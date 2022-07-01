@@ -1,0 +1,6 @@
+set ratios 1:2:3
+set previewer ~/.config/lf/preview
+set cleaner ~/.config/lf/cleaner
+set preview true
+set hidden true
+set drawbox true
