@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: cw
+# uuid: cw
+# key: cw
+# condition: t
+# --
+Console.WriteLine($1);

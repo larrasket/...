@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: foreach
+# uuid: foreach
+# key: trigger-key
+# condition: t
+# --
+
+foreach (var $1 in $2)
+{
+           $0
+}

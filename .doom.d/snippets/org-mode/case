@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: case
+# key: case
+# --
+\begin{cases}
+$1, \text{if}\ $2 \\
+$3, $4
+\end{cases}

@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: forkj
+# key: forkj
+# --
+
+for (auto i : $1 ) {
+for (auto j : $2) {
+
+}
+}

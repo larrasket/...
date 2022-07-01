@@ -1,0 +1,13 @@
+[safe]
+	directory = /mnt/disk/me/temp/infinality-remix/fontconfig-infinality-remix/src/fontconfig
+	directory = /mnt/disk/
+	directory = disk/
+	directory = disk/me/
+	directory = disk/leet/
+	directory = disk/me/gits/
+	directory = *
+[credential]
+	helper = store
+[user]
+	email = ghd@keemail.me
+	name = salehmu
