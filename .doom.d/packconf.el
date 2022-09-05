@@ -208,11 +208,13 @@
 
 ;; hmbx
 
+
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+
+
 (set-face-background 'highlight-indent-guides-odd-face "#2f3337")
 (set-face-background 'highlight-indent-guides-even-face "#2f3337")
 (set-face-foreground 'highlight-indent-guides-character-face "#2f3337")
-
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
 ;; leavun
 
