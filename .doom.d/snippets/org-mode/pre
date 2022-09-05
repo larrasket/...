@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: pre
+# uuid: pre
+# key: <p
+# condition: t
+# --
+
+#+BEGIN_PREVIEW
+$1
+#+END_PREVIEW

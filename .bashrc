@@ -1,3 +1,4 @@
+
 #
 # ~/.bashrc
 #
@@ -8,17 +9,18 @@ export PATH=$PATH:/home/ghd/.local/bin
 export FrameworkPathOverride=/lib/mono/
 
 
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
-
-
-
+[ -n "$DISPLAY" ]  && command -v xdo >/dev/null 2>&1 && xdo id > /tmp/term-wid-"$$"
+trap "( rm -f /tmp/term-wid-"$$" )" EXIT HUP
 
 
 
 colors() {
 	local fgc bgc vals seq0
 
-	printf "Color escapes are %s\n" '\e[${value};...;${value}m'
+printf "Color escapes are %s\n" '\e[${value};...;${value}m'
 	printf "Values 30..37 are \e[33mforeground colors\e[m\n"
 	printf "Values 40..47 are \e[43mbackground colors\e[m\n"
 	printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
@@ -92,13 +94,16 @@ if ${use_color} ; then
 
 
 
+
+
 alias "bt-l"='bt-device -l'
+alias mvs="mpv --config-dir=~/.config/mvs/"
 alias "bt-c"='bt-device -c'
 alias gitt='cd aur && git clone'
 alias post='/home/ghd/me/temp/page/app/GetFilesForPosting'
 alias camera="mplayer -tv device=/dev/video1 tv://"
 alias lib='libgen -s'
-alias pubb1='hugo -t  lines && cd public && git add . &&  git commit -m \"update\" && git push origin master '
+alias pubb1='cd public && git rm -rf . && cd .. && ./build.sh && cd public && git add . &&  git commit -m \"update\" && git push origin master '
 alias pub1='git add . && git commit -m update && git push origin latest_branch'
 alias pub='pub1 && pubb1'
 alias mic='ncpamixer'
@@ -145,7 +150,7 @@ alias bin='vi ~/blog/content/books.md'
 alias you='lf-yt'
 alias p='kitty +kitten icat'
 alias ls='ls -l'
-alias ll='exa -l'
+alias ll='ls -l'
 alias vim='nvim'
 alias e=emacs
 alias v='vi'
@@ -159,12 +164,20 @@ alias tori='tordl'
 alias send='tar -cz . | nc -q 10 -l -p 9090'
 alias rec='nc -w 10 192.168.1.6 9090 | tar -xz'
 alias shut='shutdown -P '
-alias psql='sudo -iu postgres && psql'
+alias psql='sudo -iu postgres'
 alias mincraft='prime-run /usr/bin/java -jar /opt/tlauncher/tlauncher.jar'
 alias netwatch='sudo nethogs'
 alias cat='highlight -O ansi --force'
 alias scriptcs='cscs'
 alias z='zathura'
+alias clone='git clone'
+alias add='git add .'
+alias pull='git pull'
+alias commit='git commit'
+alias intl="WD=\$(pwd);cd ~/source;zathura \"\$(fzf)\";cd \$WD"
+alias share="caddy file-server --listen :2030 --browse"
+alias films="sudo cryptsetup luksOpen /dev/sda3 Films && sudo mount -t ext4 /dev/sda3 /mnt/Films"
+
 
 else
 	if [[ ${EUID} == 0 ]] ; then
@@ -228,6 +241,7 @@ export PS1="\W > "
 
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+
 #source /home/saleh/.config/broot/launcher/bash/br
 export EDITOR="/usr/bin/nvim"
 # export EDITOR="emacs --no-window-system"
@@ -251,13 +265,11 @@ fi
 
 
 #source /home/ghd/.config/broot/launcher/bash/br
-function cd_up() {
-  cd $(printf "%0.0s../" $(seq 1 $1));
-}
-alias 'cd..'='cd_up'
+alias 'cd..'='cd ..'
 alias sp='systemctl suspend'
 
 
 # BEGIN_KITTY_SHELL_INTEGRATION
 if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; then source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; fi
 # END_KITTY_SHELL_INTEGRATION
+export TERM=xterm-256color

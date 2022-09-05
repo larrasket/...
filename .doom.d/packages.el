@@ -1,4 +1,4 @@
-;; -*- no-byte-compile: t; -*-
+; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
 
 ;; To install a package with Doom you must declare them here and run 'doom sync'
@@ -47,32 +47,47 @@
 ;; ...or multiple packages
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
+
+
+;; (package! vulpea)
+;; (package! delve :recipe  (:repo "publicimageltd/delve" :host github :type git))
+
+;; (package! org-roam-server)
+;;(package! toc-org)
+
+
+
+
+
+
+
+
+
+
 ;(unpin! t)
 ;;(package! dap-mode)
 (package! imenu-list)
-(package! easy-hugo)
-(package! flymd)
-(package! ox-hugo)
+;;(package! easy-hugo)
+;;(package! flymd)
+;;(package! ox-hugo)
 (package! org-journal)
-(package! objed)
-(package! nov)
+;;(package! objed)
+;;(package! nov)
 (package! auto-complete-auctex)
 (package! latex-preview-pane)
 (package! auctex)
-(package! telega)
-(package! markdown-preview-mode)
+;;(package! telega)
+;;(package! markdown-preview-mode)
 (package! org-pdfview)
-(package! dirtree)
+;;(package! dirtree)
 ;; (package! google-translate)
 (package! vimish-fold)
 (package! org-download)
 (package! iedit)
-(package! languagetool)
-(package! powerline)
+;;(package! languagetool)
+;(package! powerline)
 ;; (package! airline-themes)
-(package! org-download)
 (package! math-preview)
-;; (package! org-bullets)
 (package! gitconfig-mode
 	  :recipe (:host github :repo "magit/git-modes"
 			 :files ("gitconfig-mode.el")))
@@ -83,53 +98,67 @@
 
 
 
-(package! sage-shell-mode)
-(package! dir-treeview)
-(package! base16-theme)
-(package! real-auto-save)
-(package! sr-speedbar)
-(package! twittering-mode)
-(package! ejc-sql)
-(package! company-quickhelp)
-(package! dired-sidebar)
-(package! leetcode)
-(package! pandoc)
-(package! quickrun)
-(package! simple-httpd)
-(package! omnisharp)
-(package! white-theme)
+;; (package! sr-speedbar)
+;; (package! dired-sidebar)
+ (package! company-box)
+;; (package! pandoc)
+;; (package! omnisharp)
+;; (package! white-theme)
+;; (package! multi-term) ;; useful with windows
 (package! lsp-treemacs)
+;; (package! simple-httpd)
+;(package! twittering-mode)
+;; (package! sage-shell-mode)
+;; (package! base16-theme)
+(package! real-auto-save)
+;; (package! ejc-sql)
+;(package! quickrun)
 (package! org-tree-slide)
 (package! projectile)
-(package! irony)
+;; (package! irony)
 (package! habamax-theme)
-;;(package! highlight-indent-guides)
-(package! highlight-indentation)
-(package! solaire-mode :disable t)
-(package! dired-sidebar)
-(package! highlight-indentation)
+;;(package! dired-sidebar)
+(package! highlight-indent-guides)
 (package! ivy-posframe)
 (package! sql-indent)
-(package! smart-compile)
+;(package! smart-compile)
 (package! ob-csharp :recipe (:host github :repo "samwdp/ob-csharp"))
-;(package! centaur-tabs)
 (package! org-superstar)
-(package! vimrc-mode)
-(package! company-tabnine)
+;; (package! vimrc-mode)
 (package! dotnet)
-(package! multi-term)
-(package! vscode-dark-plus-theme)
-(package! distinguished-theme)
+;(package! vscode-dark-plus-theme)
+;(package! distinguished-theme)
 (package! kaolin-themes)
 (package! badger-theme)
-(package! cil-mode)
 (package! leuven-theme)
-(package! eziam-theme)
-(package! tao-theme)
+;; (package! org-alert)
 (package! wakatime-mode)
+(package! emacs-neotree)
+;; (package! restclient)
+;; (package! org-wild-notifier)
+(package! org-web-tools)
+(package! leetcode)
+;; (package! centaur-tabs)
+;; (package! molokai-theme)
+(package! mu4e-alert)
+(package! ts)
+(package! org-ql)
 
+(unpin! org-roam)
+(package! org-roam-ui)
+(package! org-wild-notifier)
 (package! awqat
   :recipe (:host github
            :repo "zkry/awqat"))
 
-(package! toc-org)
+
+;;(package! solaire-mode :disable t)
+
+;; (package! org-bullets)
+
+;; (package! writeroom-mode)
+
+(package! minimal-theme)
+(package! humanoid-themes)
+(package! git-gutter)
+(package! git-gutter-fringe)

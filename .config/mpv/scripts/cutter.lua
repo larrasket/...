@@ -112,7 +112,7 @@ function set_fromStart()--clean and set 0 to left trim
 	table.insert(time_queue,time_current)
 
 end
-mp.add_key_binding("s", "set_fromStart", set_fromStart)
+--mp.add_key_binding("s", "set_fromStart", set_fromStart)
 
 function set_End()--clean and set 0 to left trim
 
@@ -172,7 +172,7 @@ function undo()--clean and set 0 to left trim
     end
 
 end
-mp.add_key_binding("z", "undo", undo)
+--mp.add_key_binding("z", "undo", undo)
 
 
 function acu_output_queue()--精确切割，时间慢
