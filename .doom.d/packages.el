@@ -87,7 +87,7 @@
 ;;(package! languagetool)
 ;(package! powerline)
 ;; (package! airline-themes)
-(package! math-preview)
+;; (package! math-preview)
 (package! gitconfig-mode
 	  :recipe (:host github :repo "magit/git-modes"
 			 :files ("gitconfig-mode.el")))
@@ -128,8 +128,8 @@
 (package! dotnet)
 ;(package! vscode-dark-plus-theme)
 ;(package! distinguished-theme)
-(package! kaolin-themes)
-(package! badger-theme)
+;; (package! kaolin-themes)
+;; (package! badger-theme)
 (package! leuven-theme)
 ;; (package! org-alert)
 (package! wakatime-mode)
@@ -155,10 +155,9 @@
 ;;(package! solaire-mode :disable t)
 
 ;; (package! org-bullets)
-
 ;; (package! writeroom-mode)
 
-(package! minimal-theme)
-(package! humanoid-themes)
+;; (package! minimal-theme)
+;; (package! humanoid-themes)
 (package! git-gutter)
 (package! git-gutter-fringe)
