@@ -116,14 +116,14 @@ EOF
 "LSP severs configs..
 
 lua << EOF
---local pid = vim.fn.getpid()
---local omnisharp_bin = "/usr/bin/omnisharp"
---require'lspconfig'.omnisharp.setup{
---    cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) };
---}
---require'lspconfig'.clangd.setup{}
---vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
---vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
+local pid = vim.fn.getpid()
+local omnisharp_bin = "/usr/bin/omnisharp"
+require'lspconfig'.omnisharp.setup{
+    cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) };
+}
+require'lspconfig'.clangd.setup{}
+vim.cmd [[autocmd ColorScheme * highlight NormalFloat guibg=#1f2335]]
+vim.cmd [[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]]
 EOF
 
 
