@@ -57,6 +57,9 @@ slidebackEnabled=true
 sticky-window-snappingEnabled=true
 wobblywindowsEnabled=true
 
+[Wayland]
+InputMethod=/usr/share/applications/com.github.maliit.keyboard.desktop
+
 [Windows]
 BorderlessMaximizedWindows=true
 
