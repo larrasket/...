@@ -31,3 +31,4 @@
                (if (get-buffer "bash-aliases")(kill-buffer "bash-aliases"))
                (if (get-buffer "bash-errors")(kill-buffer "bash-errors"))))
     (add-hook 'eshell-mode-hook 'eshell-load-bash-aliases)
+(set-variable 'shell-command-switch "-c")
