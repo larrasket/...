@@ -153,11 +153,9 @@
 
 
 ;;(package! solaire-mode :disable t)
-
 ;; (package! org-bullets)
 ;; (package! writeroom-mode)
-
 ;; (package! minimal-theme)
-;; (package! humanoid-themes)
+(package! humanoid-themes)
 (package! git-gutter)
 (package! git-gutter-fringe)
