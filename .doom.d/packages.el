@@ -100,7 +100,7 @@
 
 ;; (package! sr-speedbar)
 ;; (package! dired-sidebar)
- (package! company-box)
+(package! company-box)
 ;; (package! pandoc)
 ;; (package! omnisharp)
 ;; (package! white-theme)
@@ -152,10 +152,14 @@
            :repo "zkry/awqat"))
 
 
-;;(package! solaire-mode :disable t)
+;; (package! solaire-mode :disable t)
 ;; (package! org-bullets)
 ;; (package! writeroom-mode)
-;; (package! minimal-theme)
+(package! minimal-theme)
 (package! humanoid-themes)
 (package! git-gutter)
+(package! kaolin-themes)
 (package! git-gutter-fringe)
+;; (package! bongo)
+;; (package! plan9-theme)
+;; (package! anti-zenburn-theme)

@@ -115,11 +115,6 @@
 (setq latex-run-command "pdflatex")
 
 
-(defun enable-doom-modeline-icons (_frame)
-  (setq doom-modeline-icon t))
-
-(add-hook 'after-make-frame-functions
-          #'enable-doom-modeline-icons)
 
 
 
@@ -202,6 +197,7 @@
 
 
 (add-hook 'neotree-mode-hook(lambda () (solaire-mode -1)))
+(add-hook 'doom-modeline-hook (lambda () (solitaire-mode -1)))
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 (require 'highlight-indent-guides)
 
