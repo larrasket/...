@@ -49,17 +49,21 @@
 
 
 ;; modline
-(setq doom-modeline-height 8)
-(setq doom-modeline-bar-width 2)
-(setq doom-modeline-icon (display-graphic-p))
-(setq doom-modeline-major-mode-icon t)
-(setq doom-modeline-major-mode-color-icon t)
-(setq doom-modeline-buffer-state-icon nil)
-(setq doom-modeline-buffer-modification-icon nil)
-(setq doom-modeline-unicode-fallback nil)
-(setq doom-modeline-minor-modes nil)
-(setq doom-modeline-enable-word-count nil)
+;; (setq doom-modeline-height 8)
+;; (setq doom-modeline-bar-width 2)
+;; (setq doom-modeline-icon (display-graphic-p))
+;; (setq doom-modeline-major-mode-icon t)
+;; (setq doom-modeline-major-mode-color-icon t)
+;; (setq doom-modeline-buffer-state-icon nil)
+;; (setq doom-modeline-buffer-modification-icon nil)
+;; (setq doom-modeline-unicode-fallback nil)
+;; (setq doom-modeline-minor-modes nil)
+;; (setq doom-modeline-enable-word-count nil)
+;; (defun enable-doom-modeline-icons (_frame)
+;;   (setq doom-modeline-icon t))
 
+;; (add-hook 'after-make-frame-functions
+;;           #'enable-doom-modeline-icons)
 
 ;; themes
 
@@ -72,7 +76,18 @@
 
 
 
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(line-number ((t (:inherit default :background "#232629" :foreground "#5d6658")))))
+
+
 ;; (custom-theme-set-faces! 'kaolin-aurora
+;;
+;;
+;;
 ;;   '(default :background "#121221"))
 ;;
 ;;
@@ -85,7 +100,8 @@
 ;; (setq doom-theme 'default)
 ;; (setq doom-theme 'kaolin-galaxy)
 ;; (setq doom-theme 'habamax)
-(setq doom-theme 'humanoid-dark)
+;; (setq doom-theme 'humanoid-dark)
+(setq doom-theme 'doom-acario-light)
 
 
 
@@ -335,3 +351,6 @@
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+
+
+(setq-default org-download-image-dir "~/me/media")
