@@ -160,7 +160,7 @@
        ;; org               ; organize your plain life in plain text
        (org
         +roam2
-        +pomodoro
+        ;; +pomodoro
         +present
         +dragndrop)
 
@@ -177,7 +177,7 @@
        ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
-       sh                ; she sells {ba,z,fi}sh shells on the C xor
+       ;; sh                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
@@ -192,16 +192,14 @@
        ;;(wanderlust +gmail)
 
        :app
-       calendar
-       ;;emms
+       ;; calendar
+       emms
        everywhere        ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
-       ;;(rss +org)        ; emacs as an RSS reader
-       ;;twitter           ; twitter client https://twitter.com/vnought
+       (rss +org)        ; emacs as an RSS reader
+       ;; twitter           ; twitter client https://twitter.com/vnought
 
        :config
        ;;literate
        (default +bindings +smartparens))
-
-
 (setq package-native-compile t)
