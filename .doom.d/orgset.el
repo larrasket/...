@@ -49,6 +49,11 @@
            (file+headline +org-capture-todo-file "Inbox")
            "* TODO %?" :prepend t)
 
+          ("s" "Personal to study" entry
+           (file+headline +org-capture-todo-file "Inbox")
+           "* STUDY %?" :prepend t)
+
+
           ("w" "Watch" entry
            (file+headline +org-capture-todo-file "Inbox")
            "* WATCH %?" :prepend t)
