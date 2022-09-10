@@ -131,11 +131,9 @@
 ;; (package! kaolin-themes)
 ;; (package! badger-theme)
 (package! leuven-theme)
-;; (package! org-alert)
 (package! wakatime-mode)
 (package! emacs-neotree)
 ;; (package! restclient)
-(package! org-wild-notifier)
 (package! org-web-tools)
 (package! leetcode)
 ;; (package! centaur-tabs)
@@ -146,7 +144,6 @@
 
 (unpin! org-roam)
 (package! org-roam-ui)
-;; (package! org-wild-notifier)
 (package! awqat
   :recipe (:host github
            :repo "zkry/awqat"))
@@ -156,7 +153,7 @@
 ;; (package! org-bullets)
 ;; (package! writeroom-mode)
 (package! humanoid-themes)
-(package! fringe-helper)
+;; (package! fringe-helper)
 (package! git-gutter)
 (package! git-gutter-fringe)
-
+(package! org-wild-notifier)

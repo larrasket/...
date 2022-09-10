@@ -186,13 +186,13 @@
   :config
   (org-upcoming-modeline-mode))
 
-(use-package org-wild-notifier
-  :ensure t
-  :custom
-  (alert-default-style 'notifications)
-  (org-wild-notifier-alert-time '(1 10 30))
-  :config
-  (org-wild-notifier-mode 1))
+;; (use-package org-wild-notifier
+;;   :ensure t
+;;   :custom
+;;   (alert-default-style 'notifications)
+;;   (org-wild-notifier-alert-time '(1 10 30))
+;;   :config
+;;   (org-wild-notifier-mode 1))
 
 
 
@@ -221,6 +221,9 @@
 ;; (set-face-foreground 'highlight-indent-guides-character-face "#9B9C97")
 
 (use-package! org-wild-notifier
-  :hook (org-load . org-wild-notifier-mode)
+  ;; :hook (with-eval-after-load . org-wild-notifier-mode)
   :config
-  (setq org-wild-notifier-alert-time '(60 30)))
+  (setq org-wild-notifier-alert-time '(60 30 5 1)))
+
+(org-wild-notifier-mode)
+(setq alert-default-style 'libnotify)
