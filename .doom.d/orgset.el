@@ -15,7 +15,7 @@
            "READ(b)"                    ; To Read
            "CHECK(c)"                   ; To Read
            "|"
-           "DONE(X)"                ; Task successfully completed
+           "DONE(d)"                ; Task successfully completed
            "FAIL(f)"                ; Task is not successfully completed
            "KILL(k)")               ; Task was cancelled, aborted or is no longer applicable
           (sequence
@@ -25,9 +25,9 @@
            "|"
            "[X](x)")                    ; Task was completed
           (sequence
-           "DAILY(d)"        ; A task that needs doing
+           "DAILY(D)"        ; A task that needs doing
            "|"
-           "DONE(X)")                    ; Task was completed
+           "DONE(d)")                    ; Task was completed
           (sequence
            "|"
            ;; "OKAY(o)"
