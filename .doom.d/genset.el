@@ -9,7 +9,7 @@
 (custom-theme-set-faces! 'doom-tomorrow-night
   '(default :background "#121212"))
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "brave-browser-nightly")
+      browse-url-generic-program "brave")
 (org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
 (setq treemacs-position 'right)
 (setq dired-sidebar-refresh-on-special-commands 't)
@@ -154,7 +154,7 @@
     (setq display-line-number-mode -1)))
 
 
-(setq fancy-splash-image "/home/ghd/me/me.jpg")
+(setq fancy-splash-image "/home/ghd/me/media/me.jpg")
 
 (setq all-the-icons-color-icons nil)
 
@@ -346,11 +346,9 @@
   :config
   (setq git-gutter:update-interval 0.02))
 
-(use-package git-gutter-fringe
-  :config
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom)
 
 
 (setq-default org-download-image-dir "~/me/media")

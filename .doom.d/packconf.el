@@ -219,3 +219,8 @@
 ;; (set-face-background 'highlight-indent-guides-odd-face "#9B9C97")
 ;; (set-face-background 'highlight-indent-guides-even-face "#9B9C97")
 ;; (set-face-foreground 'highlight-indent-guides-character-face "#9B9C97")
+
+(use-package! org-wild-notifier
+  :hook (org-load . org-wild-notifier-mode)
+  :config
+  (setq org-wild-notifier-alert-time '(60 30)))

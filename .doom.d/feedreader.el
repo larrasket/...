@@ -38,7 +38,16 @@
                     ("https://boards.4channel.org/adv/index.rss" people)
                     ("https://harian-oftheday.blogspot.com/feeds/posts/default?alt=rss" spirit)
                     ("https://medium.com/feed/@villekuosmanen" cs)
+		    ("https://www.reddit.com/r/OneTruthPrevails/.rss" reddit)
                     ("http://nedroid.com/feed/" comics)))
         (elfeed-update)))
 (add-hook! 'elfeed-search-mode-hook #'elfeed-update)
+
+(use-package elfeed-dashboard
+  :load-path "~/gits/elfeed-dashboard/"
+  :config
+  (setq elfeed-dashboard-file "~/gits/elfeed-dashboard/elfeed-dashboard.org")
+  ;; update feed counts on elfeed-quit
+  (advice-add 'elfeed-search-quit-window :after #'elfeed-dashboard-update-links))
+
 (provide 'feedreader)

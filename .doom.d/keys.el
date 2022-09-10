@@ -10,7 +10,6 @@
 (global-set-key (kbd "C-<down>") 'shrink-window)
 (global-set-key (kbd "C-<up>") 'enlarge-windor)
 (global-set-key (kbd "M-n") 'make-frame)
-;; (global-set-key (kbd "M-z") 'flycheck-list-errors) (global-set-key (kbd "M-w") 'eww-search-words)
 (global-set-key (kbd "M-f") 'org-footnote-action)
 (global-set-key (kbd "C-M-g") 'lsp-goto-implementation)
 
@@ -163,23 +162,32 @@
 
 (add-hook 'pdf-view-mode-hook
           (lambda () (local-set-key (kbd "<f2>") #'pdf-annot-add-text-annotation)))
+
 (add-hook 'pdf-view-mode-hook
           (lambda () (local-set-key (kbd "<f3>") #'pdf-annot-add-underline-markup-annotation)))
 
 
 
+(defun EmacsAnyWhere ()
+  (when (string= (buffer-name) "*Emacs Anywhere*")
+    (local-set-key (kbd "C-c C-c") #'evil-quit)
+    (auto-fill-mode)
+    )
+  )
+
+(add-hook 'buffer-list-update-hook 'EmacsAnyWhere)
 
 
 ;; comment
 
 
 (add-hook 'after-init-hook #'global-flycheck-mode) (add-to-list 'display-buffer-alist
-             `(,(rx bos "*Flycheck errors*" eos)
-              (display-buffer-reuse-window
-               display-buffer-in-side-window)
-              (side            . bottom)
-              (reusable-frames . visible)
-              (window-height   . 0.18)))
+                                                                `(,(rx bos "*Flycheck errors*" eos)
+                                                                  (display-buffer-reuse-window
+                                                                   display-buffer-in-side-window)
+                                                                  (side            . bottom)
+                                                                  (reusable-frames . visible)
+                                                                  (window-height   . 0.18)))
 
  (defun my-flymd-browser-function (url)
    (let ((browse-url-browser-function 'browse-url-firefox))

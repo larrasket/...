@@ -5,6 +5,7 @@
   (setq org-todo-keywords
         '((sequence
            "TODO(t)"                    ; A task that needs doing & is ready to do
+           "APPOINT(a)"
            "PROJ(p)"                    ; A project, which usually contains other tasks
            ;; "LOOP(r)"             ; A recurring task
            "STUDY(s)"                   ; A task that is in progress
@@ -14,7 +15,7 @@
            "READ(b)"                    ; To Read
            "CHECK(c)"                   ; To Read
            "|"
-           "DONE(d)"                ; Task successfully completed
+           "DONE(X)"                ; Task successfully completed
            "FAIL(f)"                ; Task is not successfully completed
            "KILL(k)")               ; Task was cancelled, aborted or is no longer applicable
           (sequence
@@ -22,7 +23,11 @@
            ;; "[-](S)"                     ; Task is in progress
            ;; "[?](W)"                     ; Task is being held up or paused
            "|"
-           "[X](D)")                    ; Task was completed
+           "[X](x)")                    ; Task was completed
+          (sequence
+           "DAILY(d)"        ; A task that needs doing
+           "|"
+           "DONE(X)")                    ; Task was completed
           (sequence
            "|"
            ;; "OKAY(o)"
@@ -35,10 +40,12 @@
           ("STUDY" . "DarkBlue")
           ;; ("[?]"  . +org-todo-onhold)
           ("WATCH" . "#86ba96")
+          ("DAILY" . "#708090")
           ;; ("HOLD" . +org-todo-onhold)
           ("PROJ" . +org-todo-project)
           ("FAIL"   . +org-todo-cancel)
           ("READ" . "#98be65")
+          ("APPOINT" . "#0a66c2")
           ("CHECK" . "#fc791c")
           ("KILL" . +org-todo-cancel)))
 

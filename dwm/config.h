@@ -18,12 +18,12 @@ static const char *pctlpreviouscmd[] = {"playerctl", "previous", NULL};
 static const char *pctlplaycmd[] = {"playerctl", "play-pause", NULL};
 static const char *pctlpausecmd[] = {"playerctl", "pause", NULL};
 static const char *pctlnextcmd[] = {"playerctl", "next", NULL};
-static const char *gbrowsercmd[] = {"brave-browser-nightly", NULL};
+static const char *gbrowsercmd[] = {"brave", NULL};
 static const char *ggm[] = {"keepassxc", NULL};
 static const char *exp[] = {"thunar", NULL};
 static const char *ranger[] = {"kitty", "-e", "ranger", NULL};
 static const char *mov[] = {
-    "brave-browser-nightly", "https://www.notion.so/Home-9061ccbeaa414fb0b7335c42f8299692",
+    "brave", "https://www.notion.so/Home-9061ccbeaa414fb0b7335c42f8299692",
     NULL};
 static const char *scr[] = {"flameshot", "gui", NULL};
 static const char *mail[] = {"mail", NULL};
@@ -32,9 +32,9 @@ static const char *copy[] = {"rofi", "-show", "drun", "-show-icons", NULL};
 static const char *copy1[] = {"rofi", "-show", "emoji", "-modi", "emoji", NULL};
 static const char *lf[] = {"kitty", "-e", "lfrun", NULL};
 static const char *tel[] = {"caprine", NULL};
-static const char *dis[] = {"brave-browser-nightly", "discord.com", NULL};
+static const char *dis[] = {"brave", "discord.com", NULL};
 static const char *ms[] = {"brave", "m.me", NULL};
-static const char *fid[] = { "brave-browser-nightly", "chrome-extension://mefgmmbdailogpfhfblcnnjfmnpnmdfa/reader.html", NULL};
+static const char *fid[] = { "brave", "chrome-extension://mefgmmbdailogpfhfblcnnjfmnpnmdfa/reader.html", NULL};
 static const char *htop[] = {"kitty", "-e ", "htop", NULL};
 static const char *yakyak[] = {"yakyak", NULL};
 static const char *pad[] = {"leafpad", NULL};
@@ -128,9 +128,9 @@ static const Rule rules[] = {
      *	WM_CLASS(STRING) = instance, class
      *	WM_NAME(STRING) = title
      */
-    /* class     instance  title           tags mask  isfloating  isterminal
-       noswallow  monitor */
+    /* class     instance  title           tags mask  isfloating  isterminal noswallow  monitor */
     {"Gimp", NULL, NULL, 0, 1, 0, 0, -1},
+    {"*Emacs Anywhere*", NULL, NULL, 0, 1, 0, 0, -1},
     /* { "Firefox", NULL,     NULL,           1 << 8,    0,          0, -1,
        -1 }, */
     {"St", NULL, NULL, 0, 0, 1, 0, -1},
@@ -187,6 +187,7 @@ static char dmenumon[2] =
 static const char *dmenucmd[] = {"dmenu_run", "-g", "10",    "-l",
                                  "48",        "-p", "Run: ", NULL};
 static const char *emacs[] = {"emaks", NULL};
+static const char *anyywhere[] = {"/home/ghd/.emacs_anywhere/bin/linux", NULL};
 
 /* the st terminal with tabbed */
 /*static const char *termcmd[]  = { "kitty", "-e" , "bicon",  NULL };*/
@@ -236,6 +237,7 @@ static Key keys[] = {
     {MODKEY | ShiftMask, -1, XK_r, spawn, {.v = ranger}},
     {MODKEY | ShiftMask, -1, XK_f, spawn, {.v = fid}},
     {MODKEY, -1, XK_w, spawn, {.v = emacs}},
+    {MODKEY | ShiftMask, -1, XK_w, spawn, {.v =  anyywhere}},
     {MODKEY, XK_s, -1, setlayout, {.v = &layouts[4]}},
     {0, -1, XF86XK_AudioPlay, spawn, {.v = pctlplaycmd}},
     {0, -1, XF86XK_AudioPause, spawn, {.v = pctlpausecmd}},
