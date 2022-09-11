@@ -225,5 +225,5 @@
   :config
   (setq org-wild-notifier-alert-time '(60 30 5 1)))
 
-(org-wild-notifier-mode)
 (setq alert-default-style 'libnotify)
+(org-wild-notifier-mode)
