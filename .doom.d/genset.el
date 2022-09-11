@@ -354,4 +354,4 @@
 
 
 
-(setq-default org-download-image-dir "~/me/media")
+;; (setq-default org-download-image-dir 'nil)

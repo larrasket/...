@@ -37,7 +37,6 @@
 ;; (setq org-journal-enable-encryption 't)
 ;; (setq org-journal-encrypt-journal 't)
 
-;; (use-package org-alert :ensure t)
 ;; (org-alert-enable)
 ;; (setq alert-default-style 'notification)
 ;; (setq org-alert-interval 200
