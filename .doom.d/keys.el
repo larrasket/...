@@ -150,21 +150,19 @@
 ;; need another one for python stuff, since this gets re-bound
 
 
-(global-set-key (kbd "<f8>") 'org-tree-slide-mode)
 (global-set-key [f6] (lambda () (interactive) (neotree-project-dir) (lsp-treemacs-symbols) (evil-window-next) ))
-(global-set-key (kbd "S-<f8>") 'org-tree-slide-skip-done-toggle)
-(global-set-key (kbd "<f11>") 'org-tree-slide-move-next-tree)
-(global-set-key (kbd "<f12>") 'org-tree-slide-move-previous-tree)
-(global-set-key (kbd "M-RET") 'lsp-execute-code-action)
+;; (global-set-key (kbd "S-<f8>") 'org-tree-slide-skip-done-toggle)
+;; (global-set-key (kbd "<f11>") 'org-tree-slide-move-next-tree)
+;; (global-set-key (kbd "<f12>") 'org-tree-slide-move-previous-tree)
 
 
 ;; debug
 
-(global-set-key [f5] '+debugger/start)
-(global-set-key (kbd "C-<f5>")'+debugger/quit)
-(global-set-key [f11] 'dap-step-in)
-(global-set-key [f12] 'lsp-goto-implementation)
-(global-set-key [f9] 'dap-breakpoint-toggle)
+;; (global-set-key [f5] '+debugger/start)
+;; (global-set-key (kbd "C-<f5>")'+debugger/quit)
+;; (global-set-key [f11] 'dap-step-in)
+;; (global-set-key [f12] 'lsp-goto-implementation)
+;; (global-set-key [f9] 'dap-breakpoint-toggle)
 
 
 
@@ -176,19 +174,18 @@
 
 
 ;; language tool
-
 (setq languagetool-language-tool-jar
       "~/.languagetool/languagetool-commandline.jar")
 (setq languagetool-default-language "en-GB")
-(global-set-key (kbd "C-c l c") 'languagetool-check)
-(global-set-key (kbd "C-q") 'org-agenda-open-link)
-(global-set-key (kbd "C-;") 'iedit-mode)
-(global-set-key (kbd "C-c l d") 'langrrgetool-clear-buffer)
-(global-set-key (kbd "C-c l p") 'languagetool-correct-at-point)
-(global-set-key (kbd "C-c l b") 'languagetool-correct-buffer)
-(global-set-key (kbd "C-c l l") 'languagetool-set-language)
-(global-set-key (kbd "C-c l l") 'languagetool-set-language)
-(global-set-key (kbd "C-c x") 'org-latex-preview)
+;; (global-set-key (kbd "C-c l c") 'languagetool-check)
+;; (global-set-key (kbd "C-q") 'org-agenda-open-link)
+;; (global-set-key (kbd "C-;") 'iedit-mode)
+;; (global-set-key (kbd "C-c l d") 'langrrgetool-clear-buffer)
+;; (global-set-key (kbd "C-c l p") 'languagetool-correct-at-point)
+;; (global-set-key (kbd "C-c l b") 'languagetool-correct-buffer)
+;; (global-set-key (kbd "C-c l l") 'languagetool-set-language)
+;; (global-set-key (kbd "C-c l l") 'languagetool-set-language)
+;; (local-set-key (kbd "C-c x") 'org-latex-preview)
 
 
 
@@ -198,15 +195,20 @@
 (add-hook 'pdf-view-mode-hook
           (lambda () (local-set-key (kbd "<f3>") #'pdf-annot-add-underline-markup-annotation)))
 
+(add-hook 'lsp-mode-hook (lambda)  () (local-set-key (kbd "M-RET") #'lsp-execute-code-action))
+
+(add-hook 'org-mode-hook (lambda () (local-set-key (kbd "<f8>") #'org-tree-slide-mode)))
+
+
+(add-hook 'calc-mode-hook (lambda () (local-set-key (kbd "r r") #'calc-reset)))
+
 
 
 (defun EmacsAnyWhere ()
   (when (string= (buffer-name) "*Emacs Anywhere*")
     (local-set-key (kbd "C-c C-c") #'evil-quit)
     (auto-fill-mode)
-    (markdown-mode)
-    )
-  )
+    (markdown-mode)))
 
 (add-hook 'buffer-list-update-hook 'EmacsAnyWhere)
 
