@@ -9,3 +9,4 @@
 (require 'shellrc)
 (require 'music)
 (require 'feedreader)
+(require 'mycustom)
