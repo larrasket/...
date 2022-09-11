@@ -28,6 +28,7 @@
 using namespace std;
 typedef pair<int, int> pi;
 priority_queue<pi, vector<pi>, greater<pi>> pq;
+typedef long long ll;
 
 void solve() {
 
