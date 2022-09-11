@@ -30,7 +30,7 @@
                     ("https://suckless.org/atom.xml" cs)
                     ("https://blog.janestreet.com/feed.xml" cs)
                     ("https://www.ribice.ba/index.xml" cs)
-                    ("https://github.com/salehmu.private.atom?token=ARVKOP6Q6D3TE577LYBCYSWA3RAUG" cs)
+                    ("https://github.com/salehmu.private.atom?token=ARVKOP6Q6D3TE577LYBCYSWA3RAUG" github)
                     ("http://www.infoworld.com/index.rss" cs)
                     ("https://hackernoon.com/feed" cs)
                     ("http://cachestocaches.com/feed/" cs)
