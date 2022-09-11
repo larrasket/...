@@ -18,6 +18,38 @@
 (map! :leader
       :desc "move to jorunal"
       "j" #'org-journal-new-entry)
+
+
+(map! :leader
+      :desc "play playlist"
+      "m p m" #'emms-play-playlist)
+
+
+(map! :leader
+      :desc "play directory"
+      "m p d" #'emms-play-directory)
+
+
+(map! :leader
+      :desc "save play directory"
+      "m p d" #'emms-play-directory)
+
+
+(map! :leader
+      :desc "save current playlist"
+      "m p s" #'emms-playlist-save)
+
+
+(map! :leader
+      :desc "shuffle playlist"
+      "m p c" #'emms-shuffle)
+
+
+(map! :leader
+      :desc "repeat"
+      "m p r" #'emms-toggle-repeat-track)
+
+
 (map! :leader
       :desc "run vterm"
       "t t" 'vterm)
@@ -172,6 +204,7 @@
   (when (string= (buffer-name) "*Emacs Anywhere*")
     (local-set-key (kbd "C-c C-c") #'evil-quit)
     (auto-fill-mode)
+    (markdown-mode)
     )
   )
 
