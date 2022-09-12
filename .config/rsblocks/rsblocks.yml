@@ -7,7 +7,7 @@ seperator: '┃'
 # Time always running, no enabled option for this
 time:
   delay: 1.0
-  format: '%d %b, %I:%M:%S %p'
+  format: '%d %b, %H:%M:%S %p'
   icon: ''
 
 
@@ -118,6 +118,6 @@ spotify:
 weather:
   city: ''
   delay: 7200.0   # 7200 seconds = 2 hours
-  enabled: false
+  enabled: true
   format: '%l:+%t'
   icon: ''
