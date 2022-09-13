@@ -1,6 +1,8 @@
 ;;; genset.el -*- lexical-binding: t; -*-
 (provide 'genset)
 
+(setq frame-title-format "%b")
+(setq real-auto-save-interval 10) ;; in seconds
 (setq-default fill-column 92)
 (setq c-default-style "linux"
       c-basic-offset 4)
@@ -16,7 +18,6 @@
 (setq user-full-name "Salh Jabr"
       user-mail-address "jabr@emailasso.net")
 (setq fill-column 92)
-
 
 
 (defun toggle-maximize-buffer () "Maximize buffer"
@@ -40,30 +41,9 @@
         (setq bidi-paragraph-direction 'right-to-left))
       (message "%s" bidi-paragraph-direction))
 
-(add-hook 'prog-mode-hook 'real-auto-save-mode)
-(setq real-auto-save-interval 5) ;; in seconds
-
 (yas-global-mode 1)
 (add-hook 'yas-minor-mode(lambda()
                            (yas-activate-extra-mode 'fundamental-mode)))
-
-
-;; modline
-;; (setq doom-modeline-height 8)
-;; (setq doom-modeline-bar-width 2)
-;; (setq doom-modeline-icon (display-graphic-p))
-;; (setq doom-modeline-major-mode-icon t)
-;; (setq doom-modeline-major-mode-color-icon t)
-;; (setq doom-modeline-buffer-state-icon nil)
-;; (setq doom-modeline-buffer-modification-icon nil)
-;; (setq doom-modeline-unicode-fallback nil)
-;; (setq doom-modeline-minor-modes nil)
-;; (setq doom-modeline-enable-word-count nil)
-;; (defun enable-doom-modeline-icons (_frame)
-;;   (setq doom-modeline-icon t))
-
-;; (add-hook 'after-make-frame-functions
-;;           #'enable-doom-modeline-icons)
 
 ;; themes
 
@@ -160,8 +140,6 @@
 
 
 
-
-(setq auto-save-visited-mode t)
 
 
 
