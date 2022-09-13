@@ -34,7 +34,9 @@
 (setq org-journal-file-format "%Y%m%d.org")
 (setq org-journal-enable-agenda-integration t)
 (setq org-directory "/mnt/disk/leet")
-(setq org-agenda-files '("/mnt/disk/leet"))
+(setq org-agenda-files '("~/leet/"))
+
+
 (setq org-journal-dir "/mnt/disk/leet/journal")
 (add-to-list 'org-agenda-files org-journal-dir)
 
