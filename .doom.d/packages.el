@@ -110,7 +110,6 @@
 ;(package! twittering-mode)
 ;; (package! sage-shell-mode)
 ;; (package! base16-theme)
-(package! real-auto-save)
 ;; (package! ejc-sql)
 ;(package! quickrun)
 (package! org-tree-slide)
@@ -157,3 +156,4 @@
 (package! git-gutter)
 (package! git-gutter-fringe)
 (package! org-wild-notifier)
+(package! real-auto-save)
