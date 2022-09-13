@@ -2,3 +2,4 @@
 .config/flameshot/*
 /.config/mpv/watch_later/*
 /.config/gtk-2.0/
+/.doom.d/flycheck_custom.el
