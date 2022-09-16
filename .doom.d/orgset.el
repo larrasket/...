@@ -59,9 +59,26 @@
 
 
           ("i" "Templates for the internet")
+
           ("ic" "Nice computer science post" item
            (file+headline +org-capture-changelog-file "Computers for Love, SWE for money")
            "+ %?" :prepend t)
+
+          ("ia" "Nice theory post" item
+           (file+headline +org-capture-changelog-file "In Theory")
+           "+ %?" :prepend t)
+
+
+
+
+          ("iv" "Nice computer science videos" item
+           (file+headline +org-capture-changelog-file "computers")
+           "+ %?" :prepend t)
+
+          ("it" "Nice videos" item
+           (file+headline +org-capture-changelog-file "other")
+           "+ %?" :prepend t)
+
 
 
           ("s" "Personal to study" entry
