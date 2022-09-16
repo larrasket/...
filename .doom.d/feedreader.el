@@ -40,6 +40,8 @@
                     ("https://medium.com/feed/@villekuosmanen" cs prod)
 		    ("https://www.reddit.com/r/OneTruthPrevails/.rss" reddit prod)
                     ("http://nedroid.com/feed/" comics prod)
+                    ("https://www.reddit.com/r/emacs/.rss" emacs reddit prod)
+                    ("https://www.reddit.com/r/programmingcirclejerk/.rss" cs reddit prod)
                     ("https://dave.cheney.net/feed" cs prod)))
         (elfeed-update)))
 (add-hook! 'elfeed-search-mode-hook #'elfeed-update)
