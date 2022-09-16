@@ -78,6 +78,11 @@
            "* READ %?" :prepend t)
 
 
+          ("c" "Check" entry
+           (file+headline +org-capture-todo-file "Inbox")
+           "* CHECK %?" :prepend t)
+
+
           ("n" "Personal notes" entry
            (file+headline +org-capture-notes-file "Inbox")
            "* %u %?\n%i\n%a" :prepend t)
