@@ -51,10 +51,18 @@
 
   (setq org-hide-leading-stars 't)
   (setq +org-capture-journal-file "~/blog/content/stack.org")
+  (setq +org-capture-changelog-file "~/blog/content/nice.org")
   (setq org-capture-templates
         '(("t" "Personal todo" entry
            (file+headline +org-capture-todo-file "Inbox")
            "* TODO %?" :prepend t)
+
+
+          ("i" "Templates for the internet")
+          ("ic" "Nice computer science post" item
+           (file+headline +org-capture-changelog-file "Computers for Love, SWE for money")
+           "+ %?" :prepend t)
+
 
           ("s" "Personal to study" entry
            (file+headline +org-capture-todo-file "Inbox")
