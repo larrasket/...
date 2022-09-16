@@ -156,4 +156,3 @@
 (package! git-gutter)
 (package! git-gutter-fringe)
 (package! org-wild-notifier)
-(package! real-auto-save)

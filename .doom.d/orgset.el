@@ -1,7 +1,6 @@
 ;;; orgset.el -*- lexical-binding: t; -*-
 (provide 'orgset)
 
-(add-hook 'org-mode-hook 'real-auto-save)
 (after! org
   (setq org-todo-keywords
         '((sequence

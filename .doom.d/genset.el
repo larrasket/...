@@ -40,8 +40,8 @@
         (setq bidi-paragraph-direction 'right-to-left))
       (message "%s" bidi-paragraph-direction))
 
-(add-hook 'prog-mode-hook 'real-auto-save-mode)
-(setq real-auto-save-interval 5) ;; in seconds
+;; (add-hook 'prog-mode-hook 'real-auto-save-mode)
+;; (setq real-auto-save-interval 5) ;; in seconds
 
 (yas-global-mode 1)
 (add-hook 'yas-minor-mode(lambda()
