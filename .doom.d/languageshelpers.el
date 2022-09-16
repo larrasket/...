@@ -5,7 +5,6 @@
 ;; C++
 
 
-(add-hook 'prog-mode-hook 'real-auto-save-mode)
 (defun my-cpp-mode-setup ()
   (lsp)
   (company-mode)
