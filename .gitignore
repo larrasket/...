@@ -3,3 +3,11 @@
 /.config/mpv/watch_later/*
 /.config/gtk-2.0/
 /.doom.d/flycheck_custom.el
+/.config/gtk-3.0/bookmarks
+/.config/gtk-3.0/settings.ini
+/.config/gtkrc
+/.config/gtkrc-2.0
+/.config/kwinrc
+/.config/latte/plasma-monterey.layout.latte
+/.config/qBittorrent/qBittorrent-data.conf
+/.config/qBittorrent/*.conf

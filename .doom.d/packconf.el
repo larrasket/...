@@ -199,7 +199,7 @@
 
 
 (add-hook 'neotree-mode-hook(lambda () (solaire-mode -1)))
-(add-hook 'doom-modeline-hook (lambda () (solitaire-mode -1)))
+;; (add-hook 'doom-modeline-hook (lambda () (solitaire-mode -1)))
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 (require 'highlight-indent-guides)
 

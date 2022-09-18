@@ -119,9 +119,21 @@
 ;;(package! dired-sidebar)
 (package! highlight-indent-guides)
 (package! ivy-posframe)
-(package! sql-indent)
+;; (package! sql-indent)
 ;(package! smart-compile)
 (package! ob-csharp :recipe (:host github :repo "samwdp/ob-csharp"))
+
+(straight-use-package
+ '(webkit :type git :host github :repo "akirakyle/emacs-webkit"
+          :branch "main"
+          :files (:defaults "*.js" "*.css" "*.so")
+          :pre-build ("make")))
+
+;; (use-package webkit
+;;   :bind ("s-b" 'webkit)) ;; Bind to whatever global key binding you want if you want
+;; (use-package 'webkit-ace) ;; If you want link hinting
+;; (use-package 'webkit-dark) ;; If you want to use the simple dark mode
+
 (package! org-superstar)
 ;; (package! vimrc-mode)
 (package! dotnet)
