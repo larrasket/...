@@ -43,7 +43,6 @@ Meta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu
 
 [Plugins]
 activatelattelaunchermenuEnabled=true
-bismuthEnabled=true
 blurEnabled=true
 forceblurEnabled=true
 krohnkiteEnabled=false
