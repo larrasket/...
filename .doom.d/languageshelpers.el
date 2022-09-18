@@ -319,3 +319,7 @@
   (shell foo))
 
 (add-hook 'company-mode-hook 'company-box-mode)
+
+
+;; (delete 'company-backend +lsp-company-backends) ;; disable non-needed snippests in the compnay backend
+;;                                                 ;; it might affects some of golang snippests, which I like
