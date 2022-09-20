@@ -1,5 +1,4 @@
 ;;; orgset.el -*- lexical-binding: t; -*-
-(provide 'orgset)
 
 (after! org
   (setq org-todo-keywords
@@ -283,3 +282,5 @@ the structure of the org file."
 (provide 'org-eww)
 
 
+
+(provide 'orgset)

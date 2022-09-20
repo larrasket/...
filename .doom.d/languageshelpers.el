@@ -263,7 +263,7 @@
 
 
 
-(setq org-tree-slide-skip-outline-level 4)
+;; (setq org-tree-slide-skip-outline-level 4)
 (setq term-default-fg-color "#FFFFFF") (setq term-default-bg-color "#FFFFFF")
 
 

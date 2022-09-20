@@ -154,7 +154,7 @@
     (setq display-line-number-mode -1)))
 
 
-(setq fancy-splash-image "/home/ghd/me/media/me.jpg")
+(setq fancy-splash-image "/home/ghd/me/wDfR_KdH_400x400.jpg")
 
 (setq all-the-icons-color-icons nil)
 
