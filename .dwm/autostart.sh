@@ -2,6 +2,7 @@
 for f in /etc/X11/xinit/xinitrc.d/*.sh; do
   source "$f"
 done
+~/.dwm/screen.sh
 picom --experimental-backends &
 dunst &
 xset r rate 200 25
