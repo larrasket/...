@@ -177,3 +177,4 @@
 (package! org-reveal)
 (package! org-present)
 ;; (package! visual-fill-column)
+(package! elfeed-goodies)

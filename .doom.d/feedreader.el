@@ -42,6 +42,9 @@
                     ("http://nedroid.com/feed/" comics prod)
                     ("https://www.reddit.com/r/emacs/.rss" emacs reddit prod)
                     ("https://www.reddit.com/r/programmingcirclejerk/.rss" cs reddit prod)
+                    ("https://www.reddit.com/r/interestingasfuck/.rss" art)
+                    ("https://hnrss.org/best" hn cs prod)
+                    ("https://hnrss.org/newest" hn cs)
                     ("https://dave.cheney.net/feed" cs prod)))
         (elfeed-update)))
 (add-hook! 'elfeed-search-mode-hook #'elfeed-update)
@@ -53,4 +56,6 @@
   ;; update feed counts on elfeed-quit
   (advice-add 'elfeed-search-quit-window :after #'elfeed-dashboard-update-links))
 
+
+(setq-default elfeed-search-filter "@1-week-ago +unread -shit +prod")
 (provide 'feedreader)
