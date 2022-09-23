@@ -235,6 +235,7 @@ map gn cd ~/me/nashid
 map gp cd ~/blog/content/posts
 map ga cd ~/me/art
 map gl cd ~/leet
+map gi cd ~/me/images/
 
 map \;j cd ~
 cmd recol %{{
