@@ -180,3 +180,7 @@
 (package! elfeed-goodies)
 (package! ob-mermaid)
 (package! dashboard)
+;; (package! grayscale-theme)
+;; (package! ample-theme)
+;; (package! nimbus-theme)
+;; (package! sorcery-theme)

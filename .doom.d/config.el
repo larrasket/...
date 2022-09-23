@@ -10,3 +10,4 @@
 (require 'music)
 (require 'feedreader)
 (require 'dashboardconf)
+;; (setq doom-theme 'doom-lighttable)
