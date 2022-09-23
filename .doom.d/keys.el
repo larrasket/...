@@ -11,7 +11,8 @@
 (global-set-key (kbd "C-<up>") 'enlarge-windor)
 (global-set-key (kbd "M-n") 'make-frame)
 (global-set-key (kbd "M-f") 'org-footnote-action)
-(global-set-key (kbd "C-M-g") 'lsp-goto-implementation)
+(global-set-key (kbd "C-M-g") 'lsp-find-definition)
+(global-set-key (kbd "M-RET") 'lsp-execute-code-action)
 
 
 
@@ -179,7 +180,7 @@
 (setq languagetool-default-language "en-GB")
 ;; (global-set-key (kbd "C-c l c") 'languagetool-check)
 ;; (global-set-key (kbd "C-q") 'org-agenda-open-link)
-;; (global-set-key (kbd "C-;") 'iedit-mode)
+(global-set-key (kbd "C-;") 'iedit-mode)
 ;; (global-set-key (kbd "C-c l d") 'langrrgetool-clear-buffer)
 ;; (global-set-key (kbd "C-c l p") 'languagetool-correct-at-point)
 ;; (global-set-key (kbd "C-c l b") 'languagetool-correct-buffer)
@@ -195,7 +196,7 @@
 (add-hook 'pdf-view-mode-hook
           (lambda () (local-set-key (kbd "<f3>") #'pdf-annot-add-underline-markup-annotation)))
 
-(add-hook 'lsp-mode-hook (lambda)  () (local-set-key (kbd "M-RET") #'lsp-execute-code-action))
+;; (add-hook 'prog-mode-hook (lambda)  () (local-set-key (kbd "M-RET") #'lsp-execute-code-action))
 
 (add-hook 'org-mode-hook (lambda () (local-set-key (kbd "<f8>") #'org-tree-slide-mode)))
 

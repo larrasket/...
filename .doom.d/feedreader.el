@@ -45,6 +45,7 @@
                     ("https://www.reddit.com/r/interestingasfuck/.rss" art)
                     ("https://hnrss.org/best" hn cs prod)
                     ("https://hnrss.org/newest" hn cs)
+                    ("https://www.calhoun.io/rss/index.xml" golang cs prod)
                     ("https://dave.cheney.net/feed" cs prod)))
         (elfeed-update)))
 (add-hook! 'elfeed-search-mode-hook #'elfeed-update)
