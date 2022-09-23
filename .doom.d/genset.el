@@ -10,7 +10,11 @@
   '(default :background "#121212"))
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "brave")
-(org-babel-do-load-languages 'org-babel-load-languages '((csharp . t)))
+(org-babel-do-load-languages
+    'org-babel-load-languages
+    '((mermaid . t)
+      (scheme . t)
+      (csharp . t)))
 (setq treemacs-position 'right)
 (setq dired-sidebar-refresh-on-special-commands 't)
 (setq user-full-name "Salh Jabr"
@@ -155,6 +159,31 @@
 
 
 (setq fancy-splash-image "/home/ghd/me/wDfR_KdH_400x400.jpg")
+(use-package dashboard
+  :init      ;; tweak dashboard config before loading it
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-banner-logo-title "Emacs Is More Than A Text Editor!")
+  ;;(setq dashboard-startup-banner 'logo) ;; use standard emacs logo as banner
+  (setq dashboard-startup-banner "/home/ghd/me/wDfR_KdH_400x400.jpg")  ;; use custom image as banner
+  (setq dashboard-center-content nil) ;; set to 't' for centered content
+  (setq dashboard-items '((recents . 5)
+                          (agenda . 5 )
+                          (bookmarks . 3)
+                          (projects . 3)
+                          (registers . 3)))
+  :config
+  (dashboard-setup-startup-hook)
+  (dashboard-modify-heading-icons '((recents . "file-text")
+			      (bookmarks . "book"))))
+(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+(setq doom-fallback-buffer-name "*dashboard*")
+
+
+
+
+
+
 
 (setq all-the-icons-color-icons nil)
 
