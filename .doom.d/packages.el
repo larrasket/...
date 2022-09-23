@@ -178,3 +178,5 @@
 (package! org-present)
 ;; (package! visual-fill-column)
 (package! elfeed-goodies)
+(package! ob-mermaid)
+(package! dashboard)

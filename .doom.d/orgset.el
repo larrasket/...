@@ -284,3 +284,14 @@ the structure of the org file."
 
 
 (provide 'orgset)
+
+
+
+
+
+
+
+
+
+
+(setq ob-mermaid-cli-path "/usr/bin/mmdc")
