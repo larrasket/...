@@ -13,6 +13,7 @@
 (global-set-key (kbd "M-f") 'org-footnote-action)
 (global-set-key (kbd "C-M-g") 'lsp-find-definition)
 (global-set-key (kbd "M-RET") 'lsp-execute-code-action)
+(evil-global-set-key 'normal (kbd "/") 'swiper)
 
 
 
@@ -209,6 +210,7 @@
   (when (string= (buffer-name) "*Emacs Anywhere*")
     (local-set-key (kbd "C-c C-c") #'evil-quit)
     (auto-fill-mode)
+    (flyspell-mode)
     (markdown-mode)))
 
 (add-hook 'buffer-list-update-hook 'EmacsAnyWhere)
