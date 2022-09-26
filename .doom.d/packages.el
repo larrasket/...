@@ -172,7 +172,6 @@
 (package! git-gutter)
 (package! git-gutter-fringe)
 (package! org-wild-notifier)
-(package! mu4e-views)
 (package! xwidgets-reuse)
 (package! org-reveal)
 (package! org-present)
@@ -180,7 +179,4 @@
 (package! elfeed-goodies)
 (package! ob-mermaid)
 (package! dashboard)
-;; (package! grayscale-theme)
-;; (package! ample-theme)
-;; (package! nimbus-theme)
-;; (package! sorcery-theme)
+

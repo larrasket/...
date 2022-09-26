@@ -230,22 +230,22 @@
 (setq alert-default-style 'libnotify)
 (org-wild-notifier-mode)
 
-(use-package mu4e-views
-  :after mu4e
-  :defer nil
-  :bind (:map mu4e-headers-mode-map
-	    ("v" . mu4e-views-mu4e-select-view-msg-method) ;; select viewing method
-	    ("M-d" . mu4e-views-cursor-msg-view-window-down) ;; from headers window scroll the email view
-	    ("M-u" . mu4e-views-cursor-msg-view-window-up) ;; from headers window scroll the email view
-        ("f" . mu4e-views-toggle-auto-view-selected-message) ;; toggle opening messages automatically when moving in the headers view
-        ("i" . mu4e-views-mu4e-view-as-nonblocked-html) ;; show currently selected email with all remote content
-	    )
-  :config
-  (setq mu4e-views-completion-method 'ivy) ;; use ivy for completion
-  (setq mu4e-views-default-view-method "html") ;; make xwidgets default
-  (mu4e-views-mu4e-use-view-msg-method "html") ;; select the default
-  (setq mu4e-views-next-previous-message-behaviour 'stick-to-current-window) ;; when pressing n and p stay in the current window
-  (setq mu4e-views-auto-view-selected-message t)) ;; automatically open messages when moving in the headers view
+;; (use-package mu4e-views
+;;   :after mu4e
+;;   :defer nil
+;;   :bind (:map mu4e-headers-mode-map
+;; 	    ("v" . mu4e-views-mu4e-select-view-msg-method) ;; select viewing method
+;; 	    ("M-d" . mu4e-views-cursor-msg-view-window-down) ;; from headers window scroll the email view
+;; 	    ("M-u" . mu4e-views-cursor-msg-view-window-up) ;; from headers window scroll the email view
+;;         ("f" . mu4e-views-toggle-auto-view-selected-message) ;; toggle opening messages automatically when moving in the headers view
+;;         ("i" . mu4e-views-mu4e-view-as-nonblocked-html) ;; show currently selected email with all remote content
+;; 	    )
+;;   :config
+;;   (setq mu4e-views-completion-method 'ivy) ;; use ivy for completion
+;;   (setq mu4e-views-default-view-method "html") ;; make xwidgets default
+;;   (mu4e-views-mu4e-use-view-msg-method "html") ;; select the default
+;;   (setq mu4e-views-next-previous-message-behaviour 'stick-to-current-window) ;; when pressing n and p stay in the current window
+;;   (setq mu4e-views-auto-view-selected-message t)) ;; automatically open messages when moving in the headers view
 
 
 
