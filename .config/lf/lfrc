@@ -199,7 +199,7 @@ map dm mvdragon
 map dc cpdragon
 map dl dlfile
 
-map ss stripspace
+#map ss stripspace
 
 # Basic Functions
 map . set hidden!
