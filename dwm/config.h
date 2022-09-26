@@ -187,8 +187,7 @@ static char dmenumon[2] =
 static const char *dmenucmd[] = {"dmenu_run", "-g", "10",    "-l",
                                  "48",        "-p", "Run: ", NULL};
 static const char *emacs[] = {"emaks", NULL};
-static const char *anyywhere[] = {"/home/ghd/.emacs_anywhere/bin/linux", NULL};
-
+static const char *anyywhere[] = {"/home/ghd/.emacs_anywhere/bin/run", NULL};
 /* the st terminal with tabbed */
 /*static const char *termcmd[]  = { "kitty", "-e" , "bicon",  NULL };*/
 static const char *termcmd[] = {"kitty", "-e", "bash", NULL};
