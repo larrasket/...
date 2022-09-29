@@ -306,15 +306,15 @@ Also see `prot/bongo-playlist-insert-playlist-file'."
 
 
 
-(global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
-(global-set-key (kbd "<XF86AudioNext>") 'emms-next)
-(global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
+;; (global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
+;; (global-set-key (kbd "<XF86AudioNext>") 'emms-next)
+;; (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
 
 ;; if in wayland
 
-;; (global-set-key (kbd "<C-AudioPrev>") 'emms-previous)
-;; (global-set-key (kbd "<C-AudioNext>") 'emms-next)
-;; (global-set-key (kbd "<C-AudioPlay>") 'emms-pause)
+(global-set-key (kbd "s-<AudioPrev>") 'emms-previous)
+(global-set-key (kbd "s-<AudioNext>") 'emms-next)
+(global-set-key (kbd "s-<AudioPlay>") 'emms-pause)
 (setq emms-info-functions '(emms-info-tinytag))  ;; When using Tinytag
 
 
