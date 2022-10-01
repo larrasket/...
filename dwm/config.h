@@ -232,7 +232,7 @@ static Key keys[] = {
     {MODKEY | ShiftMask, -1, XK_y, spawn, {.v = start}},
     {MODKEY, -1, XK_e, spawn, {.v = lf}},
     {MODKEY | ShiftMask, -1, XK_d, spawn, {.v = dis}},
-    {MODKEY | ShiftMask, -1, XK_x, spawn, {.v = htop}},
+    //{MODKEY | ShiftMask, -1, XK_x, spawn, {.v = htop}},
     {MODKEY | ShiftMask, -1, XK_r, spawn, {.v = ranger}},
     {MODKEY | ShiftMask, -1, XK_f, spawn, {.v = fid}},
     {MODKEY, -1, XK_w, spawn, {.v = emacs}},
@@ -272,7 +272,7 @@ static Key keys[] = {
        }, */
     {MODKEY, -1, XK_space, setlayout, {0}},
     {MODKEY | ShiftMask, -1, XK_space, togglefloating, {0}},
-    {MODKEY, -1, XK_x, gapm, {0}},
+  //{MODKEY, -1, XK_x, gapm, {0}},
     {MODKEY, -1, XK_a, gapl, {0}},
 
     /* Switch to specific layouts */
