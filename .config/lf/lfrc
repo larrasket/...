@@ -211,6 +211,8 @@ map <enter> open
 map mf mkfile
 map mr sudomkfile
 map md mkdir
+map + mkdir
+map - updir
 map ms $mkscript
 map ch chmod
 map bg setwallpaper
