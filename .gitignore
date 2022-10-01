@@ -11,3 +11,4 @@
 /.config/latte/plasma-monterey.layout.latte
 /.config/qBittorrent/qBittorrent-data.conf
 /.config/qBittorrent/*.conf
+/.ccls-cache/
