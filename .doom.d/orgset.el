@@ -297,3 +297,5 @@ the structure of the org file."
 (setq ob-mermaid-cli-path "/usr/bin/mmdc")
 
 (setq org-extend-today-until 1)
+
+`(add-hook 'auto-save-hook 'org-save-all-org-buffers)`
