@@ -17,124 +17,64 @@
 
 
 
-(map! :leader
-      :desc "move to jorunal"
-      "j" #'org-journal-new-entry)
+
+(global-set-key (kbd "C-x C-d") 'find-file)
+(global-set-key (kbd "C-x C-r") 'recentf)
+(global-set-key (kbd "C-x C-t") 'gts-do-translate)
+(global-set-key (kbd "C-x C-t") 'gts-do-translate)
+(global-set-key (kbd "C-x C-k") 'kill-this-buffer)
+(global-set-key (kbd "C-x C-b") 'bookmark-jump)
+
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "C-+") 'doom/reset-font-size)
 
 
-(map! :leader
-      :desc "play playlist"
-      "m p p" #'emms-play-playlist)
+(global-set-key (kbd "C-c e p") 'emms-play-playlist)
+(global-set-key (kbd "C-c e d") 'emms-play-directory)
+;; (global-set-key (kbd "C-c e <up>") 'emms-start)
+;; (global-set-key (kbd "C-c e <down>") 'emms-stop)
+(global-set-key (kbd "C-c e <left>") 'emms-seek-forward)
+(global-set-key (kbd "C-c e <right>") 'emms-seek-backward)
+
+(global-set-key (kbd "M-1") '+workspace/switch-to-0 )
+(global-set-key (kbd "M-2") '+workspace/switch-to-1 )
+(global-set-key (kbd "M-3") '+workspace/switch-to-2 )
+(global-set-key (kbd "M-4") '+workspace/switch-to-3 )
+(global-set-key (kbd "M-5") '+workspace/switch-to-4 )
+(global-set-key (kbd "M-6") '+workspace/switch-to-5 )
+(global-set-key (kbd "M-7") '+workspace/switch-to-6 )
+(global-set-key (kbd "M-8") '+workspace/switch-to-7 )
+(global-set-key (kbd "M-9") '+workspace/switch-to-8 )
 
 
-(map! :leader
-      :desc "play directory"
-      "m p d" #'emms-play-directory)
+(use-package org-roam
+  :bind (("C-c r l" . org-roam-buffer-toggle)
+         ("C-c r f" . org-roam-node-find)
+         ("C-c r g" . org-roam-graph)
+         ("C-c r i" . org-roam-node-insert)
+         ("C-c r c" . org-roam-capture)
+         ;; Dailies
+         ("C-c r j" . org-roam-dailies-capture-today)))
 
 
-(map! :leader
-      :desc "save play directory"
-      "m p d" #'emms-play-directory)
-
-
-(map! :leader
-      :desc "save current playlist"
-      "m p s" #'emms-playlist-save)
-
-
-(map! :leader
-      :desc "shuffle playlist"
-      "m p c" #'emms-shuffle)
-
-
-(map! :leader
-      :desc "repeat"
-      "m p r" #'emms-toggle-repeat-track)
-
-
-(map! :leader
-      :desc "run vterm"
-      "t t" 'vterm)
-(map! :leader
-      :desc "run mail"
-      "m m" 'mu4e)
-(map! :leader
-      :desc "watch var"
-      "o w" 'dap-ui-expressions-add)
-(map! :leader
-      :desc "open-ajenda"
-      "a" #'org-agenda)
-
-(map! :leader
-      :desc "insert date"
-      "d" #'org-schedule)
-
-
-(map! :leader
-      :desc "show errors"
-      "e e" #'flycheck-list-errors)
+;; '+workspace/switch-to-0
+;; '+workspace/switch-to-1
+;; '+workspace/switch-to-2
+;; '+workspace/switch-to-3
+;; '+workspace/switch-to-4
+;; '+workspace/switch-to-5
+;; '+workspace/switch-to-6
+;; '+workspace/switch-to-7
+;; '+workspace/switch-to-8
 
 
 
-(map! :leader
-      :desc "emacs shell"
-      "e s" #'eshell)
-
-(map! :leader
-      :desc "show errors"
-      "e l" #'lsp-treemacs-errors-list)
-
-(map! :leader
-      :desc "evaluate latex"
-      "l e" #'TeX-command-master "LaTex")
+(global-set-key (kbd "C-c a") 'org-agenda)
 
 
 
 
-(map! :leader
-      :desc "open leetcode"
-      "l l" #'leetcode)
-
-
-
-(map! :leader
-      :desc "roam graph"
-      "r g" #'org-roam-graph)
-
-
-(map! :leader
-      :desc "add tag"
-      "r t" #'org-roam-tag-add)
-
-
-
-(map! :leader
-      :desc "switch to raom buffer"
-      "r b" #'org-roam-buffer-toggle)
-
-
-(map! :leader
-      :desc "capture"
-      "r c" #'org-roam-capture)
-
-
-(map! :leader
-      :desc "insert"
-      "r i" #'org-roam-node-insert)
-
-
-(map! :leader
-      :desc "find file"
-      "r f" #'org-roam-node-find)
-
-(map! :leader
-      :desc "roam"
-      "r r" #'org-roam-buffer-display-dedicated)
-
-
-(map! :leader
-      :desc "org caputer"
-      "x" #'org-capture)
 
 (defun neotree-project-dir ()
   "Open NeoTree using the git root."
@@ -257,3 +197,6 @@
 ;; (global-set-key (kbd "M-[")  'centaur-tabs-backward)
 ;; (global-set-key (kbd "M-]") 'centaur-tabs-forward)
 ;; (global-set-key (kbd "M-t") 'centaur-tabs--create-new-tab)
+
+
+;; TODO use C-'
