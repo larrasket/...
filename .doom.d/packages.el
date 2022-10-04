@@ -179,3 +179,4 @@
 (package! ob-mermaid)
 (package! dashboard)
 (package! go-translate)
+(package! plantuml-mode)

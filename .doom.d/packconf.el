@@ -384,3 +384,16 @@
   (org-present-end)
   (visual-fill-column-mode 0)
   (visual-line-mode 0))
+
+(setq gts-translate-list '(("en" "ar")))
+
+(setq org-plantuml-jar-path
+      (expand-file-name "~/.doom.d/bin/plantuml.jar"))
+;; (setq gts-default-translator
+;;       (gts-translator
+;;        :picker (gts-prompt-picker)
+;;        :engines (list (gts-bing-engine) (gts-google-engine))
+;;        :render (gts-buffer-render)))
+    (setq-default org-download-image-dir "./org-media")
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
