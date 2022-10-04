@@ -167,11 +167,10 @@
        ;;ocaml             ; an objective camel
        ;; org               ; organize your plain life in plain text
        (org
-        +roam2
-        ) ;; ++present ;; +pomodoro
+        +roam2) ;; ++present ;; +pomodoro
 
        ;;php               ; perl's insecure younger brother
-       ;;plantuml          ; diagrams for confusing people more
+       ;; plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        ;;python            ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
@@ -207,5 +206,6 @@
 
        :config
        ;;literate
-       (default +bindings +smartparens))
+       (default +bindings
+         +smartparens))
 (setq package-native-compile t)

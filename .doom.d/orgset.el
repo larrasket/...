@@ -298,4 +298,4 @@ the structure of the org file."
 
 (setq org-extend-today-until 1)
 
-`(add-hook 'auto-save-hook 'org-save-all-org-buffers)`
+(add-hook 'auto-save-hook 'org-save-all-org-buffers)

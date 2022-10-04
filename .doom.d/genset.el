@@ -1,7 +1,10 @@
 ;;; genset.el -*- lexical-binding: t; -*-
 (provide 'genset)
 
-(setq-default fill-column 92)
+;; (setq-default fill-column 92)
+;; (setq fill-column 92)
+(setq fill-column 110)
+(setq-default fill-column 110)
 (setq c-default-style "linux"
       c-basic-offset 4)
 (setq org-roam-directory "~/roam")
@@ -19,7 +22,6 @@
 (setq dired-sidebar-refresh-on-special-commands 't)
 (setq user-full-name "Salh Jabr"
       user-mail-address "jabr@emailasso.net")
-(setq fill-column 92)
 
 
 
@@ -380,7 +382,4 @@
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
-
-
-
 ;; (setq-default org-download-image-dir 'nil)
