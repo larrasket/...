@@ -33,11 +33,11 @@
 (setq org-journal-date-format "%A, %d %B %Y")
 (setq org-journal-file-format "%Y%m%d.org")
 (setq org-journal-enable-agenda-integration t)
-(setq org-directory "/mnt/disk/leet")
-(setq org-agenda-files '("~/leet/"))
+(setq org-directory "~/org")
+(setq org-agenda-files '("~/org"))
 
 
-(setq org-journal-dir "/mnt/disk/leet/journal")
+(setq org-journal-dir "~/org/jounral")
 (add-to-list 'org-agenda-files org-journal-dir)
 
 
@@ -102,7 +102,7 @@
 (setq leetcode-prefer-language "cpp")
 (setq leetcode-prefer-sql "mysql")
 (setq leetcode-save-solutions t)
-(setq leetcode-directory "/home/ghd/leet/ps/lc")
+(setq leetcode-directory "/home/ghd/temp/leet/ps/lc")
 
 
 
