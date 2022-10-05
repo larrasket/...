@@ -177,6 +177,6 @@
 ;; (package! visual-fill-column)
 (package! elfeed-goodies)
 (package! ob-mermaid)
-(package! dashboard)
+;; (package! dashboard)
 (package! go-translate)
 (package! plantuml-mode)

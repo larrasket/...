@@ -9,6 +9,6 @@
 (require 'shellrc)
 (require 'music)
 (require 'feedreader)
-(require 'dashboardconf)
+;; (require 'dashboardconf)
 (require 'leaders)
-
+(setq-default frame-title-format '("%b"))
