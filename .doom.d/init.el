@@ -37,7 +37,7 @@
        ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
        ;; (emoji ;; +unicode
               ;; +github
-              ;; +ascii)                   ; 🙂
+              ;; +ascii)
        hl-todo                          ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;; indent-guides     ; highlighted indent columns

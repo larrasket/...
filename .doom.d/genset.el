@@ -108,7 +108,8 @@
 ;; (setq doom-theme 'kaolin-galaxy)
 ;; (setq doom-theme 'habamax)
 ;; (setq doom-theme 'humanoid-dark)
-(setq doom-theme 'doom-acario-light)
+;; (setq doom-theme 'doom-acario-light)
+(setq doom-theme 'mine)
 ;; (setq doom-theme 'modus-operandi)
 
 
