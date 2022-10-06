@@ -180,3 +180,4 @@
 ;; (package! dashboard)
 (package! go-translate)
 (package! plantuml-mode)
+(package! languagetool)
