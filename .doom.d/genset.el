@@ -1,6 +1,7 @@
 ;;; genset.el -*- lexical-binding: t; -*-
 (provide 'genset)
-
+;; (after! doom-modeline
+  ;; (setq doom-modeline-icon nil))
 (setq fancy-splash-image "~/.doom.d/pan.png")
 ;; (setq-default fill-column 92)
 ;; (setq fill-column 92)

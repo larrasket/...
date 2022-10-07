@@ -12,3 +12,4 @@
 ;; (require 'dashboardconf)
 (require 'leaders)
 (setq-default frame-title-format '("%b"))
+(add-to-list 'doom-emoji-fallback-font-families "Symbola")

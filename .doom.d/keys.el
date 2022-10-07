@@ -151,7 +151,9 @@
     (local-set-key (kbd "C-c C-c") #'evil-quit)
     (auto-fill-mode)
     (flyspell-mode)
-    (markdown-mode)))
+    ;; (evil-mode)
+    ;; (markdown-mode)
+    ))
 
 (add-hook 'buffer-list-update-hook 'EmacsAnyWhere)
 

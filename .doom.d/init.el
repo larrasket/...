@@ -28,7 +28,8 @@
        ;;ido               ; the other *other* search engine...
        (ivy)
        ;; +fuzzy)               ; a search engine for love and life
-       ;; (vertico +icons)
+       (vertico ;; +icons
+                )
 
        :ui
        ;; deft              ; notational velocity for Emacs
@@ -199,7 +200,8 @@
        emms
        ;; everywhere          ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
-       (rss)          ; emacs as an RSS reader
+       (rss
+        +org)          ; emacs as an RSS reader
        ;; twitter           ; twitter client https://twitter.com/vnought
 
        :config
