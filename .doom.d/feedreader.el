@@ -47,6 +47,7 @@
                     ("https://hnrss.org/newest" hn cs)
                     ("https://www.calhoun.io/rss/index.xml" golang cs prod)
                     ("https://go.dev/blog/feed.atom" golang cs prod)
+                    ("http://feeds.feedburner.com/berkes" cs prod software_engineering)
                     ("https://dave.cheney.net/feed" cs prod)))
         (elfeed-update)))
 (add-hook! 'elfeed-search-mode-hook #'elfeed-update)
