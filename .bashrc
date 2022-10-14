@@ -177,7 +177,7 @@ alias pull='git pull'
 alias commit='git commit'
 alias intl="WD=\$(pwd);cd ~/source;zathura \"\$(fzf)\";cd \$WD"
 alias share="caddy file-server --listen :2030 --browse"
-alias films="sudo cryptsetup luksOpen /dev/sda3 Films && sudo mount /dev/mapper/Films /mnt/Films/"
+alias films="sudo cryptsetup luksOpen /dev/sda3 winsys && sudo mount /dev/mapper/winsys /mnt/winsys/"
 
 
 
