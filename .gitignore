@@ -12,3 +12,4 @@
 /.config/qBittorrent/qBittorrent-data.conf
 /.config/qBittorrent/*.conf
 /.ccls-cache/
+/.doom.d/*.log
