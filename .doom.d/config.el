@@ -10,3 +10,4 @@
 ;; (require 'music)
 (require 'feedreader)
 (require 'leaders)
+(require 'csvmode)

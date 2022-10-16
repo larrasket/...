@@ -182,3 +182,4 @@
 (package! plantuml-mode)
 (package! languagetool)
 (package! wiki-summary)
+(package! csv-mode)
