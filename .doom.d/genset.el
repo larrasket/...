@@ -2,7 +2,7 @@
 (provide 'genset)
 ;; (after! doom-modeline
   ;; (setq doom-modeline-icon nil))
-
+(setq completion-ignore-case t)
 (setq-default frame-title-format '("%b"))
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 (setq fancy-splash-image "~/.doom.d/pan.png")
