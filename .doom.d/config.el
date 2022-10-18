@@ -11,3 +11,4 @@
 (require 'feedreader)
 (require 'leaders)
 (require 'csvmode)
+(require 'sqlconf)

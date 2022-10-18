@@ -75,10 +75,6 @@
 ;;; org-eww.el ends here
 
 ;; (global-set-key [M-q] 'org-agenda-open-link)
-;;(add-hook 'sql-mode-hook
-          ;;(lambda () (local-set-key (kbd "<f3>") #'ejc-connect-interactive)))
-;;(add-hook 'sql-mode-hook
-          ;;(lambda () (local-set-key (kbd "<f2>") #'ejc-connect)))
 ;; (add-hook 'c++-mode-hook
 ;;           (lambda () (local-set-key (kbd "<f2>") #'quickrun-shell)))
 ;; ;; (add-hook 'org-mode-hook

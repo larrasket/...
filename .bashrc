@@ -146,8 +146,6 @@ alias mva='mpv --config-dir=$HOME/.config/mvi *jpg *png *gif *webp *tiff *raw *b
 alias po='castero'
 export _JAVA_AWT_WM_NONREPARENTING=1
 alias run='rm -r ~/source/Politics'
-alias cin='vi ~/blog/content/cinema.md'
-alias bin='vi ~/blog/content/books.md'
 alias you='lf-yt'
 alias p='kitty +kitten icat'
 alias ls='ls -l'
@@ -176,6 +174,7 @@ alias add='git add .'
 alias pull='git pull'
 alias commit='git commit'
 alias intl="WD=\$(pwd);cd ~/source;zathura \"\$(fzf)\";cd \$WD"
+alias cin="WD=\$(pwd);cd ~/me/cinema/;mpv \"\$(fzf)\";cd \$WD"
 alias share="caddy file-server --listen :2030 --browse"
 alias films="sudo cryptsetup luksOpen /dev/sda3 winsys && sudo mount /dev/mapper/winsys /mnt/winsys/"
 
@@ -276,3 +275,9 @@ alias sp='systemctl suspend'
 if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; then source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; fi
 # END_KITTY_SHELL_INTEGRATION
 export TERM=xterm-256color
+
+PATH="/home/ghd/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/home/ghd/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/ghd/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/ghd/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/ghd/perl5"; export PERL_MM_OPT;

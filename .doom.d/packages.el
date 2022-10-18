@@ -114,7 +114,6 @@
 ;(package! twittering-mode)
 ;; (package! sage-shell-mode)
 ;; (package! base16-theme)
-;; (package! ejc-sql)
 ;(package! quickrun)
 ;; (package! org-tree-slide)
 ;; (package! projectile)
@@ -123,7 +122,6 @@
 ;;(package! dired-sidebar)
 (package! highlight-indent-guides)
 ;;(package! ivy-posframe)
-;; (package! sql-indent)
 ;(package! smart-compile)
 (package! ob-csharp :recipe (:host github :repo "samwdp/ob-csharp"))
 
@@ -183,3 +181,16 @@
 (package! languagetool)
 (package! wiki-summary)
 (package! csv-mode)
+
+
+
+
+
+
+;; sql
+;; (package! sql-indent)
+;;
+;; (package! direx)
+;; (package! ejc-sql)
+;; (package! auto-complete)
+;; (package! edbi)
