@@ -211,7 +211,7 @@
 (setq lsp-ui-doc-show-with-cursor t)
 (setq lsp-ui-doc-show-with-mouse t)
 (setq lsp-lens-enable t)
-(setq lsp-headerline-breadcrumb-enable t)
+(setq lsp-headerline-breadcrumb-enable f)
 (setq lsp-ui-sideline-enable t)
 (setq lsp-ui-sideline-enable t)
 (setq lsp-modeline-code-actions-enable t)
