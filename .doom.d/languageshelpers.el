@@ -75,6 +75,10 @@
 (add-hook 'c++-mode-hook
           (lambda () (local-set-key (kbd "C-c C-c") 'compileandrun)))
 
+
+(add-hook 'sql-mode-hook
+          (lambda () (local-set-key (kbd "C-c C-c") 'lsp-mssql-execute-region)))
+
 (add-hook 'csharp-mode-hook
           (lambda () (local-set-key (kbd "C-c C-c") 'sharprun)))
 
@@ -211,7 +215,7 @@
 (setq lsp-ui-doc-show-with-cursor t)
 (setq lsp-ui-doc-show-with-mouse t)
 (setq lsp-lens-enable t)
-(setq lsp-headerline-breadcrumb-enable f)
+(setq lsp-headerline-breadcrumb-enable nil)
 (setq lsp-ui-sideline-enable t)
 (setq lsp-ui-sideline-enable t)
 (setq lsp-modeline-code-actions-enable t)
