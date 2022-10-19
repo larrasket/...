@@ -119,23 +119,69 @@
 
 
 
+;; with tags
+;; (setq org-roam-capture-templates
+;;       '(("m" "main" plain
+;;          "%?"
+;;          :if-new
+;;          (file+head "main/${slug}.org" "#+title: ${title}\n#+filetags: \n- tags :: ")
+;;          :immediate-finish t
+;;          :unnarrowed t)
+;;         ("p" "People" plain
+;;          "%?"
+;;          :if-new
+;;          (file+head "main/${slug}.org" "#+title: ${title}\n#+filetags: People\n- tags :: ")
+;;          :immediate-finish t
+;;          :unnarrowed t)
+;;         ("s" "saved" plain "%?"
+;;          :if-new
+;;          (file+head "saved/${slug}.org" "#+title: ${title}\n#+filetags: \n- tags :: [[roam:saved things]]")
+;;          :immediate-finish t
+;;          :unnarrowed t)
+;;         ("c" "contemplations" plain "%?"
+;;          :if-new
+;;          (file+head "contemplations/${slug}.org" "#+title: ${title}\n#+filetags: \n- tags :: [[roam:Contemplation]]")
+;;          :immediate-finish t
+;;          :unnarrowed t)
+;;         ("q" "quotes" plain "%?"
+;;          :if-new
+;;          (file+head "quotes/${slug}.org" "#+title: ${title}\n#+filetags: \n- tags :: [[roam:Quotes]]")
+;;          :immediate-finish t
+;;          :unnarrowed t)
+;;         ("l" "literature" plain "%?"
+;;          :if-new
+;;          (file+head "literature/${slug}.org" "#+title: ${title}\n#+filetags: \n")
+;;          :immediate-finish t
+;;          :unnarrowed t)
+;;         ("h" "history" plain "%?"
+;;          :if-new
+;;          (file+head "everything/${slug}.org" "#+title: ${title}\n#+filetags: History \n- tags :: ")
+;;          :immediate-finish t
+;;          :unnarrowed t)
 
+;;         ("k" "knowledge" plain "%?"
+;;          :if-new
+;;          (file+head "everything/${slug}.org" "#+title: ${title}\n#+filetags: \n- tags :: ")
+;;          :immediate-finish t
+;;          :unnarrowed t)))
+
+;; without tags
 (setq org-roam-capture-templates
       '(("m" "main" plain
          "%?"
          :if-new
-         (file+head "main/${slug}.org" "#+title: ${title}\n#+filetags: \n- tags :: ")
+         (file+head "main/${slug}.org" "#+title: ${title}\n")
          :immediate-finish t
          :unnarrowed t)
         ("p" "People" plain
          "%?"
          :if-new
-         (file+head "main/${slug}.org" "#+title: ${title}\n#+filetags: People\n- tags :: ")
+         (file+head "main/${slug}.org" "#+title: ${title}\n#+filetags: People\n")
          :immediate-finish t
          :unnarrowed t)
         ("s" "saved" plain "%?"
          :if-new
-         (file+head "saved/${slug}.org" "#+title: ${title}\n#+filetags: \n- tags :: [[roam:saved things]]")
+         (file+head "saved/${slug}.org" "#+title: ${title}\n- tags :: [[roam:saved things]]")
          :immediate-finish t
          :unnarrowed t)
         ("c" "contemplations" plain "%?"
@@ -158,13 +204,11 @@
          (file+head "everything/${slug}.org" "#+title: ${title}\n#+filetags: History \n- tags :: ")
          :immediate-finish t
          :unnarrowed t)
-
         ("k" "knowledge" plain "%?"
          :if-new
-         (file+head "everything/${slug}.org" "#+title: ${title}\n#+filetags: \n- tags :: ")
+         (file+head "everything/${slug}.org" "#+title: ${title}\n")
          :immediate-finish t
          :unnarrowed t)))
-
 
 
 (cl-defmethod org-roam-node-type ((node org-roam-node))
