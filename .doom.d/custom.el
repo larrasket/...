@@ -23,3 +23,19 @@
 (put 'customize-group 'disabled nil)
 (put 'customize-themes 'disabled nil)
 (put 'customize-face 'disabled nil)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(company-preview ((t (:foreground "unspecified-fg" :background "gray21"))))
+ '(company-preview-common ((t (:foreground "pale turquoise" :background "gray21"))))
+ '(company-preview-search ((t (:foreground "pale turquoise" :background "gray21"))))
+ '(company-scrollbar-bg ((t (:background "gray28"))) t)
+ '(company-scrollbar-fg ((t (:background "gray23"))) t)
+ '(company-tooltip ((t (:background "gray26"))))
+ '(company-tooltip-annotation ((t (:foreground "light slate gray"))))
+ '(company-tooltip-common ((t (:foreground "pale turquoise"))))
+ '(company-tooltip-selection ((t (:background "gray21"))))
+ '(header-line ((t (:extend nil :distant-foreground "NavajoWhite4" :foreground "#C4813F"))))
+ '(mode-line ((t (:background "gray30" :box nil :family "JetBrainsMono Nerd Font")))))
