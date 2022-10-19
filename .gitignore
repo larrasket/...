@@ -13,3 +13,4 @@
 /.config/qBittorrent/*.conf
 /.ccls-cache/
 /.doom.d/*.log
+/.gitconfig
