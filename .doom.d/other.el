@@ -30,7 +30,6 @@
 ;;                :file-name "project/%<%Y-%m-%dT%H%M%S>"
 ;;                :head "#+title: ${title}\n#+created: %<%Y-%m-%dT%H%M%S>"
 ;;                :unnarrowed t))
-;; (setq org-roam-dailies-directory "journal/")
 ;; (setq org-roam-dailies-capture-templates
 ;;       '(("d" "default" entry "%A, %d %B %Y""
 ;;          :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))

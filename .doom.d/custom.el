@@ -39,3 +39,4 @@
  '(company-tooltip-selection ((t (:background "gray21"))))
  '(header-line ((t (:extend nil :distant-foreground "NavajoWhite4" :foreground "#C4813F"))))
  '(mode-line ((t (:background "gray30" :box nil :family "JetBrainsMono Nerd Font")))))
+(put 'customize-variable 'disabled nil)

@@ -80,9 +80,10 @@
 (add-hook 'sql-mode-hook 'lsp)
 (setq lsp-mssql-connections
       [(:server "localhost"
-                :database "learning"
-                :user "sa"
-                :password "i7AvcLKSU4QpQr")])
+        :database "TSQL2012"
+        :user "sa"
+        :password "i7AvcLKSU4QpQr")
+       ])
 
 
 
