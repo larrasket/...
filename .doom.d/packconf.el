@@ -50,8 +50,8 @@
   :custom
   (org-roam-directory (file-truename "~/roam"))
   (org-roam-dailies-capture-templates
-    '(("d" "default" entry "* %<%I:%M %p>: %?"
-       :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+    '(("d" "default" entry "* %<%H:%M> \n %?"
+       :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%A, %d %B %Y>\n- tags :: [[roam:Life]]\n"))))
   :config
   ;; If you're using a vertical completion framework, you might want a more informative completion interface
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))

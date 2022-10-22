@@ -11,7 +11,7 @@
  '(elfeed-goodies/html-decode-title-tags nil)
  '(highlight-indent-guides-method 'character)
  '(org-agenda-files
-   '("/mnt/disk/leet/journal/20220408.org" "/mnt/disk/leet/journal/20220409.org" "/mnt/disk/leet/journal/20220410.org" "/mnt/disk/leet/journal/20220411.org" "/mnt/disk/leet/journal/20220413.org" "/mnt/disk/leet/journal/20220414.org" "/mnt/disk/leet/journal/20220416.org" "/mnt/disk/leet/journal/20220417.org" "/mnt/disk/leet/journal/20220508.org" "/mnt/disk/leet/journal/20220509.org" "/mnt/disk/leet/journal/20220510.org" "/mnt/disk/leet/journal/20220513.org" "/mnt/disk/leet/journal/20220524.org" "/mnt/disk/leet/journal/20220613.org" "/mnt/disk/leet/journal/20220709.org" "/mnt/disk/leet/journal/20220710.org" "/mnt/disk/leet/journal/20220718.org" "/mnt/disk/leet/journal/20220825.org" "/mnt/disk/leet/journal/20220827.org" "/mnt/disk/leet/journal/20220828.org" "/mnt/disk/leet/journal/20220829.org" "/mnt/disk/leet/journal/20220830.org" "/mnt/disk/leet/journal/20220831.org" "/mnt/disk/leet/journal/20220901.org" "/mnt/disk/leet/journal/20220903.org" "/mnt/disk/leet/journal/20220910.org" "/mnt/disk/leet/README.org" "/mnt/disk/leet/todo.org" "/mnt/Films/journal/20220920.org" "~/org/todo.org"))
+   '("/mnt/Films/journal/20220920.org" "/home/ghd/org/todo.org" "/home/ghd/org/jounral/20221023.org"))
  '(org-download-method 'directory)
  '(package-selected-packages '(xwidget)))
 ;; (custom-set-faces
