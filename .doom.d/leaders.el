@@ -119,4 +119,11 @@
 (map! :leader
       :desc "org caputer"
       "x" #'org-capture)
+
+
+(map! :leader
+      :desc "org caputer"
+      "r j" #'org-roam-dailies-capture-today)
+
+
 (provide 'leaders)
