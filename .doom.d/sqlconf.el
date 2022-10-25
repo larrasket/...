@@ -88,3 +88,19 @@
 
 
 (provide 'sqlconf)
+
+(setq sqlformat-command 'pgformatter)
+(setq sqlformat-args '("-s2" "-g"))
+
+
+  (add-hook 'sql-mode-hook
+     (lambda ()
+       (remove-hook 'before-save-hook #'lsp-format-buffer t)
+       (remove-hook 'before-save-hook #'lsp-organize-imports t)
+       (remove-hook! 'before-save-hook #'+format/buffer)))
+
+(setq-hook! 'sql-mode-hook +format-with-lsp nil)
+(setq-hook! 'sql-mode-hook +format-on-save-enabled-modes nil)
+
+
+(add-hook 'sql-mode-hook 'sqlformat-on-save-mode)
