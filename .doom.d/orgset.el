@@ -6,7 +6,7 @@
            "TODO(t)"                    ; A task that needs doing & is ready to do
            "APPOINT(a)"
            "PROJ(p)"                    ; A project, which usually contains other tasks
-           ;; "LOOP(r)"             ; A recurring task
+           "RUNNING(r)"             ; A recurring task
            "STUDY(s)"                   ; A task that is in progress
            "WATCH(w)"                   ; Something external is holding up this task
            ;; "HOLD(h)"                    ; This task is paused/on hold because of me
@@ -27,6 +27,11 @@
            "DAILY(D)"        ; A task that needs doing
            "|"
            "DONE(d)")                    ; Task was completed
+
+          (sequence
+           "RUNNING(r)"        ; A task that needs doing
+           "|"
+           "DONE(d)")                    ; Task was completed
           (sequence
            "|"
            ;; "OKAY(o)"
@@ -44,6 +49,8 @@
           ("PROJ" . +org-todo-project)
           ("FAIL"   . +org-todo-cancel)
           ("READ" . "#98be65")
+
+          ("RUNNING" . "#d4cecd")
           ("APPOINT" . "#0a66c2")
           ("CHECK" . "#fc791c")
           ("KILL" . +org-todo-cancel)))
@@ -299,3 +306,21 @@ the structure of the org file."
 ;; (setq org-extend-today-until 1)
 
 (add-hook 'auto-save-hook 'org-save-all-org-buffers)
+
+(setq org-archive-location "%s_archive.org::")
+
+ (setq org-cycle-separator-lines -1)
+(defun org-archive-done-tasks ()
+  (interactive)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+   "/DONE" 'tree))
+
+
+(defun my-org-archive-done-tasks ()
+  (interactive)
+  (org-map-entries 'org-archive-subtree "/DONE" 'file)
+  (org-map-entries 'org-archive-subtree "/FAIL" 'file)
+  (org-map-entries 'org-archive-subtree "/KILL" 'file))
