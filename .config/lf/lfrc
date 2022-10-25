@@ -238,7 +238,7 @@ map gp cd ~/blog/content/posts
 map ga cd ~/me/art
 map gl cd ~/leet
 map gi cd ~/me/images/
-map gj cd ~/me/gits/
+map gj cd ~/gits/
 
 map \;j cd ~
 cmd recol %{{
