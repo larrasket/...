@@ -51,7 +51,7 @@
   (org-roam-directory (file-truename "~/roam"))
   (org-roam-dailies-capture-templates
     '(("d" "default" entry "* %<%H:%M> \n %?"
-       :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%A, %d %B %Y>\n- tags :: [[roam:Life]]\n"))))
+       :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%A, %d %B %Y>\n- tags :: [[id:15c1e0f1-d652-4fae-9234-01b69f072342][Life]]\n"))))
   :config
   ;; If you're using a vertical completion framework, you might want a more informative completion interface
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
@@ -182,7 +182,7 @@
         ("p" "People" plain
          "%?"
          :if-new
-         (file+head "main/${slug}.org" "#+title: ${title}\n#+filetags: People\n")
+         (file+head "main/${slug}.org" "#+title: ${title}\n")
          :immediate-finish t
          :unnarrowed t)
         ("s" "saved" plain "%?"
@@ -192,17 +192,17 @@
          :unnarrowed t)
         ("c" "contemplations" plain "%?"
          :if-new
-         (file+head "contemplations/${slug}.org" "#+title: ${title}\n#+filetags: \n- tags :: [[roam:Contemplation]]")
+         (file+head "contemplations/${slug}.org" "#+title: ${title}\n- tags :: [[roam:Contemplation]]")
          :immediate-finish t
          :unnarrowed t)
         ("q" "quotes" plain "%?"
          :if-new
-         (file+head "quotes/${slug}.org" "#+title: ${title}\n#+filetags: \n- tags :: [[roam:Quotes]]")
+         (file+head "quotes/${slug}.org" "#+title: ${title}\n— [[roam:Quotes]]")
          :immediate-finish t
          :unnarrowed t)
         ("l" "literature" plain "%?"
          :if-new
-         (file+head "literature/${slug}.org" "#+title: ${title}\n#+filetags: \n")
+         (file+head "literature/${slug}.org" "#+title: ${title}\n")
          :immediate-finish t
          :unnarrowed t)
         ("h" "history" plain "%?"
