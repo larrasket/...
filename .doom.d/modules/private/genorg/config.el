@@ -1,3 +1,6 @@
+;;; mine/genorg/config.el -*- lexical-binding: t; -*-
+
+
 ;;; orgset.el -*- lexical-binding: t; -*-
 
 (after! org
@@ -290,12 +293,6 @@ the structure of the org file."
 
 
 
-(provide 'orgset)
-
-
-
-
-
 
 
 
@@ -325,7 +322,15 @@ the structure of the org file."
   (org-map-entries 'org-archive-subtree "/FAIL" 'file)
   (org-map-entries 'org-archive-subtree "/KILL" 'file))
 
+(setq org-startup-folded t)
 
 
 
 
+(setq org-plantuml-jar-path
+      (expand-file-name "~/.doom.d/bin/plantuml.jar"))
+
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+
+(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+    (setq-default org-download-image-dir "./org-media")

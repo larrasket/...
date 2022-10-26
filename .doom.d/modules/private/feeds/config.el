@@ -1,4 +1,5 @@
-;;; ../configs/.doom.d/feedreader.el -*- lexical-binding: t; -*-
+;;; mine/feeds/config.el -*- lexical-binding: t; -*-
+
 (add-hook! 'elfeed-search-mode-hook #'elfeed-update)
 (add-hook 'elfeed-search-mode-hook
       (lambda () (setq elfeed-feeds
@@ -63,4 +64,3 @@
 
 
 (setq-default elfeed-search-filter "@1-week-ago +unread -shit +prod")
-(provide 'feedreader)

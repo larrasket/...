@@ -1,39 +1,39 @@
 ;;; ../configs/.doom.d/+roam.el -*- lexical-binding: t; -*-
 
 
-(cl-defmethod org-roam-node-backlinkscount-number ((node org-roam-node))
-    "Access slot \"backlinks\" of org-roam-node struct CL-X. This
-    is identical to `org-roam-node-backlinkscount' with the
-    difference that it returns a number instead of a fromatted
-    string. This is to be used in
-    `org-roam-node-sort-by-backlinks'"
-    (let* ((count (caar (org-roam-db-query
-			 [:select (funcall count source)
-				  :from links
-				  :where (= dest $s1)
-				  :and (= type "id")]
-			 (org-roam-node-id node)))))
-      count))
+;; (cl-defmethod org-roam-node-backlinkscount-number ((node org-roam-node))
+;;     "Access slot \"backlinks\" of org-roam-node struct CL-X. This
+;;     is identical to `org-roam-node-backlinkscount' with the
+;;     difference that it returns a number instead of a fromatted
+;;     string. This is to be used in
+;;     `org-roam-node-sort-by-backlinks'"
+;;     (let* ((count (caar (org-roam-db-query
+;; 			 [:select (funcall count source)
+;; 				  :from links
+;; 				  :where (= dest $s1)
+;; 				  :and (= type "id")]
+;; 			 (org-roam-node-id node)))))
+;;       count))
 
-(defun org-roam-node-sort-by-backlinks (completion-a completion-b)
-  "Sorting function for org-roam that sorts the list of nodes by
-the number of backlinks. This is the sorting function in
-`org-roam-node-find-by-backlinks'"
-  (let ((node-a (cdr completion-a))
-	(node-b (cdr completion-b)))
-    (>= (org-roam-node-backlinkscount-number node-a)
-	(org-roam-node-backlinkscount-number node-b))))
+;; (defun org-roam-node-sort-by-backlinks (completion-a completion-b)
+;;   "Sorting function for org-roam that sorts the list of nodes by
+;; the number of backlinks. This is the sorting function in
+;; `org-roam-node-find-by-backlinks'"
+;;   (let ((node-a (cdr completion-a))
+;; 	(node-b (cdr completion-b)))
+;;     (>= (org-roam-node-backlinkscount-number node-a)
+;; 	(org-roam-node-backlinkscount-number node-b))))
 
-(defun org-roam-node-find-by-backlinks ()
-  "Essentially works like `org-roam-node-find' (although it uses
-a combination of `find-file' and `org-roam-node-read' to
-accomplish that and not `org-roam-node-find' as only
-`org-roam-node-read' can take a sorting function as an argument)
-but the list of nodes is sorted by the number of backlinks
-instead of most recent nodes. Sorting is done with
-`org-roam-node-sort-by-backlinks'"
-  (interactive)
-  (find-file (org-roam-node-file (org-roam-node-read nil nil #'org-roam-node-sort-by-backlinks))))
+;; (defun org-roam-node-find-by-backlinks ()
+;;   "Essentially works like `org-roam-node-find' (although it uses
+;; a combination of `find-file' and `org-roam-node-read' to
+;; accomplish that and not `org-roam-node-find' as only
+;; `org-roam-node-read' can take a sorting function as an argument)
+;; but the list of nodes is sorted by the number of backlinks
+;; instead of most recent nodes. Sorting is done with
+;; `org-roam-node-sort-by-backlinks'"
+;;   (interactive)
+;;   (find-file (org-roam-node-file (org-roam-node-read nil nil #'org-roam-node-sort-by-backlinks))))
 
 
 
@@ -162,5 +162,50 @@ instead of most recent nodes. Sorting is done with
          ("C-c r c" . org-roam-capture)
          ;; Dailies
          ("C-c r j" . org-roam-dailies-capture-today)))
+
+
+(map! :leader
+      :desc "roam graph"
+      "r g" #'org-roam-graph)
+
+
+(map! :leader
+      :desc "add tag"
+      "r t" #'org-roam-tag-add)
+
+
+
+(map! :leader
+      :desc "switch to raom buffer"
+      "r b" #'org-roam-buffer-toggle)
+
+
+(map! :leader
+      :desc "capture"
+      "r c" #'org-roam-capture)
+
+
+(map! :leader
+      :desc "insert"
+      "r i" #'org-roam-node-insert)
+
+
+(map! :leader
+      :desc "find file"
+      "r f" #'org-roam-node-find)
+
+(map! :leader
+      :desc "roam"
+      "r r" #'org-roam-buffer-display-dedicated)
+
+
+(map! :leader
+      :desc "org caputer"
+      "x" #'org-capture)
+
+
+(map! :leader
+      :desc "org caputer"
+      "r j" #'org-roam-dailies-capture-today)
 
 (provide '+roam)

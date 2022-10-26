@@ -20,15 +20,7 @@
                                      (region-end))))
    (t
     (title-capitalization-string
-     (buffer-substring-no-properties (point-at-bol)
-                                     (point-at-eol))))))
-
-
-;; (add-to-list 'org-roam-capture-templates
-;;              '("p" "project" plain
-;;                (function org-roam--capture-get-point) "%?"
-;;                :file-name "project/%<%Y-%m-%dT%H%M%S>"
-;;                :head "#+title: ${title}\n#+created: %<%Y-%m-%dT%H%M%S>"
+     (buffer-substring-no-properties (point-a))))))ated: %<%Y-%m-%dT%H%M%S>"
 ;;                :unnarrowed t))
 ;; (setq org-roam-dailies-capture-templates
 ;;       '(("d" "default" entry "%A, %d %B %Y""

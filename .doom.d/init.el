@@ -1,8 +1,8 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
 (doom! :input
-      ;; :desktop
-      ;; exwm
+       ;; :desktop
+       ;; exwm
 
        :completion
        company             ; the ultimate code completion backend
@@ -11,16 +11,16 @@
        (ivy)
        ;; +fuzzy)               ; a search engine for love and life
        (vertico ;; +icons
-                )
+        )
 
        :ui
        ;; deft              ; notational velocity for Emacs
-       doom                             ; what makes DOOM look the way it does
+       doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
        ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
        ;; (emoji ;; +unicode
-              ;; +github
-              ;; +ascii)
+       ;; +github
+       ;; +ascii)
        hl-todo                          ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;; indent-guides     ; highlighted indent columns
@@ -29,7 +29,7 @@
        ;;minimap           ; show a map of the code on the side
        (ligatures)
        ;; +extra)         ; ligatures and symbols to make your code pretty again
-       modeline              ; snazzy, Atom-inspired modeline, plus API
+       modeline         ; snazzy, Atom-inspired modeline, plus API
        ;;nav-flash         ; blink cursor line after big motions
        ;;neotree           ; a project drawer, like NERDTree for vim
        ;; ophints               ; highlight the region an operation acts on
@@ -46,9 +46,9 @@
        :editor
        (evil
         +everywhere)     ; come to the dark side, we have cookies
-       file-templates         ; auto-snippets for empty files
-       fold                   ; (nigh) universal code folding
-       (format +onsave)       ; automated prettiness
+       file-templates    ; auto-snippets for empty files
+       fold              ; (nigh) universal code folding
+       (format +onsave)  ; automated prettiness
        ;; god               ; run Emacs commands without modifier keys
        lispy             ; vim for lisp, for people who don't like vim
        ;;multiple-cursors  ; editing in many places at once
@@ -60,7 +60,7 @@
 
        :emacs
        (dired
-        +icons)                      ; making dired pretty [functional]
+        +icons)    ; making dired pretty [functional]
        ;; electric                      ; smarter, keyword-based electric-indent
        ;;ibuffer         ; interactive buffer management
        undo                          ; persistent, smarter undo for your inevitable mistakes
@@ -75,7 +75,7 @@
        :checkers
        syntax                           ; tasing you for every semicolon you forget
        (spell
-        +flyspell)                ; tasing you for misspelling mispelling
+        +flyspell)                      ; tasing you for misspelling mispelling
        grammar                          ; tasing grammar mistake every you make
 
        :tools
@@ -86,7 +86,7 @@
        editorconfig                  ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        ;; (eval +overlay)     ; run code, run (also, repls)
-       gist              ; interacting with github gists
+       gist                             ; interacting with github gists
        (lookup
         +dictionary
         +offline)                       ; navigate your code and its documentation
@@ -133,7 +133,7 @@
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
-       json              ; At least it ain't XML
+       json                ; At least it ain't XML
        ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
        ;;javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
@@ -183,11 +183,29 @@
        ;; everywhere          ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
        (rss
-        +org)          ; emacs as an RSS reader
+        +org)              ; emacs as an RSS reader
        ;; twitter           ; twitter client https://twitter.com/vnought
 
        :config
        ;;literate
        (default +bindings
-         +smartparens))
+         +smartparens)
+
+       :private
+        awqat
+        compiler
+        dired
+        email
+        feeds
+        flyivy
+        gen
+        genorg
+        gitcolor
+        langtool
+        leetcode
+        shell
+        sql
+        translate)
+
+
 (setq package-native-compile t)

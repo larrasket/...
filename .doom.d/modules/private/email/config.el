@@ -1,11 +1,4 @@
-(provide 'emailconf)
-
-
-;; email
-
-
-
-
+;;; mine/email/config.el -*- lexical-binding: t; -*-
 
 
 (after! mu4e
@@ -40,19 +33,8 @@
 
 
 
-
-
-
 (mu4e-alert-set-default-style 'libnotify)
 (add-hook 'after-init-hook #'mu4e-alert-enable-notifications)
-
-
-
-
-
-
-
-
 
 
 

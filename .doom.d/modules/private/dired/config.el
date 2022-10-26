@@ -1,9 +1,6 @@
-;;; diredconf.el -*- lexical-binding: t; -*-
+;;; mine/dired/config.el -*- lexical-binding: t; -*-
 
-(provide 'diredconf)
 
-(add-hook 'dired-mode-hook 'org-download-enable)
-(add-hook 'dired-mode-hook(lambda () (solaire-mode -1)))
 
 
 (defun xah-open-in-external-app (&optional @fname)

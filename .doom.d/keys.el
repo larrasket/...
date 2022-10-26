@@ -1,6 +1,5 @@
-;;; keys.el -*- lexical-binding: t; -*-
+;;; ../configs/.doom.d/keys.el -*- lexical-binding: t; -*-
 
-(provide 'keys)
 
 (global-set-key [f3] 'toggle-maximize-buffer)
 (global-set-key (kbd "C-<=>") 'text-scale-increase)
@@ -13,6 +12,7 @@
 (global-set-key (kbd "M-f") 'org-footnote-action)
 (global-set-key (kbd "C-M-g") 'lsp-find-definition)
 (global-set-key (kbd "M-RET") 'lsp-execute-code-action)
+(require 'evil)
 (evil-global-set-key 'normal (kbd "/") 'swiper)
 
 
@@ -64,13 +64,6 @@
 
 (global-set-key [f6] (lambda () (interactive) (neotree-project-dir) (lsp-treemacs-symbols) (evil-window-next) ))
 
-
-
-
-;; language tool
-(setq languagetool-language-tool-jar
-      "~/.languagetool/languagetool-commandline.jar")
-(setq languagetool-default-language "en-GB")
 (global-set-key (kbd "C-;") 'iedit-mode)
 
 
@@ -80,26 +73,9 @@
 (add-hook 'pdf-view-mode-hook
           (lambda () (local-set-key (kbd "<f3>") #'pdf-annot-add-underline-markup-annotation)))
 
-;; (add-hook 'prog-mode-hook (lambda)  () (local-set-key (kbd "M-RET") #'lsp-execute-code-action))
-
 (add-hook 'org-mode-hook (lambda () (local-set-key (kbd "<f8>") #'org-tree-slide-mode)))
 (add-hook 'calc-mode-hook (lambda () (local-set-key (kbd "r r") #'calc-reset)))
 
-
-
-(defun EmacsAnyWhere ()
-  (when (string= (buffer-name) "*Emacs Anywhere*")
-    (local-set-key (kbd "C-c C-c") #'evil-quit)
-    (auto-fill-mode)
-    (flyspell-mode)
-    ;; (evil-mode)
-    ;; (markdown-mode)
-    ))
-
-(add-hook 'buffer-list-update-hook 'EmacsAnyWhere)
-
-
-;; comment
 
 
 (add-hook 'after-init-hook #'global-flycheck-mode) (add-to-list 'display-buffer-alist
@@ -109,6 +85,8 @@
                                                                   (side            . bottom)
                                                                   (reusable-frames . visible)
                                                                   (window-height   . 0.18)))
+
+
 
  (defun my-flymd-browser-function (url)
    (let ((browse-url-browser-function 'browse-url-firefox))
@@ -134,3 +112,4 @@
             (setq beg (line-beginning-position) end (line-end-position)))
         (comment-or-uncomment-region beg end)))
 (global-set-key (kbd "M-;") 'comment-or-uncomment-region-or-line)
+(provide 'keys)

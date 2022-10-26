@@ -1,4 +1,36 @@
-;;; ../configs/.doom.d/sqlconf.el -*- lexical-binding: t; -*-
+;;; mine/sql/config.el -*- lexical-binding: t; -*-
+
+
+(require 'lsp-mssql)
+(add-hook 'sql-mode-hook 'lsp)
+(setq lsp-mssql-connections
+      [(:server "localhost"
+        :database "TSQL2012"
+        :user "sa"
+        :password "i7AvcLKSU4QpQr")
+       ])
+
+
+
+(provide 'sqlconf)
+
+(setq sqlformat-command 'pgformatter)
+(setq sqlformat-args '("-s2" "-g"))
+
+
+  (add-hook 'sql-mode-hook
+     (lambda ()
+       (remove-hook 'before-save-hook #'lsp-format-buffer t)
+       (remove-hook 'before-save-hook #'lsp-organize-imports t)
+       (remove-hook! 'before-save-hook #'+format/buffer)))
+
+(setq-hook! 'sql-mode-hook +format-with-lsp nil)
+(setq-hook! 'sql-mode-hook +format-on-save-enabled-modes nil)
+
+
+(add-hook 'sql-mode-hook 'sqlformat-on-save-mode)
+
+
 
 ;; (add-hook 'sql-mode-hook
 ;;         (lambda () (local-set-key (kbd "<f3>") #'ejc-connect-interactive)))
@@ -68,39 +100,3 @@
 ;;         (sql-password "")
 ;;         (sql-database "dvdrental ")
 ;;         (sql-port 5433))))
-
-
-
-
-
-
-(use-package elfeed-dashboard
-  :load-path "~/gits/lsp-mssql")
-(require 'lsp-mssql)
-(add-hook 'sql-mode-hook 'lsp)
-(setq lsp-mssql-connections
-      [(:server "localhost"
-        :database "TSQL2012"
-        :user "sa"
-        :password "i7AvcLKSU4QpQr")
-       ])
-
-
-
-(provide 'sqlconf)
-
-(setq sqlformat-command 'pgformatter)
-(setq sqlformat-args '("-s2" "-g"))
-
-
-  (add-hook 'sql-mode-hook
-     (lambda ()
-       (remove-hook 'before-save-hook #'lsp-format-buffer t)
-       (remove-hook 'before-save-hook #'lsp-organize-imports t)
-       (remove-hook! 'before-save-hook #'+format/buffer)))
-
-(setq-hook! 'sql-mode-hook +format-with-lsp nil)
-(setq-hook! 'sql-mode-hook +format-on-save-enabled-modes nil)
-
-
-(add-hook 'sql-mode-hook 'sqlformat-on-save-mode)

@@ -1,6 +1,5 @@
-;;; shellrc.el -*- lexical-binding: t; -*-
+;;; mine/shell/config.el -*- lexical-binding: t; -*-
 
-(provide 'shellrc)
 
     (defun eshell-load-bash-aliases ()
            "Reads bash aliases from Bash and inserts
