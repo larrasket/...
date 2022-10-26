@@ -324,3 +324,8 @@ the structure of the org file."
   (org-map-entries 'org-archive-subtree "/DONE" 'file)
   (org-map-entries 'org-archive-subtree "/FAIL" 'file)
   (org-map-entries 'org-archive-subtree "/KILL" 'file))
+
+
+
+
+

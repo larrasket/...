@@ -12,3 +12,4 @@
 (require 'leaders)
 (require 'csvmode)
 (require 'sqlconf)
+(require '+roam)

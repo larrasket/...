@@ -30,13 +30,6 @@
 (global-set-key (kbd "C-+") 'doom/reset-font-size)
 
 
-(global-set-key (kbd "C-c e p") 'emms-play-playlist)
-(global-set-key (kbd "C-c e d") 'emms-play-directory)
-;; (global-set-key (kbd "C-c e <up>") 'emms-start)
-;; (global-set-key (kbd "C-c e <down>") 'emms-stop)
-(global-set-key (kbd "C-c e <left>") 'emms-seek-forward)
-(global-set-key (kbd "C-c e <right>") 'emms-seek-backward)
-
 (global-set-key (kbd "M-1") '+workspace/switch-to-0 )
 (global-set-key (kbd "M-2") '+workspace/switch-to-1 )
 (global-set-key (kbd "M-3") '+workspace/switch-to-2 )
@@ -46,27 +39,6 @@
 (global-set-key (kbd "M-7") '+workspace/switch-to-6 )
 (global-set-key (kbd "M-8") '+workspace/switch-to-7 )
 (global-set-key (kbd "M-9") '+workspace/switch-to-8 )
-
-
-(use-package org-roam
-  :bind (("C-c r l" . org-roam-buffer-toggle)
-         ("C-c r f" . org-roam-node-find)
-         ("C-c r g" . org-roam-graph)
-         ("C-c r i" . org-roam-node-insert)
-         ("C-c r c" . org-roam-capture)
-         ;; Dailies
-         ("C-c r j" . org-roam-dailies-capture-today)))
-
-
-;; '+workspace/switch-to-0
-;; '+workspace/switch-to-1
-;; '+workspace/switch-to-2
-;; '+workspace/switch-to-3
-;; '+workspace/switch-to-4
-;; '+workspace/switch-to-5
-;; '+workspace/switch-to-6
-;; '+workspace/switch-to-7
-;; '+workspace/switch-to-8
 
 
 
@@ -89,28 +61,8 @@
               (neotree-find file-name)))
       (message "Could not find git project root."))))
 
-;; need another one for python stuff, since this gets re-bound
-
 
 (global-set-key [f6] (lambda () (interactive) (neotree-project-dir) (lsp-treemacs-symbols) (evil-window-next) ))
-;; (global-set-key (kbd "S-<f8>") 'org-tree-slide-skip-done-toggle)
-;; (global-set-key (kbd "<f11>") 'org-tree-slide-move-next-tree)
-;; (global-set-key (kbd "<f12>") 'org-tree-slide-move-previous-tree)
-
-
-;; debug
-
-;; (global-set-key [f5] '+debugger/start)
-;; (global-set-key (kbd "C-<f5>")'+debugger/quit)
-;; (global-set-key [f11] 'dap-step-in)
-;; (global-set-key [f12] 'lsp-goto-implementation)
-;; (global-set-key [f9] 'dap-breakpoint-toggle)
-
-
-
-
-
-
 
 
 
@@ -119,16 +71,7 @@
 (setq languagetool-language-tool-jar
       "~/.languagetool/languagetool-commandline.jar")
 (setq languagetool-default-language "en-GB")
-;; (global-set-key (kbd "C-c l c") 'languagetool-check)
-;; (global-set-key (kbd "C-q") 'org-agenda-open-link)
 (global-set-key (kbd "C-;") 'iedit-mode)
-;; (global-set-key (kbd "C-c l d") 'langrrgetool-clear-buffer)
-;; (global-set-key (kbd "C-c l p") 'languagetool-correct-at-point)
-;; (global-set-key (kbd "C-c l b") 'languagetool-correct-buffer)
-;; (global-set-key (kbd "C-c l l") 'languagetool-set-language)
-;; (global-set-key (kbd "C-c l l") 'languagetool-set-language)
-;; (local-set-key (kbd "C-c x") 'org-latex-preview)
-
 
 
 (add-hook 'pdf-view-mode-hook
@@ -140,8 +83,6 @@
 ;; (add-hook 'prog-mode-hook (lambda)  () (local-set-key (kbd "M-RET") #'lsp-execute-code-action))
 
 (add-hook 'org-mode-hook (lambda () (local-set-key (kbd "<f8>") #'org-tree-slide-mode)))
-
-
 (add-hook 'calc-mode-hook (lambda () (local-set-key (kbd "r r") #'calc-reset)))
 
 
@@ -193,12 +134,3 @@
             (setq beg (line-beginning-position) end (line-end-position)))
         (comment-or-uncomment-region beg end)))
 (global-set-key (kbd "M-;") 'comment-or-uncomment-region-or-line)
-
-
-
-;; (global-set-key (kbd "M-[")  'centaur-tabs-backward)
-;; (global-set-key (kbd "M-]") 'centaur-tabs-forward)
-;; (global-set-key (kbd "M-t") 'centaur-tabs--create-new-tab)
-
-
-;; TODO use C-'

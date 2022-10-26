@@ -52,9 +52,6 @@
 ;; (package! vulpea)
 ;; (package! delve :recipe  (:repo "publicimageltd/delve" :host github :type git))
 
-;; (package! org-roam-server)
-;;(package! toc-org)
-
 
 
 

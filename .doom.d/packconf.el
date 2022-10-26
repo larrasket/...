@@ -45,63 +45,6 @@
 ;; leeet
 
 
-(use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory (file-truename "~/roam"))
-  (org-roam-dailies-capture-templates
-    '(("d" "default" entry "* %<%H:%M> \n %?"
-       :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%A, %d %B %Y>\n- tags :: [[id:15c1e0f1-d652-4fae-9234-01b69f072342][Life]]\n"))))
-  :config
-  ;; If you're using a vertical completion framework, you might want a more informative completion interface
-  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-  (org-roam-db-autosync-mode)
-  ;; If using org-roam-protocol
-  (require 'org-roam-protocol)
-
-  )
-    (defun cm/deft-parse-title (file contents)
-    "Parse the given FILE and CONTENTS and determine the title.
-  If `deft-use-filename-as-title' is nil, the title is taken to
-  be the first non-empty line of the FILE.  Else the base name of the FILE is
-  used as title."
-      (let ((begin (string-match "^#\\+[tT][iI][tT][lL][eE]: .*$" contents)))
-	(if begin
-	    (string-trim (substring contents begin (match-end 0)) "#\\+[tT][iI][tT][lL][eE]: *" "[\n\t ]+")
-	  (deft-base-filename file))))
-
-    (advice-add 'deft-parse-title :override #'cm/deft-parse-title)
-
-    (setq deft-strip-summary-regexp
-	  (concat "\\("
-		  "[\n\t]" ;; blank
-		  "\\|^#\\+[[:alpha:]_]+:.*$" ;; org-mode metadata
-		  "\\|^:PROPERTIES:\n\\(.+\n\\)+:END:\n"
-		  "\\)"))
-
-
-(setq org-roam-dailies-directory "journal/")
-
-
-
-
-
-
-
-
-
-(use-package! websocket
-    :after org-roam)
-
-(use-package! org-roam-ui
-    :after org-roam ;; or :after org
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
-
-
 
 ;; leetcode
 
@@ -172,62 +115,6 @@
 ;;          :unnarrowed t)))
 
 ;; without tags
-(setq org-roam-capture-templates
-      '(("m" "main" plain
-         "%?"
-         :if-new
-         (file+head "main/${slug}.org" "#+title: ${title}\n")
-         :immediate-finish t
-         :unnarrowed t)
-        ("p" "People" plain
-         "%?"
-         :if-new
-         (file+head "main/${slug}.org" "#+title: ${title}\n")
-         :immediate-finish t
-         :unnarrowed t)
-        ("s" "saved" plain "%?"
-         :if-new
-         (file+head "saved/${slug}.org" "#+title: ${title}\n- tags :: [[roam:saved things]]")
-         :immediate-finish t
-         :unnarrowed t)
-        ("c" "contemplations" plain "%?"
-         :if-new
-         (file+head "contemplations/${slug}.org" "#+title: ${title}\n- tags :: [[roam:Contemplation]]")
-         :immediate-finish t
-         :unnarrowed t)
-        ("q" "quotes" plain "%?"
-         :if-new
-         (file+head "quotes/${slug}.org" "#+title: ${title}\n— [[roam:Quotes]]")
-         :immediate-finish t
-         :unnarrowed t)
-        ("l" "literature" plain "%?"
-         :if-new
-         (file+head "literature/${slug}.org" "#+title: ${title}\n")
-         :immediate-finish t
-         :unnarrowed t)
-        ("h" "history" plain "%?"
-         :if-new
-         (file+head "everything/${slug}.org" "#+title: ${title}\n#+filetags: History \n- tags :: ")
-         :immediate-finish t
-         :unnarrowed t)
-        ("k" "knowledge" plain "%?"
-         :if-new
-         (file+head "everything/${slug}.org" "#+title: ${title}\n")
-         :immediate-finish t
-         :unnarrowed t)))
-
-
-(cl-defmethod org-roam-node-type ((node org-roam-node))
-  "Return the TYPE of NODE."
-  (condition-case nil
-      (file-name-nondirectory
-       (directory-file-name
-        (file-name-directory
-         (file-relative-name (org-roam-node-file node) org-roam-directory))))
-    (error "")))
-
-(setq org-roam-node-display-template
-      (concat "${type:15} ${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
 
 
 

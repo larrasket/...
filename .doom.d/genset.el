@@ -1,15 +1,11 @@
 ;;; genset.el -*- lexical-binding: t; -*-
 (provide 'genset)
-;; (after! doom-modeline
-  ;; (setq doom-modeline-icon nil))
 (setq completion-ignore-case t)
 (setq-default frame-title-format '("%b"))
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 (setq fancy-splash-image "~/.doom.d/pan.png")
 (setq-default fill-column 92)
 (setq fill-column 92)
-;; (setq fill-column 110)
-;; (setq-default fill-column 110)
 (setq c-default-style "linux"
       c-basic-offset 4)
 (setq org-roam-directory "~/roam")

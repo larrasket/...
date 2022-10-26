@@ -16,8 +16,8 @@
 
 (defun startpresent ()
 
-(setq fill-column 110)
-(setq-default fill-column 110)
+;; (setq fill-column 110)
+;; (setq-default fill-column 110)
 
   (setq visual-fill-column-width 110
         visual-fill-column-center-text t)
