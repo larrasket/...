@@ -81,9 +81,4 @@
 (package! org-present)
 (package! wiki-summary)
 (package! csv-mode)
-(use-package org-upcoming-modeline
-  :after org
-  :load-path "~/gits/org-upcoming-modeline"
-  :config
-  (org-upcoming-modeline-mode))
 (package! iedit)
