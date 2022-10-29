@@ -1,8 +1,5 @@
 ;;; mine/genorg/config.el -*- lexical-binding: t; -*-
 
-
-;;; orgset.el -*- lexical-binding: t; -*-
-
 (after! org
   (setq org-todo-keywords
         '((sequence
@@ -59,8 +56,6 @@
           ("KILL" . +org-todo-cancel)))
 
   (setq org-hide-leading-stars 't)
-  (setq +org-capture-journal-file "~/blog/content/stack.org")
-  (setq +org-capture-changelog-file "~/blog/content/nice.org")
   (setq org-capture-templates
         '(("t" "Personal todo" entry
            (file+headline +org-capture-todo-file "Inbox")
@@ -77,6 +72,9 @@
            (file+headline +org-capture-changelog-file "In Theory")
            "+ %?" :prepend t)
 
+          ("F" "TODO with file" entry
+           (file+headline +org-capture-todo-file "Inbox")
+           "* TODO %?\n%i\n%a" :prepend t)
 
 
 

@@ -10,8 +10,6 @@
  '(elfeed-goodies/entry-pane-size 0.5)
  '(elfeed-goodies/html-decode-title-tags nil)
  '(highlight-indent-guides-method 'character)
- '(org-agenda-files
-   '("/mnt/Films/journal/20220920.org" "/home/ghd/org/todo.org" "/home/ghd/org/jounral/20221023.org"))
  '(org-download-method 'directory)
  '(package-selected-packages '(xwidget)))
 ;; (custom-set-faces
