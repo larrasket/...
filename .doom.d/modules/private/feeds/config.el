@@ -31,15 +31,15 @@
                     ("https://suckless.org/atom.xml" cs)
                     ("https://blog.janestreet.com/feed.xml" cs prod)
                     ("https://www.ribice.ba/index.xml" cs prod)
-                    ("https://github.com/salehmu.private.atom?token=ARVKOP6Q6D3TE577LYBCYSWA3RAUG" github prod)
+                    ("https://github.com/verydumbaccount.private.atom?token=A35F2X3PGTJNM3VD3MZN35WBNS3ZI" github prod)
                     ("http://www.infoworld.com/index.rss" cs prod)
                     ("https://hackernoon.com/feed" cs prod)
                     ("http://cachestocaches.com/feed/" cs prod)
-                    ("https://boards.4channel.org/g/index.rss" cs shit)
-                    ("https://boards.4channel.org/adv/index.rss" shit)
+                    ;; ("https://boards.4channel.org/g/index.rss" cs shit)
+                    ;; ("https://boards.4channel.org/adv/index.rss" shit)
                     ("https://harian-oftheday.blogspot.com/feeds/posts/default?alt=rss" spirit prod)
                     ("https://medium.com/feed/@villekuosmanen" cs prod)
-		     ("https://www.reddit.com/r/OneTruthPrevails/.rss" reddit prod)
+		    ("https://www.reddit.com/r/OneTruthPrevails/.rss" reddit prod)
                     ("http://nedroid.com/feed/" comics prod)
                     ("https://www.reddit.com/r/emacs/.rss" emacs reddit prod)
                     ("https://www.reddit.com/r/programmingcirclejerk/.rss" cs reddit prod)
@@ -54,13 +54,5 @@
                     ))
         (elfeed-update)))
 (add-hook! 'elfeed-search-mode-hook #'elfeed-update)
-
-(use-package elfeed-dashboard
-  :load-path "~/gits/elfeed-dashboard/"
-  :config
-  (setq elfeed-dashboard-file "~/gits/elfeed-dashboard/elfeed-dashboard.org")
-  ;; update feed counts on elfeed-quit
-  (advice-add 'elfeed-search-quit-window :after #'elfeed-dashboard-update-links))
-
 
 (setq-default elfeed-search-filter "@1-week-ago +unread -shit +prod")
