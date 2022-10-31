@@ -76,8 +76,6 @@
 (unpin! org-roam)
 (package! org-roam-ui)
 (package! humanoid-themes)
-(package! xwidgets-reuse)
-(package! org-reveal)
 (package! org-present)
 (package! wiki-summary)
 (package! csv-mode)
