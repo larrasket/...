@@ -16,3 +16,4 @@
 /.gitconfig
 /.config/mpv/scripts/run.sh
 /.config/mpv/scripts/time_pairs.txt
+flycheck_**
