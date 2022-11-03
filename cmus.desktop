@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=cmus
+Comment=open cmus in kitty
+Exec=/bin/sh -c "$HOME/configs/cmus.sh"
+Icon=CMakeSetup
+Terminal=false
+Type=Application
+Categories=Music;
