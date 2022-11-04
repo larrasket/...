@@ -79,11 +79,11 @@
 
 
           ("iv" "Nice computer science videos" item
-           (file+headline +org-capture-changelog-file "computers")
+           (file+headline +org-capture-changelog-file "Computers")
            "+ %?" :prepend t)
 
           ("it" "Nice videos" item
-           (file+headline +org-capture-changelog-file "other")
+           (file+headline +org-capture-changelog-file "Other")
            "+ %?" :prepend t)
 
 
