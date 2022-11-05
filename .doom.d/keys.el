@@ -11,6 +11,7 @@
 (global-set-key (kbd "M-n") 'make-frame)
 (global-set-key (kbd "M-f") 'org-footnote-action)
 (global-set-key (kbd "C-M-g") 'lsp-find-definition)
+(global-set-key (kbd "C-M-r") 'lsp-find-references)
 (global-set-key (kbd "M-RET") 'lsp-execute-code-action)
 (require 'evil)
 (evil-global-set-key 'normal (kbd "/") 'swiper)
