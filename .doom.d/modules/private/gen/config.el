@@ -85,9 +85,11 @@
 
 
 
-
+(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
 (add-hook 'neotree-mode-hook(lambda () (solaire-mode -1)))
+(setq neo-window-width 35)
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
+
 (require 'highlight-indent-guides)
 (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 
