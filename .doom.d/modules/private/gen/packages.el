@@ -3,4 +3,4 @@
 
 
 (package! emacs-neotree)
-(package! highlight-indent-guides)
+;; (package! highlight-indent-guides)

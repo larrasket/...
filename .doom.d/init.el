@@ -23,7 +23,7 @@
        ;; +ascii)
        hl-todo                          ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
-       ;; indent-guides     ; highlighted indent columns
+       indent-guides     ; highlighted indent columns
        ;; (ligatures +iosevka)
 
        ;;minimap           ; show a map of the code on the side
