@@ -82,3 +82,4 @@
 (package! csv-mode)
 (package! iedit)
 (package! lsp-grammarly)
+(package! protobuf-mode)
