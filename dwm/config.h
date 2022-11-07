@@ -1,7 +1,9 @@
 /* See LICENSE file for copyright and license details. */
 
-static const char *dmenucmd[] = {"dmenu_run", "-g", "10",    "-l",
-                                 "48",        "-p", "Run: ", NULL};
+static const char *dmenucmd[] = {"dmenu_run", "-g", "12",    "-l",
+                                 "80",        "-p", "Run: ", NULL};
+
+//dmenu_run  -l 80 -g 12 -p 'run'
 static const char *emacs[] = {"emaks", NULL};
 static const char *anyywhere[] = {"/home/ghd/.emacs_anywhere/bin/run", NULL};
 
@@ -267,7 +269,6 @@ static Key keys[] = {
     /* { MODKEY|ShiftMask,		XK_s,		spawn, SHCMD("")
      * },
      */
-    {MODKEY, XK_d, spawn, {.v = (const char *[]){"dmenu_run", NULL}}},
     {MODKEY | ShiftMask,
      XK_d,
      spawn,
@@ -323,7 +324,7 @@ static Key keys[] = {
     {MODKEY, XK_space, zoom, {0}},
     {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
 
-    /* {MODKEY, XK_p, spawn, {.v = dmenucmd}}, */
+    {MODKEY, XK_d, spawn, {.v = dmenucmd}}, 
     {MODKEY, XK_c, killclient, {0}},
     {MODKEY | ShiftMask, XK_q, quit, {0}},
     {MODKEY | ShiftMask, XK_s, spawn, {.v = scr}},
