@@ -8,3 +8,6 @@
 (setq +org-capture-todo-file "~/roam/journal/todo.org")
 (setq neo-autorefresh 't)
 (setq neo-mode-line-type 'default)
+(after! highlight-indent-guides
+  (highlight-indent-guides-auto-set-faces))
+
