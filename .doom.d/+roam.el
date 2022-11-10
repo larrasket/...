@@ -208,4 +208,12 @@
       :desc "org caputer"
       "r j" #'org-roam-dailies-capture-today)
 
+
+(add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-direction)
+               (direction . right)
+               (window-width . 0.38)
+               (window-height . fit-window-to-buffer)))
+
 (provide '+roam)
