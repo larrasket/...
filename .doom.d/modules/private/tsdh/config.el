@@ -1,4 +1,5 @@
-;;; ../configs/.doom.d/theme.el -*- lexical-binding: t; -*-
+;;; private/tsdh/config.el -*- lexical-binding: t; -*-
+
 
 
 (custom-theme-set-faces! 'doom-homage-black
@@ -19,6 +20,7 @@
 ;; (setq doom-theme 'humanoid-dark)
 ;; (setq doom-theme 'doom-acario-light)
 ;; (setq doom-theme 'mine)
+;;
 (setq doom-theme 'tsdh-dark)
 (defvar company-new-bg "gray26") ; v1: gray30
 (defvar company-new-selection-bg "gray21"); v1: gray24
@@ -29,6 +31,7 @@
 (defvar company-new-preview-fg (face-attribute 'default :foreground))
 (defvar company-new-preview-bg "gray21")
 
+
 (custom-set-faces
  `(company-tooltip ((t (:background ,company-new-bg))))
  `(company-tooltip-selection ((t (:background ,company-new-selection-bg))))
@@ -38,7 +41,7 @@
  `(company-scrollbar-bg ((t (:background ,company-new-scrollbar-bg))))
  `(company-preview ((t (:foreground ,company-new-preview-fg :background ,company-new-preview-bg))))
  `(company-preview-common ((t (:foreground ,company-new-common-fg :background ,company-new-preview-bg))))
-`(company-preview-search ((t (:foreground ,company-new-common-fg :background ,company-new-preview-bg)))))
+ `(company-preview-search ((t (:foreground ,company-new-common-fg :background ,company-new-preview-bg)))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -55,5 +58,3 @@
  '(company-tooltip-common ((t (:foreground "pale turquoise"))))
  '(company-tooltip-selection ((t (:background "gray21"))))
  '(mode-line ((t (:background "gray30" :box nil :family "JetBrainsMono Nerd Font")))))
-
-(provide 'themeconf)
