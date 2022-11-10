@@ -58,9 +58,6 @@
 
 
 
-
-
-
 (setq display-buffer-alist
       `(("*compilation*" . ((name . "*compilation*")
                             ,@default-frame-alist))))
@@ -85,30 +82,10 @@
 
 
 
-(setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+(setq neo-theme  'icons)
 (add-hook 'neotree-mode-hook(lambda () (solaire-mode -1)))
 (setq neo-window-width 35)
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
-
-(require 'highlight-indent-guides)
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-
-;; (set-face-background 'highlight-indent-guides-odd-face "#9B9C97")
-;; (set-face-background 'highlight-indent-guides-even-face "#9B9C97")
-;; (set-face-foreground 'highlight-indent-guides-character-face "#9B9C97")
-(set-face-background 'highlight-indent-guides-odd-face "darkgray")
-(set-face-background 'highlight-indent-guides-even-face "dimgray")
-(set-face-foreground 'highlight-indent-guides-character-face "dimgray")
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -129,10 +106,8 @@
 
 
 (defun startpresent ()
-
   (setq visual-fill-column-width 110
         visual-fill-column-center-text t)
-
   (setq header-line-format " ")
   (setq header-line-format nil)
   (display-line-numbers-mode 0)
