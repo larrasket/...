@@ -9,7 +9,7 @@
            "RUNNING(r)"             ; A recurring task
            "STUDY(s)"                   ; A task that is in progress
            "WATCH(w)"                   ; Something external is holding up this task
-           ;; "HOLD(h)"                    ; This task is paused/on hold because of me
+           "HOLD(h)"                    ; This task is paused/on hold because of me
            "IDEA(i)"                    ; An unconfirmed and unapproved task or notion
            "READ(b)"                    ; To Read
            "CHECK(c)"                   ; To Read
@@ -45,7 +45,7 @@
           ;; ("[?]"  . +org-todo-onhold)
           ("WATCH" . "#86ba96")
           ("DAILY" . "#708090")
-          ;; ("HOLD" . +org-todo-onhold)
+          ("Hold" . +Org-todo-onhold)
           ("PROJ" . +org-todo-project)
           ("FAIL"   . +org-todo-cancel)
           ("READ" . "#98be65")
