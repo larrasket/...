@@ -25,6 +25,11 @@
 (global-set-key (kbd "C-x C-t") 'gts-do-translate)
 (global-set-key (kbd "C-x C-k") 'kill-this-buffer)
 (global-set-key (kbd "C-x C-b") 'bookmark-jump)
+(global-set-key (kbd "C-x C-b") 'bookmark-jump)
+(global-unset-key (kbd "\C-m"))
+(eval-after-load "evil-maps"
+  (define-key evil-motion-state-map "\C-m" nil))
+(global-set-key (kbd "C-h C-f") 'mark-defun)
 
 (global-set-key (kbd "C-=") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
