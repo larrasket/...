@@ -15,86 +15,57 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 [ -n "$DISPLAY" ]  && command -v xdo >/dev/null 2>&1 && xdo id > /tmp/term-wid-"$$"
 trap "( rm -f /tmp/term-wid-"$$" )" EXIT HUP
 
-
-alias "bt-l"='bt-device -l'
-alias mvs="mpv --config-dir=~/.config/mvs/"
-alias "bt-c"='bt-device -c'
-alias gitt='cd aur && git clone'
-alias post='/home/ghd/me/temp/page/app/GetFilesForPosting'
-alias camera="mplayer -tv device=/dev/video1 tv://"
-alias lib='libgen -s'
+# blog
 alias pubb1='cd public && git rm -rf . && cd .. && ./build.sh && cd public && git add . &&  git commit -m \"update\" && git push origin master '
 alias pub1='git add . && git commit -m update && git push origin latest_branch'
 alias pub='pub1 && pubb1'
-alias mic='ncpamixer'
+
+#programs
+alias mic='pavucontrol'
 alias wife='nmtui'
-alias n='cd books/notes'
 alias hd='nmcli con up'
-alias pro='cd /Documents/prop'
 alias s='setsid rsblocks '
-alias mynet='sudo netstat -atupen'
-alias vi='nvim'
+alias mvi='mpv --config-dir=$HOME/.config/mvi'
+alias mva='mpv --config-dir=$HOME/.config/mvi *jpg *png *gif *webp *tiff *raw *bmp *svg'
+alias htop='gotop'
+alias netwatch='sudo nethogs'
+alias sdocker='systemctl start docker.service'
+
+#make it easier
 alias c='clear'
+alias doom='~/.emacs.d/bin/doom'
 alias sv='sudo vim'
 alias smk='sudo make clean install'
-alias imk='makepkg -si'
 alias update='sudo pacman -Syu'
 alias i='sudo pacman -S '
 alias r='sudo pacman -Rs'
-alias host='sv /etc/hosts'
-alias ls='ls --color=auto'
 alias lsd='du -h --max-depth=1 | sort -hr'
-alias doom='~/.emacs.d/bin/doom'
 alias grep='grep --colour=auto'
-alias egrep='egrep --colour=auto'
-alias fgrep='fgrep --colour=auto'
-alias pss='keepassxc'
 alias f="lfrun"
 alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
-alias np='nano -w PKGBUILD'
-alias more=less
 alias d='yt-dlp -o '\''%(title)s.%(ext)s'\'' '
-alias todo='v ~/org/todo.org'
 alias ds='yt-dlp -f 136 -o  '\''%(title)s.%(ext)s'\'' '
 alias dss='yt-dlp -f '\''bestvideo[height<=480]+bestaudio/best[height<=480]'\''  --write-auto-sub -o  '\''%(title)s.%(ext)s'\'' '
 alias mp3='yt-dlp -o '\''%(title)s.%(ext)s'\'' --extract-audio --audio-format mp3 --add-metadata'
 unset use_color safe_term match_lhs sh
-alias mvi='mpv --config-dir=$HOME/.config/mvi'
-alias mva='mpv --config-dir=$HOME/.config/mvi *jpg *png *gif *webp *tiff *raw *bmp *svg'
 alias po='castero'
 export _JAVA_AWT_WM_NONREPARENTING=1
-alias run='rm -r ~/source/Politics'
-alias you='lf-yt'
-alias p='kitty +kitten icat'
 alias ls='ls -l'
 alias ll='ls -l'
-alias vim='nvim'
-alias e=emacs
-alias v='vi'
-alias a='v ~/org/todo.org'
 alias sz='du -sh'
-alias msd='cd ~/me/music/l/'
-alias t='v ~/me/temp/x.cpp'
 alias k='killall'
-alias htop='gotop'
-alias tori='tordl'
-alias send='tar -cz . | nc -q 10 -l -p 9090'
-alias rec='nc -w 10 192.168.1.6 9090 | tar -xz'
 alias shut='shutdown -P '
 alias psql='sudo -iu postgres'
-alias mincraft='prime-run /usr/bin/java -jar /opt/tlauncher/tlauncher.jar'
-alias netwatch='sudo nethogs'
-alias cat='highlight -O ansi --force'
-alias scriptcs='cscs'
-alias z='zathura'
-alias clone='git clone'
-alias add='git add .'
-alias pull='git pull'
-alias commit='git commit'
+
+# send file over network
+alias send='tar -cz . | nc -q 10 -l -p 9090'
+alias rec='nc -w 10 192.168.1.6 9090 | tar -xz'
+
+
+alias cat='bat'
 alias intl="WD=\$(pwd);cd ~/source;zathura \"\$(fzf)\";cd \$WD"
-alias cin="WD=\$(pwd);cd ~/me/cinema/;mpv \"\$(fzf)\";cd \$WD"
 alias share="caddy file-server --listen :2030 --browse"
 alias films="sudo cryptsetup luksOpen /dev/sda3 winsys && sudo mount /dev/mapper/winsys /mnt/winsys/"
 alias cmus="cd ~/music && cmus"
