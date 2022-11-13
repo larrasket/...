@@ -16,86 +16,6 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 trap "( rm -f /tmp/term-wid-"$$" )" EXIT HUP
 
 
-
-colors() {
-	local fgc bgc vals seq0
-
-printf "Color escapes are %s\n" '\e[${value};...;${value}m'
-	printf "Values 30..37 are \e[33mforeground colors\e[m\n"
-	printf "Values 40..47 are \e[43mbackground colors\e[m\n"
-	printf "Value  1 gives a  \e[1mbold-faced look\e[m\n\n"
-
-	# foreground colors
-	for fgc in {30..37}; do
-		# background colors
-		for bgc in {40..47}; do
-			fgc=${fgc#37} # white
-			bgc=${bgc#40} # black
-
-			vals="${fgc:+$fgc;}${bgc}"
-			vals=${vals%%;}
-
-			seq0="${vals:+\e[${vals}m}"
-			printf "  %-9s" "${seq0:-(default)}"
-			printf " ${seq0}TEXT\e[m"
-			printf " \e[${vals:+${vals+$vals;}}1mBOLD\e[m"
-		done
-		echo; echo
-	done
-}
-[ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
-
-# Change the window title of X terminals
-case ${TERM} in
-	xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)
-		PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\007"'
-		;;
-	screen*)
-		PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/\~}\033\\"'
-		;;
-esac
-
-use_color=true
-
-# Set colorful PS1 only on colorful terminals.
-# dircolors --print-database uses its own built-in database
-# instead of using /etc/DIR_COLORS.  Try to use the external file
-# first to take advantage of user additions.  Use internal bash
-# globbing instead of external grep binary.
-safe_term=${TERM//[^[:alnum:]]/?}   # sanitize TERM
-match_lhs=""
-[[ -f ~/.dir_colors   ]] && match_lhs="${match_lhs}$(<~/.dir_colors)"
-[[ -f /etc/DIR_COLORS ]] && match_lhs="${match_lhs}$(</etc/DIR_COLORS)"
-[[ -z ${match_lhs}    ]] \
-	&& type -P dircolors >/dev/null \
-	&& match_lhs=$(dircolors --print-database)
-[[ $'\n'${match_lhs} == *$'\n'"TERM "${safe_term}* ]] && use_color=true
-
-if ${use_color} ; then
-	# Enable colors for ls, etc.  Prefer ~/.dir_colors #64489
-	if type -P dircolors >/dev/null ; then
-		if [[ -f ~/.dir_colors ]] ; then
-			eval $(dircolors -b ~/.dir_colors)
-		elif [[ -f /etc/DIR_COLORS ]] ; then
-			eval $(dircolors -b /etc/DIR_COLORS)
-		fi
-	fi
-
-	if [[ ${EUID} == 0 ]] ; then
-		PS1='\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
-	else
-		PS1='\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] '
-	fi
-
-
-
-
-
-
-
-
-
-
 alias "bt-l"='bt-device -l'
 alias mvs="mpv --config-dir=~/.config/mvs/"
 alias "bt-c"='bt-device -c'
@@ -179,111 +99,122 @@ alias share="caddy file-server --listen :2030 --browse"
 alias films="sudo cryptsetup luksOpen /dev/sda3 winsys && sudo mount /dev/mapper/winsys /mnt/winsys/"
 alias cmus="cd ~/music && cmus"
 alias frozen="pkill -SIGUSR2 emacs"
+alias 'cd..'='cd ..'
+alias sp='systemctl suspend'
 
 
-
-
-else
-	if [[ ${EUID} == 0 ]] ; then
-		# show root@ when we don't have colors
-		PS1='\u@\h \W \$ '
-	else
-		PS1='\u@\h \w \$ '
-	fi
-fi
 
 xhost +local:root > /dev/null 2>&1
 
 complete -cf sudo
-
 # Bash won't get SIGWINCH if another process is in the foreground.
 # Enable checkwinsize so that bash will check the terminal size when
 # it regains control.  #65623
 # http://cnswww.cns.cwru.edu/~chet/bash/FAQ (E11)
 shopt -s checkwinsize
-
 shopt -s expand_aliases
-
-# export QT_SELECT=4
-
-# Enable history appending instead of overwriting.  #139609
 shopt -s histappend
 
-#
-# # ex - archive extractor
-# # usage: ex <file>
-ex ()
-{
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)   tar xjf $1   ;;
-      *.tar.gz)    tar xzf $1   ;;
-      *.bz2)       bunzip2 $1   ;;
-      *.rar)       unrar x $1     ;;
-      *.gz)        gunzip $1    ;;
-      *.tar)       tar xf $1    ;;
-      *.tbz2)      tar xjf $1   ;;
-      *.tgz)       tar xzf $1   ;;
-      *.zip)       unzip $1     ;;
-      *.Z)         uncompress $1;;
-      *.7z)        7z x $1      ;;
-      *)           echo "'$1' cannot be extracted via ex()" ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
-}
-openclose() {
-    "$@" &
-    disown
-    exit
-}
-export PS1="\W > "
-
-#setsid rsblocks
-#setsid dunst
-
-#[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-
-#source /home/saleh/.config/broot/launcher/bash/br
 export EDITOR="/usr/bin/nvim"
-# export EDITOR="emacs --no-window-system"
- # export EDITOR="emacs"
 force_color_prompt=yes
 
-if [ -n "$GTK_MODULES" ]; then
-    GTK_MODULES="${GTK_MODULES}:appmenu-gtk-module" # unity-gtk-module
-    #GTK_MODULES="${GTK_MODULES}:unity-gtk-module" # unity-gtk-module
-else
-    GTK_MODULES="appmenu-gtk-module"
-    #GTK_MODULES="unity-gtk-module"
-fi
-
-if [ -z "$UBUNTU_MENUPROXY" ]; then
-    UBUNTU_MENUPROXY=1
-fi
-# Use bash-completion, if available
-[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
-    . /usr/share/bash-completion/bash_completion
 
 
-#source /home/ghd/.config/broot/launcher/bash/br
-alias 'cd..'='cd ..'
-alias sp='systemctl suspend'
+_show_git_status() {
+  # Get the current git branch and colorize to indicate branch state
+  # branch_name+ indicates there are stash(es)
+  # branch_name? indicates there are untracked files
+  # branch_name! indicates your branches have diverged
+  local unknown untracked stash clean ahead behind staged dirty diverged
+  unknown='0;34'      # blue
+  untracked='0;32'    # green
+  stash='0;32'        # green
+  clean='0;32'        # green
+  ahead='0;33'        # yellow
+  behind='0;33'       # yellow
+  staged='0;96'       # cyan
+  dirty='0;31'        # red
+  diverged='0;31'     # red
 
+  if [[ $TERM = *256color ]]; then
+    unknown='38;5;20'     # dark blue
+    untracked='38;5;76'   # mid lime-green
+    stash='38;5;76'       # mid lime-green
+    clean='38;5;82'       # brighter green
+    ahead='38;5;226'      # bright yellow
+    behind='38;5;142'     # darker yellow-orange
+    staged='38;5;214'     # orangey yellow
+    dirty='38;5;202'      # orange
+    diverged='38;5;196'   # red
+  fi
 
-# BEGIN_KITTY_SHELL_INTEGRATION
-if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; then source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; fi
-# END_KITTY_SHELL_INTEGRATION
-export TERM=xterm-256color
+  branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  if [[ -n "$branch" ]]; then
+    git_status=$(git status 2> /dev/null)
+    # If nothing changes the color, we can spot unhandled cases.
+    color=$unknown
+    if [[ $git_status =~ 'Untracked files' ]]; then
+      color=$untracked
+      branch="${branch}?"
+    fi
+    if git stash show &>/dev/null; then
+      color=$stash
+      branch="${branch}+"
+    fi
+    if [[ $git_status =~ 'working directory clean' ]]; then
+      color=$clean
+    fi
+    if [[ $git_status =~ 'Your branch is ahead' ]]; then
+      color=$ahead
+      branch="${branch}>"
+    fi
+    if [[ $git_status =~ 'Your branch is behind' ]]; then
+      color=$behind
+      branch="${branch}<"
+    fi
+    if [[ $git_status =~ 'Changes to be committed' ]]; then
+      color=$staged
+    fi
+    if [[ $git_status =~ 'Changed but not updated' ||
+          $git_status =~ 'Changes not staged'      ||
+          $git_status =~ 'Unmerged paths' ]]; then
+      color=$dirty
+    fi
+    if [[ $git_status =~ 'Your branch'.+diverged ]]; then
+      color=$diverged
+      branch="${branch}!"
+    fi
+    echo -n "\[\033[${color}m\]${branch}\[\033[0m\]"
+  fi
+  return 0
+}
 
-PATH="/home/ghd/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/ghd/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/ghd/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/ghd/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/ghd/perl5"; export PERL_MM_OPT;
+_show_last_exit_status() {
+  # Display the exit status of the last run command
+  exit_status=$?
+  if [[ "$exit_status" -ne 0 ]]; then
+    echo "Exit $exit_status"
+  fi
+}
 
-# Hishtory Config:
-export PATH="$PATH:/home/ghd/.hishtory"
-source /home/ghd/.hishtory/config.sh
+_build_prompt() {
+  local git_status prompt_dir
+  git_status=$(_show_git_status)
+  if [[ -n "$git_status" ]]; then
+    git_status=":${git_status}"
+  fi
+  prompt_dir=$(basename "${PWD}")
+  # Set xterm title
+  echo -ne "\033]0;${HOSTNAME}\007"
+  # Check to see if inside screen
+  if [[ -n "$STY" ]]; then
+    # Set xterm title, from within screen
+    echo -ne "\033_${HOSTNAME}\033\0134"
+    # Set screen window name
+    echo -ne "\033k\033\0134"
+  fi
+  PS1="\h [${prompt_dir}${git_status}]\\\$ "
+  return 0
+}
+
+PROMPT_COMMAND="_show_last_exit_status; _build_prompt;"
