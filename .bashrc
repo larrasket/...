@@ -178,6 +178,7 @@ alias cin="WD=\$(pwd);cd ~/me/cinema/;mpv \"\$(fzf)\";cd \$WD"
 alias share="caddy file-server --listen :2030 --browse"
 alias films="sudo cryptsetup luksOpen /dev/sda3 winsys && sudo mount /dev/mapper/winsys /mnt/winsys/"
 alias cmus="cd ~/music && cmus"
+alias frozen="pkill -SIGUSR2 emacs"
 
 
 
@@ -282,3 +283,7 @@ PERL5LIB="/home/ghd/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/ghd/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/home/ghd/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/ghd/perl5"; export PERL_MM_OPT;
+
+# Hishtory Config:
+export PATH="$PATH:/home/ghd/.hishtory"
+source /home/ghd/.hishtory/config.sh
