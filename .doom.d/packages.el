@@ -79,7 +79,6 @@
 (package! humanoid-themes)
 (package! org-present)
 (package! wiki-summary)
-(package! csv-mode)
 (package! iedit)
 (package! lsp-grammarly)
 (package! protobuf-mode)
