@@ -73,6 +73,7 @@ alias cmus="cd ~/music && cmus"
 alias frozen="pkill -SIGUSR2 emacs"
 alias 'cd..'='cd ..'
 alias sp='systemctl suspend'
+alias vim='emacsclient -nw'
 
 
 
