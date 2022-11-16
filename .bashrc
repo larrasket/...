@@ -30,6 +30,7 @@ alias mva='mpv --config-dir=$HOME/.config/mvi *jpg *png *gif *webp *tiff *raw *b
 alias htop='gotop'
 alias netwatch='sudo nethogs'
 alias sdocker='systemctl start docker.service'
+alias docker='sudo docker'
 
 #make it easier
 alias c='clear'
