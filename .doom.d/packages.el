@@ -82,4 +82,4 @@
 (package! iedit)
 (package! lsp-grammarly)
 (package! protobuf-mode)
-(package! monokai-theme)
+;; (package! monokai-theme)
