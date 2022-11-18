@@ -14,11 +14,30 @@ text/*|application/json) nvim "$f";;
 esac
 }}
 
-cmd mkdir ${{
-printf "Directory Name: "
-read ans
-mkdir $ans
+
+cmd mkdir %[ -e $1 ] && printf "file exists" || mkdir "$1"
+
+
+
+
+cmd movetoarchive ${{
+for file in "$fx"
+do
+mv  "$file" ~/me/archive/
+done
 }}
+
+map am movetoarchive
+
+cmd archivehere ${{
+mkdir -p .archive
+for file in "$fx"
+do
+mv "$file" "${file%/*}"/.archive/
+done
+}}
+
+map ah archivehere
 
 cmd mkfile ${{
 printf "File Name: "
@@ -211,6 +230,7 @@ map <enter> open
 map mf mkfile
 map mr sudomkfile
 map md mkdir
+map md push :mkdir<space>
 map + mkdir
 map - updir
 map ms $mkscript
