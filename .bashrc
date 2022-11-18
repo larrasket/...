@@ -191,3 +191,8 @@ _build_prompt() {
 }
 
 PROMPT_COMMAND="_show_last_exit_status; _build_prompt;"
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux
+fi
+
+
