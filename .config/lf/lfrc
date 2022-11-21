@@ -10,7 +10,7 @@ case $(file --mime-type "$f" -bL) in
 text/*|application/json) nvim "$f";;
 # text/*|application/json) emacs --no-window-system  "$f";;
 #  text/*|application/json) emacs "$f";;
-*) xdg-open "$f" ;;
+*) setsid -f xdg-open "$f" ;;
 esac
 }}
 
@@ -18,6 +18,15 @@ esac
 cmd mkdir %[ -e $1 ] && printf "file exists" || mkdir "$1"
 
 
+
+cmd mvimg ${{
+for file in "$fx"
+do
+mv  "$file" ~/me/img/
+done
+}}
+
+map mi mvimg 
 
 
 cmd movetoarchive ${{
@@ -37,7 +46,7 @@ mv "$file" "${file%/*}"/.archive/
 done
 }}
 
-map ah archivehere
+map aa archivehere
 
 cmd mkfile ${{
 printf "File Name: "
