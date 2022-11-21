@@ -101,42 +101,14 @@
           (lambda () (local-set-key (kbd "M-<f5>") 'compiledep)))
 
 
-(add-hook 'lsp-mode-hook
-          (lambda ()
-             (add-hook 'after-save-hook 'lsp-format-buffer nil 'make-it-local)))
+;; (add-hook 'lsp-mode-hook
+;;           (lambda ()
+;;              (add-hook 'after-save-hook 'lsp-format-buffer nil 'make-it-local)))
 
 
 
-
-
-
-;; (defun my-tex ()
-;;   (interactive)
-;;   (save-buffer)
-;;   (TeX-command "LaTeX" 'TeX-master-file -1))
-;; (defun aftaa () (add-hook 'after-save-hook 'my-tex))
-;; (add-hook 'LaTeX-mode-hook #'aftaa)
-;; (defun JH/remove-electric-indent-mode ()
-;;   (electric-indent-local-mode -1))
-;; (setq LaTeX-indent-environment-list '())
-;; (setq LaTeX-indent-level 0)
-;; (setq LaTeX-item-indent 0)
-;; (setq LaTeX-left-right-indent-level 0)
-;; (setq TeX-brace-indent-level 0)
-;; (add-hook 'LaTeX-mode-hook 'JH/remove-electric-indent-mode)
-;; (add-hook 'tex-mode-hook 'JH/remove-electric-indent-mode)
-;; (setq TeX-brace-indent-level 4)
-;; (defun set-exec-path-from-shell-PATH ()
-;;   (let ((path-from-shell (replace-regexp-in-string
-;;                           "[ \t\n]*$"
-;;                           ""
-;;                           (shell-command-to-string "$SHELL --login -i -c 'echo $PATH'"))))
-;;     (setenv "PATH" path-from-shell)
-;;     (setq eshell-path-env path-from-shell) ; for eshell users
-;;     (setq exec-path (split-string path-from-shell path-separator))))
 
 (defun my-csharp-mode-setup ()
-  (lsp)
   (company-mode)
   (flycheck-mode)
   (setq indent-tabs-mode nil)
