@@ -14,7 +14,7 @@
 (global-set-key (kbd "C-M-r") 'lsp-find-references)
 (global-set-key (kbd "M-RET") 'lsp-execute-code-action)
 (require 'evil)
-(evil-global-set-key 'normal (kbd "/") 'swiper)
+;; (evil-global-set-key 'normal (kbd "/") 'swiper)
 
 
 
@@ -69,11 +69,11 @@
 (global-set-key (kbd "C-;") 'iedit-mode)
 
 
-(add-hook 'pdf-view-mode-hook
-          (lambda () (local-set-key (kbd "<f2>") #'pdf-annot-add-text-annotation)))
+;; (add-hook 'pdf-view-mode-hook
+;;           (lambda () (local-set-key (kbd "<f2>") #'pdf-annot-add-text-annotation)))
 
-(add-hook 'pdf-view-mode-hook
-          (lambda () (local-set-key (kbd "<f3>") #'pdf-annot-add-underline-markup-annotation)))
+;; (add-hook 'pdf-view-mode-hook
+;;           (lambda () (local-set-key (kbd "<f3>") #'pdf-annot-add-underline-markup-annotation)))
 
 (add-hook 'org-mode-hook (lambda () (local-set-key (kbd "<f8>") #'org-tree-slide-mode)))
 (add-hook 'calc-mode-hook (lambda () (local-set-key (kbd "r r") #'calc-reset)))
