@@ -52,6 +52,16 @@ done
 
 map am movetoarchive
 
+
+cmd movetoarchivething ${{
+for file in "$fx"
+do
+mv  "$file" ~/me/archive/everything
+done
+}}
+
+map as movetoarchivething
+
 cmd archivehere ${{
 mkdir -p .archive
 for file in "$fx"
@@ -280,7 +290,7 @@ map gn cd ~/me/nashid
 map gp cd ~/blog/content/posts
 map ga cd ~/me/art
 map gl cd ~/leet
-map gi cd ~/me/images/
+map gi cd ~/me/img/
 map gj cd ~/gits/
 
 map \;j cd ~
