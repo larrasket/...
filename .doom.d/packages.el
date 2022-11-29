@@ -80,6 +80,5 @@
 (package! org-present)
 (package! wiki-summary)
 (package! iedit)
-(package! lsp-grammarly)
 (package! protobuf-mode)
 ;; (package! monokai-theme)
