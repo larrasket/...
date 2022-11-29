@@ -29,6 +29,20 @@ done
 map mi mvimg 
 
 
+
+
+cmd searchimage ${{
+for file in "$fx"
+do
+# https://gist.github.com/salehmu/c3d6539cc7ee93e6959ae742eb06285c
+url=$(imgur.sh "$file")
+brave "https://yandex.com/images/search?rpt=imageview&url=$url"
+done
+}}
+
+map si searchimage 
+
+
 cmd movetoarchive ${{
 for file in "$fx"
 do
