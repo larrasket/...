@@ -3,7 +3,7 @@
 static const char *dmenucmd[] = {"dmenu_run", "-g", "12",    "-l",
                                  "80",        "-p", "Run: ", NULL};
 
-//dmenu_run  -l 80 -g 12 -p 'run'
+// dmenu_run  -l 80 -g 12 -p 'run'
 static const char *emacs[] = {"emaks", NULL};
 static const char *anyywhere[] = {"/home/ghd/.emacs_anywhere/bin/run", NULL};
 
@@ -11,12 +11,12 @@ static const char *pctlpreviouscmd[] = {"playerctl", "previous", NULL};
 static const char *pctlplaycmd[] = {"playerctl", "play-pause", NULL};
 static const char *pctlpausecmd[] = {"playerctl", "pause", NULL};
 static const char *pctlnextcmd[] = {"playerctl", "next", NULL};
-static const char *gbrowsercmd[] = {"brave", NULL};
+static const char *gbrowsercmd[] = {"chromium", NULL};
 static const char *ggm[] = {"keepassxc", NULL};
 static const char *exp[] = {"thunar", NULL};
 static const char *ranger[] = {"kitty", "-e", "ranger", NULL};
 static const char *mov[] = {
-    "brave", "https://www.notion.so/Home-9061ccbeaa414fb0b7335c42f8299692",
+    "chromium", "https://www.notion.so/Home-9061ccbeaa414fb0b7335c42f8299692",
     NULL};
 static const char *scr[] = {"flameshot", "gui", NULL};
 static const char *mail[] = {"mail", NULL};
@@ -25,16 +25,16 @@ static const char *copy[] = {"rofi", "-show", "drun", "-show-icons", NULL};
 static const char *copy1[] = {"rofi", "-show", "emoji", "-modi", "emoji", NULL};
 static const char *lf[] = {"kitty", "-e", "lfrun", NULL};
 static const char *tel[] = {"caprine", NULL};
-static const char *dis[] = {"brave", "discord.com", NULL};
-static const char *ms[] = {"brave", "m.me", NULL};
+static const char *dis[] = {"chromium", "discord.com", NULL};
+static const char *ms[] = {"chromium", "m.me", NULL};
 static const char *fid[] = {
-    "brave", "chrome-extension://mefgmmbdailogpfhfblcnnjfmnpnmdfa/reader.html",
-    NULL};
+    "chromium",
+    "chrome-extension://mefgmmbdailogpfhfblcnnjfmnpnmdfa/reader.html", NULL};
 static const char *htop[] = {"kitty", "-e ", "htop", NULL};
 static const char *yakyak[] = {"yakyak", NULL};
 static const char *pad[] = {"leafpad", NULL};
 static const char *start[] = {"kitty", "-e ", "rsblocks", "&", "dunst", NULL};
-static const char *trello[] = {"brave", "https://www.google.com ", NULL};
+static const char *trello[] = {"chromium", "https://www.google.com ", NULL};
 //#include "fibonacci.h"
 static const char *brightcmd[][4] = {
     {"light", "-A", "5", NULL},
@@ -52,7 +52,7 @@ static const char *mutevol[] = {"/usr/bin/pactl", "set-sink-mute",
 /* Constants */
 #define TERMINAL "kitty"
 #define TERMCLASS "kitty"
-#define BROWSER "brave"
+#define BROWSER "chromium"
 
 /* appearance */
 static unsigned int borderpx = 1; /* border pixel of windows */
@@ -324,13 +324,13 @@ static Key keys[] = {
     {MODKEY, XK_space, zoom, {0}},
     {MODKEY | ShiftMask, XK_space, togglefloating, {0}},
 
-    {MODKEY, XK_d, spawn, {.v = dmenucmd}}, 
+    {MODKEY, XK_d, spawn, {.v = dmenucmd}},
     {MODKEY, XK_c, killclient, {0}},
     {MODKEY | ShiftMask, XK_q, quit, {0}},
     {MODKEY | ShiftMask, XK_s, spawn, {.v = scr}},
     {MODKEY, XK_e, spawn, {.v = lf}},
     {MODKEY | ShiftMask, XK_d, spawn, {.v = dis}},
-    {MODKEY | ShiftMask, XK_f, spawn, {.v = fid}},
+    //{MODKEY | ShiftMask, XK_f, spawn, {.v = fid}},
     {MODKEY, XK_w, spawn, {.v = emacs}},
     {MODKEY | ShiftMask, XK_w, spawn, {.v = anyywhere}},
 
