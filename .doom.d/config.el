@@ -11,5 +11,5 @@
 (after! highlight-indent-guides
   (highlight-indent-guides-auto-set-faces))
 
-(add-hook 'org-mode-hook (lambda ()
-                           (lsp)))
+;; (add-hook 'org-mode-hook (lambda ()
+;;                            (lsp)))
