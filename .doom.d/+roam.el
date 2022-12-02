@@ -209,12 +209,13 @@
       "r j" #'org-roam-dailies-capture-today)
 
 
-(add-to-list 'display-buffer-alist
-             '("\\*org-roam\\*"
-               (display-buffer-in-direction)
-               (direction . right)
-               (window-width . 0.38)
-               (window-height . fit-window-to-buffer)))
+(after! popup
+  (set-popup-rule! "\\*org-roam\\*"
+    :side 'right
+    :width 0.40
+    :slot 0
+    :parameters '((no-other-window . t)
+                 (no-delete-other-windows . t))))
 
 
 (defvar org-roam-list-most-linked-count 5)
