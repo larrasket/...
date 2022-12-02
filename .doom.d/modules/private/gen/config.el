@@ -14,7 +14,7 @@
 (custom-theme-set-faces! 'doom-tomorrow-night
   '(default :background "#121212"))
 (setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "brave")
+      browse-url-generic-program "chromium")
 (org-babel-do-load-languages
     'org-babel-load-languages
     '((mermaid . t)
