@@ -18,8 +18,8 @@
         mu4e-attachment-dir "~/Downloads"
         mu4e-maildir (expand-file-name "~/email/mbsyncmail")
         mu4e-get-mail-command "mbsync nameaccount"
-        mu4e-user-mail-address-list '("jabrr7@outlook.com" "jabrr7@outlook.com")
-	    user-mail-address "jabrr7@outlook.com"
+        mu4e-user-mail-address-list '("salhghd7@gmail.com" "salhghd7@gmail.com")
+	    user-mail-address "salhghd7@gmail.com"
 	    user-full-name "Salh Jabr")
   (setq message-send-mail-function 'smtpmail-send-it
 	smtpmail-stream-type 'starttls

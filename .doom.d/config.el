@@ -10,6 +10,7 @@
 (setq neo-mode-line-type 'default)
 (after! highlight-indent-guides
   (highlight-indent-guides-auto-set-faces))
-
-;; (add-hook 'org-mode-hook (lambda ()
-;;                            (lsp)))
+;; Die, Doc-View-mode! die!
+;; (defalias 'doc-view-mode #'doc-view-fallback-mode) ;Or fundamental-mode, ...
+(add-hook 'org-roam-find-file-hook #'git-auto-commit-mode)
+(setq load-prefer-newer t)

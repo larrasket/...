@@ -88,7 +88,7 @@
         +offline)     ; navigate your code and its documentation
        (lsp +peak)    ;; +eglot         ; M-x vscode
        magit          ; a git porcelain for Emacs
-       make           ; run make tasks from Emacs
+       ;; make           ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
        pdf            ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
@@ -168,8 +168,8 @@
        yaml              ; JSON, but readable
        ;;zig               ; C, but simpler
 
-       :email
-       (mu4e +org)
+       ;; :email
+       ;; (mu4e +org)
        ;;notmuch
        ;;(wanderlust +gmail)
 
@@ -177,9 +177,9 @@
        ;; calendar
        ;; emms
        ;; everywhere          ; *leave* Emacs!? You must be joking
-       ;;irc               ; how neckbeards socialize
-       (rss
-        +org)              ; emacs as an RSS reader
+       irc               ; how neckbeards socialize
+       ;; (rss
+        ;; +org)              ; emacs as an RSS reader
        ;; twitter           ; twitter client https://twitter.com/vnought
 
        :config
@@ -191,7 +191,7 @@
        awqat
        compiler
        dired
-       email
+       ;; email
        ;; feeds
        ;; flyivy
        gen

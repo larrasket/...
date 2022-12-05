@@ -34,18 +34,18 @@
 
 ;; (remove-hook 'eshell-mode-hook 'hide-mode-line-mode t)
 ;;
-  (defun eshell-load-bash-aliases ()
-    "Read Bash aliases and add them to the list of eshell aliases."
-    ;; Bash needs to be run - temporarily - interactively
-    ;; in order to get the list of aliases.
-      (with-temp-buffer
-        (call-process "bash" nil '(t nil) nil "-ci" "alias")
-        (goto-char (point-min))
-        (while (re-search-forward "alias \\(.+\\)='\\(.+\\)'$" nil t)
-          (eshell/alias (match-string 1) (match-string 2)))))
+  ;; (defun eshell-load-bash-aliases ()
+  ;;   "Read Bash aliases and add them to the list of eshell aliases."
+  ;;   ;; Bash needs to be run - temporarily - interactively
+  ;;   ;; in order to get the list of aliases.
+  ;;     (with-temp-buffer
+  ;;       (call-process "bash" nil '(t nil) nil "-ci" "alias")
+  ;;       (goto-char (point-min))
+  ;;       (while (re-search-forward "alias \\(.+\\)='\\(.+\\)'$" nil t)
+  ;;         (eshell/alias (match-string 1) (match-string 2)))))
 
-  ;; We only want Bash aliases to be loaded when Eshell loads its own aliases,
-  ;; rather than every time `eshell-mode' is enabled.
-  (add-hook 'eshell-alias-load-hook 'eshell-load-bash-aliases)
+  ;; ;; We only want Bash aliases to be loaded when Eshell loads its own aliases,
+  ;; ;; rather than every time `eshell-mode' is enabled.
+  ;; (add-hook 'eshell-alias-load-hook 'eshell-load-bash-aliases)
 
 (after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
