@@ -82,3 +82,4 @@
 (package! iedit)
 (package! protobuf-mode)
 ;; (package! monokai-theme)
+(package! git-auto-commit-mode)

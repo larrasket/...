@@ -225,3 +225,5 @@
 
 
 (provide '+roam)
+
+(add-hook 'org-roam-find-file-hook #'git-auto-commit-mode)
