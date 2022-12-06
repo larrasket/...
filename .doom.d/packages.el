@@ -84,3 +84,4 @@
 ;; (package! monokai-theme)
 (package! git-auto-commit-mode)
 (package! distinguished-theme)
+(package! highlight-indent-guides)
