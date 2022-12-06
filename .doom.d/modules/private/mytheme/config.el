@@ -20,4 +20,6 @@
 ;; (setq doom-theme 'doom-acario-light)
 ;; (setq doom-theme 'mine)
 
-(setq doom-theme 'doom-monokai-classic)
+;; (setq doom-theme 'doom-monokai-classic)
+;; (setq doom-theme 'modus-vivendi)
+(setq doom-theme 'distinguished)

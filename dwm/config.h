@@ -94,11 +94,11 @@ static char selbgcolor[] = "#005577";
 /*     [SchemeSel] = {selfgcolor, selbgcolor, selbordercolor}, */
 /* }; */
 
-static const char col_gray1[] = "#333333";
+static const char col_gray1[] = "#000000";
 static const char col_gray2[] = "#888580";
-static const char col_gray3[] = "#F8F8F8";
+static const char col_gray3[] = "#F7F8F8";
 static const char col_gray4[] = "#F8F8F8";
-static const char col_cyan[] = "#404040";
+static const char col_cyan[]  = "#1E1E1E";
 
 static const char *colors[][3] = {
     /*               fg         bg         border   */
