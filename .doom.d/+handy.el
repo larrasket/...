@@ -19,3 +19,36 @@ the beginning of the list."
           (load-theme next t)
           (message "Loaded theme ‘%S’" next))
       (message "All themes disabled"))))
+
+
+
+
+(defun org-archive-done-tasks ()
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+   "/DONE" 'tree))
+
+
+(defun org-archive-killed-tasks ()
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+   "/KILL" 'tree))
+
+(defun org-archive-file ()
+  (interactive)
+  (org-archive-done-tasks)
+  (org-archive-killed-tasks))
+
+
+(defun my-org-archive-done-tasks ()
+  (interactive)
+  (org-map-entries 'org-archive-subtree "/DONE" 'file)
+  (org-map-entries 'org-archive-subtree "/FAIL" 'file)
+  (org-map-entries 'org-archive-subtree "/KILL" 'file))
+
+
+(provide '+handy)
