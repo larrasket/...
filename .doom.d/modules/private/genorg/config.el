@@ -305,20 +305,6 @@ the structure of the org file."
 (setq org-archive-location "%s_archive.org::")
 
  (setq org-cycle-separator-lines -1)
-(defun org-archive-done-tasks ()
-  (interactive)
-  (org-map-entries
-   (lambda ()
-     (org-archive-subtree)
-     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
-   "/DONE" 'tree))
-
-
-(defun my-org-archive-done-tasks ()
-  (interactive)
-  (org-map-entries 'org-archive-subtree "/DONE" 'file)
-  (org-map-entries 'org-archive-subtree "/FAIL" 'file)
-  (org-map-entries 'org-archive-subtree "/KILL" 'file))
 
 (setq org-startup-folded t)
 
