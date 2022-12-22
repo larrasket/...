@@ -9,5 +9,5 @@
 ;; (package! ejc-sql)
 ;; (package! auto-complete)
 ;; (package! edbi)
-(package! sqlformat)
+;; (package! sqlformat)
 (package! lsp-mssql)

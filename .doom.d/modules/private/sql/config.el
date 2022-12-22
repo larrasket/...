@@ -4,11 +4,11 @@
 (require 'lsp-mssql)
 (add-hook 'sql-mode-hook 'lsp)
 (setq lsp-mssql-connections
-      [(:server "localhost"
-        :database "TSQL2012"
+      [(:server "172.21.0.3"
+        :database "master"
         :user "sa"
-        :password "i7AvcLKSU4QpQr")
-       ])
+        :password "rBwiY3JgqmG26q@")])
+       
 
 
 
@@ -18,17 +18,16 @@
 (setq sqlformat-args '("-s2" "-g"))
 
 
-  (add-hook 'sql-mode-hook
-     (lambda ()
-       (remove-hook 'before-save-hook #'lsp-format-buffer t)
-       (remove-hook 'before-save-hook #'lsp-organize-imports t)
-       (remove-hook! 'before-save-hook #'+format/buffer)))
+;; (add-hook 'sql-mode-hook
+;;  (lambda ()
+;;   (remove-hook 'before-save-hook #'lsp-format-buffer t
+;;    (remove-hook 'before-save-hook #'lsp-organize-imports t)
+;;    (remove-hook! 'before-save-hook #'+format/buffer))))
 
-(setq-hook! 'sql-mode-hook +format-with-lsp nil)
-(setq-hook! 'sql-mode-hook +format-on-save-enabled-modes nil)
+;; (setq-hook! 'sql-mode-hook +format-with-lsp nil)
+;; (setq-hook! 'sql-mode-hook +format-on-save-enabled-modes nil)
 
 
-(add-hook 'sql-mode-hook 'sqlformat-on-save-mode)
 
 
 
