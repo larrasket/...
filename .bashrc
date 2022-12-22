@@ -29,7 +29,9 @@ alias mvi='mpv --config-dir=$HOME/.config/mvi'
 alias mva='mpv --config-dir=$HOME/.config/mvi *jpg *png *gif *webp *tiff *raw *bmp *svg'
 alias htop='gotop'
 alias netwatch='sudo nethogs'
-alias sdocker='systemctl start docker.service'
+alias dockerstart='systemctl start docker.service'
+alias dockercc='docker rm -vf $(docker ps -aq)'
+#alias dockerci='docker rmi -f $(docker images -aq)'
 alias docker='sudo docker'
 
 #make it easier
@@ -68,7 +70,7 @@ alias rec='nc -w 10 192.168.1.6 9090 | tar -xz'
 alias cat='bat'
 alias intl="WD=\$(pwd);cd ~/source;zathura \"\$(fzf)\";cd \$WD"
 alias share="caddy file-server --listen :2030 --browse"
-alias films="sudo cryptsetup luksOpen /dev/sda3 winsys && sudo mount /dev/mapper/winsys /mnt/winsys/"
+alias decrypt="sudo cryptsetup luksOpen /dev/sda3 winsys && sudo mount /dev/mapper/winsys /mnt/winsys/ && sudo mount --bind /mnt/winsys/roam /home/ghd/roam"
 alias cmus="cd ~/music && cmus"
 alias frozen="pkill -SIGUSR2 emacs"
 alias 'cd..'='cd ..'
