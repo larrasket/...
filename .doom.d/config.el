@@ -51,4 +51,3 @@
                           :foreground (elgantt--color-rgb-to-hex color)
                           :height .1)))
 (add-hook 'org-mode-hook 'org-visual-indent-mode)
-(setq org-capitalize-headings t)
