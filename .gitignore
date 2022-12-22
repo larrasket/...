@@ -18,3 +18,4 @@
 /.config/mpv/scripts/time_pairs.txt
 flycheck_**
 /.doom.d/custom.el
+/mpv/watch_later/
