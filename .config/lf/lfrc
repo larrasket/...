@@ -1,10 +1,8 @@
-#set ratios 4:5
-#set ratio 1:2:3
 set drawbox true
 set previewer ~/.config/lf/preview
 set cleaner ~/.config/lf/cleaner
 set preview true
-# Custom Functions
+
 cmd open ${{
 case $(file --mime-type "$f" -bL) in
 text/*|application/json) nvim "$f";;
@@ -17,12 +15,17 @@ esac
 
 cmd mkdir %[ -e $1 ] && printf "file exists" || mkdir "$1"
 
-
-
 cmd mvimg ${{
-for file in "$fx"
-do
-mv  "$file" ~/me/img/
+files=$(printf "$fx" | tr '\n' ';')
+mkdir -p .archive
+while [ "$files" ]; do
+file=${files%%;*}
+mv "$(basename "$file")" /home/ghd/me/img/
+if [ "$files" = "$file" ]; then
+files=''
+else
+files="${files#*;}"
+fi
 done
 }}
 
@@ -44,29 +47,47 @@ map si searchimage
 
 
 cmd movetoarchive ${{
-for file in "$fx"
-do
-mv  "$file" ~/me/archive/
+
+files=$(printf "$fx" | tr '\n' ';')
+mkdir -p .archive
+while [ "$files" ]; do
+file=${files%%;*}
+mv "$(basename "$file")" /home/ghd/me/archive/
+if [ "$files" = "$file" ]; then
+files=''
+else
+files="${files#*;}"
+fi
 done
 }}
 
 map am movetoarchive
 
 
-cmd movetoarchivething ${{
-for file in "$fx"
-do
-mv  "$file" ~/me/archive/everything
-done
-}}
+#cmd movetoarchivething ${{
+#
+#
+#files=$(printf "$fx" | tr '\n' ';')
+#
+#for file in "$files"
+#do
+#mv  "$file" ~/me/archive/everything
+#done
+#}}
 
-map as movetoarchivething
+#map as movetoarchivething
 
 cmd archivehere ${{
+files=$(printf "$fx" | tr '\n' ';')
 mkdir -p .archive
-for file in "$fx"
-do
-mv "$file" "${file%/*}"/.archive/
+while [ "$files" ]; do
+file=${files%%;*}
+mv "$(basename "$file")" .archive/
+if [ "$files" = "$file" ]; then
+files=''
+else
+files="${files#*;}"
+fi
 done
 }}
 
@@ -75,7 +96,7 @@ map aa archivehere
 cmd mkfile ${{
 printf "File Name: "
 read ans
-$EDITOR $ans
+$EDITOR "$ans"
 }}
 
 cmd chmod ${{
@@ -151,14 +172,8 @@ cmd tarbz2 %tar cjvf "$f.tar.bz2" "$f"
 cmd trash ${{
 files=$(printf "$fx" | tr '\n' ';')
 while [ "$files" ]; do
-# extract the substring from start of string up to delimiter.
-# this is the first "element" of the string.
 file=${files%%;*}
-
 trash-put "$(basename "$file")"
-# if there's only one element left, set `files` to an empty string.
-# this causes us to exit this `while` loop.
-# else, we delete the first "element" of the string from files, and move onto the next.
 if [ "$files" = "$file" ]; then
 files=''
 else
