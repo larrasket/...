@@ -1,5 +1,5 @@
 ;;; init.el -*- lexical-binding: t; -*-
-
+(setq inhibit-automatic-native-compilation t)
 (doom! :input
        :completion
        company             ; the ultimate code completion backend
@@ -42,8 +42,7 @@
        :checkers
        (syntax +childframe); tasing you for every semicolon you forget
        (spell
-        +everywhere
-        +hunspell)         ; tasing you for misspelling mispelling
+        +flyspell)         ; tasing you for misspelling mispelling
        grammar             ; tasing grammar mistake every you make
 
        :tools

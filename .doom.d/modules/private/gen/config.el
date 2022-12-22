@@ -1,6 +1,5 @@
 ;;; mine/gen/config.el -*- lexical-binding: t; -*-
 
-
 (setq completion-ignore-case t)
 (setq-default frame-title-format '("%b"))
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
@@ -40,14 +39,14 @@
 ;; bi
 
 (setq bidi-paragraph-direction 'left-to-right)
-   (setq-default bidi-paragraph-direction 'left-to-right)
-    (defun bidi-direction-toggle ()
-      (interactive "")
-      (setq bidi-display-reordering t)
-      (if (equal bidi-paragraph-direction 'right-to-left)
-          (setq bidi-paragraph-direction 'left-to-right)
-        (setq bidi-paragraph-direction 'right-to-left))
-      (message "%s" bidi-paragraph-direction))
+(setq-default bidi-paragraph-direction 'left-to-right)
+(defun bidi-direction-toggle ()
+  (interactive "")
+  (setq bidi-display-reordering t)
+  (if (equal bidi-paragraph-direction 'right-to-left)
+      (setq bidi-paragraph-direction 'left-to-right)
+    (setq bidi-paragraph-direction 'right-to-left))
+  (message "%s" bidi-paragraph-direction))
 
 
 (yas-global-mode 1)
@@ -163,10 +162,10 @@
                                      (org-block (:height 1.25) org-block)
                                      (org-block-begin-line (:height 0.7) org-block)))
   (my/center 110)
-  (vi-tilde-fringe-mode 0)
+  (vi-tilde-fringe-mode 0))
   ;; (centered-window-mode)
   ;; (visual-fill-column-mode 1)
-  ) ;; (visual-line-mode 1)
+   ;; (visual-line-mode 1)
 
 (add-hook 'org-present-mode-hook 'startpresent)
 

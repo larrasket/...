@@ -1,6 +1,5 @@
 ;;; ../configs/.doom.d/+roam.el -*- lexical-binding: t; -*-
 
-
 ;; (cl-defmethod org-roam-node-backlinkscount-number ((node org-roam-node))
 ;;     "Access slot \"backlinks\" of org-roam-node struct CL-X. This
 ;;     is identical to `org-roam-node-backlinkscount' with the
@@ -45,6 +44,7 @@
     '(("d" "default" entry "* %<%H:%M> \n %?"
        :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%A, %d %B %Y>\n- tags :: [[id:fe8618df-c476-44b8-8169-a210bff989d7][Journaling]]\n"))))
   :config
+  (setq org-roam-database-connector 'sqlite3)
   ;; If you're using a vertical completion framework, you might want a more informative completion interface
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)

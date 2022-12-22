@@ -50,8 +50,7 @@
                     ("https://go.dev/blog/feed.atom" golang cs prod)
                     ("http://feeds.feedburner.com/berkes" cs prod software_engineering)
                     ("https://dave.cheney.net/feed" cs prod)
-                    ("https://www.norvig.com/rss-feed.xml" cs prod)
-                    ))
+                    ("https://www.norvig.com/rss-feed.xml" cs prod)))
         (elfeed-update)))
 (add-hook! 'elfeed-search-mode-hook #'elfeed-update)
 
