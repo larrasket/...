@@ -4,4 +4,4 @@
 
 (package! awqat
   :recipe (:host github
-           :repo "zkry/awqat"))
+           :repo "luggages/awqat"))

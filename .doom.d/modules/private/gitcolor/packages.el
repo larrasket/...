@@ -6,8 +6,5 @@
 (package! git-gutter-fringe)
 
 (package! gitconfig-mode
-	  :recipe (:host github :repo "magit/git-modes"
+	  :recipe (:host github :repo "luggages/git-modes"
 			 :files ("gitconfig-mode.el")))
-(package! gitignore-mode
-	  :recipe (:host github :repo "magit/git-modes"
-			 :files ("gitignore-mode.el")))
