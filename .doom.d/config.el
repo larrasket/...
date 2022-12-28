@@ -51,3 +51,63 @@
                           :foreground (elgantt--color-rgb-to-hex color)
                           :height .1)))
 (add-hook 'org-mode-hook 'org-visual-indent-mode)
+
+
+(define-key evil-normal-state-map (kbd "C-g") 'evil-escape)
+(define-key evil-visual-state-map (kbd "C-g") 'evil-escape)
+(define-key evil-insert-state-map (kbd "C-g") 'evil-escape)
+(define-key evil-replace-state-map (kbd "C-g") 'evil-escape)
+(define-key evil-operator-state-map (kbd "C-g") 'evil-escape)
+
+(defun my/evil-escape-and-abort-company ()
+  (interactive)
+  (company-abort)
+  (evil-escape))
+
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "C-g") 'my/evil-escape-and-abort-company)
+  (define-key company-search-map (kbd "C-g") 'my/evil-escape-and-abort-company))
+
+
+
+
+(use-package! org-roam-bibtex
+  :after org-roam
+  :config
+  (require 'org-ref)) ; optional: if using Org-ref v2 or v3 citation links
+(org-roam-bibtex-mode)
+
+
+
+
+
+
+
+
+(use-package citar
+  :bind (("C-c b" . citar-insert-citation)
+         :map minibuffer-local-map
+         ("M-b" . citar-insert-preset))
+  :custom
+  (citar-bibliography '("~/configs/ref.bib")))
+
+(setq citar-templates
+      '((main . "${author editor:30}     ${date year issued:4}     ${title:48}")
+        (suffix . "          ${=key= id:15}    ${=type=:12}    ${tags keywords:*}")
+        (preview . "${author editor} (${year issued date}) ${title}, ${journal journaltitle publisher container-title collection-title}.\n")
+        (note . "Notes on ${author editor}, ${title}")))
+
+(setq citar-symbols
+      `((file ,(all-the-icons-faicon "file-o" :face 'all-the-icons-green :v-adjust -0.1) . " ")
+        (note ,(all-the-icons-material "speaker_notes" :face 'all-the-icons-blue :v-adjust -0.3) . " ")
+        (link ,(all-the-icons-octicon "link" :face 'all-the-icons-orange :v-adjust 0.01) . " ")))
+(setq citar-symbol-separator "  ")
+(with-eval-after-load 'evil
+  (define-key evil-insert-state-map (kbd "C-j") 'bibtex-next-field)
+  (define-key evil-insert-state-map (kbd "C-k") 'bibtex-previous-entry))
+(setq bibtex-completion-bibliography "~/configs/ref.bib")
+
+(with-eval-after-load 'vertigo
+  (vertigo-mode 1)
+  (setq vertigo-completing-read-function 'ivy-completing-read))
+

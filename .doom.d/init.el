@@ -3,8 +3,9 @@
 (doom! :input
        :completion
        company                          ; the ultimate code completion backend
-       ivy
+       ;; ivy
        vertico
+       ;; helm
        :ui
        doom                             ; what makes DOOM look the way it does
        doom-dashboard                   ; a nifty splash screen for Emacs
@@ -46,6 +47,7 @@
        grammar                          ; tasing grammar mistake every you make
 
        :tools
+       biblio
        gist                             ; interacting with github gists
        (lookup
         +dictionary

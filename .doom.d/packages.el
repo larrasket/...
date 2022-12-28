@@ -91,5 +91,13 @@
 (package! grip-mode)
 (package! emacsql-sqlite3)
 (package! emacsql-sqlite-module)
+
+
+
+
+(package! org-ref)
+
+(package! org-roam-bibtex
+  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 (unpin! org-roam)
-(package! org-roam)
+(unpin! bibtex-completion helm-bibtex ivy-bibtex)
