@@ -17,7 +17,8 @@ trap "( rm -f /tmp/term-wid-"$$" )" EXIT HUP
 
 # blog
 alias pubb1='cd public && git rm -rf . && cd .. && ./build.sh && cd public && git add . &&  git commit -m \"update\" && git push origin master '
-alias pub1='git add . && git commit -m update && git push origin latest_branch'
+# alias pub1='git add . && git commit -m update && git push origin latest_branch'
+alias pub1='git add . && git commit -m update'
 alias pub='pub1 && pubb1'
 
 #programs
