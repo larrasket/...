@@ -1,0 +1,11 @@
+# name: biblatex inbook
+# key: @inbook
+# --
+@inbook{${1:@inbook}},
+  author = {${2:Author}, ${3:A}.},
+  title = {${4:Title}},
+  booktitle = {${5:Book Title}},
+  publisher = {${6:Publisher}},
+  year = {${7:2020}},
+  file = {${8:/path/to/file}},
+}
