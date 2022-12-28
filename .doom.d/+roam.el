@@ -209,13 +209,18 @@
       "r j" #'org-roam-dailies-capture-today)
 
 
+(map! :leader
+      :desc "Add alias"
+      "r a" #'org-roam-alias-add)
+
+
 (after! popup
   (set-popup-rule! "\\*org-roam\\*"
     :side 'right
     :width 0.40
     :slot 0
     :parameters '((no-other-window . t)
-                 (no-delete-other-windows . t))))
+                  (no-delete-other-windows . t))))
 
 
 (defvar org-roam-list-most-linked-count 5)
