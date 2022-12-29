@@ -111,3 +111,29 @@
   (vertigo-mode 1)
   (setq vertigo-completing-read-function 'ivy-completing-read))
 
+
+
+
+
+
+
+
+(defun narrow-dwim ()
+  "Toggle narrowing."
+  (interactive)
+  (cond ((region-active-p)
+         ;; If region is highlighted, narrow to that
+         (call-interactively #'narrow-to-region)
+         (deactivate-mark t))
+        ((buffer-narrowed-p)
+         ;; Otherwise widen if narrowed
+         (widen))
+        ((derived-mode-p 'org-mode)
+         (call-interactively #'org-narrow-to-subtree))
+        (t
+         (message "Do not know what to narrow to.")
+         (call-interactively #'narrow-to-defun))))
+
+;; (setq bibtex-file-path '("/home/ghd/source"))
+
+
