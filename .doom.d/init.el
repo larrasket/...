@@ -5,7 +5,9 @@
        company                          ; the ultimate code completion backend
        ;; ivy
        vertico
-       ;; helm
+       ;; (helm
+       ;;  ;; +childframe
+       ;;  +icons)
        :ui
        doom                             ; what makes DOOM look the way it does
        doom-dashboard                   ; a nifty splash screen for Emacs
@@ -31,10 +33,10 @@
        :emacs
        (dired
         +icons)
-       electric                      ; smarter, keyword-based electric-indent
-       (ibuffer +icon)               ; interactive buffer management
-       undo                          ; persistent, smarter undo for your inevitable mistakes
-       vc                            ; version-control and Emacs, sitting in a tree
+       electric                         ; smarter, keyword-based electric-indent
+       (ibuffer +icon)                  ; interactive buffer management
+       undo                             ; persistent, smarter undo for your inevitable mistakes
+       vc                               ; version-control and Emacs, sitting in a tree
 
        :term
        eshell                           ; the elisp shell that works everywhere
@@ -56,7 +58,7 @@
        (magit +forge)                   ; a git porcelain for Emacs
        pdf                              ; pdf enhancements
        rgb                              ; creating color strings
-       ;;terraform         ; infrastructure as code
+       ;;terraform                      ; infrastructure as code
 
        :os
        (tty)                            ; improve the terminal Emacs experience
@@ -75,7 +77,8 @@
               +lsp)                     ; writing papers in Emacs has never been so fun
        markdown                         ; writing docs for people to ignore
        (org
-        +roam2)
+        +roam2
+        +noter)
        (rest +jq)                       ; Emacs as a REST client
        (sh
         +lsp)                           ; she sells {ba,z,fi}sh shells on the C xor
