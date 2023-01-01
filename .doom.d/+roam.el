@@ -137,7 +137,12 @@
          :if-new
          (file+head "everything/${slug}.org" "#+title: ${title}\n")
          :immediate-finish t
-         :unnarrowed t)))
+         :unnarrowed t)
+        ("r" "bibliography reference" plain
+         (file "~/configs/orb")
+         :target
+         (file+head "references/${citekey}.org" "#+title: ${title}\n"))
+        ))
 
 
 (cl-defmethod org-roam-node-type ((node org-roam-node))

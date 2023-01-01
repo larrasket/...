@@ -184,11 +184,6 @@
       orb-process-file-keyword t
       orb-attached-file-extensions '("pdf"))
 
-(setq org-roam-capture-templates
-      '(("r" "bibliography reference" plain
-         (file "~/configs/orb")
-         :target
-         (file+head "references/${citekey}.org" "#+title: ${title}\n"))))
+;; (setq org-roam-capture-templates
+;;       '())
 (define-key org-roam-bibtex-mode-map (kbd "C-c n a") #'orb-note-actions)
-
-
