@@ -224,18 +224,37 @@ Save the diagram to FILE."
 
 
 
+;; (defun org-babel-execute:chess (body params)
+;;   "Execute a block of Chess code with org-babel.
+;; This function is called by `org-babel-execute-src-block'."
+;;   (let* ((output-file (cdr (assq :file params)))
+;;          (pgn-file (make-temp-file "chess-notation" nil ".pgn"))
+;;          (cmd (format "python ~/configs/elchess.py %s %s" pgn-file output-file)))
+;;     (with-temp-buffer
+;;       (insert body)
+;;       (write-file pgn-file))
+;;     (shell-command cmd)
+;;     (org-babel-result-to-file output-file)))
+
+
+
+
 (defun org-babel-execute:chess (body params)
   "Execute a block of Chess code with org-babel.
 This function is called by `org-babel-execute-src-block'."
   (let* ((output-file (cdr (assq :file params)))
-         (pgn-file (make-temp-file "chess-notation" nil ".pgn"))
-         (cmd (format "python ~/configs/elchess.py %s %s" pgn-file output-file)))
+         (notation (cdr (assq :notation params)))
+         (extension (if (equal notation "fen") ".fen" ".pgn"))
+         (notation-file (make-temp-file "chess-notation" nil extension))
+         (cmd (format "python ~/configs/elchess.py %s %s %s" notation-file output-file notation)))
     (with-temp-buffer
       (insert body)
-      (write-file pgn-file))
+      (write-file notation-file))
     (shell-command cmd)
     (org-babel-result-to-file output-file)))
 
+(setq org-babel-default-header-args:chess
+      '((:results . "raw")))
 
 
 (org-babel-do-load-languages
