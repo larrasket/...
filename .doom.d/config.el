@@ -260,3 +260,4 @@ This function is called by `org-babel-execute-src-block'."
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((chess . t)))
+(add-hook 'csv-mode-hook 'csv-align-mode)

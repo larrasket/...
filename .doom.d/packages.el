@@ -104,3 +104,4 @@
 (package! ivy-bibtex)
 (package! citar)
 (package! citar-org-roam)
+(package! cvs-mode)
