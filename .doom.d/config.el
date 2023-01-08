@@ -261,3 +261,10 @@ This function is called by `org-babel-execute-src-block'."
  'org-babel-load-languages
  '((chess . t)))
 (add-hook 'csv-mode-hook 'csv-align-mode)
+
+
+
+(use-package pdf-view-restore
+  :after pdf-tools
+  :config
+  (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
