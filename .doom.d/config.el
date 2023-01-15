@@ -184,8 +184,6 @@
       orb-process-file-keyword t
       orb-attached-file-extensions '("pdf"))
 
-;; (setq org-roam-capture-templates
-;;       '())
 (define-key org-roam-bibtex-mode-map (kbd "C-c n a") #'orb-note-actions)
 
 
@@ -242,7 +240,7 @@ Save the diagram to FILE."
 (defun org-babel-execute:chess (body params)
   "Execute a block of Chess code with org-babel.
 This function is called by `org-babel-execute-src-block'."
-  (let* ((output-file (cdr (assq :file params)))
+  (let* ((output-file (concat (file-name-sans-extension (buffer-file-name)) (format "_%s_chess_output.svg" (format-time-string "%Y-%m-%d_%H-%M-%S")) ))
          (notation (cdr (assq :notation params)))
          (extension (if (equal notation "fen") ".fen" ".pgn"))
          (notation-file (make-temp-file "chess-notation" nil extension))
@@ -256,7 +254,6 @@ This function is called by `org-babel-execute-src-block'."
 (setq org-babel-default-header-args:chess
       '((:results . "raw")))
 
-
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((chess . t)))
@@ -264,7 +261,15 @@ This function is called by `org-babel-execute-src-block'."
 
 
 
-(use-package pdf-view-restore
-  :after pdf-tools
-  :config
-  (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode))
+(require 'saveplace-pdf-view)
+(save-place-mode 1)
+
+(setq org-crypt-key "ghd@keemail.me")
+
+
+
+(require 'epa-file)
+(epa-file-enable)
+(setq epa-file-cache-passphrase-for-symmetric-encryption t)
+(setq epa-file-select-keys 'silent)
+(setq epa-file-encrypt-to "ghd@keemail.me")

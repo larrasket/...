@@ -32,7 +32,8 @@
 
        :emacs
        (dired
-        +icons)
+        +icons
+        +ranger)
        electric                         ; smarter, keyword-based electric-indent
        (ibuffer +icon)                  ; interactive buffer management
        undo                             ; persistent, smarter undo for your inevitable mistakes
@@ -77,8 +78,8 @@
               +lsp)                     ; writing papers in Emacs has never been so fun
        markdown                         ; writing docs for people to ignore
        (org
-        +roam2
-        +noter)
+        +roam2)
+        ;; +noter
        (rest +jq)                       ; Emacs as a REST client
        (sh
         +lsp)                           ; she sells {ba,z,fi}sh shells on the C xor

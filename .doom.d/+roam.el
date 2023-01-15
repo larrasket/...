@@ -40,18 +40,20 @@
   :ensure t
   :custom
   (org-roam-directory (file-truename "~/roam"))
+
   (org-roam-dailies-capture-templates
-    '(("d" "default" entry "* %<%H:%M> \n %?"
-       :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%A, %d %B %Y>\n- tags :: [[id:fe8618df-c476-44b8-8169-a210bff989d7][Journaling]]\n"))))
+   '(("d" "default" entry "* %<%H:%M> \n %?"
+      :if-new (file+head "%<%Y-%m-%d>.org.gpg" "#+title: %<%A, %d %B %Y>\n- tags :: [[id:fe8618df-c476-44b8-8169-a210bff989d7][Journaling]]\n")
+      :unnarrowed t
+      )))
+
   :config
   (setq org-roam-database-connector 'sqlite3)
   ;; If you're using a vertical completion framework, you might want a more informative completion interface
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)
   ;; If using org-roam-protocol
-  (require 'org-roam-protocol)
-
-  )
+  (require 'org-roam-protocol))
     (defun cm/deft-parse-title (file contents)
     "Parse the given FILE and CONTENTS and determine the title.
   If `deft-use-filename-as-title' is nil, the title is taken to
