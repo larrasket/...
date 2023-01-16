@@ -132,8 +132,9 @@
        ;;terra             ; Earth and Moon in alignment for performance.
        ;;web               ; the tubes
        ;;zig               ; C, but simpler
-       ;; :email           ; TODO
-       ;; (mu4e +org)
+       :email
+       (mu4e +org)
+
        ;; notmuch
        ;; (wanderlust)
 
