@@ -188,68 +188,22 @@
 
 
 
-(defun my/org-insert-chess-diagram (notation file)
-  "Generate a chess diagram from NOTATION and insert it into the current Org-mode buffer.
-Save the diagram to FILE."
-  (let ((cmd (format "scidb -n %S -o %S" notation file)))
-    (call-process-shell-command cmd nil nil)
-    (insert (format "[[file:%s]]" file))))
-
-;; (defun my/org-eval-chess-block ()
-;;   "Evaluate the chess block at point and insert the resulting diagram into the current Org-mode buffer."
-;;   (interactive)
-;;   (let* ((element (org-element-at-point))
-;;          (type (org-element-type element))
-;;          (value (org-element-property :value element))
-;;          (file (make-temp-file "chess-diagram" nil ".png")))
-;;     (when (equal type 'src-block)
-;;       (let ((language (org-element-property :language element))
-;;             (parameters (org-element-property :parameters element)))
-;;         (when (equal language "chess")
-;;           (my/org-insert-chess-diagram value file)
-;;           (delete-file file))))))
-
-;; (defun my/org-confirm-babel-evaluate (lang body)
-;;   "Confirm before evaluating a code block."
-;;   (if (string= lang "chess")
-;;       (if (y-or-n-p (format "Evaluate chess block?\n%s" body))
-;;           'yes)
-;;     t))
-
-
-;; (add-to-list 'org-confirm-babel-evaluate 'my/org-confirm-babel-evaluate)
-
-
-
-
-;; (defun org-babel-execute:chess (body params)
-;;   "Execute a block of Chess code with org-babel.
-;; This function is called by `org-babel-execute-src-block'."
-;;   (let* ((output-file (cdr (assq :file params)))
-;;          (pgn-file (make-temp-file "chess-notation" nil ".pgn"))
-;;          (cmd (format "python ~/configs/elchess.py %s %s" pgn-file output-file)))
-;;     (with-temp-buffer
-;;       (insert body)
-;;       (write-file pgn-file))
-;;     (shell-command cmd)
-;;     (org-babel-result-to-file output-file)))
-
-
-
 
 (defun org-babel-execute:chess (body params)
   "Execute a block of Chess code with org-babel.
 This function is called by `org-babel-execute-src-block'."
-  (let* ((output-file (concat (file-name-sans-extension (buffer-file-name)) (format "_%s_chess_output.svg" (format-time-string "%Y-%m-%d_%H-%M-%S")) ))
+  (let* ((output-dir (expand-file-name "chessimages" (file-name-directory (buffer-file-name))))
+         (output-file (concat (format "_%s_chess_output.svg" (format-time-string "%Y-%m-%d_%H-%M-%S")) ))
+         (output-path (expand-file-name output-file output-dir))
          (notation (cdr (assq :notation params)))
          (extension (if (equal notation "fen") ".fen" ".pgn"))
          (notation-file (make-temp-file "chess-notation" nil extension))
-         (cmd (format "python ~/configs/elchess.py %s %s %s" notation-file output-file notation)))
+         (cmd (format "python ~/configs/elchess.py %s %s %s" notation-file output-path notation)))
     (with-temp-buffer
       (insert body)
       (write-file notation-file))
     (shell-command cmd)
-    (org-babel-result-to-file output-file)))
+    (org-babel-result-to-file (file-relative-name output-path))))
 
 (setq org-babel-default-header-args:chess
       '((:results . "raw")))
@@ -349,3 +303,18 @@ Regards,
 Salih Muhammed
 #+end_signature")
 
+
+
+
+
+
+
+
+
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+(use-package nov-xwidget
+  :demand t
+  :after nov
+  :config
+  (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
+  (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
