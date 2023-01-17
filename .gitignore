@@ -20,3 +20,4 @@ flycheck_**
 /.doom.d/custom.el
 /mpv/watch_later/
 /.auctex-auto/
+/__pycache__/
