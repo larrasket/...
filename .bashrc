@@ -63,7 +63,6 @@ alias k='killall'
 alias shut='shutdown -P '
 alias psql='sudo -iu postgres'
 
-# send file over network
 alias send='tar -cz . | nc -q 10 -l -p 9090'
 alias rec='nc -w 10 192.168.1.6 9090 | tar -xz'
 
@@ -77,6 +76,7 @@ alias frozen="pkill -SIGUSR2 emacs"
 alias 'cd..'='cd ..'
 alias sp='systemctl suspend'
 alias vim='emacsclient -nw'
+alias dr='yt-dlp -S "res:480"'
 
 
 
