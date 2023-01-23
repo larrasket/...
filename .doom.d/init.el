@@ -32,8 +32,9 @@
 
        :emacs
        (dired
-        +icons
-        +ranger)
+        +icons)
+        ;; +ranger
+
        electric                         ; smarter, keyword-based electric-indent
        (ibuffer +icon)                  ; interactive buffer management
        undo                             ; persistent, smarter undo for your inevitable mistakes

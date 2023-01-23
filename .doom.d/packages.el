@@ -74,40 +74,28 @@
 (package! ts)
 (package! org-ql)
 (unpin! org-roam)
-;; (package! org-roam)
 (package! org-roam-ui)
 (package! humanoid-themes)
 (package! org-present)
 (package! wiki-summary)
 (package! iedit)
 (package! protobuf-mode)
-;; (package! monokai-theme)
 (package! git-auto-commit-mode)
 (package! distinguished-theme)
 (package! highlight-indent-guides)
-
-(package! org-visual-outline :recipe (:host github :repo "luggages/org-visual-outline"))
-(package! elgantt :recipe (:host github :repo "luggages/elgantt"))
 (package! grip-mode)
 (package! emacsql-sqlite3)
 (package! emacsql-sqlite-module)
 (package! org-ref)
-
 (package! org-roam-bibtex
   :recipe (:host github :repo "org-roam/org-roam-bibtex"))
-
-;; When using org-roam via the `+roam` flag
 (unpin! org-roam)
-
-;; When using bibtex-completion via the `biblio` module
 (unpin! bibtex-completion helm-bibtex ivy-bibtex)
 (package! ivy-bibtex)
 (package! citar)
 (package! citar-org-roam)
 (package! csv-mode)
 (package! saveplace-pdf-view)
-
-
 
 
 (package! nov-xwidget
