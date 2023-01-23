@@ -53,14 +53,6 @@
 ;; (package! delve :recipe  (:repo "publicimageltd/delve" :host github :type git))
 
 
-
-
-
-
-
-
-
-
 (package! imenu-list)
 (package! org-journal)
 (package! vimish-fold)
@@ -86,17 +78,3 @@
 (package! grip-mode)
 (package! emacsql-sqlite3)
 (package! emacsql-sqlite-module)
-(package! org-ref)
-(package! org-roam-bibtex
-  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
-(unpin! org-roam)
-(unpin! bibtex-completion helm-bibtex ivy-bibtex)
-(package! ivy-bibtex)
-(package! citar)
-(package! citar-org-roam)
-(package! csv-mode)
-(package! saveplace-pdf-view)
-
-
-(package! nov-xwidget
-  :recipe (:host github :repo "luggages/nov-xwidget"))
