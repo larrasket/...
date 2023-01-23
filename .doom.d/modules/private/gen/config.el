@@ -187,3 +187,21 @@
 (add-hook 'dired-mode-hook 'org-download-enable)
 (add-hook 'dired-mode-hook(lambda () (solaire-mode -1)))
 
+
+
+
+
+
+
+(add-hook 'csv-mode-hook 'csv-align-mode)
+(require 'saveplace-pdf-view)
+(save-place-mode 1)
+
+
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+(use-package nov-xwidget
+  :demand t
+  :after nov
+  :config
+  (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
+  (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))

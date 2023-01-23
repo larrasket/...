@@ -33,12 +33,12 @@
        :emacs
        (dired
         +icons)
-        ;; +ranger
+       ;; +ranger
 
-       electric                         ; smarter, keyword-based electric-indent
-       (ibuffer +icon)                  ; interactive buffer management
-       undo                             ; persistent, smarter undo for your inevitable mistakes
-       vc                               ; version-control and Emacs, sitting in a tree
+       electric                      ; smarter, keyword-based electric-indent
+       (ibuffer +icon)               ; interactive buffer management
+       undo                          ; persistent, smarter undo for your inevitable mistakes
+       vc                            ; version-control and Emacs, sitting in a tree
 
        :term
        eshell                           ; the elisp shell that works everywhere
@@ -57,9 +57,9 @@
         +dictionary
         +offline)                       ; navigate your code and its documentation
        (lsp +peak)
-       (magit +forge)                   ; a git porcelain for Emacs
-       pdf                              ; pdf enhancements
-       rgb                              ; creating color strings
+       (magit +forge)              ; a git porcelain for Emacs
+       pdf                         ; pdf enhancements
+       rgb                         ; creating color strings
        ;;terraform                      ; infrastructure as code
 
        :os
@@ -80,7 +80,7 @@
        markdown                         ; writing docs for people to ignore
        (org
         +roam2)
-        ;; +noter
+       ;; +noter
        (rest +jq)                       ; Emacs as a REST client
        (sh
         +lsp)                           ; she sells {ba,z,fi}sh shells on the C xor
@@ -148,9 +148,7 @@
        awqat
        compiler
        dired
-       ;; email
-       ;; feeds
-       ;; flyivy
+       email
        gen
        genorg
        gitcolor
@@ -160,7 +158,11 @@
        sql
        translate
        mytheme
-       caption)
+       caption
+       chess
+       cite)
+
+
 
 
 (setq package-native-compile t)
