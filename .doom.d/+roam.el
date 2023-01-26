@@ -1,39 +1,5 @@
 ;;; ../configs/.doom.d/+roam.el -*- lexical-binding: t; -*-
 
-;; (cl-defmethod org-roam-node-backlinkscount-number ((node org-roam-node))
-;;     "Access slot \"backlinks\" of org-roam-node struct CL-X. This
-;;     is identical to `org-roam-node-backlinkscount' with the
-;;     difference that it returns a number instead of a fromatted
-;;     string. This is to be used in
-;;     `org-roam-node-sort-by-backlinks'"
-;;     (let* ((count (caar (org-roam-db-query
-;; 			 [:select (funcall count source)
-;; 				  :from links
-;; 				  :where (= dest $s1)
-;; 				  :and (= type "id")]
-;; 			 (org-roam-node-id node)))))
-;;       count))
-
-;; (defun org-roam-node-sort-by-backlinks (completion-a completion-b)
-;;   "Sorting function for org-roam that sorts the list of nodes by
-;; the number of backlinks. This is the sorting function in
-;; `org-roam-node-find-by-backlinks'"
-;;   (let ((node-a (cdr completion-a))
-;; 	(node-b (cdr completion-b)))
-;;     (>= (org-roam-node-backlinkscount-number node-a)
-;; 	(org-roam-node-backlinkscount-number node-b))))
-
-;; (defun org-roam-node-find-by-backlinks ()
-;;   "Essentially works like `org-roam-node-find' (although it uses
-;; a combination of `find-file' and `org-roam-node-read' to
-;; accomplish that and not `org-roam-node-find' as only
-;; `org-roam-node-read' can take a sorting function as an argument)
-;; but the list of nodes is sorted by the number of backlinks
-;; instead of most recent nodes. Sorting is done with
-;; `org-roam-node-sort-by-backlinks'"
-;;   (interactive)
-;;   (find-file (org-roam-node-file (org-roam-node-read nil nil #'org-roam-node-sort-by-backlinks))))
-
 
 
 (use-package org-roam
@@ -48,7 +14,7 @@
       )))
 
   :config
-  (setq org-roam-database-connector 'sqlite3)
+  (setq org-roam-database-connector 'sqlite)
   ;; If you're using a vertical completion framework, you might want a more informative completion interface
   (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)
