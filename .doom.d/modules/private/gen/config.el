@@ -10,7 +10,7 @@
       c-basic-offset 4)
 (setq org-roam-directory "~/roam")
 ;; (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12))
-(setq doom-font (font-spec :family "PragmataPro" :size 12))
+(setq doom-font (font-spec :family "PragmataPro" :size 12 :dpi 99))
 (custom-theme-set-faces! 'doom-tomorrow-night
   '(default :background "#121212"))
 (setq browse-url-browser-function 'browse-url-generic
