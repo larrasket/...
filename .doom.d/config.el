@@ -120,3 +120,6 @@
    :custom
    (pdf-annot-activate-created-annotations t "automatically annotate highlights"))
 
+
+
+(add-hook 'after-save-hook '+format/buffer)
