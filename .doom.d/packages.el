@@ -78,3 +78,7 @@
 (package! grip-mode)
 (package! emacsql-sqlite3)
 (package! emacsql-sqlite-module)
+
+
+
+(package! org-modern)
