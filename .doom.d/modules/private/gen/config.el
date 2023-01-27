@@ -10,16 +10,16 @@
       c-basic-offset 4)
 (setq org-roam-directory "~/roam")
 ;; (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 12))
-(setq doom-font (font-spec :family "PragmataPro" :size 12 :dpi 99))
+(setq doom-font (font-spec :family "PragmataPro " :size 12 :dpi 99))
 (custom-theme-set-faces! 'doom-tomorrow-night
   '(default :background "#121212"))
 (setq browse-url-browser-function 'browse-url-generic
       browse-url-generic-program "chromium")
 (org-babel-do-load-languages
-    'org-babel-load-languages
-    '((mermaid . t)
-      (scheme . t)
-      (csharp . t)))
+ 'org-babel-load-languages
+ '((mermaid . t)
+   (scheme . t)
+   (csharp . t)))
 (setq treemacs-position 'right)
 (setq dired-sidebar-refresh-on-special-commands 't)
 (setq user-full-name "Salih Muhammed"
@@ -28,12 +28,12 @@
 
 
 (defun toggle-maximize-buffer () "Maximize buffer"
-  (interactive)
-  (if (= 1 (length (window-list)))
-      (jump-to-register '_)
-    (progn
-      (window-configuration-to-register '_)
-      (delete-other-windows))))
+       (interactive)
+       (if (= 1 (length (window-list)))
+           (jump-to-register '_)
+         (progn
+           (window-configuration-to-register '_)
+           (delete-other-windows))))
 
 
 ;; bi
@@ -50,9 +50,7 @@
 
 
 (yas-global-mode 1)
-(add-hook 'yas-minor-mode(lambda()
-                           (yas-activate-extra-mode 'fundamental-mode)))
-
+(add-hook 'yas-minor-mode(lambda() (yas-activate-extra-mode 'fundamental-mode)))
 
 
 
@@ -163,9 +161,9 @@
                                      (org-block-begin-line (:height 0.7) org-block)))
   (my/center 110)
   (vi-tilde-fringe-mode 0))
-  ;; (centered-window-mode)
-  ;; (visual-fill-column-mode 1)
-   ;; (visual-line-mode 1)
+;; (centered-window-mode)
+;; (visual-fill-column-mode 1)
+;; (visual-line-mode 1)
 
 (add-hook 'org-present-mode-hook 'startpresent)
 
@@ -179,10 +177,10 @@
   (visual-line-mode 0))
 
 (use-package exec-path-from-shell
-   :if (memq window-system '(mac ns))
-   :ensure t
-   :config
-   (exec-path-from-shell-initialize))
+  :if (memq window-system '(mac ns))
+  :ensure t
+  :config
+  (exec-path-from-shell-initialize))
 
 (add-hook 'dired-mode-hook 'org-download-enable)
 (add-hook 'dired-mode-hook(lambda () (solaire-mode -1)))
