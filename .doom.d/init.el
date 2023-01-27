@@ -58,7 +58,7 @@
         +offline)                       ; navigate your code and its documentation
        (lsp +peak)
        (magit +forge)              ; a git porcelain for Emacs
-       pdf                         ; pdf enhancements
+       ;; pdf                         ; pdf enhancements
        rgb                         ; creating color strings
        ;;terraform                      ; infrastructure as code
 

@@ -82,3 +82,5 @@
 
 
 (package! org-modern)
+(package! pdf-tools)
+(package! org-noter)
