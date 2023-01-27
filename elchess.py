@@ -2,22 +2,24 @@ import chess
 import chess.svg
 import chess.pgn
 import sys
+import os
 
-pgn_file = sys.argv[1]
+notation_file = sys.argv[1]
 image_file = sys.argv[2]
 
-# Read pgn file:
-with open(pgn_file) as f:
-    game = chess.pgn.read_game(f)
-
-# Go to the end of the game and create a chess.Board() from it:
-game = game.end()
-board = game.board()
-
-# Generate the SVG image:
-boardsvg = chess.svg.board(board=board)
-
-# Write the SVG image to the specified file:
-with open(image_file, "w") as f:
-    f.write(boardsvg)
-
+try:
+    _, ext = os.path.splitext(notation_file)
+    if ext == ".pgn":
+        with open(notation_file) as f:
+            game = chess.pgn.read_game(f)
+            game = game.end()
+            board = game.board()
+    elif ext == ".fen":
+        board = chess.Board(open(notation_file).read())
+    else:
+        raise ValueError("Invalid file format. Only '.pgn' and '.fen' are supported.")
+    boardsvg = chess.svg.board(board=board)
+    with open(image_file, "w") as f:
+        f.write(boardsvg)
+except Exception as e:
+    raise e
