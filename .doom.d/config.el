@@ -123,3 +123,12 @@
 
 
 (add-hook 'after-save-hook '+format/buffer)
+(require 'webkit)
+(global-set-key (kbd "s-b") 'webkit) ;; Bind to whatever global key binding you want if you want
+(require 'webkit-ace) ;; If you want link hinting
+(use-package evil-collection-webkit
+  :config
+  (evil-collection-xwidget-setup))
+
+;; (setq browse-url-browser-function 'webkit-browse-url)
+(setq browse-url-browser-function 'xwidget-webkit-browse-url)
