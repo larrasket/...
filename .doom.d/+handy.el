@@ -53,4 +53,28 @@ the beginning of the list."
 
 
 
+
+
+(defun chess-notation-to-symbols ()
+  (interactive)
+  (let ((piece-symbols '((?K . "🨀")
+                         (?Q . "🨁")
+                         (?R . "🨂")
+                         (?B . "🨃")
+                         (?N . "🨄")
+                         (?P . "🨅"))))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward "\\(K\\|Q\\|R\\|B\\|N\\|P\\)[a-h][1-8]" (point-max) t)
+        (let ((piece (string-to-char (match-string 1)))
+              (destination (match-string 0)))
+          (replace-match (concat (cdr (assoc piece piece-symbols)) (substring destination 1))
+                         t t))))))
+(defun chess-notation-to-symbols-region (start end)
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region start end)
+      (chess-notation-to-symbols))))
+
 (provide '+handy)
