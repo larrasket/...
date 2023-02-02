@@ -23,6 +23,7 @@ alias pub='pub1 && pubb1'
 
 #programs
 alias mic='pavucontrol'
+alias land='sudo rm -R /var/cache/minidlna/ && sudo minidlnad'
 alias wife='nmtui'
 alias hd='nmcli con up'
 alias s='setsid rsblocks '
@@ -49,9 +50,13 @@ alias f="lfrun"
 alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
-alias d='yt-dlp -o '\''%(title)s.%(ext)s'\'' '
-alias ds='yt-dlp -f 136 -o  '\''%(title)s.%(ext)s'\'' '
-alias dss='yt-dlp -f '\''bestvideo[height<=480]+bestaudio/best[height<=480]'\''  --write-auto-sub -o  '\''%(title)s.%(ext)s'\'' '
+
+
+alias d='yt-dlp -f "mp4" -o "%(title)s.%(ext)s" '
+alias dss='yt-dlp -f "bestvideo[height<=480]+bestaudio/best[height<=480],mp4" --write-auto-sub -o "%(title)s.%(ext)s" '
+
+
+
 alias mp3='yt-dlp -o '\''%(title)s.%(ext)s'\'' --extract-audio --audio-format mp3 --add-metadata'
 unset use_color safe_term match_lhs sh
 alias po='castero'
