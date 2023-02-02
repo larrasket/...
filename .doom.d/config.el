@@ -70,17 +70,22 @@
 (global-org-modern-mode)
 
 (use-package pdf-tools
-   :pin manual
-   :config
-   (pdf-tools-install)
-   (setq-default pdf-view-display-size 'fit-width)
-   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
-   :custom
-   (pdf-annot-activate-created-annotations t "automatically annotate highlights"))
+  :pin manual
+  :config
+  (pdf-tools-install)
+  (setq-default pdf-view-display-size 'fit-width)
+  (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
+  :custom
+  (pdf-annot-activate-created-annotations t "automatically annotate highlights"))
 
 
 
-(add-hook 'after-save-hook '+format/buffer)
+(add-hook 'pdf-view-mode-hook
+  (lambda ()
+    (set (make-local-variable 'evil-normal-state-cursor) (list nil))))
+
+
+
 (require 'webkit)
 (global-set-key (kbd "s-b") 'webkit) ;; Bind to whatever global key binding you want if you want
 (require 'webkit-ace) ;; If you want link hinting
@@ -90,3 +95,6 @@
 
 ;; (setq browse-url-browser-function 'webkit-browse-url)
 (setq browse-url-browser-function 'xwidget-webkit-browse-url)
+
+
+
