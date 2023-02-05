@@ -32,4 +32,14 @@
       :desc "evaluate latex"
       "l e" #'TeX-command-master "LaTex")
 
+
+(defun insert-now-timestamp()
+  "Insert org mode timestamp at point with current date and time."
+  (interactive)
+  (org-insert-time-stamp (current-time) t))
+
+(map! :leader
+      :desc "insert current date"
+      "m d n" #'insert-now-timestamp)
+
 (provide 'leader)
