@@ -95,6 +95,7 @@
 
 ;; (setq browse-url-browser-function 'webkit-browse-url)
 (setq browse-url-browser-function 'xwidget-webkit-browse-url)
+(setq org-preview-html-viewer 'xwidget)
 
 
 

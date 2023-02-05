@@ -39,3 +39,4 @@
    :branch "main"
    :files (:defaults "*.js" "*.css" "*.so")
    :pre-build ("make")))
+(package! org-preview-html)
