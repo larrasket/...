@@ -2,137 +2,137 @@
 (setq inhibit-automatic-native-compilation t)
 (doom! :input
        :completion
-       company                          ; the ultimate code completion backend
+       company
        ;; ivy
        vertico
        ;; (helm
        ;;  ;; +childframe
        ;;  +icons)
        :ui
-       doom                             ; what makes DOOM look the way it does
-       doom-dashboard                   ; a nifty splash screen for Emacs
-       hl-todo                          ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
+       doom
+       doom-dashboard
+       hl-todo
        (ligatures
         +pragmata-pro)
-       modeline                         ; snazzy, Atom-inspired modeline, plus API
-       (popup +defaults)                ; tame sudden yet inevitable temporary windows
-       vi-tilde-fringe                  ; fringe tildes to mark beyond EOB
-       window-select                    ; visually switch windows
-       workspaces                       ; tab emulation, persistence & separate workspaces
+       modeline
+       (popup +defaults)
+       vi-tilde-fringe
+       window-select
+       workspaces
 
        :editor
        (evil
-        +everywhere)                    ; come to the dark side, we have cookies
-       file-templates                   ; auto-snippets for empty files
-       fold                             ; (nigh) universal code folding
-       (format +onsave)                 ; automated prettiness
-       lispy                            ; vim for lisp, for people who don't like vim
-       parinfer                         ; turn lisp into python, sort of
-       snippets                         ; my elves. They type so I don't have to
+        +everywhere)
+       file-templates
+       fold
+       (format +onsave)
+       lispy
+       parinfer
+       snippets
 
        :emacs
        (dired
         +icons)
        ;; +ranger
 
-       electric                      ; smarter, keyword-based electric-indent
-       (ibuffer +icon)               ; interactive buffer management
-       undo                          ; persistent, smarter undo for your inevitable mistakes
-       vc                            ; version-control and Emacs, sitting in a tree
+       electric
+       (ibuffer +icon)
+       undo
+       vc
 
        :term
-       eshell                           ; the elisp shell that works everywhere
-       vterm                            ; the best terminal emulation in Emacs
+       eshell
+       vterm
 
        :checkers
-       (syntax +childframe)             ; tasing you for every semicolon you forget
+       (syntax +childframe)
        (spell
-        +flyspell)                      ; tasing you for misspelling mispelling
-       grammar                          ; tasing grammar mistake every you make
+        +flyspell)
+       grammar
 
        :tools
        biblio
-       gist                             ; interacting with github gists
+       gist
        (lookup
         +dictionary
-        +offline)                       ; navigate your code and its documentation
+        +offline)
        (lsp +peak)
-       (magit +forge)              ; a git porcelain for Emacs
-       ;; pdf                         ; pdf enhancements
-       rgb                         ; creating color strings
-       ;;terraform                      ; infrastructure as code
+       (magit +forge)
+       ;; pdf
+       rgb
+       ;;terraform
 
        :os
-       (tty)                            ; improve the terminal Emacs experience
+       (tty)
        :lang
-       (cc +lsp)                        ; C > C++ == 1
-       common-lisp                      ; if you've seen one lisp, you've seen them all
-       (csharp +lsp)                    ; unity, .NET, and mono shenanigans
-       emacs-lisp                       ; drown in parentheses
+       (cc +lsp)
+       common-lisp
+       (csharp +lsp)
+       emacs-lisp
        (go +lsp
-           +tree-sitter)                ; the hipster dialect
+           +tree-sitter)
        (json
         +lsp
-        +tree-sitter)                   ; At least it ain't XML
+        +tree-sitter)
        (latex +flod
               +latexmk
-              +lsp)                     ; writing papers in Emacs has never been so fun
-       markdown                         ; writing docs for people to ignore
+              +lsp)
+       markdown
        (org
         +roam2)
        ;; +noter
-       (rest +jq)                       ; Emacs as a REST client
+       (rest +jq)
        (sh
-        +lsp)                           ; she sells {ba,z,fi}sh shells on the C xor
+        +lsp)
        (yaml
-        +lsp)    ; JSON, but readable
-       ;;agda              ; types of types of types of types...
-       ;;beancount         ; mind the GAAP
-       ;;clojure           ; java with a lisp
-       ;;coq               ; proofs-as-programs
-       ;;crystal           ; ruby at the speed of c
-       ;;data              ; config/data formats
-       ;;(dart +flutter)   ; paint ui and not much else
-       ;;elixir            ; erlang done right
-       ;;elm               ; care for a cup of TEA?
-       ;;erlang            ; an elegant language for a more civilized age
-       ;;ess               ; emacs speaks statistics
+        +lsp)
+       ;;agda
+       ;;beancount
+       ;;clojure
+       ;;coq
+       ;;crystal
+       ;;data
+       ;;(dart +flutter)
+       ;;elixir
+       ;;elm
+       ;;erlang
+       ;;ess
        ;;factor
-       ;;faust             ; dsp, but you get to keep your soul
-       ;;fsharp            ; ML stands for Microsoft's Language
-       ;;fstar             ; (dependent) types and (monadic) effects and Z3
-       ;;gdscript          ; the language you waited for
-       ;;(haskell +dante)  ; a language that's lazier than I am
-       ;;hy                ; readability of scheme w/ speed of python
-       ;;idris             ; a language you can depend on
-       ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
-       ;;javascript        ; all(hope(abandon(ye(who(enter(here))))))
-       ;;julia             ; a better, faster MATLAB
-       ;;kotlin            ; a better, slicker Java(Script)
-       ;;lean              ; for folks with too much to prove
-       ;;ledger            ; be audit you can be
-       ;;lua               ; one-based indices? one-based indices
-       ;;nim               ; python + lisp at the speed of c
-       ;;nix               ; I hereby declare "nix geht mehr!"
-       ;;ocaml             ; an objective camel
-       ;;php               ; perl's insecure younger brother
-       ;;plantuml          ; diagrams for confusing people more
-       ;;purescript        ; javascript, but functional
-       ;;python            ; beautiful is better than ugly
-       ;;qt                ; the 'cutest' gui framework ever
-       ;;racket            ; a DSL for DSLs
-       ;;raku              ; the artist formerly known as perl6
-       ;;rst               ; ReST in peace
-       ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       ;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
-       ;;scala             ; java, but good
-       ;;(scheme +guile)   ; a fully conniving family of lisps
+       ;;faust
+       ;;fsharp
+       ;;fstar
+       ;;gdscript
+       ;;(haskell +dante)
+       ;;hy
+       ;;idris
+       ;;(java +meghanada)
+       ;;javascript
+       ;;julia
+       ;;kotlin
+       ;;lean
+       ;;ledger
+       ;;lua
+       ;;nim
+       ;;nix
+       ;;ocaml
+       ;;php
+       ;;plantuml
+       ;;purescript
+       ;;python
+       ;;qt
+       ;;racket
+       ;;raku
+       ;;rst
+       ;;(ruby +rails)
+       ;;rust
+       ;;scala
+       ;;(scheme +guile)
        ;;sml
-       ;;solidity          ; do you need a blockchain? No.
-       ;;swift             ; who asked for emoji variables?
-       ;;terra             ; Earth and Moon in alignment for performance.
-       ;;web               ; the tubes
-       ;;zig               ; C, but simpler
+       ;;solidity
+       ;;swift
+       ;;terra
+       ;;web
+       ;;zig
        :email
        (mu4e +org)
 
@@ -140,7 +140,7 @@
        ;; (wanderlust)
 
        :app
-       irc                              ; how neckbeards socialize
+       irc
        :config
        (default +bindings
                 +smartparens)
