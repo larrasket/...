@@ -22,7 +22,7 @@
 (setq treemacs-position 'right)
 (setq dired-sidebar-refresh-on-special-commands 't)
 (setq user-full-name "Salih Muhammed"
-      user-mail-address "ghd@keemail.me")
+      user-mail-address "salhghd7@gmail.com")
 
 
 
