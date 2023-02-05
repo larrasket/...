@@ -99,3 +99,6 @@
 
 
 
+
+
+(add-hook 'prog-mode-hook 'column-enforce-mode)

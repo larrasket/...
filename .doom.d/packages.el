@@ -40,3 +40,4 @@
    :files (:defaults "*.js" "*.css" "*.so")
    :pre-build ("make")))
 (package! org-preview-html)
+(package! column-enforce-mode)
