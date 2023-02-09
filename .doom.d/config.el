@@ -4,7 +4,7 @@
 (require 'keys)
 (require '+handy)
 (add-to-list 'org-agenda-files "~/roam/journal/agenda/todo.org")
-(add-to-list 'org-agenda-files "~/roam/journal/agenda/birthday.org")
+(add-to-list 'org-agenda-files "~/roam/journal/agenda/births.org")
 (setq +org-capture-journal-file "~/blog/content/stack.org")
 (setq +org-capture-changelog-file "~/blog/content/nice.org")
 (setq +org-capture-todo-file "~/roam/main/life.org")
@@ -96,7 +96,6 @@
 ;; (setq browse-url-browser-function 'webkit-browse-url)
 (setq browse-url-browser-function 'xwidget-webkit-browse-url)
 (setq org-preview-html-viewer 'xwidget)
-
 
 
 

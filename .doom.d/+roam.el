@@ -64,53 +64,15 @@
 
 
 (setq org-roam-capture-templates
-      '(("m" "main" plain
-         "%?"
+      '(("k" "knowledge" plain "%?"
          :if-new
-         (file+head "main/${slug}.org" "#+title: ${title}\n")
-         :immediate-finish t
-         :unnarrowed t)
-        ("p" "People" plain
-         "%?"
-         :if-new
-         (file+head "main/${slug}.org" "#+title: ${title}\n")
-         :immediate-finish t
-         :unnarrowed t)
-        ("s" "saved" plain "%?"
-         :if-new
-         (file+head "saved/${slug}.org" "#+title: ${title}\n- tags :: [[roam:saved things]]")
-         :immediate-finish t
-         :unnarrowed t)
-        ("c" "contemplations" plain "%?"
-         :if-new
-         (file+head "contemplations/${slug}.org" "#+title: ${title}\n- tags :: [[roam:Contemplation]]")
-         :immediate-finish t
-         :unnarrowed t)
-        ("q" "quotes" plain "%?"
-         :if-new
-         (file+head "quotes/${slug}.org" "#+title: ${title}\n— [[roam:Quotes]]")
-         :immediate-finish t
-         :unnarrowed t)
-        ("l" "literature" plain "%?"
-         :if-new
-         (file+head "literature/${slug}.org" "#+title: ${title}\n")
-         :immediate-finish t
-         :unnarrowed t)
-        ("h" "history" plain "%?"
-         :if-new
-         (file+head "everything/${slug}.org" "#+title: ${title}\n#+filetags: History \n- tags :: ")
-         :immediate-finish t
-         :unnarrowed t)
-        ("k" "knowledge" plain "%?"
-         :if-new
-         (file+head "everything/${slug}.org" "#+title: ${title}\n")
+         (file+head "${slug}.org" "#+title: ${title}\n")
          :immediate-finish t
          :unnarrowed t)
         ("r" "bibliography reference" plain
          (file "~/configs/orb")
          :target
-         (file+head "references/${citekey}.org" "#+title: ${title}\n"))
-        ))
+         (file+head "references/${citekey}.org" "#+title: ${title}\n"))))
 
 
 (cl-defmethod org-roam-node-type ((node org-roam-node))
@@ -178,7 +140,7 @@
 
 
 (map! :leader
-      :desc "org caputer"
+      :desc "org capute dailyr"
       "r j" #'org-roam-dailies-capture-today)
 
 
