@@ -29,11 +29,14 @@
        lispy
        parinfer
        snippets
+       word-wrap
 
        :emacs
        (dired
         +icons)
-       ;; +ranger
+        ;; +ranger
+
+       electric
 
        electric
        (ibuffer +icon)
