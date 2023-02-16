@@ -164,7 +164,7 @@
  :prefix "C-c r"
  "b" 'org-roam-buffer-toggle
  "c" 'org-roam-capture
- "f" 'org-roam-find-node
+ "f" 'org-roam-node-find
  "i" 'org-roam-insert
  "I" 'org-roam-insert-immediate
  "t" 'org-roam-tag-add
