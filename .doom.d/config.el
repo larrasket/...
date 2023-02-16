@@ -101,3 +101,15 @@
 
 
 (add-hook 'prog-mode-hook 'column-enforce-mode)
+
+
+
+
+
+
+
+
+
+(setq-default doom-modeline-height 20)
+(setq doom-modeline-icon t)
+(setq doom-modeline-buffer-state-icon t)
