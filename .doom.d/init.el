@@ -3,11 +3,7 @@
 (doom! :input
        :completion
        company
-       ;; ivy
        vertico
-       ;; (helm
-       ;;  ;; +childframe
-       ;;  +icons)
        :ui
        doom
        doom-dashboard
@@ -136,11 +132,11 @@
        ;;terra
        ;;web
        ;;zig
-       :email
-       (mu4e +org)
+       ;; :email
+       ;; (mu4e +org)
 
-       ;; notmuch
-       ;; (wanderlust)
+       ;; ;; notmuch
+       ;; ;; (wanderlust)
 
        :app
        irc
@@ -164,7 +160,6 @@
        caption
        chess
        cite)
-
 
 
 
