@@ -31,13 +31,14 @@
 
 
 (package! org-modern)
-(package! pdf-tools)
 (package! org-noter)
-
-(straight-use-package
- '(webkit :type git :host github :repo "luggages/emacs-webkit"
-   :branch "main"
-   :files (:defaults "*.js" "*.css" "*.so")
-   :pre-build ("make")))
 (package! org-preview-html)
 (package! column-enforce-mode)
+
+
+
+
+
+
+(package! slime)
+(package! ac-slime)

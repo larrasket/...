@@ -1,0 +1,68 @@
+#+title: .dotfiles
+
+
+Do not clone the repo and use it directly (if you like the setup); this probably will never
+work for you. Instead: - if you are new to this kind of software, explore and learn it
+first. If you are familiar with this category, it would be much easier to read it, pick &
+use whatever you like, instead of replication.
+
+
+* Tags/Releases
+
+This repo used to be too missy, I tried multiple times to organize it in some manners, but
+as you can notice, in vain. The following contains some helpful description of what the
+tags/releases supposed to mean (at least what I can recall).
+
++ [[https://github.com/salehmu/dots/releases/tag/goodbyeAcario][goodbyeAcario]]; White dwm, white emacs with acario-light theme.
++ [[https://github.com/salehmu/dots/releases/tag/module!][module!]]; same as preceding, but with doom emacs config organized as modules.
++ [[https://github.com/salehmu/dots/releases/tag/StableGrayEmacs30][StableGrayEmacs30]]; Stalbe Emacs configuration, gray with grady dwm.
+
+
+* Screenshots!
+I love screenshots.
+
+** Current
+
+[[file:img/bk/2022-12-05_18-15.png]]
+
+[[file:img/bk/2022-12-06_09-24.png]]
+
+[[file:img/bk/2022-12-06_11-47.png]]
+
+
+** Gray
+[[file:img/gr/2022-10-20_18-41.png]]
+
+[[file:img/gr/2022-11-23_02-01.png]]
+** ~acario-light~
+[[file:img/ac/2022-09-18_14-59.png]]
+
+[[file:img/ac/2022-09-21_04-13.png]]
+
+[[file:img/ac/2022-09-21_09-29.png]]
+
+[[file:img/ac/2022-09-23_09-46.png]]
+
+[[file:img/ac/2022-09-24_13-58.png]]
+** Lost Areas
+Those were taken before I'd started to make tags.
+*** dwm
+[[file:img/dwm/12022-07-08_22-05.png]]
+
+[[file:img/dwm/22022-07-09_03-36.png]]
+*** KDE
+[[file:img/kde/12022-08-17_08-13.png]]
+
+[[file:img/kde/32022-08-21_07-59.png]]
+
+[[file:img/kde/42022-08-23_06-09.png]]
+
+[[file:img/kde/52022-08-23_06-29.png]]
+
+[[file:img/kde/62022-08-24_06-33.png]]
+
+[[file:img/kde/72022-08-24_13-26.png]]
+
+[[file:img/kde/82022-09-02_02-55.png]]
+
+[[file:img/kde/92022-09-06_18-23.png]]

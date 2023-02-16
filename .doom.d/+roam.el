@@ -89,64 +89,12 @@
 
 
 
-(use-package org-roam
-  :bind (("C-c r l" . org-roam-buffer-toggle)
-         ("C-c r f" . org-roam-node-find)
-         ("C-c r g" . org-roam-graph)
-         ("C-c r i" . org-roam-node-insert)
-         ("C-c r c" . org-roam-capture)
-         ;; Dailies
-         ("C-c r j" . org-roam-dailies-capture-today)))
-
-
-(map! :leader
-      :desc "roam graph"
-      "r g" #'org-roam-graph)
-
-
-(map! :leader
-      :desc "add tag"
-      "r t" #'org-roam-tag-add)
+(use-package org-roam)
 
 
 
-(map! :leader
-      :desc "switch to raom buffer"
-      "r b" #'org-roam-buffer-toggle)
 
 
-(map! :leader
-      :desc "capture"
-      "r c" #'org-roam-capture)
-
-
-(map! :leader
-      :desc "insert"
-      "r i" #'org-roam-node-insert)
-
-
-(map! :leader
-      :desc "find file"
-      "r f" #'org-roam-node-find)
-
-(map! :leader
-      :desc "roam"
-      "r r" #'org-roam-buffer-display-dedicated)
-
-
-(map! :leader
-      :desc "org caputer"
-      "x" #'org-capture)
-
-
-(map! :leader
-      :desc "org capute dailyr"
-      "r j" #'org-roam-dailies-capture-today)
-
-
-(map! :leader
-      :desc "Add alias"
-      "r a" #'org-roam-alias-add)
 
 
 (after! popup

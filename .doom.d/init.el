@@ -22,7 +22,7 @@
        file-templates
        fold
        (format +onsave)
-       lispy
+       ;; lispy
        parinfer
        snippets
        word-wrap
@@ -141,25 +141,22 @@
        :app
        irc
        :config
-       (default +bindings
+       (default ;; +bindings
                 +smartparens)
        :private
        awqat
        compiler
        dired
-       email
        gen
        genorg
        gitcolor
-       langtool
-       leetcode
-       shell
-       sql
+       ;; leetcode
        translate
-       mytheme
-       caption
        chess
-       cite)
+       cite
+       pdf
+       present
+       bind)
 
 
 

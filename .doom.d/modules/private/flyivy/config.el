@@ -2,9 +2,10 @@
 
 
 
+;; give it another try
 (require 'ivy-posframe)
 (setq ivy-posframe-height-alist '((swiper . 20)
-                                 (t      . 40)))
+                                  (t      . 40)))
 (setq ivy-posframe-display-functions-alist
      '((swiper          . ivy-display-function-fallback)
        (complete-symbol . ivy-posframe-display-at-point)
