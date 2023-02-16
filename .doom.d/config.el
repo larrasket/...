@@ -113,7 +113,8 @@
  "," 'persp-switch-to-buffer
  "<" 'switch-to-buffer
  "RET" 'bookmark-jump
- "C-x" 'projectile-find-file
+ "f r" 'projectile-find-file
+ "f g" 'magit-find-file
  "[" 'previous-buffer
  "]" 'next-buffer
  "d" 'kill-current-buffer
