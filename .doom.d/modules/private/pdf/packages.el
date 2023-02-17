@@ -10,4 +10,4 @@
 
 
 (package! pdf-tools
-  :recipe (:host github :repo "luggages/pdf-tools"))
+  :recipe (:host github :repo "luggages/emacs-pdf-tools"))
