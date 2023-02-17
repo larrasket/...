@@ -33,12 +33,12 @@
            "|"
            "DONE(d)")                    ; Task was completed
           (sequence
-           "|"
+           "|"))
            ;; "OKAY(o)"
            ;; "YES(y)"
            ;; "NO(n)"
-           )
-          )
+           
+          
         org-todo-keyword-faces
         '(("[-]"  . +org-todo-active)
           ("STUDY" . "DarkBlue")
@@ -141,4 +141,5 @@
 (require 'org-download)
 (add-hook 'dired-mode-hook 'org-download-enable)
 (add-hook 'org-mode-hook 'turn-on-auto-fill)
-(setq org-archive-location "%s_archive.org::")
+(setq org-archive-location "%s_archive.org::"
+      org-agenda-start-with-log-mode t)

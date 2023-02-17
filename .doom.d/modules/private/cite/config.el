@@ -22,7 +22,6 @@
       bibtex-autokey-titlewords-stretch 1
       bibtex-autokey-titleword-length 5)
 
-(define-key bibtex-mode-map (kbd "H-b") 'org-ref-bibtex-hydra/body)
 
 
 (use-package citar
@@ -82,7 +81,6 @@
       orb-process-file-keyword t
       orb-attached-file-extensions '("pdf"))
 
-(define-key org-roam-bibtex-mode-map (kbd "C-c n a") #'orb-note-actions)
 
 
 (setq bibtex-completion-bibliography "~/configs/ref.bib")

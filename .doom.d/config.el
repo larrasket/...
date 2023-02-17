@@ -93,9 +93,7 @@
 ;; (global-set-key (kbd "C-g") #'evil-keyboard-quit)
 ;; (global-set-key (kbd "C-g") #'evil-keyboard-quit)
 ;; (global-set-key (kbd "C-g") #'evil-keyboard-quit)
-
 ;; (global-set-key (kbd "C-g") #'evil-keyboard-quit)
-
 ;; (global-set-key (kbd "C-g") #'evil-keyboard-quit)
 
 
@@ -123,6 +121,33 @@
 
 
 (general-auto-unbind-keys)
+
+
+
+
+(add-hook 'c++-mode-hook
+          (lambda () (local-set-key (kbd "C-c C-c") 'compileandrun)))
+
+(add-hook 'csharp-mode-hook
+          (lambda () (local-set-key (kbd "C-c C-c") 'sharprun)))
+
+
+(add-hook 'go-mode-hook
+          (lambda () (local-set-key (kbd "C-c C-c") 'gorun)
+                (local-set-key (kbd "<f2>") 'rungo)))
+
+(add-hook 'dired-mode-hook
+          (lambda () (local-set-key (kbd "C-c C-c") #'xah-open-in-external-app)))
+
+
+
+(add-hook 'org-mode-hook
+          (lambda () (local-set-key (kbd "C-c C-f") #'org-footnote-action)))
+
+
+
+(global-unset-key (kbd "C-f"))
+(define-key org-mode-map (kbd "C-c C-f") nil)
 
 
 (general-define-key
@@ -211,6 +236,13 @@
  "t"   'vterm
  "e"   'eshell)
 
+
+
+
+
+
+
+
 (global-set-key (kbd "M-RET") 'lsp-execute-code-action)
 
 (add-hook 'neotree-mode-hook #'hide-mode-line-mode)
@@ -218,3 +250,12 @@
 
 
 (global-wakatime-mode)
+(add-hook 'org-agenda-mode-hook
+          (lambda ()
+            (add-hook 'auto-save-hook 'org-save-all-org-buffers nil t)
+            (auto-save-mode)))
+
+
+
+
+
