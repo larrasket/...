@@ -235,3 +235,10 @@ Version 2019-11-04 2021-02-16"
         (mapc
          (lambda ($fpath) (let ((process-connection-type nil))
                             (start-process "" nil "xdg-open" $fpath))) $file-list))))))
+
+(defun highltier ()
+  (require 'highlight-indent-guides)
+  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
+  (set-face-background 'highlight-indent-guides-even-face "dimgray")
+  (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
+  (highlight-indent-guides-mode))

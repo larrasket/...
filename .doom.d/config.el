@@ -19,13 +19,6 @@
 (setq load-prefer-newer t)
 (setq highlight-indent-guides-method 'bitmap)
 
-(defun highltier ()
-  (require 'highlight-indent-guides)
-  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
-  (set-face-background 'highlight-indent-guides-even-face "dimgray")
-  (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
-  (highlight-indent-guides-mode))
-
 
 
 (add-hook 'org-mode-hook 'highltier)
@@ -209,7 +202,7 @@
 
 
 (general-define-key
- :prefix "C-c r"
+ :prefix "C-x r"
  "b" 'org-roam-buffer-toggle
  "c" 'org-roam-capture
  "f" 'org-roam-node-find
@@ -250,12 +243,7 @@
 
 
 (global-wakatime-mode)
-(add-hook 'org-agenda-mode-hook
-          (lambda ()
-            (add-hook 'auto-save-hook 'org-save-all-org-buffers nil t)
-            (auto-save-mode)))
 
 
-
-
-
+(projectile-mode +1)
+(define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
