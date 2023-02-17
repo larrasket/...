@@ -9,4 +9,3 @@
         calendar-longitude 31.2
         awqat-mode-line-format " 🕌 ${prayer} (${hours}h${minutes}m) "))
 (awqat-display-prayer-time-mode)
-(global-wakatime-mode)
