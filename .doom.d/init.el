@@ -146,7 +146,6 @@
        :private
        awqat
        compiler
-       dired
        gen
        genorg
        gitcolor
