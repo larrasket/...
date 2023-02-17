@@ -90,12 +90,33 @@
 
 
 
-(global-set-key (kbd "C-g") #'evil-keyboard-quit)
-(global-set-key (kbd "C-g") #'evil-keyboard-quit)
-(global-set-key (kbd "C-g") #'evil-keyboard-quit)
+;; (global-set-key (kbd "C-g") #'evil-keyboard-quit)
+;; (global-set-key (kbd "C-g") #'evil-keyboard-quit)
+;; (global-set-key (kbd "C-g") #'evil-keyboard-quit)
 
-(global-set-key (kbd "C-g") #'evil-keyboard-quit)
-(global-set-key (kbd "C-g") #'evil-keyboard-quit)
+;; (global-set-key (kbd "C-g") #'evil-keyboard-quit)
+
+;; (global-set-key (kbd "C-g") #'evil-keyboard-quit)
+
+
+
+
+(define-key evil-normal-state-map (kbd "C-g") 'evil-escape)
+(define-key evil-visual-state-map (kbd "C-g") 'evil-escape)
+(define-key evil-insert-state-map (kbd "C-g") 'evil-escape)
+(define-key evil-replace-state-map (kbd "C-g") 'evil-escape)
+(define-key evil-operator-state-map (kbd "C-g") 'evil-escape)
+
+(defun my/evil-escape-and-abort-company ()
+  (interactive)
+  (company-abort)
+  (evil-escape))
+
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "C-g") 'my/evil-escape-and-abort-company)
+  (define-key company-search-map (kbd "C-g") 'my/evil-escape-and-abort-company))
+
+
 
 
 
@@ -121,7 +142,8 @@
  "k" 'kill-current-buffer
  "D" 'doom/kill-all-buffers
  "K" 'doom/kill-other-buffers
- "C-f" 'recentf-open-files)
+ "f r" 'recentf-open-files
+ "f g" 'magit-find-file)
 
 
 
@@ -193,3 +215,6 @@
 
 (add-hook 'neotree-mode-hook #'hide-mode-line-mode)
 (setq large-file-warning-threshold nil)
+
+
+(global-wakatime-mode)
