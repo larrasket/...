@@ -192,3 +192,4 @@
 (global-set-key (kbd "M-RET") 'lsp-execute-code-action)
 
 (add-hook 'neotree-mode-hook #'hide-mode-line-mode)
+(setq large-file-warning-threshold nil)
