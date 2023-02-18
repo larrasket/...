@@ -242,3 +242,13 @@ Version 2019-11-04 2021-02-16"
   (set-face-background 'highlight-indent-guides-even-face "dimgray")
   (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
   (highlight-indent-guides-mode))
+
+
+
+(defun my/rename-or-iedit ()
+  "If current buffer is in lsp-mode, call lsp-rename. Otherwise, call
+iedit-mode."
+  (interactive)
+  (if (bound-and-true-p lsp-mode)
+      (call-interactively #'lsp-rename)
+    (call-interactively #'iedit-mode)))
