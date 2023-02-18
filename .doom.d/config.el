@@ -251,3 +251,5 @@
 (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
 (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
 
+(after! eww
+  (push '("\\*eww\\*" . (display-buffer-same-window)) display-buffer-alist))
