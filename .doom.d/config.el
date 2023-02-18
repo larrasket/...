@@ -57,9 +57,6 @@
       gts-translate-list '(("en" "ar")))
 
 
-
-
-
 (add-hook 'org-mode-hook 'highltier)
 (add-hook 'prog-mode-hook 'highltier)
 (add-hook 'prog-mode-hook 'column-enforce-mode)

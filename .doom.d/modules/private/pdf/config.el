@@ -15,9 +15,11 @@
 
 
 
-
-(save-place-mode 1)
-
-
 (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files)
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+
+
+
+(add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
+(setq pdf-view-restore-filename "~/configs/.pdf-view-restore")
