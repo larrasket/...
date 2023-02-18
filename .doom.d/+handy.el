@@ -45,7 +45,7 @@ the beginning of the list."
   (org-archive-killed-tasks))
 
 
-(defun my-org-archive-done-tasks ()
+(defun salih-org-archive-done-tasks ()
   (interactive)
   (org-map-entries 'org-archive-subtree "/DONE" 'file)
   (org-map-entries 'org-archive-subtree "/FAIL" 'file)
@@ -245,7 +245,7 @@ Version 2019-11-04 2021-02-16"
 
 
 
-(defun my/rename-or-iedit ()
+(defun salih/rename-or-iedit ()
   "If current buffer is in lsp-mode, call lsp-rename. Otherwise, call
 iedit-mode."
   (interactive)
