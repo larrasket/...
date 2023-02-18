@@ -161,7 +161,8 @@
  "D" 'doom/kill-all-buffers
  "K" 'doom/kill-other-buffers
  "f r" 'recentf-open-files
- "f g" 'magit-find-file)
+ "f g" 'magit-find-file
+ "C-t" 'gts-do-translate)
 
 
 
@@ -237,6 +238,7 @@
 
 
 (global-set-key (kbd "M-RET") 'lsp-execute-code-action)
+(global-set-key (kbd "C-c r") #'my/rename-or-iedit)
 
 (add-hook 'neotree-mode-hook #'hide-mode-line-mode)
 (setq large-file-warning-threshold nil)
@@ -247,3 +249,5 @@
 
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+(advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
+
