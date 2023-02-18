@@ -1,5 +1,4 @@
 (add-to-list 'load-path "~/.doom.d/")
-(require '+roam)
 (require '+handy)
 (require 'keys)
 (require 'epa-file)
@@ -45,7 +44,17 @@
       org-modern-timestamp nil
       org-modern-todo nil
 
-      doom-theme 'distinguished)
+      doom-theme 'distinguished
+
+
+      ;; prayer time
+      calendar-latitude 30.0
+      calendar-longitude 31.2
+
+
+      bibtex-completion-bibliography "~/configs/ref.bib"
+
+      gts-translate-list '(("en" "ar")))
 
 
 

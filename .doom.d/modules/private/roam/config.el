@@ -1,4 +1,6 @@
-;;; ../configs/.doom.d/+roam.el -*- lexical-binding: t; -*-
+;;; private/roam/config.el -*- lexical-binding: t; -*-
+
+
 
 
 

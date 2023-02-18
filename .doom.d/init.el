@@ -150,7 +150,6 @@
        genorg
        gitcolor
        ;; leetcode
-       translate
        chess
        cite
        pdf

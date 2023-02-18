@@ -82,5 +82,3 @@
       orb-attached-file-extensions '("pdf"))
 
 
-
-(setq bibtex-completion-bibliography "~/configs/ref.bib")
