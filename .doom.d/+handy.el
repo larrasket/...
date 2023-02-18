@@ -24,39 +24,27 @@ the beginning of the list."
 
 
 
-(defun org-archive-done-tasks ()
+(defun org-archive-subtree-if-match (match)
+  "Archive all subtrees matching the given MATCH pattern."
   (org-map-entries
    (lambda ()
      (org-archive-subtree)
      (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
-   "/DONE" 'tree))
+   match 'tree))
 
-
-(defun org-archive-killed-tasks ()
-  (org-map-entries
-   (lambda ()
-     (org-archive-subtree)
-     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
-   "/KILL" 'tree))
-
-(defun org-archive-file ()
+(defun salih/org-archive-done-and-killed-tasks ()
+  "Archive all DONE and KILL tasks in the current buffer."
   (interactive)
-  (org-archive-done-tasks)
-  (org-archive-killed-tasks))
-
-
-(defun salih-org-archive-done-tasks ()
-  (interactive)
-  (org-map-entries 'org-archive-subtree "/DONE" 'file)
-  (org-map-entries 'org-archive-subtree "/FAIL" 'file)
-  (org-map-entries 'org-archive-subtree "/KILL" 'file))
+  (org-archive-subtree-if-match "/DONE")
+  (org-archive-subtree-if-match "/KILL"))
 
 
 
 
 
 
-(defun chess-notation-to-symbols ()
+
+(defun salih/chess-notation-to-symbols ()
   (interactive)
   (let ((piece-symbols '((?K . "🨀")
                          (?Q . "🨁")
@@ -76,7 +64,7 @@ the beginning of the list."
   (save-excursion
     (save-restriction
       (narrow-to-region start end)
-      (chess-notation-to-symbols))))
+      (salih/chess-notation-to-symbols))))
 
 
 
@@ -89,7 +77,7 @@ the beginning of the list."
 
 (setq bidi-paragraph-direction 'left-to-right)
 (setq-default bidi-paragraph-direction 'left-to-right)
-(defun bidi-direction-toggle ()
+(defun salih/bidi-direction-toggle ()
   (interactive "")
   (setq bidi-display-reordering t)
   (if (equal bidi-paragraph-direction 'right-to-left)
@@ -110,8 +98,6 @@ the beginning of the list."
 (require 'evil)
 
 (defun neotree-project-dir ()
-  "Open NeoTree using the git root."
-  (interactive)
   (let ((project-dir (projectile-project-root))
         (file-name (buffer-file-name)))
     (neotree-toggle)
@@ -123,23 +109,24 @@ the beginning of the list."
       (message "Could not find git project root."))))
 
 
-(global-set-key [f6] (lambda () (interactive) (neotree-project-dir) (lsp-treemacs-symbols) (evil-window-next)))
+(global-set-key [f6]
+                (lambda ()
+                  (neotree-project-dir)
+                  (lsp-treemacs-symbols)
+                  (evil-window-next)))
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Flycheck errors*" eos)
+               (display-buffer-reuse-window
+                display-buffer-in-side-window)
+               (side            . bottom)
+               (reusable-frames . visible)
+               (window-height   . 0.18)))
 
 
-(add-hook 'org-mode-hook (lambda () (local-set-key (kbd "<f8>") #'org-tree-slide-mode)))
-
-
-
-(add-hook 'after-init-hook #'global-flycheck-mode) (add-to-list 'display-buffer-alist
-                                                                `(,(rx bos "*Flycheck errors*" eos)
-                                                                  (display-buffer-reuse-window
-                                                                   display-buffer-in-side-window)
-                                                                  (side            . bottom)
-                                                                  (reusable-frames . visible)
-                                                                  (window-height   . 0.18)))
-
-
-(defun comment-or-uncomment-region-or-line ()
+(defun salih/comment-or-uncomment-region-or-line ()
     "Comments or uncomments the region or the current line if there's no active region."
     (interactive)
     (let (beg end)
@@ -148,7 +135,7 @@ the beginning of the list."
             (setq beg (line-beginning-position) end (line-end-position)))
         (comment-or-uncomment-region beg end)
         (next-line)))
-(global-set-key (kbd "M-;") 'comment-or-uncomment-region-or-line)
+(global-set-key (kbd "M-;") 'salih/comment-or-uncomment-region-or-line)
 
 (defun quit-it ()
   (if (and evil-mode (eq evil-state 'insert))
@@ -174,7 +161,6 @@ the beginning of the list."
 
 
 (defun sharprun()
- (interactive)
  (save-buffer)
  (compile (concat "dotnet run") t  ) (other-window t)
  (end-of-add-hook 'csharp-mode))
@@ -182,7 +168,6 @@ the beginning of the list."
 
 
 (defun gorun()
- (interactive)
  (save-buffer)
  (compile (concat "go run .") t  ) (other-window t)
  (end-of-add-hook 'go-mode))
@@ -190,7 +175,6 @@ the beginning of the list."
 
 
 (defun rungo()
- (interactive)
  (save-buffer)
  (compile (concat "go run "  (file-name-nondirectory (buffer-file-name))) t)
  (other-window t)
@@ -208,7 +192,6 @@ the beginning of the list."
 When called in emacs lisp, if @fname is given, open that.
 URL `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html'
 Version 2019-11-04 2021-02-16"
-  (interactive)
   (let* (
          ($file-list
           (if @fname
@@ -252,3 +235,27 @@ iedit-mode."
   (if (bound-and-true-p lsp-mode)
       (call-interactively #'lsp-rename)
     (call-interactively #'iedit-mode)))
+
+
+(defun insert-now-timestamp()
+  (org-insert-time-stamp (current-time) t))
+
+
+
+(defun salih/global (key-sequence)
+  (concat (kbd "C-x") (kbd key-sequence)))
+(defun salih/mode (key-sequence)
+  (concat (kbd "C-c") (kbd key-sequence)))
+
+
+
+(defun salih/evil-escape-and-abort-company ()
+  (interactive)
+  (company-abort)
+  (evil-escape))
+
+(defun salih/find-definition-or-lookup ()
+  "If current buffer is in lsp-mode, call lsp-find-definition. Otherwise, call lookup."
+  (if (bound-and-true-p lsp-mode)
+      (call-interactively #'lsp-find-definition)
+    (call-interactively #'+lookup/file)))

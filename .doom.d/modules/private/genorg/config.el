@@ -143,3 +143,8 @@
 (add-hook 'org-mode-hook 'turn-on-auto-fill)
 (setq org-archive-location "%s_archive.org::"
       org-agenda-start-with-log-mode t)
+
+
+
+
+(advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)

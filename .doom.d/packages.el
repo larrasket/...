@@ -41,4 +41,3 @@
 
 
 (package! slime)
-(package! ac-slime)
