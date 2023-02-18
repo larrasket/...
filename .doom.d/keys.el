@@ -69,8 +69,7 @@
  :prefix (concat salih/prefix-global " f")
  "r" 'recentf-open-files
  "g" 'magit-find-file
- "L" 'magit-log-buffer-file
- "l" #'locate)
+ "l" 'projectile-find-file)
 
 
 
@@ -142,7 +141,7 @@
 
 ;; code editing
 (general-define-key
- :prefix (concat salih/prefix-mode)
+ :prefix (concat salih/prefix-mode " r")
  "r" #'salih/rename-or-iedit)
 
 
@@ -150,6 +149,9 @@
 
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+
+(define-key projectile-mode-map (kbd "C-x p a") 'projectile-add-known-project)
+
 
 
 (global-set-key (kbd "M-RET") 'lsp-execute-code-action)
