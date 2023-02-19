@@ -259,3 +259,17 @@ iedit-mode."
   (if (bound-and-true-p lsp-mode)
       (call-interactively #'lsp-find-definition)
     (call-interactively #'+lookup/file)))
+
+
+(defun my-randomize-date-time ()
+  "Randomize the time for the date on the current line."
+  (interactive)
+  (save-excursion
+    (beginning-of-line)
+    (when (re-search-forward "#\\+DATE: *<\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)>" nil t)
+      (let* ((date (match-string 1))
+             (time (format "%02d:%02d:%02d" (random 24) (random 60) (random 60)))
+             (new-date (concat date " " time)))
+        (replace-match (concat "#+DATE: <" new-date ">"))))))
+
+(global-set-key (kbd "C-c r") 'my-randomize-date-time)
