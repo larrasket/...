@@ -69,3 +69,5 @@
 (epa-file-enable)
 (global-wakatime-mode)
 (global-org-modern-mode)
+
+(after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
