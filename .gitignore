@@ -21,3 +21,5 @@ flycheck_**
 /mpv/watch_later/
 /.auctex-auto/
 /__pycache__/
+/.config/qBittorrent/lockfile
+/.config/qBittorrent/rss/storage.lock
