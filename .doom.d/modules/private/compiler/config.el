@@ -20,14 +20,3 @@
       lsp-completion-show-kind t)
 
 (add-hook 'company-mode-hook 'company-box-mode)
-
-
-
-;; setup lisp
-(set-repl-handler! 'lisp-mode #'sly-mrepl)
-(set-eval-handler! 'lisp-mode #'sly-eval-region)
-
-
-(set-lookup-handlers! 'lisp-mode
-  :definition #'sly-edit-definition
-  :documentation #'sly-describe-symbol)

@@ -3,4 +3,3 @@
 
 
 (package! company-box)
-(package! slime)

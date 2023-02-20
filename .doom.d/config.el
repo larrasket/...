@@ -61,8 +61,6 @@
 (add-hook 'prog-mode-hook 'highltier)
 (add-hook 'prog-mode-hook 'column-enforce-mode)
 (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
-(add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-(add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'neotree-mode-hook #'hide-mode-line-mode)
 
 
