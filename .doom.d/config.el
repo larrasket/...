@@ -17,7 +17,7 @@
       org-roam-directory "~/roam"
 
       highlight-indent-guides-method 'bitmap
-      browse-url-browser-function 'xwidget-webkit-browse-url
+      browse-url-generic-program "chromium"
       inferior-lisp-program "sbcl"
       large-file-warning-threshold nil
 
@@ -62,7 +62,6 @@
 (add-hook 'prog-mode-hook 'column-enforce-mode)
 (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'neotree-mode-hook #'hide-mode-line-mode)
-
 
 (epa-file-enable)
 (global-wakatime-mode)

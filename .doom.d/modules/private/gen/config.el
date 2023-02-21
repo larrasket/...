@@ -10,7 +10,6 @@
 (setq c-default-style "linux"
       c-basic-offset 4)
 (setq doom-font (font-spec :family "PragmataPro" :size 12)
-      browse-url-generic-program "chromium"
       treemacs-position 'right
       dired-sidebar-refresh-on-special-commands 't
       display-line-numbers-type 'relative
