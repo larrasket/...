@@ -23,3 +23,8 @@ flycheck_**
 /__pycache__/
 /.config/qBittorrent/lockfile
 /.config/qBittorrent/rss/storage.lock
+/.config/musikcube/1/
+/.config/musikcube/log.txt
+/.config/musikcube/plugin_pipewireioutput.json
+/.config/musikcube/plugin_portaudioioutput.json
+/.config/musikcube/stderr.txt
