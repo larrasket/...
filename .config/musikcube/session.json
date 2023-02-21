@@ -1,11 +1,13 @@
 {
   "LastBrowseCategoryId": 1.0,
   "LastBrowseCategoryType": "playlists",
+  "LastBrowseFilter": "",
+  "LastBrowseFilterVisible": false,
   "LastCategoryFilter": "",
   "LastCategoryFilterMatchType": 1,
   "LastLibraryView": "Browse",
   "LastPlayQueueIndex": 0,
-  "LastPlayQueueTime": 44.0,
+  "LastPlayQueueTime": 1.0,
   "LastTrackFilter": "",
   "LastTrackFilterMatchType": 1
 }
