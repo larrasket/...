@@ -95,7 +95,7 @@
 
 ;; insertion
 (general-define-key
- :prefix (concat salih/prefix-global " i")
+ :prefix (concat salih/prefix-mode " i")
  "u" 'insert-char
  "n" 'org-noter-insert-note
  "t" 'insert-now-timestamp)
