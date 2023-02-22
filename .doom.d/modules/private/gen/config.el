@@ -1,7 +1,8 @@
 ;;; mine/gen/config.el -*- lexical-binding: t; -*-
 
 (setq completion-ignore-case t)
-(setq-default frame-title-format '("%b"))
+(setq-default frame-title-format '("%b")
+              bidi-paragraph-direction 'left-to-right)
 
 
 ;; disable emojis
@@ -17,7 +18,8 @@
       neo-theme 'icons
       neo-window-width 35
       doom-modeline-height 20
-      doom-modeline-buffer-state-icon nil)
+      doom-modeline-buffer-state-icon nil
+      bidi-paragraph-direction 'left-to-right)
 
 
 

@@ -7,7 +7,6 @@
 (add-to-list 'org-agenda-files "~/roam/journal/agenda/todo.org")
 (add-to-list 'org-agenda-files "~/roam/journal/agenda/births.org")
 
-
 (setq load-prefer-newer t ;; avoid warnings
 ;; set org files
       +org-capture-journal-file "~/blog/content/stack.org"
@@ -60,6 +59,7 @@
 (add-hook 'org-mode-hook 'highltier)
 (add-hook 'prog-mode-hook 'highltier)
 (add-hook 'prog-mode-hook 'column-enforce-mode)
+(add-hook 'prog-mode-hook 'auto-fill-mode)
 (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'neotree-mode-hook #'hide-mode-line-mode)
 
@@ -68,3 +68,14 @@
 (global-org-modern-mode)
 
 (after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+
+
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Flycheck errors*" eos)
+               (display-buffer-reuse-window
+                display-buffer-in-side-window)
+               (side            . bottom)
+               (reusable-frames . visible)
+               (window-height   . 0.18)))

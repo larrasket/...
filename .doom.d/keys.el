@@ -1,6 +1,7 @@
 ;;; ../configs/.doom.d/keys.el -*- lexical-binding: t; -*-
 
 (provide 'keys)
+(require '+handy)
 
 (setq salih/prefix-global "C-x"
       salih/prefix-mode "C-c")
@@ -25,22 +26,33 @@
 (general-auto-unbind-keys)
 
 
+;; TODO Refactor this. I think this should be rewritten as an only one function
+;; that is "Run file", which check the mode and map it to the matching running
+;; method.
 
 (add-hook 'c++-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") 'compileandrun)))
+          (lambda () (local-set-key (salih/mode "C-c") 'salih/compile-and-run-cpp)))
 
 (add-hook 'csharp-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") 'sharprun)))
+          (lambda () (local-set-key (salih/mode "C-c") 'salih/compile-and-run-csharp)))
 
 (add-hook 'go-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") 'gorun)
-                (local-set-key (kbd "<f2>") 'rungo)))
+          (lambda () (local-set-key (salih/mode "C-c") 'salih/compile-and-run-go-file)
+                (local-set-key (kbd "<f2>") 'salih/compile-and-run-go-project)))
 
 (add-hook 'dired-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") #'xah-open-in-external-app)))
+          (lambda () (local-set-key (salih/mode "C-c") 'salih/open-in-external-app)))
 
 (add-hook 'org-mode-hook
-          (lambda () (local-set-key (salih/mode "C-f") #'org-footnote-action)))
+          (lambda () (local-set-key (salih/mode "C-f") 'org-footnote-action)))
+
+
+
+(add-hook 'org-roam-mode-hook
+          (lambda () (local-set-key (salih/mode "C-f") 'org-footnote-action)))
+
+
+
 
 (global-unset-key (kbd "C-f"))
 (define-key org-mode-map (kbd "C-c C-f") nil)
@@ -84,9 +96,18 @@
 
 
 
+
+
+(general-define-key
+ :prefix salih/prefix-mode
+ "e l" 'flycheck-list-errors)
+
+
+
+
 ;; search keys
 (general-define-key
- :prefix (concat salih/prefix-global " s")
+ :prefix (concat salih/prefix-mode " s")
  "d" '+default/search-cwd
  "p" '+default/search-project
  "b" '+default/search-buffer
@@ -96,6 +117,7 @@
 ;; insertion
 (general-define-key
  :prefix (concat salih/prefix-mode " i")
+
  "u" 'insert-char
  "n" 'org-noter-insert-note
  "t" 'insert-now-timestamp)
@@ -115,11 +137,16 @@
  "b" 'org-roam-buffer-toggle
  "c" 'org-roam-capture
  "f" 'org-roam-node-find
- "i" 'org-roam-insert
- "I" 'org-roam-insert-immediate
- "t" 'org-roam-tag-add
- "a" 'org-roam-alias-add
- "j" 'org-roam-dailies-capture-today)
+ "j" 'org-roam-dailies-capture-today
+
+
+
+ "i n" 'org-roam-node-insert
+ "i t" 'org-roam-tag-add
+ "i a" 'org-roam-alias-add)
+
+
+
 
 ;; magit
 (general-define-key
@@ -159,3 +186,16 @@
 (global-set-key (kbd "C-<right>") 'enlarge-window-horizontally)
 (global-set-key (kbd "C-<down>") 'enlarge-window)
 (global-set-key (kbd "C-<up>") 'shrink-window)
+(global-set-key (kbd "<f2>") 'salih/toggle-maximize-buffer)
+(global-set-key (kbd "M-RET") 'lsp-execute-code-action)
+(global-set-key (kbd "C-M-g") '+lookup/definition)
+
+
+
+(global-set-key [f6]
+                (lambda ()
+                  (neotree-project-dir)
+                  (lsp-treemacs-symbols)
+                  (evil-window-next 0)))
+
+(global-set-key (kbd "M-;") 'salih/comment-or-uncomment-region-or-line)

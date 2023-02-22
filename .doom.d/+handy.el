@@ -3,6 +3,38 @@
 
 (provide '+handy)
 
+;; basic definiton for keys.el
+
+(defun salih/global (key-sequence)
+  (concat (kbd "C-x") (kbd key-sequence)))
+(defun salih/mode (key-sequence)
+  (concat (kbd "C-c") (kbd key-sequence)))
+
+
+
+
+;; fix evil C-g methods
+
+(require 'evil)
+
+(defun salih/evil-escape-and-abort-company ()
+  (interactive)
+  (company-abort)
+  (evil-escape))
+
+(defun quit-it ()
+  (if (and evil-mode (eq evil-state 'insert))
+      (evil-force-normal-state)
+    (keyboard-quit)))
+
+(defun evil-keyboard-quit ()
+  "Keyboard quit and force normal state."
+  (and evil-mode (evil-force-normal-state))
+  (keyboard-quit))
+
+
+;; handy stuff
+
 (defun gk-next-theme ()
   "Switch to the next theme in ‘custom-known-themes’.
 If exhausted, disable themes.  If run again thereafter, wrap to
@@ -23,13 +55,13 @@ the beginning of the list."
 
 
 
-
 (defun org-archive-subtree-if-match (match)
   "Archive all subtrees matching the given MATCH pattern."
   (org-map-entries
    (lambda ()
      (org-archive-subtree)
-     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+     (setq org-map-continue-from
+           (org-element-property :begin (org-element-at-point))))
    match 'tree))
 
 (defun salih/org-archive-done-and-killed-tasks ()
@@ -37,10 +69,6 @@ the beginning of the list."
   (interactive)
   (org-archive-subtree-if-match "/DONE")
   (org-archive-subtree-if-match "/KILL"))
-
-
-
-
 
 
 
@@ -69,14 +97,6 @@ the beginning of the list."
 
 
 
-
-
-
-
-
-
-(setq bidi-paragraph-direction 'left-to-right)
-(setq-default bidi-paragraph-direction 'left-to-right)
 (defun salih/bidi-direction-toggle ()
   (interactive "")
   (setq bidi-display-reordering t)
@@ -85,7 +105,8 @@ the beginning of the list."
     (setq bidi-paragraph-direction 'right-to-left))
   (message "%s" bidi-paragraph-direction))
 
-(defun toggle-maximize-buffer ()
+
+(defun salih/toggle-maximize-buffer ()
        (interactive)
        (if (= 1 (length (window-list)))
            (jump-to-register '_)
@@ -93,9 +114,6 @@ the beginning of the list."
            (window-configuration-to-register '_)
            (delete-other-windows))))
 
-
-(global-set-key (kbd "M-RET") 'lsp-execute-code-action)
-(require 'evil)
 
 (defun neotree-project-dir ()
   (let ((project-dir (projectile-project-root))
@@ -109,89 +127,29 @@ the beginning of the list."
       (message "Could not find git project root."))))
 
 
-(global-set-key [f6]
-                (lambda ()
-                  (neotree-project-dir)
-                  (lsp-treemacs-symbols)
-                  (evil-window-next)))
-
-(add-hook 'after-init-hook #'global-flycheck-mode)
-
-(add-to-list 'display-buffer-alist
-             `(,(rx bos "*Flycheck errors*" eos)
-               (display-buffer-reuse-window
-                display-buffer-in-side-window)
-               (side            . bottom)
-               (reusable-frames . visible)
-               (window-height   . 0.18)))
 
 
 (defun salih/comment-or-uncomment-region-or-line ()
-    "Comments or uncomments the region or the current line if there's no active region."
+    "Comments or uncomments the region or the current line if there's no active
+region."
     (interactive)
     (let (beg end)
         (if (region-active-p)
             (setq beg (region-beginning) end (region-end))
             (setq beg (line-beginning-position) end (line-end-position)))
         (comment-or-uncomment-region beg end)
-        (next-line)))
-(global-set-key (kbd "M-;") 'salih/comment-or-uncomment-region-or-line)
-
-(defun quit-it ()
-  (if (and evil-mode (eq evil-state 'insert))
-      (evil-force-normal-state)
-    (keyboard-quit)))
-
-(defun evil-keyboard-quit ()
-  "Keyboard quit and force normal state."
-  (and evil-mode (evil-force-normal-state))
-  (keyboard-quit))
-
-
-
-
-(defun compileandrun()
- (save-buffer)
- (compile (concat "g++ "  (file-name-nondirectory (buffer-file-name)) " -o "
-           (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./"
-           (file-name-sans-extension  (file-name-nondirectory (buffer-file-name))) " && rm "
-           (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t  ) (other-window t)
- (end-of-add-hook 'c++-mode))
-
-
-
-(defun sharprun()
- (save-buffer)
- (compile (concat "dotnet run") t  ) (other-window t)
- (end-of-add-hook 'csharp-mode))
-
-
-
-(defun gorun()
- (save-buffer)
- (compile (concat "go run .") t  ) (other-window t)
- (end-of-add-hook 'go-mode))
-
-
-
-(defun rungo()
- (save-buffer)
- (compile (concat "go run "  (file-name-nondirectory (buffer-file-name))) t)
- (other-window t)
- (end-of-add-hook 'go-mode))
+        (forward-line)))
 
 
 
 
 
-
-
-
-(defun xah-open-in-external-app (&optional @fname)
+(defun salih/open-in-external-app (&optional @fname)
   "Open the current file or dired marked files in external app.
 When called in emacs lisp, if @fname is given, open that.
 URL `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html'
 Version 2019-11-04 2021-02-16"
+  (interactive)
   (let* (
          ($file-list
           (if @fname
@@ -226,8 +184,6 @@ Version 2019-11-04 2021-02-16"
   (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
   (highlight-indent-guides-mode))
 
-
-
 (defun salih/rename-or-iedit ()
   "If current buffer is in lsp-mode, call lsp-rename. Otherwise, call
 iedit-mode."
@@ -241,29 +197,16 @@ iedit-mode."
   (org-insert-time-stamp (current-time) t))
 
 
-
-(defun salih/global (key-sequence)
-  (concat (kbd "C-x") (kbd key-sequence)))
-(defun salih/mode (key-sequence)
-  (concat (kbd "C-c") (kbd key-sequence)))
-
-
-
-(defun salih/evil-escape-and-abort-company ()
-  (interactive)
-  (company-abort)
-  (evil-escape))
-
 (defun salih/find-definition-or-lookup ()
-  "If current buffer is in lsp-mode, call lsp-find-definition. Otherwise, call lookup."
+  "If current buffer is in lsp-mode, call lsp-find-definition. Otherwise, call
+lookup."
   (if (bound-and-true-p lsp-mode)
       (call-interactively #'lsp-find-definition)
     (call-interactively #'+lookup/file)))
 
 
-(defun my-randomize-date-time ()
+(defun salih/randomize-date-time ()
   "Randomize the time for the date on the current line."
-  (interactive)
   (save-excursion
     (beginning-of-line)
     (when (re-search-forward "#\\+DATE: *<\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)>" nil t)
@@ -272,4 +215,37 @@ iedit-mode."
              (new-date (concat date " " time)))
         (replace-match (concat "#+DATE: <" new-date ">"))))))
 
-(global-set-key (kbd "C-c r") 'my-randomize-date-time)
+
+;; compile-and-run methods
+(defun salih/compile-and-run-cpp ()
+ (save-buffer)
+ (compile (concat "g++ "  (file-name-nondirectory (buffer-file-name)) " -o "
+           (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./"
+           (file-name-sans-extension  (file-name-nondirectory (buffer-file-name))) " && rm "
+           (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t  ) (other-window t)
+           (end-of-add-hook 'c++-mode))
+
+
+
+(defun salih/compile-and-run-csharp ()
+ (save-buffer)
+ (compile (concat "dotnet run") t  ) (other-window t)
+ (end-of-add-hook 'csharp-mode))
+
+
+
+(defun salih/compile-and-run-go-project ()
+  (interactive)
+  (save-buffer)
+  (compile
+   (concat "go run .") t)
+  (other-window t)
+  (end-of-add-hook 'go-mode))
+
+
+
+(defun salih/compile-and-run-go-file ()
+ (save-buffer)
+ (compile (concat "go run "  (file-name-nondirectory (buffer-file-name))) t)
+ (other-window t)
+ (end-of-add-hook 'go-mode))
