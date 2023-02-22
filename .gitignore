@@ -28,3 +28,4 @@ flycheck_**
 /.config/musikcube/plugin_pipewireioutput.json
 /.config/musikcube/plugin_portaudioioutput.json
 /.config/musikcube/stderr.txt
+/bookmarks

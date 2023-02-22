@@ -1,15 +1,15 @@
 ;;; ../configs/.doom.d/handy.el -*- lexical-binding: t; -*-
 ;;; contains some handy functions to use at once; not loaded by default
 
+;; TODO clean this
 (provide '+handy)
 
 ;; basic definiton for keys.el
 
 (defun salih/global (key-sequence)
-  (concat (kbd "C-x") (kbd key-sequence)))
+  (kbd (concat salih/prefix-global key-sequence)))
 (defun salih/mode (key-sequence)
-  (concat (kbd "C-c") (kbd key-sequence)))
-
+  (kbd (concat salih/prefix-mode   key-sequence)))
 
 
 
@@ -218,6 +218,7 @@ lookup."
 
 ;; compile-and-run methods
 (defun salih/compile-and-run-cpp ()
+  (interactive)
  (save-buffer)
  (compile (concat "g++ "  (file-name-nondirectory (buffer-file-name)) " -o "
            (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./"
@@ -228,6 +229,7 @@ lookup."
 
 
 (defun salih/compile-and-run-csharp ()
+  (interactive)
  (save-buffer)
  (compile (concat "dotnet run") t  ) (other-window t)
  (end-of-add-hook 'csharp-mode))
@@ -245,6 +247,7 @@ lookup."
 
 
 (defun salih/compile-and-run-go-file ()
+  (interactive)
  (save-buffer)
  (compile (concat "go run "  (file-name-nondirectory (buffer-file-name))) t)
  (other-window t)
