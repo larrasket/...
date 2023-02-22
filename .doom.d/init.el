@@ -22,7 +22,7 @@
        file-templates
        fold
        (format +onsave)
-       ;; lispy
+       lispy
        parinfer
        snippets
        word-wrap
