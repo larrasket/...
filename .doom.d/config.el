@@ -76,5 +76,3 @@
 (epa-file-enable)
 (global-wakatime-mode)
 (global-org-modern-mode)
-;; (vertico-buffer-mode 1)
-;; (setq vertico-buffer-display-action '(display-buffer-same-window))
