@@ -21,6 +21,7 @@ alias grep='grep --colour=auto'
 alias smk='sudo make clean install'
 alias f="lfrun"
 alias d='yt-dlp -f "mp4" -o "%(title)s.%(ext)s" '
+alias c='clear'
 
 # Download in lower quality (480)
 # (Internet plans sucks in my country)

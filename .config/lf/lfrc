@@ -270,7 +270,7 @@ map dl dlfile
 
 # Basic Functions
 map . set hidden!
-map DD delete
+map DD archivehere
 map p paste
 map x cut
 map y copy
