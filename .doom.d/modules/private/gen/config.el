@@ -57,3 +57,14 @@
 ;; Disable images in eww buffer
 (setq-default shr-inhibit-images t
               org-download-image-dir "./org-media")
+
+
+(after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
+
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*Flycheck errors*" eos)
+               (display-buffer-reuse-window
+                display-buffer-in-side-window)
+               (side            . bottom)
+               (reusable-frames . visible)
+               (window-height   . 0.18)))

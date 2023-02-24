@@ -58,6 +58,7 @@
       browse-url-generic-program                        "chromium"
       large-file-warning-threshold                      nil
       inferior-lisp-program                             "sbcl"
+      neo-mode-line-type                                'default
       org-annotate-file-storage-file                    "~/configs/annotated.org")
 
 ;; this should be called after defining salih/prefix-global
@@ -70,23 +71,10 @@
 (add-hook 'prog-mode-hook 'auto-fill-mode)
 (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'neotree-mode-hook #'hide-mode-line-mode)
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 (epa-file-enable)
 (global-wakatime-mode)
 (global-org-modern-mode)
-
-(after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
-(add-hook 'after-init-hook #'global-flycheck-mode)
-
-(add-to-list 'display-buffer-alist
-             `(,(rx bos "*Flycheck errors*" eos)
-               (display-buffer-reuse-window
-                display-buffer-in-side-window)
-               (side            . bottom)
-               (reusable-frames . visible)
-               (window-height   . 0.18)))
-
-
-
-(defvar org-projectile-annotate-file-name "projectile-annotations.org"
-  "The name of the file to store project annotations.")
+;; (vertico-buffer-mode 1)
+;; (setq vertico-buffer-display-action '(display-buffer-same-window))
