@@ -6,7 +6,6 @@ work for you. Instead: - if you are new to this kind of software, explore and le
 first. If you are familiar with this category, it would be much easier to read it, pick &
 use whatever you like, instead of replication.
 
-
 [[file:img/bk/2022-12-05_18-15.png]]
 
 [[file:img/bk/2022-12-06_09-24.png]]
@@ -30,7 +29,6 @@ I spend ~95% of my time while doing computing inside Emacs, this probably is the
 most important part of this configuration system, The following contains my
 favorite Emacs keybindings, some of them are defined by default and other are
 only in my configuration.
-
 * TODO Dynamic Window Manager
 * TODO lf file manager
 * TODO MPV
