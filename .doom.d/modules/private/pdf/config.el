@@ -23,3 +23,17 @@
 
 (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
 (setq pdf-view-restore-filename "~/configs/.pdf-view-restore")
+
+
+
+
+(use-package nov-xwidget
+  :demand t
+  :after nov
+  :config
+  (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
+  (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
+
+
+(require 'nov-xwidget)
+(setq nov-xwidget-style-dark nov-xwidget-style-light)
