@@ -1,63 +1,47 @@
-
-#
 # ~/.bashrc
 #
 [[ $- != *i* ]] && return
-export PATH=$PATH:/home/ghd/.cargo/bin
-export PATH=$PATH:/home/ghd/.dotnet/tools
-export PATH=$PATH:/home/ghd/.local/bin
-export FrameworkPathOverride=/lib/mono/
 
 
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 [ -n "$DISPLAY" ]  && command -v xdo >/dev/null 2>&1 && xdo id > /tmp/term-wid-"$$"
 trap "( rm -f /tmp/term-wid-"$$" )" EXIT HUP
 
-# blog
-alias pubb1='cd ~/blog && ./build.sh && cd public && git add . &&  git commit -m \"update\" && git push '
-alias pub1='git add . && git commit -m update'
-alias pub='pub1 && pubb1'
+unset use_color safe_term match_lhs sh
 
-#programs
-alias mic='pavucontrol'
+# Conv
 alias land='sudo rm -R /var/cache/minidlna/ && sudo minidlnad'
 alias wife='nmtui'
 alias hd='nmcli con up'
 alias s='setsid rsblocks '
-alias mvi='mpv --config-dir=$HOME/.config/mvi'
-alias mva='mpv --config-dir=$HOME/.config/mvi *jpg *png *gif *webp *tiff *raw *bmp *svg'
 alias htop='gotop'
 alias netwatch='sudo nethogs'
-alias dockerstart='systemctl start docker.service'
-alias dockercc='docker rm -vf $(docker ps -aq)'
-#alias dockerci='docker rmi -f $(docker images -aq)'
-alias docker='sudo docker'
-
-#make it easier
-alias c='clear'
-alias doom='~/.emacs.d/bin/doom'
 alias sv='sudo vim'
-alias smk='sudo make clean install'
-alias update='sudo pacman -Syu'
-alias i='sudo pacman -S '
-alias r='sudo pacman -Rs'
-alias lsd='du -h --max-depth=1 | sort -hr'
 alias grep='grep --colour=auto'
+alias smk='sudo make clean install'
 alias f="lfrun"
-alias cp="cp -i"                          # confirm before overwriting something
-alias df='df -h'                          # human-readable sizes
-alias free='free -m'                      # show sizes in MB
-
-
 alias d='yt-dlp -f "mp4" -o "%(title)s.%(ext)s" '
+
+# Download in lower quality (480)
+# (Internet plans sucks in my country)
 alias dss='yt-dlp -f "bestvideo[height<=480]+bestaudio/best[height<=480],mp4" --write-auto-sub -o "%(title)s.%(ext)s" '
 
-
-
+# Download song with metadata
 alias mp3='yt-dlp -o '\''%(title)s.%(ext)s'\'' --extract-audio --audio-format mp3 --add-metadata'
-unset use_color safe_term match_lhs sh
+
+# confirm before overwriting something
+alias cp="cp -i"
+
+# Package management
+alias i='sudo pacman -S '
+alias r='sudo pacman -Rs'
+
+# get sizes of current pwd's content, readable and sorted
+alias lsd='du -h --max-depth=1 | sort -hr'
+
+
+
+
 alias po='castero'
 export _JAVA_AWT_WM_NONREPARENTING=1
 alias ls='ls -l'
@@ -85,7 +69,6 @@ alias dr='yt-dlp -S "res:480"'
 
 
 xhost +local:root > /dev/null 2>&1
-
 complete -cf sudo
 # Bash won't get SIGWINCH if another process is in the foreground.
 # Enable checkwinsize so that bash will check the terminal size when
@@ -201,5 +184,3 @@ PROMPT_COMMAND="_show_last_exit_status; _build_prompt;"
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   exec tmux
 fi
-
-TERM=xterm-kitty
