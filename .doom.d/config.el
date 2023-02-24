@@ -72,6 +72,7 @@
 (add-hook 'lisp-mode-hook #'rainbow-delimiters-mode)
 (add-hook 'neotree-mode-hook #'hide-mode-line-mode)
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(add-hook 'nov-mode-hook 'salih/make-buffer-white)
 
 (epa-file-enable)
 (global-wakatime-mode)

@@ -252,3 +252,12 @@ lookup."
  (compile (concat "go run "  (file-name-nondirectory (buffer-file-name))) t)
  (other-window t)
  (end-of-add-hook 'go-mode))
+
+
+(defun salih/make-buffer-white ()
+  (interactive)
+  (setq buffer-face-mode-face `(:background "white"
+                                :foreground "black"))
+  (face-remap-add-relative 'hl-line :background "#e6e6e6")
+  (face-remap-add-relative 'link :foreground "blue")
+  (buffer-face-mode))
