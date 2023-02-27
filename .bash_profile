@@ -13,6 +13,7 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude *.srt'
 export PATH=$PATH:~/.emacs.d/bin
 export PATH=$PATH:~/.doom.d/bin
+export PATH=$PATH:~/.bin/
 
 
 export PATH=$PATH:/home/ghd/.cargo/bin

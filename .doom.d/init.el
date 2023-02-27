@@ -149,7 +149,7 @@
        gen
        genorg
        gitcolor
-       ;; leetcode
+       leetcode
        chess
        cite
        pdf

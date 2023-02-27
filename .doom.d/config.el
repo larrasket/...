@@ -3,6 +3,9 @@
 (add-to-list 'org-agenda-files "~/roam/journal/agenda/births.org")
 (require 'epa-file)
 
+
+
+
 (setq load-prefer-newer t ;; avoid warnings
       ;; set org files
       +org-capture-journal-file                         "~/blog/content/stack.org"
@@ -11,15 +14,17 @@
       org-preview-html-viewer                           'xwidget
       org-roam-directory                                "~/roam"
 
-      ;; I've no idea of any of this.
-      org-crypt-key                                     "ghd@keemail.me"
-      epa-file-cache-passphrase-for-symmetric-encryption t
-      epa-file-select-keys                              'silent
-      epa-file-encrypt-to                               "ghd@keemail.me"
 
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "ghd@keemail.me"
+
+      ;; I've no idea of any of this.
+      org-crypt-key                                     user-mail-address
+      epa-file-cache-passphrase-for-symmetric-encryption t
+      epa-file-select-keys                              'silent
+      epa-file-encrypt-to                               user-mail-address
+
 
       ;; skull welecome in emacs
       fancy-splash-image                                "~/.doom.d/pan.png"
@@ -55,6 +60,7 @@
       salih/prefix-mode                                 "C-c "
 
       ;; other
+      vertico-buffer-display-action                     '(display-buffer-same-window)
       browse-url-generic-program                        "chromium"
       large-file-warning-threshold                      nil
       inferior-lisp-program                             "sbcl"
@@ -73,7 +79,10 @@
 (add-hook 'neotree-mode-hook #'hide-mode-line-mode)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (add-hook 'nov-mode-hook 'salih/make-buffer-white)
+(add-hook 'csv-mode-hook 'csv-align-mode)
+(add-hook 'prog-mode-hook (lambda () (setq-default indent-tabs-mode nil)))
 
 (epa-file-enable)
 (global-wakatime-mode)
 (global-org-modern-mode)
+(vertico-buffer-mode)

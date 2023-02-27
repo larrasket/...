@@ -247,7 +247,7 @@ map ا updir
 
 
 # Trash Mappings
-map dd trash
+map dd archivehere
 map dx rm
 map tc clear_trash
 map tr restore_trash

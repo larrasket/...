@@ -54,21 +54,15 @@ the beginning of the list."
       (message "All themes disabled"))))
 
 
-
-(defun org-archive-subtree-if-match (match)
-  "Archive all subtrees matching the given MATCH pattern."
-  (org-map-entries
-   (lambda ()
-     (org-archive-subtree)
-     (setq org-map-continue-from
-           (org-element-property :begin (org-element-at-point))))
-   match 'tree))
-
-(defun salih/org-archive-done-and-killed-tasks ()
-  "Archive all DONE and KILL tasks in the current buffer."
+(defun salih/org-archive-done-tasks ()
   (interactive)
-  (org-archive-subtree-if-match "/DONE")
-  (org-archive-subtree-if-match "/KILL"))
+  (org-map-entries 'org-archive-subtree "/DONE" 'file))
+
+
+(defun salih/org-archive-killed-tasks ()
+  (interactive)
+  (org-map-entries 'org-archive-subtree "/KILL" 'file))
+
 
 
 

@@ -63,7 +63,9 @@
  "k"    'kill-current-buffer
  "D"    'doom/kill-all-buffers
  "K"    'doom/kill-other-buffers
- "C-t"  'gts-do-translate)
+ "C-t"  'gts-do-translate
+ "l l"  'leetcode
+ "TAB d" '+workspace-delete)
 
 ;; file keys
 (general-define-key
@@ -87,9 +89,7 @@
  ;; e + l = (e)rrors (l)ist
  "l" 'flycheck-list-errors
  ;; wat
- ";" 'salih/rename-or-iedit
- ;; e + s = (es)hell
- "s" 'eshell)
+ ";" 'salih/rename-or-iedit)
 
 ;; search global
 (general-define-key
@@ -97,6 +97,7 @@
  "d" '+default/search-cwd
  "b" '+default/search-buffer
  "p" '+default/search-project
+ "g" 'rgrep
  "w" '+lookup/dictionary-definition)
 
 ;; insertion
@@ -119,14 +120,15 @@
  "b" 'org-roam-buffer-toggle
  "c" 'org-roam-capture
  "f" 'org-roam-node-find
- "j" 'org-roam-dailies-capture-today)
+ "j" 'org-roam-dailies-capture-today
+ "t" 'org-roam-dailies-goto-today)
 
 ;; roam mode
 (add-hook 'org-mode-hook
           (lambda ()
-            (local-set-key (salih/mode "r i") 'org-roam-node-insert)
-            (local-set-key (salih/mode "r t") 'org-roam-tag-add)
-            (local-set-key (salih/mode "r a") 'org-roam-alias-add)))
+            (local-set-key (salih/global "r i") 'org-roam-node-insert)
+            (local-set-key (salih/global "r t") 'org-roam-tag-add)
+            (local-set-key (salih/global "r a") 'org-roam-alias-add)))
 
 
 ;; magit and vc
@@ -139,10 +141,10 @@
  "."   '+vc/browse-at-remote
  "t"   'magit-todos-list)
 
-;; manipulate buffer
+;; other
 (general-define-key
- :prefix salih/prefix-mode
- "C-l" 'org-annotate-file)
+ :prefix (concat salih/prefix-global "e")
+ "e" 'eshell)
 
 ;; projectile
 (projectile-mode +1)
