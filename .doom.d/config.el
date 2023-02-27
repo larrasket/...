@@ -65,6 +65,7 @@
       large-file-warning-threshold                      nil
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
+      consult-preview-key                               nil
       org-annotate-file-storage-file                    "~/configs/annotated.org")
 
 ;; this should be called after defining salih/prefix-global
