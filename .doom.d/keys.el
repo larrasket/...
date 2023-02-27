@@ -65,7 +65,8 @@
  "K"    'doom/kill-other-buffers
  "C-t"  'gts-do-translate
  "l l"  'leetcode
- "TAB d" '+workspace-delete)
+ "TAB d" '+workspace/delete
+ "SPC" 'projectile-find-file)
 
 ;; file keys
 (general-define-key
