@@ -48,6 +48,8 @@
 (add-hook 'org-mode-hook
           (lambda () (local-set-key (salih/mode "C-f") 'org-footnote-action)))
 
+(add-hook 'TeX-mode-hook
+          (lambda () (local-set-key (salih/global "C-l") '(TeX-command-master "LatexMk"))))
 ;; convenient
 (general-define-key
  :prefix salih/prefix-global
@@ -140,7 +142,8 @@
  "C"   'magit-clone
  "L"   'magit-log-buffer-file
  "."   '+vc/browse-at-remote
- "t"   'magit-todos-list)
+ "t"   'magit-todos-list
+ "D"   'magit-file-delete)
 
 ;; other
 (general-define-key
