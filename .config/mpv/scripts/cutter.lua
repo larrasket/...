@@ -1,210 +1,291 @@
-count=0
-time_queue={}
---its shell's path
---output_dir='~/Documents/my_cut'--*
---output_file='~/Documents/my_cut/time_pairs.txt'
-output_file='~/.config/mpv/scripts/time_pairs.txt'
---c_concat_sh='~/Documents/my_cut/c_concat.sh'
-c_concat_sh='~/.config/mpv/scripts/c_concat.sh'
-c_concat_sh2='~/.config/mpv/scripts/c_concat2.sh'
---run_sh='~/Documents/my_cut/run.sh'
-run_sh='~/.config/mpv/scripts/run.sh'
-run_dir='~/.config/mpv/scripts'
+utils = require "mp.utils"
 
---mkdir_sh='if [ ! -d "'..output_dir..'" ]; then mkdir '..output_dir..';fi'
-
-function file_exists(path)
-  local file = io.open(path, "rb")
-  if file then file:close() end
-  return file ~= nil
+local function print(s)
+	mp.msg.info(s)
+	mp.osd_message(s)
 end
 
-function table_leng(t)
-  local leng=0
-  for k, v in pairs(t) do
-    leng=leng+1
-  end
-  return leng;
-end
-
-
-function cut_movie()
-	count=count+1
-	print('count:'..count)
-	local time_current=mp.get_property_number('time-pos')
-	table.insert(time_queue,time_current)
-	if (count%2 == 0)
-	then
-		print('[right trim is cut]:'..time_current)
-        print("time pairs:" .. time_queue[count-1]..','..time_queue[count])
-    else
-    	print('[left trim is cut]:'..time_current)
-    end
-    --os.execute('date')--
-end
-mp.add_key_binding("c", "cut_movie", cut_movie)
-
-function log_time_queue()
-	local str = ''
-	if(count%2==1)
-	then
-		print('please confrim the right trim!')
-	else
-		for k,v in ipairs(time_queue)
-		do
-			if (k%2==1) then str=str..'['..v..',' else str=str..v..'],'  end
+local function table_to_str(o)
+	if type(o) == 'table' then
+		local s = ''
+		for k,v in pairs(o) do
+			if type(k) ~= 'number' then k = '"'..k..'"' end
+			s = s .. '['..k..'] = ' .. table_to_str(v) .. '\n'
 		end
-
-		print('current_pairs:'..string.sub(str,0,#str-1)) str=''
-	end
-	os.execute('pwd')
-end
-mp.add_key_binding("l", "log_time_queue", log_time_queue)
-
-function output_queue()
-
-	local filename = mp.get_property('filename')
-	local file_path = mp.get_property('path')
-	local output_dir=string.sub(file_path,0,#file_path - #filename - 1)
-
-	local video_path=mp.get_property('stream-path')
-	print('video_path:'..video_path)
-	--video_path = string.gsub(video_path, " ", "\\ ")
-	print('_video_path:'..video_path)
-	local str = ''
-	local shell_str = ''
-	if(count%2==1)
-	then
-		print('please confrim the right trim!')
+		return s
 	else
-		for k,v in ipairs(time_queue)
-		do
-			if (k%2==1) then str=str..v..',' else str=str..v..'\\n'  end
-		end
-		str=string.sub(str,0,#str-2)
-		shell_str='echo'..' '..'"'..str..'"'..'>'..' '..output_file
-		print('shell:'..shell_str)
-		os.execute('pwd')
-		--os.execute(mkdir_sh)
-		os.execute(shell_str)
-		print('shell:'..c_concat_sh .. ' '..output_file..' "'..video_path..'" '..output_dir)
-		os.execute(c_concat_sh .. ' "'..output_file..'" "'..video_path..'" "'..output_dir..'" "'..run_dir..'"')
-		os.execute(run_sh)
-
+		return tostring(o)
 	end
 end
-mp.add_key_binding("o", "output_queue", output_queue)
 
-
-function reset_cut()
-	count=0
-	time_queue={}
-	print('cutter reset')
+local function to_hms(seconds)
+	local ms = math.floor((seconds - math.floor(seconds)) * 1000)
+	local secs = math.floor(seconds)
+	local mins = math.floor(secs / 60)
+	secs = secs % 60
+	local hours = math.floor(mins / 60)
+	mins = mins % 60
+	return string.format("%02d-%02d-%02d-%03d", hours, mins, secs, ms)
 end
-mp.add_key_binding("Q", "reset_cut", reset_cut)
 
-function set_fromStart()--clean and set 0 to left trim
-	print('set_fromBegin')
-	reset_cut()
-	count=count+1
-	print('count:'..count)
-	local time_current=0
-	table.insert(time_queue,time_current)
-
-end
---mp.add_key_binding("s", "set_fromStart", set_fromStart)
-
-function set_End()--clean and set 0 to left trim
-
-	print('set_set_End')
-	-- count=count+1
-	-- print('count:'..count)
-	-- local time_current=0
-	-- table.insert(time_queue,time_current)
-	if(count%2==1)
-	then
-		count=count+1
-		local full_time=mp.get_property_number('time-remaining')+mp.get_property_number('time-pos')
-		print('full_time:'..full_time)
-		table.insert(time_queue,full_time)
-
-	else
-		print('please confrim the left trim!')
-
+local function next_table_key(t, current)
+	local keys = {}
+	for k in pairs(t) do
+		keys[#keys + 1] = k
 	end
-
-end
-mp.add_key_binding("e", "set_End", set_End)
-
---mp.get_property('stream-path')
-function get_path()--clean and set 0 to left trim
-	print(123123)
-	os.execute('pwd')
-	os.execute('ls')
-	print("stream-path:"..mp.get_property('stream-path'))
-	print("path:"..mp.get_property('path'))
-	print("filename:"..mp.get_property('filename'))
-	print("working-directory:"..mp.get_property('working-directory'))
-
-	local filename = mp.get_property('filename')
-	local file_path = mp.get_property('path')
-	local file_dir=string.sub(file_path,0,#file_path - #filename - 1)
-	print("file_dir:"..file_dir)
-
-end
-mp.add_key_binding("p", "get_path", get_path)
-
-function undo()--clean and set 0 to left trim
-    if(count==0)
-    then
-    	print("cat't undo!")
-    else
-    	table.remove(time_queue)
-		count=count-1
-		if(count==0)
-		then
-			print('undo!time_queue is empty.')
-		else
-			print('undo!last trim:'..time_queue[count])
+	table.sort(keys)
+	for i = 1, #keys do
+		if keys[i] == current then
+			return keys[(i % #keys) + 1]
 		end
-
-
-    end
-
+	end
+	return keys[1]
 end
---mp.add_key_binding("z", "undo", undo)
 
+ACTIONS = {}
 
-function acu_output_queue()--精确切割，时间慢
+ACTIONS.COPY = function(d)
+	local args = {
+		"ffmpeg",
+		"-nostdin", "-y",
+		"-loglevel", "error",
+		"-ss", d.start_time,
+		"-t", d.duration,
+		"-i", d.inpath,
+		"-pix_fmt", "yuv420p",
+		"-c", "copy",
+		"-map", "0",
+		"-avoid_negative_ts", "make_zero",
+		utils.join_path(d.indir, "COPY_" .. d.channel .. "_" .. d.infile_noext .. "_FROM_" .. d.start_time_hms .. "_TO_" .. d.end_time_hms .. d.ext)
+	}
+	mp.command_native_async({
+		name = "subprocess",
+		args = args,
+		playback_only = false,
+	}, function() print("Done") end)
+end
 
-	local filename = mp.get_property('filename')
-	local file_path = mp.get_property('path')
-	local output_dir=string.sub(file_path,0,#file_path - #filename - 1)
+ACTIONS.ENCODE = function(d)
+	local args = {
+		"ffmpeg",
+		"-nostdin", "-y",
+		"-loglevel", "error",
+		"-i", d.inpath,
+		"-ss", d.start_time,
+		"-t", d.duration,
+		"-pix_fmt", "yuv420p",
+		"-crf", "16",
+		"-preset", "superfast",
+		utils.join_path(d.indir, "ENCODE_" .. d.channel .. "_" .. d.infile_noext .. "_FROM_" .. d.start_time_hms .. "_TO_" .. d.end_time_hms .. d.ext)
+	}
+	mp.command_native_async({
+		name = "subprocess",
+		args = args,
+		playback_only = false,
+	}, function() print("Done") end)
+end
 
-	local video_path=mp.get_property('stream-path')
-	print('video_path:'..video_path)
-	--video_path = string.gsub(video_path, " ", "\\ ")
-	print('_video_path:'..video_path)
-	local str = ''
-	local shell_str = ''
-	if(count%2==1)
-	then
-		print('please confrim the right trim!')
+ACTIONS.LIST = function(d)
+	local inpath = mp.get_property("path")
+	local outpath = inpath .. ".list"
+	local file = io.open(outpath, "a")
+	if not file then print("Error writing to cut list") return end
+	local filesize = file:seek("end")
+	local s = "\n" .. d.channel
+		.. ":" .. d.start_time
+		.. ":" .. d.end_time
+	file:write(s)
+	local delta = file:seek("end") - filesize
+	io.close(file)
+	print("Δ " .. delta)
+end
+
+ACTION = "COPY"
+
+MAKE_CUT = ACTIONS.COPY
+
+CHANNEL = 1
+
+CHANNEL_NAMES = {}
+
+KEY_CUT = "c"
+KEY_CYCLE_ACTION = "a"
+KEY_BOOKMARK_ADD = "i"
+KEY_CHANNEL_INC = "="
+KEY_CHANNEL_DEC = "-"
+KEY_MAKE_CUTS = "0"
+
+pcall(require, "config")
+
+mp.msg.info("MPV-CUT LOADED.")
+
+for i, v in ipairs(CHANNEL_NAMES) do
+    CHANNEL_NAMES[i] = string.gsub(v, ":", "-")
+end
+
+if not ACTIONS[ACTION] then ACTION = next_table_key(ACTIONS, nil) end
+
+START_TIME = nil
+
+local function get_current_channel_name()
+	return CHANNEL_NAMES[CHANNEL] or tostring(CHANNEL)
+end
+
+local function get_data()
+	local d = {}
+	d.inpath = mp.get_property("path")
+	d.indir = utils.split_path(d.inpath)
+	d.infile = mp.get_property("filename")
+	d.infile_noext = mp.get_property("filename/no-ext")
+	d.ext = mp.get_property("filename"):match("^.+(%..+)$") or ".mp4"
+	d.channel = get_current_channel_name()
+	return d
+end
+
+local function get_times(start_time, end_time)
+	local d = {}
+	d.start_time = tostring(start_time)
+	d.end_time = tostring(end_time)
+	d.duration = tostring(end_time - start_time)
+	d.start_time_hms = tostring(to_hms(start_time))
+	d.end_time_hms = tostring(to_hms(end_time))
+	d.duration_hms = tostring(to_hms(end_time - start_time))
+	return d
+end
+
+text_overlay = mp.create_osd_overlay("ass-events")
+text_overlay.hidden = true
+text_overlay:update()
+
+local function text_overlay_off()
+	-- https://github.com/mpv-player/mpv/issues/10227
+	text_overlay:update()
+	text_overlay.hidden = true
+	text_overlay:update()
+end
+
+local function text_overlay_on()
+	local channel = get_current_channel_name()
+	text_overlay.data = string.format("%s in %s from %s", ACTION, channel, START_TIME)
+	text_overlay.hidden = false
+	text_overlay:update()
+end
+
+local function print_or_update_text_overlay(content)
+	if START_TIME then text_overlay_on() else print(content) end
+end
+
+local function cycle_action()
+	ACTION = next_table_key(ACTIONS, ACTION)
+	print_or_update_text_overlay("ACTION: " .. ACTION)
+end
+
+local function make_cuts()
+	print("MAKING CUTS")
+	if not MAKE_CUT then print("MAKE_CUT function not found.") return end
+	local inpath = mp.get_property("path") .. ".list"
+	local file = io.open(inpath, "r")
+	if not file then print("Error reading cut list") return end
+	for line in file:lines() do
+		if line ~= "" then
+			local cut = {}
+			for token in string.gmatch(line, "[^" .. ":" .. "]+") do
+				table.insert(cut, token)
+			end
+			local d = get_data()
+			d.channel = cut[1]
+			local t = get_times(tonumber(cut[2]), tonumber(cut[3]))
+			for k, v in pairs(t) do d[k] = v end
+			mp.msg.info("MAKE_CUT")
+			mp.msg.info(table_to_str(d))
+			MAKE_CUT(d)
+		end
+	end
+	io.close(file)
+end
+
+local function cut(start_time, end_time)
+	local d = get_data()
+	local t = get_times(start_time, end_time)
+	for k, v in pairs(t) do d[k] = v end
+	mp.msg.info(ACTION)
+	mp.msg.info(table_to_str(d))
+	ACTIONS[ACTION](d)
+end
+
+local function put_time()
+	local time = mp.get_property_number("time-pos")
+	if not START_TIME then
+		START_TIME = time
+		text_overlay_on()
+		return
+	end
+	text_overlay_off()
+	if time > START_TIME then
+		cut(START_TIME, time)
+		START_TIME = nil
 	else
-		for k,v in ipairs(time_queue)
-		do
-			if (k%2==1) then str=str..v..',' else str=str..v..'\\n'  end
-		end
-		str=string.sub(str,0,#str-2)
-		shell_str='echo'..' '..'"'..str..'"'..'>'..' '..output_file
-		print('shell:'..shell_str)
-		os.execute('pwd')
-		--os.execute(mkdir_sh)
-		os.execute(shell_str)
-		print('shell:'..c_concat_sh2 .. ' '..output_file..' "'..video_path..'" '..output_dir)
-		os.execute(c_concat_sh2 .. ' "'..output_file..'" "'..video_path..'" "'..output_dir..'" "'..run_dir..'"')
-		os.execute(run_sh)
-
+		print("INVALID")
+		START_TIME = nil
 	end
 end
---mp.add_key_binding("i", "acu_output_queue", acu_output_queue)
+
+local function get_bookmark_file_path()
+	local d = get_data()
+	mp.msg.info(table_to_str(d))
+	local outfile = string.format("%s_%s.book", d.channel, d.infile)
+	return utils.join_path(d.indir, outfile)
+end
+
+local function bookmarks_load()
+	local inpath = get_bookmark_file_path()
+	local file = io.open(inpath, "r")
+	if not file then return end
+	local arr = {}
+	for line in file:lines() do
+		if tonumber(line) then
+			table.insert(arr, {
+				time = tonumber(line),
+				title = "chapter_" .. line
+			})
+		end
+	end
+	file:close()
+	table.sort(arr, function(a, b) return a.time < b.time end)
+	mp.set_property_native("chapter-list", arr)
+end
+
+local function bookmark_add()
+	local d = get_data()
+	local outpath = get_bookmark_file_path()
+	local file = io.open(outpath, "a")
+	if not file then print("Failed to open bookmark file for writing") return end
+	local out_string = mp.get_property_number("time-pos") .. "\n"
+	local filesize = file:seek("end")
+	file:write(out_string)
+	local delta = file:seek("end") - filesize
+	io.close(file)
+	bookmarks_load()
+	print(string.format("Δ %s, %s", delta, d.channel))
+end
+
+local function channel_inc()
+	CHANNEL = CHANNEL + 1
+	bookmarks_load()
+	print_or_update_text_overlay(get_current_channel_name())
+end
+
+local function channel_dec()
+	if CHANNEL >= 2 then CHANNEL = CHANNEL - 1 end
+	bookmarks_load()
+	print_or_update_text_overlay(get_current_channel_name())
+end
+
+mp.add_key_binding(KEY_CUT, "cut", put_time)
+mp.add_key_binding(KEY_BOOKMARK_ADD, "bookmark_add", bookmark_add)
+mp.add_key_binding(KEY_CHANNEL_INC, "channel_inc", channel_inc)
+mp.add_key_binding(KEY_CHANNEL_DEC, "channel_dec", channel_dec)
+mp.add_key_binding(KEY_CYCLE_ACTION, "cycle_action", cycle_action)
+mp.add_key_binding(KEY_MAKE_CUTS, "make_cuts", make_cuts)
+
+mp.register_event('file-loaded', bookmarks_load)
