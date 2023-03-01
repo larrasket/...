@@ -95,5 +95,3 @@
 (global-org-modern-mode)
 (vertico-buffer-mode)
 
-(after! 'sly
- (setq sly-complete-symbol-function 'sly-flex-completions))

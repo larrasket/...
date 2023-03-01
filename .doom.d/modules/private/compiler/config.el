@@ -20,3 +20,6 @@
       lsp-completion-show-kind t)
 
 (add-hook 'company-mode-hook 'company-box-mode)
+
+(after! 'sly
+ (setq sly-complete-symbol-function 'sly-flex-completions))
