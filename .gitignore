@@ -29,3 +29,5 @@ flycheck_**
 /.config/musikcube/plugin_portaudioioutput.json
 /.config/musikcube/stderr.txt
 /bookmarks
+/.config/musikcube/playback.json
+/.config/musikcube/session.json
