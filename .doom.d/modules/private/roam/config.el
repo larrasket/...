@@ -11,9 +11,8 @@
 
   (org-roam-dailies-capture-templates
    '(("d" "default" entry "* %<%H:%M> \n %?"
-      :if-new (file+head "%<%Y-%m-%d>.org.gpg" "#+title: %<%A, %d %B %Y>\n- tags :: [[id:fe8618df-c476-44b8-8169-a210bff989d7][Journaling]]\n")
-      :unnarrowed t
-      )))
+      :if-new (file+head "%<%Y-%m-%d>.org.gpg" "#+title: (%<%A, %d %B %Y>) %^{daily-title} \n- tags :: [[id:fe8618df-c476-44b8-8169-a210bff989d7][Journaling]]\n")
+      :unnarrowed t)))
 
   :config
   (setq org-roam-database-connector 'sqlite)
