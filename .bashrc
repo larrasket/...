@@ -167,7 +167,13 @@ _build_prompt() {
   if [[ -n "$git_status" ]]; then
     git_status=":${git_status}"
   fi
-  prompt_dir=$(basename "${PWD}")
+if [[ "$PWD" == "$HOME"* ]]; then
+  prompt_dir="~${PWD#$HOME}"
+else
+  prompt_dir="${PWD}"
+fi
+
+
   # Set xterm title
   echo -ne "\033]0;${HOSTNAME}\007"
   # Check to see if inside screen
@@ -185,3 +191,11 @@ PROMPT_COMMAND="_show_last_exit_status; _build_prompt;"
 if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
   exec tmux
 fi
+
+
+
+# BEGIN_KITTY_SHELL_INTEGRATION
+if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; then source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"; fi
+# END_KITTY_SHELL_INTEGRATION
+export TERM=xterm-256color
+
