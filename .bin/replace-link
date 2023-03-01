@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Check for command line argument
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <symbolic_link>"
+    exit 1
+fi
+
+# Check if file exists and is a symbolic link
+if [ ! -L "$1" ]; then
+    echo "Error: $1 is not a symbolic link"
+    exit 1
+fi
+
+# Get the target file of the symbolic link
+target_file=$(readlink -f "$1")
+
+# Replace the symbolic link with the target file
+mv "$target_file" "$1"
