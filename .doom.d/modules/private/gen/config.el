@@ -10,18 +10,12 @@
 
 (setq c-default-style "linux"
       c-basic-offset 4)
+
 (setq doom-font (font-spec :family "PragmataPro" :size 12)
-      treemacs-position 'right
-      dired-sidebar-refresh-on-special-commands 't
-      display-line-numbers-type 'relative
       all-the-icons-color-icons nil
       neo-theme 'icons
       neo-window-width 35
-      doom-modeline-height 20
-      doom-modeline-buffer-state-icon nil
       bidi-paragraph-direction 'left-to-right)
-
-
 
 (yas-global-mode 1)
 (add-hook 'yas-minor-mode(lambda() (yas-activate-extra-mode 'fundamental-mode)))

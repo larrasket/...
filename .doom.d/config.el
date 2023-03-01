@@ -59,6 +59,7 @@
       salih/prefix-global                               "C-x "
       salih/prefix-mode                                 "C-c "
 
+
       ;; other
       vertico-buffer-display-action                     '(display-buffer-same-window)
       browse-url-generic-program                        "chromium"
@@ -66,6 +67,12 @@
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
       consult-preview-key                               nil
+      treemacs-position                                 'right
+      dired-sidebar-refresh-on-special-commands         't
+      display-line-numbers-type                         'relative
+      doom-modeline-height                              17
+      doom-modeline-buffer-state-icon                   nil
+      doom-modeline-icon                                nil
       org-annotate-file-storage-file                    "~/configs/annotated.org")
 
 ;; this should be called after defining salih/prefix-global
