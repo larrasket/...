@@ -60,7 +60,6 @@
       salih/prefix-mode                                 "C-c "
 
 
-
       ;; other
       vertico-buffer-display-action                     '(display-buffer-same-window)
       browse-url-generic-program                        "chromium"

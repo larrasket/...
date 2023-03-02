@@ -2,4 +2,4 @@
 ;;; mine/compiler/packages.el
 
 
-;; (package! company-box)
+(package! company-box)
