@@ -2,7 +2,7 @@
 (setq inhibit-automatic-native-compilation t)
 (doom! :input
        :completion
-       ;; company
+       company
        corfu
        vertico
        :ui

@@ -19,8 +19,7 @@
 
 (defun salih/evil-escape-and-abort-company ()
   (interactive)
-  ;; (company-abort)
-  (evil-escape)
+  (company-abort)
   (evil-escape))
 
 (defun quit-it ()

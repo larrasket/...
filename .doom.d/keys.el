@@ -23,9 +23,6 @@
 ;;   (define-key company-search-map (kbd "C-g") 'salih/evil-escape-and-abort-company))
 
 
-(define-key company-active-map (kbd "C-g") 'salih/evil-escape-and-abort-company)
-(define-key company-search-map (kbd "C-g") 'salih/evil-escape-and-abort-company)
-
 ;; Run project
 
 ;; TODO Refactor this. I think this should be rewritten as an only one function
