@@ -29,3 +29,4 @@
 
 (package! go-translate)
 (package! distinguished-theme)
+(package! vertico :recipe (:host github :repo "luggages/vertico"))

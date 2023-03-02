@@ -18,9 +18,9 @@
 (define-key evil-operator-state-map     (kbd "C-g") 'evil-escape)
 
 
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "C-g") 'salih/evil-escape-and-abort-company)
-  (define-key company-search-map (kbd "C-g") 'salih/evil-escape-and-abort-company))
+;; (with-eval-after-load 'company
+;;   (define-key company-active-map (kbd "C-g") 'salih/evil-escape-and-abort-company)
+;;   (define-key company-search-map (kbd "C-g") 'salih/evil-escape-and-abort-company))
 
 
 ;; Run project

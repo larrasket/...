@@ -3,6 +3,7 @@
 (doom! :input
        :completion
        company
+       corfu
        vertico
        :ui
        doom
