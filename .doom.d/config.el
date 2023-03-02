@@ -89,7 +89,9 @@
 (add-hook 'nov-mode-hook 'salih/make-buffer-white)
 (add-hook 'csv-mode-hook 'csv-align-mode)
 (add-hook 'prog-mode-hook (lambda () (setq-default indent-tabs-mode nil)))
-
+(add-hook 'org-mode-hook (lambda ()
+                           (display-line-numbers-mode -1)
+                           (setq truncate-lines 1)))
 (epa-file-enable)
 (global-wakatime-mode)
 (global-org-modern-mode)
