@@ -255,3 +255,10 @@ lookup."
   (face-remap-add-relative 'hl-line :background "#e6e6e6")
   (face-remap-add-relative 'link :foreground "blue")
   (buffer-face-mode))
+
+
+(defun salih/open-book ()
+  "Search for a file in ~/me and open it."
+  (interactive)
+  (let ((default-directory "~/source/"))
+    (call-interactively 'find-file)))

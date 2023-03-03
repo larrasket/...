@@ -115,7 +115,8 @@
  :prefix (concat salih/prefix-global "n")
  "b" 'citar-open-notes
  "f" 'citar-open-notes
- "n" 'org-noter)
+ "n" 'org-noter
+ "o" 'salih/open-book)
 
 ;; roam
 (general-define-key
