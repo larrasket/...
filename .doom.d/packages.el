@@ -29,3 +29,6 @@
 
 (package! go-translate)
 (package! distinguished-theme)
+
+(unpin! vertico)
+(package! vertico)
