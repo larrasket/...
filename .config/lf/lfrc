@@ -5,7 +5,7 @@ set preview true
 
 cmd open ${{
 case $(file --mime-type "$f" -bL) in
-text/*|application/json) nvim "$f";;
+text/*|application/json) vim "$f";;
 # text/*|application/json) emacs --no-window-system  "$f";;
 #  text/*|application/json) emacs "$f";;
 *) setsid -f xdg-open "$f" ;;
