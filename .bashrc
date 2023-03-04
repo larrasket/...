@@ -64,7 +64,6 @@ alias cmus="cd ~/music && cmus"
 alias frozen="pkill -SIGUSR2 emacs"
 alias 'cd..'='cd ..'
 alias sp='systemctl suspend'
-alias vim='emacsclient -nw'
 alias dr='yt-dlp -S "res:480"'
 
 
@@ -79,7 +78,7 @@ shopt -s checkwinsize
 shopt -s expand_aliases
 shopt -s histappend
 
-export EDITOR="/usr/bin/nvim"
+export EDITOR="/usr/bin/vim"
 force_color_prompt=yes
 
 
