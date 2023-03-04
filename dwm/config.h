@@ -35,7 +35,7 @@ static const char *yakyak[] = {"yakyak", NULL};
 static const char *pad[] = {"leafpad", NULL};
 static const char *start[] = {"kitty", "-e ", "rsblocks", "&", "dunst", NULL};
 static const char *trello[] = {"chromium", "https://www.google.com ", NULL};
-//#include "fibonacci.h"
+// #include "fibonacci.h"
 static const char *brightcmd[][4] = {
     {"light", "-A", "5", NULL},
     {"light", "-U", "5", NULL},
@@ -74,36 +74,16 @@ static const char *fonts[] = {
     "Hack:size=9.5:antialias=true:autohint=true",
     "JoyPixels:size=9.5:antialias=true:autohint=true"};
 
-static char normbgcolor[] = "#222222";
+static char normbgcolor[] = "#2D2A2E";
 static char normbordercolor[] = "#444444";
 static char normfgcolor[] = "#bbbbbb";
 static char selfgcolor[] = "#eeeeee";
-static char selbordercolor[] = "#770000";
-static char selbgcolor[] = "#005577";
-
-/* static char normbgcolor[] = "#333333"; */
-/* static char normbordercolor[] = "#888580"; */
-/* static char normfgcolor[] = "#888580"; */
-/* static char selfgcolor[] = "#F8F8F8"; */
-/* static char selbordercolor[] = "#F8F8F8"; */
-/* static char selbgcolor[] = "#404040"; */
-
-/* static char *colors[][3] = { */
-/*     /\*               fg           bg           border   *\/ */
-/*     [SchemeNorm] = {normfgcolor, normbgcolor, normbordercolor}, */
-/*     [SchemeSel] = {selfgcolor, selbgcolor, selbordercolor}, */
-/* }; */
-
-static const char col_gray1[] = "#000000";
-static const char col_gray2[] = "#888580";
-static const char col_gray3[] = "#F7F8F8";
-static const char col_gray4[] = "#F8F8F8";
-static const char col_cyan[]  = "#1E1E1E";
-
-static const char *colors[][3] = {
-    /*               fg         bg         border   */
-    [SchemeNorm] = {col_gray3, col_gray1, col_gray2},
-    [SchemeSel] = {col_gray4, col_cyan, col_cyan},
+static char selbordercolor[] = "#939293";
+static char selbgcolor[] = "#221F22";
+static char *colors[][3] = {
+    /*               fg           bg           border   */
+    [SchemeNorm] = {normfgcolor, normbgcolor, normbordercolor},
+    [SchemeSel] = {selfgcolor, selbgcolor, selbordercolor},
 };
 
 typedef struct {
