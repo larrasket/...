@@ -17,7 +17,7 @@
 
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
-      user-mail-address                                 "ghd@keemail.me"
+      user-mail-address                                 "salhghd7@gmail.com"
 
       ;; I've no idea of any of this.
       org-crypt-key                                     user-mail-address
@@ -74,6 +74,16 @@
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
       org-annotate-file-storage-file                    "~/configs/annotated.org")
+
+
+(after! mu4e
+  (setq message-send-mail-function 'smtpmail-send-it
+      starttls-use-gnutls t
+      smtpmail-default-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587
+      smtpmail-starttls-credentials '(("smtp.gmail.com" "587" nil nil))
+      smtpmail-stream-type 'starttls))
 
 ;; this should be called after defining salih/prefix-global
 (require '+handy)

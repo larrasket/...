@@ -132,8 +132,10 @@
        ;;terra
        ;;web
        ;;zig
-       ;; :email
-       ;; (mu4e +org)
+       :email
+       (mu4e
+        +gmail)
+        
 
        ;; ;; notmuch
        ;; ;; (wanderlust)
