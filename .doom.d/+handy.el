@@ -262,3 +262,38 @@ lookup."
   (interactive)
   (let ((default-directory "~/source/"))
     (call-interactively 'find-file)))
+
+
+;;;; My embark / consult-preview-at-point-mode
+;; It is meant to be used for the *Embark Collect* buffer from the list of
+;; Org-roam nodes candidate It provides preview of the note at point as you move
+;; throught the candidate list in *Embark Collect* buffer.
+(with-eval-after-load 'embark
+  (add-hook 'embark-collect-mode-hook  #'salih/consult-preview-at-point-mode))
+
+;;;###autoload
+(define-minor-mode salih/consult-preview-at-point-mode
+  "Preview minor mode for an *Embark Collect* buffer.
+When moving around in the *Embark Collect* buffer, the candidate at point is
+automatically previewed."
+  :init-value nil :group 'consult
+  (if salih/consult-preview-at-point-mode
+      (add-hook 'post-command-hook #'salih/consult-preview-at-point nil 'local)
+    (remove-hook 'post-command-hook #'salih/consult-preview-at-point 'local)))
+
+;;;###autoload
+(defun salih/consult-preview-at-point ()
+  "Preview candidate at point in an *Embark Collect* buffer."
+  (interactive)
+  (let ((display-buffer-base-action '(display-buffer-pop-up-window))
+        (cbuf (current-buffer))
+        (node))
+    ;; Avoid pushing the button created by Embark.  For some reason, some
+    ;; candidates lead to a org-roam-node-find prompt and create a new frame.
+    (if (setq node (get-text-property (point) 'node))
+        ;; `org-roam-node-visit' does not return the buffer visited
+        (progn
+          (unless (featurep 'org-roam)(require 'org-roam))
+          (org-roam-node-visit node :other-window)
+          (switch-to-buffer-other-window cbuf))
+      (push-button))))
