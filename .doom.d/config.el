@@ -92,7 +92,7 @@
 (add-hook 'org-mode-hook (lambda ()
                            (display-line-numbers-mode -1)
                            (setq truncate-lines 1)))
-(add-hook 'sly-mrepl-mode-hook (solitaire-mode -1))
+(add-hook 'sly-mrepl-mode-hook (solaire-mode -1))
 (epa-file-enable)
 (global-wakatime-mode)
 (global-org-modern-mode)
