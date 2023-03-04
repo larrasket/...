@@ -82,8 +82,8 @@ static char selbordercolor[] = "#939293";
 static char selbgcolor[] = "#221F22";
 static char *colors[][3] = {
     /*               fg           bg           border   */
-    [SchemeNorm] = {normfgcolor, normbgcolor, normbordercolor},
-    [SchemeSel] = {selfgcolor, selbgcolor, selbordercolor},
+    [SchemeNorm] = {normfgcolor, normbgcolor, selbordercolor},
+    [SchemeSel] = {selfgcolor, selbgcolor, normbordercolor},
 };
 
 typedef struct {
