@@ -42,7 +42,7 @@
       org-modern-todo                                   nil
 
       ;; theme
-      doom-theme                                        'distinguished
+      doom-theme                                        'doom-monokai-pro
       highlight-indent-guides-method                    'bitmap
 
       ;; prayer time
@@ -96,4 +96,4 @@
 (global-wakatime-mode)
 (global-org-modern-mode)
 (vertico-buffer-mode)
-
+(salih/consult-preview-at-point)

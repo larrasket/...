@@ -46,7 +46,9 @@
 
 ;; make life easier in org
 (add-hook 'org-mode-hook
-          (lambda () (local-set-key (salih/mode "C-f") 'org-footnote-action)))
+          (lambda ()
+            (local-set-key (salih/mode "C-f") 'org-footnote-action)
+            (local-set-key (salih/mode "C-i") 'org-id-get-create)))
 
 (add-hook 'TeX-mode-hook
           (lambda () (local-set-key (salih/global "C-l") '(TeX-command-master "LatexMk"))))
@@ -84,15 +86,14 @@
  "r" '+lookup/references
  "t" '+lookup/type-definition
  "e" '+default/diagnostics
- "g" 'salih/find-definition-or-lookup)
+ "g" 'salih/find-definition-or-lookup
+ ";" 'salih/rename-or-iedit)
 
 ;; convenient
 (general-define-key
  :prefix (concat salih/prefix-mode "e")
  ;; e + l = (e)rrors (l)ist
- "l" 'flycheck-list-errors
- ;; wat
- ";" 'salih/rename-or-iedit)
+ "l" 'flycheck-list-errors)
 
 ;; search global
 (general-define-key
@@ -113,7 +114,6 @@
 ;; notes
 (general-define-key
  :prefix (concat salih/prefix-global "n")
- "b" 'citar-open-notes
  "f" 'citar-open-notes
  "n" 'org-noter
  "o" 'salih/open-book)
@@ -174,6 +174,7 @@
 
 (global-set-key [f6]
                 (lambda ()
+                  (interactive)
                   (neotree-project-dir)
-                  (lsp-treemacs-symbols)
-                  (evil-window-next 0)))
+                  (lsp-treemacs-symbols)))
+
