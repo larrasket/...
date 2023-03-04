@@ -113,7 +113,7 @@ KEY_CYCLE_ACTION = "a"
 KEY_BOOKMARK_ADD = "i"
 KEY_CHANNEL_INC = "="
 KEY_CHANNEL_DEC = "-"
-KEY_MAKE_CUTS = "0"
+KEY_MAKE_CUTS = "!"
 
 pcall(require, "config")
 
