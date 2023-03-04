@@ -757,3 +757,6 @@ endfunction
 " 2. https://gist.github.com/autrimpo/f40e4eda233977dd3a619c6083d9bebd
 " 3. https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
 "}
+
+set clipboard=unnamedplus
+
