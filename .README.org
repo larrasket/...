@@ -16,19 +16,18 @@ tags/releases supposed to mean (at least what I can recall).
 + [[https://github.com/salehmu/dots/releases/tag/goodbyeAcario][goodbyeAcario]]; White dwm, white emacs with acario-light theme.
 + [[https://github.com/salehmu/dots/releases/tag/module!][module!]]; same as preceding, but with doom emacs config organized as modules.
 + [[https://github.com/salehmu/dots/releases/tag/StableGrayEmacs30][StableGrayEmacs30]]; Stalbe Emacs configuration, gray with grady dwm.
++ [[https://github.com/salehmu/dots/releases/tag/2023.03.1][2023.03.1]]; just black
 
 
-* Screenshots!
-I love screenshots.
+* Worth a thousand words
 
-** Current
+** [[https://github.com/salehmu/dots/releases/tag/2023.03.1][2023.03.1]]
 
 [[file:img/bk/2022-12-05_18-15.png]]
 
 [[file:img/bk/2022-12-06_09-24.png]]
 
 [[file:img/bk/2022-12-06_11-47.png]]
-
 
 ** Gray
 [[file:img/gr/2022-10-20_18-41.png]]

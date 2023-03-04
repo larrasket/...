@@ -6,11 +6,13 @@ work for you. Instead: - if you are new to this kind of software, explore and le
 first. If you are familiar with this category, it would be much easier to read it, pick &
 use whatever you like, instead of replication.
 
-[[file:img/bk/2022-12-05_18-15.png]]
+#+DOWNLOADED: screenshot @ 2023-03-04 22:39:46
+[[file:org-media/2023-03-04_22-39-46_screenshot.png]]
 
-[[file:img/bk/2022-12-06_09-24.png]]
 
-[[file:img/bk/2022-12-06_11-47.png]]
+#+DOWNLOADED: screenshot @ 2023-03-04 22:42:32
+[[file:org-media/2023-03-04_22-42-32_screenshot.png]]
+
 
 For more screenshots and other information about tagging, check [[file:.README.org][old README.]]
 
