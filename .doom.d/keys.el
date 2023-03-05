@@ -11,16 +11,16 @@
 
 
 
-(define-key evil-normal-state-map       (kbd "C-g") 'evil-escape)
-(define-key evil-visual-state-map       (kbd "C-g") 'evil-escape)
-(define-key evil-insert-state-map       (kbd "C-g") 'evil-escape)
-(define-key evil-replace-state-map      (kbd "C-g") 'evil-escape)
-(define-key evil-operator-state-map     (kbd "C-g") 'evil-escape)
+(define-key evil-normal-state-map       (kbd "C-g") #'evil-escape)
+(define-key evil-visual-state-map       (kbd "C-g") #'evil-escape)
+(define-key evil-insert-state-map       (kbd "C-g") #'evil-escape)
+(define-key evil-replace-state-map      (kbd "C-g") #'evil-escape)
+(define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
 
 
 (with-eval-after-load 'company
-  (define-key company-active-map (kbd "C-g") 'salih/evil-escape-and-abort-company)
-  (define-key company-search-map (kbd "C-g") 'salih/evil-escape-and-abort-company))
+  (define-key company-active-map (kbd "C-g") #'salih/evil-escape-and-abort-company)
+  (define-key company-search-map (kbd "C-g") #'salih/evil-escape-and-abort-company))
 
 
 ;; Run project
@@ -30,14 +30,14 @@
 ;; method.
 
 (add-hook 'c++-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") 'salih/compile-and-run-cpp)))
+          (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-cpp)))
 
 (add-hook 'csharp-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") 'salih/compile-and-run-csharp)))
+          (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-csharp)))
 
 (add-hook 'go-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") 'salih/compile-and-run-go-file)
-                (local-set-key (kbd "<f2>") 'salih/compile-and-run-go-project)))
+          (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-go-file)
+                (local-set-key (kbd "<f2>") #'salih/compile-and-run-go-project)))
 
 
 ;; open file in dired
@@ -47,124 +47,124 @@
 ;; make life easier in org
 (add-hook 'org-mode-hook
           (lambda ()
-            (local-set-key (salih/mode "C-f") 'org-footnote-action)
-            (local-set-key (salih/mode "C-i") 'org-id-get-create)))
+            (local-set-key (salih/mode "C-f") #'org-footnote-action)
+            (local-set-key (salih/mode "C-i") #'org-id-get-create)))
 
 (add-hook 'TeX-mode-hook
           (lambda () (local-set-key (salih/global "C-l") '(TeX-command-master "LatexMk"))))
 ;; convenient
 (general-define-key
  :prefix salih/prefix-global
- "c"    'org-capture
- "a"    'org-agenda
- "."    'find-file
- ","    'persp-switch-to-buffer
- "<"    'switch-to-buffer
- "RET"  'bookmark-jump
- "["    'previous-buffer
- "]"    'next-buffer
- "d"    'kill-current-buffer
- "k"    'kill-current-buffer
- "D"    'doom/kill-all-buffers
- "K"    'doom/kill-other-buffers
- "C-t"  'gts-do-translate
- "l l"  'leetcode
- "TAB d" '+workspace/delete
- "SPC" 'projectile-find-file)
+ "c"     #'org-capture
+ "a"     #'org-agenda
+ "."     #'find-file
+ ","     #'persp-switch-to-buffer
+ "<"     #'switch-to-buffer
+ "RET"   #'bookmark-jump
+ "["     #'previous-buffer
+ "]"     #'next-buffer
+ "d"     #'kill-current-buffer
+ "k"     #'kill-current-buffer
+ "D"     #'doom/kill-all-buffers
+ "K"     #'doom/kill-other-buffers
+ "C-t"   #'gts-do-translate
+ "l l"   #'leetcode
+ "TAB d" #'+workspace/delete
+ "SPC"   #'projectile-find-file)
 
 ;; file keys
 (general-define-key
  :prefix (concat salih/prefix-global "f")
- "r" 'recentf-open-files
- "g" 'magit-find-file
- "l" 'projectile-find-file)
+ "r" #'recentf-open-files
+ "g" #'magit-find-file
+ "l" #'projectile-find-file)
 
 ;; code keys
 (general-define-key
  :prefix (concat salih/prefix-mode "c")
- "d" '+lookup/definition
- "r" '+lookup/references
- "t" '+lookup/type-definition
- "e" '+default/diagnostics
- "g" 'salih/find-definition-or-lookup
- ";" 'salih/rename-or-iedit)
+ "d" #'+lookup/definition
+ "r" #'+lookup/references
+ "t" #'+lookup/type-definition
+ "e" #'+default/diagnostics
+ "g" #'salih/find-definition-or-lookup
+ ";" #'salih/rename-or-iedit)
 
 ;; convenient
 (general-define-key
  :prefix (concat salih/prefix-mode "e")
  ;; e + l = (e)rrors (l)ist
- "l" 'flycheck-list-errors)
+ "l" #'flycheck-list-errors)
 
 ;; search global
 (general-define-key
  :prefix (concat salih/prefix-global "s")
- "d" '+default/search-cwd
- "b" '+default/search-buffer
- "p" '+default/search-project
- "g" 'rgrep
- "w" '+lookup/dictionary-definition)
+ "d" #'+default/search-cwd
+ "b" #'+default/search-buffer
+ "p" #'+default/search-project
+ "g" #'rgrep
+ "w" #'+lookup/dictionary-definition)
 
 ;; insertion
 (general-define-key
  :prefix (concat salih/prefix-mode "i")
- "u" 'insert-char
- "n" 'org-noter-insert-note
- "t" 'insert-now-timestamp)
+ "u" #'insert-char
+ "n" #'org-noter-insert-note
+ "t" #'insert-now-timestamp)
 
 ;; notes
 (general-define-key
  :prefix (concat salih/prefix-global "n")
- "f" 'citar-open-notes
- "n" 'org-noter
- "o" 'salih/open-book)
+ "f" #'citar-open-notes
+ "n" #'org-noter
+ "o" #'salih/open-book)
 
 ;; roam
 (general-define-key
  :prefix (concat salih/prefix-global "r")
- "b" 'org-roam-buffer-toggle
- "c" 'org-roam-capture
- "f" 'org-roam-node-find
- "j" 'org-roam-dailies-capture-today
- "t" 'org-roam-dailies-goto-today)
+ "b" #'org-roam-buffer-toggle
+ "c" #'org-roam-capture
+ "f" #'org-roam-node-find
+ "j" #'org-roam-dailies-capture-today
+ "t" #'org-roam-dailies-goto-today)
 
 ;; roam mode
 (add-hook 'org-mode-hook
           (lambda ()
-            (local-set-key (salih/global "r i") 'org-roam-node-insert)
-            (local-set-key (salih/global "r t") 'org-roam-tag-add)
-            (local-set-key (salih/global "r a") 'org-roam-alias-add)))
+            (local-set-key (salih/global "r i") #'org-roam-node-insert)
+            (local-set-key (salih/global "r t") #'org-roam-tag-add)
+            (local-set-key (salih/global "r a") #'org-roam-alias-add)))
 
 
 ;; magit and vc
 (general-define-key
  :prefix (concat salih/prefix-global "g")
- "g"   'magit-status
- "G"   'magit-status-here
- "C"   'magit-clone
- "L"   'magit-log-buffer-file
- "."   '+vc/browse-at-remote
- "t"   'magit-todos-list
- "D"   'magit-file-delete)
+ "g"   #'magit-status
+ "G"   #'magit-status-here
+ "C"   #'magit-clone
+ "L"   #'magit-log-buffer-file
+ "."   #'+vc/browse-at-remote
+ "t"   #'magit-todos-list
+ "D"   #'magit-file-delete)
 
 ;; other
 (general-define-key
  :prefix (concat salih/prefix-global "e")
- "e" 'eshell)
+ "e" #'eshell)
 
 ;; projectile
 (projectile-mode +1)
-(define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-x p a") 'projectile-add-known-project)
+(define-key projectile-mode-map (kbd "C-x p")   #'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-x p a") #'projectile-add-known-project)
 
 ;; convenient
-(global-set-key (kbd "M-RET") 'lsp-execute-code-action)
-(global-set-key (kbd "C-M-g") '+lookup/definition)
+(global-set-key (kbd "M-RET") #'lsp-execute-code-action)
+(global-set-key (kbd "C-M-g") #'+lookup/definition)
 
 ;; resize windows
-(global-set-key (kbd "C-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "C-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "C-<down>") 'enlarge-window)
-(global-set-key (kbd "C-<up>") 'shrink-window)
+(global-set-key (kbd "C-<left>")  #'shrink-window-horizontally)
+(global-set-key (kbd "C-<right>") #'enlarge-window-horizontally)
+(global-set-key (kbd "C-<down>")  #'enlarge-window)
+(global-set-key (kbd "C-<up>")    #'shrink-window)
 
 ;; maximize buffer
 (global-set-key (kbd "<f3>") 'salih/toggle-maximize-buffer)
