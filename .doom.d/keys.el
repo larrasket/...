@@ -42,7 +42,10 @@
 
 ;; open file in dired
 (add-hook 'dired-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") 'salih/open-in-external-app)))
+          (lambda () (local-set-key (salih/mode "C-c") 'salih/open-in-external-app)
+                (local-set-key (salih/mode "C-e") 'salih/epa-dired-do-encrypt)
+                (local-set-key (salih/mode "C-d") 'epa-dired-do-decrypt)))
+
 
 ;; make life easier in org
 (add-hook 'org-mode-hook
@@ -93,7 +96,8 @@
 (general-define-key
  :prefix (concat salih/prefix-mode "e")
  ;; e + l = (e)rrors (l)ist
- "l" #'flycheck-list-errors)
+ "l" #'flycheck-list-errors
+ "f" #'salih/epa-encrypt-file)
 
 ;; search global
 (general-define-key
