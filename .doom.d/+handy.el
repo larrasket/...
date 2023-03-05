@@ -2,6 +2,7 @@
 ;;; contains some handy functions to use at once; not loaded by default
 
 ;; TODO clean this
+(require 'evil)
 (provide '+handy)
 
 ;; basic definiton for keys.el
@@ -14,9 +15,6 @@
 
 
 ;; fix evil C-g methods
-
-(require 'evil)
-
 (defun salih/evil-escape-and-abort-company ()
   (interactive)
   (company-abort)
@@ -34,24 +32,6 @@
 
 
 ;; handy stuff
-
-(defun gk-next-theme ()
-  "Switch to the next theme in ‘custom-known-themes’.
-If exhausted, disable themes.  If run again thereafter, wrap to
-the beginning of the list."
-  (interactive)
-  (let* ((ct (or (car custom-enabled-themes)
-                 (car custom-known-themes)))
-         (next (cadr (memq ct custom-known-themes))))
-    (when (memq next '(user changed))
-      (setq next nil))
-    (dolist (theme custom-enabled-themes)
-      (disable-theme theme))
-    (if next
-        (progn
-          (load-theme next t)
-          (message "Loaded theme ‘%S’" next))
-      (message "All themes disabled"))))
 
 
 (defun salih/org-archive-done-tasks ()
@@ -171,12 +151,6 @@ Version 2019-11-04 2021-02-16"
          (lambda ($fpath) (let ((process-connection-type nil))
                             (start-process "" nil "xdg-open" $fpath))) $file-list))))))
 
-(defun highltier ()
-  (require 'highlight-indent-guides)
-  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
-  (set-face-background 'highlight-indent-guides-even-face "dimgray")
-  (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
-  (highlight-indent-guides-mode))
 
 (defun salih/rename-or-iedit ()
   "If current buffer is in lsp-mode, call lsp-rename. Otherwise, call
@@ -192,6 +166,7 @@ iedit-mode."
 
 
 (defun salih/find-definition-or-lookup ()
+  (interactive)
   "If current buffer is in lsp-mode, call lsp-find-definition. Otherwise, call
 lookup."
   (if (bound-and-true-p lsp-mode)
@@ -271,7 +246,6 @@ lookup."
 (with-eval-after-load 'embark
   (add-hook 'embark-collect-mode-hook  #'salih/consult-preview-at-point-mode))
 
-;;;###autoload
 (define-minor-mode salih/consult-preview-at-point-mode
   "Preview minor mode for an *Embark Collect* buffer.
 When moving around in the *Embark Collect* buffer, the candidate at point is
@@ -281,7 +255,6 @@ automatically previewed."
       (add-hook 'post-command-hook #'salih/consult-preview-at-point nil 'local)
     (remove-hook 'post-command-hook #'salih/consult-preview-at-point 'local)))
 
-;;;###autoload
 (defun salih/consult-preview-at-point ()
   "Preview candidate at point in an *Embark Collect* buffer."
   (interactive)
@@ -297,3 +270,58 @@ automatically previewed."
           (org-roam-node-visit node :other-window)
           (switch-to-buffer-other-window cbuf))
       (push-button))))
+
+
+
+(defun highltier ()
+  (interactive)
+  (require 'highlight-indent-guides)
+  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
+  (set-face-background 'highlight-indent-guides-even-face "dimgray")
+  (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
+  (highlight-indent-guides-mode))
+
+
+
+(defun salih/epa-encrypt-file (recipients)
+  "Encrypt the currently opened file for RECIPIENTS and delete the original."
+  (interactive
+   (list (epa-select-keys (epg-make-context epa-protocol)
+  "Select recipients for encryption. If no one is selected, symmetric encryption
+  will be performed.")))
+  (let* ((file (buffer-file-name))
+         (cipher (concat file
+                         (if (eq epa-protocol 'OpenPGP)
+                             (if epa-armor ".asc" ".gpg")
+                           ".p7m")))
+         (context (epg-make-context epa-protocol)))
+    (setf (epg-context-armor context) epa-armor)
+    (setf (epg-context-textmode context) epa-textmode)
+    (epg-context-set-passphrase-callback context
+					 #'epa-passphrase-callback-function)
+    (epg-context-set-progress-callback context
+				       (cons
+					#'epa-progress-callback-function
+					(format "Encrypting %s..." (file-name-nondirectory file))))
+    (message "Encrypting %s..." (file-name-nondirectory file))
+    (condition-case error
+	(epg-encrypt-file context file recipients cipher)
+      (error
+       (epa-display-error context)
+       (signal (car error) (cdr error))))
+    (delete-file file)
+    (message "Encrypting %s...wrote %s and deleted original file"
+	     (file-name-nondirectory file)
+	     (file-name-nondirectory cipher))))
+
+
+(defun salih/epa-dired-do-encrypt ()
+  "Encrypt marked files and delete the originals."
+  (interactive)
+  (let ((recipients (epa-select-keys (epg-make-context) "Select recipients for encryption.
+If no one is selected, symmetric encryption will be performed.  ")))
+    (dolist (file (dired-get-marked-files))
+      (with-current-buffer (find-file-noselect file)
+	(epa-encrypt-current-file-and-delete recipients)))
+    (revert-buffer)))
+
