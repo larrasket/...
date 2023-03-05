@@ -13,6 +13,7 @@
       +org-capture-todo-file                            "~/roam/main/life.org"
       org-preview-html-viewer                           'xwidget
       org-roam-directory                                "~/roam"
+      org-extend-today-until                            2
 
 
       ;; please don't stalk me
