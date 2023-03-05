@@ -322,6 +322,6 @@ automatically previewed."
 If no one is selected, symmetric encryption will be performed.  ")))
     (dolist (file (dired-get-marked-files))
       (with-current-buffer (find-file-noselect file)
-	(epa-encrypt-current-file-and-delete recipients)))
+	(salih/epa-encrypt-file recipients)))
     (revert-buffer)))
 
