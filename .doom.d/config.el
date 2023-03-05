@@ -76,14 +76,19 @@
       org-annotate-file-storage-file                    "~/configs/annotated.org")
 
 
+;; setup email
+;; don't forget to setup authinfo
+;; https://www.emacswiki.org/emacs/GnusAuthinfo
+;; and of course mu, isync
 (after! mu4e
   (setq message-send-mail-function 'smtpmail-send-it
-      starttls-use-gnutls t
-      smtpmail-default-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587
-      smtpmail-starttls-credentials '(("smtp.gmail.com" "587" nil nil))
-      smtpmail-stream-type 'starttls))
+        starttls-use-gnutls t
+        mu4e-update-interval 200
+        smtpmail-default-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-server "smtp.gmail.com"
+        smtpmail-smtp-service 587
+        smtpmail-starttls-credentials '(("smtp.gmail.com" "587" nil nil))
+        smtpmail-stream-type 'starttls))
 
 ;; this should be called after defining salih/prefix-global
 (require '+handy)
