@@ -11,6 +11,6 @@ setxkbmap -layout en_US,ar -option 'grp:alt_shift_toggle'
 /home/ghd/go/bin/notifier  &
 #/home/ghd/go/bin/motivier  &
 feh --bg-fill ~/configs/bg.png
-tor &
+# tor &
 # pgrep -fl 'pidswallow -gl' || pidswallow -gl
 flameshot &
