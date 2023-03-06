@@ -91,6 +91,12 @@
         smtpmail-starttls-credentials '(("smtp.gmail.com" "587" nil nil))
         smtpmail-stream-type 'starttls))
 
+
+
+(after! solaire-mode
+  (setq solaire-mode-real-buffer-fn #'salih/solaire-mode-real-buffer-custom-p))
+
+
 ;; this should be called after defining salih/prefix-global
 (require '+handy)
 (require 'keys)
@@ -107,7 +113,6 @@
 (add-hook 'prog-mode-hook    (lambda () (setq-default indent-tabs-mode nil)))
 (add-hook 'org-mode-hook     (lambda () (display-line-numbers-mode -1) (setq truncate-lines 1)))
 
-(add-hook 'sly-mrepl-mode-hook (solaire-mode -1))
 (epa-file-enable)
 (global-wakatime-mode)
 (global-org-modern-mode)
