@@ -134,9 +134,10 @@
 ;; roam mode
 (add-hook 'org-mode-hook
           (lambda ()
-            (local-set-key (salih/global "r i") #'org-roam-node-insert)
-            (local-set-key (salih/global "r t") #'org-roam-tag-add)
-            (local-set-key (salih/global "r a") #'org-roam-alias-add)))
+            (local-set-key (salih/mode "r i") #'org-roam-node-insert)
+            (local-set-key (salih/mode "r t") #'org-roam-tag-add)
+            (local-set-key (salih/mode "r a") #'org-roam-alias-add)
+            (local-set-key (salih/mode "r b") #'orb-insert-link)))
 
 
 ;; magit and vc
