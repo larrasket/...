@@ -325,3 +325,11 @@ If no one is selected, symmetric encryption will be performed.  ")))
 	(salih/epa-encrypt-file recipients)))
     (revert-buffer)))
 
+
+
+(defun salih/solaire-mode-real-buffer-custom-p ()
+  "Return t if the current buffer is the dashboard or scratch, or is a real
+(file-visiting) buffer."
+  (cond ((string= (buffer-name (buffer-base-buffer)) "*sly-mrepl for sbcl*") t)
+        ((buffer-file-name (buffer-base-buffer)) t)
+        (t nil)))

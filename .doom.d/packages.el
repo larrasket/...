@@ -32,3 +32,5 @@
 
 (unpin! vertico)
 (package! vertico)
+
+(package! consult-org-roam)

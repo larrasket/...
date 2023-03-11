@@ -51,7 +51,8 @@
 (add-hook 'org-mode-hook
           (lambda ()
             (local-set-key (salih/mode "C-f") #'org-footnote-action)
-            (local-set-key (salih/mode "C-i") #'org-id-get-create)))
+            (local-set-key (salih/mode "C-i") #'org-id-get-create)
+            (local-set-key (salih/mode "TAB") #'consult-org-heading)))
 
 (add-hook 'TeX-mode-hook
           (lambda () (local-set-key (salih/global "C-l") '(TeX-command-master "LatexMk"))))
@@ -137,7 +138,11 @@
             (local-set-key (salih/mode "r i") #'org-roam-node-insert)
             (local-set-key (salih/mode "r t") #'org-roam-tag-add)
             (local-set-key (salih/mode "r a") #'org-roam-alias-add)
-            (local-set-key (salih/mode "r b") #'orb-insert-link)))
+            (local-set-key (salih/mode "r b") #'orb-insert-link)
+
+           (local-set-key (salih/mode "f b") #'consult-org-roam-backlinks)
+           (local-set-key (salih/mode "f f") #'consult-org-roam-forward-links)
+           (local-set-key (salih/mode "f n") #'consult-org-roam-search)))
 
 
 ;; magit and vc
@@ -183,3 +188,12 @@
                   (neotree-project-dir)
                   (lsp-treemacs-symbols)))
 
+
+(after! org-noter
+  (defun salih/org-noter-sync-current-note-and-switch-window ()
+    (interactive)
+    (let ((prev-window (selected-window)))
+      (org-noter-sync-current-note)
+      (select-window prev-window)))
+  (define-key org-noter-notes-mode-map (kbd "C-c C-j")
+               #'salih/org-noter-sync-current-note-and-switch-window))
