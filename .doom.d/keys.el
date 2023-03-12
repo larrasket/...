@@ -52,7 +52,7 @@
           (lambda ()
             (local-set-key (salih/mode "C-f") #'org-footnote-action)
             (local-set-key (salih/mode "C-i") #'org-id-get-create)
-            (local-set-key (salih/mode "TAB") #'consult-org-heading)))
+            (local-set-key (salih/global "TAB") #'consult-org-heading)))
 
 (add-hook 'TeX-mode-hook
           (lambda () (local-set-key (salih/global "C-l") '(TeX-command-master "LatexMk"))))
@@ -138,7 +138,7 @@
             (local-set-key (salih/mode "r i") #'org-roam-node-insert)
             (local-set-key (salih/mode "r t") #'org-roam-tag-add)
             (local-set-key (salih/mode "r a") #'org-roam-alias-add)
-            (local-set-key (salih/mode "r b") #'orb-insert-link)
+            (local-set-key (salih/mode "i b") #'orb-insert-link)
 
            (local-set-key (salih/mode "f b") #'consult-org-roam-backlinks)
            (local-set-key (salih/mode "f f") #'consult-org-roam-forward-links)
