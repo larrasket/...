@@ -74,12 +74,12 @@ static const char *fonts[] = {
     "Hack:size=9.5:antialias=true:autohint=true",
     "JoyPixels:size=9.5:antialias=true:autohint=true"};
 
-static char normbgcolor[] = "#2D2A2E";
+static char normbgcolor[] = "#000000";
 static char normbordercolor[] = "#444444";
 static char normfgcolor[] = "#bbbbbb";
 static char selfgcolor[] = "#eeeeee";
 static char selbordercolor[] = "#939293";
-static char selbgcolor[] = "#221F22";
+static char selbgcolor[] = "#000000";
 static char *colors[][3] = {
     /*               fg           bg           border   */
     [SchemeNorm] = {normfgcolor, normbgcolor, selbordercolor},

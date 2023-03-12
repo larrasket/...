@@ -43,7 +43,7 @@
       org-modern-todo                                   nil
 
       ;; theme
-      doom-theme                                        'doom-monokai-pro
+      doom-theme                                        'distinguished
       highlight-indent-guides-method                    'bitmap
 
       ;; prayer time
