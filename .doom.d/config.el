@@ -118,3 +118,15 @@
 (global-org-modern-mode)
 (vertico-buffer-mode)
 (salih/consult-preview-at-point)
+
+;; (after! lsp-mode
+;;   (push "[/\\\\]_build\\'" lsp-file-watch-ignored-directories)
+;;   (push "[/\\\\]deps\\'" lsp-file-watch-ignored-directories)
+;;   (push "[/\\\\]cover\\'" lsp-file-watch-ignored-directories)
+;;   (push "[/\\\\]priv\\'" lsp-file-watch-ignored-directories)
+;;   (push "[/\\\\]\\.deliver\\'" lsp-file-watch-ignored-directories)
+;;   (push "[/\\\\]\\.elixir_ls\\'" lsp-file-watch-ignored-directories)
+;;   (push "[/\\\\]\\.build\\'" lsp-file-watch-ignored-directories)
+;;   (push "[/\\\\]node_modules\\'" lsp-file-watch-ignored-directories)
+;;   (push "[/\\\\]examples\\'" lsp-file-watch-ignored-directories))
+(add-hook 'after-init-hook #'mu4e)
