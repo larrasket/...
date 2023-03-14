@@ -30,18 +30,6 @@
       ;; skull welecome in emacs
       fancy-splash-image                                "~/.doom.d/pan.png"
 
-      ;; modern org mode style
-      highlight-indent-guides-method                    'bitmap
-      org-modern-block-name                             '(("" "" ""))
-      org-modern-checkbox                               nil
-      org-modern-keyword                                '(("" . ""))
-      org-modern-list                                   nil
-      org-modern-priority                               nil
-      org-modern-star                                   nil
-      org-modern-tag                                    nil
-      org-modern-timestamp                              nil
-      org-modern-todo                                   nil
-
       ;; theme
       doom-theme                                        'distinguished
       highlight-indent-guides-method                    'bitmap

@@ -6,7 +6,6 @@
 
 (package! org-web-tools)
 (package! org-present)
-(package! org-modern)
 (package! org-noter)
 (package! org-preview-html)
 
