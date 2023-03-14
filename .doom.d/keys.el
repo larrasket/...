@@ -156,6 +156,14 @@
  "t"   #'magit-todos-list
  "D"   #'magit-file-delete)
 
+
+
+;; email
+(general-define-key
+ :prefix (concat salih/prefix-global "m")
+ "m" #'compose-mail
+ "i" #'mu4e)
+
 ;; other
 (general-define-key
  :prefix (concat salih/prefix-global "e")
