@@ -103,7 +103,6 @@
 
 (epa-file-enable)
 (global-wakatime-mode)
-(global-org-modern-mode)
 (vertico-buffer-mode)
 (salih/consult-preview-at-point)
 
