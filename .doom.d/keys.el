@@ -58,6 +58,10 @@
 
 (add-hook 'TeX-mode-hook
           (lambda () (local-set-key (salih/global "C-l") '(TeX-command-master "LatexMk"))))
+
+
+(add-hook 'emacs-lisp-mode
+          (lambda () (local-set-key (salih/mode "C-c") 'eval-region)))
 ;; convenient
 (general-define-key
  :prefix salih/prefix-global
@@ -93,7 +97,8 @@
  "t" #'+lookup/type-definition
  "e" #'+default/diagnostics
  "g" #'salih/find-definition-or-lookup
- ";" #'salih/rename-or-iedit)
+ ";" #'salih/rename-or-iedit
+ "f" #'+format/buffer)
 
 ;; convenient
 (general-define-key
@@ -107,6 +112,7 @@
  :prefix (concat salih/prefix-global "s")
  "d" #'+default/search-cwd
  "b" #'+default/search-buffer
+ "/" #'+default/search-buffer
  "p" #'+default/search-project
  "g" #'rgrep
  "w" #'+lookup/dictionary-definition)
