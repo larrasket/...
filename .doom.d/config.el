@@ -117,3 +117,6 @@
 ;;   (push "[/\\\\]node_modules\\'" lsp-file-watch-ignored-directories)
 ;;   (push "[/\\\\]examples\\'" lsp-file-watch-ignored-directories))
 (add-hook 'after-init-hook #'mu4e)
+
+(after! sly
+  (setq sly-complete-symbol-function 'sly-flex-completions))
