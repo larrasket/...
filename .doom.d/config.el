@@ -7,69 +7,76 @@
 
 
 (setq load-prefer-newer t ;; avoid warnings
-     ;; set org files
-     +org-capture-journal-file                         "~/blog/content/stack.org"
-     +org-capture-changelog-file                       "~/blog/content/nice.org"
-     +org-capture-todo-file                            "~/roam/main/life.org"
-     org-preview-html-viewer                           'xwidget
-     org-roam-directory                                "~/roam"
-     org-extend-today-until                            2
+      ;; set org files
+      +org-capture-journal-file                         "~/blog/content/stack.org"
+      +org-capture-changelog-file                       "~/blog/content/nice.org"
+      +org-capture-todo-file                            "~/roam/main/life.org"
+      org-preview-html-viewer                           'xwidget
+      org-roam-directory                                "~/roam"
+      org-extend-today-until                            2
 
 
-     ;; please don't stalk me
-     user-full-name                                    "Salih Muhammed"
-     user-mail-address                                 "salhghd7@gmail.com"
+      ;; please don't stalk me
+      user-full-name                                    "Salih Muhammed"
+      user-mail-address                                 "salhghd7@gmail.com"
 
-     ;; I've no idea of any of this.
-     org-crypt-key                                     user-mail-address
-     epa-file-cache-passphrase-for-symmetric-encryption t
-     epa-file-select-keys                              'silent
-     epa-file-encrypt-to                               user-mail-address
-
-
-     ;; skull welecome in emacs
-     fancy-splash-image                                "~/.doom.d/pan.png"
-
-     ;; theme
-     doom-theme                                        'distinguished
-     highlight-indent-guides-method                    'character
-
-     ;; prayer time
-     calendar-latitude                                 30.0
-     calendar-longitude                                31.2
-
-     ;; school
-     bibtex-completion-bibliography                    "~/configs/ref.bib"
-
-     ;; translate
-     gts-translate-list                                '(("en" "ar"))
-
-     ;; keyboard
-     salih/prefix-global                               "C-x "
-     salih/prefix-mode                                 "C-c "
+      ;; I've no idea of any of this.
+      org-crypt-key                                     user-mail-address
+      epa-file-cache-passphrase-for-symmetric-encryption t
+      epa-file-select-keys                              'silent
+      epa-file-encrypt-to                               user-mail-address
 
 
-     ;; irc
-     erc-nick                                          "jahiz"
-     erc-user-full-name                                "Salih Muhammed"
-     erc-prompt-for-password                            nil
-     erc-prompt-for-nickserv-password                   nil
-     erc-autojoin-channels-alist                        '(("irc.libera.chat" "##arabic"))
+      ;; skull welecome in emacs
+      fancy-splash-image                                "~/.doom.d/pan.png"
 
-     ;; other
-     vertico-buffer-display-action                     '(display-buffer-same-window)
-     browse-url-generic-program                        "chromium"
-     large-file-warning-threshold                      nil
-     inferior-lisp-program                             "sbcl"
-     neo-mode-line-type                                'default
-     consult-preview-key                               nil
-     treemacs-position                                 'right
-     dired-sidebar-refresh-on-special-commands         t
-     display-line-numbers-type                         t
-     doom-modeline-height                              17
-     doom-modeline-buffer-state-icon                   nil
-     doom-modeline-icon                                nil
-     org-annotate-file-storage-file                    "~/configs/annotated.org")
+      ;; theme
+      doom-theme                                        'distinguished
+      highlight-indent-guides-method                    'character
+
+      ;; prayer time
+      calendar-latitude                                 30.0
+      calendar-longitude                                31.2
+
+      ;; school
+      bibtex-completion-bibliography                    "~/configs/ref.bib"
+
+      ;; translate
+      gts-translate-list                                '(("en" "ar"))
+
+      ;; keyboard
+      salih/prefix-global                               "C-x "
+      salih/prefix-mode                                 "C-c "
+
+
+      ;; irc
+      ;; for the options `erc-prompt-for-password' and
+      ;; `erc-prompt-for-nickserv-password', you should have a .authinfo file
+      ;; conatins your password for the nickname. For Example, using
+      ;; yournickname and yourpassword as a NickName and password (repsectively
+      ;; machine irc.libera.chat login yournickname password yourpassword
+      ;; See. https://www.gnu.org/software/emacs/manual/html_node/emacs/Authentication.html
+      erc-nick                                          "jahiz"
+      erc-user-full-name                                "Salih Muhammed"
+      erc-prompt-for-password                            nil
+      erc-prompt-for-nickserv-password                   nil
+      erc-autojoin-channels-alist                        '(("irc.libera.chat"
+                                                            "##arabic"))
+
+      ;; other
+      vertico-buffer-display-action                     '(display-buffer-same-window)
+      browse-url-generic-program                        "chromium"
+      large-file-warning-threshold                      nil
+      inferior-lisp-program                             "sbcl"
+      neo-mode-line-type                                'default
+      consult-preview-key                               nil
+      treemacs-position                                 'right
+      dired-sidebar-refresh-on-special-commands         t
+      display-line-numbers-type                         t
+      doom-modeline-height                              17
+      doom-modeline-buffer-state-icon                   nil
+      doom-modeline-icon                                nil
+      org-annotate-file-storage-file                    "~/configs/annotated.org")
 
 
 ;; setup email
