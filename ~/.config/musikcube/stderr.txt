@@ -1,0 +1,72 @@
+AlsaOut::AlsaOut() called
+PulseOut::PulseOut() called
+[2023-03-27 23:13:32] [info] asio async_connect error: asio.system:111 (Connection refused)
+[2023-03-27 23:13:32] [info] Error getting remote endpoint: asio.system:107 (Transport endpoint is not connected)
+[2023-03-27 23:13:32] [error] handle_connect error: Connection refused
+ALSA lib pcm.c:2666:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.rear
+ALSA lib pcm.c:2666:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.center_lfe
+ALSA lib pcm.c:2666:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.side
+ALSA lib pcm_route.c:877:(find_matching_chmap) Found no matching channel map
+ALSA lib pcm_route.c:877:(find_matching_chmap) Found no matching channel map
+ALSA lib pcm_route.c:877:(find_matching_chmap) Found no matching channel map
+ALSA lib pcm_route.c:877:(find_matching_chmap) Found no matching channel map
+Cannot connect to server socket err = No such file or directory
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+Cannot connect to server socket err = No such file or directory
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+ALSA lib pcm_oss.c:397:(_snd_pcm_oss_open) Cannot open device /dev/dsp
+ALSA lib pcm_oss.c:397:(_snd_pcm_oss_open) Cannot open device /dev/dsp
+ALSA lib pcm_a52.c:1001:(_snd_pcm_a52_open) a52 is only for playback
+ALSA lib confmisc.c:160:(snd_config_get_card) Invalid field card
+ALSA lib pcm_usb_stream.c:482:(_snd_pcm_usb_stream_open) Invalid card 'card'
+ALSA lib confmisc.c:160:(snd_config_get_card) Invalid field card
+ALSA lib pcm_usb_stream.c:482:(_snd_pcm_usb_stream_open) Invalid card 'card'
+Cannot connect to server socket err = No such file or directory
+Cannot connect to server request channel
+jack server is not running or cannot be started
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+JackShmReadWritePtr::~JackShmReadWritePtr - Init not done for -1, skipping unlock
+AlsaOut: destructor
+AlsaOut: joining...
+AlsaOut: thread finished
+AlsaOut: closing device...
+AlsaOut: destroyed.
+[mp3 @ 0x7fbc10002a70] Estimating duration from bitrate, this may be inaccurate
+[mp3float @ 0x7fbc30006090] Could not update timestamps for skipped samples.
+PulseOut: opening device 
+pulse_blocking_stream: CHECK_VALIDITY server
+pulse_blocking_stream: CHECK_VALIDITY dir
+pulse_blocking_stream: CHECK_VALIDITY device
+pulse_blocking_stream: CHECK_VALIDITY spec
+pulse_blocking_stream: CHECK_VALIDITY channel map
+pulse_blocking_stream: context is ready
+pulse_blocking_stream: stream is ready
+[mp3float @ 0x7fbc0800fd90] Could not update timestamps for skipped samples.
+[mp3float @ 0x7fbc08014cc0] Could not update timestamps for skipped samples.
+[mp3float @ 0x7fbc30006090] Could not update timestamps for discarded samples.
+PulseOut: closing device
+PulseOut: opening device 
+pulse_blocking_stream: CHECK_VALIDITY server
+pulse_blocking_stream: CHECK_VALIDITY dir
+pulse_blocking_stream: CHECK_VALIDITY device
+pulse_blocking_stream: CHECK_VALIDITY spec
+pulse_blocking_stream: CHECK_VALIDITY channel map
+pulse_blocking_stream: context is ready
+pulse_blocking_stream: stream is ready
+[ogg @ 0x7fbc3001f760] 3918 bytes of comment header remain
+[ogg @ 0x7fbc0c0027d0] 3918 bytes of comment header remain
+PulseOut: closing device
+PulseOut: opening device 
+pulse_blocking_stream: CHECK_VALIDITY server
+pulse_blocking_stream: CHECK_VALIDITY dir
+pulse_blocking_stream: CHECK_VALIDITY device
+pulse_blocking_stream: CHECK_VALIDITY spec
+pulse_blocking_stream: CHECK_VALIDITY channel map
+pulse_blocking_stream: context is ready
+pulse_blocking_stream: stream is ready
