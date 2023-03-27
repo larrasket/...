@@ -57,8 +57,8 @@
       neo-mode-line-type                                'default
       consult-preview-key                               nil
       treemacs-position                                 'right
-      dired-sidebar-refresh-on-special-commands         't
-      display-line-numbers-type                         'relative
+      dired-sidebar-refresh-on-special-commands         t
+      display-line-numbers-type                         t
       doom-modeline-height                              17
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
@@ -120,3 +120,6 @@
 
 (after! sly
   (setq sly-complete-symbol-function 'sly-flex-completions))
+
+
+
