@@ -74,4 +74,4 @@
       '(("p" "Personal TODOs" tags "+personal+TODO=\"TODO\"")
         ("t" "Check TODOs" todo "CHECK")
         ("c" "Check APPOINTs" todo "APPOINT")
-        ("i" "CHECK IDEAs" tags "+IDEA+TODO=\"TODO\"")))
+        ("i" "CHECK IDEAs" tags "+idea+TODO=\"TODO\"")))
