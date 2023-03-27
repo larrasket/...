@@ -60,8 +60,14 @@
           (lambda () (local-set-key (salih/global "C-l") '(TeX-command-master "LatexMk"))))
 
 
-(add-hook 'emacs-lisp-mode
-          (lambda () (local-set-key (salih/mode "C-c") 'eval-region)))
+(eval-after-load 'sly
+  `(define-key sly-mode-map (salih/mode "C-e") 'sly-eval-region))
+
+
+(eval-after-load 'sly
+  `(define-key sly-mode-map (salih/mode "C-f") 'sly-eval-buffer))
+
+
 ;; convenient
 (general-define-key
  :prefix salih/prefix-global
@@ -164,13 +170,19 @@
  "t"   #'magit-todos-list
  "D"   #'magit-file-delete)
 
-
-
 ;; email
 (general-define-key
  :prefix (concat salih/prefix-global "m")
- "m" #'compose-mail
+ "m" #'(lambda () (interactive) (mu4e~headers-jump-to-maildir "/gmail/Inbox"))
  "i" #'mu4e)
+
+(add-hook 'mu4e-headers-mode-hook (lambda ()
+                                    (evil-define-key 'normal
+                                      mu4e-headers-mode-map "u"
+                                      'mu4e-update-mail-and-index)
+                                    (evil-define-key 'normal
+                                      mu4e-headers-mode-map "q" 'previous-buffer)))
+
 
 ;; other
 (general-define-key
