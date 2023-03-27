@@ -7,8 +7,6 @@
            "APPOINT(a)"
            "PROJ(p)"                    ; A project, which usually contains other tasks
            "HOLD(h)"                    ; This task is paused/on hold because of me
-           "IDEA(i)"                    ; An unconfirmed and unapproved task or notion
-           "READ(b)"                    ; To Read
            "CHECK(c)"                   ; To Read
            "|"
            "DONE(d)"                ; Task successfully completed
@@ -23,7 +21,6 @@
           ("DAILY" . "#708090")
           ("Hold" . +Org-todo-onhold)
           ("PROJ" . +org-todo-project)
-          ("READ" . "#98be65")
 
           ("APPOINT" . "#0a66c2")
           ("CHECK" . "#fc791c")
@@ -70,3 +67,11 @@
 
 
 (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
+
+
+
+(setq org-agenda-custom-commands
+      '(("p" "Personal TODOs" tags "+personal+TODO=\"TODO\"")
+        ("t" "Check TODOs" todo "CHECK")
+        ("c" "Check APPOINTs" todo "APPOINT")
+        ("i" "CHECK IDEAs" tags "+IDEA+TODO=\"TODO\"")))
