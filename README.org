@@ -7,6 +7,6 @@
 
 [[https://link.storjshare.io/raw/jujjsspml7xognpzhkzfxk76at3q/blog/2023-03-04_22-42-32_screenshot.png]]
 
-https://link.storjshare.io/raw/jwwup3rvzchbtd6ugsyjzubbuwkq/blog/2023-03-04_22-39-46_screenshot.png
+[[https://link.storjshare.io/raw/jwwup3rvzchbtd6ugsyjzubbuwkq/blog/2023-03-04_22-39-46_screenshot.png]]
 
-For more screenshots and other information about tagging, check [[https://github.com/salehmu/.../tree/~/.README.org][old README.]]
+For more screenshots and other information about tagging, check [[https://github.com/salehmu/.../blob/master/~/.README.org][old README.]]
