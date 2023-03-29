@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: cout
+# uuid:
+# key: cout
+# condition: t
+# --
+std::cout << $1 << std::endl;

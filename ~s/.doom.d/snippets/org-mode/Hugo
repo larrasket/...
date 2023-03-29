@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: post
+# key: post
+# uuid: post
+# --
+#+TITLE: ${1:title}
+#+DATE:  `(format-time-string "<%Y-%m-%d>")`
+#+OPTIONS: broken-links:mark
+$0

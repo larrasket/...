@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: forn
-# key: forn
-# --
-
-for (int $1 = 0; $1 < $2 ; $1++) {
-}

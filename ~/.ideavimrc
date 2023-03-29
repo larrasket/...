@@ -1,6 +1,0 @@
-set clipboard+=unnamed
-set ideajoin
-autocmd BufWritePost * !brave
-:map :w <Action>(ReformatCode)
-:set relativenumber
-:set number

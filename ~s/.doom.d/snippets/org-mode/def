@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: def
+# key: #begin_def
+# --
+#+begin_def
+$1
+#+end_def

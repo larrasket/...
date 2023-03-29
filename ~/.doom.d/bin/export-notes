@@ -1,6 +1,0 @@
-#!/usr/bin/env doomscript
-
-(require 'doom-start)
-(print "START AGENDA")
-(org-batch-agenda-csv "a")
-(print "END AGENDA")

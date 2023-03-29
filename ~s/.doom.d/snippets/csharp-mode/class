@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: class
+# key: class
+# --
+$1 class $2
+{
+    public $2()
+    {
+
+    }
+    $0
+
+}

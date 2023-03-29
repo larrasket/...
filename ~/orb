@@ -1,9 +1,0 @@
-%^{title} is a [[roam:Book]] by %^{author-or-editor}
-
-* %^{title}
-:PROPERTIES:
-:Custom_ID: %^{citekey}
-:URL: %^{url}
-:AUTHOR: %^{author-or-editor}
-:NOTER_DOCUMENT: %^{file}
-:END:

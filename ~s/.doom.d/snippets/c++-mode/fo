@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: fo
+# key: fo
+# --
+
+
+for (int $1 = $2; $1 $3 $4; $1 $5) {
+}

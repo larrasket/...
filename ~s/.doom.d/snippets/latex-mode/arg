@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: arg
+# key: arg
+# --
+\[
+  \begin{array}{ r l }
+               & $1
+               & $2
+    \cline{2-2}
+    \therefore & $3
+  \end{array}
+\]

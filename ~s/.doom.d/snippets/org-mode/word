@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: word
+# uuid: word
+# key: word
+# --
+
+*** ${1:vocabulary}
+${2:meaning}
+
+#+begin_quote
+${3:qoute}
+#+end_quote
+${4:arabic}

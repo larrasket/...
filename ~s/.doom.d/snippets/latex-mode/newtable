@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: newtable
+# key: ctable
+# --
+
+\begin{table}[ht]
+\centering
+\caption{$1}
+\begin{tabular}[t]{$2}
+\end{tabular}
+\caption{$3}
+\end{table}

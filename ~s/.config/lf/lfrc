@@ -1,0 +1,316 @@
+set drawbox true
+set previewer ~/.config/lf/preview
+set cleaner ~/.config/lf/cleaner
+set preview true
+set ratios 1:1
+
+cmd open ${{
+case $(file --mime-type "$f" -bL) in
+text/*|application/json) vim "$f";;
+# text/*|application/json) emacs --no-window-system  "$f";;
+#  text/*|application/json) emacs "$f";;
+*) setsid -f xdg-open "$f" ;;
+esac
+}}
+
+
+cmd mkdir %[ -e $1 ] && printf "file exists" || mkdir "$1"
+
+cmd mvimg ${{
+files=$(printf "$fx" | tr '\n' ';')
+mkdir -p .archive
+while [ "$files" ]; do
+file=${files%%;*}
+mv "$(basename "$file")" /home/ghd/me/img/
+if [ "$files" = "$file" ]; then
+files=''
+else
+files="${files#*;}"
+fi
+done
+}}
+
+map mi mvimg 
+
+
+
+
+cmd searchimage ${{
+for file in "$fx"
+do
+# https://gist.github.com/salehmu/c3d6539cc7ee93e6959ae742eb06285c
+url=$(imgur.sh "$file")
+brave "https://yandex.com/images/search?rpt=imageview&url=$url"
+done
+}}
+
+map si searchimage 
+
+
+cmd movetoarchive ${{
+
+files=$(printf "$fx" | tr '\n' ';')
+mkdir -p .archive
+while [ "$files" ]; do
+file=${files%%;*}
+mv "$(basename "$file")" /home/ghd/me/archive/
+if [ "$files" = "$file" ]; then
+files=''
+else
+files="${files#*;}"
+fi
+done
+}}
+
+map am movetoarchive
+
+
+#cmd movetoarchivething ${{
+#
+#
+#files=$(printf "$fx" | tr '\n' ';')
+#
+#for file in "$files"
+#do
+#mv  "$file" ~/me/archive/everything
+#done
+#}}
+
+#map as movetoarchivething
+
+cmd archivehere ${{
+files=$(printf "$fx" | tr '\n' ';')
+mkdir -p .archive
+while [ "$files" ]; do
+file=${files%%;*}
+mv "$(basename "$file")" .archive/
+if [ "$files" = "$file" ]; then
+files=''
+else
+files="${files#*;}"
+fi
+done
+}}
+
+map aa archivehere
+
+cmd mkfile ${{
+printf "File Name: "
+read ans
+$EDITOR "$ans"
+}}
+
+cmd chmod ${{
+printf "Mode Bits: "
+read ans
+
+for file in "$fx"
+do
+chmod $ans $file
+done
+
+lf -remote 'send reload'
+}}
+
+cmd sudomkfile ${{
+printf "File Name: "
+read ans
+sudo $EDITOR $ans
+}}
+
+cmd setwallpaper %cp "$f" ~/.config/wall.png && xwallpaper --zoom "$f"
+
+cmd fzf_jump ${{
+res="$(find . -maxdepth 3 | fzf --reverse --header='Jump to location')"
+if [ -f "$res" ]; then
+cmd="select"
+elif [ -d "$res" ]; then
+cmd="cd"
+fi
+lf -remote "send $id $cmd \"$res\""
+}}
+
+cmd broot_jump ${{
+f=$(mktemp)
+res="$(broot --outcmd $f && cat $f | sed 's/cd //')"
+rm -f "$f"
+if [ -f "$res" ]; then
+cmd="select"
+elif [ -d "$res" ]; then
+cmd="cd"
+fi
+lf -remote "send $id $cmd \"$res\""
+}}
+
+cmd open_config  ${{
+$EDITOR $(bookmenu -b ~/.config/bookmenu/configs -f fzf -o)
+}}
+
+cmd dragon %dragon-drag-and-drop -a -x $fx
+cmd dragon-stay %dragon-drag-and-drop -a $fx
+cmd dragon-individual %dragon-drag-and-drop $fx
+cmd cpdragon %cpdragon
+cmd mvdragon %mvdragon
+cmd dlfile %dlfile
+
+# Archive bindings
+cmd unarchive ${{
+case "$f" in
+*.zip) unzip "$f" ;;
+*.tar.gz) tar -xzvf "$f" ;;
+*.tar.bz2) tar -xjvf "$f" ;;
+*.tar) tar -xvf "$f" ;;
+*) echo "Unsupported format" ;;
+esac
+}}
+
+cmd zip %zip -r "$f" "$f"
+cmd tar %tar cvf "$f.tar" "$f"
+cmd targz %tar cvzf "$f.tar.gz" "$f"
+cmd tarbz2 %tar cjvf "$f.tar.bz2" "$f"
+
+# Trash cli bindings
+cmd trash ${{
+files=$(printf "$fx" | tr '\n' ';')
+while [ "$files" ]; do
+file=${files%%;*}
+trash-put "$(basename "$file")"
+if [ "$files" = "$file" ]; then
+files=''
+else
+files="${files#*;}"
+fi
+done
+}}
+
+
+
+
+cmd rm ${{
+files=$(printf "$fx" | tr '\n' ';')
+while [ "$files" ]; do
+# extract the substring from start of string up to delimiter.
+# this is the first "element" of the string.
+file=${files%%;*}
+
+rm "$(basename "$file")"
+# if there's only one element left, set `files` to an empty string.
+# this causes us to exit this `while` loop.
+# else, we delete the first "element" of the string from files, and move onto the next.
+if [ "$files" = "$file" ]; then
+files=''
+else
+files="${files#*;}"
+fi
+done
+}}
+
+
+
+
+cmd clear_trash %trash-empty
+
+cmd restore_trash ${{
+trash-restore
+}}
+
+cmd stripspace %stripspace "$f"
+
+# Bindings
+# Remove some defaults
+map m
+map o
+map "'"
+map '"'
+map d
+map c
+map e
+map f
+
+# File Openers
+cmd batch ${{
+/bin/sh -c  "vimv $(echo -e "$vim" | xargs -i echo "\\'{}\\'" | xargs echo)"
+}}
+map e batch
+
+
+# Archive Mappings
+map az zip
+map at tar
+map ag targz
+map ab targz
+map au unarchive
+
+map ت down
+map ن up
+map م open
+map ا updir
+
+
+# Trash Mappings
+map dd archivehere
+map dx rm
+map tc clear_trash
+map tr restore_trash
+
+# Broot Mapping
+map f broot_jump
+map u toggle
+map U unselect
+
+
+# Dragon Mapping
+map dr dragon
+map ds dragon-stay
+map di dragon-individual
+map dm mvdragon
+map dc cpdragon
+map dl dlfile
+
+#map ss stripspace
+
+# Basic Functions
+map . set hidden!
+map DD archivehere
+map p paste
+map x cut
+map y copy
+map <enter> open
+map mf mkfile
+map mr sudomkfile
+map md mkdir
+map md push :mkdir<space>
+map + mkdir
+map - updir
+map ms $mkscript
+map ch chmod
+map bg setwallpaper
+map o open_config
+map br $vimv $fx
+map r rename
+map H top
+map L bottom
+map R reload
+map C clear
+
+# Movement
+map ge cd ~/me/cinema
+map gb cd ~/source
+map gd cd ~/me/Downloads
+map gm cd ~/me
+map g2 cd ~/Disk
+map gc cd ~/.config
+map gs cd ~/me/cinema/Shows
+map gt cd ~/me/temp/
+map gn cd ~/me/nashid
+map gp cd ~/blog/content/posts
+map ga cd ~/me/art
+map gl cd ~/leet
+map gi cd ~/me/img/
+map gj cd ~/gits/
+
+map \;j cd ~
+cmd recol %{{
+        lf -remote "send $id set ratios 1:2:3"
+}}
+
