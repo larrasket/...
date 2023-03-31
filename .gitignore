@@ -33,3 +33,5 @@
 /~s/.config/musikcube/session.json
 /~s/.config/musikcube/1/musik.db-wal
 /~s/.doom.d/flycheck_keys.el
+/~s/.config/musikcube/settings.json
+flycheck_config.el
