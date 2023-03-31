@@ -333,3 +333,19 @@ If no one is selected, symmetric encryption will be performed.  ")))
   (cond ((string= (buffer-name (buffer-base-buffer)) "*sly-mrepl for sbcl*") t)
         ((buffer-file-name (buffer-base-buffer)) t)
         (t nil)))
+
+
+
+
+
+
+
+
+(defun salih/xwidget-open-html ()
+  "Open the current buffer's file path in an xwidget window."
+  (interactive)
+  (add-hook 'after-save-hook 'xwidget-webkit-reload)
+  (let ((file-path (buffer-file-name)))
+    (when file-path
+      (let ((xwidget (xwidget-webkit-browse-url (concat "file://" file-path))))
+        (message "Opened file %s in an xwidget window." file-path)))))
