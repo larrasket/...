@@ -9,8 +9,7 @@
 (setq-default frame-title-format '("%b")
               bidi-paragraph-direction 'left-to-right)
 
-(setq load-prefer-newer t ;; avoid warnings
-
+(setq load-prefer-newer                                 t ;; avoid warnings
       ;; emacs settings
       completion-ignore-case                            t
       doom-font                                         (font-spec :family "PragmataPro" :size 12)
@@ -107,7 +106,6 @@
         smtpmail-stream-type 'starttls))
 
 
-
 (after! solaire-mode
   (setq solaire-mode-real-buffer-fn #'salih/solaire-mode-real-buffer-custom-p))
 
@@ -136,13 +134,11 @@
 
 (add-hook 'org-mode-hook     (lambda ()
                                (display-line-numbers-mode -1)
-                               (setq truncate-lines 1)
-                               (highltier)
-                               (setq highlight-indent-guides-method 'character)))
+                               (setq truncate-lines 1)))
 
 (epa-file-enable)
-(erc-spelling-mode)
 (yas-global-mode 1)
+(erc-spelling-mode)
 (global-wakatime-mode)
 (vertico-buffer-mode)
 (salih/consult-preview-at-point)
