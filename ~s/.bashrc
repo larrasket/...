@@ -66,7 +66,7 @@ alias 'cd..'='cd ..'
 alias sp='systemctl suspend'
 alias dr='yt-dlp -S "res:480"'
 
-
+alias djvu2pdf='docker run --rm -u $(id -u):$(id -g) -v $(pwd):/opt/work ilyabystrov/djvu2pdf'
 
 xhost +local:root > /dev/null 2>&1
 complete -cf sudo
