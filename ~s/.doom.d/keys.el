@@ -103,8 +103,11 @@
  "t" #'+lookup/type-definition
  "e" #'+default/diagnostics
  "g" #'salih/find-definition-or-lookup
- ";" #'salih/rename-or-iedit
  "f" #'+format/buffer)
+
+(general-define-key
+ :prefix salih/prefix-mode
+ ";" #'salih/rename-or-iedit)
 
 ;; convenient
 (general-define-key
@@ -127,7 +130,7 @@
 (general-define-key
  :prefix (concat salih/prefix-mode "i")
  "u" #'insert-char
- "n" #'org-noter-insert-note
+ "n" #'orb-insert-link
  "t" #'insert-now-timestamp)
 
 ;; notes

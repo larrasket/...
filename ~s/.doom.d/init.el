@@ -130,7 +130,7 @@
        ;;solidity
        ;;swift
        ;;terra
-       ;;web
+       web
        ;;zig
        :email
        (mu4e

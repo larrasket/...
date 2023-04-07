@@ -67,7 +67,7 @@
 (setq org-roam-capture-templates
       '(("k" "knowledge" plain "%?"
          :if-new
-         (file+head "${slug}.org" "#+title: ${title}\n")
+         (file+head "2023/${slug}.org" "#+title: ${title}\n")
          :immediate-finish t
          :unnarrowed t)
         ("r" "bibliography reference" plain
