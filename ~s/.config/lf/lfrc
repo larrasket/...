@@ -16,25 +16,6 @@ esac
 
 cmd mkdir %[ -e $1 ] && printf "file exists" || mkdir "$1"
 
-cmd mvimg ${{
-files=$(printf "$fx" | tr '\n' ';')
-mkdir -p .archive
-while [ "$files" ]; do
-file=${files%%;*}
-mv "$(basename "$file")" /home/ghd/me/img/
-if [ "$files" = "$file" ]; then
-files=''
-else
-files="${files#*;}"
-fi
-done
-}}
-
-map mi mvimg 
-
-
-
-
 cmd searchimage ${{
 for file in "$fx"
 do
@@ -47,52 +28,8 @@ done
 map si searchimage 
 
 
-cmd movetoarchive ${{
-
-files=$(printf "$fx" | tr '\n' ';')
-mkdir -p .archive
-while [ "$files" ]; do
-file=${files%%;*}
-mv "$(basename "$file")" /home/ghd/me/archive/
-if [ "$files" = "$file" ]; then
-files=''
-else
-files="${files#*;}"
-fi
-done
-}}
-
-map am movetoarchive
 
 
-#cmd movetoarchivething ${{
-#
-#
-#files=$(printf "$fx" | tr '\n' ';')
-#
-#for file in "$files"
-#do
-#mv  "$file" ~/me/archive/everything
-#done
-#}}
-
-#map as movetoarchivething
-
-cmd archivehere ${{
-files=$(printf "$fx" | tr '\n' ';')
-mkdir -p .archive
-while [ "$files" ]; do
-file=${files%%;*}
-mv "$(basename "$file")" .archive/
-if [ "$files" = "$file" ]; then
-files=''
-else
-files="${files#*;}"
-fi
-done
-}}
-
-map aa archivehere
 
 cmd mkfile ${{
 printf "File Name: "
@@ -121,7 +58,7 @@ sudo $EDITOR $ans
 cmd setwallpaper %cp "$f" ~/.config/wall.png && xwallpaper --zoom "$f"
 
 cmd fzf_jump ${{
-res="$(find . -maxdepth 3 | fzf --reverse --header='Jump to location')"
+tr="$(find . -maxdepth 3 | fzf --reverse --header='Jump to location')"
 if [ -f "$res" ]; then
 cmd="select"
 elif [ -d "$res" ]; then
@@ -132,7 +69,7 @@ lf -remote "send $id $cmd \"$res\""
 
 cmd broot_jump ${{
 f=$(mktemp)
-res="$(broot --outcmd $f && cat $f | sed 's/cd //')"
+tr="$(broot --outcmd $f && cat $f | sed 's/cd //')"
 rm -f "$f"
 if [ -f "$res" ]; then
 cmd="select"
@@ -153,68 +90,72 @@ cmd cpdragon %cpdragon
 cmd mvdragon %mvdragon
 cmd dlfile %dlfile
 
-# Archive bindings
-cmd unarchive ${{
-case "$f" in
-*.zip) unzip "$f" ;;
-*.tar.gz) tar -xzvf "$f" ;;
-*.tar.bz2) tar -xjvf "$f" ;;
-*.tar) tar -xvf "$f" ;;
-*) echo "Unsupported format" ;;
-esac
-}}
 
 cmd zip %zip -r "$f" "$f"
 cmd tar %tar cvf "$f.tar" "$f"
 cmd targz %tar cvzf "$f.tar.gz" "$f"
 cmd tarbz2 %tar cjvf "$f.tar.bz2" "$f"
 
+
+
+
+
+
+cmd stripspace %stripspace "$f"
+
+
 # Trash cli bindings
 cmd trash ${{
-files=$(printf "$fx" | tr '\n' ';')
-while [ "$files" ]; do
-file=${files%%;*}
-trash-put "$(basename "$file")"
-if [ "$files" = "$file" ]; then
-files=''
-else
-files="${files#*;}"
-fi
-done
+  files=$(printf "$fx" | tr '\n' ';')
+  while [ "$files" ]; do
+    # extract the substring from start of string up to delimiter.
+    # this is the first "element" of the string.
+    file=${files%%;*}
+
+    trash-put "$(basename "$file")"
+    # if there's only one element left, set `files` to an empty string.
+    # this causes us to exit this `while` loop.
+    # else, we delete the first "element" of the string from files, and move onto the next.
+    if [ "$files" = "$file" ]; then
+      files=''
+    else
+      files="${files#*;}"
+    fi
+  done
 }}
-
-
-
-
-cmd rm ${{
-files=$(printf "$fx" | tr '\n' ';')
-while [ "$files" ]; do
-# extract the substring from start of string up to delimiter.
-# this is the first "element" of the string.
-file=${files%%;*}
-
-rm "$(basename "$file")"
-# if there's only one element left, set `files` to an empty string.
-# this causes us to exit this `while` loop.
-# else, we delete the first "element" of the string from files, and move onto the next.
-if [ "$files" = "$file" ]; then
-files=''
-else
-files="${files#*;}"
-fi
-done
-}}
-
-
-
 
 cmd clear_trash %trash-empty
 
-cmd restore_trash ${{
-trash-restore
+cmd bo_start ${{
+bo
+boloc="/tmp/boBrowser"
+cmd="cd"
+lf -remote "send $id $cmd \"$boloc\""
+
 }}
 
-cmd stripspace %stripspace "$f"
+
+
+cmd bo_restore ${{
+  files=$(printf "$fx" | tr '\n' ' ')
+  /home/ghd/go/bin/bo r $files
+}}
+
+cmd bo_getback ${{
+  file_path=$(cat /tmp/boBrowser/.bin_organizer12)
+  cmd="cd"
+  lf -remote "send $id $cmd \"$file_path\""
+}}
+
+
+# Trash Mappings
+map dd trash
+map ds bo_start
+map dr bo_restore
+map g` bo_getback
+
+
+
 
 # Bindings
 # Remove some defaults
@@ -234,7 +175,6 @@ cmd batch ${{
 map e batch
 
 
-# Archive Mappings
 map az zip
 map at tar
 map ag targz
@@ -247,11 +187,6 @@ map م open
 map ا updir
 
 
-# Trash Mappings
-map dd archivehere
-map dx rm
-map tc clear_trash
-map tr restore_trash
 
 # Broot Mapping
 map f broot_jump
@@ -259,19 +194,9 @@ map u toggle
 map U unselect
 
 
-# Dragon Mapping
-map dr dragon
-map ds dragon-stay
-map di dragon-individual
-map dm mvdragon
-map dc cpdragon
-map dl dlfile
-
-#map ss stripspace
 
 # Basic Functions
 map . set hidden!
-map DD archivehere
 map p paste
 map x cut
 map y copy
