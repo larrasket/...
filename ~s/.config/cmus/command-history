@@ -1,0 +1,24 @@
+q
+pl-export ~/p
+pl-export 
+save
+set status_display_program=cmusfm
+:set status_display_program=cmusfm
+pl-create classics
+add -p /home/ghd/music/But, What Ends When the Symbols Shatter/
+pl-create deception
+pl-create missing
+pl-create 
+pl-create awake
+pl-create
+pl-create romance
+pl-cre
+pl-import
+unmark 
+pl-rename dungeon
+pl-rename dungeaon
+pl-rename dungone
+pl-rename 
+pl-rename awake
+pla
+l
