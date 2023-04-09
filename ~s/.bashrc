@@ -22,6 +22,7 @@ alias smk='sudo make clean install'
 alias f="lfrun"
 alias d='yt-dlp -f "mp4" -o "%(title)s.%(ext)s" '
 alias c='clear'
+alias convertwebm='function _convertwebm(){ ffmpeg -fflags +genpts -i "$1" -r 24 "${1%.webm}.mp4" && rm "$1"; };_convertwebm'
 
 # Download in lower quality (480)
 # (Internet plans sucks in my country)
