@@ -150,6 +150,7 @@
 (vertico-buffer-mode)
 (salih/consult-preview-at-point)
 
+(add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 
 
 (add-hook 'after-init-hook #'mu4e)
