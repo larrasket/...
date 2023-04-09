@@ -155,7 +155,6 @@
        chess
        cite
        pdf
-       present
        roam
        bind)
 
