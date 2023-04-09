@@ -27,6 +27,23 @@ done
 
 map si searchimage 
 
+cmd movetoarchive ${{
+
+files=$(printf "$fx" | tr '\n' ';')
+mkdir -p .archive
+while [ "$files" ]; do
+file=${files%%;*}
+mv "$(basename "$file")" /home/ghd/me/links/
+if [ "$files" = "$file" ]; then
+files=''
+else
+files="${files#*;}"
+fi
+done
+}}
+
+map am movetoarchive
+
 
 
 
@@ -137,14 +154,16 @@ lf -remote "send $id $cmd \"$boloc\""
 
 
 cmd bo_restore ${{
-  files=$(printf "$fx" | tr '\n' ' ')
-  /home/ghd/go/bin/bo r $files
-}}
 
-cmd bo_getback ${{
-  file_path=$(cat /tmp/boBrowser/.bin_organizer12)
-  cmd="cd"
-  lf -remote "send $id $cmd \"$file_path\""
+IFS=$'\n'   # set the input field separator to newline
+files=($(printf '%s' "$fx"))   # create an array of filenames
+echo "${files[@]}"
+/home/ghd/go/bin/bo r "${files[@]}"   # pass the array of filenames to the command
+
+file_path=$(cat /tmp/boBrowser/.bin_organizer12)
+cmd="cd"
+lf -remote "send $id $cmd \"$file_path\""
+
 }}
 
 
@@ -152,7 +171,6 @@ cmd bo_getback ${{
 map dd trash
 map ds bo_start
 map dr bo_restore
-map g` bo_getback
 
 
 
