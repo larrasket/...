@@ -77,6 +77,11 @@
       erc-prompt-for-nickserv-password                  nil
       erc-autojoin-channels-alist                       '(("irc.libera.chat"
                                                            "##arabic"))
+      leetcode-prefer-language                          "cpp"
+      leetcode-prefer-sql                               "mssql"
+      leetcode-save-solutions                           t
+      leetcode-directory                                "/home/ghd/gits/ps/lc"
+
 
       ;; other
       vertico-buffer-display-action                     '(display-buffer-same-window)

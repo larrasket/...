@@ -35,3 +35,4 @@
 (package! consult-org-roam)
 
 (package! sage-shell-mode)
+(package! leetcode)
