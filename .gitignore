@@ -35,3 +35,7 @@
 /~s/.doom.d/flycheck_keys.el
 /~s/.config/musikcube/settings.json
 flycheck_config.el
+/~s/.config/cmus/autosave
+/~s/.config/cmus/cache
+/~s/.config/cmus/command-history
+/~s/.config/cmus/search-history

@@ -36,6 +36,16 @@
 /mnt/disk/me/music/فيروز-عندى ثقه فيك.mp3
 /mnt/disk/me/music/Crows in the Rain - Drim Wan; Därk Blü - 04 - Drimerz Path  Way.mp3
 /mnt/disk/me/music/C.W. Stoneking - Jungle Blues - 08 - The Love Me or Die.mp3
+/home/ghd/music/But, What Ends When the Symbols Shatter/01 - Death In June - Death Is the Martyr of Beauty.ogg
+/home/ghd/music/But, What Ends When the Symbols Shatter/02 - Death In June - He's Disabled.ogg
+/home/ghd/music/But, What Ends When the Symbols Shatter/03 - Death In June - The Mourner's Bench.ogg
+/home/ghd/music/But, What Ends When the Symbols Shatter/04 - Death In June - Because of Him.ogg
+/home/ghd/music/But, What Ends When the Symbols Shatter/05 - Death In June - Little Black Angel.ogg
+/home/ghd/music/But, What Ends When the Symbols Shatter/06 - Death In June - The Golden Wedding of Sorrow.ogg
+/home/ghd/music/But, What Ends When the Symbols Shatter/07 - Death In June - The Giddy Edge of Light.ogg
+/home/ghd/music/But, What Ends When the Symbols Shatter/08 - Death In June - Ku Ku Ku.ogg
+/home/ghd/music/But, What Ends When the Symbols Shatter/09 - Death In June - Hollows of Devotion.ogg
+/home/ghd/music/But, What Ends When the Symbols Shatter/10 - Death In June - But, What Ends When the Symbols Shatter_.ogg
 /mnt/disk/me/music/Death In June - But, What Ends When the Symbols Shatter - 05 - Little Black Angel.mp3
 /mnt/disk/me/music/Eleni Karaindrou - Eternity And A Day - 02 - Eternity And A Day 2. By The Sea.mp3
 /mnt/disk/me/music/Eleni Karaindrou, Vangelis Christopoulos, Nikos Guinos, Vangelis Skouras, Aris Dimitriadis, Iraklis Vavatsikas, Spyros Kazianis, String Orchestra La Camerata - Eternity And A Day - 03 - Eternity And A Day 3. Eternity Theme.mp3
