@@ -151,7 +151,6 @@
        gen
        genorg
        gitcolor
-       leetcode
        chess
        cite
        pdf

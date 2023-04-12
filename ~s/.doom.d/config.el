@@ -118,56 +118,9 @@
         smtpmail-stream-type 'starttls))
 
 
-(after! solaire-mode
-  (setq solaire-mode-real-buffer-fn #'salih/solaire-mode-real-buffer-custom-p))
-
-
-(after! sly
-  (setq sly-complete-symbol-function 'sly-flex-completions))
 
 ;; this should be called after defining salih/prefix-global
 (require '+handy)
-(require 'keys)
+(require '+bindings)
+(require '+hooks)
 
-(add-hook 'prog-mode-hook (lambda ()
-                            (highltier)
-                            (column-enforce-mode)
-                            (auto-fill-mode)
-                            (setq-default indent-tabs-mode nil)))
-
-(add-hook 'after-init-hook   #'global-flycheck-mode)
-(add-hook 'nov-mode-hook     #'salih/make-buffer-white)
-(add-hook 'csv-mode-hook     #'csv-align-mode)
-(add-hook 'neotree-mode-hook (lambda () (doom-modeline 1) (solaire-mode -1)))
-(add-hook 'sly-mrepl-mode (lambda () (doom-modeline-mode 1)))
-(add-hook 'lisp-mode-hook    #'rainbow-delimiters-mode)
-(add-hook 'yas-minor-mode(lambda() (yas-activate-extra-mode 'fundamental-mode)))
-(add-hook 'dired-mode-hook(lambda () (solaire-mode -1) (org-download-enable)))
-
-(add-hook 'org-mode-hook     (lambda ()
-                               (display-line-numbers-mode -1)
-                               (setq truncate-lines 1)))
-
-(epa-file-enable)
-(yas-global-mode 1)
-(erc-spelling-mode)
-(global-wakatime-mode)
-(vertico-buffer-mode)
-(salih/consult-preview-at-point)
-
-(add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
-
-
-(add-hook 'after-init-hook #'mu4e)
-
-
-(custom-set-faces
- '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
- '(org-level-2 ((t (:inherit outline-2 :height 1.2))))
- '(org-level-3 ((t (:inherit outline-3 :height 1.1))))
- '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
- '(org-level-5 ((t (:inherit outline-5 :height 0.9))))
- '(org-level-6 ((t (:inherit outline-6 :height 0.8))))
- '(org-level-7 ((t (:inherit outline-7 :height 0.7))))
- '(org-level-8 ((t (:inherit outline-8 :height 0.6))))
- '(org-document-title ((t (:weight bold :height 1.5)))))

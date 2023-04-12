@@ -1,6 +1,6 @@
 ;;; ../configs/.doom.d/keys.el -*- lexical-binding: t; -*-
 
-(provide 'keys)
+(provide '+bindings)
 (require '+handy)
 
 

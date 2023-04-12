@@ -75,3 +75,16 @@
         ("t" "Check TODOs" todo "CHECK")
         ("c" "Check APPOINTs" todo "APPOINT")
         ("i" "CHECK IDEAs" tags "+idea+TODO=\"TODO\"")))
+
+
+
+(custom-set-faces
+ '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
+ '(org-level-2 ((t (:inherit outline-2 :height 1.2))))
+ '(org-level-3 ((t (:inherit outline-3 :height 1.1))))
+ '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
+ '(org-level-5 ((t (:inherit outline-5 :height 0.9))))
+ '(org-level-6 ((t (:inherit outline-6 :height 0.8))))
+ '(org-level-7 ((t (:inherit outline-7 :height 0.7))))
+ '(org-level-8 ((t (:inherit outline-8 :height 0.6))))
+ '(org-document-title ((t (:weight bold :height 1.5)))))
