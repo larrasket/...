@@ -2,71 +2,24 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("gene"
- (filename . "~/configs/.doom.d/config.el")
- (front-context-string . "(add-to-list 'lo")
- (rear-context-string)
- (position . 1)
- (last-modified 25628 46733 852794 845000))
-("conig"
- (filename . "/mnt/disk/me/temp/test.l")
- (front-context-string)
- (rear-context-string . "ckload :kdl)\n\njo")
- (position . 141)
- (last-modified 25621 52578 62307 382000))
-("doom"
- (filename . "~/roam/blog/content/stack.org")
- (front-context-string)
- (rear-context-string . "g\n works great.\n")
- (position . 1736)
- (last-modified 25608 36847 628456 639000))
+(("ps"
+ (filename . "~/gits/ps/")
+ (front-context-string . "lc\n  drwxr-xr-x ")
+ (rear-context-string . "0K Apr 11 10:10 ")
+ (position . 64)
+ (last-modified 25654 23907 55447 171000))
+("found"
+ (filename . "~/roam/2023/types_of_keyboards.org")
+ (front-context-string . "#+title: Found\n\n")
+ (rear-context-string . "2255baaf7\n:END:\n")
+ (position . 68)
+ (last-modified 25649 60709 88901 330000))
 ("irg"
  (filename . "~/configs/.doom.d/config.el")
  (front-context-string . "\n(add-hook 'org-")
  (rear-context-string . "(require 'keys)\n")
  (position . 3956)
  (last-modified 25603 56495 435503 169000))
-("cib"
- (filename . "~/.mail/drafts/cur/1677970709.12c4361fc46b647a.work:2,DS")
- (front-context-string . "--text follows t")
- (rear-context-string . ".fsf@gmail.com>\n")
- (position . 191)
- (last-modified 25603 52517 484298 943000))
-("stack"
- (filename . "~/roam/stack.org")
- (front-context-string . "* Posts\n** Satur")
- (rear-context-string . "blished 1717.\n\n\n")
- (position . 463)
- (last-modified 25594 8320 140606 276000))
-#1=(#("debian-11.4.0-amd64-netinst.iso" 0 31
-      (bmkp-full-record #1#))
-    (tags "osfile")
-    (filename . "/mnt/disk/me/archive/assets/os/debian-11.4.0-amd64-netinst.iso")
-    (position . 0)
-    (created 25589 41820 381681 682000))
-#1=(#("Win10_22H2_Arabic_x64.iso" 0 25
-      (bmkp-full-record #1#))
-    (tags "osfile")
-    (filename . "/mnt/disk/me/archive/assets/os/Win10_22H2_Arabic_x64.iso")
-    (position . 0)
-    (created 25589 41815 98506 300000))
-#1=(#("arcolinuxb-dwm-v22.11.02-x86_64.iso" 0 35
-      (bmkp-full-record #1#))
-    (time 25589 42210 138741 786000)
-    (visits . 0)
-    (tags "osfile")
-    (filename . "/mnt/disk/me/arcolinuxb-dwm-v22.11.02-x86_64.iso")
-    (position . 0)
-    (created 25589 41775 479178 845000))
-#1=(#("dired+.el" 0 9
-      (bmkp-full-record #1#))
-    (end-position . 1)
-    (time 25589 42215 728687 561000)
-    (visits . 1)
-    (tags "sometag")
-    (filename . "/home/ghd/configs/.doom.d/dired+.el")
-    (position . 1)
-    (created 25589 40343 890641 140000))
 #1=(#("rbook" 0 5
       (bmkp-full-record #1#))
     (filename . "~/blog/content/rbooks.org")
@@ -97,41 +50,6 @@
        (location . "file:///home/ghd/gits/clhs/HyperSpec/Front/X_Master.htm")
        (handler . eww-bookmark-jump)
        (defaults #2# "CLHS: Index" "*eww*"))
-#1=(#("orb" 0 3
-      (bmkp-full-record #1#))
-    (filename . "~/roam/main/life.org")
-    (front-context-string . "[0/2]\n  :PROPERT")
-    (rear-context-string . "/1]\n* Long-Term ")
-    (position . 42436)
-    (last-modified 25583 53791 863707 847000))
-#1=(#("rbo" 0 3
-      (bmkp-full-record #1#))
-    (filename . "~/blog/content/fullbooks.org")
-    (front-context-string . "*See for compute")
-    (rear-context-string . "anned to read.\n\n")
-    (position . 162)
-    (last-modified 25581 37912 163218 798000))
-#1=(#("ranger-j" 0 8
-      (bmkp-full-record #1#))
-    (filename . "~/old/old/")
-    (front-context-string . "20220813151136-س")
-    (rear-context-string . ".6k 12-21 06:37 ")
-    (position . 536)
-    (last-modified 25570 6090 807460 486000))
-#1=(#("ranger-m" 0 8
-      (bmkp-full-record #1#))
-    (filename . "~/roam/journal/")
-    (front-context-string . "2022-10-23.org\n ")
-    (rear-context-string . ".8k 12-21 06:37 ")
-    (position . 147)
-    (last-modified 25539 20376 283324 973000))
-#1=(#("packs" 0 5
-      (bmkp-full-record #1#))
-    (filename . "~/configs/.doom.d/config.el")
-    (front-context-string)
-    (rear-context-string . "l-separator \"  \"")
-    (position . 5379)
-    (last-modified 25518 33036 766052 878000))
 #1=(#("bib" 0 3
       (bmkp-full-record #1#))
     (filename . "~/configs/ref.bib")
@@ -141,11 +59,11 @@
     (last-modified 25513 14212 721962 52000))
 #1=(#("crb" 0 3
       (bmkp-full-record #1#))
-    (filename . "~/roam/current_reading_books.org")
+    (filename . "~/roam/2023/current_reading_books.org")
     (front-context-string . ":PROPERTIES:\n:ID")
     (rear-context-string)
     (position . 1)
-    (last-modified 25570 10504 641864 572000))
+    (last-modified 25649 63565 138286 992000))
 #1=(#("org" 0 3
       (bmkp-full-record #1#))
     (filename . "~/roam/main/life.org")
@@ -153,13 +71,6 @@
     (rear-context-string . "y Plain Life in ")
     (position . 94)
     (last-modified 25488 48176 566012 618000))
-#1=(#("CSC" 0 3
-      (bmkp-full-record #1#))
-    (filename . "~/gits/CSC354/")
-    (front-context-string . "  /home/ghd/gits")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25457 35803 111340 283000))
 #1=(#("dummy" 0 1
       (bmkp-full-record #1#)
       1 5
@@ -169,42 +80,6 @@
     (rear-context-string)
     (position . 1)
     (last-modified 25467 47992 938684 347000))
-#1=(#("ps" 0 1
-      (bmkp-full-record #1#)
-      1 2
-      (bmkp-full-record #1#))
-    (filename . "~/gits/leet/ps/lc/")
-    (front-context-string . ":\n  drwxr-xr-x  ")
-    (rear-context-string . "/me/temp/leet/ps")
-    (position . 28)
-    (last-modified 25464 61752 980745 702000))
-#1=(#("go" 0 1
-      (bmkp-full-record #1#)
-      1 2
-      (bmkp-full-record #1#))
-    (filename . "~/blog/content/computer-science/go.org")
-    (front-context-string . "#+title: GO Note")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25410 32135 46265 657000))
-#1=(#("leet" 0 1
-      (bmkp-full-record #1#)
-      1 4
-      (bmkp-full-record #1#))
-    (filename . "~/gits/leet/")
-    (front-context-string . "  /mnt/disk/me/t")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25445 45912 372093 127000))
-#1=(#("cinema" 0 1
-      (bmkp-full-record #1#)
-      1 6
-      (bmkp-full-record #1#))
-    (filename . "~/blog/content/cinema.org")
-    (front-context-string . "#+TITLE: Cinema\n")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25399 49938 142242 685000))
 #1=(#("tmp" 0 1
       (bmkp-full-record #1#)
       1 3
@@ -232,24 +107,6 @@
     (rear-context-string . "mnt/disk/me/gits")
     (position . 20)
     (last-modified 25415 55712 208580 551000))
-#1=(#("met" 0 1
-      (bmkp-full-record #1#)
-      1 3
-      (bmkp-full-record #1#))
-    (filename . "/mnt/disk/me/")
-    (front-context-string . ":\n  lrwxrwxrwx  ")
-    (rear-context-string)
-    (position . 15)
-    (last-modified 25385 22115 297530 342000))
-#1=(#("shell" 0 1
-      (bmkp-full-record #1#)
-      1 5
-      (bmkp-full-record #1#))
-    (filename . "~/configs/.doom.d/shellrc.el")
-    (front-context-string . ";;; shellrc.el -")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25384 19448 385773 216000))
 #1=(#("packegs" 0 1
       (bmkp-full-record #1#)
       1 7
@@ -259,33 +116,6 @@
     (rear-context-string . "*- no-byte-compi")
     (position . 20)
     (last-modified 25384 19442 836585 828000))
-#1=(#("other" 0 1
-      (bmkp-full-record #1#)
-      1 5
-      (bmkp-full-record #1#))
-    (filename . "~/configs/.doom.d/other.el")
-    (front-context-string . ";;; other.el -*-")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25384 19436 289900 902000))
-#1=(#("music" 0 1
-      (bmkp-full-record #1#)
-      1 5
-      (bmkp-full-record #1#))
-    (filename . "~/configs/.doom.d/music.el")
-    (front-context-string . ";;; ../configs/.")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25384 19425 12187 843000))
-#1=(#("lsp" 0 1
-      (bmkp-full-record #1#)
-      1 3
-      (bmkp-full-record #1#))
-    (filename . "~/configs/.doom.d/languageshelpers.el")
-    (front-context-string . "languageshelpers")
-    (rear-context-string)
-    (position . 5)
-    (last-modified 25384 19422 305106 615000))
 #1=(#("keys" 0 1
       (bmkp-full-record #1#)
       1 4
@@ -308,51 +138,6 @@
     (rear-context-string)
     (position . 1)
     (last-modified 25384 19415 143217 56000))
-#1=(#("genset" 0 1
-      (bmkp-full-record #1#)
-      1 6
-      (bmkp-full-record #1#))
-    (filename . "~/configs/.doom.d/genset.el")
-    (front-context-string . ";;; genset.el -*")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25384 19412 10363 316000))
-#1=(#("feedconf" 0 1
-      (bmkp-full-record #1#)
-      1 8
-      (bmkp-full-record #1#))
-    (filename . "~/configs/.doom.d/modules/private/feeds/config.el")
-    (front-context-string . ";;; ../configs/.")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25440 22854 838848 707000))
-#1=(#("email" 0 1
-      (bmkp-full-record #1#)
-      1 5
-      (bmkp-full-record #1#))
-    (filename . "~/configs/.doom.d/emailconf.el")
-    (front-context-string . "(provide 'emailc")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25384 19395 475227 978000))
-#1=(#("diredconf" 0 1
-      (bmkp-full-record #1#)
-      1 9
-      (bmkp-full-record #1#))
-    (filename . "~/configs/.doom.d/diredconf.el")
-    (front-context-string . ";;; diredconf.el")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25384 19391 779275 34000))
-#1=(#("custom" 0 1
-      (bmkp-full-record #1#)
-      1 6
-      (bmkp-full-record #1#))
-    (filename . "~/configs/.doom.d/custom.el")
-    (front-context-string . "(custom-set-vari")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25384 19383 688107 168000))
 #1=(#("config" 0 1
       (bmkp-full-record #1#)
       1 6
@@ -406,18 +191,9 @@
       (bmkp-full-record #1#)
       1 23
       (bmkp-full-record #1#))
-    (filename . "~/roam/blog/content/stack.org")
-    (front-context-string . "** Wednesday, 29")
-    (rear-context-string . ".jpg]]\n\n* Posts\n")
-    (position . 275)
-    (last-modified 25635 51659 437089 586000))
-#1=(#("packconf" 0 1
-      (bmkp-full-record #1#)
-      1 8
-      (bmkp-full-record #1#))
-    (filename . "~/configs/.doom.d/packconf.el")
-    (front-context-string . ";;; packconf.el ")
-    (rear-context-string)
-    (position . 1)
-    (last-modified 25382 49060 555466 665000))
+    (filename . "~/roam/main/life.org")
+    (front-context-string . "** TODO the ps r")
+    (rear-context-string . "oo many things.\n")
+    (position . 36026)
+    (last-modified 25647 24906 457 773000))
 )
