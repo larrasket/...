@@ -2,7 +2,19 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("ps"
+(("hooks"
+ (filename . "/:/home/ghd/gits/configs/~s/.doom.d/+hooks.el")
+ (front-context-string)
+ (rear-context-string . "'flyspell-mode)\n")
+ (position . 1486)
+ (last-modified 25655 33053 60031 942000))
+("euler"
+ (filename . "~/gits/euler/src/")
+ (front-context-string . ":\n  -rw-r--r-- 1")
+ (rear-context-string . "d/gits/euler/src")
+ (position . 27)
+ (last-modified 25655 15461 205243 423000))
+("ps"
  (filename . "~/gits/ps/")
  (front-context-string . "lc\n  drwxr-xr-x ")
  (rear-context-string . "0K Apr 11 10:10 ")
@@ -122,11 +134,11 @@
       (bmkp-full-record #1#))
     (time 25589 41103 19171 90000)
     (visits . 1)
-    (filename . "~/configs/.doom.d/keys.el")
+    (filename . "~/configs/.doom.d/+bindings.el")
     (front-context-string . ";;; keys.el -*- ")
     (rear-context-string)
     (position . 1)
-    (last-modified 25384 19418 497880 930000))
+    (last-modified 25655 34291 14364 463000))
 #1=(#("init" 0 1
       (bmkp-full-record #1#)
       1 4
