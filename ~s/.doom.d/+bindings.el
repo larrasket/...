@@ -56,6 +56,19 @@
             (local-set-key (salih/mode "i d") #'org-download-clipboard)
             (local-set-key (salih/global "TAB") #'consult-org-heading)))
 
+(add-hook 'ement-room-mode-hook
+          (lambda ()
+            (evil-local-set-key 'normal (kbd "RET") #'ement-room-send-message)
+            (evil-local-set-key 'normal (kbd "C-k") #'ement-room-delete-message)
+            (evil-local-set-key 'normal (kbd "s f") #'ement-room-send-file)
+            (evil-local-set-key 'normal (kbd "s i") #'ement-room-send-image)
+            (evil-local-set-key 'normal (kbd "q") #'quit-window)
+            (evil-local-set-key 'normal (kbd "r j") #'ement-room-join)
+            (evil-local-set-key 'normal (kbd "r l") #'ement-room-leave)
+            (evil-local-set-key 'normal (kbd "R") #'ement-room-write-reply)))
+
+
+
 (add-hook 'TeX-mode-hook
           (lambda () (local-set-key (salih/global "C-l") '(TeX-command-master "LatexMk"))))
 

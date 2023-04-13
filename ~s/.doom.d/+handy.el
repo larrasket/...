@@ -349,3 +349,17 @@ If no one is selected, symmetric encryption will be performed.  ")))
     (when file-path
       (let ((xwidget (xwidget-webkit-browse-url (concat "file://" file-path))))
         (message "Opened file %s in an xwidget window." file-path)))))
+
+
+
+(require 'auth-source)
+(defun salih/ement-connect ()
+  "Connect to Ement with credentials from Authinfo."
+  (interactive)
+  (let* ((auth-info (auth-source-search :host "matrix.org"
+                                        :require '(:user :secret)))
+         (user-id (plist-get (car auth-info) :user))
+         (password (funcall (plist-get (car auth-info) :secret))))
+    (ement-connect :user-id user-id
+                   :password password
+                   :uri-prefix "http://127.0.0.1:8008")))
