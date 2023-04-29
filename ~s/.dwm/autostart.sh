@@ -9,7 +9,7 @@ dunst &
 xset r rate 200 25
 setxkbmap -layout en_US,ar -option 'grp:alt_shift_toggle'
 pantalaimon &
-/home/ghd/go/bin/notifier  &
+/home/l/go/bin/notifier  &
 #/home/ghd/go/bin/motivier  &
 feh --bg-fill ~/configs/bg.png
 # tor &
