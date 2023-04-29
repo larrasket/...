@@ -39,3 +39,4 @@ flycheck_config.el
 /~s/.config/cmus/cache
 /~s/.config/cmus/command-history
 /~s/.config/cmus/search-history
+*.o
