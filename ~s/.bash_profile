@@ -2,61 +2,24 @@
 # ~/.bash_profile
 #
 
-
-
 [[ -f ~/.bashrc ]] && . ~/.bashrc
-
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude *.srt'
-export PATH=$PATH:~/.emacs.d/bin
-export PATH=$PATH:~/.doom.d/bin
-export PATH=$PATH:~/.bin/
+export PATH=$PATH:$HOME/.emacs.d/bin
+export PATH=$PATH:$HOME/.doom.d/bin
+export PATH=$PATH:$HOME/.bin/
 
-
-export PATH=$PATH:/home/ghd/.cargo/bin
-export PATH=$PATH:/home/ghd/.dotnet/tools
-export PATH=$PATH:/home/ghd/.local/bin
+export PATH=$PATH:$HOME/l/.cargo/bin
+export PATH=$PATH:$HOME/l/.dotnet/tools
+export PATH=$PATH:$HOME/l/.local/bin
 export FrameworkPathOverride=/lib/mono/
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
-
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export GTK_USE_PORTAL=gedit
-#export FLOATINGTERMINAL="st -T 'stfloat' -g 85x25+550+300"
-
-
-# make sure You have installed the infinality patches
-
-#export INFINALITY_FT_FILTER_PARAMS="8 17 50 17 8"
-#export INFINALITY_FT_GRAYSCALE_FILTER_STRENGTH="0"
-#export INFINALITY_FT_FRINGE_FILTER_STRENGTH="55"
-#export INFINALITY_FT_AUTOHINT_HORIZONTAL_STEM_DARKEN_STRENGTH="0"
-#export INFINALITY_FT_AUTOHINT_VERTICAL_STEM_DARKEN_STRENGTH="0"
-#export INFINALITY_FT_WINDOWS_STYLE_SHARPENING_STRENGTH="20"
-#export INFINALITY_FT_CHROMEOS_STYLE_SHARPENING_STRENGTH="0"
-#export INFINALITY_FT_STEM_ALIGNMENT_STRENGTH="0"
-#export INFINALITY_FT_STEM_FITTING_STRENGTH="100"
-#export INFINALITY_FT_STEM_DARKENING_AUTOFIT="false"
-#export INFINALITY_FT_STEM_DARKENING_CFF="false"
-#export INFINALITY_FT_GAMMA_CORRECTION="0 100"
-#export INFINALITY_FT_BRIGHTNESS="60"
-#export INFINALITY_FT_CONTRAST="0"
-#export INFINALITY_FT_USE_VARIOUS_TWEAKS="false"
-#export INFINALITY_FT_AUTOHINT_INCREASE_GLYPH_HEIGHTS="false"
-#export INFINALITY_FT_AUTOHINT_SNAP_STEM_HEIGHT="100"
-#export INFINALITY_FT_STEM_SNAPPING_SLIDING_SCALE="0"
-#export INFINALITY_FT_USE_KNOWN_SETTINGS_ON_SELECTED_FONTS="false"
-#
-#export INFINALITY_FT_GLOBAL_EMBOLDEN_X_VALUE=35
-#export INFINALITY_FT_GLOBAL_EMBOLDEN_Y_VALUE=0
-#export INFINALITY_FT_BOLD_EMBOLDEN_X_VALUE=0
-#export INFINALITY_FT_BOLD_EMBOLDEN_Y_VALUE=0
-
-# Hishtory Config:
-

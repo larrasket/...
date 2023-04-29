@@ -13,7 +13,7 @@
 (setq load-prefer-newer                                 t ;; avoid warnings
       ;; emacs settings
       completion-ignore-case                            t
-      doom-font                                         (font-spec :family "PragmataPro" :size 12)
+      doom-font                                         (font-spec :family "PragmataPro Mono Liga" :size 12)
       all-the-icons-color-icons                         nil
       neo-theme                                         'icons
       neo-window-width                                  35
@@ -33,7 +33,7 @@
 
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
-      user-mail-address                                 "salhghd7@gmail.com"
+      user-mail-address                                 "larrasket@bk.ru"
 
       ;; I've no idea of any of this.
       org-crypt-key                                     user-mail-address
@@ -80,7 +80,7 @@
       leetcode-prefer-language                          "cpp"
       leetcode-prefer-sql                               "mssql"
       leetcode-save-solutions                           t
-      leetcode-directory                                "/home/ghd/gits/ps/lc"
+      leetcode-directory                                "/home/l/gits/ps/lc"
 
 
       ;; other
@@ -111,11 +111,12 @@
   (setq message-send-mail-function 'smtpmail-send-it
         starttls-use-gnutls t
         mu4e-update-interval 200
-        smtpmail-default-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-server "smtp.gmail.com"
-        smtpmail-smtp-service 587
-        smtpmail-starttls-credentials '(("smtp.gmail.com" "587" nil nil))
-        smtpmail-stream-type 'starttls))
+        smtpmail-default-smtp-server "smtp.mail.ru"
+        smtpmail-smtp-server "smtp.mail.ru"
+        smtpmail-smtp-service 465
+        smtpmail-starttls-credentials '(("smtp.mail.ru" "465" nil nil))
+        smtpmail-stream-type 'starttls
+        mu4e-modeline-show-global nil))
 
 
 
@@ -123,4 +124,8 @@
 (require '+handy)
 (require '+bindings)
 (require '+hooks)
+
+
+
+
 

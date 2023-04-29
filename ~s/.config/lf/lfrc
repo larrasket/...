@@ -33,7 +33,7 @@ files=$(printf "$fx" | tr '\n' ';')
 mkdir -p .archive
 while [ "$files" ]; do
 file=${files%%;*}
-mv "$(basename "$file")" /home/ghd/me/links/
+mv "$(basename "$file")" /home/l/me/links/
 if [ "$files" = "$file" ]; then
 files=''
 else
@@ -158,7 +158,7 @@ cmd bo_restore ${{
 IFS=$'\n'   # set the input field separator to newline
 files=($(printf '%s' "$fx"))   # create an array of filenames
 echo "${files[@]}"
-/home/ghd/go/bin/bo r "${files[@]}"   # pass the array of filenames to the command
+/home/l/go/bin/bo r "${files[@]}"   # pass the array of filenames to the command
 
 file_path=$(cat /tmp/boBrowser/.bin_organizer12)
 cmd="cd"
@@ -192,6 +192,17 @@ cmd batch ${{
 }}
 map e batch
 
+
+
+cmd unarchive ${{
+  case "$f" in
+      *.zip) unzip "$f" ;;
+      *.tar.gz) tar -xzvf "$f" ;;
+      *.tar.bz2) tar -xjvf "$f" ;;
+      *.tar) tar -xvf "$f" ;;
+      *) echo "Unsupported format" ;;
+  esac
+}}
 
 map az zip
 map at tar
@@ -237,19 +248,10 @@ map R reload
 map C clear
 
 # Movement
-map ge cd ~/me/cinema
-map gb cd ~/source
-map gd cd ~/me/Downloads
+map gb cd ~/roam/source
 map gm cd ~/me
-map g2 cd ~/Disk
 map gc cd ~/.config
-map gs cd ~/me/cinema/Shows
-map gt cd ~/me/temp/
-map gn cd ~/me/nashid
-map gp cd ~/blog/content/posts
-map ga cd ~/me/art
-map gl cd ~/leet
-map gi cd ~/me/img/
+map gt cd ~/tmp
 map gj cd ~/gits/
 
 map \;j cd ~

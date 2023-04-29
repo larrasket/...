@@ -52,6 +52,7 @@
        :tools
        biblio
        gist
+       tree-sitter
        (lookup
         +dictionary
         +offline)
@@ -76,7 +77,7 @@
        (latex +flod
               +latexmk
               +lsp)
-       markdown
+       ;;markdown
        (org
         +roam2)
        ;; +noter
@@ -130,7 +131,7 @@
        ;;solidity
        ;;swift
        ;;terra
-       web
+       ;;web
        ;;zig
        :email
        (mu4e
