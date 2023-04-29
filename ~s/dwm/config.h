@@ -170,30 +170,6 @@ static const Layout layouts[] = {
 /* commands */
 static const char *termcmd[] = {TERMINAL, NULL};
 
-/*
- * Xresources preferences to load at startup
- */
-ResourcePref resources[] = {
-    {"color0", STRING, &normbordercolor},
-    {"color8", STRING, &selbordercolor},
-    {"color0", STRING, &normbgcolor},
-    {"color4", STRING, &normfgcolor},
-    {"color0", STRING, &selfgcolor},
-    {"color4", STRING, &selbgcolor},
-    {"borderpx", INTEGER, &borderpx},
-    {"snap", INTEGER, &snap},
-    {"showbar", INTEGER, &showbar},
-    {"topbar", INTEGER, &topbar},
-    {"nmaster", INTEGER, &nmaster},
-    {"resizehints", INTEGER, &resizehints},
-    {"mfact", FLOAT, &mfact},
-    {"gappih", INTEGER, &gappih},
-    {"gappiv", INTEGER, &gappiv},
-    {"gappoh", INTEGER, &gappoh},
-    {"gappov", INTEGER, &gappov},
-    {"swallowfloating", INTEGER, &swallowfloating},
-    {"smartgaps", INTEGER, &smartgaps},
-};
 
 #include "shiftview.c"
 #include <X11/XF86keysym.h>

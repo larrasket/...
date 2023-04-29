@@ -2824,8 +2824,6 @@ load_xresources(void)
 		return;
 
 	db = XrmGetStringDatabase(resm);
-	for (p = resources; p < resources + LENGTH(resources); p++)
-		resource_load(db, p->name, p->type, p->dst);
 	XCloseDisplay(display);
 }
 
