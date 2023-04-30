@@ -61,7 +61,6 @@ alias cat='bat'
 alias intl="WD=\$(pwd);cd ~/source;zathura \"\$(fzf)\";cd \$WD"
 alias share="caddy file-server --listen :2030 --browse"
 alias decrypt="sudo cryptsetup luksOpen /dev/sda3 winsys && sudo mount /dev/mapper/winsys /mnt/winsys/ && sudo mount --bind /mnt/winsys/roam /home/ghd/roam"
-alias cmus="cd ~/music && cmus"
 alias frozen="pkill -SIGUSR2 emacs"
 alias 'cd..'='cd ..'
 alias sp='systemctl suspend'
