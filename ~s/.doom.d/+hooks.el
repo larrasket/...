@@ -38,4 +38,13 @@
 (global-wakatime-mode)
 (vertico-buffer-mode)
 (salih/consult-preview-at-point)
+
+(add-hook 'mu4e-headers-mode-hook
+          (lambda ()
+            (evil-motion-state)
+            (define-key evil-motion-state-map (kbd "u") 'mu4e-update-mail-and-index)
+            (define-key evil-motion-state-map (kbd "RET") 'mu4e-headers-view-message)))
+(add-hook 'mu4e-view-mode-hook (lambda () (evil-motion-state)))
+
+
 (add-hook 'after-init-hook #'mu4e)

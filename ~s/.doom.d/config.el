@@ -115,8 +115,8 @@
         smtpmail-default-smtp-server "smtp.mail.ru"
         smtpmail-smtp-server "smtp.mail.ru"
         smtpmail-smtp-service 465
-        smtpmail-starttls-credentials '(("smtp.mail.ru" "465" nil nil))
-        smtpmail-stream-type 'starttls
+        smtpmail-starttls-credentials '(("smtp.mail.ru" 465 nil nil))
+        smtpmail-stream-type 'ssl
         mu4e-modeline-show-global nil))
 
 
