@@ -27,6 +27,7 @@
       org-roam-directory                                "~/roam"
       org-directory                                     org-roam-directory
       org-id-locations-file                             "~/roam/.orgids"
+      org-agenda-skip-scheduled-if-done                 t
       ;; org-extend-today-until                            2
 
 
