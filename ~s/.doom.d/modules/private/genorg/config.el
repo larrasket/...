@@ -67,9 +67,18 @@
       '(("p" "Personal TODOs" tags "+PERSONAL+TODO=\"TODO\"")
         ("c" "Check APPOINTs" todo "APPOINT")
         ("v" "Agenda"
-         ((agenda ""
+         ((tags-todo "+PRIORITY=\"A\""
+                     ((org-agenda-overriding-header "High Priority Tasks"
+                                                    (org-agenda-files '("~/roam/main/life.org"))
+                                                    (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+                                                    (org-agenda-sorting-strategy '(priority-down)))))
+
+          (agenda ""
                   ((org-agenda-span '3)))
-          (tags-todo "+TODO=\"TODO\"+PERSONAL"
+
+
+
+          (tags-todo "+TODO=\"TODO\"+PERSONAL-PRIORITY=\"A\""
                      ((org-agenda-overriding-header "Get something done")
                       (org-agenda-files '("~/roam/main/life.org"))
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
@@ -87,9 +96,8 @@
                      ((org-agenda-overriding-header "Watch and chill..")
                       (org-agenda-files '("~/roam/main/life.org"))
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
-                      (org-agenda-sorting-strategy '(todo-state-up priority-down))))
-
-
+                      (org-agenda-sorting-strategy '(todo-state-up
+                                                     priority-down))))
 
           (tags-todo "+TODO=\"TODO\"+IDEA"
                      ((org-agenda-overriding-header "Looking for an idea?")
