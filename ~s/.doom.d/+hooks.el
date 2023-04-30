@@ -38,3 +38,4 @@
 (global-wakatime-mode)
 (vertico-buffer-mode)
 (salih/consult-preview-at-point)
+(add-hook 'after-init-hook #'mu4e)

@@ -363,3 +363,9 @@ If no one is selected, symmetric encryption will be performed.  ")))
     (ement-connect :user-id user-id
                    :password password
                    :uri-prefix "http://127.0.0.1:8008")))
+
+(add-hook 'mu4e-headers-mode-hook
+          (lambda ()
+            (evil-motion-state)
+            (define-key evil-motion-state-map (kbd "RET") 'mu4e-headers-view-message)))
+
