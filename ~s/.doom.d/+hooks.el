@@ -21,7 +21,6 @@
                                (setq truncate-lines 1)))
 
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
-(add-hook 'after-init-hook #'mu4e)
 
 
 (after! solaire-mode

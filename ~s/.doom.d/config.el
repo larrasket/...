@@ -1,6 +1,5 @@
 (add-to-list 'load-path "~/.doom.d/")
-(add-to-list 'org-agenda-files "~/roam/journal/agenda/todo.org")
-(add-to-list 'org-agenda-files "~/roam/journal/agenda/births.org")
+(add-to-list 'org-agenda-files "~/roam/main/life.org")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 (require 'epa-file)
 (require 'erc-services)
@@ -82,6 +81,8 @@
       leetcode-save-solutions                           t
       leetcode-directory                                "/home/l/gits/ps/lc"
 
+      ;; fix time format
+      system-time-locale                                "C"
 
       ;; other
       vertico-buffer-display-action                     '(display-buffer-same-window)
@@ -124,8 +125,4 @@
 (require '+handy)
 (require '+bindings)
 (require '+hooks)
-
-
-
-
 
