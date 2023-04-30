@@ -7,7 +7,6 @@
            "APPOINT(a)"
            "PROJ(p)"                    ; A project, which usually contains other tasks
            "HOLD(h)"                    ; This task is paused/on hold because of me
-           "CHECK(c)"                   ; To Read
            "|"
            "DONE(d)"                ; Task successfully completed
            "KILL(k)")               ; Task was cancelled, aborted or is no longer applicable
@@ -23,33 +22,27 @@
           ("PROJ" . +org-todo-project)
 
           ("APPOINT" . "#0a66c2")
-          ("CHECK" . "#fc791c")
           ("KILL" . +org-todo-cancel)))
 
   (setq org-hide-leading-stars 't)
   (setq org-capture-templates
         '(("t" "Personal todo" entry
            (file+headline +org-capture-todo-file "Inbox")
-           "* TODO %? :personal:" :prepend t)
+           "* TODO %? :PERSONAL:" :prepend t)
 
 
-          ("w" "Watch" entry
+          ("w" "WATCH" entry
            (file+headline +org-capture-todo-file "Inbox")
-           "* TODO %? :watch:" :prepend t)
+           "* TODO %? :WATCH:" :prepend t)
 
-          ("r" "Read" entry
+          ("c" "CHECK" entry
            (file+headline +org-capture-todo-file "Inbox")
-           "* TODO %? :read:" :prepend t)
-
-
-          ("c" "Check" entry
-           (file+headline +org-capture-todo-file "Inbox")
-           "* CHECK %?" :prepend t)
-
+           "* TODO %? :CHECK:" :prepend t)
 
           ("n" "Personal notes" entry
            (file+headline +org-capture-notes-file "Inbox")
            "* %u %?\n%i\n%a" :prepend t)
+
           ("j" "Journal" entry
            (file+headline +org-capture-journal-file "Posts")
            "*** %<%A, %d %B %Y>\n%?"  :prepend t)))
@@ -71,10 +64,37 @@
 
 
 (setq org-agenda-custom-commands
-      '(("p" "Personal TODOs" tags "+personal+TODO=\"TODO\"")
-        ("t" "Check TODOs" todo "CHECK")
+      '(("p" "Personal TODOs" tags "+PERSONAL+TODO=\"TODO\"")
         ("c" "Check APPOINTs" todo "APPOINT")
-        ("i" "CHECK IDEAs" tags "+idea+TODO=\"TODO\"")))
+        ("v" "Agenda"
+         ((agenda ""
+                  ((org-agenda-span '3)))
+          (tags-todo "+TODO=\"TODO\"+PERSONAL"
+                     ((org-agenda-overriding-header "Get something done")
+                      (org-agenda-files '("~/roam/main/life.org"))
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+                      (org-agenda-sorting-strategy '(todo-state-up priority-down))))
+
+
+          (tags-todo "+TODO=\"TODO\"+CHECK"
+                     ((org-agenda-overriding-header "Check this out")
+                      (org-agenda-files '("~/roam/main/life.org"))
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+                      (org-agenda-sorting-strategy '(todo-state-up priority-down))))
+
+
+          (tags-todo "+TODO=\"TODO\"+WATCH"
+                     ((org-agenda-overriding-header "Watch and chill..")
+                      (org-agenda-files '("~/roam/main/life.org"))
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+                      (org-agenda-sorting-strategy '(todo-state-up priority-down))))
+
+
+
+          (tags-todo "+TODO=\"TODO\"+IDEA"
+                     ((org-agenda-overriding-header "Looking for an idea?")
+                      (org-agenda-files '("~/roam/main/life.org"))
+                      (org-agenda-sorting-strategy '(todo-state-up priority-down))))))))
 
 
 
