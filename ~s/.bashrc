@@ -69,6 +69,8 @@ alias dr='yt-dlp -S "res:480"'
 
 alias djvu2pdf='docker run --rm -u $(id -u):$(id -g) -v $(pwd):/opt/work ilyabystrov/djvu2pdf'
 
+alias killall='killall -9'
+
 xhost +local:root > /dev/null 2>&1
 complete -cf sudo
 # Bash won't get SIGWINCH if another process is in the foreground.
