@@ -65,7 +65,9 @@
             (evil-local-set-key 'normal (kbd "q") #'quit-window)
             (evil-local-set-key 'normal (kbd "r j") #'ement-room-join)
             (evil-local-set-key 'normal (kbd "r l") #'ement-room-leave)
-            (evil-local-set-key 'normal (kbd "R") #'ement-room-write-reply)))
+            (evil-local-set-key 'normal (kbd "R") #'ement-room-write-reply)
+            (evil-local-set-key 'normal (kbd "E") #'ement-room-edit-message)))
+
 
 
 
