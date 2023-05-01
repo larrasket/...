@@ -70,6 +70,14 @@
          (file+head "2023/${slug}.org" "#+title: ${title}\n")
          :immediate-finish t
          :unnarrowed t)
+
+
+      ("f" "fleeting" plain "%?"
+         :target
+         (file+olp "2023/fleet.org" ("${title}"))
+         :immediate-finish t
+         :unnarrowed nil)
+
         ("r" "bibliography reference" plain
          (file "~/configs/orb")
          :target
