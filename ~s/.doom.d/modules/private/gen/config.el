@@ -34,8 +34,8 @@
 
 
 ;; Disable images in eww buffer
-(setq-default shr-inhibit-images t
-              org-download-image-dir "./org-media")
+(setq-default shr-inhibit-images t)
+              
 
 
 (after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
