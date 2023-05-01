@@ -9,8 +9,7 @@ dunst &
 xset r rate 200 25
 setxkbmap -layout en_US,ar -option 'grp:alt_shift_toggle'
 pantalaimon &
-/home/l/go/bin/notifier  &
-#/home/ghd/go/bin/motivier  &
+/home/l/go/bin/ang  &
 feh --bg-fill ~/configs/bg.png
 # tor &
 # pgrep -fl 'pidswallow -gl' || pidswallow -gl
