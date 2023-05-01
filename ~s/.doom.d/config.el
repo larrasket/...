@@ -29,7 +29,9 @@
       org-id-locations-file                             "~/roam/.orgids"
       org-agenda-skip-scheduled-if-done                 t
       org-download-image-dir                            "~/roam/media"
-      ;; org-extend-today-until                            2
+      org-use-tag-inheritance                           nil
+      org-agenda-block-separator                        9472
+      ;; org-extend-today-until                         2
 
 
       ;; please don't stalk me
