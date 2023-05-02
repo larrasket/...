@@ -67,14 +67,21 @@
 (setq org-roam-capture-templates
       '(("k" "knowledge" plain "%?"
          :if-new
-         (file+head "2023/${slug}.org" "#+title: ${title}\n")
+         (file+head "main/${slug}.org" "#+title: ${title}\n")
+         :immediate-finish t
+         :unnarrowed t)
+
+        ("l" "links" plain "%?"
+         :if-new
+         (file+head "links/${slug}.org" "#+title: ${title}\n#+FILETAGS: link")
          :immediate-finish t
          :unnarrowed t)
 
 
+
       ("f" "fleeting" plain "%?"
          :target
-         (file+olp "2023/fleet.org" ("${title}"))
+         (file+olp "main/fleet.org" ("${title}"))
          :immediate-finish t
          :unnarrowed nil)
 
