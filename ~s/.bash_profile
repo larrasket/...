@@ -11,10 +11,11 @@ export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --e
 export PATH=$PATH:$HOME/.emacs.d/bin
 export PATH=$PATH:$HOME/.doom.d/bin
 export PATH=$PATH:$HOME/.bin/
+export PATH=$PATH:$HOME/.local/bin/
 
-export PATH=$PATH:$HOME/l/.cargo/bin
-export PATH=$PATH:$HOME/l/.dotnet/tools
-export PATH=$PATH:$HOME/l/.local/bin
+export PATH=$PATH:$HOME/.cargo/bin
+export PATH=$PATH:$HOME/.dotnet/tools
+export PATH=$PATH:$HOME/.local/bin
 export FrameworkPathOverride=/lib/mono/
 
 export GOPATH=$HOME/go
