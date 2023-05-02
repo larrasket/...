@@ -35,6 +35,11 @@
            (file+headline +org-capture-todo-file "Inbox")
            "* TODO %? :WATCH:" :prepend t)
 
+          ("r" "READ" entry
+           (file+headline +org-capture-todo-file "Inbox")
+           "* TODO %? :READ:" :prepend t)
+
+
           ("c" "CHECK" entry
            (file+headline +org-capture-todo-file "Inbox")
            "* TODO %? :CHECK:" :prepend t)
@@ -72,42 +77,64 @@
          ((tags-todo "+PRIORITY=\"A\""
                      ((org-agenda-overriding-header "High priority tasks:"
                                                     (org-agenda-files '("~/roam/main/life.org"))
+                                                    (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
                                                     (org-agenda-sorting-strategy '(priority-down)))))
 
           (agenda ""
                   ((org-agenda-span '5)))
 
 
+          (todo "DAILY"
+                ((org-agenda-overriding-header "Do something today")
+                 (org-agenda-files '("~/roam/main/life.org"))
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+                 (org-agenda-sorting-strategy '(todo-state-up priority-down))))
+
+
 
           (tags-todo "+TODO=\"TODO\"+PERSONAL-PRIORITY=\"A\""
                      ((org-agenda-overriding-header "Get something done:")
                       (org-agenda-files '("~/roam/main/life.org"))
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
                       (org-agenda-sorting-strategy '(todo-state-up priority-down))))
 
 
           (tags-todo "+TODO=\"TODO\"+CHECK"
                      ((org-agenda-overriding-header "Check this out:")
                       (org-agenda-files '("~/roam/main/life.org"))
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
                       (org-agenda-sorting-strategy '(todo-state-up priority-down))))
 
 
 
           (tags-todo "+TODO=\"TODO\"+WATCH"
-                     ((org-agenda-overriding-header "Watch to watch:")
+                     ((org-agenda-overriding-header "Your ungoogled watch later:")
                       (org-agenda-files '("~/roam/main/life.org"))
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
                       (org-agenda-sorting-strategy '(todo-state-up
                                                      priority-down))))
+
+
+          (tags-todo "+TODO=\"TODO\"+READ"
+                     ((org-agenda-overriding-header "Read:")
+                      (org-agenda-files '("~/roam/main/life.org"))
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
+                      (org-agenda-sorting-strategy '(todo-state-up
+                                                     priority-down))))
+
 
           (tags-todo "+TODO=\"TODO\"+IDEA"
                      ((org-agenda-overriding-header "Looking for an idea?")
                       (org-agenda-files '("~/roam/main/life.org"))
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
                       (org-agenda-sorting-strategy '(todo-state-up
                                                      priority-down))))
 
 
-          (tags-todo "-TAGS={.+}"
-                     ((org-agenda-overriding-header "Uknown untagged notes")
+          (tags-todo "-TAGS={.+}+TODO=\"TODO\""
+                     ((org-agenda-overriding-header "Uknown time tasks")
                       (org-agenda-files '("~/roam/main/life.org"))
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
                       (org-agenda-sorting-strategy '(todo-state-up priority-down))))))))
 
 
