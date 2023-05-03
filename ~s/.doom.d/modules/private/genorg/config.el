@@ -77,7 +77,6 @@
          ((tags-todo "+PRIORITY=\"A\""
                      ((org-agenda-overriding-header "High priority tasks:"
                                                     (org-agenda-files '("~/roam/main/life.org"))
-                                                    (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
                                                     (org-agenda-sorting-strategy '(priority-down)))))
 
           (agenda ""

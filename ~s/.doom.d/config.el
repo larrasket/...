@@ -27,7 +27,7 @@
       org-roam-directory                                "~/roam"
       org-directory                                     org-roam-directory
       org-id-locations-file                             "~/roam/.orgids"
-      org-agenda-skip-scheduled-if-done                 t
+      org-agenda-skip-scheduled-if-done                 nil
       org-download-image-dir                            "~/roam/media"
       org-use-tag-inheritance                           nil
       org-agenda-block-separator                        9472
@@ -129,4 +129,3 @@
 (require '+handy)
 (require '+bindings)
 (require '+hooks)
-
