@@ -67,13 +67,13 @@
 (setq org-roam-capture-templates
       '(("k" "knowledge" plain "%?"
          :if-new
-         (file+head "main/${slug}.org" "#+title: ${title}\n")
+         (file+head "main/${slug}.org" "#+title: ${title}\n#+FILETAGS: permanent")
          :immediate-finish t
          :unnarrowed t)
 
         ("l" "links" plain "%?"
          :if-new
-         (file+head "links/${slug}.org" "#+title: ${title}\n#+FILETAGS: link")
+         (file+head "main/${slug}.org" "#+title: ${title}\n#+FILETAGS: link\n")
          :immediate-finish t
          :unnarrowed t)
 
