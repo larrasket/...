@@ -369,3 +369,9 @@ If no one is selected, symmetric encryption will be performed.  ")))
             (evil-motion-state)
             (define-key evil-motion-state-map (kbd "RET") 'mu4e-headers-view-message)))
 
+
+
+
+(use-package! awqat
+  :commands (awqat-display-prayer-time-mode
+             awqat-times-for-day))

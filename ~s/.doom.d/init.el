@@ -146,8 +146,16 @@
        (default ;; +bindings
                 +smartparens)
        :private
-       awqat
        compiler
+;
+      ;; src==irc
+      ;; for the options `erc-prompt-for-password' and
+      ;; `erc-prompt-for-nickserv-password', you should have a .authinfo file
+      ;; conatins your password for the nickname. For Example, using
+      ;; yournickname and yourpassword as a NickName and password (repsectively
+      ;; machine irc.libera.chat login yournickname password yourpassword
+      ;; See. https://www.gnu.org/software/emacs/manual/html_node/emacs/Authentication.html
+       src
        gen
        genorg
        gitcolor

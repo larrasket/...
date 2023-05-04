@@ -37,3 +37,6 @@
 (package! sage-shell-mode)
 (package! leetcode)
 (package! ement)
+(package! awqat
+  :recipe (:host github
+           :repo "luggages/awqat"))

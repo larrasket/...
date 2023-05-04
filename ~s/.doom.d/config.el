@@ -2,7 +2,6 @@
 (add-to-list 'org-agenda-files "~/roam/main/life.org")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 (require 'epa-file)
-(require 'erc-services)
 (require 'go-translate)
 
 
@@ -24,7 +23,6 @@
       +org-capture-changelog-file                       "~/blog/content/nice.org"
       +org-capture-todo-file                            "~/roam/main/life.org"
       org-preview-html-viewer                           'xwidget
-      org-roam-directory                                "~/roam"
       org-directory                                     org-roam-directory
       org-id-locations-file                             "~/roam/.orgids"
       org-agenda-skip-scheduled-if-done                 nil
@@ -67,9 +65,14 @@
       ;; prayer time
       calendar-latitude                                 30.0
       calendar-longitude                                31.2
+      awqat-mode-line-format                            " 🕌 ${prayer} (${hours}h${minutes}m) "
 
       ;; school
-      bibtex-completion-bibliography                    "~/configs/ref.bib"
+      org-roam-directory                                (file-truename "~/roam")
+      bibtex-completion-bibliography                    "~/configs/~s/ref.bib"
+      bibtex-completion-library-path                    '("~/roam/source/")
+      citar-bibliography                                bibtex-completion-bibliography
+      bibtex-completion-notes-path                      "~/roam/reference/"
 
       ;; translate
       gts-translate-list                                '(("en" "ar"))
@@ -79,19 +82,7 @@
       salih/prefix-mode                                 "C-c "
 
 
-      ;; irc
-      ;; for the options `erc-prompt-for-password' and
-      ;; `erc-prompt-for-nickserv-password', you should have a .authinfo file
-      ;; conatins your password for the nickname. For Example, using
-      ;; yournickname and yourpassword as a NickName and password (repsectively
-      ;; machine irc.libera.chat login yournickname password yourpassword
-      ;; See. https://www.gnu.org/software/emacs/manual/html_node/emacs/Authentication.html
-      erc-nick                                          "jahiz"
-      erc-user-full-name                                user-full-name
-      erc-prompt-for-password                           nil
-      erc-prompt-for-nickserv-password                  nil
-      erc-autojoin-channels-alist                       '(("irc.libera.chat"
-                                                           "##arabic"))
+      ;; will be purged soon. "i don't want to play with you anymore"
       leetcode-prefer-language                          "cpp"
       leetcode-prefer-sql                               "mssql"
       leetcode-save-solutions                           t

@@ -35,10 +35,10 @@
 
 (epa-file-enable)
 (yas-global-mode 1)
-(erc-spelling-mode)
 (vertico-buffer-mode)
 (global-wakatime-mode)
 ;; (global-org-modern-mode)
+(awqat-display-prayer-time-mode)
 (salih/consult-preview-at-point)
 
 (add-hook 'mu4e-headers-mode-hook

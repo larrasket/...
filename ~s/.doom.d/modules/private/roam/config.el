@@ -86,7 +86,7 @@
          :unnarrowed nil)
 
         ("r" "bibliography reference" plain
-         (file "~/configs/orb")
+         (file "~/configs/~s/orb")
          :target
          (file+head "references/${citekey}.org" "#+title: ${title}\n"))))
 
