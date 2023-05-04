@@ -32,6 +32,18 @@
       org-use-tag-inheritance                           nil
       org-agenda-block-separator                        9472
       ;; org-extend-today-until                         2
+      org-modern-keyword                                nil
+      org-modern-list                                   nil
+      org-modern-progress                               nil
+      org-modern-priority                               nil
+      org-modern-radio-target                           nil
+      org-modern-star                                   nil
+      org-modern-radio-target                           nil
+      org-modern-statistics                             nil
+      org-modern-tag                                    nil
+      org-modern-timestamp                              nil
+      org-modern-todo                                   nil
+      org-modern-block-name                             nil
 
 
       ;; please don't stalk me

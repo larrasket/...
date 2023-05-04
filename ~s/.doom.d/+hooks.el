@@ -18,7 +18,8 @@
 
 (add-hook 'org-mode-hook     (lambda ()
                                (display-line-numbers-mode -1)
-                               (setq truncate-lines 1)))
+                               (setq truncate-lines 1)
+                               (setq org-hide-leading-stars t)))
 
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 
@@ -35,8 +36,9 @@
 (epa-file-enable)
 (yas-global-mode 1)
 (erc-spelling-mode)
-(global-wakatime-mode)
 (vertico-buffer-mode)
+(global-wakatime-mode)
+;; (global-org-modern-mode)
 (salih/consult-preview-at-point)
 
 (add-hook 'mu4e-headers-mode-hook
