@@ -235,7 +235,7 @@ lookup."
 (defun salih/open-book ()
   "Search for a file in ~/me and open it."
   (interactive)
-  (let ((default-directory "~/source/"))
+  (let ((default-directory (car bibtex-completion-library-path)))
     (call-interactively 'find-file)))
 
 
