@@ -1,6 +1,5 @@
 ;;; ../../../:/home/ghd/gits/configs/~s/.doom.d/+hooks.el -*- lexical-binding: t; -*-
 
-(provide '+hooks)
 (add-hook 'prog-mode-hook (lambda ()
                             (highltier)
                             (column-enforce-mode)
@@ -50,3 +49,8 @@
 
 
 (add-hook 'after-init-hook #'mu4e)
+
+(add-hook 'bibtex-mode-hook (lambda ()
+                              (add-hook 'after-save-hook '+format/buffer)))
+
+(provide '+hooks)
