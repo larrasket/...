@@ -5,8 +5,10 @@
 (require 'go-translate)
 
 
-(setq-default frame-title-format '("%b")
-              bidi-paragraph-direction 'left-to-right)
+(setq-default frame-title-format                        '("%b")
+              bidi-paragraph-direction                  'left-to-right
+              org-download-image-dir                    "~/roam/media")
+ 
 
 (setq load-prefer-newer                                 t ;; avoid warnings
       ;; emacs settings
@@ -26,7 +28,6 @@
       org-directory                                     org-roam-directory
       org-id-locations-file                             "~/roam/.orgids"
       org-agenda-skip-scheduled-if-done                 nil
-      org-download-image-dir                            "~/roam/media"
       org-use-tag-inheritance                           nil
       org-agenda-block-separator                        9472
       ;; org-extend-today-until                         2
