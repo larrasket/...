@@ -89,8 +89,6 @@
       leetcode-save-solutions                           t
       leetcode-directory                                "/home/l/gits/ps/lc"
 
-      ;; fix time format
-      system-time-locale                                "C"
 
       ;; other
       vertico-buffer-display-action                     '(display-buffer-same-window)
