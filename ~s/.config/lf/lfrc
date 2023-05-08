@@ -30,10 +30,9 @@ map si searchimage
 cmd movetoarchive ${{
 
 files=$(printf "$fx" | tr '\n' ';')
-mkdir -p .archive
 while [ "$files" ]; do
 file=${files%%;*}
-mv "$(basename "$file")" /home/l/me/links/
+mv "$(basename "$file")" /home/l/me/links/saved
 if [ "$files" = "$file" ]; then
 files=''
 else
