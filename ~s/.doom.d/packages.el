@@ -40,3 +40,4 @@
 (package! awqat
   :recipe (:host github
            :repo "luggages/awqat"))
+(package! ob-sagemath)

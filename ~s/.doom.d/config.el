@@ -91,6 +91,7 @@
 
 
       ;; other
+      sage-shell:check-ipython-version-on-startup       nil
       vertico-buffer-display-action                     '(display-buffer-same-window)
       browse-url-generic-program                        "chromium"
       large-file-warning-threshold                      nil
