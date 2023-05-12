@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: sci
+# uuid: sci
+# key: sci
+# condition: t
+# --
+#+LATEX_CLASS_OPTIONS: [a4paper,10pt,twoside,twocolumn]
+#+LATEX_HEADER: \usepackage{times}
+#+PANDOC_OPTIONS: bibliography:/home/l/configs/~s/ref.bib
+#+PANDOC_OPTIONS: citeproc:t
+$1
