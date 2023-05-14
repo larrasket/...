@@ -37,14 +37,14 @@
 
 (add-hook 'go-mode-hook
           (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-go-file)
-                (local-set-key (kbd "<f2>") #'salih/compile-and-run-go-project)))
+            (local-set-key (kbd "<f2>") #'salih/compile-and-run-go-project)))
 
 
 ;; open file in dired
 (add-hook 'dired-mode-hook
           (lambda () (local-set-key (salih/mode "C-c") 'salih/open-in-external-app)
-                (local-set-key (salih/mode "C-e") 'salih/epa-dired-do-encrypt)
-                (local-set-key (salih/mode "C-d") 'epa-dired-do-decrypt)))
+            (local-set-key (salih/mode "C-e") 'salih/epa-dired-do-encrypt)
+            (local-set-key (salih/mode "C-d") 'epa-dired-do-decrypt)))
 
 
 ;; make life easier in org
@@ -54,6 +54,7 @@
             (local-set-key (salih/mode "C-i") #'org-id-get-create)
             (local-set-key (salih/mode "i l") #'org-web-tools-insert-link-for-url)
             (local-set-key (salih/mode "i d") #'org-download-clipboard)
+            (local-set-key (salih/mode "i k") #'citar-insert-citation)
             (local-set-key (salih/global "TAB") #'consult-org-heading)))
 
 (add-hook 'ement-room-mode-hook
@@ -172,9 +173,9 @@
             (local-set-key (salih/mode "r a") #'org-roam-alias-add)
             (local-set-key (salih/mode "i b") #'orb-insert-link)
 
-           (local-set-key (salih/mode "f b") #'consult-org-roam-backlinks)
-           (local-set-key (salih/mode "f f") #'consult-org-roam-forward-links)
-           (local-set-key (salih/mode "f n") #'consult-org-roam-search)))
+            (local-set-key (salih/mode "f b") #'consult-org-roam-backlinks)
+            (local-set-key (salih/mode "f f") #'consult-org-roam-forward-links)
+            (local-set-key (salih/mode "f n") #'consult-org-roam-search)))
 
 
 ;; magit and vc
@@ -239,4 +240,4 @@
       (org-noter-sync-current-note)
       (select-window prev-window)))
   (define-key org-noter-notes-mode-map (kbd "C-c C-j")
-               #'salih/org-noter-sync-current-note-and-switch-window))
+              #'salih/org-noter-sync-current-note-and-switch-window))

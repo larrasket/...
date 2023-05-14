@@ -6,6 +6,11 @@
 # --
 #+LATEX_CLASS_OPTIONS: [a4paper,10pt,twoside,twocolumn]
 #+LATEX_HEADER: \usepackage{times}
-#+PANDOC_OPTIONS: bibliography:/home/l/configs/~s/ref.bib
-#+PANDOC_OPTIONS: citeproc:t
+#+LATEX_HEADER: \usepackage{biblatex}
+#+bibliography: /home/l/configs/~s/ref.bib
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \usepackage{lmodern}  % for bold teletype font
+#+LATEX_HEADER: \usepackage{amsmath}  % for \hookrightarrow
+#+LATEX_HEADER: \usepackage{xcolor}   % for \textcolor
+#+LaTeX_HEADER: \lstset{columns=fullflexible, frame=single, breaklines=true, postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},}
 $1
