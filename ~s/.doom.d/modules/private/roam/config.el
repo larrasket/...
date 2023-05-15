@@ -11,7 +11,7 @@
 
   (org-roam-dailies-capture-templates
    '(("d" "default" entry "* %<%H:%M> \n %?"
-      :if-new (file+head "%<%Y-%m-%d>.org" "#+title: (%<%A, %d %B %Y>) %^{daily-title}\n#+DATE: <%<%Y-%m-%d>>\n- tags :: [[id:fe8618df-c476-44b8-8169-a210bff989d7][Journaling]]\n")
+      :if-new (file+head "%<%Y-%m-%d>.org" "#+title: (%<%A, %d %B %Y>) %^{daily-title}\n#+DATE: <%<%Y-%m-%d>>\n#+FILETAGS: journal\n- tags :: [[id:fe8618df-c476-44b8-8169-a210bff989d7][Journaling]]\n")
       :unnarrowed t)))
 
   :config
@@ -21,24 +21,24 @@
   (org-roam-db-autosync-mode)
   ;; If using org-roam-protocol
   (require 'org-roam-protocol))
-    (defun cm/deft-parse-title (file contents)
-    "Parse the given FILE and CONTENTS and determine the title.
+(defun cm/deft-parse-title (file contents)
+  "Parse the given FILE and CONTENTS and determine the title.
   If `deft-use-filename-as-title' is nil, the title is taken to
   be the first non-empty line of the FILE.  Else the base name of the FILE is
   used as title."
-      (let ((begin (string-match "^#\\+[tT][iI][tT][lL][eE]: .*$" contents)))
-	(if begin
-	    (string-trim (substring contents begin (match-end 0)) "#\\+[tT][iI][tT][lL][eE]: *" "[\n\t ]+")
-	  (deft-base-filename file))))
+  (let ((begin (string-match "^#\\+[tT][iI][tT][lL][eE]: .*$" contents)))
+    (if begin
+	(string-trim (substring contents begin (match-end 0)) "#\\+[tT][iI][tT][lL][eE]: *" "[\n\t ]+")
+      (deft-base-filename file))))
 
-    (advice-add 'deft-parse-title :override #'cm/deft-parse-title)
+(advice-add 'deft-parse-title :override #'cm/deft-parse-title)
 
-    (setq deft-strip-summary-regexp
-	  (concat "\\("
-		  "[\n\t]" ;; blank
-		  "\\|^#\\+[[:alpha:]_]+:.*$" ;; org-mode metadata
-		  "\\|^:PROPERTIES:\n\\(.+\n\\)+:END:\n"
-		  "\\)"))
+(setq deft-strip-summary-regexp
+      (concat "\\("
+	      "[\n\t]" ;; blank
+	      "\\|^#\\+[[:alpha:]_]+:.*$" ;; org-mode metadata
+	      "\\|^:PROPERTIES:\n\\(.+\n\\)+:END:\n"
+	      "\\)"))
 
 
 (setq org-roam-dailies-directory "journal/")
@@ -52,15 +52,15 @@
 
 
 (use-package! websocket
-    :after org-roam)
+  :after org-roam)
 
 (use-package! org-roam-ui
-    :after org-roam ;; or :after org
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
+  :after org-roam ;; or :after org
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
 
 
 
@@ -79,7 +79,7 @@
 
 
 
-      ("f" "fleeting" plain "%?"
+        ("f" "fleeting" plain "%?"
          :target
          (file+olp "main/fleet.org" ("${title}"))
          :immediate-finish t
