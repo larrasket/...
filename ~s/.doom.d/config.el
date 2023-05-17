@@ -5,6 +5,7 @@
 (require 'go-translate)
 
 
+
 (setq-default frame-title-format                        '("%b")
               bidi-paragraph-direction                  'left-to-right
               org-download-image-dir                    "~/roam/media")
@@ -57,8 +58,8 @@
 
 
       ;; skull welecome in emacs
-      fancy-splash-image                                "~/.doom.d/pan.png"
-
+      ;; fancy-splash-image                                "~/.doom.d/pan.png"
+      +doom-dashboard-ascii-banner-fn                   'salih/banner
       ;; theme
       doom-theme                                        'distinguished
       highlight-indent-guides-method                    'bitmap
