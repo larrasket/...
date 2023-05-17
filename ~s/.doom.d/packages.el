@@ -41,3 +41,4 @@
   :recipe (:host github
            :repo "luggages/awqat"))
 (package! ob-sagemath)
+(package! lsp-jedi)

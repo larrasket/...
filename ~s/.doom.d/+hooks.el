@@ -7,7 +7,7 @@
                             (setq-default indent-tabs-mode nil)))
 
 (add-hook 'after-init-hook   #'global-flycheck-mode)
-(add-hook 'nov-mode-hook     #'salih/make-buffer-white)
+;; (add-hook 'nov-mode-hook     #'salih/make-buffer-white)
 (add-hook 'csv-mode-hook     #'csv-align-mode)
 (add-hook 'neotree-mode-hook (lambda () (doom-modeline 1) (solaire-mode -1)))
 (add-hook 'sly-mrepl-mode (lambda () (doom-modeline-mode 1)))
@@ -19,6 +19,10 @@
                                (display-line-numbers-mode -1)
                                (setq truncate-lines 1)
                                (setq org-hide-leading-stars t)))
+
+(add-hook 'python-mode-hook (lambda ()
+                              (flycheck-mode -1)))
+
 
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 

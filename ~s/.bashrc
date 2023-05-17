@@ -24,6 +24,7 @@ alias d='yt-dlp -f "mp4" -o "%(title)s.%(ext)s" '
 alias c='clear'
 alias w4='function _convertwebm(){ ffmpeg  -fflags +genpts -i "$1" -r 24 -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" "${1%.webm}.mp4" && rm "$1"; };_convertwebm'
 
+
 # Download in lower quality (480)
 # (Internet plans sucks in my country)
 alias dss='yt-dlp -f "bestvideo[height<=480]+bestaudio/best[height<=480],mp4" --write-auto-sub -o "%(title)s.%(ext)s" '
@@ -67,6 +68,7 @@ alias sp='systemctl suspend'
 alias dr='yt-dlp -S "res:480"'
 
 alias djvu2pdf='docker run --rm -u $(id -u):$(id -g) -v $(pwd):/opt/work ilyabystrov/djvu2pdf'
+alias docker='sudo docker'
 
 alias killall='killall -9'
 
