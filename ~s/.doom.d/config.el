@@ -5,7 +5,6 @@
 (require 'go-translate)
 
 
-
 (setq-default frame-title-format                        '("%b")
               bidi-paragraph-direction                  'left-to-right
               org-download-image-dir                    "~/roam/media")
@@ -32,6 +31,7 @@
       org-use-tag-inheritance                           nil
       org-agenda-block-separator                        9472
       ;; org-extend-today-until                         2
+      org-element-use-cache                             nil
       org-modern-keyword                                nil
       org-modern-list                                   nil
       org-modern-progress                               nil
