@@ -8,7 +8,6 @@
 (setq-default frame-title-format                        '("%b")
               bidi-paragraph-direction                  'left-to-right
               org-download-image-dir                    "~/roam/media")
- 
 
 (setq load-prefer-newer                                 t ;; avoid warnings
       ;; emacs settings
@@ -78,6 +77,10 @@
 
       ;; translate
       gts-translate-list                                '(("en" "ar"))
+      gts-default-translator                            (gts-translator
+                                                         :picker (gts-prompt-picker)
+                                                         :engines (list (gts-google-engine))
+                                                         :render (gts-buffer-render))
 
       ;; keyboard
       salih/prefix-global                               "C-x "
@@ -92,7 +95,6 @@
 
 
       ;; other
-      sage-shell:check-ipython-version-on-startup       nil
       vertico-buffer-display-action                     '(display-buffer-same-window)
       browse-url-generic-program                        "chromium"
       large-file-warning-threshold                      nil
@@ -105,11 +107,8 @@
       doom-modeline-height                              17
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
-      gts-default-translator                            (gts-translator
-                                                         :picker (gts-prompt-picker)
-                                                         :engines (list (gts-google-engine))
-                                                         :render (gts-buffer-render))
-      org-annotate-file-storage-file                    "~/configs/annotated.org")
+      org-annotate-file-storage-file                    "~/configs/annotated.org"
+      pdf-view-restore-filename                         "~/configs/~/.pdf-view-restore")
 
 
 ;; setup email

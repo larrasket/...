@@ -22,7 +22,6 @@
 
 
 (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
-(setq pdf-view-restore-filename "~/configs/.pdf-view-restore")
 
 
 
