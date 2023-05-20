@@ -3,7 +3,7 @@
 IMAPAccount larrasket@bk.ru
 Host imap.mail.ru
 User larrasket@bk.ru
-PassCmd "echo ${PASSWORD:-$(gpg --no-tty -qd ~/.authinfo.gpg | sed -n 's,^machine imap.mail.ru .*password \\([^ ]*\\).*,\\1,p')}"
+Pass cr37CZ9nPvf9CTyUViQZ
 AuthMechs LOGIN
 SSLType IMAPS
 SSLVersion TLSv1.2
