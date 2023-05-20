@@ -58,3 +58,4 @@
                               (add-hook 'after-save-hook '+format/buffer)))
 
 (provide '+hooks)
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
