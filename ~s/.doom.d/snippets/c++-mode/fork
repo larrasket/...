@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: fork
+# key: fork
+# --
+for (auto & $1 : $2) {
+$0
+}

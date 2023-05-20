@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: forit
+# key: forit
+# condition: t
+# --
+
+for (auto iter=$1.begin(); iter!=$1.end(); ++iter) {
+ }

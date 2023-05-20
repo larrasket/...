@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clip-Web_1920_1);
+      }
+
+      .cls-2 {
+        fill: #093580;
+      }
+
+      .cls-2, .cls-3, .cls-4 {
+        stroke: #707070;
+      }
+
+      .cls-3 {
+        fill: #800909;
+      }
+
+      .cls-4 {
+        fill: #0f6;
+      }
+
+      .cls-5 {
+        stroke: none;
+      }
+
+      .cls-6 {
+        fill: none;
+      }
+
+      .cls-7 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-Web_1920_1">
+      <rect width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+  <g id="Web_1920_1" data-name="Web 1920 – 1" class="cls-1">
+    <rect class="cls-7" width="1920" height="1080"/>
+    <g id="Rectangle_1" data-name="Rectangle 1" class="cls-2" transform="translate(1064 185)">
+      <rect class="cls-5" width="491" height="276"/>
+      <rect class="cls-6" x="0.5" y="0.5" width="490" height="275"/>
+    </g>
+    <g id="Rectangle_2" data-name="Rectangle 2" class="cls-3" transform="translate(298 185)">
+      <rect class="cls-5" width="491" height="276"/>
+      <rect class="cls-6" x="0.5" y="0.5" width="490" height="275"/>
+    </g>
+    <g id="Rectangle_3" data-name="Rectangle 3" class="cls-4" transform="translate(543 613)">
+      <rect class="cls-5" width="794" height="267"/>
+      <rect class="cls-6" x="0.5" y="0.5" width="793" height="266"/>
+    </g>
+  </g>
+</svg>

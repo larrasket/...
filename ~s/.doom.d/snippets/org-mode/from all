@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: from all
+# key: all
+# --
+SELECT
+   *
+FROM
+   real_person
+LIMIT
+   10;

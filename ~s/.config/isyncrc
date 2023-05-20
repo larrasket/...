@@ -1,0 +1,68 @@
+## IMAPAccount (Mail.ru)
+
+IMAPAccount larrasket@bk.ru
+Host imap.mail.ru
+User larrasket@bk.ru
+Pass cr37CZ9nPvf9CTyUViQZ
+AuthMechs LOGIN
+SSLType IMAPS
+SSLVersion TLSv1.2
+# Increase timeout
+Timeout 120
+
+MaildirStore larrasket@bk.ru-local
+Path ~/mail/larrasket@bk.ru/
+Inbox ~/mail/larrasket@bk.ru/Inbox
+SubFolders Verbatim
+
+IMAPStore larrasket@bk.ru-remote
+Account larrasket@bk.ru
+
+Channel larrasket@bk.ru-inbox
+Far :larrasket@bk.ru-remote:"INBOX"
+Near :larrasket@bk.ru-local:"INBOX"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+
+Channel larrasket@bk.ru-trash
+Far :larrasket@bk.ru-remote:"Корзина"
+Near :larrasket@bk.ru-local:"Trash"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+
+Channel larrasket@bk.ru-spam
+Far :larrasket@bk.ru-remote:"Спам"
+Near :larrasket@bk.ru-local:"Spam"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+
+Channel larrasket@bk.ru-drafts
+Far :larrasket@bk.ru-remote:"Черновики"
+Near :larrasket@bk.ru-local:"Drafts"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+
+
+Channel larrasket@bk.ru-sent
+Far :larrasket@bk.ru-remote:"Отправленные"
+Near :larrasket@bk.ru-local:"Sent"
+CopyArrivalDate yes
+Create Both
+Expunge Both
+SyncState *
+
+Group larrasket@bk.ru
+Channel larrasket@bk.ru-inbox
+Channel larrasket@bk.ru-trash
+Channel larrasket@bk.ru-spam
+Channel larrasket@bk.ru-drafts
+Channel larrasket@bk.ru-archive
+Channel larrasket@bk.ru-sent

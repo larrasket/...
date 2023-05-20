@@ -1,0 +1,9 @@
+%^{title} is a [[id:e7e9c747-48fc-4f56-a1f9-2e8faea62b67][book]] by %^{author-or-editor}
+
+* %^{title}
+:PROPERTIES:
+:Custom_ID: %^{citekey}
+:URL: %^{url}
+:AUTHOR: %^{author-or-editor}
+:NOTER_DOCUMENT: %^{file}
+:END:

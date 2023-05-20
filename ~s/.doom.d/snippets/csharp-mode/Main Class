@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: Main Class
+# key: mclass
+# --
+
+namespace $1
+{
+    internal class Program
+    {
+        public static void Main(${2:string[] args})
+        {
+        $0
+        }
+    }
+}

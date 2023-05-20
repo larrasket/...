@@ -1,0 +1,439 @@
+/home/l/me/music/dung/The Sound of Dungeon Synth/Aardia - The Prophecy.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Aaron Dunn - The Music of the Ainur.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Adamantum - Gates of the Forest Kingdom.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Adamantum - Forest Guards.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Adamantum - Faerie's Dance.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Adrian Von Ziegler - Moonsong.ogg
+/home/l/me/music/lik/Ahmad Kaabour - Ounadikom.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Aindulmedir - Wind-Bitten.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Aindulmedir - Winter And Slumber.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Aindulmedir - Snow Above Blue Fire.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Alex Crispin - Endless Dark.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Alhazred - The Nameless City.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Alhazred - The Great Old Ones.ogg
+/home/l/me/music/lik/Alicia Keys - Fallin'.ogg
+/home/l/me/music/lik/America - A Horse with No Name.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Angst Sessions - Världarnas glömda värld.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Angst Sessions - Källans urkraft.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Apoptose - Nidstång.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Arath - Avarsthending enedh Heroden.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Arath - Off to New Adventures.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Arath - In Misty Forests.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Arcana - Somnolence.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Arthuros - As I Pass Through The Moongate.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Arthuros - The Vision Of The Northern Star.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Arthuros - Genesis Of A New Goddess.._.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Asgar - Centurias.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Asgar - In the Eternity.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Asgar - Bifrost.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Basarabian Hills - Snowflakes.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Basarabian Hills - Phantasmagoria.ogg
+/home/l/me/music/lik/Beautiful Death - In the Forest.ogg
+/home/l/me/music/lik/Black Hill - Yamuna.ogg
+/home/l/me/music/lik/Black Hill - Alphée.ogg
+/home/l/me/music/lik/Black Hill - Eden.ogg
+/home/l/me/music/lik/Black Hill - Olarabel.ogg
+/home/l/me/music/lik/Black Hill - A wild river to take you home.ogg
+/home/l/me/music/lik/Black Hill - Hidden Valley.ogg
+/home/l/me/music/lik/Black Sabbath - Solitude.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Blakagir - Mystery From Grave.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Burzum - Dunkelheit.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Cantique Lépreux - Paysages Polaires II.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Carnifexian - The Banners of Empire Will Rise Again.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Carnifexian - Kobold Crystal.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Carnifexian - In the Cradle of Worms.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Cernunnos Woods - The Autumn Moon.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Cernunnos Woods - Horned Is the Hunter.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Cernunnos Woods - Return to Infra-Green.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Chevalier Errant - Dessouto Lei Platanos.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Chevalier Errant - Salle d'Études de la Guilde des Mages.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Chevalier Errant - Le Souvenir de Balmora.ogg
+/home/l/me/music/lik/Colonel Bagshot - Lord High Human Being.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Cosmic Sorcerer - Cosmic Sorcery.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Cosmic Sorcerer - Alchemy of the Stars.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Cosmic Sorcerer - Old Star, Methuselah.ogg
+/home/l/me/music/lik/Cry A Laugh - Last Of Your Kind.ogg
+/home/l/me/music/lik/C.W. Stoneking - The Love Me or Die.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Darchon - Outer Darkness.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Dargaard - Temple of the Morning Star.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Dark Ages - Ships Full of Blackened Corpses.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Dark Ages - Black Death.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Darkness Enshroud - Finsternis.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Darksol - Dance of Ancient Winds.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Darksol - Tower Keys.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Darksol - Hill Funeral.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/David Terry - Slowly, Slowly, Up Into The Rain We Fell.ogg
+/home/l/me/music/lik/Death In June - The Mourner's Bench.ogg
+/home/l/me/music/lik/Death In June - Little Black Angel.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Den Sorte Død - Ensomhedens Slette.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Den Sorte Død - Undergangen.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Depressive Silence - Dreams.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Desiderii Marginis - Silent Messenger.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Dieux Des Cimetières - As We Put the Land of Completion to the Torch.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Dieux Des Cimetières - A Hundred Nights of Broken Glass.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Dieux Des Cimetières - Kling Klang Klockan Slår.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/DIM - Edge of Town.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/DIM - Sellsword's Grotto.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/DIM - Ellendrial's Lullaby.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Diplodocus - Prowl of the Concavenator.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Diplodocus - Encased in Amber.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Drachenfeuer - Valar.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Draped in Shadows - Arrival of the Hunted.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Draped in Shadows - Farewell.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Draped in Shadows - Wandering in the Living Garden.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Drochtuarach - In the Shadow of Malkin Tower.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Dryads - Conqueror St Robin.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/dungeontroll - The Sleeping Crypt.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/dungeontroll - Weaving a Web of Gold.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/dungeontroll - An Unspoken Oath.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/EITR - Hädanfärden.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/EITR - Elden.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Ekbladstid - Silent Are the Corridors.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Ekbladstid - Doomed at Dakrsot.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Ekbladstid - A Veil in Time.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Eldamar - Spirit of the North.ogg
+/home/l/me/music/lik/Eleni Karaindrou - Eternity And A Day_ 2. By The Sea.ogg
+/home/l/me/music/lik/Eleni Karaindrou - Karaindrou_ To Vals Tou Gamou.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Elffor - Specters of Deathless Oblivion.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Elffor - Where the Damned Dwells.ogg
+/home/l/me/music/lik/Elijah Who - it's finally raining again.ogg
+/home/l/me/music/lik/Elliott Smith - Needle In The Hay.ogg
+/home/l/me/music/lik/Elliott Smith - Son Of Sam.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Elyvilon - Ere the Dawn's Rays Chase Night's Mists Away.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Elyvilon - Noonday Feast of the Jolly Friar.ogg
+/home/l/me/music/lik/Eminem - Cleanin' Out My Closet.ogg
+/home/l/me/music/lik/Eminem - The Real Slim Shady.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Emyn Muil - Turin Son of Hurin.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Emyn Muil - Under a Silvered Star.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Encloaked - The Ramtops.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Encloaked - Cobwebs and Secrets.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Endarg - Waffenbruder.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Endarg - Celtic Dream.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Enisum - Chiusella's Waters - Original Mix.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Erang - By the Starlight.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Erang - Feast of the Night.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Erang - Funeral for Erang.ogg
+/home/l/me/music/lik/Ernest Ranglin - Surfin'.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Evilfeast - Solitude Apotheosis.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Evilfeast - Winter Descent's Eve... I Become the Journey.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Evilnox - Beauty Never Dies.ogg
+/home/l/me/music/lik/Fairuz - Saaltak Habiby_1.ogg
+/home/l/me/music/lik/Fairuz - Kedeish Kan Fe Nas.ogg
+/home/l/me/music/lik/Fairuz - Ya Ana Ya Ana.ogg
+/home/l/me/music/lik/Fairuz - Nahana Oul Kamar.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fata Morgana - Stargazer.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fata Morgana - A Forest Path.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fathomage - Megaloschemos II.ogg
+/home/l/me/music/lik/Febueder - Nea Kameni.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fiendish Imp - Play with Poppet.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fiendish Imp - The Charming Trickster.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fiendish Imp - Dance Under the Full Moon.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fjelltrone - Skogens ande.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fjelltrone - En sorg.ogg
+/home/l/me/music/lik/Flunk - Down.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Foglord - In the Forest and Above the Mountains.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Foglord - The Dream of a Winter's Night.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fogweaver - Raising Up the Magewind.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fogweaver - Dragonfly.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fogweaver - Illuminated by Magelight.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Forgotten Pathways - Incoming.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Forgotten Pathways - Wuduaelfen.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Forgotten Pathways - Beowolf - Intro.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Forndom - Återkomst.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Francis Roberts - Guardian Beast Sleeps.ogg
+/home/l/me/music/lik/Franz Schubert - Schwanengesang, D. 957_ IV. Ständchen.ogg
+/home/l/me/music/lik/Franz Schubert - Ständchen, D. 889.ogg
+/home/l/me/music/lik/Frédéric Chopin - Nocturne in C-sharp minor, B. 49.ogg
+/home/l/me/music/lik/Frédéric Chopin - Nocturne in C Minor, Op. Posth., B. 108.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fvrfvr - Tales from the Emerald Kingdom.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Fvrfvr - Ancient Titans.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Garadrak - A Questing Knight.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Garadrak - Long Forgotten Glory.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Garadrak - Nothing Beside Remains.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Goatcraft - Call Me Judas.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Gondar - Sword of Gondar.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Gondar - Crypt Forgotten.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Gondar - Ancient Hex.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Grandma's Cottage - Picking Beans.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Grandma's Cottage - painting eggs.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Grimrik - Der astrale Ursprung, Pt. 1.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Grimrik - Der astrale Ursprung, Pt. 2.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Grimrik - Erkenntnis.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Guild of Lore - A Wandering Path.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Haxan Dreams - Love and The Abyss.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Haxan Dreams - Battle of Twin Mountains.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Haxan Dreams - Forest of Idran.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Henbane - Intet Lys.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Henbane - Ensomheden.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Henbane - Ruinernes Væsner.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Hermit Knight - once.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Hermit Knight - it's time to rest my friend (the rainbow bridge is calling).ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Hewer of Caves - Mountain Summit Tavern.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Hewer of Caves - Harvest Melody.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Hewer of Caves - Leper King.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Hole Dweller - With Dreams of Adventure, I Smoke from My Longpipe Beneath the Stars.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Hole Dweller - An Empty Tankard of Ale at the Floating Log Inn.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Hole Dweller - Wishing Well.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Iagon - Blood Passage.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Iagon - The Crystal Wizard.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Iagon - Through the Darkness.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Ildjarn - Blackened Might.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Ildjarn - Svarte Hjerter.ogg
+/home/l/me/music/lik/Interpol - Rest My Chemistry.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Isegrimm - Hiltibrant Enti Hadubrant.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Isegrimm - Ort Widar Orte.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Isegrimm - Ih Wallota Sumaro Enti Wintro.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/I Shalt Become - The Funeral Rain.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Jääportit - Vaellus Porteille Tuonelan.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Jääportit - Kauan Koskematon.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Jääportit - Kohtalon Sinetti.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Jason Shook - Woodsman's Charge.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Jason Shook - Voice of the Mountain.ogg
+/home/l/me/music/lik/Jay and the Coffee - Beautiful Vulnerable Unreliable Unreachable Broken.ogg
+/home/l/me/music/lik/J Hus - Fight for Your Right.ogg
+/home/l/me/music/lik/j^p^n - Bloom.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Kobold - No Way Out.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Kobold - Survivors.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Krauhl - The Spring of Whiskey Hollow.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Krauhl - A Vampire in Hiding.ogg
+/home/l/me/music/02 - Leonard Cohen - Suzanne.ogg
+/home/l/me/music/13 - Leonard Cohen - Teachers.ogg
+/home/l/me/music/16 - Leonard Cohen - Avalanche.ogg
+/home/l/me/music/11 - Leonard Cohen - Famous Blue Raincoat.ogg
+/home/l/me/music/09 - Leonard Cohen - Sing Another Song, Boys.ogg
+/home/l/me/music/24 - Leonard Cohen - Queen Victoria - Live.ogg
+/home/l/me/music/29 - Leonard Cohen - A Singer Must Die.ogg
+/home/l/me/music/18 - Leonard Cohen - True Love Leaves No Traces.ogg
+/home/l/me/music/31 - Leonard Cohen - Humbled in Love.ogg
+/home/l/me/music/05 - Leonard Cohen - Came So Far for Beauty.ogg
+/home/l/me/music/10 - Leonard Cohen - Ballad of the Absent Mare - Longer Version.ogg
+/home/l/me/music/06 - Leonard Cohen - Night Comes On.ogg
+/home/l/me/music/04 - Leonard Cohen - The Captain.ogg
+/home/l/me/music/14 - Leonard Cohen - Everybody Knows.ogg
+/home/l/me/music/30 - Leonard Cohen - Jazz Police.ogg
+/home/l/me/music/08 - Leonard Cohen - Tower of Song.ogg
+/home/l/me/music/22 - Leonard Cohen - Tacoma Trailer.ogg
+/home/l/me/music/25 - Leonard Cohen - Who By Fire_ - Live in Austin, 1988.ogg
+/home/l/me/music/26 - Leonard Cohen - In My Secret Life.ogg
+/home/l/me/music/21 - Leonard Cohen - Here It Is.ogg
+/home/l/me/music/17 - Leonard Cohen - You Have Loved Enough.ogg
+/home/l/me/music/15 - Leonard Cohen - You Know Who I Am - Live at Isle of Wight Festival, UK.ogg
+/home/l/me/music/03 - Leonard Cohen - Banjo.ogg
+/home/l/me/music/28 - Leonard Cohen - Amen - Live in Dublin.ogg
+/home/l/me/music/23 - Leonard Cohen - Did I Ever Love You.ogg
+/home/l/me/music/07 - Leonard Cohen - Nevermind.ogg
+/home/l/me/music/01 - Leonard Cohen - If I Didn't Have Your Love.ogg
+/home/l/me/music/20 - Leonard Cohen - It Seemed the Better Way.ogg
+/home/l/me/music/12 - Leonard Cohen - Happens to the Heart.ogg
+/home/l/me/music/19 - Leonard Cohen - The Night of Santiago.ogg
+/home/l/me/music/27 - Leonard Cohen - The Goal.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Llathasa - A Fog Descends Over The Village Square.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Lord Wind - Arianrod Heil!.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Lord Wind - The Temple of Harmony.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Lousberg - The Spirit of Nothingness.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Lousberg - Gemälde I.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Machina Coeli - Approaching the Forgotten Lake.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Malfet - Farewell to Gaste Forest.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Malfet - Lost in Broceliande.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Malfet - Joyeuse Garde Idyll.ogg
+/home/l/me/music/lik/Mashrou' Leila - Fasateen.ogg
+/home/l/me/music/lik/Matt Elliott - The Sinking Ship Song.ogg
+/home/l/me/music/lik/Matt Elliott - Trying to Explain_1.ogg
+/home/l/me/music/lik/Matt Elliott - What's Wrong.ogg
+/home/l/me/music/lik/Matt Elliott - The Kursk.ogg
+/home/l/me/music/lik/Matt Elliott - The Maid We Messed.ogg
+/home/l/me/music/lik/Matt Elliott - Broken Bones.ogg
+/home/l/me/music/lik/Matt Elliott - Desemparado.ogg
+/home/l/me/music/lik/Matt Elliott - Good Pawn.ogg
+/home/l/me/music/lik/Matt Elliott - Gone.ogg
+/home/l/me/music/lik/Matt Elliott - Planting Seeds.ogg
+/home/l/me/music/lik/Matt Elliott - The Kübler-Ross Model.ogg
+/home/l/me/music/lik/Matt Elliott - Something About Ghosts_1.ogg
+/home/l/me/music/lik/Matt Elliott - I Name This Ship The Tragedy, Bless Her & All Who Sail With Her.ogg
+/home/l/me/music/lik/Matt Elliott - Song For A Failed Relationship.ogg
+/home/l/me/music/lik/Matt Elliott - Bomb The Stock Exchange.ogg
+/home/l/me/music/lik/Matt Elliott - Oh How We Fell.ogg
+/home/l/me/music/lik/Matt Elliott - Please Please Please.ogg
+/home/l/me/music/lik/Matt Elliott - Dust Flesh and Bones_1.ogg
+/home/l/me/music/lik/Matt Elliott - How to Kill a Rose.ogg
+/home/l/me/music/lik/Matt Elliott - This Is For.ogg
+/home/l/me/music/lik/Matt Elliott - The Pain That's Yet to Come.ogg
+/home/l/me/music/lik/Matt Elliott - The Right To Cry_1.ogg
+/home/l/me/music/lik/Matt Elliott - Reap What You Sow.ogg
+/home/l/me/music/lik/Matt Elliott - I Would Have Woken You With This Song.ogg
+/home/l/me/music/lik/Matt Elliott - Prepare for Disappointment.ogg
+/home/l/me/music/lik/Matt Elliott - Zugzwang.ogg
+/home/l/me/music/lik/Matt Elliott - Again.ogg
+/home/l/me/music/lik/Matt Elliott - De Nada.ogg
+/home/l/me/music/lik/Matt Elliott - The Calm Before.ogg
+/home/l/me/music/lik/Matt Elliott - The Feast of St. Stephen.ogg
+/home/l/me/music/lik/Matt Elliott - I Only Wanted to Give You Everything.ogg
+/home/l/me/music/lik/Matt Elliott - Wings and Crown_1.ogg
+/home/l/me/music/lik/Matt Elliott - Get Wrecked.ogg
+/home/l/me/music/lik/Matt Elliott - What Once Was Hope.ogg
+/home/l/me/music/lik/Matt Elliott - Farewell to All we Know.ogg
+/home/l/me/music/lik/Matt Elliott - Guidance is Internal.ogg
+/home/l/me/music/lik/Matt Elliott - Bye Now.ogg
+/home/l/me/music/lik/Matt Elliott - Crisis Apparition.ogg
+/home/l/me/music/lik/Michael Jackson - Billie Jean.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Midnight Odyssey - A Death So Pure.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Midnight Odyssey - Night Spirits.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mistigo Varggoth Darkestra - The Key To The Gates Of Apocalypses.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Moloch - Die Stille in mir (rehearsal piano).ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Moloch - Enthroned! Thy Unholy Spirit!.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Monastery - Part I_ A Violet Vigil.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Monastery - Part I_ An Orchid Night.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Monastery - Part I_ A Rosemary Crown.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mondfinsternis - Knight Of The Black Order.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mondfinsternis - A Winter Night.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mondfinsternis - Rosahringur.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Moongates Guardian - The Misty Mountains Cold.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Moongates Guardian - I.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Moonlight Sorcery - Untenkutoja.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/MORELOCKE - And so the Story Was Told.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/MORELOCKE - A Walk Along the Gates.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mörkt Slott - Return to Oakfield.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mörkt Slott - Lucien Fairfax.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mortiis - Parasite God.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mortiis - Bleed Like You - Merzbow Version.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mosegrodd - Tales of the Ancient Era.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mosegrodd - Song of the Valkyries.ogg
+/home/l/me/music/lik/Motorama - Red Drop.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Müldeponie - The Other Side, Pt. 1.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Murgrind - Gate of Stone.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Murgrind - Palace of Oblivion.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Murgrind - Emerald Forest.ogg
+/home/l/me/music/lik/Muse - Uprising.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mythril Spectre - Hallowed Ground of Ancient Queens.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mythril Spectre - World of Fantasy.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Mythril Spectre - Emerging Shadow.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Nebel Torvum - Medieval Feast.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Neptune Towers - Caravans to Empire Algol.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Neptune Towers - Excerpts from `space Lab` Part 3.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Neverlur - Fjellets svarte røtter.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Neverlur - Taarnet I Den Dype Skogen.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Neverlur - Op Under Fjeldet Toner en Lur.ogg
+/home/l/me/music/lik/No Blues - Columbus Stockade.ogg
+/home/l/me/music/lik/No Blues - Farewell Shalabiye.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Nox Arcana - Shivers.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Offermose - Sorgflugt.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Offermose - Sjælens Ruin.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Old Sorcery - Vaikerruksen Portti.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Old Sorcery - In a Forest Trapped.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Old Sorcery - Epilogue.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Old Tower - The Silence Beneath Ancient Grounds.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Old Tower - Storms of the Dragon's Spells.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Old Tower - Drachenblut.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Örnatorpet - I villande skogen.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Örnatorpet - Varggropen.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Örnatorpet - Bäckens Serenad.ogg
+/home/l/me/music/lik/Otaku - Nausicaa Requiem.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/PATHS - Torchlit Corridor.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/PATHS - Call of the Forgotten.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/PATHS - Roaming Presence.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Paths of the Eternal - Brick Walls Abundant in Lichen.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Paths of the Eternal - Broken Relic.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Paths of the Eternal - Abandoned Cathedral.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Paysage D'Hiver - Welt aus Eis.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Paysage D'Hiver - Eishalle.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Pazuzu - The Churning Seas of Absu.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Pendragon - Uther's Lust.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Pendragon - Morgana (A Calling A Journey An Ambition).ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Penitent - Det Sorte Tjern.ogg
+/home/l/me/music/lik/Piers Faccini - The Beggar & the Thief.ogg
+/home/l/me/music/lik/Pink Floyd - Julia Dream.ogg
+/home/l/me/music/lik/Pixies - Where Is My Mind_ - Remastered.ogg
+/home/l/me/music/lik/Pixies - Where Is My Mind_.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Pumpkin Witch - A Dark October.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Pumpkin Witch - Wrath of the Skeleton King.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Quest Master - Cathedral of Glistening Hope.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Quest Master - Cloudy Gateways.ogg
+/home/l/me/music/lik/Radiohead - Jigsaw Falling Into Place.ogg
+/home/l/me/music/lik/Red Hot Chili Peppers - Can't Stop.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Resinator - Apothecaries' Weight, Pt. 2.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Resinator - Calling Song of the Greenflower Gatherers.ogg
+/home/l/me/music/lik/Richard Hawley - Coles Corner.ogg
+/home/l/me/music/lik/Rise Against - Savior.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Rune Realms - Discovery of the Ice Chasms.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Rune Realms - Secrets of the Deepwood.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Rune Realms - Call of the Glow Wisp.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Silent Cabin - Thousand Nights.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Silent Cabin - Melting Snow Revealing the Lost Words.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Silent Cabin - Sleeping Halls of Frozen Tears.ogg
+/home/l/me/music/lik/Sleep Party People - Notes to You.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Sojourner - Relics of the Natural Realm.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Sombre Arcane - Far from the Hold of the Sea Princes.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Sombre Arcane - Return from Dragonspear.ogg
+/home/l/me/music/lik/Strangers On A Train - Rusty Trombone.ogg
+/home/l/me/music/lik/Strangers On A Train - The Madame.ogg
+/home/l/me/music/lik/Strangers On A Train - Lost Her to Wolves.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Stronghold Guardian - The Magic of the Ages Long Forgotten.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Stronghold Guardian - Horsemen's Folk.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Summoning - Land of the Dead.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Summoning - Old Mornings Dawn.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Svartkonst - Dygdenes Stijg Synes Trång Och Mörk.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Svartkonst - När Kropp Och Siäl Äre Skilde.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Svartkonst - När Han Begynner Blås' I Sitt Horn.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Tales Under the Oak - Entering the Croaked Forest.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Taramis - A Witch Is Born.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Taramis - Incantation.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Tartavara - Winter's Tale.ogg
+/home/l/me/music/lik/The Doors - You're Lost Little Girl.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/The Herbalists - Today We Go to the Forest.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/The Herbalists - Chew This for Courage as the Trees Grow Thicker.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/The Herbalists - We'll Have to Burn Our Gloves After We Collect the Stinksap.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/The Inquisitor - From Nothing to Tomorrow.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/The Inquisitor - The Hero's Descent.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/The Inquisitor - The Beast Beckons.ogg
+/home/l/me/music/lik/The Moody Blues - Melancholy Man.ogg
+/home/l/me/music/lik/The Neighbourhood - Lurk.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Theoroth - A Vision of Brave Old Times.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Theoroth - The Remains of Our Homes.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Theoroth - Wastelands.ogg
+/home/l/me/music/lik/The Rolling Stones - Paint It, Black.ogg
+/home/l/me/music/lik/The Shutes - Bright Blue Berlin Sky.ogg
+/home/l/me/music/lik/The Talking Bugs - The Lovers.ogg
+/home/l/me/music/lik/The Talking Bugs - Laika.ogg
+/home/l/me/music/lik/The Talking Bugs - My Wounds.ogg
+/home/l/me/music/lik/The Talking Bugs - I Don't Know Why.ogg
+/home/l/me/music/lik/The Talking Bugs - Like a Ship in the Sea.ogg
+/home/l/me/music/lik/The Talking Bugs - Broken Sword.ogg
+/home/l/me/music/lik/The White Stripes - Dead Leaves and the Dirty Ground.ogg
+/home/l/me/music/lik/The White Stripes - Seven Nation Army.ogg
+/home/l/me/music/lik/The Worst - MAN.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Throne - Viking Ships.ogg
+/home/l/me/music/lik/Ticklah - Nine Years.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Torchlight - The Long Quest.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Torchlight - Ivy's Solemn Empire.ogg
+/home/l/me/music/lik/Travis - Happy To Hang Around.ogg
+/home/l/me/music/lik/TSU! - Prince Of Gumbay.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Ulk - Tortoise I.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Ulk - Tortoise II.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Ulk - Tortoise III.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Ulwhednar - Midvinter 6.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Ur Pale - Arcane Piracy.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Ur Pale - Floral Sorcery.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Ur Pale - Calypso's Farewell.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Uruk-Hai - Deep Dark Forests.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Uruk-Hai - Vargriders.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Vaelastrasz - Pamela.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Vaelastrasz - Rise of the Black Dragonflight_The Life-Binder.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Vaelastrasz - Ladimore's Lament.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Vættur - Alheimsvíðáttan.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Vindkaldr - Weeping At Stars.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Vindkaldr - In Solitude Until the End of Time.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Vinterriket - Boten der Rückkehr.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Vinterriket - Visionen nächtlicher Fluten.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Vond - Selvmord pt I.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Vond - Slipp Sorgen Løs.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Wallachian Cobwebs - The Electrical Secrets of Heaven.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Wallachian Cobwebs - A Lonely Walk.ogg
+/home/l/me/music/lik/We Lost The Sea - A Gallant Gentleman.ogg
+/home/l/me/music/lik/We Lost The Sea - A Beautiful Collapse.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Wojnar - Part One.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Wojnar - Part Two.ogg
+/home/l/me/music/lik/Wolfgang Amadeus Mozart - Lacrimosa.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Wonders of Nature - Winter Forest.ogg
+/home/l/me/music/lik/Woodkid - Iron.ogg
+/home/l/me/music/dung/The Sound of Dungeon Synth/Wraith Knight - The Cloaked Conqueror.ogg
+/home/l/me/music/lik/Владимир Высоцкий - Вариации на цыганские темы.ogg

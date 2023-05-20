@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Check for command line arguments
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <symbolic_link1> <symbolic_link2> ..."
+    exit 1
+fi
+
+# Loop through each argument
+for link in "$@"; do
+    # Check if file exists and is a symbolic link
+    if [ ! -L "$link" ]; then
+        echo "Error: $link is not a symbolic link"
+        continue
+    fi
+
+    # Get the target file of the symbolic link
+    target_file=$(readlink -f "$link")
+
+    # Replace the symbolic link with the target file
+    mv "$target_file" "$link"
+done

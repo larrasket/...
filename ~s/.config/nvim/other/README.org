@@ -1,0 +1,3 @@
+#+title: Vim Configuration
+I use Emacs mainly as my main IDE, this repo contains both my old & current vim
+configuration files.
