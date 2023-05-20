@@ -55,6 +55,7 @@
             (local-set-key (salih/mode "i l") #'org-web-tools-insert-link-for-url)
             (local-set-key (salih/mode "i d") #'org-download-clipboard)
             (local-set-key (salih/mode "i k") #'citar-insert-citation)
+            (local-set-key (salih/mode "i r") #'org-roam-node-insert)
             (local-set-key (salih/global "TAB") #'consult-org-heading)))
 
 (add-hook 'ement-room-mode-hook
