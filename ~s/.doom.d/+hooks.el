@@ -52,3 +52,5 @@
 
 (provide '+hooks)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
+
+(add-hook 'after-init-hook #'mu4e)
