@@ -47,7 +47,7 @@
 
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
-      user-mail-address                                 "larrasket@bk.ru"
+      user-mail-address                                 "lar21@gmx.com"
 
       ;; I've no idea of any of this.
       org-crypt-key                                     user-mail-address
@@ -119,11 +119,11 @@
   (setq message-send-mail-function 'smtpmail-send-it
         starttls-use-gnutls t
         mu4e-update-interval 200
-        smtpmail-default-smtp-server "smtp.mail.ru"
-        smtpmail-smtp-server "smtp.mail.ru"
-        smtpmail-smtp-service 465
-        smtpmail-starttls-credentials '(("smtp.mail.ru" 465 nil nil))
-        smtpmail-stream-type 'ssl
+        smtpmail-default-smtp-server "mail.gmx.com"
+        smtpmail-smtp-server "mail.gmx.com"
+        smtpmail-smtp-service 587
+        smtpmail-starttls-credentials '(("mail.gmx.com" 465 nil nil))
+        smtpmail-stream-type 'starttls
         mu4e-modeline-show-global nil))
 
 
