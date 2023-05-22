@@ -190,15 +190,7 @@
  "t"   #'magit-todos-list
  "D"   #'magit-file-delete)
 
-;; email
-(general-define-key
- :prefix (concat salih/prefix-global "m")
- "m" #'(lambda () (interactive) (mu4e~headers-jump-to-maildir "/Inbox"))
- "i" #'mu4e)
 
-;; (add-hook 'mu4e-headers-mode-hook (lambda ()
-;;                                     (evil-define-key 'normal mu4e-headers-mode-map "u" 'mu4e-update-mail-and-index)
-;;                                     (evil-define-key 'normal mu4e-headers-mode-map "q" 'previous-buffer)))
 
 
 ;; other

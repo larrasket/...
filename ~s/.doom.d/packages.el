@@ -42,3 +42,8 @@
            :repo "luggages/awqat"))
 (package! ob-sagemath)
 (package! lsp-jedi)
+
+
+(unpin! evil-collection)
+(package! evil-collection
+  :recipe (:repo "luggages/evil-collection" :branch "mu4e-development"))
