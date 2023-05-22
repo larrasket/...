@@ -234,3 +234,9 @@
       (select-window prev-window)))
   (define-key org-noter-notes-mode-map (kbd "C-c C-j")
               #'salih/org-noter-sync-current-note-and-switch-window))
+
+
+(general-define-key
+ :prefix (concat salih/prefix-global "m")
+ "m" #'(lambda () (interactive) (mu4e~headers-jump-to-maildir "/Inbox"))
+ "i" #'mu4e)
