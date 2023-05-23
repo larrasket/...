@@ -12,25 +12,16 @@
 (setq load-prefer-newer                                 t ;; avoid warnings
       ;; emacs settings
       completion-ignore-case                            t
+      bidi-paragraph-direction                          'left-to-right
+
+      ;; appearance
       doom-font                                         (font-spec :family "PragmataPro Mono Liga" :size 12)
       all-the-icons-color-icons                         nil
       neo-theme                                         'icons
       neo-window-width                                  35
-      bidi-paragraph-direction                          'left-to-right
-
-
-      ;; set org files
-      +org-capture-journal-file                         "~/blog/content/stack.org"
-      +org-capture-changelog-file                       "~/blog/content/nice.org"
-      +org-capture-todo-file                            "~/roam/main/life.org"
-      org-preview-html-viewer                           'xwidget
-      org-directory                                     org-roam-directory
-      org-id-locations-file                             "~/roam/.orgids"
-      org-agenda-skip-scheduled-if-done                 nil
-      org-use-tag-inheritance                           nil
-      org-agenda-block-separator                        9472
-      ;; org-extend-today-until                         2
-      org-element-use-cache                             nil
+      +doom-dashboard-ascii-banner-fn                   'salih/banner
+      doom-theme                                        'distinguished
+      highlight-indent-guides-method                    'bitmap
       org-modern-keyword                                nil
       org-modern-list                                   nil
       org-modern-progress                               nil
@@ -44,10 +35,23 @@
       org-modern-todo                                   nil
       org-modern-block-name                             nil
 
+      ;; set org files
+      +org-capture-journal-file                         "~/blog/content/stack.org"
+      +org-capture-changelog-file                       "~/blog/content/nice.org"
+      +org-capture-todo-file                            "~/roam/main/life.org"
+      org-preview-html-viewer                           'xwidget
+      org-directory                                     org-roam-directory
+      org-id-locations-file                             "~/roam/.orgids"
+      org-agenda-skip-scheduled-if-done                 nil
+      org-use-tag-inheritance                           nil
+      org-agenda-block-separator                        9472
+      org-extend-today-until                            6
+      org-element-use-cache                             nil
+
 
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
-      user-mail-address                                 "lar12@gmx.com"
+      user-mail-address                                 "larrasket@gmx.com"
 
       ;; I've no idea of any of this.
       org-crypt-key                                     user-mail-address
@@ -56,12 +60,6 @@
       epa-file-encrypt-to                               user-mail-address
 
 
-      ;; skull welecome in emacs
-      ;; fancy-splash-image                                "~/.doom.d/pan.png"
-      +doom-dashboard-ascii-banner-fn                   'salih/banner
-      ;; theme
-      doom-theme                                        'distinguished
-      highlight-indent-guides-method                    'bitmap
 
       ;; prayer time
       calendar-latitude                                 30.0
