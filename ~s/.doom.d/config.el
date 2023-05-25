@@ -22,18 +22,6 @@
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       doom-theme                                        'distinguished
       highlight-indent-guides-method                    'bitmap
-      org-modern-keyword                                nil
-      org-modern-list                                   nil
-      org-modern-progress                               nil
-      org-modern-priority                               nil
-      org-modern-radio-target                           nil
-      org-modern-star                                   nil
-      org-modern-radio-target                           nil
-      org-modern-statistics                             nil
-      org-modern-tag                                    nil
-      org-modern-timestamp                              nil
-      org-modern-todo                                   nil
-      org-modern-block-name                             nil
 
       ;; set org files
       +org-capture-journal-file                         "~/blog/content/stack.org"
