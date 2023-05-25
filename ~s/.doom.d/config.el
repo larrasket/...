@@ -85,16 +85,18 @@
       salih/prefix-mode                                 "C-c "
 
 
+      ;; browser
+      browse-url-browser-function                       'eww-browse-url
+      shr-inhibit-images                                nil
+
       ;; will be purged soon. "i don't want to play with you anymore"
       leetcode-prefer-language                          "cpp"
       leetcode-prefer-sql                               "mssql"
       leetcode-save-solutions                           t
       leetcode-directory                                "/home/l/gits/ps/lc"
 
-
       ;; other
       vertico-buffer-display-action                     '(display-buffer-same-window)
-      browse-url-generic-program                        "chromium"
       large-file-warning-threshold                      nil
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
