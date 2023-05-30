@@ -425,5 +425,9 @@ If no one is selected, symmetric encryption will be performed.  ")))
      'face 'doom-dashboard-banner)))
 
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((ksh . t)))
+
 
 (provide '+handy)
