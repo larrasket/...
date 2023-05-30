@@ -1,6 +1,7 @@
 ;;; private/chess/config.el -*- lexical-binding: t; -*-
 
 
+;; FIXME the path is not being set correctly.
 
 (defun org-babel-execute:chess (body params)
   "Execute a block of Chess code with org-babel.
