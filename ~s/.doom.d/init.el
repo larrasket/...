@@ -134,7 +134,7 @@
        ;;web
        ;;zig
        :email
-       mu4e
+       (mu4e +org)
 
 
        ;; ;; notmuch
