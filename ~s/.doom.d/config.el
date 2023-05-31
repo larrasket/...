@@ -32,6 +32,7 @@
       org-agenda-skip-scheduled-if-done                 nil
       org-use-tag-inheritance                           nil
       org-agenda-block-separator                        9472
+      org-clock-mode-line-total                         'today
       ;; org-extend-today-until                            6
       org-element-use-cache                             nil
 
