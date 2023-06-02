@@ -16,6 +16,3 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[github]
-	user = salehmu
-	oauth-token = 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
