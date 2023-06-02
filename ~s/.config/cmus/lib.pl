@@ -350,6 +350,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Quest Master - Cloudy Gateways.ogg
 /home/l/me/music/lik/Radiohead - Jigsaw Falling Into Place.ogg
 /home/l/me/music/lik/Red Hot Chili Peppers - Can't Stop.ogg
+/home/l/me/music/lik/Release The Long Ships - Holocene.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Resinator - Apothecaries' Weight, Pt. 2.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Resinator - Calling Song of the Greenflower Gatherers.ogg
 /home/l/me/music/lik/Richard Hawley - Coles Corner.ogg
