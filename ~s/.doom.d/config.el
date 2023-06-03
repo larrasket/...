@@ -35,7 +35,7 @@
       org-clock-mode-line-total                         'today
       ;; org-extend-today-until                            6
       org-element-use-cache                             nil
-
+      org-noter-auto-save-last-location                 t
 
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
