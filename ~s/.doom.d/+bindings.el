@@ -154,6 +154,7 @@
 (general-define-key
  :prefix (concat salih/prefix-global "n")
  "f" #'citar-open-notes
+ "b" #'citar-open-notes
  "n" #'org-noter
  "o" #'salih/open-book)
 
