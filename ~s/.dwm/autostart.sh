@@ -14,3 +14,4 @@ feh --bg-fill ~/configs/bg.png
 # tor &
 # pgrep -fl 'pidswallow -gl' || pidswallow -gl
 flameshot &
+qbittorrent-nox &
