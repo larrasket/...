@@ -47,7 +47,6 @@ alias lsd='du -h --max-depth=1 | sort -hr'
 
 alias po='castero'
 export _JAVA_AWT_WM_NONREPARENTING=1
-alias ls='ls -l'
 alias ll='ls -l'
 alias sz='du -sh'
 alias k='killall'
