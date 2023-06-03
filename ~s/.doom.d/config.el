@@ -77,8 +77,11 @@
       browse-url-browser-function                       'eww-browse-url
       shr-inhibit-images                                nil
 
-      ;; other
+      ;; vertico
       vertico-buffer-display-action                     '(display-buffer-same-window)
+      enable-recursive-minibuffers                      nil
+
+      ;; other
       large-file-warning-threshold                      nil
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
