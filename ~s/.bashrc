@@ -43,6 +43,7 @@ alias r='sudo pacman -Rs'
 alias lsd='du -h --max-depth=1 | sort -hr'
 
 
+alias kp="xset r rate 200 25 && setxkbmap -layout en_US,ar -option 'grp:alt_shift_toggle'"
 
 
 alias po='castero'
