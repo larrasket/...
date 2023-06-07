@@ -34,8 +34,10 @@
       org-agenda-block-separator                        9472
       org-clock-mode-line-total                         'today
       ;; org-extend-today-until                            6
-      org-element-use-cache                             nil
+      org-element-use-cache                             t
       org-noter-auto-save-last-location                 t
+      org-startup-folded                                t
+      org-image-actual-width                            600
 
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
@@ -46,8 +48,6 @@
       epa-file-cache-passphrase-for-symmetric-encryption t
       epa-file-select-keys                              'silent
       epa-file-encrypt-to                               user-mail-address
-
-
 
       ;; prayer time
       calendar-latitude                                 30.0
@@ -71,7 +71,6 @@
       ;; keyboard
       salih/prefix-global                               "C-x "
       salih/prefix-mode                                 "C-c "
-
 
       ;; browser
       browse-url-browser-function                       'eww-browse-url
