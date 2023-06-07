@@ -71,6 +71,14 @@
          :immediate-finish t
          :unnarrowed t)
 
+
+      ("e" "encrypted knowledge" plain "%?"
+         :if-new
+         (file+head "main/${slug}.org.gpg" "#+title: ${title}\n#+FILETAGS: permanent")
+         :immediate-finish t
+         :unnarrowed t)
+
+
         ("l" "links" plain "%?"
          :if-new
          (file+head "main/${slug}.org" "#+title: ${title}\n#+FILETAGS: link\n")
