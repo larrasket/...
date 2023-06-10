@@ -41,7 +41,7 @@
 
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
-      user-mail-address                                 "larrasket@gmx.com"
+      user-mail-address                                 "lr0@gmx.com"
 
       ;; I've no idea of any of this.
       org-crypt-key                                     user-mail-address
