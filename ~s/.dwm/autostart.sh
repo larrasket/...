@@ -13,5 +13,6 @@ setxkbmap -layout en_US,ar -option 'grp:alt_shift_toggle'
 feh --bg-fill ~/configs/bg.png
 # tor &
 # pgrep -fl 'pidswallow -gl' || pidswallow -gl
+pantalaimon --data-path ~/tmp/pant/ &
 flameshot &
 qbittorrent-nox &
