@@ -54,3 +54,12 @@
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 
 (add-hook 'after-init-hook #'mu4e)
+
+
+
+
+(with-eval-after-load 'org-agenda
+  (defun my/org-has-children ()
+    (if (save-excursion (org-goto-first-child)) "▶" " "))
+  (add-to-list 'org-agenda-prefix-format '(
+                                           agenda  . "%i%-3:(my/org-has-children) %-12:c%?-12t% s ")))
