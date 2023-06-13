@@ -32,10 +32,9 @@
         +icons)
         ;; +ranger
 
-       electric
 
        electric
-       (ibuffer +icon)
+       ;; (ibuffer +icon)
        undo
        vc
 
@@ -47,19 +46,18 @@
        (syntax +childframe)
        (spell
         +flyspell)
-       grammar
 
        :tools
        biblio
-       gist
+       ;; gist
        tree-sitter
        (lookup
         +dictionary
         +offline)
        (lsp +peak)
-       (magit +forge)
+       (magit)
        ;; pdf
-       rgb
+       ;; rgb
        ;;terraform
 
        :os
@@ -155,7 +153,7 @@
       ;; yournickname and yourpassword as a NickName and password (repsectively
       ;; machine irc.libera.chat login yournickname password yourpassword
       ;; See. https://www.gnu.org/software/emacs/manual/html_node/emacs/Authentication.html
-       src
+       ;; src
        gen
        genorg
        gitcolor
