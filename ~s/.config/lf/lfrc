@@ -41,7 +41,7 @@ fi
 done
 }}
 
-map am movetoarchive
+map aa movetoarchive
 
 
 
