@@ -129,6 +129,6 @@
 
 
 ;; this should be called after defining salih/prefix-global
-(require '+handy)
-(require '+bindings)
-(require '+hooks)
+(load "+helper.el")
+(load "+bindings.el")
+(load "+hooks.el")

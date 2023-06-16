@@ -1,4 +1,4 @@
-;;; ../../../:/home/ghd/gits/configs/~s/.doom.d/+hooks.el -*- lexical-binding: t; -*-
+;;; configs/~s/.doom.d/+hooks.el -*- lexical-binding: t; -*-
 
 (add-hook 'prog-mode-hook (lambda ()
                             (highltier)
@@ -50,7 +50,6 @@
 (add-hook 'bibtex-mode-hook (lambda ()
                               (add-hook 'after-save-hook '+format/buffer)))
 
-(provide '+hooks)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 
 (add-hook 'after-init-hook #'mu4e)

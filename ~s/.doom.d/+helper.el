@@ -1,8 +1,6 @@
-;;; ../configs/.doom.d/handy.el -*- lexical-binding: t; -*-
-;;; contains some handy functions to use at once; not loaded by default
+;;; configs/~s/.doom.d/+helper.el -*- lexical-binding: t; -*-
 
-;; TODO clean this
-(require 'evil)
+
 
 ;; basic definiton for keys.el
 
@@ -30,8 +28,8 @@
   (keyboard-quit))
 
 
-;; handy stuff
 
+;; org archive
 
 (defun salih/org-archive-done-tasks ()
   (interactive)
@@ -44,6 +42,7 @@
 
 
 
+;; chess
 
 (defun salih/chess-notation-to-symbols ()
   (interactive)
@@ -70,6 +69,8 @@
 
 
 
+;; bidi support
+
 (defun salih/bidi-direction-toggle ()
   (interactive "")
   (setq bidi-display-reordering t)
@@ -78,15 +79,18 @@
     (setq bidi-paragraph-direction 'right-to-left))
   (message "%s" bidi-paragraph-direction))
 
+;; window management
 
 (defun salih/toggle-maximize-buffer ()
-       (interactive)
-       (if (= 1 (length (window-list)))
-           (jump-to-register '_)
-         (progn
-           (window-configuration-to-register '_)
-           (delete-other-windows))))
+  (interactive)
+  (if (= 1 (length (window-list)))
+      (jump-to-register '_)
+    (progn
+      (window-configuration-to-register '_)
+      (delete-other-windows))))
 
+
+;; neotree
 
 (defun neotree-project-dir ()
   (let ((project-dir (projectile-project-root))
@@ -101,21 +105,42 @@
 
 
 
+;; editing
 
 (defun salih/comment-or-uncomment-region-or-line ()
-    "Comments or uncomments the region or the current line if there's no active
+  "Comments or uncomments the region or the current line if there's no active
 region."
-    (interactive)
-    (let (beg end)
-        (if (region-active-p)
-            (setq beg (region-beginning) end (region-end))
-            (setq beg (line-beginning-position) end (line-end-position)))
-        (comment-or-uncomment-region beg end)
-        (forward-line)))
+  (interactive)
+  (let (beg end)
+    (if (region-active-p)
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position) end (line-end-position)))
+    (comment-or-uncomment-region beg end)
+    (forward-line)))
 
 
+(defun salih/rename-or-iedit ()
+  "If current buffer is in lsp-mode, call lsp-rename. Otherwise, call
+iedit-mode."
+  (interactive)
+  (if (bound-and-true-p lsp-mode)
+      (call-interactively #'lsp-rename)
+    (call-interactively #'iedit-mode)))
 
 
+(defun salih/find-definition-or-lookup ()
+  (interactive)
+  "If current buffer is in lsp-mode, call lsp-find-definition. Otherwise, call
+lookup."
+  (if (bound-and-true-p lsp-mode)
+      (call-interactively #'lsp-find-definition)
+    (call-interactively #'+lookup/file)))
+
+(defun insert-now-timestamp()
+  (org-insert-time-stamp (current-time) t))
+
+
+;; dired
 
 (defun salih/open-in-external-app (&optional @fname)
   "Open the current file or dired marked files in external app.
@@ -151,56 +176,25 @@ Version 2019-11-04 2021-02-16"
                             (start-process "" nil "xdg-open" $fpath))) $file-list))))))
 
 
-(defun salih/rename-or-iedit ()
-  "If current buffer is in lsp-mode, call lsp-rename. Otherwise, call
-iedit-mode."
-  (interactive)
-  (if (bound-and-true-p lsp-mode)
-      (call-interactively #'lsp-rename)
-    (call-interactively #'iedit-mode)))
-
-
-(defun insert-now-timestamp()
-  (org-insert-time-stamp (current-time) t))
-
-
-(defun salih/find-definition-or-lookup ()
-  (interactive)
-  "If current buffer is in lsp-mode, call lsp-find-definition. Otherwise, call
-lookup."
-  (if (bound-and-true-p lsp-mode)
-      (call-interactively #'lsp-find-definition)
-    (call-interactively #'+lookup/file)))
-
-
-(defun salih/randomize-date-time ()
-  "Randomize the time for the date on the current line."
-  (save-excursion
-    (beginning-of-line)
-    (when (re-search-forward "#\\+DATE: *<\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)>" nil t)
-      (let* ((date (match-string 1))
-             (time (format "%02d:%02d:%02d" (random 24) (random 60) (random 60)))
-             (new-date (concat date " " time)))
-        (replace-match (concat "#+DATE: <" new-date ">"))))))
-
 
 ;; compile-and-run methods
+
 (defun salih/compile-and-run-cpp ()
   (interactive)
- (save-buffer)
- (compile (concat "g++ "  (file-name-nondirectory (buffer-file-name)) " -o "
-           (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./"
-           (file-name-sans-extension  (file-name-nondirectory (buffer-file-name))) " && rm "
-           (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t  ) (other-window t)
-           (end-of-add-hook 'c++-mode))
+  (save-buffer)
+  (compile (concat "g++ "  (file-name-nondirectory (buffer-file-name)) " -o "
+                   (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./"
+                   (file-name-sans-extension  (file-name-nondirectory (buffer-file-name))) " && rm "
+                   (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t  ) (other-window t)
+  (end-of-add-hook 'c++-mode))
 
 
 
 (defun salih/compile-and-run-csharp ()
   (interactive)
- (save-buffer)
- (compile (concat "dotnet run") t  ) (other-window t)
- (end-of-add-hook 'csharp-mode))
+  (save-buffer)
+  (compile (concat "dotnet run") t  ) (other-window t)
+  (end-of-add-hook 'csharp-mode))
 
 
 
@@ -216,59 +210,10 @@ lookup."
 
 (defun salih/compile-and-run-go-file ()
   (interactive)
- (save-buffer)
- (compile (concat "go run "  (file-name-nondirectory (buffer-file-name))) t)
- (other-window t)
- (end-of-add-hook 'go-mode))
-
-
-(defun salih/make-buffer-white ()
-  (interactive)
-  (setq buffer-face-mode-face `(:background "white"
-                                :foreground "black"))
-  (face-remap-add-relative 'hl-line :background "#e6e6e6")
-  (face-remap-add-relative 'link :foreground "blue")
-  (buffer-face-mode))
-
-
-(defun salih/open-book ()
-  "Search for a file in ~/me and open it."
-  (interactive)
-  (let ((default-directory (car bibtex-completion-library-path)))
-    (call-interactively 'find-file)))
-
-
-;;;; My embark / consult-preview-at-point-mode
-;; It is meant to be used for the *Embark Collect* buffer from the list of
-;; Org-roam nodes candidate It provides preview of the note at point as you move
-;; throught the candidate list in *Embark Collect* buffer.
-(with-eval-after-load 'embark
-  (add-hook 'embark-collect-mode-hook  #'salih/consult-preview-at-point-mode))
-
-(define-minor-mode salih/consult-preview-at-point-mode
-  "Preview minor mode for an *Embark Collect* buffer.
-When moving around in the *Embark Collect* buffer, the candidate at point is
-automatically previewed."
-  :init-value nil :group 'consult
-  (if salih/consult-preview-at-point-mode
-      (add-hook 'post-command-hook #'salih/consult-preview-at-point nil 'local)
-    (remove-hook 'post-command-hook #'salih/consult-preview-at-point 'local)))
-
-(defun salih/consult-preview-at-point ()
-  "Preview candidate at point in an *Embark Collect* buffer."
-  (interactive)
-  (let ((display-buffer-base-action '(display-buffer-pop-up-window))
-        (cbuf (current-buffer))
-        (node))
-    ;; Avoid pushing the button created by Embark.  For some reason, some
-    ;; candidates lead to a org-roam-node-find prompt and create a new frame.
-    (if (setq node (get-text-property (point) 'node))
-        ;; `org-roam-node-visit' does not return the buffer visited
-        (progn
-          (unless (featurep 'org-roam)(require 'org-roam))
-          (org-roam-node-visit node :other-window)
-          (switch-to-buffer-other-window cbuf))
-      (push-button))))
+  (save-buffer)
+  (compile (concat "go run "  (file-name-nondirectory (buffer-file-name))) t)
+  (other-window t)
+  (end-of-add-hook 'go-mode))
 
 
 
@@ -280,13 +225,21 @@ automatically previewed."
   (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
   (highlight-indent-guides-mode))
 
+;; school
 
+(defun salih/open-book ()
+  "Search for a file in ~/me and open it."
+  (interactive)
+  (let ((default-directory (car bibtex-completion-library-path)))
+    (call-interactively 'find-file)))
+
+;; let's hope for the best
 
 (defun salih/epa-encrypt-file (recipients)
   "Encrypt the currently opened file for RECIPIENTS and delete the original."
   (interactive
    (list (epa-select-keys (epg-make-context epa-protocol)
-  "Select recipients for encryption. If no one is selected, symmetric encryption
+                          "Select recipients for encryption. If no one is selected, symmetric encryption
   will be performed.")))
   (let* ((file (buffer-file-name))
          (cipher (concat file
@@ -324,21 +277,44 @@ If no one is selected, symmetric encryption will be performed.  ")))
 	(salih/epa-encrypt-file recipients)))
     (revert-buffer)))
 
+;; TODO purge this (i don't use doom-themes anymore)
+;; (defun salih/solaire-mode-real-buffer-custom-p ()
+;;   "Return t if the current buffer is the dashboard or scratch, or is a real
+;; (file-visiting) buffer."
+;;   (cond ((string= (buffer-name (buffer-base-buffer)) "*sly-mrepl for sbcl*") t)
+;;         ((buffer-file-name (buffer-base-buffer)) t)
+;;         (t nil)))
 
 
-(defun salih/solaire-mode-real-buffer-custom-p ()
-  "Return t if the current buffer is the dashboard or scratch, or is a real
-(file-visiting) buffer."
-  (cond ((string= (buffer-name (buffer-base-buffer)) "*sly-mrepl for sbcl*") t)
-        ((buffer-file-name (buffer-base-buffer)) t)
-        (t nil)))
+;; other handy stuff
 
+(with-eval-after-load 'embark
+  (add-hook 'embark-collect-mode-hook  #'salih/consult-preview-at-point-mode))
 
+(define-minor-mode salih/consult-preview-at-point-mode
+  "Preview minor mode for an *Embark Collect* buffer.
+When moving around in the *Embark Collect* buffer, the candidate at point is
+automatically previewed."
+  :init-value nil :group 'consult
+  (if salih/consult-preview-at-point-mode
+      (add-hook 'post-command-hook #'salih/consult-preview-at-point nil 'local)
+    (remove-hook 'post-command-hook #'salih/consult-preview-at-point 'local)))
 
-
-
-
-
+(defun salih/consult-preview-at-point ()
+  "Preview candidate at point in an *Embark Collect* buffer."
+  (interactive)
+  (let ((display-buffer-base-action '(display-buffer-pop-up-window))
+        (cbuf (current-buffer))
+        (node))
+    ;; Avoid pushing the button created by Embark.  For some reason, some
+    ;; candidates lead to a org-roam-node-find prompt and create a new frame.
+    (if (setq node (get-text-property (point) 'node))
+        ;; `org-roam-node-visit' does not return the buffer visited
+        (progn
+          (unless (featurep 'org-roam)(require 'org-roam))
+          (org-roam-node-visit node :other-window)
+          (switch-to-buffer-other-window cbuf))
+      (push-button))))
 
 (defun salih/xwidget-open-html ()
   "Open the current buffer's file path in an xwidget window."
@@ -348,6 +324,7 @@ If no one is selected, symmetric encryption will be performed.  ")))
     (when file-path
       (let ((xwidget (xwidget-webkit-browse-url (concat "file://" file-path))))
         (message "Opened file %s in an xwidget window." file-path)))))
+
 
 
 
@@ -362,8 +339,6 @@ If no one is selected, symmetric encryption will be performed.  ")))
     (ement-connect :user-id user-id
                    :password password
                    :uri-prefix "http://127.0.0.1:8008")))
-
-
 
 
 (use-package! awqat
@@ -428,6 +403,3 @@ If no one is selected, symmetric encryption will be performed.  ")))
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((ksh . t)))
-
-
-(provide '+handy)
