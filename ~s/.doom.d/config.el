@@ -99,6 +99,8 @@
 ;; don't forget to setup authinfo
 ;; https://www.emacswiki.org/emacs/GnusAuthinfo
 ;; and of course mu, isync
+;; tidy is required to use with xwidget:
+;; pacman -S tidy
 (after! mu4e
   (setq message-send-mail-function 'smtpmail-send-it
         starttls-use-gnutls t
@@ -108,7 +110,21 @@
         smtpmail-smtp-service 587
         smtpmail-starttls-credentials '(("mail.gmx.com" 465 nil nil))
         smtpmail-stream-type 'starttls
-        mu4e-modeline-show-global nil))
+        mu4e-modeline-show-global nil)
+
+  (defun remove-file-prefix (url)
+    (replace-regexp-in-string "^file://" "" url))
+
+  (defun mu4e-action-view-in-xwidget (msg)
+    (unless (fboundp 'xwidget-webkit-browse-url)
+      (mu4e-error "No xwidget support available"))
+    (let ((browse-url-handlers nil)
+          (browse-url-browser-function (lambda (url &optional _rest)
+                                         (with-output-to-string (call-process "tidy" nil nil nil "-m" "--numeric-entities" "yes" (remove-file-prefix url)))
+                                         (xwidget-webkit-browse-url url))))
+      (mu4e-action-view-in-browser msg))))
+
+
 
 
 
