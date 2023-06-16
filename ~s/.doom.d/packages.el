@@ -47,3 +47,11 @@
 (unpin! evil-collection)
 (package! evil-collection
   :recipe (:repo "luggages/evil-collection" :branch "mu4e-development"))
+
+
+(package! ox-tufte
+  :recipe (:host github
+           :repo "luggages/ox-tufte"))
+
+
+
