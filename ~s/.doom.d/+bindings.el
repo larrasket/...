@@ -9,12 +9,11 @@
 
 
 
-;; TODO purge this
-;; (define-key evil-normal-state-map       (kbd "C-g") #'evil-escape)
-;; (define-key evil-visual-state-map       (kbd "C-g") #'evil-escape)
-;; (define-key evil-insert-state-map       (kbd "C-g") #'evil-escape)
-;; (define-key evil-replace-state-map      (kbd "C-g") #'evil-escape)
-;; (define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
+(define-key evil-normal-state-map       (kbd "C-g") #'evil-escape)
+(define-key evil-visual-state-map       (kbd "C-g") #'evil-escape)
+(define-key evil-insert-state-map       (kbd "C-g") #'evil-escape)
+(define-key evil-replace-state-map      (kbd "C-g") #'evil-escape)
+(define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
 
 
 (with-eval-after-load 'company
