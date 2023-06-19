@@ -27,8 +27,6 @@
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 
 
-(after! solaire-mode
-  (setq solaire-mode-real-buffer-fn #'salih/solaire-mode-real-buffer-custom-p))
 
 
 (after! sly
