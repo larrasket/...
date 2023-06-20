@@ -7,7 +7,7 @@ picom &
 #--experimental-backends &
 dunst &
 xset r rate 200 25
-setxkbmap -layout en_US,ar -option 'grp:alt_shift_toggle'
+setxkbmap -layout us,ara -option 'grp:alt_shift_toggle'
 /home/l/.local/bin/pantalaimon &
 /home/l/go/bin/ang  &
 feh --bg-fill ~/configs/bg.png
