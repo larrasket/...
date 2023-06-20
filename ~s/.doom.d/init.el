@@ -132,7 +132,7 @@
        ;;web
        ;;zig
        :email
-       (mu4e +org)
+       mu4e
 
 
        ;; ;; notmuch
