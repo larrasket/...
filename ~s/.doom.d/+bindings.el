@@ -21,31 +21,52 @@
   (define-key company-search-map (kbd "C-g") #'salih/evil-escape-and-abort-company))
 
 
+
+
+
+;; general programming
+(add-hook 'prog-mode-hook (lambda ()
+                            (local-set-key (salih/mode "c d") #'+lookup/definition)
+                            (local-set-key (salih/mode "c r") #'+lookup/references)
+                            (local-set-key (salih/mode "c t") #'+lookup/type-definition)
+                            (local-set-key (salih/mode "c e") #'+default/diagnostics)
+                            (local-set-key (salih/mode "c g") #'salih/find-definition-or-lookup)
+                            (local-set-key (salih/mode ";")   #'salih/rename-or-iedit)
+                            (local-set-key (salih/mode "e l") #'flycheck-list-errors)))
+
+
+
 ;; Run project
 
 ;; TODO Refactor this. I think this should be rewritten as an only one function
 ;; that is "Run file", which check the mode and map it to the matching running
 ;; method.
 
+
+
+;; C++
+
 (add-hook 'c++-mode-hook
           (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-cpp)))
 
+;; C#
 (add-hook 'csharp-mode-hook
           (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-csharp)))
 
+;; Go
 (add-hook 'go-mode-hook
           (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-go-file)
             (local-set-key (kbd "<f2>") #'salih/compile-and-run-go-project)))
 
 
-;; open file in dired
+;; Dired
 (add-hook 'dired-mode-hook
           (lambda () (local-set-key (salih/mode "C-c") 'salih/open-in-external-app)
             (local-set-key (salih/mode "C-e") 'salih/epa-dired-do-encrypt)
             (local-set-key (salih/mode "C-d") 'epa-dired-do-decrypt)))
 
 
-;; make life easier in org
+;; Org-mode
 (add-hook 'org-mode-hook
           (lambda ()
             (local-set-key (salih/mode "C-f") #'org-footnote-action)
@@ -53,9 +74,23 @@
             (local-set-key (salih/mode "i l") #'org-web-tools-insert-link-for-url)
             (local-set-key (salih/mode "i d") #'org-download-clipboard)
             (local-set-key (salih/mode "i k") #'citar-insert-citation)
+            (local-set-key (salih/mode "i n") #'orb-insert-link)
+            (local-set-key (salih/mode "n n") #'org-noter)
+
+            ;; roam
             (local-set-key (salih/mode "i r") #'org-roam-node-insert)
+            (local-set-key (salih/mode "r i") #'org-roam-node-insert)
+            (local-set-key (salih/mode "r t") #'org-roam-tag-add)
+            (local-set-key (salih/mode "r a") #'org-roam-alias-add)
+            (local-set-key (salih/mode "i b") #'orb-insert-link)
+            (local-set-key (salih/mode "f b") #'consult-org-roam-backlinks)
+            (local-set-key (salih/mode "f f") #'consult-org-roam-forward-links)
+            (local-set-key (salih/mode "f n") #'consult-org-roam-search)
+
             (local-set-key (salih/global "TAB") #'consult-org-heading)))
 
+
+;; ement.el
 (add-hook 'ement-room-mode-hook
           (lambda ()
             (evil-local-set-key 'normal (kbd "RET") #'ement-room-send-message)
@@ -68,12 +103,12 @@
             (evil-local-set-key 'normal (kbd "R") #'ement-room-write-reply)
             (evil-local-set-key 'normal (kbd "E") #'ement-room-edit-message)))
 
+(add-hook 'ement-room-list-mode-hook (lambda ()
+                                             (evil-local-set-key 'normal (kbd "RET") #'ement-room-list-RET)))
 
 
 
-(add-hook 'TeX-mode-hook
-          (lambda () (local-set-key (salih/global "C-l") '(TeX-command-master "LatexMk"))))
-
+;; Lisp
 
 (eval-after-load 'sly
   `(define-key sly-mode-map (salih/mode "C-e") 'sly-eval-region))
@@ -100,6 +135,7 @@
  "K"     #'doom/kill-other-buffers
  "C-t"   #'gts-do-translate
  "l l"   #'leetcode
+ "s s"   #'doom/sudo-this-file
  "TAB d" #'+workspace/delete
  "SPC"   #'projectile-find-file)
 
@@ -110,26 +146,6 @@
  "g" #'magit-find-file
  "l" #'projectile-find-file)
 
-;; code keys
-(general-define-key
- :prefix (concat salih/prefix-mode "c")
- "d" #'+lookup/definition
- "r" #'+lookup/references
- "t" #'+lookup/type-definition
- "e" #'+default/diagnostics
- "g" #'salih/find-definition-or-lookup
- "f" #'+format/buffer)
-
-(general-define-key
- :prefix salih/prefix-mode
- ";" #'salih/rename-or-iedit)
-
-;; convenient
-(general-define-key
- :prefix (concat salih/prefix-mode "e")
- ;; e + l = (e)rrors (l)ist
- "l" #'flycheck-list-errors
- "f" #'salih/epa-encrypt-file)
 
 ;; search global
 (general-define-key
@@ -141,19 +157,12 @@
  "g" #'rgrep
  "w" #'+lookup/dictionary-definition)
 
-;; insertion
-(general-define-key
- :prefix (concat salih/prefix-mode "i")
- "u" #'insert-char
- "n" #'orb-insert-link
- "t" #'insert-now-timestamp)
 
 ;; notes
 (general-define-key
  :prefix (concat salih/prefix-global "n")
  "f" #'citar-open-notes
  "b" #'citar-open-notes
- "n" #'org-noter
  "o" #'salih/open-book)
 
 ;; roam
@@ -165,17 +174,6 @@
  "j" #'org-roam-dailies-capture-today
  "t" #'org-roam-dailies-goto-today)
 
-;; roam mode
-(add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key (salih/mode "r i") #'org-roam-node-insert)
-            (local-set-key (salih/mode "r t") #'org-roam-tag-add)
-            (local-set-key (salih/mode "r a") #'org-roam-alias-add)
-            (local-set-key (salih/mode "i b") #'orb-insert-link)
-
-            (local-set-key (salih/mode "f b") #'consult-org-roam-backlinks)
-            (local-set-key (salih/mode "f f") #'consult-org-roam-forward-links)
-            (local-set-key (salih/mode "f n") #'consult-org-roam-search)))
 
 
 ;; magit and vc
@@ -194,8 +192,9 @@
 
 ;; other
 (general-define-key
- :prefix (concat salih/prefix-global "e")
- "e" #'eshell)
+ :prefix (concat salih/prefix-global)
+ "e e" #'eshell
+ "i u" #'insert-char)
 
 ;; projectile
 (projectile-mode +1)
