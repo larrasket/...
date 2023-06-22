@@ -396,3 +396,87 @@ automatically previewed."
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((ksh . t)))
+
+
+
+;; disable spaces and icons in dashboard
+
+
+(defun doom-dashboard-widget-shortmenu ()
+  (let ((all-the-icons-scale-factor 1.45)
+        (all-the-icons-default-adjust -0.02))
+    (insert "\n")
+    (dolist (section +doom-dashboard-menu-sections)
+      (cl-destructuring-bind (label &key icon action when face key) section
+        (when (and (fboundp action)
+                   (or (null when)
+                       (eval when t)))
+          (insert
+           (+doom-dashboard--center
+            (- +doom-dashboard--width 1)
+            (let ((icon (if (stringp icon) icon (eval icon t))))
+              (format (format "%s%%s%%-10s" (if icon "%3s\t" "%3s"))
+                      (or icon "")
+                      (with-temp-buffer
+                        (insert-text-button
+                         label
+                         'action
+                         `(lambda (_)
+                            (call-interactively (or (command-remapping #',action)
+                                                    #',action)))
+                         'face (or face 'doom-dashboard-menu-title)
+                         'follow-link t
+                         'help-echo
+                         (format "%s (%s)" label
+                                 (propertize (symbol-name action) 'face 'doom-dashboard-menu-desc)))
+                        (format "%-37s" (buffer-string)))
+                      ;; Lookup command keys dynamically
+                      (propertize
+                       (or key
+                           (when-let*
+                               ((keymaps
+                                 (delq
+                                  nil (list (when (bound-and-true-p evil-local-mode)
+                                              (evil-get-auxiliary-keymap +doom-dashboard-mode-map 'normal))
+                                            +doom-dashboard-mode-map)))
+                                (key
+                                 (or (when keymaps
+                                       (where-is-internal action keymaps t))
+                                     (where-is-internal action nil t))))
+                             (with-temp-buffer
+                               (save-excursion (insert (key-description key)))
+                               (while (re-search-forward "<\\([^>]+\\)>" nil t)
+                                 (let ((str (match-string 1)))
+                                   (replace-match
+                                    (upcase (if (< (length str) 3)
+                                                str
+                                              (substring str 0 3))))))
+                               (buffer-string)))
+                           "")
+                       'face 'doom-dashboard-menu-desc))))
+           "\n"))))))
+
+
+
+(setq +doom-dashboard-menu-sections
+      '(("Reload last session"
+         :when (cond ((modulep! :ui workspaces)
+                      (file-exists-p (expand-file-name persp-auto-save-fname persp-save-dir)))
+                     ((require 'desktop nil t)
+                      (file-exists-p (desktop-full-file-name))))
+         :face (:inherit (doom-dashboard-menu-title bold))
+         :action doom/quickload-session)
+        ("Open org-agenda"
+         :when (fboundp 'org-agenda)
+         :action org-agenda)
+        ("Recently opened files"
+         :action recentf-open-files)
+        ("Open project"
+         :action projectile-switch-project)
+        ("Jump to bookmark"
+         :action bookmark-jump)
+        ("Open private configuration"
+         :when (file-directory-p doom-user-dir)
+         :action doom/open-private-config)
+        ("Open documentation"
+         :action doom/help)))
