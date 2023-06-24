@@ -27,6 +27,7 @@
 ;; general programming
 (add-hook 'prog-mode-hook (lambda ()
                             (local-set-key (salih/mode "c d") #'+lookup/definition)
+                            (local-set-key (salih/mode "/")   #'swiper)
                             (local-set-key (salih/mode "c r") #'+lookup/references)
                             (local-set-key (salih/mode "c t") #'+lookup/type-definition)
                             (local-set-key (salih/mode "c e") #'+default/diagnostics)
@@ -76,6 +77,9 @@
             (local-set-key (salih/mode "i k") #'citar-insert-citation)
             (local-set-key (salih/mode "i n") #'orb-insert-link)
             (local-set-key (salih/mode "n n") #'org-noter)
+            (define-key org-mode-map (kbd "C-c /") nil)
+            (local-set-key (salih/mode "/") #'swiper)
+
 
             ;; roam
             (local-set-key (salih/mode "i r") #'org-roam-node-insert)
@@ -104,7 +108,7 @@
             (evil-local-set-key 'normal (kbd "E") #'ement-room-edit-message)))
 
 (add-hook 'ement-room-list-mode-hook (lambda ()
-                                             (evil-local-set-key 'normal (kbd "RET") #'ement-room-list-RET)))
+                                       (evil-local-set-key 'normal (kbd "RET") #'ement-room-list-RET)))
 
 
 
@@ -204,6 +208,7 @@
 ;; convenient
 (global-set-key (kbd "M-RET") #'lsp-execute-code-action)
 (global-set-key (kbd "C-M-g") #'+lookup/definition)
+
 
 ;; resize windows
 (global-set-key (kbd "C-<left>")  #'shrink-window-horizontally)
