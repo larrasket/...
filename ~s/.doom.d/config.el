@@ -22,6 +22,13 @@
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       doom-theme                                        'distinguished
       highlight-indent-guides-method                    'bitmap
+      display-line-numbers-type                         'visual
+      doom-modeline-height                              17
+      doom-modeline-buffer-state-icon                   nil
+      doom-modeline-icon                                nil
+      treemacs-position                                 'right
+
+
 
       ;; set org files
       +org-capture-journal-file                         "~/blog/content/stack.org"
@@ -80,17 +87,16 @@
       vertico-buffer-display-action                     '(display-buffer-same-window)
       enable-recursive-minibuffers                      nil
 
+      ;; git-auto-commit-mode
+      gac-debounce-interval                             200
+      gac-silent-message-p                              t
+
       ;; other
       large-file-warning-threshold                      nil
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
       consult-preview-key                               nil
-      treemacs-position                                 'right
       dired-sidebar-refresh-on-special-commands         t
-      display-line-numbers-type                         'visual
-      doom-modeline-height                              17
-      doom-modeline-buffer-state-icon                   nil
-      doom-modeline-icon                                nil
       org-annotate-file-storage-file                    "~/configs/annotated.org"
       pdf-view-restore-filename                         "~/configs/~/.pdf-view-restore")
 
