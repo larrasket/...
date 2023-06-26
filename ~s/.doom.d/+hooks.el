@@ -43,7 +43,8 @@
 
 (epa-file-enable)
 (yas-global-mode 1)
-(vertico-buffer-mode)
+(if (not IS-PLASMA)
+    (vertico-buffer-mode))
 (global-wakatime-mode)
 ;; (global-org-modern-mode)
 (awqat-display-prayer-time-mode)

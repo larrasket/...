@@ -9,6 +9,8 @@
               bidi-paragraph-direction                  'left-to-right
               org-download-image-dir                    "~/roam/media")
 
+(defvar IS-PLASMA (cl-search "Plasma" (getenv "DESKTOP_SESSION")))
+
 (setq load-prefer-newer                                 t ;; avoid warnings
       ;; emacs settings
       completion-ignore-case                            t
@@ -20,7 +22,9 @@
       neo-theme                                         'icons
       neo-window-width                                  35
       +doom-dashboard-ascii-banner-fn                   'salih/banner
-      doom-theme                                        'distinguished
+      doom-theme                                        (if IS-PLASMA
+                                                            'doom-monokai-spectrum
+                                                          'distinguished)
       highlight-indent-guides-method                    'bitmap
       display-line-numbers-type                         'visual
       doom-modeline-height                              17
