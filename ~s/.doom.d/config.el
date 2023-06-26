@@ -45,6 +45,7 @@
       org-noter-auto-save-last-location                 t
       org-startup-folded                                t
       org-image-actual-width                            600
+      org-link-file-path-type                           'relative
 
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
