@@ -156,10 +156,8 @@
  :prefix (concat salih/prefix-global "s")
  "d" #'+default/search-cwd
  "b" #'+default/search-buffer
- "/" #'+default/search-buffer
  "p" #'+default/search-project
- "g" #'rgrep
- "w" #'+lookup/dictionary-definition)
+ "g" #'rgrep)
 
 
 ;; notes
@@ -197,8 +195,7 @@
 ;; other
 (general-define-key
  :prefix (concat salih/prefix-global)
- "e e" #'eshell
- "i u" #'insert-char)
+ "e e" #'eshell)
 
 ;; projectile
 (projectile-mode +1)
@@ -206,9 +203,10 @@
 (define-key projectile-mode-map (kbd "C-x p a") #'projectile-add-known-project)
 
 ;; convenient
-(global-set-key (kbd "M-RET") #'lsp-execute-code-action)
-(global-set-key (kbd "C-M-g") #'+lookup/definition)
-
+(global-set-key (kbd "M-RET")      #'lsp-execute-code-action)
+(global-set-key (kbd "C-M-g")      #'+lookup/definition)
+(global-set-key (salih/mode "i u") #'insert-char)
+(global-set-key (salih/mode "s w") #'+lookup/dictionary-definition)
 
 ;; resize windows
 (global-set-key (kbd "C-<left>")  #'shrink-window-horizontally)
@@ -235,8 +233,11 @@
     (let ((prev-window (selected-window)))
       (org-noter-sync-current-note)
       (select-window prev-window)))
-  (define-key org-noter-notes-mode-map (kbd "C-c C-j")
-              #'salih/org-noter-sync-current-note-and-switch-window))
+  (define-key org-noter-notes-mode-map (salih/mode "C-j")
+              #'salih/org-noter-sync-current-note-and-switch-window)
+  (define-key org-noter-doc-mode-map (salih/mode "i i")
+            #'org-noter-insert-precise-note))
+ 
 
 
 (general-define-key
