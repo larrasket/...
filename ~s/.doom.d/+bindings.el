@@ -32,8 +32,10 @@
                             (local-set-key (salih/mode "c t") #'+lookup/type-definition)
                             (local-set-key (salih/mode "c e") #'+default/diagnostics)
                             (local-set-key (salih/mode "c g") #'salih/find-definition-or-lookup)
-                            (local-set-key (salih/mode ";")   #'salih/rename-or-iedit)
-                            (local-set-key (salih/mode "e l") #'flycheck-list-errors)))
+                            (local-set-key (salih/mode ";")   #'salih/rename-or-iedit)))
+
+(add-hook 'flycheck-mode-hook (lambda ()
+                                (local-set-key (salih/mode "e l") #'flycheck-list-errors)))
 
 
 
