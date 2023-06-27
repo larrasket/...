@@ -9,7 +9,8 @@
               bidi-paragraph-direction                  'left-to-right
               org-download-image-dir                    "~/roam/media")
 
-(defvar IS-PLASMA (cl-search "Plasma" (getenv "DESKTOP_SESSION")))
+(defvar IS-PLASMA (let ((output (shell-command-to-string "pgrep -x plasmashell")))
+                    (not (string-blank-p output))))
 
 (setq load-prefer-newer                                 t ;; avoid warnings
       ;; emacs settings
