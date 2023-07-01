@@ -21,7 +21,7 @@
 (add-hook 'mu4e-headers-mode-hook #'salih/disable-bright)
 (add-hook 'mu4e-view-mode-hook    #'salih/disable-bright)
 (add-hook 'mu4e-main-mode-hook    #'salih/disable-bright)
-(add-hook 'yas-minor-mode         (lambda() (yas-activate-extra-mode 'fundamental-mode)))
+(add-hook 'yas-minor-mode         (lambda () (yas-activate-extra-mode 'fundamental-mode)))
 (add-hook 'org-mode-hook          (lambda ()
                                     (display-line-numbers-mode -1)
                                     (setq truncate-lines 1)
@@ -34,6 +34,12 @@
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 
 
+(add-hook 'xwidget-webkit-mode-hook (lambda ()
+                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "y" 'xwidget-webkit-copy-selection-as-kill)
+                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "SPC" 'xwidget-webkit-scroll-up)))
+                                     
+
+                                     
 
 
 (after! sly
