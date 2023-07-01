@@ -480,3 +480,8 @@ automatically previewed."
          :action doom/open-private-config)
         ("Open documentation"
          :action doom/help)))
+
+(defun salih/org-remove-all-tags ()
+  "Remove all tags from all headlines in the current Org mode buffer."
+  (interactive)
+  (org-map-entries (lambda () (org-set-tags nil))))

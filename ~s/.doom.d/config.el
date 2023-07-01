@@ -42,7 +42,7 @@
       org-directory                                     org-roam-directory
       org-id-locations-file                             "~/roam/.orgids"
       org-agenda-skip-scheduled-if-done                 nil
-      org-use-tag-inheritance                           nil
+      org-use-tag-inheritance                           t
       org-agenda-block-separator                        9472
       org-clock-mode-line-total                         'today
       ;; org-extend-today-until                            6
@@ -51,6 +51,36 @@
       org-startup-folded                                t
       org-image-actual-width                            600
       org-link-file-path-type                           'relative
+      org-tag-alist                                     '((:startgroup)
+                                                          ("@personal" . nil)
+                                                          (:grouptags)
+
+                                                          ("@read" . ?r)
+                                                          ("@school" . ?s)
+                                                          ("@programming" . ?p)
+                                                          ("@idea" . ?i)
+                                                          ("@write" . ?w)
+                                                          ("@check" . ?c)
+                                                          ("@watch" . ?W)
+                                                          (:endgroup)
+                                                          (:startgroup)
+                                                          ("@tinker" . nil)
+                                                          (:grouptags)
+                                                          ("@emacs" . ?e) ("@blog" . ?b)
+                                                          (:endgroup)
+
+                                                          (:startgroup)
+                                                          ("@nothing" . nil)
+                                                          (:grouptags)
+                                                          ("@chill" . ?C)
+                                                          ("@lost" . ?l)
+                                                          ("@people" . nil)
+                                                          (:endgroup)
+                                                          ;; some topics off-groups
+                                                          ("@politics" . nil)
+                                                          ("@philosophy" . nil)
+                                                          ("@history" . nil)
+                                                          ("@science" . nil))
 
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
