@@ -27,7 +27,6 @@
 ;; general programming
 (add-hook 'prog-mode-hook (lambda ()
                             (local-set-key (salih/mode "c d") #'+lookup/definition)
-                            (local-set-key (salih/mode "/")   #'swiper)
                             (local-set-key (salih/mode "c r") #'+lookup/references)
                             (local-set-key (salih/mode "c t") #'+lookup/type-definition)
                             (local-set-key (salih/mode "c e") #'+default/diagnostics)
@@ -37,7 +36,12 @@
 (add-hook 'flycheck-mode-hook (lambda ()
                                 (local-set-key (salih/mode "e l") #'flycheck-list-errors)))
 
+(add-hook 'nov-mode-hook (lambda ()
+                           (local-set-key (salih/mode "t") #'gts-do-translate)))
 
+
+(add-hook 'pdf-view-mode-hook (lambda ()
+                                (local-set-key (salih/mode "t") #'gts-do-translate)))
 
 ;; Run project
 
@@ -80,7 +84,6 @@
             (local-set-key (salih/mode "i n") #'orb-insert-link)
             (local-set-key (salih/mode "n n") #'org-noter)
             (define-key org-mode-map (kbd "C-c /") nil)
-            (local-set-key (salih/mode "/") #'swiper)
 
 
             ;; roam
@@ -139,11 +142,11 @@
  "k"     #'kill-current-buffer
  "D"     #'doom/kill-all-buffers
  "K"     #'doom/kill-other-buffers
- "C-t"   #'gts-do-translate
  "l l"   #'leetcode
  "s s"   #'doom/sudo-this-file
  "TAB d" #'+workspace/delete
- "SPC"   #'projectile-find-file)
+ "SPC"   #'projectile-find-file
+ "/"     #'swiper)
 
 ;; file keys
 (general-define-key
@@ -209,6 +212,7 @@
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
 (global-set-key (salih/mode "i u") #'insert-char)
 (global-set-key (salih/mode "s w") #'+lookup/dictionary-definition)
+(global-set-key (salih/mode "C-t") #'gts-do-translate)
 
 ;; resize windows
 (global-set-key (kbd "C-<left>")  #'shrink-window-horizontally)
@@ -238,8 +242,8 @@
   (define-key org-noter-notes-mode-map (salih/mode "C-j")
               #'salih/org-noter-sync-current-note-and-switch-window)
   (define-key org-noter-doc-mode-map (salih/mode "i i")
-            #'org-noter-insert-precise-note))
- 
+              #'org-noter-insert-precise-note))
+
 
 
 (general-define-key
