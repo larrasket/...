@@ -4,6 +4,7 @@
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/5875027b6bc46f2c79efa658f0d26e39" "")
 ; (gtk_accel_path "<Actions>/ThunarStandardView/sort-by-type" "")
 ; (gtk_accel_path "<Actions>/ThunarStatusBar/toggle-last-modified" "")
+; (gtk_accel_path "<Actions>/ThunarBookmarks/ef884331022ced0558d9e4cc39974192" "")
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/fe5c07fb6d255519c4158ae5ce196c1e" "")
 ; (gtk_accel_path "<Actions>/ThunarActionManager/cut" "<Primary>x")
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/1f280ebfcfbbf82bc72d62f7a17acea6" "")
