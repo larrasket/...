@@ -105,7 +105,9 @@
        ;;idris
        ;;(java +meghanada)
        ;;javascript
-       ;;julia
+       (julia
+        +lsp
+        +tree-sitter)
        ;;kotlin
        ;;lean
        ;;ledger

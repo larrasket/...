@@ -52,6 +52,3 @@
 (package! ox-tufte
   :recipe (:host github
            :repo "luggages/ox-tufte"))
-
-
-

@@ -127,6 +127,11 @@
       gac-debounce-interval                             200
       gac-silent-message-p                              t
 
+      ;; julia
+      lsp-julia-default-environment                     "~/.julia/environments/v1.9"
+      lsp-julia-package-dir                             nil
+      lsp-julia-flags                                   `("-J/home/l/configs/~s/assets/languageserver.so")
+
       ;; other
       large-file-warning-threshold                      nil
       inferior-lisp-program                             "sbcl"
