@@ -132,6 +132,11 @@
       lsp-julia-package-dir                             nil
       lsp-julia-flags                                   `("-J/home/l/configs/~s/assets/languageserver.so")
 
+      ;; org-noter
+      org-noter-always-create-frame nil
+      org-noter-kill-frame-at-session-end nil
+      org-noter-swap-window nil
+
       ;; other
       large-file-warning-threshold                      nil
       inferior-lisp-program                             "sbcl"
@@ -139,6 +144,8 @@
       consult-preview-key                               nil
       dired-sidebar-refresh-on-special-commands         t
       org-annotate-file-storage-file                    "~/configs/annotated.org"
+      ement-room-send-message-filter                    'ement-room-send-org-filter
+      bmkp-last-as-first-bookmark-file                  "/home/ghd/.emacs.d/.local/etc/bookmarks"
       pdf-view-restore-filename                         "~/configs/~/.pdf-view-restore")
 
 
