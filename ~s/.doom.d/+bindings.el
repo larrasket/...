@@ -41,7 +41,10 @@
 
 
 (add-hook 'pdf-view-mode-hook (lambda ()
-                                (local-set-key (salih/mode "t") #'gts-do-translate)))
+                                (local-set-key (salih/mode "t") #'gts-do-translate)
+                                (evil-local-set-key 'normal (kbd "J") #' pdf-view-next-page-command)
+                                (evil-local-set-key 'normal (kbd "K") #' pdf-view-previous-page-command)))
+                               
 
 ;; Run project
 
