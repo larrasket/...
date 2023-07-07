@@ -30,7 +30,7 @@
   :demand t
   :after nov
   :config
-  (define-key nov-mode-map (kbd "o") 'nov-xwidget-view)
+  (define-key nov-mode-map (kbd "&") 'nov-xwidget-view)
   (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files))
 
 
