@@ -133,9 +133,12 @@
       lsp-julia-flags                                   `("-J/home/l/configs/~s/assets/languageserver.so")
 
       ;; org-noter
-      org-noter-always-create-frame nil
-      org-noter-kill-frame-at-session-end nil
-      org-noter-swap-window nil
+      org-noter-always-create-frame                     nil
+      org-noter-kill-frame-at-session-end               nil
+      org-noter-swap-window                             nil
+      nov-text-width                                    80
+
+
 
       ;; other
       large-file-warning-threshold                      nil
