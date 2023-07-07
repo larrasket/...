@@ -16,3 +16,4 @@ feh --bg-fill ~/configs/bg.png
 pantalaimon --data-path ~/tmp/pant/ &
 flameshot &
 qbittorrent-nox &
+libinput-gestures-setup start
