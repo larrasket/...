@@ -6,7 +6,6 @@
                             (auto-fill-mode)
                             (setq-default indent-tabs-mode nil)))
 
-;; (add-hook 'nov-mode-hook     #'salih/make-buffer-white)
 (add-hook 'after-init-hook        #'global-flycheck-mode)
 (add-hook 'csv-mode-hook          #'csv-align-mode)
 
@@ -74,3 +73,10 @@
     (if (save-excursion (org-goto-first-child)) "▶" " "))
   (add-to-list 'org-agenda-prefix-format '(
                                            agenda  . "%i%-3:(my/org-has-children) %-12:c%?-12t% s ")))
+
+
+
+(add-hook 'nov-mode-hook (lambda ()
+                           (defface tmp-buffer-local-face
+                             '((t :family "Noto Sans" :height 1.0)) "")
+                           (buffer-face-set 'tmp-buffer-local-face)))

@@ -485,3 +485,13 @@ automatically previewed."
   "Remove all tags from all headlines in the current Org mode buffer."
   (interactive)
   (org-map-entries (lambda () (org-set-tags nil))))
+
+
+(defun salih/make-nov-white ()
+  (interactive)
+  (setq buffer-face-mode-face `(:background "white"
+                                :foreground "black"
+                                :family "Noto Sans" :height 1.0))
+  (face-remap-add-relative 'hl-line :background "#e6e6e6")
+  (face-remap-add-relative 'link :foreground "blue")
+  (buffer-face-mode t))
