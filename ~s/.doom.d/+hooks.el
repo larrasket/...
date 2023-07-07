@@ -79,4 +79,7 @@
 (add-hook 'nov-mode-hook (lambda ()
                            (defface tmp-buffer-local-face
                              '((t :family "Noto Sans" :height 1.0)) "")
-                           (buffer-face-set 'tmp-buffer-local-face)))
+                           (buffer-face-set 'tmp-buffer-local-face)
+                           (setq left-margin-width 4)
+                           (setq left-fringe-width 0)
+                          (setq right-fringe-width 0)))
