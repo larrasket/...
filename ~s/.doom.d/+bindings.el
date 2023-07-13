@@ -44,7 +44,7 @@
                                 (local-set-key (salih/mode "t") #'gts-do-translate)
                                 (evil-local-set-key 'normal (kbd "J") #' pdf-view-next-page-command)
                                 (evil-local-set-key 'normal (kbd "K") #' pdf-view-previous-page-command)))
-                               
+
 
 ;; Run project
 
@@ -86,6 +86,7 @@
             (local-set-key (salih/mode "i k") #'citar-insert-citation)
             (local-set-key (salih/mode "i n") #'orb-insert-link)
             (local-set-key (salih/mode "n n") #'org-noter)
+            (local-set-key (salih/mode "e p") #'org-pandoc-export-to-latex-pdf)
             (define-key org-mode-map (kbd "C-c /") nil)
 
 
