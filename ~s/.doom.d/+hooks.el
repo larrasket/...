@@ -78,8 +78,17 @@
 
 (add-hook 'nov-mode-hook (lambda ()
                            (defface tmp-buffer-local-face
-                             '((t :family "Noto Sans" :height 1.0)) "")
+                             '((t :family "Roboto Condensed" :height 1.0)) "")
                            (buffer-face-set 'tmp-buffer-local-face)
                            (setq left-margin-width 4)
                            (setq left-fringe-width 0)
-                          (setq right-fringe-width 0)))
+                           (setq right-fringe-width 0)
+                           (text-scale-set 1)))
+
+
+
+
+;; make evil treat "-" and "_" as parts of words when using w or e
+(with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol)
+    (setq-default evil-symbol-word-search t))

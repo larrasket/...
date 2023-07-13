@@ -491,7 +491,7 @@ automatically previewed."
   (interactive)
   (setq buffer-face-mode-face `(:background "white"
                                 :foreground "black"
-                                :family "Noto Sans" :height 1.0))
+                                :family "Roboto Condensed" :height 1.0))
   (face-remap-add-relative 'hl-line :background "#e6e6e6")
   (face-remap-add-relative 'link :foreground "blue")
   (buffer-face-mode t))

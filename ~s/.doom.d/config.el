@@ -136,7 +136,7 @@
       org-noter-always-create-frame                     nil
       org-noter-kill-frame-at-session-end               nil
       org-noter-swap-window                             nil
-      nov-text-width                                    80
+      nov-text-width                                    100
 
 
 
