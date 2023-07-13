@@ -3,11 +3,12 @@
 
 (require 'erc-services)
 
-(setq erc-nick                                          "jahiz"
-      erc-user-full-name                                user-full-name
-      erc-prompt-for-password                           nil
-      erc-prompt-for-nickserv-password                  nil
-      erc-autojoin-channels-alist                       '(("irc.libera.chat"
-                                                           "##arabic")))
+(setq-default erc-nick                                "lr0"
+    erc-user-full-name                                user-full-name
+    erc-prompt-for-password                           nil
+    erc-prompt-for-nickserv-password                  nil
+    erc-autojoin-channels-alist                       '(("irc.libera.chat"
+                                                         "##arabic")))
+ 
 
 (erc-spelling-mode)
