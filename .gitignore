@@ -41,3 +41,4 @@ flycheck_config.el
 /~s/.config/cmus/search-history
 *.o
 /~s/.config/mvi/watch_later/
+/~s/assets/languageserver.so

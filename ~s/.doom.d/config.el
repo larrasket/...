@@ -158,3 +158,4 @@
 (load "+helper.el")
 (load "+bindings.el")
 (load "+hooks.el")
+(load "org-tags.el")
