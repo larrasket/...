@@ -42,3 +42,5 @@ flycheck_config.el
 *.o
 /~s/.config/mvi/watch_later/
 /~s/assets/languageserver.so
+/~s/.config/cmus/queue.pl
+/~s/.config/cmus/resume
