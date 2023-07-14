@@ -5,12 +5,10 @@
                         (:grouptags)
                         ("@read" . ?r)
                         ("@school" . ?s)
-                        ("@programming" . ?p)
                         ("@idea" . ?i)
                         ("@write" . ?w)
                         ("@check" . ?c)
                         ("@watch" . ?W)
-                        ("@research" . ?R)
                         (:endgroup)
 
                         (:startgroup)
@@ -27,7 +25,10 @@
                         ("@lost" . ?l)
                         ("@people" . nil)
                         (:endgroup)
+                        ;; topics
                         ("@politics" . nil)
+                        ("@programming" . ?p)
+                        ("@research" . ?R)
                         ("@philosophy" . nil)
                         ("@history" . nil)
                         ("@science" . nil)))
