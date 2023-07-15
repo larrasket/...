@@ -215,6 +215,16 @@
 ;; convenient
 (global-set-key (kbd "M-RET")      #'lsp-execute-code-action)
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
+
+
+
+(general-define-key
+ :prefix salih/prefix-mode
+ "i w" #'insert-char
+ "s w" #'+lookup/dictionary-definition
+ "C-t" #'gts-do-translate
+ "C-s" #'centaur-tabs-ace-jump)
+
 (global-set-key (salih/mode "i u") #'insert-char)
 (global-set-key (salih/mode "s w") #'+lookup/dictionary-definition)
 (global-set-key (salih/mode "C-t") #'gts-do-translate)

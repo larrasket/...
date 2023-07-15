@@ -111,6 +111,7 @@
 
       ;; other
       large-file-warning-threshold                      nil
+      centaur-tabs-enable-key-bindings                  t
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
       consult-preview-key                               nil
@@ -157,5 +158,5 @@
 ;; this should be called after defining salih/prefix-global
 (load "+helper.el")
 (load "+bindings.el")
-(load "+hooks.el")
 (load "org-tags.el")
+(load "+hooks.el")
