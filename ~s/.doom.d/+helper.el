@@ -495,3 +495,11 @@ automatically previewed."
   (face-remap-add-relative 'hl-line :background "#e6e6e6")
   (face-remap-add-relative 'link :foreground "blue")
   (buffer-face-mode t))
+
+
+(defun salih/solaire-mode-real-buffer-custom-p ()
+  "Return t if the current buffer is the dashboard or scratch, or is a real (file-visiting) buffer."
+  (cond ((string= (buffer-name (buffer-base-buffer)) "*sly-mrepl for sbcl*") t)
+        ((string= (buffer-name (buffer-base-buffer)) "*eshell*") t)
+        ((buffer-file-name (buffer-base-buffer)) t)
+        (t nil)))

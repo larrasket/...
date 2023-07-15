@@ -89,3 +89,11 @@
 (with-eval-after-load 'evil
     (defalias #'forward-evil-word #'forward-evil-symbol)
     (setq-default evil-symbol-word-search t))
+
+
+
+(after! solaire-mode
+  (setq solaire-mode-real-buffer-fn #'salih/solaire-mode-real-buffer-custom-p))
+
+
+(centaur-tabs-mode)

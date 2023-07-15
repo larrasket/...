@@ -25,7 +25,7 @@
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       doom-theme                                        (if IS-PLASMA
                                                             'doom-monokai-spectrum
-                                                          'distinguished)
+                                                          'doom-ir-black)
       highlight-indent-guides-method                    'bitmap
       display-line-numbers-type                         'visual
       doom-modeline-height                              17
