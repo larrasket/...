@@ -39,6 +39,7 @@
       +org-capture-journal-file                         "~/blog/content/stack.org"
       +org-capture-changelog-file                       "~/blog/content/nice.org"
       +org-capture-todo-file                            "~/roam/main/life.org"
+      org-id-method                                     'org
       org-directory                                     org-roam-directory
       org-id-locations-file                             "~/roam/.orgids"
       org-agenda-skip-scheduled-if-done                 nil
