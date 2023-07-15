@@ -96,4 +96,6 @@
   (setq solaire-mode-real-buffer-fn #'salih/solaire-mode-real-buffer-custom-p))
 
 
+(add-hook 'org-agenda-mode-hook 'centaur-tabs-local-mode)
+(add-hook 'native-comp-limple-mode-hook 'centaur-tabs-local-mode)
 (centaur-tabs-mode)

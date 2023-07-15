@@ -108,11 +108,14 @@
       org-noter-swap-window                             nil
       nov-text-width                                    100
 
+      ;; tabs
+      centaur-tabs-enable-key-bindings                  t
+      centaur-tabs-set-icons                            t
+      centaur-tabs-plain-icons                          t
 
 
       ;; other
       large-file-warning-threshold                      nil
-      centaur-tabs-enable-key-bindings                  t
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
       consult-preview-key                               nil
