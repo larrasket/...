@@ -99,3 +99,39 @@
 (add-hook 'org-agenda-mode-hook 'centaur-tabs-local-mode)
 (add-hook 'native-comp-limple-mode-hook 'centaur-tabs-local-mode)
 (centaur-tabs-mode)
+(defun centaur-tabs-hide-tab (x)
+  "Do no to show buffer X in tabs."
+  (let ((name (format "%s" x)))
+    (or
+     ;; Current window is not dedicated window.
+     (window-dedicated-p (selected-window))
+
+     ;; Buffer name not match below blacklist.
+     (string-prefix-p "*epc" name)
+     (string-prefix-p "*helm" name)
+     (string-prefix-p "*Helm" name)
+     (string-prefix-p "*Org Agenda*" name)
+     (string-prefix-p "*lsp" name)
+     (string-prefix-p "*company" name)
+     (string-prefix-p "*Flycheck" name)
+     (string-prefix-p "*tramp" name)
+     (string-prefix-p " *Mini" name)
+     (string-prefix-p "*help" name)
+     (string-prefix-p "*straight" name)
+     (string-prefix-p " *temp" name)
+     (string-prefix-p "*Help" name)
+     (string-prefix-p "*Compile-Log*" name)
+
+     (string-prefix-p "*doom*" name)
+     (string-prefix-p "*scratch*" name)
+     (string-prefix-p "*Semantic" name)
+     (string-prefix-p "*mu4e-headers*" name)
+     (string-prefix-p "*mu4e-main*" name)
+     (string-prefix-p "*Messages*" name)
+     (string-prefix-p "*Async-native-compile-log*" name)
+     (string-prefix-p "*Native-compile-Log" name)
+
+
+     ;; Is not magit buffer.
+     (and (string-prefix-p "magit" name)
+          (not (file-name-extension name))))))

@@ -269,5 +269,5 @@
 
 
 ;; tabs
-(define-key evil-normal-state-map (kbd "g t") 'centaur-tabs-forward)
-(define-key evil-normal-state-map (kbd "g T") 'centaur-tabs-backward)
+(define-key evil-normal-state-map (kbd "g ]") 'centaur-tabs-forward)
+(define-key evil-normal-state-map (kbd "g [") 'centaur-tabs-backward)
