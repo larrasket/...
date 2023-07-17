@@ -112,7 +112,10 @@
       centaur-tabs-enable-key-bindings                  t
       centaur-tabs-set-icons                            t
       centaur-tabs-plain-icons                          t
-
+      centaur-tabs-set-modified-marker                  t
+      centaur-tabs-close-button                         "✕"
+      centaur-tabs-modified-marker                      "•"
+      centaur-tabs-cycle-scope                          'tabs
 
       ;; other
       large-file-warning-threshold                      nil

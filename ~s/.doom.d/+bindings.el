@@ -217,17 +217,17 @@
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
 
 
-
+(define-key org-mode-map (salih/mode "]") nil)
+(define-key org-mode-map (salih/mode "[") nil)
 (general-define-key
  :prefix salih/prefix-mode
  "i w" #'insert-char
  "s w" #'+lookup/dictionary-definition
  "C-t" #'gts-do-translate
- "C-s" #'centaur-tabs-ace-jump)
-
-(global-set-key (salih/mode "i u") #'insert-char)
-(global-set-key (salih/mode "s w") #'+lookup/dictionary-definition)
-(global-set-key (salih/mode "C-t") #'gts-do-translate)
+ "C-s" #'centaur-tabs-ace-jump
+ "]"   #'centaur-tabs-forward
+ "["   #'centaur-tabs-backward)
+ 
 
 ;; resize windows
 (global-set-key (kbd "C-<left>")  #'shrink-window-horizontally)
@@ -265,9 +265,3 @@
  :prefix (concat salih/prefix-global "m")
  "m" #'(lambda () (interactive) (mu4e~headers-jump-to-maildir "/Inbox"))
  "i" #'mu4e)
-
-
-
-;; tabs
-(define-key evil-normal-state-map (kbd "g ]") 'centaur-tabs-forward)
-(define-key evil-normal-state-map (kbd "g [") 'centaur-tabs-backward)
