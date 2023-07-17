@@ -123,6 +123,7 @@
      (string-prefix-p "*Compile-Log*" name)
 
      (string-prefix-p "*doom*" name)
+     (string-prefix-p "*Org tags*" name)
      (string-prefix-p "*scratch*" name)
      (string-prefix-p "*Semantic" name)
      (string-prefix-p "*mu4e-headers*" name)
