@@ -3,7 +3,7 @@
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 (require 'epa-file)
 (require 'go-translate)
-
+(require 'org-inlinetask)
 
 (setq-default frame-title-format                        '("%b")
               bidi-paragraph-direction                  'left-to-right
