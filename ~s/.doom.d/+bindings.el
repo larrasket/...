@@ -131,6 +131,10 @@
 (eval-after-load 'sly
   `(define-key sly-mode-map (salih/mode "C-f") 'sly-eval-buffer))
 
+(eval-after-load 'sly
+  `(define-key sly-mode-map (salih/mode "C-j") 'salih/sly-compile-defun-with-print))
+
+
 
 ;; convenient
 (general-define-key

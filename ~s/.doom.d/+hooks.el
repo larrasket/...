@@ -136,3 +136,33 @@
      ;; Is not magit buffer.
      (and (string-prefix-p "magit" name)
           (not (file-name-extension name))))))
+
+;; lisp
+
+(defvar salih/sly--compile-eval-begin-print-counter 0 "a counter to distinguish compile/eval cycles")
+(defun salih/sly--compile-eval-begin-print (&rest _)
+  "print the counter value into REPL to distinguish compile/eval cycles."
+  ;;(sly-eval-async `(cl:format t "~&----- my advice called from: ~a" (quote ,real-this-command))) ;; debug-code
+  (sly-eval-async `(cl:format t "" ,(cl-incf salih/sly--compile-eval-begin-print-counter))))
+(advice-add 'sly-compile-string :before 'salih/sly--compile-eval-begin-print)
+(advice-add 'sly-compile-file :before 'salih/sly--compile-eval-begin-print)
+;;(advice-add 'sly-compile-region :before 'salih/sly--compile-eval-begin-print) ;; `sly-compile-region' already done by `sly-compile-string'
+(advice-add 'sly-eval-print-last-expression :before 'salih/sly--compile-eval-begin-print) ;; `C-j' in `sly-scratch' buffer
+(advice-add 'sly-eval-with-transcript :before 'salih/sly--compile-eval-begin-print)
+
+(defun salih/sly-eval-with-print (form)
+  "Evaluate FORM in the SLY REPL, wrapping it with a (print ...) form."
+  (interactive "sForm: ")
+  (let* ((form-with-print (format "(print %s)" form))
+         (sly-command (sly-interactive-eval form-with-print)))
+    (sly-eval-last-expression)
+    (message "Evaluated: %s" form-with-print)))
+
+(defun salih/sly-compile-defun-with-print ()
+  "Compile the current toplevel form in SLY, wrapping it with a (print ...) form."
+  (interactive)
+  (let* ((form (sly-sexp-at-point))
+         (form-with-print (format "(print %s)" form))
+         (sly-command (sly-interactive-eval form-with-print)))
+    (sly-compile-defun)
+    (message "Compiled: %s" form-with-print)))
