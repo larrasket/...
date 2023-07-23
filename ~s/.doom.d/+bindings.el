@@ -88,7 +88,6 @@
             (local-set-key (salih/mode "n n") #'org-noter)
             (local-set-key (salih/mode "n k") #'org-noter-kill-session)
             (local-set-key (salih/mode "e p") #'org-pandoc-export-to-latex-pdf)
-            (define-key org-mode-map (kbd "C-c /") nil)
 
 
             ;; roam
@@ -225,7 +224,7 @@
 (define-key org-mode-map (salih/mode "[") nil)
 (general-define-key
  :prefix salih/prefix-mode
- "i w" #'insert-char
+ "i u" #'insert-char
  "s w" #'+lookup/dictionary-definition
  "C-t" #'gts-do-translate
  "C-s" #'centaur-tabs-ace-jump
