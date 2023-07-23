@@ -8,14 +8,15 @@
 
 (add-hook 'after-init-hook        #'global-flycheck-mode)
 (add-hook 'csv-mode-hook          #'csv-align-mode)
+(plist-put +popup-defaults :modeline t)
+
 
 (defun salih/disable-bright ()
-  (doom-modeline 1)
   (solaire-mode -1))
 
 (add-hook 'lisp-mode-hook         #'rainbow-delimiters-mode)
 (add-hook 'neotree-mode-hook      #'salih/disable-bright)
-(add-hook 'sly-mrepl-mode         #'salih/disable-bright)
+(add-hook 'sly-mrepl-mode-hook    #'salih/disable-bright)
 (add-hook 'dired-mode-hook        #'salih/disable-bright)
 (add-hook 'mu4e-headers-mode-hook #'salih/disable-bright)
 (add-hook 'mu4e-view-mode-hook    #'salih/disable-bright)
@@ -85,10 +86,10 @@
 
 
 
-;; make evil treat "-" and "_" as parts of words when using w or e
-(with-eval-after-load 'evil
-    (defalias #'forward-evil-word #'forward-evil-symbol)
-    (setq-default evil-symbol-word-search t))
+;; ;; make evil treat "-" and "_" as parts of words when using w or e
+;; (with-eval-after-load 'evil
+;;     (defalias #'forward-evil-word #'forward-evil-symbol)
+;;     (setq-default evil-symbol-word-search t))
 
 
 
@@ -128,6 +129,11 @@
      (string-prefix-p "*Semantic" name)
      (string-prefix-p "*mu4e-headers*" name)
      (string-prefix-p "*mu4e-main*" name)
+     (string-prefix-p "*mu4e-update" name)
+     (string-prefix-p "*julia" name)
+     (string-prefix-p "*sly-mrepl" name)
+
+
      (string-prefix-p "*Messages*" name)
      (string-prefix-p "*Async-native-compile-log*" name)
      (string-prefix-p "*Native-compile-Log" name)
