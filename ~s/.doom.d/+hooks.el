@@ -25,7 +25,16 @@
 (add-hook 'org-mode-hook          (lambda ()
                                     (display-line-numbers-mode -1)
                                     (setq truncate-lines 1)
+                                    (add-hook 'before-save-hook #'vulpea-project-update-tag nil 'local)
+                                    (add-hook 'find-file-hook #'vulpea-project-update-tag nil 'local)
                                     (setq org-hide-leading-stars t)))
+
+
+(advice-add 'org-agenda :before #'vulpea-agenda-files-update)
+(advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
+(add-to-list 'org-tags-exclude-from-inheritance "@read")
+(add-to-list 'org-tags-exclude-from-inheritance "project")
+
 
 (add-hook 'python-mode-hook (lambda ()
                               (flycheck-mode -1)))
@@ -37,9 +46,9 @@
 (add-hook 'xwidget-webkit-mode-hook (lambda ()
                                       (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "y" 'xwidget-webkit-copy-selection-as-kill)
                                       (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "SPC" 'xwidget-webkit-scroll-up)))
-                                     
 
-                                     
+
+
 
 
 (after! sly

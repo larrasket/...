@@ -54,3 +54,5 @@
            :repo "luggages/ox-tufte"))
 
 (package! centaur-tabs)
+
+(package! vulpea)
