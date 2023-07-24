@@ -7,7 +7,8 @@
 
 (setq-default frame-title-format                        '("%b")
               bidi-paragraph-direction                  'left-to-right
-              org-download-image-dir                    "~/roam/media")
+              org-download-image-dir                    "~/roam/media"
+              pdf-view-display-size                     'fit-width)
 
 (defvar IS-PLASMA (let ((output (shell-command-to-string "pgrep -x plasmashell")))
                     (not (string-blank-p output))))
@@ -119,6 +120,7 @@
 
       ;; other
       large-file-warning-threshold                      nil
+      save-place-ignore-files-regexp                    "\\(?:COMMIT_EDITMSG\\|hg-editor-[[:alnum:]]+\\.txt\\|svn-commit\\.tmp\\|bzr_log\\.[[:alnum:]]+\\|\\.pdf\\)$"
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
       consult-preview-key                               nil

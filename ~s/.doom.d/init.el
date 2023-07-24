@@ -56,7 +56,7 @@
         +offline)
        (lsp +peak)
        (magit)
-       ;; pdf
+       pdf
        ;; rgb
        ;;terraform
 
@@ -78,7 +78,6 @@
        ;;markdown
        (org
         +roam2)
-       ;; +noter
        (rest +jq)
        (sh
         +lsp)
@@ -161,7 +160,6 @@
        gitcolor
        chess
        cite
-       pdf
        roam
        bind)
 

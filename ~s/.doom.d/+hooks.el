@@ -47,8 +47,12 @@
                                       (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "y" 'xwidget-webkit-copy-selection-as-kill)
                                       (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "SPC" 'xwidget-webkit-scroll-up)))
 
+(add-hook 'pdf-view-mode-hook
+  (lambda ()
+    (set (make-local-variable 'evil-normal-state-cursor) (list nil))))
 
-
+(add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files)
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
 
 (after! sly

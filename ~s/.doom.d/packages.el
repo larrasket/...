@@ -6,7 +6,6 @@
 
 (package! org-web-tools)
 (package! org-present)
-(package! org-noter)
 (package! org-preview-html)
 
 (package! wiki-summary)
@@ -56,3 +55,5 @@
 (package! centaur-tabs)
 
 (package! vulpea)
+(package! org-noter)
+(package! nov)
