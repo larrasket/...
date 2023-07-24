@@ -68,9 +68,6 @@
 
 (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
 
-(setq org-agenda-custom-commands
-      '(("ces" "Custom: Agenda and Emacs SOMEDAY [#A] items"
-         ())))
 
 
 (setq org-agenda-custom-commands
@@ -98,6 +95,7 @@
                           (not (deadline))
                           (not (scheduled)))
                         ((org-ql-block-header "Get something done")))
+                        
 
 
           (org-ql-block '(and

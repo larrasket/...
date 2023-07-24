@@ -19,6 +19,7 @@
       bidi-paragraph-direction                          'left-to-right
 
       ;; appearance
+      ;; font `:size` value of 29 is prefect for filming
       doom-font                                         (font-spec :family "PragmataPro Mono Liga" :size 12)
       all-the-icons-color-icons                         nil
       neo-theme                                         'icons

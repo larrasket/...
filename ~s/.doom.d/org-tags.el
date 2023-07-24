@@ -32,3 +32,9 @@
                         ("@philosophy" . nil)
                         ("@history" . nil)
                         ("@science" . nil)))
+
+(add-to-list 'org-tags-exclude-from-inheritance "@read")
+(add-to-list 'org-tags-exclude-from-inheritance "noexport")
+(add-to-list 'org-tags-exclude-from-inheritance "project")
+(add-to-list 'org-tags-exclude-from-inheritance "permanent")
+(add-to-list 'org-tags-exclude-from-inheritance "link")

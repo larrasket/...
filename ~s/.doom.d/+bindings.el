@@ -80,6 +80,8 @@
 (add-hook 'org-mode-hook
           (lambda ()
             (local-set-key (salih/mode "C-f") #'org-footnote-action)
+            (local-set-key (salih/mode "c i") #'org-clock-in)
+            (local-set-key (salih/mode "c o") #'org-clock-out)
             (local-set-key (salih/mode "C-i") #'org-id-get-create)
             (local-set-key (salih/mode "i l") #'org-web-tools-insert-link-for-url)
             (local-set-key (salih/mode "i d") #'org-download-clipboard)
@@ -258,9 +260,10 @@
       (org-noter-sync-current-note)
       (select-window prev-window)))
   (define-key org-noter-notes-mode-map (salih/mode "C-j")
-              #'salih/org-noter-sync-current-note-and-switch-window)
-  (define-key org-noter-doc-mode-map (salih/mode "i i")
-              #'org-noter-insert-precise-note))
+              #'salih/org-noter-sync-current-note-and-switch-window))
+  ;; (define-key org-noter-doc-mode-map (salih/mode "C-c")
+  ;;             #'org-noter-insert-precise-note)
+
 
 
 

@@ -33,6 +33,7 @@
 (advice-add 'org-agenda :before #'vulpea-agenda-files-update)
 (advice-add 'org-todo-list :before #'vulpea-agenda-files-update)
 (add-to-list 'org-tags-exclude-from-inheritance "@read")
+(add-to-list 'org-tags-exclude-from-inheritance "noexport")
 (add-to-list 'org-tags-exclude-from-inheritance "project")
 
 
