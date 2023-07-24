@@ -246,6 +246,7 @@ static Key keys[] = {
     {MODKEY | ShiftMask, XK_Return, togglescratch, {.ui = 0}},
 
     {MODKEY, XK_z, incrgaps, {.i = +3}},
+    {MODKEY, XK_m, incrgaps2, {.i = +3}},
     /* { MODKEY|ShiftMask,		XK_z,		spawn, SHCMD("")
      * },
      */

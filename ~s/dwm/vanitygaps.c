@@ -73,6 +73,15 @@ incrgaps(const Arg *arg)
 	);
 }
 
+
+static void
+incrgaps2(const Arg *arg)
+{
+	if (borderpx == 1)
+		borderpx = 0;
+	else borderpx = 1;
+}
+
 /* static void */
 /* incrigaps(const Arg *arg) */
 /* { */
