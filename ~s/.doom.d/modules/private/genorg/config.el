@@ -51,7 +51,7 @@
 
           ("j" "Journal" entry
            (file+headline +org-capture-journal-file "Posts")
-           "*** %<%A, %d %B %Y>\n%?"  :prepend t)))
+           "*** %?\n:DATE:\n%<[%Y-%m-%d %a %H:%M]>\n:END:"  :prepend t)))
 
   (require 'ox))
 
