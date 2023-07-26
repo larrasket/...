@@ -561,7 +561,8 @@ function returns nil if current buffer contains only completed
 tasks."
   (seq-find                                 ; (3)
    (lambda (type)
-     (eq type 'todo))
+     (or (eq type 'todo)
+         (eq type 'done)))
    (org-element-map                         ; (2)
        (org-element-parse-buffer 'headline) ; (1)
        'headline
