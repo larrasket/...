@@ -101,7 +101,7 @@
             (local-set-key (salih/mode "i b") #'orb-insert-link)
             (local-set-key (salih/mode "f b") #'consult-org-roam-backlinks)
             (local-set-key (salih/mode "f f") #'consult-org-roam-forward-links)
-            (local-set-key (salih/mode "f n") #'consult-org-roam-search)
+
 
             (local-set-key (salih/global "TAB") #'consult-org-heading)))
 
@@ -190,7 +190,8 @@
  "c" #'org-roam-capture
  "f" #'org-roam-node-find
  "j" #'org-roam-dailies-capture-today
- "t" #'org-roam-dailies-goto-today)
+ "t" #'org-roam-dailies-goto-today
+ "s" #'consult-org-roam-search)
 
 
 
@@ -261,9 +262,8 @@
       (org-noter-sync-current-note)
       (select-window prev-window)))
   (define-key org-noter-notes-mode-map (salih/mode "C-j")
-              #'salih/org-noter-sync-current-note-and-switch-window))
-;; (define-key org-noter-doc-mode-map (salih/mode "C-c")
-;;             #'org-noter-insert-precise-note)
+              #'salih/org-noter-sync-current-note-and-switch-window)
+  (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note))
 
 
 
