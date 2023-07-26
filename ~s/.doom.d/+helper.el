@@ -611,3 +611,19 @@ tasks."
 (defun vulpea-agenda-files-update (&rest _)
   "Update the value of `org-agenda-files'."
   (setq org-agenda-files (vulpea-project-files)))
+
+
+
+
+(defun salih/org-id-get-create-with-custom-id ()
+  (interactive)
+  (when (org-before-first-heading-p)
+    (user-error "Not inside a heading"))
+  (let* ((org-id (org-id-get))
+         (custom-id-property "CUSTOM_ID"))
+
+    (unless org-id
+      (setq org-id (org-id-new))
+      (org-entry-put nil "ID" org-id)
+      (org-entry-put nil custom-id-property org-id))
+    org-id))
