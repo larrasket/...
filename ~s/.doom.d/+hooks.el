@@ -153,6 +153,9 @@
      (string-prefix-p "*Native-compile-Log" name)
 
 
+     (string-prefix-p "*elfeed-log*" name)
+
+
      ;; Is not magit buffer.
      (and (string-prefix-p "magit" name)
           (not (file-name-extension name))))))
