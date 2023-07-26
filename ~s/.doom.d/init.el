@@ -141,6 +141,7 @@
 
        :app
        ;; irc
+       rss
        :config
        (default ;; +bindings
                 +smartparens)

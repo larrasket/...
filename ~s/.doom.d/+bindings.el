@@ -233,7 +233,7 @@
  "C-s" #'centaur-tabs-ace-jump
  "]"   #'centaur-tabs-forward
  "["   #'centaur-tabs-backward)
- 
+
 
 ;; resize windows
 (global-set-key (kbd "C-<left>")  #'shrink-window-horizontally)
@@ -262,8 +262,8 @@
       (select-window prev-window)))
   (define-key org-noter-notes-mode-map (salih/mode "C-j")
               #'salih/org-noter-sync-current-note-and-switch-window))
-  ;; (define-key org-noter-doc-mode-map (salih/mode "C-c")
-  ;;             #'org-noter-insert-precise-note)
+;; (define-key org-noter-doc-mode-map (salih/mode "C-c")
+;;             #'org-noter-insert-precise-note)
 
 
 
@@ -272,3 +272,11 @@
  :prefix (concat salih/prefix-global "m")
  "m" #'(lambda () (interactive) (mu4e~headers-jump-to-maildir "/Inbox"))
  "i" #'mu4e)
+
+
+(evil-define-key 'normal elfeed-show-mode-map
+  (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "K") 'elfeed-goodies/split-show-prev)
+(evil-define-key 'normal elfeed-search-mode-map
+  (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "K") 'elfeed-goodies/split-show-prev)

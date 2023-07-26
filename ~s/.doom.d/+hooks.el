@@ -49,8 +49,8 @@
                                       (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "SPC" 'xwidget-webkit-scroll-up)))
 
 (add-hook 'pdf-view-mode-hook
-  (lambda ()
-    (set (make-local-variable 'evil-normal-state-cursor) (list nil))))
+          (lambda ()
+            (set (make-local-variable 'evil-normal-state-cursor) (list nil))))
 
 (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files)
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
@@ -186,3 +186,5 @@
          (sly-command (sly-interactive-eval form-with-print)))
     (sly-compile-defun)
     (message "Compiled: %s" form-with-print)))
+
+(add-hook 'elfeed-show-mode-hook 'visual-line-mode)

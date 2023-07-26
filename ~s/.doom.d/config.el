@@ -173,3 +173,4 @@
 (load "+bindings.el")
 (load "org-tags.el")
 (load "+hooks.el")
+(load "feeds.el")

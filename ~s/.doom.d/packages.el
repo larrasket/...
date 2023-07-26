@@ -57,3 +57,5 @@
 (package! vulpea)
 (package! org-noter)
 (package! nov)
+
+(package! elfeed-goodies)

@@ -44,3 +44,4 @@ flycheck_config.el
 /~s/assets/languageserver.so
 /~s/.config/cmus/queue.pl
 /~s/.config/cmus/resume
+/~s/.doom.d/feeds.el
