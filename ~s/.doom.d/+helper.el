@@ -501,7 +501,7 @@ automatically previewed."
   "Return t if the current buffer is the dashboard or scratch, or is a real (file-visiting) buffer."
   (cond ((string-prefix-p "*sly-mrepl for sbcl*" (buffer-name (buffer-base-buffer)) ) t)
         ((string-prefix-p "*eshell*" (buffer-name (buffer-base-buffer)) ) t)
-        ((string-prefix-p "*julia:main" (buffer-name (buffer-base-buffer)) ) t)
+        ((string-prefix-p "*julia" (buffer-name (buffer-base-buffer)) ) t)
         ((string-prefix-p "*doom*" (buffer-name (buffer-base-buffer)) ) t)
         ((buffer-file-name (buffer-base-buffer)) t)
         (t nil)))
