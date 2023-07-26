@@ -134,8 +134,27 @@
           ;;             (org-agenda-sorting-strategy '(todo-state-up priority-down))))
 
 
+(defun salih/org-ql-view--format-element (orig-fun &rest args)
+  "This function will intercept the original function and
+add the category to the result.
 
+ARGS is `element' in `org-ql-view--format-element'"
+  (if (not args)
+      ""
+    (let* ((element args)
+           (properties (cadar element))
+           (result (apply orig-fun element))
+           (smt "")
+           (category (org-entry-get (plist-get properties :org-marker) "CATEGORY")))
+      (if (> (length category) 11)
+          (setq category (substring category 0 10)))
+      (if (< (length category) 11)
+          (setq smt (make-string (- 11 (length category)) ?\s)))
+      (org-add-props
+       (format "   %-8s %s" (concat category ":" smt) result)
+       (text-properties-at 0 result)))))
 
+(advice-add 'org-ql-view--format-element :around #'salih/org-ql-view--format-element)
 
 
 
