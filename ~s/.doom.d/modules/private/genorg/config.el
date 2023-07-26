@@ -74,7 +74,10 @@
       '(("A" "Deadlines and Scheduled" ((tags-todo "DEADLINE<>\"\"|SCHEDULED<>\"\"")))
         ("v" "Agenda"
          ((org-ql-block '(and
-                          (priority "A"))
+                          (priority "A")
+                          (not (deadline))
+                          (not (scheduled)))
+
                         ((org-ql-block-header "High-priority tasks")))
 
           (agenda ""
@@ -95,7 +98,7 @@
                           (not (deadline))
                           (not (scheduled)))
                         ((org-ql-block-header "Get something done")))
-                        
+
 
 
           (org-ql-block '(and
@@ -128,10 +131,6 @@
                         ((org-ql-block-header "Looking for an idea?")))))))
 
 
-          ;; (tags-todo "-TAGS={.+}+TODO=\"TODO\""
-          ;;            ((org-agenda-overriding-header "Uknown time tasks")
-          ;;             (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline))
-          ;;             (org-agenda-sorting-strategy '(todo-state-up priority-down))))
 
 
 (defun salih/org-ql-view--format-element (orig-fun &rest args)
