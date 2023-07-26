@@ -71,10 +71,13 @@
 
       ;; school
       org-roam-directory                                (file-truename "~/roam")
-      bibtex-completion-bibliography                    "~/configs/~s/ref.bib"
       bibtex-completion-library-path                    '("~/roam/source/")
-      citar-bibliography                                bibtex-completion-bibliography
       bibtex-completion-notes-path                      "~/roam/reference/"
+      bibtex-completion-bibliography                    "/home/l/configs/~s/ref.bib"
+      org-cite-global-bibliography                      (list bibtex-completion-bibliography)
+      org-cite-csl-styles-dir                           "/home/l/configs/~s/assets/csl"
+      citar-bibliography                                bibtex-completion-bibliography
+      org-cite-csl--fallback-style-file                 (expand-file-name "chicago-ibid.csl" org-cite-csl-styles-dir)
 
       ;; translate
       gts-translate-list                                '(("en" "ar"))
