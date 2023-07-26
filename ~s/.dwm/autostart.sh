@@ -15,5 +15,4 @@ feh --bg-fill ~/configs/bg.png
 # pgrep -fl 'pidswallow -gl' || pidswallow -gl
 pantalaimon --data-path ~/tmp/pant/ &
 flameshot &
-qbittorrent-nox &
 libinput-gestures-setup start
