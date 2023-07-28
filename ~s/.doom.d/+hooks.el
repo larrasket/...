@@ -111,8 +111,9 @@
   (setq solaire-mode-real-buffer-fn #'salih/solaire-mode-real-buffer-custom-p))
 
 
-(add-hook 'org-agenda-mode-hook 'centaur-tabs-local-mode)
-(add-hook 'native-comp-limple-mode-hook 'centaur-tabs-local-mode)
+(add-hook 'org-agenda-mode-hook         #'centaur-tabs-local-mode)
+(add-hook 'dired-mode-hook              #'centaur-tabs-local-mode)
+(add-hook 'native-comp-limple-mode-hook #'centaur-tabs-local-mode)
 (centaur-tabs-mode)
 (defun centaur-tabs-hide-tab (x)
   "Do no to show buffer X in tabs."
@@ -154,6 +155,11 @@
 
 
      (string-prefix-p "*elfeed-log*" name)
+
+
+     (string-prefix-p "*flycheck" name)
+     (string-prefix-p "*nov" name)
+     (string-prefix-p "*format" name)
 
 
      ;; Is not magit buffer.

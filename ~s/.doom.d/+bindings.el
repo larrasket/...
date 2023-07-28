@@ -14,6 +14,7 @@
 (define-key evil-insert-state-map       (kbd "C-g") #'evil-escape)
 (define-key evil-replace-state-map      (kbd "C-g") #'evil-escape)
 (define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
+(define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
 
 
 (with-eval-after-load 'company
@@ -211,8 +212,9 @@
 
 ;; other
 (general-define-key
- :prefix (concat salih/prefix-global)
- "e e" #'eshell)
+ :prefix (concat salih/prefix-global "e")
+ "e" #'eshell
+ "f" #'elfeed)
 
 ;; projectile
 (projectile-mode +1)
