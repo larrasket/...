@@ -155,6 +155,7 @@
 
 
      (string-prefix-p "*elfeed-log*" name)
+     (string-prefix-p "*Org Clock*" name)
 
 
      (string-prefix-p "*flycheck" name)
@@ -197,3 +198,6 @@
     (message "Compiled: %s" form-with-print)))
 
 (add-hook 'elfeed-show-mode-hook 'visual-line-mode)
+
+
+(add-hook 'eshell-alias-load-hook 'salih/eshell-load-bash-aliases)

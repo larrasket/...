@@ -627,3 +627,17 @@ tasks."
       (org-entry-put nil "ID" org-id)
       (org-entry-put nil custom-id-property org-id))
     org-id))
+
+
+
+
+
+(defun salih/eshell-load-bash-aliases ()
+    "Read Bash aliases and add them to the list of eshell aliases."
+    ;; Bash needs to be run - temporarily - interactively
+    ;; in order to get the list of aliases.
+      (with-temp-buffer
+        (call-process "bash" nil '(t nil) nil "-ci" "alias")
+        (goto-char (point-min))
+        (while (re-search-forward "alias \\(.+\\)='\\(.+\\)'$" nil t)
+          (eshell/alias (match-string 1) (match-string 2)))))
