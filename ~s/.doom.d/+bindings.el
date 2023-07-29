@@ -47,6 +47,7 @@
                                 (evil-local-set-key 'normal (kbd "K") #' pdf-view-previous-page-command)))
 
 
+(add-hook 'lsp-mode-hook (lambda () (local-set-key (kbd "M-RET") #'lsp-execute-code-action)))
 ;; Run project
 
 ;; TODO Refactor this. I think this should be rewritten as an only one function
@@ -222,7 +223,7 @@
 (define-key projectile-mode-map (kbd "C-x p a") #'projectile-add-known-project)
 
 ;; convenient
-(global-set-key (kbd "M-RET")      #'lsp-execute-code-action)
+
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
 
 

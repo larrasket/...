@@ -161,6 +161,7 @@
      (string-prefix-p "*flycheck" name)
      (string-prefix-p "*nov" name)
      (string-prefix-p "*format" name)
+     (string-prefix-p "*Pandoc" name)
 
 
      ;; Is not magit buffer.
