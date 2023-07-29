@@ -6,7 +6,6 @@
                             (auto-fill-mode)
                             (setq-default indent-tabs-mode nil)))
 
-(add-hook 'after-init-hook        #'global-flycheck-mode)
 (add-hook 'csv-mode-hook          #'csv-align-mode)
 (plist-put +popup-defaults :modeline t)
 
@@ -61,13 +60,15 @@
 
 
 
+;; init
 (epa-file-enable)
 (yas-global-mode 1)
 (global-wakatime-mode)
 (awqat-display-prayer-time-mode)
 (salih/consult-preview-at-point)
-
-
+(add-hook 'after-init-hook        #'global-flycheck-mode)
+(add-hook 'after-init-hook #'mu4e)
+(consult-org-roam-mode 1)
 
 
 (add-hook 'bibtex-mode-hook (lambda ()
@@ -75,7 +76,6 @@
 
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 
-(add-hook 'after-init-hook #'mu4e)
 
 
 
