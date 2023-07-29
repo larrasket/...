@@ -534,6 +534,10 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     ((memq major-mode '(helpful-mode
                         help-mode))
      "Help")
+
+    ((memq major-mode '(erc-mode))
+     "Erc")
+
     ((memq major-mode '(org-mode
                         org-agenda-clockreport-mode
                         org-src-mode
