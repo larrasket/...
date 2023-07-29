@@ -230,7 +230,7 @@ Version 2019-11-04 2021-02-16"
 (defun salih/open-book ()
   "Search for a file in ~/me and open it."
   (interactive)
-  (let ((default-directory (car bibtex-completion-library-path)))
+  (let ((default-directory salih/source-directory))
     (call-interactively 'find-file)))
 
 ;; let's hope for the best

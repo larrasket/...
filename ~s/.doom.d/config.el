@@ -71,7 +71,7 @@
 
       ;; school
 
-      salih/source-directory                             "~/roam/references/source"
+      salih/source-directory                             "~/roam/references/source/"
       salih/books                                       (let (file-list)
                                                          (dolist (file (directory-files-recursively salih/source-directory "" nil t))
                                                            (push file file-list))
