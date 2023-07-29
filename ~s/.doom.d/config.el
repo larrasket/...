@@ -70,8 +70,15 @@
       awqat-mode-line-format                            " 🕌 ${prayer} (${hours}h${minutes}m) "
 
       ;; school
+
+      salih/source-directory                             "~/roam/references/source"
+      salih/books                                       (let (file-list)
+                                                         (dolist (file (directory-files-recursively salih/source-directory "" nil t))
+                                                           (push file file-list))
+                                                         file-list)
+
       org-roam-directory                                (file-truename "~/roam")
-      bibtex-completion-library-path                    '("~/roam/source/")
+      bibtex-completion-library-path                    (list salih/source-directory)
       bibtex-completion-notes-path                      "~/roam/reference/"
       bibtex-completion-bibliography                    "/home/l/configs/~s/ref.bib"
       org-cite-global-bibliography                      (list bibtex-completion-bibliography)

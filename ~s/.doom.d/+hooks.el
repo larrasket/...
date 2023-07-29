@@ -199,5 +199,26 @@
 
 (add-hook 'elfeed-show-mode-hook 'visual-line-mode)
 
-
 (add-hook 'eshell-alias-load-hook 'salih/eshell-load-bash-aliases)
+
+
+
+(defvar salih/consult--source-books
+  `(:name     "File"
+    :narrow   ?f
+    :category file
+    :face     consult-file
+    :history  file-name-history
+    :state    ,#'consult--file-state
+    :new      ,#'consult--file-action
+    :items
+    ,(lambda ()
+       (let ((ht (consult--buffer-file-hash))
+             items)
+         (dolist (file (bound-and-true-p salih/books) (nreverse items))
+           (unless (eq (aref file 0) ?/)
+             (let (file-name-handler-alist)
+               (setq file (expand-file-name file))))
+           (unless (gethash file ht)
+             (push (consult--fast-abbreviate-file-name file) items)))))))
+(add-to-list 'consult-buffer-sources 'salih/consult--source-books 'append)
