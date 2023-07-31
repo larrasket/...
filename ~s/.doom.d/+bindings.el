@@ -5,10 +5,15 @@
 ;; unbinding
 (define-key org-mode-map (kbd "C-c C-f") nil)
 (global-unset-key        (kbd "C-f"))
+(define-key org-mode-map (salih/mode "]") nil)
+(define-key org-mode-map (salih/mode "[") nil)
 (general-auto-unbind-keys)
 
 
 
+;; FIXME this is to make it easier with C-g instead of ESC while using evil
+;; mode. It is not prefect yet, I will tree to reach better solutions in the
+;; future
 (define-key evil-normal-state-map       (kbd "C-g") #'evil-escape)
 (define-key evil-visual-state-map       (kbd "C-g") #'evil-escape)
 (define-key evil-insert-state-map       (kbd "C-g") #'evil-escape)
@@ -16,35 +21,40 @@
 (define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
 (define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
 
-
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "C-g") #'salih/evil-escape-and-abort-company)
   (define-key company-search-map (kbd "C-g") #'salih/evil-escape-and-abort-company))
 
 
 
+(general-define-key
+ :keymaps 'prog-mode-map
+ :prefix salih/prefix-mode
+ "c d" #'+lookup/definition
+ "c r" #'+lookup/references
+ "c t" #'+lookup/type-definition
+ "c e" #'+default/diagnostics
+ "c g" #'salih/find-definition-or-lookup
+ ";"   #'salih/rename-or-iedit)
 
 
-;; general programming
-(add-hook 'prog-mode-hook (lambda ()
-                            (local-set-key (salih/mode "c d") #'+lookup/definition)
-                            (local-set-key (salih/mode "c r") #'+lookup/references)
-                            (local-set-key (salih/mode "c t") #'+lookup/type-definition)
-                            (local-set-key (salih/mode "c e") #'+default/diagnostics)
-                            (local-set-key (salih/mode "c g") #'salih/find-definition-or-lookup)
-                            (local-set-key (salih/mode ";")   #'salih/rename-or-iedit)))
+(general-define-key
+ :keymaps 'flycheck-mode-map
+ :prefix salih/prefix-mode
+ "e l" #'flycheck-list-errors)
 
-(add-hook 'flycheck-mode-hook (lambda ()
-                                (local-set-key (salih/mode "e l") #'flycheck-list-errors)))
 
-(add-hook 'nov-mode-hook (lambda ()
-                           (local-set-key (salih/mode "t") #'gts-do-translate)))
+(general-define-key
+ :keymaps 'nov-mode-map
+ :prefix salih/prefix-mode
+ "t" #'gts-do-translate)
 
 
 (add-hook 'pdf-view-mode-hook (lambda ()
                                 (local-set-key (salih/mode "t") #'gts-do-translate)
                                 (evil-local-set-key 'normal (kbd "J") #' pdf-view-next-page-command)
                                 (evil-local-set-key 'normal (kbd "K") #' pdf-view-previous-page-command)))
+
 
 
 (add-hook 'lsp-mode-hook (lambda () (local-set-key (kbd "M-RET") #'lsp-execute-code-action)))
@@ -54,10 +64,7 @@
 ;; that is "Run file", which check the mode and map it to the matching running
 ;; method.
 
-
-
 ;; C++
-
 (add-hook 'c++-mode-hook
           (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-cpp)))
 
@@ -72,42 +79,41 @@
 
 
 ;; Dired
-(add-hook 'dired-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") 'salih/open-in-external-app)
-            (local-set-key (salih/mode "C-e") 'salih/epa-dired-do-encrypt)
-            (local-set-key (salih/mode "C-d") 'epa-dired-do-decrypt)))
+(general-define-key
+ :keymaps 'dired-mode-map
+ :prefix salih/prefix-mode
+ "C-c" #'salih/open-in-external-app
+ "C-e" #'salih/epa-dired-do-encrypt
+ "C-d" #'epa-dired-do-encrypt)
+
 
 
 ;; Org-mode
-(add-hook 'org-mode-hook
-          (lambda ()
-            (local-set-key (salih/mode "C-f") #'org-footnote-action)
-            (local-set-key (salih/mode "c i") #'org-clock-in)
-            (local-set-key (salih/mode "c o") #'org-clock-out)
-            (local-set-key (salih/mode "C-i") #'org-id-get-create)
-            (local-set-key (salih/mode "i l") #'org-web-tools-insert-link-for-url)
-            (local-set-key (salih/mode "i d") #'org-download-clipboard)
-            (local-set-key (salih/mode "i c") #'salih/org-id-get-create-with-custom-id)
-            (local-set-key (salih/mode "i k") #'citar-insert-citation)
-            (local-set-key (salih/mode "i n") #'orb-insert-link)
-            (local-set-key (salih/mode "n n") #'org-noter)
-            (local-set-key (salih/mode "n k") #'org-noter-kill-session)
-            (local-set-key (salih/mode "e p") #'org-pandoc-export-to-latex-pdf)
+(general-define-key
+ :keymaps 'org-mode-map
+ :prefix salih/prefix-mode
+ "C-f" #'org-footnote-action
+ "c i" #'org-clock-in
+ "c o" #'org-clock-out
+ "C-i" #'org-id-get-create
+ "i l" #'org-web-tools-insert-link-for-url
+ "i d" #'org-download-clipboard
+ "i c" #'salih/org-id-get-create-with-custom-id
+ "i k" #'citar-insert-citation
+ "i n" #'orb-insert--link
+ "n n" #'org-noter
+ "n k" #'org-noter-kill-session
+ "e p" #'org-pandoc-export-to-latex-pdf
 
-
-            ;; roam
-            (local-set-key (salih/mode "i r") #'org-roam-node-insert)
-            (local-set-key (salih/mode "r i") #'org-roam-node-insert)
-            (local-set-key (salih/mode "r t") #'org-roam-tag-add)
-            (local-set-key (salih/mode "r a") #'org-roam-alias-add)
-            (local-set-key (salih/mode "i b") #'orb-insert-link)
-            (local-set-key (salih/mode "f b") #'consult-org-roam-backlinks)
-            (local-set-key (salih/mode "f f") #'consult-org-roam-forward-links)
-
-
-            (local-set-key (salih/global "TAB") #'consult-org-heading)))
-
-
+ ;; roam
+ "i r" #'org-roam-node-insert
+ "r i" #'org-roam-node-insert
+ "r t" #'org-roam-tag-add
+ "r a" #'org-roam-alias-add
+ "i b" #'orb-insert-link
+ "f b" #'consult-org-roam-backlinks
+ "f f" #'consult-org-roam-forward-links
+ "TAB" #'consult-org-heading)
 
 
 
@@ -133,7 +139,7 @@
  "."     #'find-file
  ","     #'persp-switch-to-buffer
  "<"     #'switch-to-buffer
- "RET"   #'bookmark-jump
+ "RET"   #'switch-to-buffer
  "["     #'previous-buffer
  "]"     #'next-buffer
  "d"     #'kill-current-buffer
@@ -212,8 +218,6 @@
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
 
 
-(define-key org-mode-map (salih/mode "]") nil)
-(define-key org-mode-map (salih/mode "[") nil)
 (general-define-key
  :prefix salih/prefix-mode
  "i u" #'insert-char
