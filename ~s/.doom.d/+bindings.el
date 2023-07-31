@@ -108,21 +108,6 @@
             (local-set-key (salih/global "TAB") #'consult-org-heading)))
 
 
-;; ement.el
-(add-hook 'ement-room-mode-hook
-          (lambda ()
-            (evil-local-set-key 'normal (kbd "RET") #'ement-room-send-message)
-            (evil-local-set-key 'normal (kbd "C-k") #'ement-room-delete-message)
-            (evil-local-set-key 'normal (kbd "s f") #'ement-room-send-file)
-            (evil-local-set-key 'normal (kbd "s i") #'ement-room-send-image)
-            (evil-local-set-key 'normal (kbd "q") #'quit-window)
-            (evil-local-set-key 'normal (kbd "r j") #'ement-room-join)
-            (evil-local-set-key 'normal (kbd "r l") #'ement-room-leave)
-            (evil-local-set-key 'normal (kbd "R") #'ement-room-write-reply)
-            (evil-local-set-key 'normal (kbd "E") #'ement-room-edit-message)))
-
-(add-hook 'ement-room-list-mode-hook (lambda ()
-                                       (evil-local-set-key 'normal (kbd "RET") #'ement-room-list-RET)))
 
 
 

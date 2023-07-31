@@ -321,17 +321,6 @@ automatically previewed."
 
 
 
-(require 'auth-source)
-(defun salih/ement-connect ()
-  "Connect to Ement with credentials from Authinfo."
-  (interactive)
-  (let* ((auth-info (auth-source-search :host "matrix.org"
-                                        :require '(:user :secret)))
-         (user-id (plist-get (car auth-info) :user))
-         (password (funcall (plist-get (car auth-info) :secret))))
-    (ement-connect :user-id user-id
-                   :password password
-                   :uri-prefix "http://127.0.0.1:8008")))
 
 
 (use-package! awqat

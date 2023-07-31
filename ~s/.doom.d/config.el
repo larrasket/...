@@ -137,7 +137,6 @@
       consult-preview-key                               nil
       dired-sidebar-refresh-on-special-commands         t
       org-annotate-file-storage-file                    "~/configs/annotated.org"
-      ement-room-send-message-filter                    'ement-room-send-org-filter
       bmkp-last-as-first-bookmark-file                  "/home/ghd/.emacs.d/.local/etc/bookmarks"
       pdf-view-restore-filename                         "~/configs/~/.pdf-view-restore")
 
