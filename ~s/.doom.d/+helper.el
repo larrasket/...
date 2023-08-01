@@ -643,3 +643,19 @@ tasks."
 (defun salih/open-agenda ()
   (interactive)
   (org-agenda nil "v"))
+
+
+
+
+
+(require 'auth-source)
+(defun salih/get-mail-password ()
+  (interactive)
+  (let* ((auth-info (auth-source-search :host "mail.gmx.com"
+                                        :require '(:user :secret)))
+         (password (funcall (plist-get (car auth-info) :secret))))
+    password))
+
+
+
+

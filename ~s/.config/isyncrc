@@ -1,21 +1,21 @@
-IMAPAccount lar21@gmx.com
+IMAPAccount lr0@gmx.com
 Host imap.gmx.com
-User lar21@gmx.com
-# Pass PyNVQ8ptVbPKur
+User lr0@gmx.com
 AuthMechs LOGIN
 CertificateFile /etc/ssl/certs/ca-certificates.crt
+PassCmd ~/configs/~s/assets/getmupassword.sh
 
-MaildirStore lar21@gmx.com-local
-Path ~/mail/lar21@gmx.com/
-Inbox ~/mail/lar21@gmx.com/Inbox
+MaildirStore lr0@gmx.com-local
+Path ~/mail/lr0@gmx.com/
+Inbox ~/mail/lr0@gmx.com/Inbox
 SubFolders Verbatim
 
-IMAPStore lar21@gmx.com-remote
-Account lar21@gmx.com
+IMAPStore lr0@gmx.com-remote
+Account lr0@gmx.com
 
-Channel lar21@gmx.com
-Far :lar21@gmx.com-remote:
-Near :lar21@gmx.com-local:
+Channel lr0@gmx.com
+Far :lr0@gmx.com-remote:
+Near :lr0@gmx.com-local:
 Patterns "INBOX" "Archive" "Trash" "Spam" "Drafts" "Sent"
 CopyArrivalDate yes
 Create Both

@@ -22,6 +22,7 @@
 (add-hook 'mu4e-main-mode-hook    #'salih/disable-bright)
 (add-hook 'yas-minor-mode         (lambda () (yas-activate-extra-mode 'fundamental-mode)))
 (add-hook 'org-mode-hook          (lambda ()
+                                    (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
                                     (display-line-numbers-mode -1)
                                     (setq truncate-lines 1)
                                     (add-hook 'before-save-hook #'vulpea-project-update-tag nil 'local)
@@ -68,7 +69,7 @@
 (awqat-display-prayer-time-mode)
 (salih/consult-preview-at-point)
 (add-hook 'after-init-hook        #'global-flycheck-mode)
-(add-hook 'after-init-hook #'mu4e)
+;; (add-hook 'after-init-hook #'mu4e)
 (consult-org-roam-mode 1)
 
 
