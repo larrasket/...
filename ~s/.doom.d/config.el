@@ -73,9 +73,9 @@
 
       salih/source-directory                             "~/roam/references/source/"
       salih/books                                       (let (file-list)
-                                                         (dolist (file (directory-files-recursively salih/source-directory "" nil t))
-                                                           (push file file-list))
-                                                         file-list)
+                                                          (dolist (file (directory-files-recursively salih/source-directory "" nil t))
+                                                            (push file file-list))
+                                                          file-list)
 
       org-roam-directory                                (file-truename "~/roam")
       bibtex-completion-library-path                    (list salih/source-directory)
@@ -120,6 +120,10 @@
       org-noter-swap-window                             nil
       nov-text-width                                    100
 
+      ;; consult
+      consult-preview-key                               nil
+      consult-org-roam-buffer-narrow-key                ?r
+
       ;; tabs
       centaur-tabs-enable-key-bindings                  t
       centaur-tabs-set-icons                            t
@@ -134,7 +138,6 @@
       save-place-ignore-files-regexp                    "\\(?:COMMIT_EDITMSG\\|hg-editor-[[:alnum:]]+\\.txt\\|svn-commit\\.tmp\\|bzr_log\\.[[:alnum:]]+\\|\\.pdf\\)$"
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
-      consult-preview-key                               nil
       dired-sidebar-refresh-on-special-commands         t
       org-annotate-file-storage-file                    "~/configs/annotated.org"
       bmkp-last-as-first-bookmark-file                  "/home/ghd/.emacs.d/.local/etc/bookmarks"

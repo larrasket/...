@@ -150,6 +150,7 @@
  "s s"   #'doom/sudo-this-file
  "TAB d" #'+workspace/delete
  "SPC"   #'projectile-find-file
+ "C-x"   #'salih/xwidget-open-with-clipboard
  "/"     #'swiper)
 
 ;; file keys

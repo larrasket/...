@@ -624,7 +624,6 @@ tasks."
 
 
 
-
 (defun salih/eshell-load-bash-aliases ()
     "Read Bash aliases and add them to the list of eshell aliases."
     ;; Bash needs to be run - temporarily - interactively
@@ -634,3 +633,13 @@ tasks."
         (goto-char (point-min))
         (while (re-search-forward "alias \\(.+\\)='\\(.+\\)'$" nil t)
           (eshell/alias (match-string 1) (match-string 2)))))
+
+
+(defun salih/xwidget-open-with-clipboard ()
+  (interactive)
+  (xwidget-webkit-browse-url (current-kill 0 t)))
+
+
+(defun salih/open-agenda ()
+  (interactive)
+  (org-agenda nil "v"))
