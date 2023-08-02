@@ -224,3 +224,21 @@
            (unless (gethash file ht)
              (push (consult--fast-abbreviate-file-name file) items)))))))
 (add-to-list 'consult-buffer-sources 'salih/consult--source-books 'append)
+
+
+(defun salih/org-roam-get-node-files (node-list)
+  "Applies `org-roam-node-file' function to the cdr of each element in NODE-LIST."
+  (mapcar (lambda (node) (org-roam-node-title (cdr node)))
+          node-list))
+(setq roam-titles (salih/org-roam-get-node-files (org-roam-node-read--completions)))
+(defun salih/get-org-roam-titles ()
+  roam-titles)
+(setq org-roam-buffer-source
+  `(:name     "Org-roam"
+     :hidden   nil
+     :narrow   ,consult-org-roam-buffer-narrow-key
+     :annotate ,(lambda (cand)
+                  (file-name-nondirectory (org-roam-node-file (org-roam-node-from-title-or-alias cand))))
+     :action ,(lambda (name)
+                (find-file (org-roam-node-file (org-roam-node-from-title-or-alias name))))
+     :items    ,#'salih/get-org-roam-titles))
