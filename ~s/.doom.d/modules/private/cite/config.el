@@ -48,7 +48,7 @@
   :after citar org-roam
   :no-require
   :config (citar-org-roam-mode))
-(setq citar-org-roam-note-title-template "${author} - ${title}\n- tags :: [[roam:Book]]\n")
+(setq citar-org-roam-note-title-template "${title}\n ${title} is a book by ${author}\n * ${title}\n ")
 
 
 (add-hook 'helm-minibuffer-set-up-hook

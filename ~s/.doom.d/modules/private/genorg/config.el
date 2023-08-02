@@ -1,6 +1,7 @@
 ;;; mine/genorg/config.el -*- lexical-binding: t; -*-
 
 (after! org
+  (setq org-tags-column -77)
   (setq org-todo-keywords
         '((sequence
            "TODO(t)"                    ; A task that needs doing & is ready to do
