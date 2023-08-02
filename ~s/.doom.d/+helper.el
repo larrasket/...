@@ -527,6 +527,11 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     ((memq major-mode '(erc-mode))
      "Erc")
 
+
+    ((memq major-mode '(elfeed-show-mode
+                        elfeed-search-mode))
+     "elfeed")
+
     ((memq major-mode '(org-mode
                         org-agenda-clockreport-mode
                         org-src-mode
@@ -561,6 +566,7 @@ tasks."
        'headline
      (lambda (h)
        (org-element-property :todo-type h)))))
+
 
 (defun vulpea-project-update-tag ()
   "Update PROJECT tag in the current buffer."
@@ -625,14 +631,14 @@ tasks."
 
 
 (defun salih/eshell-load-bash-aliases ()
-    "Read Bash aliases and add them to the list of eshell aliases."
-    ;; Bash needs to be run - temporarily - interactively
-    ;; in order to get the list of aliases.
-      (with-temp-buffer
-        (call-process "bash" nil '(t nil) nil "-ci" "alias")
-        (goto-char (point-min))
-        (while (re-search-forward "alias \\(.+\\)='\\(.+\\)'$" nil t)
-          (eshell/alias (match-string 1) (match-string 2)))))
+  "Read Bash aliases and add them to the list of eshell aliases."
+  ;; Bash needs to be run - temporarily - interactively
+  ;; in order to get the list of aliases.
+  (with-temp-buffer
+    (call-process "bash" nil '(t nil) nil "-ci" "alias")
+    (goto-char (point-min))
+    (while (re-search-forward "alias \\(.+\\)='\\(.+\\)'$" nil t)
+      (eshell/alias (match-string 1) (match-string 2)))))
 
 
 (defun salih/xwidget-open-with-clipboard ()
@@ -659,3 +665,8 @@ tasks."
 
 
 
+
+
+
+(defun salih/keyboard-config () (when (display-graphic-p)  (keyboard-translate ?\C-i ?\H-i)))
+(salih/keyboard-config)

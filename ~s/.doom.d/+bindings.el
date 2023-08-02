@@ -1,5 +1,6 @@
 ;;; ../configs/.doom.d/keys.el -*- lexical-binding: t; -*-
-
+;;;
+;;;
 
 
 ;; unbinding
@@ -30,24 +31,24 @@
 (general-define-key
  :keymaps 'prog-mode-map
  :prefix salih/prefix-mode
- "c d" #'+lookup/definition
- "c r" #'+lookup/references
- "c t" #'+lookup/type-definition
- "c e" #'+default/diagnostics
- "c g" #'salih/find-definition-or-lookup
- ";"   #'salih/rename-or-iedit)
+ "C-c C-d" #'+lookup/definition
+ "C-c C-r" #'+lookup/references
+ "C-c C-t" #'+lookup/type-definition
+ "C-c C-e" #'+default/diagnostics
+ "C-c C-g" #'salih/find-definition-or-lookup
+ "C-;"   #'salih/rename-or-iedit)
 
 
 (general-define-key
  :keymaps 'flycheck-mode-map
  :prefix salih/prefix-mode
- "e l" #'flycheck-list-errors)
+ "C-e C-l" #'flycheck-list-errors)
 
 
 (general-define-key
  :keymaps 'nov-mode-map
  :prefix salih/prefix-mode
- "t" #'gts-do-translate)
+ "C-t" #'gts-do-translate)
 
 
 (add-hook 'pdf-view-mode-hook (lambda ()
@@ -87,7 +88,6 @@
  "C-d" #'epa-dired-do-encrypt)
 
 
-
 ;; Org-mode
 (general-define-key
  :keymaps 'org-mode-map
@@ -95,26 +95,24 @@
  "C-f" #'org-footnote-action
  "c i" #'org-clock-in
  "c o" #'org-clock-out
- "C-i" #'org-id-get-create
- "i l" #'org-web-tools-insert-link-for-url
- "i d" #'org-download-clipboard
- "i c" #'salih/org-id-get-create-with-custom-id
- "i k" #'citar-insert-citation
- "i n" #'orb-insert--link
- "n n" #'org-noter
- "n k" #'org-noter-kill-session
- "e p" #'org-pandoc-export-to-latex-pdf
+ "H-i H-i" #'org-id-get-create
+ "H-i C-l" #'org-web-tools-insert-link-for-url
+ "H-i C-d" #'org-download-clipboard
+ "H-i C-c" #'salih/org-id-get-create-with-custom-id
+ "H-i C-k" #'citar-insert-citation
+ "C-b" #'citar-insert-citation
+ "H-i C-b" #'orb-insert-link
+ "C-n C-n" #'org-noter
+ "C-n C-k" #'org-noter-kill-session
+ "C-e C-p" #'org-pandoc-export-to-latex-pdf
 
  ;; roam
- "i r" #'org-roam-node-insert
- "r i" #'org-roam-node-insert
- "r t" #'org-roam-tag-add
- "r a" #'org-roam-alias-add
- "i b" #'orb-insert-link
- "f b" #'consult-org-roam-backlinks
- "f f" #'consult-org-roam-forward-links
- "TAB" #'consult-org-heading)
-
+ "H-i C-r" #'org-roam-node-insert
+ "C-r H-i" #'org-roam-node-insert
+ "C-r C-t" #'org-roam-tag-add
+ "C-r C-a" #'org-roam-alias-add
+ "C-f C-b" #'consult-org-roam-backlinks
+ "C-f C-f" #'consult-org-roam-forward-links)
 
 
 ;; Lisp
@@ -134,20 +132,22 @@
 ;; convenient
 (general-define-key
  :prefix salih/prefix-global
- "c"     #'org-capture
- "a"     #'org-agenda
+ "C-c"     #'org-capture
+ "C-a"     #'salih/open-agenda
+ "C-."     #'find-file
  "."     #'find-file
+ "C-,"     #'persp-switch-to-buffer
  ","     #'persp-switch-to-buffer
+ "C-<"     #'switch-to-buffer
  "<"     #'switch-to-buffer
  "RET"   #'switch-to-buffer
+ "C-<return>"   #'switch-to-buffer
  "["     #'previous-buffer
  "]"     #'next-buffer
- "d"     #'kill-current-buffer
- "k"     #'kill-current-buffer
- "D"     #'doom/kill-all-buffers
- "K"     #'doom/kill-other-buffers
- "l l"   #'leetcode
- "s s"   #'doom/sudo-this-file
+ "C-d"     #'kill-current-buffer
+ "C-k"     #'kill-current-buffer
+ "C-l C-l"   #'leetcode
+ "C-r C-r"   #'doom/sudo-this-file
  "TAB d" #'+workspace/delete
  "SPC"   #'projectile-find-file
  "C-x"   #'salih/xwidget-open-with-clipboard
@@ -155,41 +155,42 @@
 
 ;; file keys
 (general-define-key
- :prefix (concat salih/prefix-global "f")
- "r" #'recentf-open-files
- "g" #'magit-find-file
- "l" #'projectile-find-file)
+ :prefix (concat salih/prefix-global "C-f")
+ "C-r" #'recentf-open-files
+ "C-g" #'magit-find-file
+ "C-l" #'projectile-find-file)
 
 
 ;; search global
 (general-define-key
- :prefix (concat salih/prefix-global "s")
- "d" #'+default/search-cwd
- "b" #'+default/search-buffer
- "p" #'+default/search-project
- "g" #'rgrep)
+ :prefix "C-s"
+ "C-d" #'+default/search-cwd
+ "C-b" #'+default/search-buffer
+ "C-p" #'+default/search-project
+ "C-g" #'rgrep)
 
 
 ;; notes
 (general-define-key
- :prefix (concat salih/prefix-global "n")
- "f" #'citar-open-notes
- "b" #'citar-open-notes
- "o" #'salih/open-book)
+ :prefix (concat salih/prefix-global "C-n")
+ "C-f" #'citar-open-notes
+ "C-b" #'citar-open-notes
+ "C-o" #'salih/open-book)
 
 ;; roam
 (general-define-key
- :prefix (concat salih/prefix-global "r")
- "b" #'org-roam-buffer-toggle
+ :prefix (concat salih/prefix-global "C-r")
+ "C-b" #'org-roam-buffer-toggle
  "c" #'org-roam-capture
- "f" #'org-roam-node-find
- "j" #'org-roam-dailies-capture-today
- "t" #'org-roam-dailies-goto-today
- "s" #'consult-org-roam-search)
+ "C-f" #'org-roam-node-find
+ "C-j" #'org-roam-dailies-capture-today
+ "C-t" #'org-roam-dailies-goto-today
+ "C-s" #'consult-org-roam-search)
 
 
 
 ;; magit and vc
+;; TODO refactor if possible
 (general-define-key
  :prefix (concat salih/prefix-global "g")
  "g"   #'magit-status
@@ -205,9 +206,9 @@
 
 ;; other
 (general-define-key
- :prefix (concat salih/prefix-global "e")
- "e" #'eshell
- "f" #'elfeed)
+ :prefix (concat salih/prefix-global "C-e")
+ "C-e" #'eshell
+ "C-f" #'elfeed)
 
 ;; projectile
 (projectile-mode +1)
@@ -221,8 +222,8 @@
 
 (general-define-key
  :prefix salih/prefix-mode
- "i u" #'insert-char
- "s w" #'+lookup/dictionary-definition
+ "H-i C-u" #'insert-char
+ "C-s C-w" #'+lookup/dictionary-definition
  "C-t" #'gts-do-translate
  "C-s" #'centaur-tabs-ace-jump
  "]"   #'centaur-tabs-forward
@@ -266,6 +267,10 @@
  "m" #'(lambda () (interactive) (mu4e~headers-jump-to-maildir "/Inbox"))
  "i" #'mu4e)
 
+(general-define-key
+ :prefix salih/prefix-mode
+ :keymaps 'elfeed-search-mode-map
+ "C-u" #'elfeed-update)
 
 (evil-define-key 'normal elfeed-show-mode-map
   (kbd "J") 'elfeed-goodies/split-show-next
