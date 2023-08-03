@@ -241,4 +241,8 @@
                   (file-name-nondirectory (org-roam-node-file (org-roam-node-from-title-or-alias cand))))
      :action ,(lambda (name)
                 (find-file (org-roam-node-file (org-roam-node-from-title-or-alias name))))
+     :new ,(lambda (name)
+             (org-roam-capture-
+              :node (org-roam-node-read name nil nil)
+              :props '(:finalize find-file)))
      :items    ,#'salih/get-org-roam-titles))
