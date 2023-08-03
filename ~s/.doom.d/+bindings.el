@@ -128,12 +128,15 @@
   `(define-key sly-mode-map (salih/mode "C-j") 'salih/sly-compile-defun-with-print))
 
 
+(global-set-key (salih/global "C-a") #'org-agenda)
+
+
 
 ;; convenient
 (general-define-key
  :prefix salih/prefix-global
  "C-c"     #'org-capture
- "C-a"     #'salih/open-agenda
+ "C-a C-a"     #'salih/open-agenda
  "C-."     #'find-file
  "."     #'find-file
  "C-,"     #'persp-switch-to-buffer
