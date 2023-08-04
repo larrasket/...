@@ -113,6 +113,7 @@
 
 
 (add-hook 'org-agenda-mode-hook         #'centaur-tabs-local-mode)
+(add-hook 'org-mode-hook                #'centaur-tabs-local-mode)
 (add-hook 'dired-mode-hook              #'centaur-tabs-local-mode)
 (add-hook 'native-comp-limple-mode-hook #'centaur-tabs-local-mode)
 (centaur-tabs-mode)
@@ -151,6 +152,9 @@
 
 
      (string-prefix-p "*Messages*" name)
+     (string-prefix-p "*Warnings*" name)
+     (string-prefix-p "*httpd*" name)
+     (string-prefix-p "*gopls*" name)
      (string-prefix-p "*Async-native-compile-log*" name)
      (string-prefix-p "*Native-compile-Log" name)
 
