@@ -113,6 +113,7 @@
 
 
 (add-hook 'org-agenda-mode-hook         #'centaur-tabs-local-mode)
+(add-hook 'treemacs-mode-hook           #'centaur-tabs-local-mode)
 (add-hook 'org-mode-hook                #'centaur-tabs-local-mode)
 (add-hook 'dired-mode-hook              #'centaur-tabs-local-mode)
 (add-hook 'native-comp-limple-mode-hook #'centaur-tabs-local-mode)
