@@ -1,7 +1,7 @@
 ;;; mine/genorg/config.el -*- lexical-binding: t; -*-
 
 (after! org
-  (setq org-tags-column -77)
+  (setq org-tags-column -80)
   (setq org-todo-keywords
         '((sequence
            "TODO(t)"                    ; A task that needs doing & is ready to do
@@ -151,8 +151,8 @@ ARGS is `element' in `org-ql-view--format-element'"
       (if (< (length category) 11)
           (setq smt (make-string (- 11 (length category)) ?\s)))
       (org-add-props
-       (format "   %-8s %s" (concat category ":" smt) result)
-       (text-properties-at 0 result)))))
+          (format "   %-8s %s" (concat category ":" smt) result)
+          (text-properties-at 0 result)))))
 
 (advice-add 'org-ql-view--format-element :around #'salih/org-ql-view--format-element)
 
