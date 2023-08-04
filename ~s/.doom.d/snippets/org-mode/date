@@ -3,4 +3,8 @@
 # key: date
 # uuid: date
 # --
-/(`(format-time-string "%Y/%m/%d")`)/ $0
+
+:DATE:
+[`(format-time-string "%Y-%m-%d %a %H:%M")`]
+:DATE:
+$0
