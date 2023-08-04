@@ -153,6 +153,7 @@
 (after! mu4e
   (setq message-send-mail-function 'smtpmail-send-it
         starttls-use-gnutls t
+        mu4e-compose-reply-ignore-address '("no-?reply" "lr0@gmx.com")
         mu4e-update-interval 200
         smtpmail-default-smtp-server "mail.gmx.com"
         smtpmail-smtp-server "mail.gmx.com"
