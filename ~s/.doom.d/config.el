@@ -184,3 +184,7 @@
 (load "org-tags.el")
 (load "+hooks.el")
 (load "feeds.el")
+
+
+(after! org-roam
+  (setq org-roam-list-files-commands '(find fd fdfind rg)))
