@@ -532,6 +532,12 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                         elfeed-search-mode))
      "elfeed")
 
+
+    ((memq major-mode '(pdf-view-mode
+                        nov-mode
+                        doc-view-mode))
+     "PDF")
+
     ((memq major-mode '(org-mode
                         org-agenda-clockreport-mode
                         org-src-mode
