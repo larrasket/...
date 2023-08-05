@@ -9,8 +9,8 @@
 [credential]
 	helper = store
 [user]
-	email = ghd@keemail.me
-	name = salehmu
+	email = lr0@gmx.com
+	name = Salih Muhammed
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
