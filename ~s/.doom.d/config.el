@@ -27,7 +27,7 @@
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       doom-theme                                        (if IS-PLASMA
                                                             'doom-monokai-spectrum
-                                                          'doom-ir-black)
+                                                          'doom-homage-black)
       highlight-indent-guides-method                    'bitmap
       display-line-numbers-type                         'visual
       doom-modeline-height                              17
@@ -118,7 +118,7 @@
       org-noter-always-create-frame                     nil
       org-noter-kill-frame-at-session-end               nil
       org-noter-swap-window                             nil
-      nov-text-width                                    100
+      nov-text-width                                    140
 
       ;; consult
       consult-preview-key                               nil
@@ -188,3 +188,10 @@
 
 (after! org-roam
   (setq org-roam-list-files-commands '(find fd fdfind rg)))
+
+
+(set-frame-parameter nil 'alpha-background 80)
+(add-to-list 'default-frame-alist '(alpha-background . 70))
+
+(remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook)
+           #'vi-tilde-fringe-mode)
