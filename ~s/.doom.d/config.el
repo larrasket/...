@@ -190,8 +190,9 @@
   (setq org-roam-list-files-commands '(find fd fdfind rg)))
 
 
-(set-frame-parameter nil 'alpha-background 80)
-(add-to-list 'default-frame-alist '(alpha-background . 70))
+(set-frame-parameter (selected-frame) 'alpha '(85 85))
+(add-to-list 'default-frame-alist '(alpha 85 85))
 
 (remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook)
            #'vi-tilde-fringe-mode)
+
