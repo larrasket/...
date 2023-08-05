@@ -184,7 +184,7 @@ static const Key keys[] = {
 	/* { MODKEY,			XK_y,		setlayout,	{.v = &layouts[2]} }, /\* spiral *\/ */
 	{ MODKEY|ShiftMask,	XK_y,		setlayout,	{.v = &layouts[3]} }, /* dwindle */
 	{ MODKEY,			XK_u,		setlayout,	{.v = &layouts[4]} }, /* deck */
-	{ MODKEY,	        XK_m,		setlayout,	{.v = &layouts[5]} }, /* monocle */
+	{ MODKEY,	        XK_f,		setlayout,	{.v = &layouts[5]} }, /* monocle */
 	/* { MODKEY,			XK_i,		setlayout,	{.v = &layouts[6]} }, /\* centeredmaster *\/ */
 	/* { MODKEY|ShiftMask,	XK_i,		setlayout,	{.v = &layouts[7]} }, /\* centeredfloatingmaster *\/ */
 	{ MODKEY,			XK_i,		incnmaster, {.i = +1 } },
@@ -194,7 +194,7 @@ static const Key keys[] = {
 	{ MODKEY,			XK_a,		togglegaps,	{0} },
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
 	/* { MODKEY,			XK_s,		togglesticky,	{0} }, */
-	{ MODKEY,			XK_f,		togglefullscr,	{0} },
+	{ MODKEY,			XK_m,		togglefullscr,	{0} },
 	{ MODKEY|ShiftMask,		XK_f,		setlayout,	{.v = &layouts[8]} },
 	{ MODKEY,			XK_g,		shiftview,	{ .i = -1 } },
 	{ MODKEY|ShiftMask,		XK_g,		shifttag,	{ .i = -1 } },
