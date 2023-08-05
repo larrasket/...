@@ -131,6 +131,7 @@
      (string-prefix-p "*Helm" name)
      (string-prefix-p "*Org Agenda*" name)
      (string-prefix-p "*lsp" name)
+     (string-prefix-p "*LSP" name)
      (string-prefix-p "*company" name)
      (string-prefix-p "*Flycheck" name)
      (string-prefix-p "*tramp" name)
@@ -239,15 +240,15 @@
 (defun salih/get-org-roam-titles ()
   roam-titles)
 (setq org-roam-buffer-source
-  `(:name     "Org-roam"
-     :hidden   nil
-     :narrow   ,consult-org-roam-buffer-narrow-key
-     :annotate ,(lambda (cand)
-                  (file-name-nondirectory (org-roam-node-file (org-roam-node-from-title-or-alias cand))))
-     :action ,(lambda (name)
-                (find-file (org-roam-node-file (org-roam-node-from-title-or-alias name))))
-     :new ,(lambda (name)
-             (org-roam-capture-
-              :node (org-roam-node-read name nil nil)
-              :props '(:finalize find-file)))
-     :items    ,#'salih/get-org-roam-titles))
+      `(:name     "Org-roam"
+        :hidden   nil
+        :narrow   ,consult-org-roam-buffer-narrow-key
+        :annotate ,(lambda (cand)
+                     (file-name-nondirectory (org-roam-node-file (org-roam-node-from-title-or-alias cand))))
+        :action ,(lambda (name)
+                   (find-file (org-roam-node-file (org-roam-node-from-title-or-alias name))))
+        :new ,(lambda (name)
+                (org-roam-capture-
+                 :node (org-roam-node-read name nil nil)
+                 :props '(:finalize find-file)))
+        :items    ,#'salih/get-org-roam-titles))
