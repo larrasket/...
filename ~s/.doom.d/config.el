@@ -134,6 +134,7 @@
       centaur-tabs-cycle-scope                          'tabs
 
       ;; other
+      salih/temp-roam-insert                            nil
       large-file-warning-threshold                      nil
       save-place-ignore-files-regexp                    "\\(?:COMMIT_EDITMSG\\|hg-editor-[[:alnum:]]+\\.txt\\|svn-commit\\.tmp\\|bzr_log\\.[[:alnum:]]+\\|\\.pdf\\)$"
       inferior-lisp-program                             "sbcl"
@@ -196,3 +197,11 @@
 (remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook)
            #'vi-tilde-fringe-mode)
 
+(setq-default fringes-outside-margins t)
+;; thin fringe bitmaps
+(define-fringe-bitmap 'git-gutter-fr:added [224]
+  nil nil '(center repeated))
+(define-fringe-bitmap 'git-gutter-fr:modified [224]
+  nil nil '(center repeated))
+(define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240]
+  nil nil 'bottom)

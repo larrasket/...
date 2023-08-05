@@ -5,6 +5,7 @@
        company
        vertico
        :ui
+       vc-gutter
        doom
        doom-dashboard
        hl-todo
@@ -158,7 +159,7 @@
        src
        gen
        genorg
-       gitcolor
+       ;; gitcolor
        chess
        cite
        roam

@@ -26,6 +26,7 @@
                                     (setq truncate-lines 1)
                                     (add-hook 'before-save-hook #'vulpea-project-update-tag nil 'local)
                                     (add-hook 'find-file-hook #'vulpea-project-update-tag nil 'local)
+                                    (git-gutter-mode -1)
                                     (setq org-hide-leading-stars t)))
 
 
