@@ -246,9 +246,23 @@
         :annotate ,(lambda (cand)
                      (file-name-nondirectory (org-roam-node-file (org-roam-node-from-title-or-alias cand))))
         :action ,(lambda (name)
-                   (find-file (org-roam-node-file (org-roam-node-from-title-or-alias name))))
+                   (if salih/temp-roam-insert
+                       (progn
+                         (setq salih/temp-roam-insert nil)
+                         (let* ((node (org-roam-node-from-title-or-alias name))
+                                (description (org-roam-node-formatted node))
+                                (id (org-roam-node-id node)))
+                           (insert (org-link-make-string
+                                    (concat "id:" id)
+                                    description))
+                           (run-hook-with-args 'org-roam-post-node-insert-hook
+                                               id
+                                               description)))
+                     (find-file (org-roam-node-file (org-roam-node-from-title-or-alias name)))))
+
         :new ,(lambda (name)
                 (org-roam-capture-
                  :node (org-roam-node-read name nil nil)
                  :props '(:finalize find-file)))
         :items    ,#'salih/get-org-roam-titles))
+

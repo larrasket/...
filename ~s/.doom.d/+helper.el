@@ -676,3 +676,12 @@ tasks."
 
 (defun salih/keyboard-config () (when (display-graphic-p)  (keyboard-translate ?\C-i ?\H-i)))
 (salih/keyboard-config)
+
+
+
+
+
+(defun salih/org-roam-node-insert ()
+  (interactive)
+  (setq salih/temp-roam-insert t)
+  (consult-buffer (list org-roam-buffer-source)))

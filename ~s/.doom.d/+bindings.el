@@ -107,8 +107,8 @@
  "C-e C-p" #'org-pandoc-export-to-latex-pdf
 
  ;; roam
- "H-i C-r" #'org-roam-node-insert
- "C-r H-i" #'org-roam-node-insert
+ "H-i C-r" #'salih/org-roam-node-insert
+ "C-r H-i" #'salih/org-roam-node-insert
  "C-r C-t" #'org-roam-tag-add
  "C-r C-a" #'org-roam-alias-add
  "C-f C-b" #'consult-org-roam-backlinks
