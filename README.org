@@ -5,11 +5,5 @@
 [[https://link.storjshare.io/raw/jubxv7sp7cvlvzrwx3asfwueh2dq/blog/made0.png]]
 
 
-[[file:~s/img/dwm/2023-07-16_01-40.png]]
+[[file:~s/img/dwm/2023-08-06_18-29.png]]
 
-+For more screenshots and other information about tagging, check [[https://github.com/salehmu/.../blob/master/~s/.README.org][old README.]]+
-
-By now I've to admit that documenting my dots has been nothing but a complete
-joke. The commit history (still available in the ~archived_main~ branch) is
-completely useless and objectiveless. Today (/(2023/05/20)/) I've archived all
-the old commits, starting with a clean that applies [[https://www.conventionalcommits.org/en/v1.0.0/][Conventional Commits 1.0.0]].
