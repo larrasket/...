@@ -269,5 +269,25 @@
                
         :items    ,#'salih/get-org-roam-titles))
 
+
+(after! julia-repl
+  (set-popup-rule! "^\\*julia:*.*\\*$" :quit nil :side 'right :width .5))
+
+
 (after! org-roam
   (setq org-roam-list-files-commands '(find fd fdfind rg)))
+
+
+
+(remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook)
+           #'vi-tilde-fringe-mode)
+
+
+(after! git-gutter-fringe
+  (setq-default fringes-outside-margins t)
+  (define-fringe-bitmap 'git-gutter-fr:added [224]
+    nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224]
+    nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240]
+    nil nil 'bottom))

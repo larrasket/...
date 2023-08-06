@@ -187,22 +187,6 @@
 (load "feeds.el")
 
 
-(after! org-roam
-  (setq org-roam-list-files-commands '(find fd fdfind rg)))
-
-
 (set-frame-parameter (selected-frame) 'alpha '(85 85))
 (add-to-list 'default-frame-alist '(alpha 85 85))
 
-(remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook)
-           #'vi-tilde-fringe-mode)
-
-
-(after! git-gutter-fringe
-  (setq-default fringes-outside-margins t)
-  (define-fringe-bitmap 'git-gutter-fr:added [224]
-    nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:modified [224]
-    nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240]
-    nil nil 'bottom))
