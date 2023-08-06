@@ -51,8 +51,11 @@
  "C-t" #'gts-do-translate)
 
 
+
 (add-hook 'pdf-view-mode-hook (lambda ()
                                 (local-set-key (salih/mode "t") #'gts-do-translate)
+                                (define-key pdf-view-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note)
+                                (evil-local-set-key 'normal (salih/mode "C-c") #'org-noter-insert-precise-note)
                                 (evil-local-set-key 'normal (kbd "J") #' pdf-view-next-page-command)
                                 (evil-local-set-key 'normal (kbd "K") #' pdf-view-previous-page-command)))
 
@@ -260,7 +263,9 @@
       (select-window prev-window)))
   (define-key org-noter-notes-mode-map (salih/mode "C-j")
               #'salih/org-noter-sync-current-note-and-switch-window)
-  (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note))
+  (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note)
+  (evil-local-set-key 'normal (salih/mode "C-c") #' pdf-view-next-page-command))
+ 
 
 
 
