@@ -263,7 +263,11 @@
 
         :new ,(lambda (name)
                 (org-roam-capture-
-                 :node (org-roam-node-read name nil nil)
-                 :props '(:finalize find-file)))
+                 :node (org-roam-node-create :title name)
+                 :props '(:finalize find-file))
+                (setq roam-titles (salih/org-roam-get-node-files (org-roam-node-read--completions))))
+               
         :items    ,#'salih/get-org-roam-titles))
 
+(after! org-roam
+  (setq org-roam-list-files-commands '(find fd fdfind rg)))

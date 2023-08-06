@@ -685,3 +685,8 @@ tasks."
   (interactive)
   (setq salih/temp-roam-insert t)
   (consult-buffer (list org-roam-buffer-source)))
+
+
+(defun salih/org-roam-node-open ()
+  (interactive)
+  (consult-buffer (list org-roam-buffer-source)))

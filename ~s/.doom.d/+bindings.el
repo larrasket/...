@@ -188,7 +188,7 @@
  :prefix (concat salih/prefix-global "C-r")
  "C-b" #'org-roam-buffer-toggle
  "c" #'org-roam-capture
- "C-f" #'org-roam-node-find
+ "C-f" #'salih/org-roam-node-open
  "C-j" #'org-roam-dailies-capture-today
  "C-t" #'org-roam-dailies-goto-today
  "C-s" #'consult-org-roam-search)
