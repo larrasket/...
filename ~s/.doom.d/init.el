@@ -30,11 +30,9 @@
        :emacs
        (dired
         +icons)
-        ;; +ranger
 
 
        electric
-       ;; (ibuffer +icon)
        undo
        vc
 
@@ -49,7 +47,6 @@
 
        :tools
        biblio
-       ;; gist
        tree-sitter
        (lookup
         +dictionary
@@ -57,8 +54,6 @@
        (lsp +peak)
        (magit)
        pdf
-       ;; rgb
-       ;;terraform
 
        :os
        (tty)
@@ -69,9 +64,7 @@
        emacs-lisp
        (go +lsp
            +tree-sitter)
-       (json
-        +lsp
-        +tree-sitter)
+       json
        (latex +flod
               +latexmk
               +lsp)
@@ -83,62 +76,11 @@
         +lsp)
        (yaml
         +lsp)
-       ;;agda
-       ;;beancount
-       ;;clojure
-       ;;coq
-       ;;crystal
-       ;;data
-       ;;(dart +flutter)
-       ;;elixir
-       ;;elm
-       ;;erlang
-       ;;ess
-       ;;factor
-       ;;faust
-       ;;fsharp
-       ;;fstar
-       ;;gdscript
-       ;;(haskell +dante)
-       ;;hy
-       ;;idris
-       ;;(java +meghanada)
-       ;;javascript
        (julia
         +lsp
         +tree-sitter)
-       ;;kotlin
-       ;;lean
-       ;;ledger
-       ;;lua
-       ;;nim
-       ;;nix
-       ;;ocaml
-       ;;php
-       ;;plantuml
-       ;;purescript
-       ;;python
-       ;;qt
-       ;;racket
-       ;;raku
-       ;;rst
-       ;;(ruby +rails)
-       ;;rust
-       ;;scala
-       ;;(scheme +guile)
-       ;;sml
-       ;;solidity
-       ;;swift
-       ;;terra
-       ;;web
-       ;;zig
        :email
        mu4e
-
-
-       ;; ;; notmuch
-       ;; ;; (wanderlust)
-
        :app
        ;; irc
        rss
