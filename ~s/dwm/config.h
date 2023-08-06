@@ -228,6 +228,9 @@ static const Key keys[] = {
     {MODKEY, XK_o, spawn, {.v = copy}},
     {MODKEY, XK_semicolon, spawn, {.v = copy1}},
 	{MODKEY | ShiftMask, XK_q, quit, {0}},
+	{MODKEY, XK_comma, focusmon, {.i = -1}},
+    {MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
+
 
 
 
