@@ -197,11 +197,12 @@
 (remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook)
            #'vi-tilde-fringe-mode)
 
-(setq-default fringes-outside-margins t)
-;; thin fringe bitmaps
-(define-fringe-bitmap 'git-gutter-fr:added [224]
-  nil nil '(center repeated))
-(define-fringe-bitmap 'git-gutter-fr:modified [224]
-  nil nil '(center repeated))
-(define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240]
-  nil nil 'bottom)
+
+(after! git-gutter-fringe
+  (setq-default fringes-outside-margins t)
+  (define-fringe-bitmap 'git-gutter-fr:added [224]
+    nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224]
+    nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240]
+    nil nil 'bottom))
