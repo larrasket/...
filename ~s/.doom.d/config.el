@@ -118,7 +118,7 @@
       org-noter-always-create-frame                     nil
       org-noter-kill-frame-at-session-end               nil
       org-noter-swap-window                             nil
-      nov-text-width                                    100
+      nov-text-width                                    140
 
       ;; consult
       consult-preview-key                               nil
@@ -134,6 +134,7 @@
       centaur-tabs-cycle-scope                          'tabs
 
       ;; other
+      salih/temp-roam-insert                            nil
       large-file-warning-threshold                      nil
       save-place-ignore-files-regexp                    "\\(?:COMMIT_EDITMSG\\|hg-editor-[[:alnum:]]+\\.txt\\|svn-commit\\.tmp\\|bzr_log\\.[[:alnum:]]+\\|\\.pdf\\)$"
       inferior-lisp-program                             "sbcl"

@@ -110,8 +110,8 @@
  "C-e C-p" #'org-pandoc-export-to-latex-pdf
 
  ;; roam
- "H-i C-r" #'org-roam-node-insert
- "C-r H-i" #'org-roam-node-insert
+ "H-i C-r" #'salih/org-roam-node-insert
+ "C-r H-i" #'salih/org-roam-node-insert
  "C-r C-t" #'org-roam-tag-add
  "C-r C-a" #'org-roam-alias-add
  "C-f C-b" #'consult-org-roam-backlinks
@@ -188,7 +188,7 @@
  :prefix (concat salih/prefix-global "C-r")
  "C-b" #'org-roam-buffer-toggle
  "c" #'org-roam-capture
- "C-f" #'org-roam-node-find
+ "C-f" #'salih/org-roam-node-open
  "C-j" #'org-roam-dailies-capture-today
  "C-t" #'org-roam-dailies-goto-today
  "C-s" #'consult-org-roam-search)
