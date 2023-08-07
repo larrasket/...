@@ -244,13 +244,16 @@
         :hidden   nil
         :narrow   ,consult-org-roam-buffer-narrow-key
         :annotate ,(lambda (cand)
-                     (file-name-nondirectory (org-roam-node-file (org-roam-node-from-title-or-alias cand))))
+                     (let* ((name (org-roam-node-from-title-or-alias cand)))
+                       (if name (file-name-nondirectory (org-roam-node-file name))
+                         "")))
+                     
         :action ,(lambda (name)
                    (if salih/temp-roam-insert
                        (progn
                          (setq salih/temp-roam-insert nil)
                          (let* ((node (org-roam-node-from-title-or-alias name))
-                                (description (org-roam-node-formatted node))
+                                (description (org-roam-node-title node))
                                 (id (org-roam-node-id node)))
                            (insert (org-link-make-string
                                     (concat "id:" id)
@@ -261,9 +264,22 @@
                      (find-file (org-roam-node-file (org-roam-node-from-title-or-alias name)))))
 
         :new ,(lambda (name)
-                (org-roam-capture-
-                 :node (org-roam-node-create :title name)
-                 :props '(:finalize find-file))
+                (let* ((n (org-roam-node-create :title name)))
+                  (org-roam-capture- :node n)
+                  (when salih/temp-roam-insert
+                   (progn
+                          (setq salih/temp-roam-insert nil)
+                          (let* ((node (org-roam-node-from-title-or-alias name))
+                                 (description (org-roam-node-title node))
+                                 (id (org-roam-node-id node)))
+                            (insert (org-link-make-string
+                                     (concat "id:" id)
+                                     description))
+                            (run-hook-with-args 'org-roam-post-node-insert-hook
+                                                id
+                                                description)))))
+
+
                 (setq roam-titles (salih/org-roam-get-node-files (org-roam-node-read--completions))))
                
         :items    ,#'salih/get-org-roam-titles))
