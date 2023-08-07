@@ -1,5 +1,9 @@
 /* See LICENSE file for copyright and license details. */
 
+static const char *dmenucmd[] = {"dmenu_run", "-g", "12",    "-l",
+                                 "80",        "-p", "Run: ", NULL};
+
+
 /* Constants */
 #define TERMINAL "kitty"
 #define TERMCLASS "kitty"
@@ -230,6 +234,8 @@ static const Key keys[] = {
 	{MODKEY | ShiftMask, XK_q, quit, {0}},
 	{MODKEY, XK_comma, focusmon, {.i = -1}},
     {MODKEY | ShiftMask, XK_comma, tagmon, {.i = -1}},
+	{MODKEY, XK_d, spawn, {.v = dmenucmd}},
+
 
 
 
