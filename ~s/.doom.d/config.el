@@ -156,6 +156,7 @@
         starttls-use-gnutls t
         mu4e-compose-reply-ignore-address '("no-?reply" "lr0@gmx.com")
         mu4e-update-interval 200
+        mu4e-compose-signature "Regards,\nSalih"
         smtpmail-default-smtp-server "mail.gmx.com"
         smtpmail-smtp-server "mail.gmx.com"
         smtpmail-smtp-service 587
