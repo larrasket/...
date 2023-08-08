@@ -72,7 +72,7 @@
          :unnarrowed t)
 
 
-      ("e" "encrypted knowledge" plain "%?"
+        ("e" "encrypted knowledge" plain "%?"
          :if-new
          (file+head "main/${slug}.org.gpg" "#+title: ${title}\n#+FILETAGS: permanent")
          :immediate-finish t
@@ -96,8 +96,25 @@
         ("r" "bibliography reference" plain
          (file "~/configs/~s/orb")
          :target
-         (file+head "references/${citekey}.org" "#+title: ${title}\n"))))
+         (file+head "references/${citekey}.org" "#+title: ${title}\n"))
 
+
+
+        ("v"
+         "video ref"
+         plain
+         "* %? ${body}\n"
+         :if-new
+         (file+head
+          "webnotes/${slug}.org"
+          "#+title: ${title}\n\n")
+         :immediate-finish t
+         :jump-to-captured t
+         :unnarrowed t)))
+
+;; To enable the v (video from youtube) tempplate, uses the following bookmark
+;; javascript:(function(){  let v = (new URLSearchParams(window.location.search)).get('v');  if(location.href.indexOf("youtube.com")>=0 && v !== null)  {    let seek = (document.getElementsByClassName('video-stream html5-main-video')[0].currentTime).toFixed();    let ytb = "https://youtu.be/" + v;    location.href='org-protocol://roam-ref?template=v&ref=%27 + encodeURIComponent(ytb) + %27&title=%27 + encodeURIComponent(document.title) + %27&body=%27 + %27(%27 +  %27[%27 + %27[%27 + encodeURIComponent(ytb + %27&t=%27 + seek) + %27]%27  + %27[%27 + (new Date(seek * 1000)).toISOString().substr(11,8) + %27]%27 + %27]%27 + %27)%27;  }  else {    location.href=%27org-protocol://roam-ref?template=r&ref=%27 + encodeURIComponent(location.href) + %27&title=%27 + encodeURIComponent(document.title) + %27&body=%27 + encodeURIComponent(window.getSelection())  }})();
+;; make sure to setup org roam protocl too.
 
 (cl-defmethod org-roam-node-type ((node org-roam-node))
   "Return the TYPE of NODE."
