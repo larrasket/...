@@ -190,3 +190,4 @@
 
 (after! org-roam
   (setq org-roam-list-files-commands '(find fd fdfind rg)))
+(require 'org-roam-protocol)
