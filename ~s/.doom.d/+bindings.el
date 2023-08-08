@@ -114,8 +114,8 @@
  "C-r H-i" #'salih/org-roam-node-insert
  "C-r C-t" #'org-roam-tag-add
  "C-r C-a" #'org-roam-alias-add
- "C-f C-b" #'consult-org-roam-backlinks
- "C-f C-f" #'consult-org-roam-forward-links)
+ "C-r C-b" #'consult-org-roam-backlinks
+ "C-r C-f" #'consult-org-roam-forward-links)
 
 
 ;; Lisp
@@ -265,7 +265,7 @@
               #'salih/org-noter-sync-current-note-and-switch-window)
   (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note)
   (evil-local-set-key 'normal (salih/mode "C-c") #' pdf-view-next-page-command))
- 
+
 
 
 
