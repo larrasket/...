@@ -192,3 +192,4 @@
 (add-to-list 'default-frame-alist '(alpha 85 85))
 
 (require 'org-roam-protocol)
+

@@ -5,6 +5,9 @@ static const char *dmenucmd[] = {"dmenu_run", "-g", "12",    "-l",
 
 
 /* Constants */
+
+static const double activeopacity   = 1.0f;     /* Window opacity when it's focused (0 <= opacity <= 1) */
+static const double inactiveopacity = 1.0f;     /* Window opacity when it's inactive (0 <= opacity <= 1) */
 #define TERMINAL "kitty"
 #define TERMCLASS "kitty"
 #define BROWSER "ungoogled-chromium"
@@ -77,14 +80,14 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	*/
-	/* class    instance      title       	 tags mask    isfloating   isterminal  noswallow  monitor */
-	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,           0,         0,        -1 },
-	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 },
-	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 },
-	{ TERMCLASS,      "floatterm", NULL,       	    0,       1,           1,         0,        -1 },
-	{ TERMCLASS,      "bg",        NULL,       	    1 << 7,       0,           1,         0,        -1 },
-	{ TERMCLASS,      "spterm",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 },
-	{ TERMCLASS,      "spcalc",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 },
+	/* class    instance      title       	 tags mask    isfloating * isterminal  noswallow  monitor focusopacity    unfocusopacity */
+	{ "Chromium",     NULL,       NULL,       	    0,       0,           0,         0,        -1 , 0.90f,  0.90f},
+	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 , activeopacity,  inactiveopacity},
+	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 , activeopacity,  inactiveopacity},
+	{ TERMCLASS,      "floatterm", NULL,       	    0,       1,           1,         0,        -1 , activeopacity,  inactiveopacity},
+	{ TERMCLASS,      "bg",        NULL,       	    1 << 7,       0,           1,         0,        -1 , activeopacity,  inactiveopacity},
+	{ TERMCLASS,      "spterm",    NULL,       	    SPTAG(0),     1,           1,         0,        -1 , activeopacity,  inactiveopacity},
+	{ TERMCLASS,      "spcalc",    NULL,       	    SPTAG(1),     1,           1,         0,        -1 , activeopacity,  inactiveopacity},
 };
 
 /* layout(s) */
