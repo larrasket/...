@@ -526,9 +526,11 @@
 /home/l/me/music/st/89.mp3
 /home/l/me/music/st/8.mp3
 /home/l/me/music/st/9.mp3
+/home/l/me/music/selec/GEORGIAN LEGEND SAMAIA~1.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Aardia - The Prophecy.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Aaron Dunn - The Music of the Ainur.ogg
 /home/l/me/music/lik/a balladeer - Happy New Year - reprise.ogg
+/home/l/me/music/selec/Frédéric Chopin - The Nocturnes ｜ Maria João Pires, live recital.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Adamantum - Gates of the Forest Kingdom.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Adamantum - Forest Guards.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Adamantum - Faerie's Dance.ogg
@@ -539,6 +541,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Aindulmedir - Wind-Bitten.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Aindulmedir - Winter And Slumber.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Aindulmedir - Snow Above Blue Fire.ogg
+/home/l/me/music/selec/Dvorak - Romance for piano and violin, Op.11.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Alex Crispin - Endless Dark.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Alhazred - The Nameless City.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Alhazred - The Great Old Ones.ogg
@@ -699,10 +702,12 @@
 /home/l/me/music/jabr/تلاوة من تهجد الحرم المكي من سورتي الأنعام والأعراف - الشيخ علي جابر 28-9-1408هـ.mp3
 /home/l/me/music/jabr/مقطع نادر آخر للشيخ علي جابر وهو يتهيأ للصلاة على الجنازة 25-9-1407هـ.mp3
 /home/l/me/music/lik/America - A Horse with No Name.ogg
+/home/l/me/music/selec/Arvo Pärt ＂Spiegel im Spiegel＂ for Violin & Piano.mp3
 /home/l/me/music/class/Beethoven - Moonlight Sonata (FULL).mp3
 /home/l/me/music/lik/Angel Olsen - Unfucktheworld.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Angst Sessions - Världarnas glömda värld.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Angst Sessions - Källans urkraft.ogg
+/home/l/me/music/selec/Poland Radio 1939 - relax⧸study to 📻 Old aesthetic sound + War ambient part.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/009. Antonín DVOŘÁK - (1893) Symphony No.9 in E Minor, Op. 95 (From The New World, IV. Allegro con fuoco).mp3
 /home/l/me/music/class/Serenade for String Orchestra in E major, Op. 22 - Tempo di Valse.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/004. Antonio Vivaldi - (1716-1717) The Four Seasons - Concerto No. 1 in E major, Op. 8, RV 269 (Spring La primavera - Allegro in E major).mp3
@@ -722,9 +727,11 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Asgar - Centurias.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Asgar - In the Eternity.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Asgar - Bifrost.ogg
+/home/l/me/music/selec/Tchaikovsky： Violin Concerto op.35 & Romeo and Juliet Fantasy Overture - Live Concert HD.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Basarabian Hills - Snowflakes.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Basarabian Hills - Phantasmagoria.ogg
 /home/l/me/music/lik/Beautiful Death - In the Forest.ogg
+/home/l/me/music/selec/Schumann    Arabeske    Op 18        Rubinstein   Rec 1969.wmv.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/048. Bedřich Smetana - (1877) Má vlast (Vltava).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/048. Béla Bartók - (1944) Concerto for Orchestra (IV_ Intermezzo interrotto. Allegretto).mp3
 /home/l/me/music/class/Schubert： Symphony No. 5 in B Flat Major, D. 485 - II. Andante con moto.mp3
@@ -743,7 +750,9 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Burzum - Dunkelheit.ogg
 /home/l/me/music/My Playlist #23/02 - Calexico - Banderilla.ogg
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/043. Camille Saint-Saëns - (1872) Dance Macabre Op. 40.mp3
+/home/l/me/music/selec/Schubert Ständchen ： Camille Thomas and Beatrice Berrut.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Cantique Lépreux - Paysages Polaires II.ogg
+/home/l/me/music/selec/Khatia Buniatishvili - Grieg - Piano Concerto in A minor - Sokhiev.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/026. Carl Nielsen - (1917) Chaconne, Op. 32.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/042. Carl Orff - (1937) Carmina Burana (Fortuna Imperatrix Mundi).mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Carnifexian - The Banners of Empire Will Rise Again.ogg
@@ -811,6 +820,8 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/dungeontroll - Weaving a Web of Gold.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/dungeontroll - An Unspoken Oath.ogg
 /home/l/me/music/lik/DUSK (GR) - What Are the Chances.ogg
+/home/l/me/music/selec/Brahms： Symphony No. 2 ｜ Kurt Masur and the Leipzig Gewandhaus Orchestra.mp3
+/home/l/me/music/selec/The Chairman Dances (Foxtrot for Orchestra).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/040. Edvard Grieg - (1868) Piano Concerto in A Minor, Op. 16 (Allegro molto moderato).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/044. Edvard Grieg - (1873) Peer Gynt Suite No.1, Op.46 (In the Hall of the Mountain King).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/015. Edvard Grieg - (1901) Lyric Suite, Op. 54 (March of the Dwarfs).mp3
@@ -857,6 +868,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Evilfeast - Solitude Apotheosis.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Evilfeast - Winter Descent's Eve... I Become the Journey.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Evilnox - Beauty Never Dies.ogg
+/home/l/me/music/تريز سليمان شهرزاد - SHAHRZAD music video.mp3
 /home/l/me/music/lik/Faia Younan - Ohebbou Yadayka.ogg
 /home/l/me/music/lik/Fairuz - Saaltak Habiby_1.ogg
 /home/l/me/music/My Playlist #23/01 - Fairuz - Al Bostah.ogg
@@ -933,6 +945,8 @@
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/019. Gustav Holst - (1909) Suite for Military Band No. 1 in E-Flat Major, Op. 28 (No. 1_ I. Chaconne).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/023. Gustav Holst - (1914) The Planets, Op. 32 (4. Jupiter, the Bringer of Jollity).mp3
 /home/l/me/music/lik/GXNXSIS - of course i still love you.ogg
+/home/l/me/music/selec/The Best of Baroque Music.mp3
+/home/l/me/music/selec/Bach： Cello Collection.mp3
 /home/l/me/music/lik/Hammock - We Watched You Disappear.ogg
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/050. Hans Werner Henze - (1949) Symphony No. 2 (II_ Allegro molto vivace).mp3
 /home/l/me/music/lik/Hawa Dafi - Shebak Zgher.ogg
@@ -953,6 +967,9 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Hole Dweller - An Empty Tankard of Ale at the Floating Log Inn.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Hole Dweller - Wishing Well.ogg
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/047. Howard Hanson - (1943) Symphony No. 4, Op. 34 (The Requiem_ IV - Lux aeterna. Largo pastorale).mp3
+/home/l/me/music/selec/Brahms： 4. Sinfonie ∙ hr-Sinfonieorchester ∙ Andrés Orozco-Estrada.mp3
+/home/l/me/music/selec/Schubert： 7. Sinfonie (»Unvollendete«) ∙ hr-Sinfonieorchester ∙ Andrés Orozco-Estrada.mp3
+/home/l/me/music/selec/Saint-Saëns： 1. Cellokonzert ∙ hr-Sinfonieorchester ∙ Bruno Philippe ∙ Christoph Eschenbach.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Iagon - Blood Passage.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Iagon - The Crystal Wizard.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Iagon - Through the Darkness.ogg
@@ -969,6 +986,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Isegrimm - Ort Widar Orte.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Isegrimm - Ih Wallota Sumaro Enti Wintro.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/I Shalt Become - The Funeral Rain.ogg
+/home/l/me/music/selec/Chopin - Nocturne Op. 9 No. 2  - Piano Classical Music.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Jääportit - Vaellus Porteille Tuonelan.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Jääportit - Kauan Koskematon.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Jääportit - Kohtalon Sinetti.ogg
@@ -1013,8 +1031,10 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Krauhl - A Vampire in Hiding.ogg
 /home/l/me/music/lik/Kurt Cobain - And I Love Her.ogg
 /home/l/me/music/lik/Laura Marling - What He Wrote.ogg
+/home/l/me/music/selec/Dave Brubeck - Golden Brown.mp3
 /home/l/me/music/lik/Leech - The Man With The Hammer.ogg
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/003. Léo Delibes - (1883) Lakmé (Flower Duet).mp3
+/home/l/me/music/selec/Adagio for Strings, Op. 11.mp3
 /home/l/me/music/02 - Leonard Cohen - Suzanne.ogg
 /home/l/me/music/lik/Leonard Cohen - Stories of the Street.ogg
 /home/l/me/music/13 - Leonard Cohen - Teachers.ogg
@@ -1050,6 +1070,7 @@
 /home/l/me/music/19 - Leonard Cohen - The Night of Santiago.ogg
 /home/l/me/music/27 - Leonard Cohen - The Goal.ogg
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/027. Leos Janacek - (1918) Taras Bulba (III. The Prophesy and Death of Taras Bulba).mp3
+/home/l/me/music/selec/F. Liszt - ＂Ständchen＂ Piano Transcriptions After Schubert - Khatia Buniatishvili.mp3
 /home/l/me/music/lik/Les Discrets - Linceul d'hiver.ogg
 /home/l/me/music/lik/Lhasa De Sela - Love Came Here.ogg
 /home/l/me/music/lik/Lilium - Sleeping Inside.ogg
@@ -1080,6 +1101,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Malfet - Joyeuse Garde Idyll.ogg
 /home/l/me/music/class/Mozart - Requiem - Dies irae - Herreweghe.mp3
 /home/l/me/music/lik/Marika Hackman - Claude's Girl.ogg
+/home/l/me/music/selec/Samuel Barber - Adagio for Strings.mp3
 /home/l/me/music/lik/Mashrou' Leila - Fasateen.ogg
 /home/l/me/music/lik/Mashrou' Leila - Abdo.ogg
 /home/l/me/music/lik/Mashrou' Leila - Taxi.ogg
@@ -1150,6 +1172,11 @@
 /home/l/me/music/lik/Matt Elliott - The Day After That_1.ogg
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/034. Maurice Ravel - (1928) Boléro.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/039. Max Bruch - (1867) Violin Concerto No. 1 in G Minor, Op. 26 (1st Movement_ Prelude - Allegro moderato).mp3
+/home/l/me/music/selec/The Consolations of Philosophy (Music From ＂Black Mirror＂ TV Series).mp3
+/home/l/me/music/selec/Max Richter - Dream 3 (in the midst of my life).mp3
+/home/l/me/music/selec/Max Richter - Mercy (Official Music Video by Yulia Mahr).mp3
+/home/l/me/music/selec/Lang Lang -- Träumerei (Kinderszenen, Op. 15 No. 7), Schumann.mp3
+/home/l/me/music/selec/Elgar - Nimrod (from ＂Enigma Variations＂).mp3
 /home/l/me/music/31may/Hit the road jack - Ray Charles.mp3
 /home/l/me/music/lik/Michael Jackson - Billie Jean.ogg
 /home/l/me/music/lik/Midlake - The Fairest Way.ogg
@@ -1300,14 +1327,17 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Murgrind - Emerald Forest.ogg
 /home/l/me/music/lik/Muse - Uprising.ogg
 /home/l/me/music/class/Beethoven  Symphony No  6 in F Major 'Pastoral', Op. 68   IV  Allegro.mp3
+/home/l/me/music/selec/Ludovico Einaudi Best Songs Of All Time ｜ Ludovico Einaudi Full Album.mp3
 /home/l/me/music/lik/Myriam Alter - It's All There.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Mythril Spectre - Hallowed Ground of Ancient Queens.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Mythril Spectre - World of Fantasy.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Mythril Spectre - Emerging Shadow.ogg
+/home/l/me/music/selec/Cecilia Bartoli - ＂Caro mio ben＂.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Nebel Torvum - Medieval Feast.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Neptune Towers - Caravans to Empire Algol.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Neptune Towers - Excerpts from `space Lab` Part 3.ogg
 /home/l/me/music/class/Beethoven - Symphony No.7 in A major op.92 - II, Allegretto.mp3
+/home/l/me/music/selec/Georgian Legend - Romelni.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Neverlur - Fjellets svarte røtter.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Neverlur - Taarnet I Den Dype Skogen.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Neverlur - Op Under Fjeldet Toner en Lur.ogg
@@ -1344,6 +1374,7 @@
 /home/l/me/music/lik/No Clear Mind - a new sun.ogg
 /home/l/me/music/lik/No Clear Mind - Lulu.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Nox Arcana - Shivers.ogg
+/home/l/me/music/selec/Luigi Boccherini - Musica notturna delle strade di Madrid.mp3
 /home/l/me/music/lik/Oasis - Wonderwall - Remastered.ogg
 /home/l/me/music/lik/Odetta Hartman - Batonebo.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Offermose - Sorgflugt.ogg
@@ -1357,6 +1388,8 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Old Tower - The Silence Beneath Ancient Grounds.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Old Tower - Storms of the Dragon's Spells.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Old Tower - Drachenblut.ogg
+/home/l/me/music/selec/Frédéric Chopin： Piano Concerto No. 1 e-minor (Olga Scheps live).mp3
+/home/l/me/music/selec/Franz Schubert - Piano Quintet in A major, D. 667, ＂Trout＂.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Örnatorpet - I villande skogen.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Örnatorpet - Varggropen.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Örnatorpet - Bäckens Serenad.ogg
@@ -1385,13 +1418,16 @@
 /home/l/me/music/lik/Pixies - Where Is My Mind_ - Remastered.ogg
 /home/l/me/music/lik/Pixies - Where Is My Mind_.ogg
 /home/l/me/music/lik/Placebo - Where Is My Mind_ - XFM Live Version.ogg
+/home/l/me/music/selec/Arvo Pärt- Spiegel im Spiegel.mp3
 /home/l/me/music/class/Claude Debussy - Prelude to the Afternoon of a Faun.mp3
+/home/l/me/music/selec/American speaks Latin with Italians at the Park! 🇮🇹 Will they understand？.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Pumpkin Witch - A Dark October.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Pumpkin Witch - Wrath of the Skeleton King.ogg
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/042. Pyotr Ilyich Tchaikovsky - (1871) Andante Cantabile Op. 11.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/047. Pyotr Ilyich Tchaikovsky - (1876) Swan Lake, Op. 20 (Danses des Cygnes - Scene; Moderato assai).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/049. Pyotr Ilyich Tchaikovsky - (1879) Eugene Onegin (Polonaise).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/008. Pyotr Ilyich Tchaikovsky - (1892) The Nutcracker Suite Op. 71 (Dance of the Sugar Plum Fairy).mp3
+/home/l/me/music/selec/Edward Elgar - Enigma Variations, Op.36： IX. (Nimrod).mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Quest Master - Cathedral of Glistening Hope.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Quest Master - Cloudy Gateways.ogg
 /home/l/me/music/lik/Racha Rizk - Yimkin Law.ogg
@@ -1417,6 +1453,7 @@
 /home/l/me/music/lik/Rogér Fakhr - Sad Sad Songs.ogg
 /home/l/me/music/class/Mozart - Lacrimosa.mp3
 /home/l/me/music/lik/Rosemary Standley - All the World Is Green.ogg
+/home/l/me/music/Inas inas.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Rune Realms - Discovery of the Ice Chasms.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Rune Realms - Secrets of the Deepwood.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Rune Realms - Call of the Glow Wisp.ogg
@@ -1458,6 +1495,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Sombre Arcane - Return from Dragonspear.ogg
 /home/l/me/music/lik/Sorry - Starstruck - Single Version.ogg
 /home/l/me/music/lik/Souad Massi - Ghir Enta.ogg
+/home/l/me/music/selec/Mischa Maisky plays Bach Cello Suite No.1 in G (full).mp3
 /home/l/me/music/lik/Sting - Englishman In New York.ogg
 /home/l/me/music/lik/Stone Sour - Wicked Game - Acoustic; Live.ogg
 /home/l/me/music/lik/Stone Sour - Home Again.ogg
@@ -1523,6 +1561,7 @@
 /home/l/me/music/lik/Titanic - Ballad of a Rock'n Roll Loser.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Torchlight - The Long Quest.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Torchlight - Ivy's Solemn Empire.ogg
+/home/l/me/music/Camille Saint-Saëns - Danse Macabre, OP. 40 - Leopold Stokowski - National Philharmonic Orchestra.mp3
 /home/l/me/music/lik/Trapt - Headstrong.ogg
 /home/l/me/music/lik/Travis - Happy To Hang Around.ogg
 /home/l/me/music/lik/Trygve Seim - Sol’s Song.ogg
@@ -1544,8 +1583,11 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Vaelastrasz - Rise of the Black Dragonflight_The Life-Binder.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Vaelastrasz - Ladimore's Lament.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Vættur - Alheimsvíðáttan.ogg
+/home/l/me/music/selec/Chopin Berceuse Op 57 D Flat Major.mp3
+/home/l/me/music/selec/Valentina Lisitsa. Chopin Nocturne Op 27 # 2 D Flat Major.mp3
 /home/l/me/music/lik/Vàli - Naar Vinden Graater.ogg
 /home/l/me/music/lik/Vàli - Sevjedraaper.ogg
+/home/l/me/music/selec/Mezzosoprano IRINA ARKHIPOVA  (T. Giordani)  “Caro mio ben”    (1976).mp3
 /home/l/me/music/lik/Versa - We Are Not What We Say We Are.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Vindkaldr - Weeping At Stars.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Vindkaldr - In Solitude Until the End of Time.ogg
@@ -1557,6 +1599,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Wallachian Cobwebs - The Electrical Secrets of Heaven.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Wallachian Cobwebs - A Lonely Walk.ogg
 /home/l/me/music/lik/Wang Wen - Lonely God.ogg
+/home/l/me/music/selec/Itzhak Perlman – Beethoven： Violin Concerto (with Daniel Barenboim, Berliner Philharmoniker).mp3
 /home/l/me/music/lik/We Lost The Sea - A Gallant Gentleman.ogg
 /home/l/me/music/lik/We Lost The Sea - A Beautiful Collapse.ogg
 /home/l/me/music/lik/Whoopie Cat - When She Goes.ogg
