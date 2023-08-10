@@ -312,3 +312,11 @@
 (add-hook 'org-roam-capture-new-node-hook (lambda  ()
                                             (setq roam-titles
                                                   (salih/org-roam-get-node-files (org-roam-node-read--completions)))))
+
+
+
+(with-eval-after-load 'flycheck
+  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+
+(provide '+hooks)
+

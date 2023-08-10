@@ -1,4 +1,4 @@
-(add-to-list 'load-path "~/.doom.d/")
+(add-to-list 'load-path "~/.doom.d/lisp/")
 (add-to-list 'org-agenda-files "~/roam/main/life.org")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 (require 'epa-file)
@@ -181,12 +181,12 @@
 
 
 ;; this should be called after defining salih/prefix-global
-(load "+helper.el")
-(load "+bindings.el")
-(load "org-tags.el")
-(load "+hooks.el")
-(load "feeds.el")
 
+(require '+helper)
+(require '+org-tags)
+(require '+hooks)
+(require '+feeds)
+(require '+bindings)
 
 (set-frame-parameter (selected-frame) 'alpha '(85 85))
 (add-to-list 'default-frame-alist '(alpha 85 85))

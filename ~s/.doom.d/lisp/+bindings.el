@@ -1,6 +1,4 @@
-;;; ../configs/.doom.d/keys.el -*- lexical-binding: t; -*-
-;;;
-;;;
+;;; ../configs/.doom.d/lisp/+bindings.el -*- lexical-binding: t; -*-
 
 
 ;; unbinding
@@ -9,6 +7,7 @@
 (define-key org-mode-map (salih/mode "]") nil)
 (define-key org-mode-map (salih/mode "[") nil)
 (general-auto-unbind-keys)
+
 
 
 
@@ -91,9 +90,11 @@
  "C-d" #'epa-dired-do-encrypt)
 
 
+(general-auto-unbind-keys)
 ;; Org-mode
-(general-define-key
- :keymaps 'org-mode-map
+(map!
+ :map org-mode-map
+ :after org
  :prefix salih/prefix-mode
  "C-f" #'org-footnote-action
  "c i" #'org-clock-in
@@ -107,16 +108,19 @@
  "H-i C-b" #'orb-insert-link
  "C-n C-n" #'org-noter
  "C-n C-k" #'org-noter-kill-session
+ "C-e"     nil
  "C-e C-p" #'org-pandoc-export-to-latex-pdf
 
  ;; roam
  "H-i C-r" #'salih/org-roam-node-insert
+ "C-r"     nil
  "C-r H-i" #'salih/org-roam-node-insert
  "C-r C-t" #'org-roam-tag-add
  "C-r C-a" #'org-roam-alias-add
  "C-r C-b" #'consult-org-roam-backlinks
  "C-r C-f" #'consult-org-roam-forward-links)
 
+(general-auto-unbind-keys)
 
 ;; Lisp
 
@@ -136,9 +140,10 @@
 
 
 ;; convenient
-(general-define-key
+(map!
  :prefix salih/prefix-global
  "C-c"     #'org-capture
+ "C-a" nil
  "C-a C-a"     #'salih/open-agenda
  "C-."     #'find-file
  "."     #'find-file
@@ -152,8 +157,11 @@
  "]"     #'next-buffer
  "C-d"     #'kill-current-buffer
  "C-k"     #'kill-current-buffer
+ "C-l" nil
  "C-l C-l"   #'leetcode
+ "C-r" nil
  "C-r C-r"   #'doom/sudo-this-file
+ "TAB" nil
  "TAB d" #'+workspace/delete
  "SPC"   #'projectile-find-file
  "C-x"   #'salih/xwidget-open-with-clipboard
@@ -162,14 +170,16 @@
 ;; file keys
 (general-define-key
  :prefix (concat salih/prefix-global "C-f")
+ "" nil
  "C-r" #'recentf-open-files
  "C-g" #'magit-find-file
  "C-l" #'projectile-find-file)
 
 
 ;; search global
-(general-define-key
+(map!
  :prefix "C-s"
+ :map 'override
  "C-d" #'+default/search-cwd
  "C-b" #'+default/search-buffer
  "C-p" #'+default/search-project
@@ -179,6 +189,7 @@
 ;; notes
 (general-define-key
  :prefix (concat salih/prefix-global "C-n")
+ "" nil
  "C-f" #'citar-open-notes
  "C-b" #'citar-open-notes
  "C-o" #'salih/open-book)
@@ -186,6 +197,7 @@
 ;; roam
 (general-define-key
  :prefix (concat salih/prefix-global "C-r")
+ ""  nil
  "C-b" #'org-roam-buffer-toggle
  "c" #'org-roam-capture
  "C-f" #'salih/org-roam-node-open
@@ -199,6 +211,7 @@
 ;; TODO refactor if possible
 (general-define-key
  :prefix (concat salih/prefix-global "g")
+ "" nil
  "g"   #'magit-status
  "G"   #'magit-status-here
  "C"   #'magit-clone
@@ -213,6 +226,7 @@
 ;; other
 (general-define-key
  :prefix (concat salih/prefix-global "C-e")
+ "" nil
  "C-e" #'eshell
  "C-f" #'elfeed)
 
@@ -226,9 +240,10 @@
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
 
 
-(general-define-key
+(map!
  :prefix salih/prefix-mode
  "H-i C-u" #'insert-char
+ "C-s" nil
  "C-s C-w" #'+lookup/dictionary-definition
  "C-t" #'gts-do-translate
  "C-s" #'centaur-tabs-ace-jump
@@ -272,6 +287,7 @@
 
 (general-define-key
  :prefix (concat salih/prefix-global "m")
+ "" nil
  "m" #'(lambda () (interactive) (mu4e~headers-jump-to-maildir "/Inbox"))
  "i" #'mu4e)
 
@@ -286,3 +302,5 @@
 (evil-define-key 'normal elfeed-search-mode-map
   (kbd "J") 'elfeed-goodies/split-show-next
   (kbd "K") 'elfeed-goodies/split-show-prev)
+
+(provide '+bindings)
