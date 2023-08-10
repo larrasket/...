@@ -51,7 +51,8 @@
 
 (add-hook 'pdf-view-mode-hook
           (lambda ()
-            (set (make-local-variable 'evil-normal-state-cursor) (list nil))))
+            (set (make-local-variable 'evil-normal-state-cursor) (list nil))
+            (pdf-view-themed-minor-mode)))
 
 (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files)
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
@@ -69,7 +70,7 @@
 (awqat-display-prayer-time-mode)
 (salih/consult-preview-at-point)
 (add-hook 'after-init-hook        #'global-flycheck-mode)
-(add-hook 'after-init-hook #'mu4e)
+;; (add-hook 'after-init-hook #'mu4e)
 (consult-org-roam-mode 1)
 (add-hook 'after-make-frame-functions (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
 
@@ -248,7 +249,7 @@
                      (let* ((name (org-roam-node-from-title-or-alias cand)))
                        (if name (file-name-nondirectory (org-roam-node-file name))
                          "")))
-                     
+
         :action ,(lambda (name)
                    (if salih/temp-roam-insert
                        (progn
@@ -268,21 +269,21 @@
                 (let* ((n (org-roam-node-create :title name)))
                   (org-roam-capture- :node n)
                   (when salih/temp-roam-insert
-                   (progn
-                          (setq salih/temp-roam-insert nil)
-                          (let* ((node (org-roam-node-from-title-or-alias name))
-                                 (description (org-roam-node-title node))
-                                 (id (org-roam-node-id node)))
-                            (insert (org-link-make-string
-                                     (concat "id:" id)
-                                     description))
-                            (run-hook-with-args 'org-roam-post-node-insert-hook
-                                                id
-                                                description)))))
+                    (progn
+                      (setq salih/temp-roam-insert nil)
+                      (let* ((node (org-roam-node-from-title-or-alias name))
+                             (description (org-roam-node-title node))
+                             (id (org-roam-node-id node)))
+                        (insert (org-link-make-string
+                                 (concat "id:" id)
+                                 description))
+                        (run-hook-with-args 'org-roam-post-node-insert-hook
+                                            id
+                                            description)))))
 
 
                 (setq roam-titles (salih/org-roam-get-node-files (org-roam-node-read--completions))))
-               
+
         :items    ,#'salih/get-org-roam-titles))
 
 
@@ -296,7 +297,7 @@
 
 
 (remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook)
-           #'vi-tilde-fringe-mode)
+  #'vi-tilde-fringe-mode)
 
 
 (after! git-gutter-fringe
@@ -307,3 +308,7 @@
     nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240]
     nil nil 'bottom))
+
+(add-hook 'org-roam-capture-new-node-hook (lambda  ()
+                                            (setq roam-titles
+                                                  (salih/org-roam-get-node-files (org-roam-node-read--completions)))))
