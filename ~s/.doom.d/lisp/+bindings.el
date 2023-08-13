@@ -137,7 +137,9 @@
 
 (global-set-key (salih/global "C-a") #'org-agenda)
 
-
+(general-define-key
+ :map 'xwidget-webkit-mode-map
+ "C-c C-c" #'salih/open-current-url-in-chrome)
 
 ;; convenient
 (map!

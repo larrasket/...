@@ -692,4 +692,13 @@ tasks."
   (consult-buffer (list org-roam-buffer-source)))
 
 
+
+
+(defun salih/open-current-url-in-chrome ()
+  "Open the current URL in Chrome using xwidget mode."
+  (interactive)
+  (let ((url (xwidget-webkit-current-url)))
+    (start-process "chromium" nil "chromium" (car kill-ring))))
+
+
 (provide '+helper)

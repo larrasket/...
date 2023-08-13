@@ -11,7 +11,6 @@
                      ("https://williamdavies.blog/feed/" philosophy)
                      ("http://chomsky.info/feed/" philosophy)
                      ("https://blog.giovanh.com/feeds/atom.xml" cs)
-                     ("https://hnrss.org/replies?id=lr0" personal)
 
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCdHT7KB1gDAXZYpPW71fn0Q" yt philosophy)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA" yt cs)
@@ -35,14 +34,25 @@
 
 
 
-(defun salih/add-feeds-by-keyword (keyword category)
+(defun salih/add-feeds-by-keyword (keyword-category-list)
   (let ((urls (list "https://hnrss.org/newest?q=%s")))
-    (dolist (url urls)
-      (let ((l (format url keyword)))
-       (add-to-list 'elfeed-feeds `(,l ,category))))))
+    (dolist (pair keyword-category-list)
+      (let ((keyword (car pair))
+            (category (cdr pair)))
+        (dolist (url urls)
+          (let ((l (format url keyword)))
+            (add-to-list 'elfeed-feeds `(,l ,category))))))))
 
-(salih/add-feeds-by-keyword "chomsky" 'philosophy)
-(salih/add-feeds-by-keyword "emacs" 'emacs)
+(setq keyword-category-list
+      '(("chomsky"      . philosophy)
+        ("emacs"        . emacs)
+        ("Egypt"        . politics)
+        ("Algeria"      . politics)
+        ("Arab"         . politics)
+        ("Israel"       . politics)
+        ("Palestine"    . politics)))
+
+(salih/add-feeds-by-keyword keyword-category-list)
 
 
 (provide '+feeds)
