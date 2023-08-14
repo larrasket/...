@@ -36,8 +36,9 @@
 
 (defun salih/add-feeds-by-keyword (keyword-category-list)
   (let ((urls (list "https://hnrss.org/newest?q=%s"
-                    "https://rssc.fly.dev/rss?src=https://boards.4channel.org/sci/index.rss&titlef=%s&descriptionf=%s"
-                    "https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&titlef=%s&descriptionf=%s")))
+                    "https://rssc.fly.dev/rss?src=https://boards.4channel.org/sci/index.rss&titlef=(?i)%s&descriptionf=(?i)%s"
+                    "https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&titlef=(?i)%s&descriptionf=(?i)%s"
+                    "https://rssc.fly.dev/rss?src=https://theconversation.com/articles.atom?language=en&titlef=(?i)%s&descriptionf=(?i)%s")))
     (dolist (pair keyword-category-list)
       (let ((keyword (car pair))
             (category (cdr pair)))
