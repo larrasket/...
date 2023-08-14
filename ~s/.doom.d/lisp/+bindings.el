@@ -77,7 +77,11 @@
 
 ;; Go
 (add-hook 'go-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-go-file)
+          (lambda ()
+            (gomacro-mode)
+            (local-set-key (salih/mode "C-c") #'gomacro-eval-region)
+            (local-set-key (salih/mode "C-f") #'gomacro-eval-file)
+            (local-set-key (salih/mode "C-b") #'gomacro-eval-buffer)
             (local-set-key (kbd "<f2>") #'salih/compile-and-run-go-project)))
 
 
@@ -183,6 +187,7 @@
  :prefix "C-s"
  :map 'override
  "C-d" #'+default/search-cwd
+ "C-w" #'+lookup/dictionary-definition
  "C-b" #'+default/search-buffer
  "C-p" #'+default/search-project
  "C-g" #'rgrep)
@@ -246,7 +251,6 @@
  :prefix salih/prefix-mode
  "H-i C-u" #'insert-char
  "C-s" nil
- "C-s C-w" #'+lookup/dictionary-definition
  "C-t" #'gts-do-translate
  "C-s" #'centaur-tabs-ace-jump
  "]"   #'centaur-tabs-forward

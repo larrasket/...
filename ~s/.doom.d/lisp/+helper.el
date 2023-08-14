@@ -702,3 +702,15 @@ tasks."
 
 
 (provide '+helper)
+
+
+(defun salih/unescape-string (str)
+  "Remove escape characters from a string."
+  (replace-regexp-in-string "\\\\(.)" "\\1" str))
+
+
+(defun salih/gomacro--sanitize-string (str)
+  (salih/unescape-string str))
+
+
+(advice-add 'gomacro--sanitize-string :override 'salih/gomacro--sanitize-string)

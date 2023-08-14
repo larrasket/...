@@ -57,4 +57,5 @@
 (package! org-noter)
 (package! nov)
 
-(package! elfeed-goodies)
+(package! gomacro-mode)
+
