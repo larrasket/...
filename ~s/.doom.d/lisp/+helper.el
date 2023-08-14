@@ -701,7 +701,6 @@ tasks."
     (start-process "chromium" nil "chromium" (car kill-ring))))
 
 
-(provide '+helper)
 
 
 (defun salih/unescape-string (str)
@@ -714,3 +713,11 @@ tasks."
 
 
 (advice-add 'gomacro--sanitize-string :override 'salih/gomacro--sanitize-string)
+
+(defun salih/format (format-string arg)
+  "Custom format function to replace all %s with the same argument."
+  (replace-regexp-in-string "%s" arg format-string))
+
+
+
+(provide '+helper)

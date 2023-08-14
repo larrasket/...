@@ -35,12 +35,14 @@
 
 
 (defun salih/add-feeds-by-keyword (keyword-category-list)
-  (let ((urls (list "https://hnrss.org/newest?q=%s")))
+  (let ((urls (list "https://hnrss.org/newest?q=%s"
+                    "https://rssc.fly.dev/rss?src=https://boards.4channel.org/sci/index.rss&titlef=%s&descriptionf=%s"
+                    "https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&titlef=%s&descriptionf=%s")))
     (dolist (pair keyword-category-list)
       (let ((keyword (car pair))
             (category (cdr pair)))
         (dolist (url urls)
-          (let ((l (format url keyword)))
+          (let ((l (salih/format url keyword)))
             (add-to-list 'elfeed-feeds `(,l ,category))))))))
 
 (setq keyword-category-list
@@ -48,6 +50,7 @@
         ("emacs"        . emacs)
         ("Egypt"        . politics)
         ("Algeria"      . politics)
+        ("lisp"         . programming)
         ("Arab"         . politics)
         ("Israel"       . politics)
         ("Palestine"    . politics)))
