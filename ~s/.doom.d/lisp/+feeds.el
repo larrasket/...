@@ -11,6 +11,7 @@
                      ("https://williamdavies.blog/feed/" philosophy)
                      ("http://chomsky.info/feed/" philosophy)
                      ("https://blog.giovanh.com/feeds/atom.xml" cs)
+                     ("https://www.theatlantic.com/feed/best-of/" politics)
 
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCdHT7KB1gDAXZYpPW71fn0Q" yt philosophy)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA" yt cs)
@@ -48,6 +49,7 @@
 
 (setq keyword-category-list
       '(("chomsky"      . philosophy)
+        ("arabic"       . philosophy)
         ("emacs"        . emacs)
         ("Egypt"        . politics)
         ("Algeria"      . politics)
