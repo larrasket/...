@@ -91,7 +91,7 @@
  :prefix salih/prefix-mode
  "C-c" #'salih/open-in-external-app
  "C-e" #'salih/epa-dired-do-encrypt
- "C-d" #'epa-dired-do-encrypt)
+ "C-d" #'epa-dired-do-decrypt)
 
 
 (general-auto-unbind-keys)
@@ -108,6 +108,7 @@
  "H-i C-d" #'org-download-clipboard
  "H-i C-c" #'salih/org-id-get-create-with-custom-id
  "H-i C-k" #'citar-insert-citation
+ "H-i C-t" #'org-inlinetask-insert-task
  "C-b" #'citar-insert-citation
  "H-i C-b" #'orb-insert-link
  "C-n C-n" #'org-noter
