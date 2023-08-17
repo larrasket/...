@@ -118,10 +118,19 @@
                           (todo "TODO")
                           (tags "@read")
                           (not (tags "@later"))
+                          (not (tags "project"))
                           (not (deadline))
                           (not (scheduled)))
-                        ((org-ql-block-header "Read:")))
+                        ((org-ql-block-header "Read something:")))
 
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (tags "project")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read a book:")))
 
           (org-ql-block '(and
                           (todo "TODO")
