@@ -719,5 +719,41 @@ tasks."
   (replace-regexp-in-string "%s" arg format-string))
 
 
+(defun salih/nov-search (pattern)
+  (interactive "sEnter search pattern: ")
+  (let ((version nov-epub-version)
+        (index 1)
+        results)
+    (while (< index (1- (length nov-documents)))
+      (seq-let (id &rest path) (aref nov-documents index)
+        (let (;; HACK: this should be looked up in the manifest
+              (imagep (seq-find (lambda (item) (string-match-p (car item) path))
+                                image-type-file-name-regexps))
+              ;; NOTE: allows resolving image references correctly
+              (default-directory (file-name-directory path)))
+          (unless imagep
+            (with-temp-buffer
+              (if (and (version< version "3.0") (eq id nov-toc-id))
+                  (insert (nov-ncx-to-html path))
+                (insert (nov-slurp path)))
+              (goto-char (point-min))
+              (when (search-forward pattern nil t)
+                (nov-render-html)
+                (goto-char (point-min))
+                (while (search-forward pattern nil t)
+                  (push (list (format "%d %s" index
+                                      (replace-regexp-in-string "\n" " "
+                                                                (thing-at-point 'line)))
+                              index (point))
+                        results)))))
+          (setq index (1+ index)))))
+    ;; (print results)))
+    (seq-let (index point) (alist-get (completing-read "Jump to: " (reverse results)) results
+                                      nil nil #'string=)
+      (nov-goto-document index)
+      (goto-char point))))
+
+
+
 
 (provide '+helper)
