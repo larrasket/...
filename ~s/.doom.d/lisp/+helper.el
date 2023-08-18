@@ -754,6 +754,13 @@ tasks."
       (goto-char point))))
 
 
+(defun salih/elfeed-copy-url ()
+  (interactive)
+  (let ((link (elfeed-entry-link elfeed-show-entry)))
+    (when link
+      (kill-new link)
+      (message "URL: %s" link))))
+
 
 
 (provide '+helper)

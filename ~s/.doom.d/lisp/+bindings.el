@@ -305,6 +305,7 @@
 
 (evil-define-key 'normal elfeed-show-mode-map
   (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "c") 'salih/elfeed-copy-url
   (kbd "K") 'elfeed-goodies/split-show-prev)
 (evil-define-key 'normal elfeed-search-mode-map
   (kbd "J") 'elfeed-goodies/split-show-next
