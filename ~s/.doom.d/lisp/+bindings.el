@@ -41,7 +41,8 @@
 (general-define-key
  :keymaps 'flycheck-mode-map
  :prefix salih/prefix-mode
- "C-e C-l" #'flycheck-list-errors)
+ "C-e C-l" #'flycheck-list-errors
+ "C-e C-e" #'flycheck-list-errors)
 
 
 (general-define-key
