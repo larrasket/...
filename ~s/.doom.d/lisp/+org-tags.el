@@ -17,7 +17,8 @@
                         ("@people" . ?p)
                         (:endgroup)
                         ("noexport" . ?n)
-                        ("@later" . ?l)))
+                        ("@later" . ?l)
+                        ("@general" . ?g)))
 
 (add-to-list 'org-tags-exclude-from-inheritance "@read")
 (add-to-list 'org-tags-exclude-from-inheritance "@later")
