@@ -9,6 +9,7 @@
        doom
        doom-dashboard
        hl-todo
+       treemacs
        (ligatures
         +pragmata-pro)
        modeline
