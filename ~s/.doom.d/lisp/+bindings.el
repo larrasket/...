@@ -14,11 +14,11 @@
 ;; FIXME this is to make it easier with C-g instead of ESC while using evil
 ;; mode. It is not prefect yet, I will tree to reach better solutions in the
 ;; future
-(define-key evil-normal-state-map       (kbd "C-g") #'evil-escape)
-(define-key evil-visual-state-map       (kbd "C-g") #'evil-escape)
-(define-key evil-insert-state-map       (kbd "C-g") #'evil-escape)
-(define-key evil-replace-state-map      (kbd "C-g") #'evil-escape)
-(define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
+(define-key evil-normal-state-map       (kbd "C-g") #'evil-normal-state)
+(define-key evil-visual-state-map       (kbd "C-g") #'evil-normal-state)
+(define-key evil-insert-state-map       (kbd "C-g") #'evil-normal-state)
+(define-key evil-replace-state-map      (kbd "C-g") #'evil-normal-state)
+(define-key evil-operator-state-map     (kbd "C-g") #'evil-normal-state)
 (define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
 
 (with-eval-after-load 'company
