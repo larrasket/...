@@ -143,9 +143,9 @@
 
 (global-set-key (salih/global "C-a") #'org-agenda)
 
-(general-define-key
- :map 'xwidget-webkit-mode-map
- "C-c C-c" #'salih/open-current-url-in-chrome)
+(require 'xwidget)
+(evil-define-key 'nomral xwidget-webkit-mode-map (kbd "O") 'salih/elfeed-open-url)
+
 
 ;; convenient
 (map!
@@ -172,7 +172,6 @@
  "TAB" nil
  "TAB d" #'+workspace/delete
  "SPC"   #'projectile-find-file
- "C-x"   #'salih/xwidget-open-with-clipboard
  "/"     #'swiper)
 
 ;; file keys
@@ -305,9 +304,10 @@
  "C-u" #'elfeed-update)
 
 (evil-define-key 'normal elfeed-show-mode-map
-  (kbd "J") 'elfeed-goodies/split-show-next
-  (kbd "c") 'salih/elfeed-copy-url
-  (kbd "K") 'elfeed-goodies/split-show-prev)
+ (kbd "J") 'elfeed-goodies/split-show-next
+ (kbd "c") 'salih/elfeed-copy-url
+ (kbd "O") 'salih/elfeed-open-url
+ (kbd "K") 'elfeed-goodies/split-show-prev)
 (evil-define-key 'normal elfeed-search-mode-map
   (kbd "J") 'elfeed-goodies/split-show-next
   (kbd "K") 'elfeed-goodies/split-show-prev)

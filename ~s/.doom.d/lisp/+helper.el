@@ -759,8 +759,14 @@ tasks."
   (let ((link (elfeed-entry-link elfeed-show-entry)))
     (when link
       (kill-new link)
-      (message "URL: %s" link))))
+      (message "URL: %s" link)
+      link)))
 
+(defun salih/elfeed-open-url ()
+  (interactive)
+    (let ((link (elfeed-entry-link elfeed-show-entry)))
+    (when link
+      (browse-url link))))
 
 
 (defun salih/insert-relative-file-path ()
