@@ -5,6 +5,7 @@
        company
        vertico
        :ui
+       treemacs
        vc-gutter
        doom
        doom-dashboard
