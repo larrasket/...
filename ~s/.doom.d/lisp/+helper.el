@@ -789,4 +789,15 @@ tasks."
           (insert file-path))
       (message "File does not exist: %s" file-path))))
 
+
+(defun salih/elfeed-tag-sort (a b)
+  (let* ((a-tags (format "%s" (elfeed-entry-tags a)))
+         (b-tags (format "%s" (elfeed-entry-tags b))))
+    (if (string= a-tags b-tags)
+        (< (elfeed-entry-date b) (elfeed-entry-date a)))
+    (string< a-tags b-tags)))
+
+(setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
+
+
 (provide '+helper)
