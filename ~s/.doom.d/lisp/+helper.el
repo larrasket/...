@@ -763,4 +763,16 @@ tasks."
 
 
 
+(defun salih/insert-relative-file-path ()
+  "Insert a relative file path selected by the user."
+  (interactive)
+  (let* ((current-buffer-file (buffer-file-name))
+         (file-path (read-file-name "Insert file path: ")))
+    (if (file-exists-p file-path)
+        (if current-buffer-file
+            (let ((relative-path (file-relative-name file-path (file-name-directory current-buffer-file))))
+              (insert relative-path))
+          (insert file-path))
+      (message "File does not exist: %s" file-path))))
+
 (provide '+helper)
