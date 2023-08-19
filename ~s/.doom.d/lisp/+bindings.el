@@ -307,6 +307,7 @@
  (kbd "J") 'elfeed-goodies/split-show-next
  (kbd "c") 'salih/elfeed-copy-url
  (kbd "O") 'salih/elfeed-open-url
+ (kbd "C") 'salih/elfeed-open-url-in-chrome
  (kbd "K") 'elfeed-goodies/split-show-prev)
 (evil-define-key 'normal elfeed-search-mode-map
   (kbd "J") 'elfeed-goodies/split-show-next
