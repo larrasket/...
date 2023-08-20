@@ -103,7 +103,7 @@
        gen
        genorg
        ;; gitcolor
-       chess
+       ;; chess
        cite
        roam
        bind)
