@@ -80,7 +80,8 @@
 (add-hook 'go-mode-hook
           (lambda ()
             (gomacro-mode)
-            (local-set-key (salih/mode "C-c") #'gomacro-eval-region)
+            (local-set-key (salih/mode "C-c") #'salih/compile-and-run-go-project)
+            (local-set-key (salih/mode "C-v") #'gomacro-eval-region)
             (local-set-key (salih/mode "C-f") #'gomacro-eval-file)
             (local-set-key (salih/mode "C-b") #'gomacro-eval-buffer)
             (local-set-key (kbd "<f2>") #'salih/compile-and-run-go-project)))
