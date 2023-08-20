@@ -5,12 +5,11 @@
        company
        vertico
        :ui
-       treemacs
        vc-gutter
        doom
        doom-dashboard
        hl-todo
-       treemacs
+       (treemacs +lsp)
        (ligatures
         +pragmata-pro)
        modeline

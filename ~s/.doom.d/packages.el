@@ -1,6 +1,5 @@
 ; -*- no-byte-compile: t; -*-
 
-(package! lsp-treemacs)
 
 (package! wakatime-mode)
 
