@@ -44,6 +44,7 @@
       org-id-method                                     'org
       org-directory                                     org-roam-directory
       org-id-locations-file                             "~/roam/.orgids"
+      org-roam-ui-open-on-start                         nil
       org-agenda-skip-scheduled-if-done                 nil
       org-use-tag-inheritance                           t
       org-agenda-block-separator                        9472
