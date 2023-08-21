@@ -201,7 +201,7 @@ static const Key keys[] = {
 
 	{ MODKEY,			XK_a,		togglegaps,	{0} },
 	{ MODKEY|ShiftMask,		XK_a,		defaultgaps,	{0} },
-	/* { MODKEY,			XK_s,		togglesticky,	{0} }, */
+	{ MODKEY,			XK_p,		togglesticky,	{0} },
 	{ MODKEY,			XK_m,		togglefullscr,	{0} },
 	{ MODKEY|ShiftMask,		XK_f,		setlayout,	{.v = &layouts[8]} },
 	{ MODKEY,			XK_g,		shiftview,	{ .i = -1 } },
