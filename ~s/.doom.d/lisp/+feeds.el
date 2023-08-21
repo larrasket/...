@@ -13,23 +13,24 @@
                      ("https://blog.giovanh.com/feeds/atom.xml" g cs)
                      ("https://www.theatlantic.com/feed/best-of/" atlantic politics)
 
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" YOUTUBE systemcraft emacs)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCX7katl3DVmch4D7LSvqbVQ" YOUTUBE montemayor history)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCEqNbbsx0i7fhwRt0saYIcQ" YOUTUBE america history)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7pr_dQxm2Ns2KlzRSx5FZA" YOUTUBE sandrhoman history)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrI5U0R293u9uveijefKyAA" YOUTUBE ryan history)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCdHT7KB1gDAXZYpPW71fn0Q" YOUTUBE Distributist philosophy)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCqBiWcuTF8IaLH7wBqnihsQ" YOUTUBE toldinstone history)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCsaViv1SDQy2FcRFHrf_Dkw" YOUTUBE hikma history)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA" YOUTUBE computerphile cs)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCheAUBrk8xw6QhJIxEPsvhg" YOUTUBE thelifeguide history)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9ff15w4ufviWfv9UfIuByA" YOUTUBE wes cecil history philosophy)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCMhLD2vecQSBqKd5uVPrwaQ" YOUTUBE historiancraft history)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCp9ZtilfKJds0iWytR_pnOQ" YOUTUBE Epimetheum history)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVpb6nv1igxnoY0SRVhaoEA" YOUTUBE engieering cs)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC_5ENzPnzYCGRxiOIdtaRug" YOUTUBE ramah aesthetic)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC99wd4wi8AfaSkqprWo206g" YOUTUBE edits aesthetic)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A" YOUTUBE numberphile math)))
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" youtube systemcraft emacs)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube mentaloutlaw cs)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCX7katl3DVmch4D7LSvqbVQ" youtube montemayor history)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCEqNbbsx0i7fhwRt0saYIcQ" youtube america history)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7pr_dQxm2Ns2KlzRSx5FZA" youtube sandrhoman history)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrI5U0R293u9uveijefKyAA" youtube ryan history)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCdHT7KB1gDAXZYpPW71fn0Q" youtube Distributist philosophy)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCqBiWcuTF8IaLH7wBqnihsQ" youtube toldinstone history)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCsaViv1SDQy2FcRFHrf_Dkw" youtube hikma history)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA" youtube computerphile cs)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCheAUBrk8xw6QhJIxEPsvhg" youtube thelifeguide history)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9ff15w4ufviWfv9UfIuByA" youtube wes cecil history philosophy)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCMhLD2vecQSBqKd5uVPrwaQ" youtube historiancraft history)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCp9ZtilfKJds0iWytR_pnOQ" youtube Epimetheum history)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVpb6nv1igxnoY0SRVhaoEA" youtube engieering cs)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC_5ENzPnzYCGRxiOIdtaRug" youtube ramah aesthetic)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UC99wd4wi8AfaSkqprWo206g" youtube edits aesthetic)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A" youtube numberphile math)))
 
 
 (use-package elfeed-goodies
@@ -48,7 +49,7 @@
 
 (defun salih/add-feeds-by-keyword (keyword-category-list)
   (let ((urls (list "https://hnrss.org/newest?q=%s"
-                    "https://rssc.fly.dev/rss?src=https://boards.4channel.org/sci/index.rss&titlef=(?i)%s&descriptionf=(?i)%s"
+                    "https://rssc.fly.dev/rss?src=https://www.reddit.com/r/programming/.rss&titlef=(?i)%s&descriptionf=(?i)%s"
                     "https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&titlef=(?i)%s&descriptionf=(?i)%s"
                     "https://rssc.fly.dev/rss?src=https://theconversation.com/articles.atom?language=en&titlef=(?i)%s&descriptionf=(?i)%s")))
     (dolist (pair keyword-category-list)
