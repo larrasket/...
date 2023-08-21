@@ -108,20 +108,13 @@
 
           (org-ql-block '(and
                           (todo "TODO")
-                          (tags "@watch")
-                          (not (tags "@later"))
-                          (not (deadline))
-                          (not (scheduled)))
-                        ((org-ql-block-header "Your ungoogled watch later:")))
-
-          (org-ql-block '(and
-                          (todo "TODO")
                           (tags "@read")
                           (not (tags "@later"))
                           (not (tags "project"))
                           (not (deadline))
                           (not (scheduled)))
                         ((org-ql-block-header "Read something:")))
+
 
           (org-ql-block '(and
                           (todo "TODO")
@@ -131,6 +124,15 @@
                           (not (deadline))
                           (not (scheduled)))
                         ((org-ql-block-header "Read a book:")))
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@watch")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Your ungoogled watch later:")))
 
           (org-ql-block '(and
                           (todo "TODO")
