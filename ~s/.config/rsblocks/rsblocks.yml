@@ -37,7 +37,7 @@ pub_ip:
 local_ip:
   icon: ''
   enabled: true
-  interface: 'wlp1s0' #network interface required for now..
+  interface: 'wlan0' #network interface required for now..
   delay: 120.0
 
 

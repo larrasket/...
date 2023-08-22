@@ -84,49 +84,60 @@
           (agenda ""
                   ((org-agenda-span '5)))
 
-
           (org-ql-block '(and
                           (todo "DAILY")
                           (not (deadline))
                           (not (scheduled)))
                         ((org-ql-block-header "Do something today")))
 
-
-
           (org-ql-block '(and
                           (todo "TODO")
                           (tags "@general")
+                          (not (tags "@later"))
                           (not (deadline))
                           (not (scheduled)))
                         ((org-ql-block-header "Get something done")))
 
-
-
           (org-ql-block '(and
                           (todo "TODO")
                           (tags "@check")
+                          (not (tags "@later"))
                           (not (deadline))
                           (not (scheduled)))
                         ((org-ql-block-header "Check this out")))
 
           (org-ql-block '(and
                           (todo "TODO")
+                          (tags "@read")
+                          (not (tags "@later"))
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read something:")))
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (tags "project")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read a book:")))
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
                           (tags "@watch")
+                          (not (tags "@later"))
                           (not (deadline))
                           (not (scheduled)))
                         ((org-ql-block-header "Your ungoogled watch later:")))
 
           (org-ql-block '(and
                           (todo "TODO")
-                          (tags "@read")
-                          (not (deadline))
-                          (not (scheduled)))
-                        ((org-ql-block-header "Read:")))
-
-
-          (org-ql-block '(and
-                          (todo "TODO")
                           (tags "@idea")
+                          (not (tags "@later"))
                           (not (deadline))
                           (not (scheduled)))
                         ((org-ql-block-header "Looking for an idea?")))))))

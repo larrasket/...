@@ -5,9 +5,11 @@
        company
        vertico
        :ui
+       vc-gutter
        doom
        doom-dashboard
        hl-todo
+       (treemacs +lsp)
        (ligatures
         +pragmata-pro)
        modeline
@@ -100,8 +102,8 @@
        src
        gen
        genorg
-       gitcolor
-       chess
+       ;; gitcolor
+       ;; chess
        cite
        roam
        bind)

@@ -16,10 +16,16 @@
                         (:grouptags)
                         ("@people" . ?p)
                         (:endgroup)
-                        ("noexport" . ?n)))
+                        ("noexport" . ?n)
+                        ("@later" . ?l)
+                        ("@general" . ?g)))
 
 (add-to-list 'org-tags-exclude-from-inheritance "@read")
+(add-to-list 'org-tags-exclude-from-inheritance "@later")
 (add-to-list 'org-tags-exclude-from-inheritance "noexport")
 (add-to-list 'org-tags-exclude-from-inheritance "project")
 (add-to-list 'org-tags-exclude-from-inheritance "permanent")
 (add-to-list 'org-tags-exclude-from-inheritance "link")
+
+
+(provide '+org-tags)

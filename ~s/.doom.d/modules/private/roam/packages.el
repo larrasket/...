@@ -2,7 +2,12 @@
 ;;; private/roam/packages.el
 
 
-(package! org-ql)
+
+(package! org-ql
+  :recipe (:host github
+           :repo "luggages/org-ql"
+           :branch "priority"))
+
 (unpin! org-roam)
 (package! org-roam-ui)
 (package! emacsql-sqlite3)

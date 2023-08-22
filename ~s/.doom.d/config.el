@@ -1,4 +1,4 @@
-(add-to-list 'load-path "~/.doom.d/")
+(add-to-list 'load-path "~/.doom.d/lisp/")
 (add-to-list 'org-agenda-files "~/roam/main/life.org")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 (require 'epa-file)
@@ -27,7 +27,7 @@
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       doom-theme                                        (if IS-PLASMA
                                                             'doom-monokai-spectrum
-                                                          'doom-ir-black)
+                                                          'doom-homage-black)
       highlight-indent-guides-method                    'bitmap
       display-line-numbers-type                         'visual
       doom-modeline-height                              17
@@ -44,6 +44,7 @@
       org-id-method                                     'org
       org-directory                                     org-roam-directory
       org-id-locations-file                             "~/roam/.orgids"
+      org-roam-ui-open-on-start                         nil
       org-agenda-skip-scheduled-if-done                 nil
       org-use-tag-inheritance                           t
       org-agenda-block-separator                        9472
@@ -181,13 +182,13 @@
 
 
 ;; this should be called after defining salih/prefix-global
-(load "+helper.el")
-(load "+bindings.el")
-(load "org-tags.el")
-(load "+hooks.el")
-(load "feeds.el")
+
+(require '+helper)
+(require '+org-tags)
+(require '+hooks)
+(require '+feeds)
+(require '+bindings)
 
 
-(after! org-roam
-  (setq org-roam-list-files-commands '(find fd fdfind rg)))
 (require 'org-roam-protocol)
+

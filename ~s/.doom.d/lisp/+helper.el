@@ -382,9 +382,9 @@ automatically previewed."
      'face 'doom-dashboard-banner)))
 
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((ksh . t)))
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '((ksh . t)))
 
 
 
@@ -690,3 +690,113 @@ tasks."
 (defun salih/org-roam-node-open ()
   (interactive)
   (consult-buffer (list org-roam-buffer-source)))
+
+
+
+
+(defun salih/open-current-url-in-chrome ()
+  "Open the current URL in Chrome"
+  (interactive)
+  (let ((_ (xwidget-webkit-current-url)))
+    (salih/open-url-in-chrome (car kill-ring))))
+
+(defun salih/open-url-in-chrome (url)
+  "Open the current URL in Chrome"
+  (start-process "chromium" nil "chromium" url))
+
+
+(defun salih/unescape-string (str)
+  "Remove escape characters from a string."
+  (replace-regexp-in-string "\\\\(.)" "\\1" str))
+
+
+(defun salih/gomacro--sanitize-string (str)
+  (salih/unescape-string str))
+
+
+(advice-add 'gomacro--sanitize-string :override 'salih/gomacro--sanitize-string)
+
+(defun salih/format (format-string arg)
+  "Custom format function to replace all %s with the same argument."
+  (replace-regexp-in-string "%s" arg format-string))
+
+
+(defun salih/nov-search (pattern)
+  (interactive "sEnter search pattern: ")
+  (let ((version nov-epub-version)
+        (index 1)
+        results)
+    (while (< index (1- (length nov-documents)))
+      (seq-let (id &rest path) (aref nov-documents index)
+        (let (;; HACK: this should be looked up in the manifest
+              (imagep (seq-find (lambda (item) (string-match-p (car item) path))
+                                image-type-file-name-regexps))
+              ;; NOTE: allows resolving image references correctly
+              (default-directory (file-name-directory path)))
+          (unless imagep
+            (with-temp-buffer
+              (if (and (version< version "3.0") (eq id nov-toc-id))
+                  (insert (nov-ncx-to-html path))
+                (insert (nov-slurp path)))
+              (goto-char (point-min))
+              (when (search-forward pattern nil t)
+                (nov-render-html)
+                (goto-char (point-min))
+                (while (search-forward pattern nil t)
+                  (push (list (format "%d %s" index
+                                      (replace-regexp-in-string "\n" " "
+                                                                (thing-at-point 'line)))
+                              index (point))
+                        results)))))
+          (setq index (1+ index)))))
+    ;; (print results)))
+    (seq-let (index point) (alist-get (completing-read "Jump to: " (reverse results)) results
+                                      nil nil #'string=)
+      (nov-goto-document index)
+      (goto-char point))))
+
+
+(defun salih/elfeed-copy-url ()
+  (interactive)
+  (let ((link (elfeed-entry-link elfeed-show-entry)))
+    (when link
+      (kill-new link)
+      (message "URL: %s" link)
+      link)))
+
+(defun salih/elfeed-open-url ()
+  (interactive)
+  (let ((link (elfeed-entry-link elfeed-show-entry)))
+    (when link
+      (browse-url link))))
+
+
+(defun salih/elfeed-open-url-in-chrome ()
+  (interactive)
+  (let ((link (elfeed-entry-link elfeed-show-entry)))
+    (when link
+      (salih/open-url-in-chrome link))))
+
+(defun salih/insert-relative-file-path ()
+  "Insert a relative file path selected by the user."
+  (interactive)
+  (let* ((current-buffer-file (buffer-file-name))
+         (file-path (read-file-name "Insert file path: ")))
+    (if (file-exists-p file-path)
+        (if current-buffer-file
+            (let ((relative-path (file-relative-name file-path (file-name-directory current-buffer-file))))
+              (insert relative-path))
+          (insert file-path))
+      (message "File does not exist: %s" file-path))))
+
+
+(defun salih/elfeed-tag-sort (a b)
+  (let* ((a-tags (format "%s" (elfeed-entry-tags a)))
+         (b-tags (format "%s" (elfeed-entry-tags b))))
+    (if (string= a-tags b-tags)
+        (< (elfeed-entry-date b) (elfeed-entry-date a)))
+    (string< a-tags b-tags)))
+
+(setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
+
+(provide '+helper)

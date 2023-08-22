@@ -46,3 +46,4 @@ flycheck_config.el
 /~s/.config/cmus/resume
 /~s/.doom.d/feeds.el
 /~s/.fehbg
+/~s/.config/mvi/*

@@ -112,6 +112,7 @@
          :jump-to-captured t
          :unnarrowed t)))
 
+(setq org-roam-capture-ref-templates org-roam-capture-templates)
 ;; To enable the v (video from youtube) tempplate, uses the following bookmark
 ;; javascript:(function(){  let v = (new URLSearchParams(window.location.search)).get('v');  if(location.href.indexOf("youtube.com")>=0 && v !== null)  {    let seek = (document.getElementsByClassName('video-stream html5-main-video')[0].currentTime).toFixed();    let ytb = "https://youtu.be/" + v;    location.href='org-protocol://roam-ref?template=v&ref=%27 + encodeURIComponent(ytb) + %27&title=%27 + encodeURIComponent(document.title) + %27&body=%27 + %27(%27 +  %27[%27 + %27[%27 + encodeURIComponent(ytb + %27&t=%27 + seek) + %27]%27  + %27[%27 + (new Date(seek * 1000)).toISOString().substr(11,8) + %27]%27 + %27]%27 + %27)%27;  }  else {    location.href=%27org-protocol://roam-ref?template=r&ref=%27 + encodeURIComponent(location.href) + %27&title=%27 + encodeURIComponent(document.title) + %27&body=%27 + encodeURIComponent(window.getSelection())  }})();
 ;; make sure to setup org roam protocl too.

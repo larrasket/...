@@ -1,6 +1,4 @@
-;;; ../configs/.doom.d/keys.el -*- lexical-binding: t; -*-
-;;;
-;;;
+;;; ../configs/.doom.d/lisp/+bindings.el -*- lexical-binding: t; -*-
 
 
 ;; unbinding
@@ -12,14 +10,15 @@
 
 
 
+
 ;; FIXME this is to make it easier with C-g instead of ESC while using evil
 ;; mode. It is not prefect yet, I will tree to reach better solutions in the
 ;; future
-(define-key evil-normal-state-map       (kbd "C-g") #'evil-escape)
-(define-key evil-visual-state-map       (kbd "C-g") #'evil-escape)
-(define-key evil-insert-state-map       (kbd "C-g") #'evil-escape)
-(define-key evil-replace-state-map      (kbd "C-g") #'evil-escape)
-(define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
+(define-key evil-normal-state-map       (kbd "C-g") #'evil-normal-state)
+(define-key evil-visual-state-map       (kbd "C-g") #'evil-normal-state)
+(define-key evil-insert-state-map       (kbd "C-g") #'evil-normal-state)
+(define-key evil-replace-state-map      (kbd "C-g") #'evil-normal-state)
+(define-key evil-operator-state-map     (kbd "C-g") #'evil-normal-state)
 (define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
 
 (with-eval-after-load 'company
@@ -42,7 +41,8 @@
 (general-define-key
  :keymaps 'flycheck-mode-map
  :prefix salih/prefix-mode
- "C-e C-l" #'flycheck-list-errors)
+ "C-e C-l" #'flycheck-list-errors
+ "C-e C-e" #'flycheck-list-errors)
 
 
 (general-define-key
@@ -78,7 +78,12 @@
 
 ;; Go
 (add-hook 'go-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-go-file)
+          (lambda ()
+            (gomacro-mode)
+            (local-set-key (salih/mode "C-c") #'salih/compile-and-run-go-project)
+            (local-set-key (salih/mode "C-v") #'gomacro-eval-region)
+            (local-set-key (salih/mode "C-f") #'gomacro-eval-file)
+            (local-set-key (salih/mode "C-b") #'gomacro-eval-buffer)
             (local-set-key (kbd "<f2>") #'salih/compile-and-run-go-project)))
 
 
@@ -88,12 +93,14 @@
  :prefix salih/prefix-mode
  "C-c" #'salih/open-in-external-app
  "C-e" #'salih/epa-dired-do-encrypt
- "C-d" #'epa-dired-do-encrypt)
+ "C-d" #'epa-dired-do-decrypt)
 
 
+(general-auto-unbind-keys)
 ;; Org-mode
-(general-define-key
- :keymaps 'org-mode-map
+(map!
+ :map org-mode-map
+ :after org
  :prefix salih/prefix-mode
  "C-f" #'org-footnote-action
  "c i" #'org-clock-in
@@ -103,20 +110,24 @@
  "H-i C-d" #'org-download-clipboard
  "H-i C-c" #'salih/org-id-get-create-with-custom-id
  "H-i C-k" #'citar-insert-citation
+ "H-i C-t" #'org-inlinetask-insert-task
  "C-b" #'citar-insert-citation
  "H-i C-b" #'orb-insert-link
  "C-n C-n" #'org-noter
  "C-n C-k" #'org-noter-kill-session
+ "C-e"     nil
  "C-e C-p" #'org-pandoc-export-to-latex-pdf
 
  ;; roam
  "H-i C-r" #'salih/org-roam-node-insert
+ "C-r"     nil
  "C-r H-i" #'salih/org-roam-node-insert
  "C-r C-t" #'org-roam-tag-add
  "C-r C-a" #'org-roam-alias-add
- "C-f C-b" #'consult-org-roam-backlinks
- "C-f C-f" #'consult-org-roam-forward-links)
+ "C-r C-b" #'consult-org-roam-backlinks
+ "C-r C-f" #'consult-org-roam-forward-links)
 
+(general-auto-unbind-keys)
 
 ;; Lisp
 
@@ -133,12 +144,15 @@
 
 (global-set-key (salih/global "C-a") #'org-agenda)
 
+(require 'xwidget)
+(evil-define-key 'nomral xwidget-webkit-mode-map (kbd "O") 'salih/elfeed-open-url)
 
 
 ;; convenient
-(general-define-key
+(map!
  :prefix salih/prefix-global
  "C-c"     #'org-capture
+ "C-a" nil
  "C-a C-a"     #'salih/open-agenda
  "C-."     #'find-file
  "."     #'find-file
@@ -152,25 +166,30 @@
  "]"     #'next-buffer
  "C-d"     #'kill-current-buffer
  "C-k"     #'kill-current-buffer
+ "C-l" nil
  "C-l C-l"   #'leetcode
+ "C-r" nil
  "C-r C-r"   #'doom/sudo-this-file
+ "TAB" nil
  "TAB d" #'+workspace/delete
  "SPC"   #'projectile-find-file
- "C-x"   #'salih/xwidget-open-with-clipboard
  "/"     #'swiper)
 
 ;; file keys
 (general-define-key
  :prefix (concat salih/prefix-global "C-f")
+ "" nil
  "C-r" #'recentf-open-files
  "C-g" #'magit-find-file
  "C-l" #'projectile-find-file)
 
 
 ;; search global
-(general-define-key
+(map!
  :prefix "C-s"
+ :map 'override
  "C-d" #'+default/search-cwd
+ "C-w" #'+lookup/dictionary-definition
  "C-b" #'+default/search-buffer
  "C-p" #'+default/search-project
  "C-g" #'rgrep)
@@ -179,6 +198,7 @@
 ;; notes
 (general-define-key
  :prefix (concat salih/prefix-global "C-n")
+ "" nil
  "C-f" #'citar-open-notes
  "C-b" #'citar-open-notes
  "C-o" #'salih/open-book)
@@ -186,6 +206,7 @@
 ;; roam
 (general-define-key
  :prefix (concat salih/prefix-global "C-r")
+ ""  nil
  "C-b" #'org-roam-buffer-toggle
  "c" #'org-roam-capture
  "C-f" #'salih/org-roam-node-open
@@ -199,6 +220,7 @@
 ;; TODO refactor if possible
 (general-define-key
  :prefix (concat salih/prefix-global "g")
+ "" nil
  "g"   #'magit-status
  "G"   #'magit-status-here
  "C"   #'magit-clone
@@ -213,6 +235,7 @@
 ;; other
 (general-define-key
  :prefix (concat salih/prefix-global "C-e")
+ "" nil
  "C-e" #'eshell
  "C-f" #'elfeed)
 
@@ -226,10 +249,10 @@
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
 
 
-(general-define-key
+(map!
  :prefix salih/prefix-mode
  "H-i C-u" #'insert-char
- "C-s C-w" #'+lookup/dictionary-definition
+ "C-s" nil
  "C-t" #'gts-do-translate
  "C-s" #'centaur-tabs-ace-jump
  "]"   #'centaur-tabs-forward
@@ -265,13 +288,14 @@
               #'salih/org-noter-sync-current-note-and-switch-window)
   (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note)
   (evil-local-set-key 'normal (salih/mode "C-c") #' pdf-view-next-page-command))
- 
+
 
 
 
 
 (general-define-key
  :prefix (concat salih/prefix-global "m")
+ "" nil
  "m" #'(lambda () (interactive) (mu4e~headers-jump-to-maildir "/Inbox"))
  "i" #'mu4e)
 
@@ -281,8 +305,13 @@
  "C-u" #'elfeed-update)
 
 (evil-define-key 'normal elfeed-show-mode-map
-  (kbd "J") 'elfeed-goodies/split-show-next
-  (kbd "K") 'elfeed-goodies/split-show-prev)
+ (kbd "J") 'elfeed-goodies/split-show-next
+ (kbd "c") 'salih/elfeed-copy-url
+ (kbd "O") 'salih/elfeed-open-url
+ (kbd "C") 'salih/elfeed-open-url-in-chrome
+ (kbd "K") 'elfeed-goodies/split-show-prev)
 (evil-define-key 'normal elfeed-search-mode-map
   (kbd "J") 'elfeed-goodies/split-show-next
   (kbd "K") 'elfeed-goodies/split-show-prev)
+
+(provide '+bindings)

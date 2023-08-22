@@ -1,6 +1,5 @@
 ; -*- no-byte-compile: t; -*-
 
-(package! lsp-treemacs)
 
 (package! wakatime-mode)
 
@@ -57,4 +56,5 @@
 (package! org-noter)
 (package! nov)
 
-(package! elfeed-goodies)
+(package! gomacro-mode)
+
