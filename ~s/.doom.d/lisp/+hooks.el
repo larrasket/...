@@ -53,7 +53,7 @@
 (add-hook 'pdf-view-mode-hook
           (lambda ()
             (set (make-local-variable 'evil-normal-state-cursor) (list nil))
-            (pdf-view-themed-minor-mode)))
+            (pdf-view-midnight-minor-mode)))
 
 (add-hook 'nov-mode-hook 'nov-xwidget-inject-all-files)
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
