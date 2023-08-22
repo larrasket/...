@@ -766,14 +766,14 @@ tasks."
 
 (defun salih/elfeed-open-url ()
   (interactive)
-    (let ((link (elfeed-entry-link elfeed-show-entry)))
+  (let ((link (elfeed-entry-link elfeed-show-entry)))
     (when link
       (browse-url link))))
 
 
 (defun salih/elfeed-open-url-in-chrome ()
   (interactive)
-    (let ((link (elfeed-entry-link elfeed-show-entry)))
+  (let ((link (elfeed-entry-link elfeed-show-entry)))
     (when link
       (salih/open-url-in-chrome link))))
 
@@ -798,6 +798,5 @@ tasks."
     (string< a-tags b-tags)))
 
 (setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
-
 
 (provide '+helper)

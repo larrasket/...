@@ -13,6 +13,7 @@
                      ("https://blog.giovanh.com/feeds/atom.xml" g cs)
                      ("https://www.theatlantic.com/feed/best-of/" atlantic politics)
 
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkS_HP3m9NXOgswVAKbMeJQ" youtube thenandnow philosophy)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" youtube systemcraft emacs)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube mentaloutlaw cs)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCX7katl3DVmch4D7LSvqbVQ" youtube montemayor history)

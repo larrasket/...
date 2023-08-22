@@ -212,6 +212,8 @@
 
 (add-hook 'eshell-alias-load-hook 'salih/eshell-load-bash-aliases)
 
+;; call elfeed-update every 30 minutes
+(run-at-time nil (* 30 60) #'elfeed-update)
 
 
 (defvar salih/consult--source-books
