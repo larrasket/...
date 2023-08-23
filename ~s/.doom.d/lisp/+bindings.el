@@ -296,7 +296,11 @@
 (general-define-key
  :prefix (concat salih/prefix-global "m")
  "" nil
- "m" #'(lambda () (interactive) (mu4e~headers-jump-to-maildir "/Inbox"))
+ "m" #'(lambda ()
+         (interactive)
+         (if (featurep 'mu4e)
+             (mu4e~headers-jump-to-maildir "/Inbox")
+           (mu4e)))
  "i" #'mu4e)
 
 (general-define-key
