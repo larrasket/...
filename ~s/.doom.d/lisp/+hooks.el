@@ -37,6 +37,11 @@
 (add-to-list 'org-tags-exclude-from-inheritance "project")
 
 
+;; Activate the advice
+(ad-activate 'org-agenda-get-some-entry-text)
+(add-hook 'org-agenda-mode-hook #'org-agenda-entry-text-mode)
+
+
 (add-hook 'python-mode-hook (lambda ()
                               (flycheck-mode -1)))
 

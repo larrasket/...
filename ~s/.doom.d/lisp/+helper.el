@@ -799,4 +799,22 @@ tasks."
 
 (setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
 
+
+
+(defadvice org-agenda-get-some-entry-text (after modify-agenda-entry-text activate)
+  "Modify the text returned by org-agenda-get-some-entry-text."
+  (setq ad-return-value (salih/modify-agenda-entry-text ad-return-value)))
+
+
+(defun salih/modify-agenda-entry-text (text)
+  "Customize the agenda entry text."
+  ;; Modify the 'text' variable as needed here
+  (replace-regexp-in-string "^[[:space:]]*$\\|^[[:space:]]*>[[:space:]]*$" ""
+                            (replace-regexp-in-string "\\[\\[\\([^]]+\\)\\]\\[\\([^]]+\\)\\]\\]" "\\2" text)))
+
+
+
+
+
+
 (provide '+helper)
