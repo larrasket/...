@@ -209,7 +209,7 @@
  ""  nil
  "C-b" #'org-roam-buffer-toggle
  "c" #'org-roam-capture
- "C-f" #'salih/org-roam-node-open
+ "C-f" #'org-roam-node-find
  "C-j" #'org-roam-dailies-capture-today
  "C-t" #'org-roam-dailies-goto-today
  "C-s" #'consult-org-roam-search)
