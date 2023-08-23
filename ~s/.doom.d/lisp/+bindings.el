@@ -11,15 +11,16 @@
 
 
 
-;; FIXME this is to make it easier with C-g instead of ESC while using evil
-;; mode. It is not prefect yet, I will tree to reach better solutions in the
-;; future
-(define-key evil-normal-state-map       (kbd "C-g") #'evil-normal-state)
 (define-key evil-visual-state-map       (kbd "C-g") #'evil-normal-state)
 (define-key evil-insert-state-map       (kbd "C-g") #'evil-normal-state)
 (define-key evil-replace-state-map      (kbd "C-g") #'evil-normal-state)
 (define-key evil-operator-state-map     (kbd "C-g") #'evil-normal-state)
 (define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
+(define-key evil-normal-state-map       (kbd "C-g") (lambda ()
+                                                      (interactive)
+                                                      (evil-normal-state)
+                                                      (evil-ex-nohighlight)))
+
 
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "C-g") #'salih/evil-escape-and-abort-company)
@@ -173,6 +174,11 @@
  "TAB" nil
  "TAB d" #'+workspace/delete
  "SPC"   #'projectile-find-file
+ "H-i" #'(lambda ()
+             (interactive)
+             (if (featurep 'mu4e)
+               (mu4e~headers-jump-to-maildir "/Inbox")
+               (mu4e)))
  "/"     #'swiper)
 
 ;; file keys
@@ -292,16 +298,6 @@
 
 
 
-
-(general-define-key
- :prefix (concat salih/prefix-global "m")
- "" nil
- "m" #'(lambda ()
-         (interactive)
-         (if (featurep 'mu4e)
-             (mu4e~headers-jump-to-maildir "/Inbox")
-           (mu4e)))
- "i" #'mu4e)
 
 (general-define-key
  :prefix salih/prefix-mode
