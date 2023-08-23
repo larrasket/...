@@ -118,7 +118,8 @@
  "C-n C-k" #'org-noter-kill-session
  "C-e"     nil
  "C-e C-p" #'org-pandoc-export-to-latex-pdf
-
+ "C-t" nil
+ "C-t C-l" #'salih/get-file-todos
  ;; roam
  "H-i C-r" #'salih/org-roam-node-insert
  "C-r"     nil

@@ -654,6 +654,7 @@ tasks."
 
 (defun salih/open-agenda ()
   (interactive)
+  (org-agenda-remove-restriction-lock)
   (org-agenda nil "v"))
 
 
@@ -813,6 +814,11 @@ tasks."
                             (replace-regexp-in-string "\\[\\[\\([^]]+\\)\\]\\[\\([^]]+\\)\\]\\]" "\\2" text)))
 
 
+
+(defun salih/get-file-todos ()
+  (interactive)
+  (org-agenda-set-restriction-lock)
+  (org-agenda nil "t"))
 
 
 
