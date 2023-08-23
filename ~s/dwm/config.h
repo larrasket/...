@@ -82,7 +82,7 @@ static const Rule rules[] = {
 	*/
 	/* class    instance      title       	 tags mask    isfloating * isterminal  noswallow  monitor focusopacity    unfocusopacity */
 	{ "Chromium",     NULL,       NULL,       	    0,       0,           0,         0,        -1 , 0.90f,  0.90f},
-	{ "Emacs",     NULL,       NULL,       	    0,       0,           0,         0,        -1 , 0.90f,  0.90f},
+	/* { "Emacs",     NULL,       NULL,       	    0,       0,           0,         0,        -1 , 0.90f,  0.90f}, */
 	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 , activeopacity,  inactiveopacity},
 	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 , activeopacity,  inactiveopacity},
 	{ TERMCLASS,      "floatterm", NULL,       	    0,       1,           1,         0,        -1 , activeopacity,  inactiveopacity},
@@ -241,6 +241,8 @@ static const Key keys[] = {
 	{MODKEY, XK_d, spawn, {.v = dmenucmd}},
 
 
+    /* { MODKEY|ShiftMask,             XK_a,      changefocusopacity,   {.f = +0.025}}, */
+    /* { MODKEY|ShiftMask,             XK_s,      changefocusopacity,   {.f = -0.025}}, */
 
 
 

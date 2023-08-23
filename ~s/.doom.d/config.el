@@ -27,7 +27,7 @@
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       doom-theme                                        (if IS-PLASMA
                                                             'doom-monokai-spectrum
-                                                          'doom-homage-black)
+                                                          'doom-ir-black)
       highlight-indent-guides-method                    'bitmap
       display-line-numbers-type                         'visual
       doom-modeline-height                              17
@@ -177,6 +177,8 @@
                                          (xwidget-webkit-browse-url url))))
       (mu4e-action-view-in-browser msg))))
 
+(set-frame-parameter (selected-frame) 'alpha '(85 85))
+(add-to-list 'default-frame-alist '(alpha 85 85))
 
 
 
