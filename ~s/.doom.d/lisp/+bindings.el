@@ -118,8 +118,7 @@
  "C-n C-k" #'org-noter-kill-session
  "C-e"     nil
  "C-e C-p" #'org-pandoc-export-to-latex-pdf
- "C-t" nil
- "C-t C-l" #'salih/get-file-todos
+ "C-e C-t" #'salih/get-file-todos
  ;; roam
  "H-i C-r" #'salih/org-roam-node-insert
  "C-r"     nil
@@ -146,8 +145,12 @@
 
 (global-set-key (salih/global "C-a") #'org-agenda)
 
-(require 'xwidget)
-(evil-define-key 'nomral xwidget-webkit-mode-map (kbd "O") 'salih/elfeed-open-url)
+(add-hook 'xwidget-webkit-mode-hook (lambda ()
+                                      (evil-define-key 'nomral xwidget-webkit-mode-map (kbd "O") 'salih/elfeed-open-url)
+                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "y" 'xwidget-webkit-copy-selection-as-kill)
+                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "C" 'salih/open-current-url-in-chrome)
+                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "c" 'xwidget-webkit-current-url)
+                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "SPC" 'xwidget-webkit-scroll-up)))
 
 
 ;; convenient
@@ -176,10 +179,10 @@
  "TAB d" #'+workspace/delete
  "SPC"   #'projectile-find-file
  "H-i" #'(lambda ()
-             (interactive)
-             (if (featurep 'mu4e)
+           (interactive)
+           (if (featurep 'mu4e)
                (mu4e~headers-jump-to-maildir "/Inbox")
-               (mu4e)))
+             (mu4e)))
  "/"     #'swiper)
 
 ;; file keys

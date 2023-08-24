@@ -48,11 +48,6 @@
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 
 
-(add-hook 'xwidget-webkit-mode-hook (lambda ()
-                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "c" 'xwidget-webkit-copy-selection-as-kill)
-                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "O" 'salih/open-current-url-in-chrome)
-                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "y" 'xwidget-webkit-current-url)
-                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "SPC" 'xwidget-webkit-scroll-up)))
 
 (add-hook 'pdf-view-mode-hook
           (lambda ()
