@@ -12,6 +12,7 @@
                      ("http://chomsky.info/feed/" chomsky philosophy)
                      ("https://blog.giovanh.com/feeds/atom.xml" g cs)
                      ("https://www.theatlantic.com/feed/best-of/" atlantic politics)
+                     ("https://daily.jstor.org//feed" jstore science)
 
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkS_HP3m9NXOgswVAKbMeJQ" youtube thenandnow philosophy)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" youtube systemcraft emacs)
