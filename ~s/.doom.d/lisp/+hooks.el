@@ -208,6 +208,7 @@
     (message "Compiled: %s" form-with-print)))
 
 (add-hook 'elfeed-show-mode-hook 'visual-line-mode)
+(add-hook 'elfeed-show-mode-hook (lambda () (set-fontset-font "fontset-default" 'arabic (font-spec :family "Arial" :size 16))))
 
 (add-hook 'eshell-alias-load-hook 'salih/eshell-load-bash-aliases)
 
