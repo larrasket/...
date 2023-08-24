@@ -39,7 +39,6 @@
 
 ;; Activate the advice
 (ad-activate 'org-agenda-get-some-entry-text)
-(add-hook 'org-agenda-mode-hook #'org-agenda-entry-text-mode)
 
 
 (add-hook 'python-mode-hook (lambda ()
