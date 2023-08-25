@@ -322,4 +322,5 @@
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(add-hook 'org-mode-hook #'salih/fix-tag-alignment)
 (provide '+hooks)
