@@ -3,7 +3,8 @@
 (after! org
 
   (custom-set-faces
-   '(variable-pitch ((t (:family "Roboto Mono" :height 1.0 :weight normal))))
+   '(org-link ((t (:inherit link :underline nil :slant italic :weight bold))))
+   '(variable-pitch ((t (:family "Roboto Condensed" :height 1.0 :weight normal))))
    '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight normal :family "Arial"))))
    '(org-level-2 ((t (:inherit outline-2 :height 1.2 :weight normal :family "Arial"))))
    '(org-level-3 ((t (:inherit outline-3 :height 1.2 :weight normal :family "Arial"))))
