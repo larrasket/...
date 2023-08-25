@@ -321,4 +321,5 @@
 (with-eval-after-load 'flycheck
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (provide '+hooks)

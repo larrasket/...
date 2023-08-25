@@ -59,3 +59,5 @@
 
 (package! gomacro-mode)
 
+
+(package! org-bullets)
