@@ -202,7 +202,9 @@
  "C-w" #'+lookup/dictionary-definition
  "C-b" #'+default/search-buffer
  "C-p" #'+default/search-project
- "C-g" #'rgrep)
+ "C-g" #'rgrep
+ "C-r" #'consult-org-roam-search)
+ 
 
 
 ;; notes
@@ -221,8 +223,7 @@
  "c" #'org-roam-capture
  "C-f" #'org-roam-node-find
  "C-j" #'org-roam-dailies-capture-today
- "C-t" #'org-roam-dailies-goto-today
- "C-s" #'consult-org-roam-search)
+ "C-t" #'org-roam-dailies-goto-today)
 
 
 
