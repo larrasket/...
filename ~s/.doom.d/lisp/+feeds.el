@@ -13,10 +13,6 @@
                      ("https://blog.giovanh.com/feeds/atom.xml" g cs)
                      ("https://www.theatlantic.com/feed/best-of/" atlantic politics)
                      ("https://daily.jstor.org//feed" jstore science)
-                     ("https://rss.app/feeds/E56beOXCby07fgAy.xml" twitter blogs wazir)
-                     ("https://rss.app/feeds/c7U64I3DqWDOI6wB.xml" twitter abbass philosphy blogs)
-                     ("https://rss.app/feeds/d2Kkztojc2Ebeycn.xml" twitter emad blogs)
-                     ("https://rss.app/feeds/yZcP2X4CX1RXEr9n.xml" twitter blogs)
 
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkS_HP3m9NXOgswVAKbMeJQ" youtube thenandnow philosophy)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" youtube systemcraft emacs)
@@ -74,7 +70,8 @@
         ("lisp"         . programming)
         ("Arab"         . politics)
         ("Israel"       . politics)
-        ("Palestine"    . politics)))
+        ("Palestine"    . politics)
+        ("linguistics"  . philosophy)))
 
 (salih/add-feeds-by-keyword keyword-category-list)
 
