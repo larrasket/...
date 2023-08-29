@@ -53,8 +53,11 @@
 (package! centaur-tabs)
 
 (package! vulpea)
-(package! org-noter)
+
+
 (package! nov)
 
 (package! gomacro-mode)
 
+
+(package! org-bullets)

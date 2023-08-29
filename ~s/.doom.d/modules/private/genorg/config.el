@@ -1,20 +1,37 @@
 ;;; mine/genorg/config.el -*- lexical-binding: t; -*-
 
 (after! org
+
+  (custom-set-faces
+   '(org-link ((t (:inherit link :underline nil :slant italic :weight bold :family "Arial"))))
+   '(variable-pitch ((t (:family "Roboto Condensed"))))
+   '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight normal :family "Arial"))))
+   '(org-level-2 ((t (:inherit outline-2 :height 1.2 :weight normal :family "Arial"))))
+   '(org-level-3 ((t (:inherit outline-3 :height 1.2 :weight normal :family "Arial"))))
+   '(org-level-4 ((t (:inherit outline-4 :height 1.0 :weight normal :family "Arial"))))
+   '(org-level-5 ((t (:inherit outline-5 :height 0.9 :weight normal :family "Arial"))))
+   '(org-level-6 ((t (:inherit outline-6 :height 0.8 :weight normal :family "Arial"))))
+   '(org-level-7 ((t (:inherit outline-7 :height 0.7 :weight normal :family "Arial"))))
+   '(org-level-8 ((t (:inherit outline-8 :height 0.6 :weight normal :family "Arial"))))
+   '(org-document-title ((t (:inherit outline-8 :height 1.4 :weight light :family "Droid Sans")))))
+
+
+
+
   (setq org-tags-column -80)
   (setq org-todo-keywords
         '((sequence
-           "TODO(t)"                    ; A task that needs doing & is ready to do
+           "TODO(t)"                  ; A task that needs doing & is ready to do
            "APPOINT(a)"
-           "PROJ(p)"                    ; A project, which usually contains other tasks
-           "HOLD(h)"                    ; This task is paused/on hold because of me
+           "PROJ(p)"             ; A project, which usually contains other tasks
+           "HOLD(h)"             ; This task is paused/on hold because of me
            "|"
-           "DONE(d)"                ; Task successfully completed
-           "KILL(k)")               ; Task was cancelled, aborted or is no longer applicable
+           "DONE(d)"    ; Task successfully completed
+           "KILL(k)")   ; Task was cancelled, aborted or is no longer applicable
           (sequence
-           "DAILY(D)"        ; A task that needs doing
+           "DAILY(D)"                   ; A task that needs doing
            "|"
-           "DONE(d)"))                    ; Task was completed
+           "DONE(d)"))                  ; Task was completed
 
         org-todo-keyword-faces
         '(("[-]"  . +org-todo-active)
@@ -166,18 +183,3 @@ ARGS is `element' in `org-ql-view--format-element'"
           (text-properties-at 0 result)))))
 
 (advice-add 'org-ql-view--format-element :around #'salih/org-ql-view--format-element)
-
-
-
-
-
-(custom-set-faces
- '(org-level-1 ((t (:inherit outline-1 :height 1.3))))
- '(org-level-2 ((t (:inherit outline-2 :height 1.2))))
- '(org-level-3 ((t (:inherit outline-3 :height 1.1))))
- '(org-level-4 ((t (:inherit outline-4 :height 1.0))))
- '(org-level-5 ((t (:inherit outline-5 :height 0.9))))
- '(org-level-6 ((t (:inherit outline-6 :height 0.8))))
- '(org-level-7 ((t (:inherit outline-7 :height 0.7))))
- '(org-level-8 ((t (:inherit outline-8 :height 0.6))))
- '(org-document-title ((t (:weight bold :height 1.5)))))

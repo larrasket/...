@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: unexported tags
+# key: <ue
+# --
+#+BEGIN_UNEXPORTEDTAG
+$1
+#+END_UNEXPORTEDTAG
+$0

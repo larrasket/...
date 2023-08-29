@@ -11,15 +11,16 @@
 
 
 
-;; FIXME this is to make it easier with C-g instead of ESC while using evil
-;; mode. It is not prefect yet, I will tree to reach better solutions in the
-;; future
-(define-key evil-normal-state-map       (kbd "C-g") #'evil-normal-state)
 (define-key evil-visual-state-map       (kbd "C-g") #'evil-normal-state)
 (define-key evil-insert-state-map       (kbd "C-g") #'evil-normal-state)
 (define-key evil-replace-state-map      (kbd "C-g") #'evil-normal-state)
 (define-key evil-operator-state-map     (kbd "C-g") #'evil-normal-state)
 (define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
+(define-key evil-normal-state-map       (kbd "C-g") (lambda ()
+                                                      (interactive)
+                                                      (evil-normal-state)
+                                                      (evil-ex-nohighlight)))
+
 
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "C-g") #'salih/evil-escape-and-abort-company)
@@ -117,7 +118,7 @@
  "C-n C-k" #'org-noter-kill-session
  "C-e"     nil
  "C-e C-p" #'org-pandoc-export-to-latex-pdf
-
+ "C-e C-t" #'salih/get-file-todos
  ;; roam
  "H-i C-r" #'salih/org-roam-node-insert
  "C-r"     nil
@@ -144,8 +145,12 @@
 
 (global-set-key (salih/global "C-a") #'org-agenda)
 
-(require 'xwidget)
-(evil-define-key 'nomral xwidget-webkit-mode-map (kbd "O") 'salih/elfeed-open-url)
+(add-hook 'xwidget-webkit-mode-hook (lambda ()
+                                      (evil-define-key 'nomral xwidget-webkit-mode-map (kbd "O") 'salih/elfeed-open-url)
+                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "y" 'xwidget-webkit-copy-selection-as-kill)
+                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "C" 'salih/open-current-url-in-chrome)
+                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "c" 'xwidget-webkit-current-url)
+                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "SPC" 'xwidget-webkit-scroll-up)))
 
 
 ;; convenient
@@ -173,6 +178,11 @@
  "TAB" nil
  "TAB d" #'+workspace/delete
  "SPC"   #'projectile-find-file
+ "H-i" #'(lambda ()
+           (interactive)
+           (if (featurep 'mu4e)
+               (mu4e~headers-jump-to-maildir "/Inbox")
+             (mu4e)))
  "/"     #'swiper)
 
 ;; file keys
@@ -192,7 +202,9 @@
  "C-w" #'+lookup/dictionary-definition
  "C-b" #'+default/search-buffer
  "C-p" #'+default/search-project
- "C-g" #'rgrep)
+ "C-g" #'rgrep
+ "C-r" #'consult-org-roam-search)
+ 
 
 
 ;; notes
@@ -209,10 +221,9 @@
  ""  nil
  "C-b" #'org-roam-buffer-toggle
  "c" #'org-roam-capture
- "C-f" #'salih/org-roam-node-open
+ "C-f" #'org-roam-node-find
  "C-j" #'org-roam-dailies-capture-today
- "C-t" #'org-roam-dailies-goto-today
- "C-s" #'consult-org-roam-search)
+ "C-t" #'org-roam-dailies-goto-today)
 
 
 
@@ -292,12 +303,6 @@
 
 
 
-
-(general-define-key
- :prefix (concat salih/prefix-global "m")
- "" nil
- "m" #'(lambda () (interactive) (mu4e~headers-jump-to-maildir "/Inbox"))
- "i" #'mu4e)
 
 (general-define-key
  :prefix salih/prefix-mode

@@ -17,6 +17,7 @@
                         ("@people" . ?p)
                         (:endgroup)
                         ("noexport" . ?n)
+                        ("anthology" . ?a)
                         ("@later" . ?l)
                         ("@general" . ?g)))
 

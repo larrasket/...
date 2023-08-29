@@ -37,6 +37,10 @@
 (add-to-list 'org-tags-exclude-from-inheritance "project")
 
 
+;; Activate the advice
+(ad-activate 'org-agenda-get-some-entry-text)
+
+
 (add-hook 'python-mode-hook (lambda ()
                               (flycheck-mode -1)))
 
@@ -44,11 +48,6 @@
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 
 
-(add-hook 'xwidget-webkit-mode-hook (lambda ()
-                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "c" 'xwidget-webkit-copy-selection-as-kill)
-                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "O" 'salih/open-current-url-in-chrome)
-                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "y" 'xwidget-webkit-current-url)
-                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "SPC" 'xwidget-webkit-scroll-up)))
 
 (add-hook 'pdf-view-mode-hook
           (lambda ()
@@ -209,6 +208,7 @@
     (message "Compiled: %s" form-with-print)))
 
 (add-hook 'elfeed-show-mode-hook 'visual-line-mode)
+(add-hook 'elfeed-show-mode-hook (lambda () (set-fontset-font "fontset-default" 'arabic (font-spec :family "Arial" :size 16))))
 
 (add-hook 'eshell-alias-load-hook 'salih/eshell-load-bash-aliases)
 
@@ -321,4 +321,6 @@
 (with-eval-after-load 'flycheck
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(add-hook 'org-mode-hook #'salih/fix-tag-alignment)
 (provide '+hooks)

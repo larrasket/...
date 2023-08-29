@@ -72,7 +72,8 @@
               +lsp)
        ;;markdown
        (org
-        +roam2)
+        +roam2
+        +noter)
        (rest +jq)
        (sh
         +lsp)

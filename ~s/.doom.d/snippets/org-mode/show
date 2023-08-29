@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: show
-# uuid: show
-# key: show
-# condition: t
-# --
-#+ATTR_HTML: :alt show
