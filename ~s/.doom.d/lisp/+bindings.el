@@ -11,6 +11,7 @@
 
 
 
+(define-key flyspell-mode-map (kbd "C-;") nil)
 (define-key evil-visual-state-map       (kbd "C-g") #'evil-normal-state)
 (define-key evil-insert-state-map       (kbd "C-g") #'evil-normal-state)
 (define-key evil-replace-state-map      (kbd "C-g") #'evil-normal-state)
