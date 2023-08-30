@@ -21,8 +21,8 @@
                         ("@later" . ?l)
                         ("@general" . ?g)))
 
-(add-to-list 'org-tags-exclude-from-inheritance "@read")
-(add-to-list 'org-tags-exclude-from-inheritance "@later")
+;; (add-to-list 'org-tags-exclude-from-inheritance "@read")
+;; (add-to-list 'org-tags-exclude-from-inheritance "@later")
 (add-to-list 'org-tags-exclude-from-inheritance "noexport")
 (add-to-list 'org-tags-exclude-from-inheritance "project")
 (add-to-list 'org-tags-exclude-from-inheritance "permanent")

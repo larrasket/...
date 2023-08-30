@@ -156,7 +156,7 @@
 ;; convenient
 (map!
  :prefix salih/prefix-global
- "C-c"          #'org-capture
+ "C-c"          (lambda () (interactive) (org-capture nil "f"))
  "C-a"          nil
  "C-a C-a"      #'salih/open-agenda
  "C-."          #'find-file

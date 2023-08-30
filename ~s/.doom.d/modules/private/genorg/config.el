@@ -49,6 +49,10 @@
            "* TODO %? :@general:" :prepend t)
 
 
+          ("f" "Empty" entry
+           (file+headline +org-capture-todo-file "Inbox")
+           "* TODO %?" :prepend t)
+
           ("w" "WATCH" entry
            (file+headline +org-capture-todo-file "Inbox")
            "* TODO %? :@watch:" :prepend t)
