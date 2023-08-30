@@ -104,23 +104,22 @@
  :map org-mode-map
  :after org
  :prefix salih/prefix-mode
- "C-f" #'org-footnote-action
- "c i" #'org-clock-in
- "c o" #'org-clock-out
+ "C-f"     #'org-footnote-action
+ "c i"     #'org-clock-in
+ "c o"     #'org-clock-out
  "H-i H-i" #'org-id-get-create
  "H-i C-l" #'org-web-tools-insert-link-for-url
  "H-i C-d" #'org-download-clipboard
  "H-i C-c" #'salih/org-id-get-create-with-custom-id
  "H-i C-k" #'citar-insert-citation
  "H-i C-t" #'org-inlinetask-insert-task
- "C-b" #'citar-insert-citation
+ "C-b"     #'citar-insert-citation
  "H-i C-b" #'orb-insert-link
  "C-n C-n" #'org-noter
  "C-n C-k" #'org-noter-kill-session
  "C-e"     nil
  "C-e C-p" #'org-pandoc-export-to-latex-pdf
  "C-e C-t" #'salih/get-file-todos
- ;; roam
  "H-i C-r" #'salih/org-roam-node-insert
  "C-r"     nil
  "C-r H-i" #'salih/org-roam-node-insert
@@ -157,34 +156,34 @@
 ;; convenient
 (map!
  :prefix salih/prefix-global
- "C-c"     #'org-capture
- "C-a" nil
- "C-a C-a"     #'salih/open-agenda
- "C-."     #'find-file
- "."     #'find-file
- "C-,"     #'persp-switch-to-buffer
- ","     #'persp-switch-to-buffer
- "C-<"     #'switch-to-buffer
- "<"     #'switch-to-buffer
- "RET"   #'switch-to-buffer
+ "C-c"          #'org-capture
+ "C-a"          nil
+ "C-a C-a"      #'salih/open-agenda
+ "C-."          #'find-file
+ "."            #'find-file
+ "C-,"          #'persp-switch-to-buffer
+ ","            #'persp-switch-to-buffer
+ "C-<"          #'switch-to-buffer
+ "<"            #'switch-to-buffer
+ "RET"          #'switch-to-buffer
  "C-<return>"   #'switch-to-buffer
- "["     #'previous-buffer
- "]"     #'next-buffer
- "C-d"     #'kill-current-buffer
- "C-k"     #'kill-current-buffer
- "C-l" nil
- "C-l C-l"   #'leetcode
- "C-r" nil
- "C-r C-r"   #'doom/sudo-this-file
- "TAB" nil
- "TAB d" #'+workspace/delete
- "SPC"   #'projectile-find-file
- "H-i" #'(lambda ()
-           (interactive)
-           (if (featurep 'mu4e)
-               (mu4e~headers-jump-to-maildir "/Inbox")
-             (mu4e)))
- "/"     #'swiper)
+ "["            #'previous-buffer
+ "]"            #'next-buffer
+ "C-d"          #'kill-current-buffer
+ "C-k"          #'kill-current-buffer
+ "C-l"          nil
+ "C-l C-l"      #'leetcode
+ "C-r"          nil
+ "C-r C-r"      #'doom/sudo-this-file
+ "TAB"          nil
+ "TAB d"        #'+workspace/delete
+ "SPC"          #'projectile-find-file
+ "H-i"          #'(lambda ()
+                    (interactive)
+                    (if (featurep 'mu4e)
+                        (mu4e~headers-jump-to-maildir "/Inbox")
+                      (mu4e)))
+ "/"            #'swiper)
 
 ;; file keys
 (general-define-key
@@ -220,11 +219,11 @@
 (general-define-key
  :prefix (concat salih/prefix-global "C-r")
  ""  nil
- "C-b" #'org-roam-buffer-toggle
- "c" #'org-roam-capture
- "C-f" #'org-roam-node-find
- "C-j" #'org-roam-dailies-capture-today
- "C-t" #'org-roam-dailies-goto-today)
+ "C-b"  #'org-roam-buffer-toggle
+ "c"    #'org-roam-capture
+ "C-f"  #'org-roam-node-find
+ "C-j"  #'org-roam-dailies-capture-today
+ "C-t"  #'org-roam-dailies-goto-today)
 
 
 
