@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: tag blog
+# key: <tag
+# --
+#+BEGIN_tag
+{{{t}}} $1
+#+END_tag
+$0
