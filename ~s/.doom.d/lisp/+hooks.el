@@ -82,15 +82,6 @@
 
 
 
-
-(with-eval-after-load 'org-agenda
-  (defun my/org-has-children ()
-    (if (save-excursion (org-goto-first-child)) "▶" " "))
-  (add-to-list 'org-agenda-prefix-format '(
-                                           agenda  . "%i%-3:(my/org-has-children) %-12:c%?-12t% s ")))
-
-
-
 (add-hook 'nov-mode-hook (lambda ()
                            (defface tmp-buffer-local-face
                              '((t :family "Roboto Condensed" :height 1.0)) "")
