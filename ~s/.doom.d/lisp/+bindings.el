@@ -11,6 +11,7 @@
 
 
 
+
 (define-key flyspell-mode-map (kbd "C-;") nil)
 (define-key evil-visual-state-map       (kbd "C-g") #'evil-normal-state)
 (define-key evil-insert-state-map       (kbd "C-g") #'evil-normal-state)
@@ -122,7 +123,7 @@
  "C-e C-t" #'salih/get-file-todos
  "H-i C-r" #'salih/org-roam-node-insert
  "C-r"     nil
- "C-r H-i" #'salih/org-roam-node-insert
+ "C-r H-i" #'org-roam-node-insert
  "C-r C-t" #'org-roam-tag-add
  "C-r C-a" #'org-roam-alias-add
  "C-r C-b" #'consult-org-roam-backlinks
@@ -205,7 +206,7 @@
  "C-p" #'+default/search-project
  "C-g" #'rgrep
  "C-r" #'consult-org-roam-search)
- 
+
 
 
 ;; notes
@@ -311,13 +312,22 @@
  "C-u" #'elfeed-update)
 
 (evil-define-key 'normal elfeed-show-mode-map
- (kbd "J") 'elfeed-goodies/split-show-next
- (kbd "c") 'salih/elfeed-copy-url
- (kbd "O") 'salih/elfeed-open-url
- (kbd "C") 'salih/elfeed-open-url-in-chrome
- (kbd "K") 'elfeed-goodies/split-show-prev)
+  (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "c") 'salih/elfeed-copy-url
+  (kbd "O") 'salih/elfeed-open-url
+  (kbd "C") 'salih/elfeed-open-url-in-chrome
+  (kbd "K") 'elfeed-goodies/split-show-prev)
 (evil-define-key 'normal elfeed-search-mode-map
   (kbd "J") 'elfeed-goodies/split-show-next
   (kbd "K") 'elfeed-goodies/split-show-prev)
+
+
+(add-hook 'nov-mode-hook (lambda ()
+                           (evil-collection-define-key 'normal 'nov-mode-map "t"  nil)
+                           (evil-collection-define-key 'normal 'nov-mode-map "h"  nil)
+                           (define-key nov-mode-map        (kbd "l")              nil)
+                           (define-key nov-button-map      (kbd "l")              nil)
+                           (define-key shr-map             (kbd "u")              nil)
+                           (define-key shr-map             (kbd "w")              nil)))
 
 (provide '+bindings)
