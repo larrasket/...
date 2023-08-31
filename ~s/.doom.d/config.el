@@ -137,6 +137,7 @@
       centaur-tabs-cycle-scope                          'tabs
 
       ;; other
+      company-idle-delay                                0.3
       salih/temp-roam-insert                            nil
       large-file-warning-threshold                      nil
       save-place-ignore-files-regexp                    "\\(?:COMMIT_EDITMSG\\|hg-editor-[[:alnum:]]+\\.txt\\|svn-commit\\.tmp\\|bzr_log\\.[[:alnum:]]+\\|\\.pdf\\)$"
@@ -194,3 +195,4 @@
 
 (require 'org-roam-protocol)
 
+org-html-preamble-format
