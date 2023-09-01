@@ -102,15 +102,16 @@
 
         ("v"
          "video ref"
-         plain
-         "* %? ${body}\n"
+         entry
+         "** %? ${body}\n"
          :if-new
          (file+head
-          "webnotes/${slug}.org"
-          "#+title: ${title}\n\n")
+          "webnotes/yt.org"
+          "* ${title}\n\n")
          :immediate-finish t
          :jump-to-captured t
-         :unnarrowed t)))
+         :unnarrowed t
+         :prepend nil)))
 
 (setq org-roam-capture-ref-templates org-roam-capture-templates)
 ;; To enable the v (video from youtube) tempplate, uses the following bookmark
