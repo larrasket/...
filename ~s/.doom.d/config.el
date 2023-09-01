@@ -191,8 +191,5 @@
 (require '+hooks)
 (require '+feeds)
 (require '+bindings)
-
-
 (require 'org-roam-protocol)
 
-org-html-preamble-format
