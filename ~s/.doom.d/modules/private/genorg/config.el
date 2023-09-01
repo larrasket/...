@@ -149,6 +149,16 @@
 
           (org-ql-block '(and
                           (todo "TODO")
+                          (tags "@write")
+                          (not (tags "@later"))
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Write something:")))
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
                           (tags "@watch")
                           (not (tags "@later"))
                           (not (deadline))
