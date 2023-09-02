@@ -91,9 +91,12 @@
 (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
 
 
+(setq org-agenda-start-on-weekday nil
+      org-agenda-start-day "0d")
 
 (setq org-agenda-custom-commands
-      '(("A" "Deadlines and Scheduled" ((tags-todo "DEADLINE<>\"\"|SCHEDULED<>\"\"")))
+      '(("a" "days agenda " ((agenda ""
+                                     ((org-agenda-span 4)))))
         ("v" "Agenda"
          ((org-ql-block '(and
                           (priority "A")
@@ -103,7 +106,7 @@
                         ((org-ql-block-header "High-priority tasks")))
 
           (agenda ""
-                  ((org-agenda-span '5)))
+                  ((org-agenda-span 2)))
 
           (org-ql-block '(and
                           (todo "DAILY")

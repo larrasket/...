@@ -145,7 +145,7 @@
   `(define-key sly-mode-map (salih/mode "C-j") 'salih/sly-compile-defun-with-print))
 
 
-(global-set-key (salih/global "C-a") #'org-agenda)
+;; (global-set-key (salih/global "C-a") #'org-agenda)
 
 (add-hook 'xwidget-webkit-mode-hook (lambda ()
                                       (evil-define-key 'nomral xwidget-webkit-mode-map (kbd "O") 'salih/elfeed-open-url)
@@ -160,7 +160,9 @@
  :prefix salih/prefix-global
  "C-c"          (lambda () (interactive) (org-capture nil "f"))
  "C-a"          nil
- "C-a C-a"      #'salih/open-agenda
+ "C-a C-a"      (lambda () (interactive (org-agenda nil "a")))
+
+ "C-a C-v"      #'salih/open-agenda
  "C-."          #'find-file
  "."            #'find-file
  "C-,"          #'persp-switch-to-buffer
