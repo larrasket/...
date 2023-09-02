@@ -105,8 +105,8 @@
                                                  (todo "TODO")
                                                  (or (scheduled)
                                                      (deadline)))
-                                              ((org-ql-block-header "Soon")
-                                               :sort (date priority)))))
+                                              ((org-ql-block-header "Soon")))))
+                                               
         ("v" "Agenda"
                                 ((org-ql-block '(and
                                                  (priority "A")
