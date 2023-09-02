@@ -881,5 +881,11 @@ and 0 means insert a single space in between the headline and the tags."
   (org-align-tags t))
 
 
+(defun salih/org-calendar-goto-agenda ()
+  (interactive)
+  (let ((org-agenda-span 1))
+    (org-calendar-goto-agenda)))
+
+
 
 (provide '+helper)

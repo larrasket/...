@@ -173,7 +173,7 @@
  "C-<return>"   #'switch-to-buffer
  "["            #'previous-buffer
  "]"            #'next-buffer
- "C-d"          #'kill-current-buffer
+ "C-d"          #'calendar
  "C-k"          #'kill-current-buffer
  "C-l"          nil
  "C-l C-l"      #'leetcode
@@ -323,6 +323,7 @@
   (kbd "J") 'elfeed-goodies/split-show-next
   (kbd "K") 'elfeed-goodies/split-show-prev)
 
+(evil-define-key 'normal calendar-mode-map (kbd "RET") 'salih/org-calendar-goto-agenda)
 
 (add-hook 'nov-mode-hook (lambda ()
                            (evil-collection-define-key 'normal 'nov-mode-map "t"  nil)

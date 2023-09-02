@@ -4,6 +4,7 @@
 
   (custom-set-faces
    '(org-link ((t (:inherit link :underline nil :slant italic :weight bold :family "Arial"))))
+   '(org-roam-dailies-calendar-note ((t (:inherit link :underline nil))))
    '(variable-pitch ((t (:family "DejaVu Sans"))))
    '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight normal :family "Arial"))))
    '(org-level-2 ((t (:inherit outline-2 :height 1.2 :weight normal :family "Arial"))))
@@ -104,8 +105,8 @@
                                                  (todo "TODO")
                                                  (or (scheduled)
                                                      (deadline)))
-                                               ((org-ql-block-header "Soon"))
-                                               :sort (date priority))))
+                                              ((org-ql-block-header "Soon")
+                                               :sort (date priority)))))
         ("v" "Agenda"
                                 ((org-ql-block '(and
                                                  (priority "A")
