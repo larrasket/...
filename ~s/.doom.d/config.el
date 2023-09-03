@@ -57,6 +57,7 @@
       org-image-actual-width                            600
       org-link-file-path-type                           'relative
       org-agenda-entry-text-exclude-regexps             '("- State \"\\S-+\"\\s-+from\\s-+\"\\S-+\"\\s-+\\[\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}[^]]*\\)\\]")
+      org-agenda-show-future-repeats                    nil
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
