@@ -67,7 +67,6 @@
 (epa-file-enable)
 (yas-global-mode 1)
 (global-wakatime-mode)
-(awqat-display-prayer-time-mode)
 (salih/consult-preview-at-point)
 (add-hook 'after-init-hook        #'global-flycheck-mode)
 ;; (add-hook 'after-init-hook #'mu4e)
