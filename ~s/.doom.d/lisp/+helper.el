@@ -327,34 +327,6 @@ automatically previewed."
   :commands (awqat-display-prayer-time-mode
              awqat-times-for-day))
 
-(defun +lookup/dictionary-definition
-    (identifier &optional arg)
-  "Look up the definition of the word at point (or selection)."
-  (interactive
-   (list
-    (or
-     (doom-thing-at-point-or-region 'word)
-     (read-string "Look up in dictionary: "))
-    current-prefix-arg))
-  (if (equal major-mode 'pdf-view-mode)
-      (setq identifier (car (pdf-view-active-region-text))))
-  (message "Looking up dictionary definition for %S" identifier)
-  (cond
-   ((and IS-MAC
-         (require 'osx-dictionary nil t))
-    (osx-dictionary--view-result identifier))
-   ((and +lookup-dictionary-prefer-offline
-         (require 'wordnut nil t))
-    (if
-        (executable-find wordnut-cmd)
-        nil
-      (user-error "Couldn't find %S installed on your system" wordnut-cmd))
-    (wordnut-search identifier))
-   ((require 'define-word nil t)
-    (define-word identifier nil arg))
-   ((user-error "No dictionary backend is available"))))
-
-
 
 (defun salih/banner ()
   (let* ((banner '(
