@@ -50,7 +50,11 @@
       org-use-tag-inheritance                           t
       org-agenda-block-separator                        9472
       org-clock-mode-line-total                         'today
-      ;; org-extend-today-until                            6
+      ;; this option is useful when you are up after 00:00. set 0 to the value
+      ;; yoe sleep at. if you sleep at 02:00 it should be 2, if you sleep at
+      ;; 02:30 it should be 3 and so on. Org agenda for the day will not overlap
+      ;; until your day is done.
+      org-extend-today-until                            0
       org-element-use-cache                             t
       org-noter-auto-save-last-location                 t
       org-startup-folded                                t
@@ -58,6 +62,14 @@
       org-link-file-path-type                           'relative
       org-agenda-entry-text-exclude-regexps             '("- State \"\\S-+\"\\s-+from\\s-+\"\\S-+\"\\s-+\\[\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}[^]]*\\)\\]")
       org-agenda-show-future-repeats                    nil
+      org-clock-mode-line-total                         'current
+      ;; FIXME this is useful to hide the title name from the org clock, however
+      ;; it might be inconsistent. Better should be redefining
+      ;; `org-clock-get-clock-string'. I wouldn't overwrite it myself since it
+      ;; might break things in the future, I might consider making PR to
+      ;; org-mode making the string customizable.
+      org-clock-string-limit                            8
+
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
@@ -180,9 +192,6 @@
                                          (with-output-to-string (call-process "tidy" nil nil nil "-m" "--numeric-entities" "yes" (remove-file-prefix url)))
                                          (xwidget-webkit-browse-url url))))
       (mu4e-action-view-in-browser msg))))
-
-
-
 
 
 ;; this should be called after defining salih/prefix-global
