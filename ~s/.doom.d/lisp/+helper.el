@@ -219,7 +219,6 @@ Version 2019-11-04 2021-02-16"
 
 (defun highltier ()
   (interactive)
-  (require 'highlight-indent-guides)
   (set-face-background 'highlight-indent-guides-odd-face "darkgray")
   (set-face-background 'highlight-indent-guides-even-face "dimgray")
   (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
@@ -528,7 +527,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 
 
 
-(require 'vulpea)
 (defun vulpea-project-p ()
   "Return non-nil if current buffer has any todo entry.
 
@@ -633,7 +631,6 @@ tasks."
 
 
 
-(require 'auth-source)
 (defun salih/get-mail-password ()
   (interactive)
   (let* ((auth-info (auth-source-search :host "mail.gmx.com"

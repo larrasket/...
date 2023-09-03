@@ -1,9 +1,17 @@
 (add-to-list 'load-path "~/.doom.d/lisp/")
 (add-to-list 'org-agenda-files "~/roam/main/life.org")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
-(require 'epa-file)
-(require 'go-translate)
-(require 'org-inlinetask)
+
+(require 'awqat)                        ; for praer support in the agenda
+(require 'vulpea)                       ; org-roam project tasks in org-agenda
+(require 'epa-file)                     ; for encryption function in `+helper`
+(require 'auth-source)                  ; required for encryption support
+(require 'go-translate)                 ; define trnaslation engine in config.el
+(require 'org-inlinetask)               ; enable org inline tasks
+(require 'highlight-indent-guides)      ; enables indent guide
+
+
+
 
 (setq-default frame-title-format                        '("%b")
               bidi-paragraph-direction                  'left-to-right
