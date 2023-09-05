@@ -96,7 +96,7 @@
       org-agenda-start-day "0d")
 
 (setq org-agenda-custom-commands
-      '(("a" "Today Tasks"
+      '(("f" "Today Tasks"
          ((agenda ""
                   ((org-agenda-span 4)))
 

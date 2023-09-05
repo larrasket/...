@@ -160,7 +160,7 @@
  :prefix salih/prefix-global
  "C-c"          (lambda () (interactive) (org-capture nil "f"))
  "C-a"          nil
- "C-a C-a"      (lambda () (interactive (org-agenda nil "a")))
+ "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))
 
  "C-a C-v"      #'salih/open-agenda
  "C-."          #'find-file
