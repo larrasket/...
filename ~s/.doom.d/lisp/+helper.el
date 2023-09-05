@@ -857,4 +857,24 @@ and 0 means insert a single space in between the headline and the tags."
 
 
 
+(defun salih/polyphasic-sleep (start n)
+  (if (or org-agenda-show-future-repeats (time-equal-p (awqat--today) date))
+      (cond
+       ((= n 1) (salih/polyphasic-sleep--1 start))
+       ((= n 2) (salih/polyphasic-sleep--2 start))
+       ((= n 3) (salih/polyphasic-sleep--3 start))
+       ((= n 4) (salih/polyphasic-sleep--4 start)))))
+
+(defun salih/polyphasic-sleep--1 (s)
+  (format "Sleep (1h.30) %d:30 " (mod (+ s 5) 24)))
+
+(defun salih/polyphasic-sleep--2 (s)
+  (format "Sleep (30m) %d:00 " (mod (+ s 12) 24)))
+
+(defun salih/polyphasic-sleep--3 (s)
+  (format "Sleep (30m) %d:15 " (mod (+ s 17) 24)))
+
+(defun salih/polyphasic-sleep--4 (s)
+  (format "Sleep (1h.30) %d:30 " (mod (+ s 22) 24)))
+
 (provide '+helper)
