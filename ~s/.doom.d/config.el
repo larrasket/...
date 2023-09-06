@@ -126,7 +126,7 @@
       shr-inhibit-images                                nil
 
       ;; vertico
-      vertico-buffer-display-action                     '(display-buffer-same-window)
+      vertico-buffer-display-action                     '(display-buffer-at-bottom (window-height . 20))
       enable-recursive-minibuffers                      nil
 
       ;; git-auto-commit-mode

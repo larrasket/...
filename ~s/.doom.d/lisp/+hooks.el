@@ -65,6 +65,7 @@
 
 ;; init
 (epa-file-enable)
+(vertico-buffer-mode)
 (yas-global-mode 1)
 (global-wakatime-mode)
 (salih/consult-preview-at-point)
