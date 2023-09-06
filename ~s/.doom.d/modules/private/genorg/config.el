@@ -105,26 +105,6 @@
           ;; FIXME this should support sorting functionality.
           ;; Waiting for the next org-ql update.
 
-          (org-ql-block '(and
-                          (todo "TODO")
-                          (or (scheduled)
-                              (deadline)))
-                        ((org-ql-block-header "Soon")))
-
-          (org-ql-block '(and
-                          (todo "DAILY")
-                          (or (and (not (deadline))
-                                   (not (scheduled)))
-                              (tags "@general")))
-                        ((org-ql-block-header "Daily Task")))))
-
-        ("v" "General Tasks"
-         ((org-ql-block '(and
-                          (priority "A")
-                          (not (deadline))
-                          (not (scheduled)))
-                        ((org-ql-block-header "High-priority tasks")))
-
 
           (org-ql-block '(and
                           (todo "TODO")
@@ -133,6 +113,31 @@
                           (not (deadline))
                           (not (scheduled)))
                         ((org-ql-block-header "Get something done")))
+
+          (org-ql-block '(and
+                          (todo "DAILY")
+                          (or (and (not (deadline))
+                                   (not (scheduled)))
+                              (tags "@general")))
+                        ((org-ql-block-header "Daily Task")))
+
+
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (or (scheduled)
+                              (deadline)))
+                        ((org-ql-block-header "Soon")))))
+          
+
+        ("v" "General Tasks"
+         ((org-ql-block '(and
+                          (priority "A")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "High-priority tasks")))
+
 
           (org-ql-block '(and
                           (todo "TODO")
