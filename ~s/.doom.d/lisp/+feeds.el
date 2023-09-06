@@ -15,7 +15,10 @@
                      ("https://daily.jstor.org//feed" jstore science)
                      ("https://protesilaos.com/master.xml" prot blogs emacs philosophy)
                      ("https://stackexchange.com/feeds/questions"  questions)
+                     ("https://aeon.co/feed.rss" aeon philosophy)
+                     ("https://www.radicalphilosophy.com/feed" radical_philosophy philosphy)
 
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCUMZ7gohGI9HcU9VNsr2FJQ" youtube bloomberg)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkS_HP3m9NXOgswVAKbMeJQ" youtube thenandnow philosophy)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" youtube systemcraft emacs)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube mentaloutlaw cs)
