@@ -1,13 +1,11 @@
 #+title: .dotfiles
-
+#+OPTIONS: toc:nil
 
 
 [[https://link.storjshare.io/raw/jubxv7sp7cvlvzrwx3asfwueh2dq/blog/made0.png]]
 
 
 [[file:~s/img/dwm/2023-07-16_01-40.png]]
-
-+For more screenshots and other information about tagging, check [[https://github.com/salehmu/.../blob/master/~s/.README.org][old README.]]+
 
 By now I've to admit that documenting my dots has been nothing but a complete
 joke. The commit history (still available in the ~archived_main~ branch) is
