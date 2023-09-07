@@ -665,7 +665,7 @@ tasks."
 
 
 (defun salih/open-current-url-in-chrome ()
-  "Open the current URL in Chrome"
+  "Open the current URL (from kill-ring) in Chrome"
   (interactive)
   (let ((_ (xwidget-webkit-current-url)))
     (salih/open-url-in-chrome (car kill-ring))))

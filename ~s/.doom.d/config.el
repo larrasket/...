@@ -3,6 +3,7 @@
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 
 (require 'awqat)                        ; for praer support in the agenda
+(require 'embark)                       ; for embark action `+helper` specifications
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require 'epa-file)                     ; for encryption function in `+helper`
 (require 'auth-source)                  ; required for encryption support
@@ -210,4 +211,3 @@
 (require '+feeds)
 (require '+bindings)
 (require 'org-roam-protocol)
-
