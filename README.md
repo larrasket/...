@@ -1,9 +1,10 @@
-![img](https://link.storjshare.io/raw/jubxv7sp7cvlvzrwx3asfwueh2dq/blog/made0.png)
+Personal dot files, configurations gathered from/for BSDs and GNU/Linux based
+systems. It also contains a lot of personal-related stuff, like my music
+library.
 
-![img](~s/img/dwm/2023-07-16_01-40.png)
-
-By now I&rsquo;ve to admit that documenting my dots has been nothing but a complete
-joke. The commit history (still available in the `archived_main` branch) is
-completely useless and objectiveless. Today (*(2023/05/20)*) I&rsquo;ve archived all
-the old commits, starting with a clean that applies [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/).
+I do not think anyone would be interested in using those files other than me,
+but they are available here anyway. Maybe you would be interested in my Emacs
+configuration instead, it&rsquo;s available too in this repo. Note that I use my own
+fork of Doom Emacs (an Emacs framework), it&rsquo;s available on [~lr0/.emacs.d](https://git.sr.ht/~lr0/.emacs.d). There
+are some screenshots too in this repository.
 
