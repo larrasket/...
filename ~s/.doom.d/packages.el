@@ -63,3 +63,4 @@
 
 
 (package! org-bullets)
+(package! elfeed-tube)

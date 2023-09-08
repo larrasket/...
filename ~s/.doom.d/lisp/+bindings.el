@@ -303,11 +303,6 @@
               #'salih/org-noter-sync-current-note-and-switch-window)
   (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note))
 
-
-
-
-
-
 (general-define-key
  :prefix salih/prefix-mode
  :keymaps 'elfeed-search-mode-map
@@ -322,6 +317,11 @@
 (evil-define-key 'normal elfeed-search-mode-map
   (kbd "J") 'elfeed-goodies/split-show-next
   (kbd "K") 'elfeed-goodies/split-show-prev)
+
+(define-key elfeed-show-mode-map (kbd "F") 'elfeed-tube-fetch)
+(define-key elfeed-show-mode-map [remap save-buffer] 'elfeed-tube-save)
+(define-key elfeed-search-mode-map (kbd "F") 'elfeed-tube-fetch)
+(define-key elfeed-search-mode-map [remap save-buffer] 'elfeed-tube-save)
 
 (evil-define-key 'normal calendar-mode-map (kbd "RET") 'salih/org-calendar-goto-agenda)
 

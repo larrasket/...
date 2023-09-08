@@ -6,6 +6,7 @@
 (require 'embark)                       ; for embark action `+helper` specifications
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require 'epa-file)                     ; for encryption function in `+helper`
+(require 'elfeed-tube)                  ; for reviewing youtube feeds in elfeed
 (require 'auth-source)                  ; required for encryption support
 (require 'go-translate)                 ; define trnaslation engine in config.el
 (require 'org-inlinetask)               ; enable org inline tasks
@@ -206,8 +207,9 @@
 ;; this should be called after defining salih/prefix-global
 
 (require '+helper)
-(require '+org-tags)
+
 (require '+hooks)
 (require '+feeds)
 (require '+bindings)
+(require '+org-tags)
 (require 'org-roam-protocol)

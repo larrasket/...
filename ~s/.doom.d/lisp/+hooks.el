@@ -63,23 +63,11 @@
 
 
 
-;; init
-(epa-file-enable)
-(vertico-buffer-mode)
-(yas-global-mode 1)
-(global-wakatime-mode)
-(salih/consult-preview-at-point)
-(add-hook 'after-init-hook        #'global-flycheck-mode)
-;; (add-hook 'after-init-hook #'mu4e)
-(consult-org-roam-mode 1)
-(add-hook 'after-make-frame-functions (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
 
 (add-hook 'bibtex-mode-hook (lambda ()
                               (add-hook 'after-save-hook '+format/buffer)))
 
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
-
-
 
 
 (add-hook 'nov-mode-hook (lambda ()
@@ -319,5 +307,21 @@
 
 (custom-set-variables
  '(all-the-icons-completion-mode nil))
+
+
+;; init
+
+(add-hook 'after-make-frame-functions (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
+
+(epa-file-enable)
+(elfeed-tube-setup)
+(yas-global-mode 1)
+(vertico-buffer-mode)
+(global-wakatime-mode)
+(salih/consult-preview-at-point)
+(add-hook 'after-init-hook        #'global-flycheck-mode)
+(consult-org-roam-mode 1)
+
+
 
 (provide '+hooks)
