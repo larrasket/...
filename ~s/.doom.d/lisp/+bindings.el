@@ -234,17 +234,12 @@
 ;; magit and vc
 ;; TODO refactor if possible
 (general-define-key
- :prefix (concat salih/prefix-global "g")
+ :prefix (concat salih/prefix-global "C-v")
  "" nil
- "g"   #'magit-status
- "G"   #'magit-status-here
- "C"   #'magit-clone
- "L"   #'magit-log-buffer-file
- "."   #'+vc/browse-at-remote
- "t"   #'magit-todos-list
- "D"   #'magit-file-delete)
-
-
+ "C-v"   #'magit-status
+ "C-c"   #'magit-clone
+ "C-t"   #'magit-todos-list
+ "C-x"   #'magit-file-delete)
 
 
 ;; other
@@ -271,7 +266,8 @@
  "C-t" #'gts-do-translate
  "C-s" #'centaur-tabs-ace-jump
  "]"   #'centaur-tabs-forward
- "["   #'centaur-tabs-backward)
+ "["   #'centaur-tabs-backward
+ "C-v" #'magit-log-buffer-file)
 
 
 ;; resize windows
