@@ -64,3 +64,5 @@
 
 (package! org-bullets)
 (package! elfeed-tube)
+
+(package! maxima)

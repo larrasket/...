@@ -241,6 +241,7 @@
  "C-t"   #'magit-todos-list
  "C-x"   #'magit-file-delete)
 
+(define-key maxima-mode-map (kbd "M-;") #'salih/comment-or-uncomment-region-or-line)
 
 ;; other
 (general-define-key
