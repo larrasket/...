@@ -14,6 +14,7 @@
   (solaire-mode -1))
 
 (add-hook 'lisp-mode-hook         #'rainbow-delimiters-mode)
+(add-hook 'maxima-inferior-mode   #'salih/disable-bright)
 (add-hook 'neotree-mode-hook      #'salih/disable-bright)
 (add-hook 'sly-mrepl-mode-hook    #'salih/disable-bright)
 (add-hook 'dired-mode-hook        #'salih/disable-bright)
