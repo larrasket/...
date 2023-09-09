@@ -38,7 +38,8 @@
  "C-c C-t" #'+lookup/type-definition
  "C-c C-e" #'+default/diagnostics
  "C-c C-g" #'salih/find-definition-or-lookup
- "C-;"   #'salih/rename-or-iedit)
+ "C-;"     #'salih/rename-or-iedit
+ "M-;"     #'salih/comment-or-uncomment-region-or-line)
 
 
 (general-define-key
@@ -99,7 +100,6 @@
  "C-d" #'epa-dired-do-decrypt)
 
 
-(general-auto-unbind-keys)
 ;; Org-mode
 (map!
  :map org-mode-map
@@ -130,8 +130,6 @@
  "C-;"     #'salih/rename-or-iedit
  "C-r C-f" #'consult-org-roam-forward-links)
 
-(general-auto-unbind-keys)
-
 ;; Lisp
 
 (eval-after-load 'sly
@@ -143,9 +141,6 @@
 
 (eval-after-load 'sly
   `(define-key sly-mode-map (salih/mode "C-j") 'salih/sly-compile-defun-with-print))
-
-
-;; (global-set-key (salih/global "C-a") #'org-agenda)
 
 (add-hook 'xwidget-webkit-mode-hook (lambda ()
                                       (evil-define-key 'nomral xwidget-webkit-mode-map (kbd "O") 'salih/elfeed-open-url)
@@ -241,7 +236,8 @@
  "C-t"   #'magit-todos-list
  "C-x"   #'magit-file-delete)
 
-(define-key maxima-mode-map (kbd "M-;") #'salih/comment-or-uncomment-region-or-line)
+
+ 
 
 ;; other
 (general-define-key
@@ -251,9 +247,10 @@
  "C-f" #'elfeed)
 
 ;; projectile
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "C-x p")   #'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-x p a") #'projectile-add-known-project)
+;; TODO add better bindings for it
+;; (projectile-mode +1)
+;; (define-key projectile-mode-map (kbd "C-x p")   #'projectile-command-map)
+;; (define-key projectile-mode-map (kbd "C-x p a") #'projectile-add-known-project)
 
 ;; convenient
 
