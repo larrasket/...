@@ -237,7 +237,7 @@
  "C-x"   #'magit-file-delete)
 
 
- 
+
 
 ;; other
 (general-define-key
@@ -316,6 +316,9 @@
 (define-key elfeed-show-mode-map [remap save-buffer] 'elfeed-tube-save)
 (define-key elfeed-search-mode-map (kbd "F") 'elfeed-tube-fetch)
 (define-key elfeed-search-mode-map [remap save-buffer] 'elfeed-tube-save)
+
+(define-key embark-url-map (kbd "c") 'salih/open-url-in-chrome)
+(define-key embark-org-link-map (kbd "RET") 'org-web-tools-read-url-as-org)
 
 (evil-define-key 'normal calendar-mode-map (kbd "RET") 'salih/org-calendar-goto-agenda)
 
