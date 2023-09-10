@@ -1,11 +1,16 @@
 ;;; configs/~s/.doom.d/+hooks.el -*- lexical-binding: t; -*-
 
-(add-hook 'prog-mode-hook (lambda ()
-                            (highltier)
-                            (column-enforce-mode)
-                            (auto-fill-mode)
-                            (setq-default indent-tabs-mode nil)))
 
+
+
+(set-face-background 'highlight-indent-guides-odd-face "darkgray")
+(set-face-background 'highlight-indent-guides-odd-face "darkgray")
+(set-face-background 'highlight-indent-guides-even-face "dimgray")
+(set-face-foreground 'highlight-indent-guides-character-face "dimgray")
+
+(add-hook 'prog-mode-hook 'column-enforce-mode)
+(add-hook 'prog-mode-hook 'auto-fill-mode)
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 (add-hook 'csv-mode-hook          #'csv-align-mode)
 (plist-put +popup-defaults :modeline t)
 
@@ -13,21 +18,22 @@
 (defun salih/disable-bright ()
   (solaire-mode -1))
 
-(add-hook 'lisp-mode-hook         #'rainbow-delimiters-mode)
-(add-hook 'neotree-mode-hook      #'salih/disable-bright)
-(add-hook 'sly-mrepl-mode-hook    #'salih/disable-bright)
-(add-hook 'dired-mode-hook        #'salih/disable-bright)
-(add-hook 'mu4e-headers-mode-hook #'salih/disable-bright)
-(add-hook 'mu4e-view-mode-hook    #'salih/disable-bright)
-(add-hook 'mu4e-main-mode-hook    #'salih/disable-bright)
-(add-hook 'yas-minor-mode         (lambda () (yas-activate-extra-mode 'fundamental-mode)))
-(add-hook 'org-mode-hook          (lambda ()
-                                    (display-line-numbers-mode -1)
-                                    (setq truncate-lines 1)
-                                    (add-hook 'before-save-hook #'vulpea-project-update-tag nil 'local)
-                                    (add-hook 'find-file-hook #'vulpea-project-update-tag nil 'local)
-                                    (git-gutter-mode -1)
-                                    (setq org-hide-leading-stars t)))
+(add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
+(add-hook 'maxima-inferior-mode-hook    #'salih/disable-bright)
+(add-hook 'neotree-mode-hook            #'salih/disable-bright)
+(add-hook 'sly-mrepl-mode-hook          #'salih/disable-bright)
+(add-hook 'dired-mode-hook              #'salih/disable-bright)
+(add-hook 'mu4e-headers-mode-hook       #'salih/disable-bright)
+(add-hook 'mu4e-view-mode-hook          #'salih/disable-bright)
+(add-hook 'mu4e-main-mode-hook          #'salih/disable-bright)
+(add-hook 'yas-minor-mode               (lambda () (yas-activate-extra-mode 'fundamental-mode)))
+(add-hook 'org-mode-hook                (lambda ()
+                                          (display-line-numbers-mode -1)
+                                          (setq truncate-lines 1)
+                                          (add-hook 'before-save-hook #'vulpea-project-update-tag nil 'local)
+                                          (add-hook 'find-file-hook #'vulpea-project-update-tag nil 'local)
+                                          (git-gutter-mode -1)
+                                          (setq org-hide-leading-stars t)))
 
 
 (advice-add 'org-agenda :before #'vulpea-agenda-files-update)
@@ -63,32 +69,11 @@
 
 
 
-;; init
-(epa-file-enable)
-(yas-global-mode 1)
-(global-wakatime-mode)
-(awqat-display-prayer-time-mode)
-(salih/consult-preview-at-point)
-(add-hook 'after-init-hook        #'global-flycheck-mode)
-;; (add-hook 'after-init-hook #'mu4e)
-(consult-org-roam-mode 1)
-(add-hook 'after-make-frame-functions (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
 
 (add-hook 'bibtex-mode-hook (lambda ()
                               (add-hook 'after-save-hook '+format/buffer)))
 
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
-
-
-
-
-
-(with-eval-after-load 'org-agenda
-  (defun my/org-has-children ()
-    (if (save-excursion (org-goto-first-child)) "▶" " "))
-  (add-to-list 'org-agenda-prefix-format '(
-                                           agenda  . "%i%-3:(my/org-has-children) %-12:c%?-12t% s ")))
-
 
 
 (add-hook 'nov-mode-hook (lambda ()
@@ -208,7 +193,7 @@
     (message "Compiled: %s" form-with-print)))
 
 (add-hook 'elfeed-show-mode-hook 'visual-line-mode)
-(add-hook 'elfeed-show-mode-hook (lambda () (set-fontset-font "fontset-default" 'arabic (font-spec :family "Arial" :size 16))))
+;; (add-hook 'elfeed-show-mode-hook (lambda () (set-fontset-font "fontset-default" 'arabic (font-spec :family "Arial" :size 16))))
 
 (add-hook 'eshell-alias-load-hook 'salih/eshell-load-bash-aliases)
 
@@ -323,4 +308,26 @@
 
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (add-hook 'org-mode-hook #'salih/fix-tag-alignment)
+
+
+
+(custom-set-variables
+ '(all-the-icons-completion-mode nil))
+
+
+;; init
+
+(add-hook 'after-make-frame-functions (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
+
+(epa-file-enable)
+(elfeed-tube-setup)
+(yas-global-mode 1)
+(vertico-buffer-mode)
+(global-wakatime-mode)
+(salih/consult-preview-at-point)
+(add-hook 'after-init-hook        #'global-flycheck-mode)
+(consult-org-roam-mode 1)
+
+
+
 (provide '+hooks)

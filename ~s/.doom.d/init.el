@@ -3,7 +3,7 @@
 (doom! :input
        :completion
        company
-       vertico
+       (vertico +icons)
        :ui
        vc-gutter
        doom

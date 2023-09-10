@@ -1,6 +1,5 @@
 ; -*- no-byte-compile: t; -*-
 
-
 (package! wakatime-mode)
 
 (package! org-web-tools)
@@ -50,6 +49,9 @@
   :recipe (:host github
            :repo "luggages/ox-tufte"))
 
+(package! ox-html-stable-ids
+  :recipe (:host github
+                 :repo "larrasket/ox-html-stable-ids.el"))
 (package! centaur-tabs)
 
 (package! vulpea)
@@ -61,3 +63,6 @@
 
 
 (package! org-bullets)
+(package! elfeed-tube)
+
+(package! maxima)

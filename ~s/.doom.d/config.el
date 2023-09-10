@@ -1,13 +1,25 @@
 (add-to-list 'load-path "~/.doom.d/lisp/")
 (add-to-list 'org-agenda-files "~/roam/main/life.org")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
-(require 'epa-file)
-(require 'go-translate)
-(require 'org-inlinetask)
+
+(require 'awqat)                        ; for praer support in the agenda
+(require 'embark)                       ; for embark action `+helper` specifications
+(require 'vulpea)                       ; org-roam project tasks in org-agenda
+(require 'epa-file)                     ; for encryption function in `+helper`
+(require 'elfeed-tube)                  ; for reviewing youtube feeds in elfeed
+(require 'auth-source)                  ; required for encryption support
+(require 'go-translate)                 ; define trnaslation engine in config.el
+(require 'org-inlinetask)               ; enable org inline tasks
+(require 'highlight-indent-guides)      ; enables indent guide
+
+
+
 
 (setq-default frame-title-format                        '("%b")
               bidi-paragraph-direction                  'left-to-right
               org-download-image-dir                    "~/roam/media"
+              indent-tabs-mode                          nil
+              highlight-indent-guides-auto-enabled      nil
               pdf-view-display-size                     'fit-width)
 
 (defvar IS-PLASMA (let ((output (shell-command-to-string "pgrep -x plasmashell")))
@@ -50,13 +62,26 @@
       org-use-tag-inheritance                           t
       org-agenda-block-separator                        9472
       org-clock-mode-line-total                         'today
-      ;; org-extend-today-until                            6
+      ;; this option is useful when you are up after 00:00. set 0 to the value
+      ;; yoe sleep at. if you sleep at 02:00 it should be 2, if you sleep at
+      ;; 02:30 it should be 3 and so on. Org agenda for the day will not overlap
+      ;; until your day is done.
+      org-extend-today-until                            0
       org-element-use-cache                             t
       org-noter-auto-save-last-location                 t
       org-startup-folded                                t
       org-image-actual-width                            600
       org-link-file-path-type                           'relative
       org-agenda-entry-text-exclude-regexps             '("- State \"\\S-+\"\\s-+from\\s-+\"\\S-+\"\\s-+\\[\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}[^]]*\\)\\]")
+      org-agenda-show-future-repeats                    nil
+      org-clock-mode-line-total                         'current
+      ;; FIXME this is useful to hide the title name from the org clock, however
+      ;; it might be inconsistent. Better should be redefining
+      ;; `org-clock-get-clock-string'. I wouldn't overwrite it myself since it
+      ;; might break things in the future, I might consider making PR to
+      ;; org-mode making the string customizable.
+      org-clock-string-limit                            8
+
       ;; please don't stalk me
       user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
@@ -105,7 +130,7 @@
       shr-inhibit-images                                nil
 
       ;; vertico
-      vertico-buffer-display-action                     '(display-buffer-same-window)
+      vertico-buffer-display-action                     '(display-buffer-at-bottom (window-height . 20))
       enable-recursive-minibuffers                      nil
 
       ;; git-auto-commit-mode
@@ -137,6 +162,7 @@
       centaur-tabs-cycle-scope                          'tabs
 
       ;; other
+      company-idle-delay                                0.3
       salih/temp-roam-insert                            nil
       large-file-warning-threshold                      nil
       save-place-ignore-files-regexp                    "\\(?:COMMIT_EDITMSG\\|hg-editor-[[:alnum:]]+\\.txt\\|svn-commit\\.tmp\\|bzr_log\\.[[:alnum:]]+\\|\\.pdf\\)$"
@@ -188,11 +214,9 @@
 ;; this should be called after defining salih/prefix-global
 
 (require '+helper)
-(require '+org-tags)
+
 (require '+hooks)
 (require '+feeds)
 (require '+bindings)
-
-
+(require '+org-tags)
 (require 'org-roam-protocol)
-

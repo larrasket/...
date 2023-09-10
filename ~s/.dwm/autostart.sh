@@ -10,9 +10,7 @@ xset r rate 200 25
 setxkbmap -layout us,ara -option 'grp:alt_shift_toggle'
 /home/l/.local/bin/pantalaimon &
 /home/l/go/bin/ang  &
-
-feh --bg-fill ~/me/links/art/land/$(ls ~/me/links/art/land | shuf -n 1)
-
+feh --bg-fill ~/configs/bg.png
 # tor &
 # pgrep -fl 'pidswallow -gl' || pidswallow -gl
 pantalaimon --data-path ~/tmp/pant/ &

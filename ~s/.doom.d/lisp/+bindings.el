@@ -11,6 +11,8 @@
 
 
 
+
+(define-key flyspell-mode-map (kbd "C-;") nil)
 (define-key evil-visual-state-map       (kbd "C-g") #'evil-normal-state)
 (define-key evil-insert-state-map       (kbd "C-g") #'evil-normal-state)
 (define-key evil-replace-state-map      (kbd "C-g") #'evil-normal-state)
@@ -36,7 +38,8 @@
  "C-c C-t" #'+lookup/type-definition
  "C-c C-e" #'+default/diagnostics
  "C-c C-g" #'salih/find-definition-or-lookup
- "C-;"   #'salih/rename-or-iedit)
+ "C-;"     #'salih/rename-or-iedit
+ "M-;"     #'salih/comment-or-uncomment-region-or-line)
 
 
 (general-define-key
@@ -54,8 +57,8 @@
 
 
 (add-hook 'pdf-view-mode-hook (lambda ()
-                                (local-set-key (salih/mode "t") #'gts-do-translate)
                                 (define-key pdf-view-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note)
+                                (define-key pdf-view-mode-map (salih/mode "C-d") #'pdf-view-themed-minor-mode)
                                 (evil-local-set-key 'normal (salih/mode "C-c") #'org-noter-insert-precise-note)
                                 (evil-local-set-key 'normal (kbd "J") #' pdf-view-next-page-command)
                                 (evil-local-set-key 'normal (kbd "K") #' pdf-view-previous-page-command)))
@@ -97,38 +100,35 @@
  "C-d" #'epa-dired-do-decrypt)
 
 
-(general-auto-unbind-keys)
 ;; Org-mode
 (map!
  :map org-mode-map
  :after org
  :prefix salih/prefix-mode
- "C-f" #'org-footnote-action
- "c i" #'org-clock-in
- "c o" #'org-clock-out
+ "C-f"     #'org-footnote-action
+ "c i"     #'org-clock-in
+ "c o"     #'org-clock-out
  "H-i H-i" #'org-id-get-create
  "H-i C-l" #'org-web-tools-insert-link-for-url
  "H-i C-d" #'org-download-clipboard
  "H-i C-c" #'salih/org-id-get-create-with-custom-id
  "H-i C-k" #'citar-insert-citation
  "H-i C-t" #'org-inlinetask-insert-task
- "C-b" #'citar-insert-citation
+ "C-b"     #'citar-insert-citation
  "H-i C-b" #'orb-insert-link
  "C-n C-n" #'org-noter
  "C-n C-k" #'org-noter-kill-session
  "C-e"     nil
  "C-e C-p" #'org-pandoc-export-to-latex-pdf
  "C-e C-t" #'salih/get-file-todos
- ;; roam
  "H-i C-r" #'salih/org-roam-node-insert
  "C-r"     nil
- "C-r H-i" #'salih/org-roam-node-insert
+ "C-r H-i" #'org-roam-node-insert
  "C-r C-t" #'org-roam-tag-add
  "C-r C-a" #'org-roam-alias-add
  "C-r C-b" #'consult-org-roam-backlinks
+ "C-;"     #'salih/rename-or-iedit
  "C-r C-f" #'consult-org-roam-forward-links)
-
-(general-auto-unbind-keys)
 
 ;; Lisp
 
@@ -142,9 +142,6 @@
 (eval-after-load 'sly
   `(define-key sly-mode-map (salih/mode "C-j") 'salih/sly-compile-defun-with-print))
 
-
-(global-set-key (salih/global "C-a") #'org-agenda)
-
 (add-hook 'xwidget-webkit-mode-hook (lambda ()
                                       (evil-define-key 'nomral xwidget-webkit-mode-map (kbd "O") 'salih/elfeed-open-url)
                                       (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "y" 'xwidget-webkit-copy-selection-as-kill)
@@ -156,34 +153,36 @@
 ;; convenient
 (map!
  :prefix salih/prefix-global
- "C-c"     #'org-capture
- "C-a" nil
- "C-a C-a"     #'salih/open-agenda
- "C-."     #'find-file
- "."     #'find-file
- "C-,"     #'persp-switch-to-buffer
- ","     #'persp-switch-to-buffer
- "C-<"     #'switch-to-buffer
- "<"     #'switch-to-buffer
- "RET"   #'switch-to-buffer
+ "C-c"          (lambda () (interactive) (org-capture nil "f"))
+ "C-a"          nil
+ "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))
+
+ "C-a C-v"      #'salih/open-agenda
+ "C-."          #'find-file
+ "."            #'find-file
+ "C-,"          #'persp-switch-to-buffer
+ ","            #'persp-switch-to-buffer
+ "C-<"          #'switch-to-buffer
+ "<"            #'switch-to-buffer
+ "RET"          #'switch-to-buffer
  "C-<return>"   #'switch-to-buffer
- "["     #'previous-buffer
- "]"     #'next-buffer
- "C-d"     #'kill-current-buffer
- "C-k"     #'kill-current-buffer
- "C-l" nil
- "C-l C-l"   #'leetcode
- "C-r" nil
- "C-r C-r"   #'doom/sudo-this-file
- "TAB" nil
- "TAB d" #'+workspace/delete
- "SPC"   #'projectile-find-file
- "H-i" #'(lambda ()
-           (interactive)
-           (if (featurep 'mu4e)
-               (mu4e~headers-jump-to-maildir "/Inbox")
-             (mu4e)))
- "/"     #'swiper)
+ "["            #'previous-buffer
+ "]"            #'next-buffer
+ "C-d"          #'calendar
+ "C-k"          #'kill-current-buffer
+ "C-l"          nil
+ "C-l C-l"      #'leetcode
+ "C-r"          nil
+ "C-r C-r"      #'doom/sudo-this-file
+ "TAB"          nil
+ "TAB d"        #'+workspace/delete
+ "SPC"          #'projectile-find-file
+ "H-i"          #'(lambda ()
+                    (interactive)
+                    (if (featurep 'mu4e)
+                        (mu4e~headers-jump-to-maildir "/Inbox")
+                      (mu4e)))
+ "/"            #'swiper)
 
 ;; file keys
 (general-define-key
@@ -204,7 +203,7 @@
  "C-p" #'+default/search-project
  "C-g" #'rgrep
  "C-r" #'consult-org-roam-search)
- 
+
 
 
 ;; notes
@@ -219,26 +218,23 @@
 (general-define-key
  :prefix (concat salih/prefix-global "C-r")
  ""  nil
- "C-b" #'org-roam-buffer-toggle
- "c" #'org-roam-capture
- "C-f" #'org-roam-node-find
- "C-j" #'org-roam-dailies-capture-today
- "C-t" #'org-roam-dailies-goto-today)
+ "C-b"  #'org-roam-buffer-toggle
+ "c"    #'org-roam-capture
+ "C-f"  #'org-roam-node-find
+ "C-j"  #'org-roam-dailies-capture-today
+ "C-t"  #'org-roam-dailies-goto-today)
 
 
 
 ;; magit and vc
 ;; TODO refactor if possible
 (general-define-key
- :prefix (concat salih/prefix-global "g")
+ :prefix (concat salih/prefix-global "C-v")
  "" nil
- "g"   #'magit-status
- "G"   #'magit-status-here
- "C"   #'magit-clone
- "L"   #'magit-log-buffer-file
- "."   #'+vc/browse-at-remote
- "t"   #'magit-todos-list
- "D"   #'magit-file-delete)
+ "C-v"   #'magit-status
+ "C-c"   #'magit-clone
+ "C-t"   #'magit-todos-list
+ "C-x"   #'magit-file-delete)
 
 
 
@@ -251,9 +247,10 @@
  "C-f" #'elfeed)
 
 ;; projectile
-(projectile-mode +1)
-(define-key projectile-mode-map (kbd "C-x p")   #'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-x p a") #'projectile-add-known-project)
+;; TODO add better bindings for it
+;; (projectile-mode +1)
+;; (define-key projectile-mode-map (kbd "C-x p")   #'projectile-command-map)
+;; (define-key projectile-mode-map (kbd "C-x p a") #'projectile-add-known-project)
 
 ;; convenient
 
@@ -267,7 +264,8 @@
  "C-t" #'gts-do-translate
  "C-s" #'centaur-tabs-ace-jump
  "]"   #'centaur-tabs-forward
- "["   #'centaur-tabs-backward)
+ "["   #'centaur-tabs-backward
+ "C-v" #'magit-log-buffer-file)
 
 
 ;; resize windows
@@ -297,12 +295,7 @@
       (select-window prev-window)))
   (define-key org-noter-notes-mode-map (salih/mode "C-j")
               #'salih/org-noter-sync-current-note-and-switch-window)
-  (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note)
-  (evil-local-set-key 'normal (salih/mode "C-c") #' pdf-view-next-page-command))
-
-
-
-
+  (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note))
 
 (general-define-key
  :prefix salih/prefix-mode
@@ -310,13 +303,31 @@
  "C-u" #'elfeed-update)
 
 (evil-define-key 'normal elfeed-show-mode-map
- (kbd "J") 'elfeed-goodies/split-show-next
- (kbd "c") 'salih/elfeed-copy-url
- (kbd "O") 'salih/elfeed-open-url
- (kbd "C") 'salih/elfeed-open-url-in-chrome
- (kbd "K") 'elfeed-goodies/split-show-prev)
+  (kbd "J") 'elfeed-goodies/split-show-next
+  (kbd "c") 'salih/elfeed-copy-url
+  (kbd "O") 'salih/elfeed-open-url
+  (kbd "C") 'salih/elfeed-open-url-in-chrome
+  (kbd "K") 'elfeed-goodies/split-show-prev)
 (evil-define-key 'normal elfeed-search-mode-map
   (kbd "J") 'elfeed-goodies/split-show-next
   (kbd "K") 'elfeed-goodies/split-show-prev)
+
+(define-key elfeed-show-mode-map (kbd "F") 'elfeed-tube-fetch)
+(define-key elfeed-show-mode-map [remap save-buffer] 'elfeed-tube-save)
+(define-key elfeed-search-mode-map (kbd "F") 'elfeed-tube-fetch)
+(define-key elfeed-search-mode-map [remap save-buffer] 'elfeed-tube-save)
+
+(define-key embark-url-map (kbd "c") 'salih/open-url-in-chrome)
+(define-key embark-org-link-map (kbd "RET") 'org-web-tools-read-url-as-org)
+
+(evil-define-key 'normal calendar-mode-map (kbd "RET") 'salih/org-calendar-goto-agenda)
+
+(add-hook 'nov-mode-hook (lambda ()
+                           (evil-collection-define-key 'normal 'nov-mode-map "t"  nil)
+                           (evil-collection-define-key 'normal 'nov-mode-map "h"  nil)
+                           (define-key nov-mode-map        (kbd "l")              nil)
+                           (define-key nov-button-map      (kbd "l")              nil)
+                           (define-key shr-map             (kbd "u")              nil)
+                           (define-key shr-map             (kbd "w")              nil)))
 
 (provide '+bindings)

@@ -16,7 +16,7 @@ Account lr0@gmx.com
 Channel lr0@gmx.com
 Far :lr0@gmx.com-remote:
 Near :lr0@gmx.com-local:
-Patterns "INBOX" "Archive" "Trash" "Spam" "Drafts" "Sent"
+Patterns "INBOX" "Archive" "Trash" "Drafts" "Sent"
 CopyArrivalDate yes
 Create Both
 Expunge Both

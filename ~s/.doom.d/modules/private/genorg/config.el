@@ -4,7 +4,8 @@
 
   (custom-set-faces
    '(org-link ((t (:inherit link :underline nil :slant italic :weight bold :family "Arial"))))
-   '(variable-pitch ((t (:family "Roboto Condensed"))))
+   '(org-roam-dailies-calendar-note ((t (:inherit link :underline nil))))
+   '(variable-pitch ((t (:family "DejaVu Sans"))))
    '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight normal :family "Arial"))))
    '(org-level-2 ((t (:inherit outline-2 :height 1.2 :weight normal :family "Arial"))))
    '(org-level-3 ((t (:inherit outline-3 :height 1.2 :weight normal :family "Arial"))))
@@ -49,6 +50,10 @@
            "* TODO %? :@general:" :prepend t)
 
 
+          ("f" "Empty" entry
+           (file+headline +org-capture-todo-file "Inbox")
+           "* TODO %?" :prepend t)
+
           ("w" "WATCH" entry
            (file+headline +org-capture-todo-file "Inbox")
            "* TODO %? :@watch:" :prepend t)
@@ -87,25 +92,19 @@
 (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
 
 
+(setq org-agenda-start-on-weekday nil
+      org-agenda-start-day "0d")
 
 (setq org-agenda-custom-commands
-      '(("A" "Deadlines and Scheduled" ((tags-todo "DEADLINE<>\"\"|SCHEDULED<>\"\"")))
-        ("v" "Agenda"
-         ((org-ql-block '(and
-                          (priority "A")
-                          (not (deadline))
-                          (not (scheduled)))
+      '(("f" "Today Tasks"
+         ((agenda ""
+                  ((org-agenda-span 4)))
 
-                        ((org-ql-block-header "High-priority tasks")))
 
-          (agenda ""
-                  ((org-agenda-span '5)))
 
-          (org-ql-block '(and
-                          (todo "DAILY")
-                          (not (deadline))
-                          (not (scheduled)))
-                        ((org-ql-block-header "Do something today")))
+          ;; FIXME this should support sorting functionality.
+          ;; Waiting for the next org-ql update.
+
 
           (org-ql-block '(and
                           (todo "TODO")
@@ -114,6 +113,31 @@
                           (not (deadline))
                           (not (scheduled)))
                         ((org-ql-block-header "Get something done")))
+
+          (org-ql-block '(and
+                          (todo "DAILY")
+                          (or (and (not (deadline))
+                                   (not (scheduled)))
+                              (tags "@general")))
+                        ((org-ql-block-header "Daily Task")))
+
+
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (or (scheduled)
+                              (deadline)))
+                        ((org-ql-block-header "Soon")))))
+          
+
+        ("v" "General Tasks"
+         ((org-ql-block '(and
+                          (priority "A")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "High-priority tasks")))
+
 
           (org-ql-block '(and
                           (todo "TODO")
@@ -145,6 +169,16 @@
 
           (org-ql-block '(and
                           (todo "TODO")
+                          (tags "@write")
+                          (not (tags "@later"))
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Write something:")))
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
                           (tags "@watch")
                           (not (tags "@later"))
                           (not (deadline))
@@ -158,7 +192,6 @@
                           (not (deadline))
                           (not (scheduled)))
                         ((org-ql-block-header "Looking for an idea?")))))))
-
 
 
 

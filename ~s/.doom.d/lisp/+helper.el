@@ -216,15 +216,6 @@ Version 2019-11-04 2021-02-16"
   (end-of-add-hook 'go-mode))
 
 
-
-(defun highltier ()
-  (interactive)
-  (require 'highlight-indent-guides)
-  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
-  (set-face-background 'highlight-indent-guides-even-face "dimgray")
-  (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
-  (highlight-indent-guides-mode))
-
 ;; school
 
 (defun salih/open-book ()
@@ -326,34 +317,6 @@ automatically previewed."
 (use-package! awqat
   :commands (awqat-display-prayer-time-mode
              awqat-times-for-day))
-
-(defun +lookup/dictionary-definition
-    (identifier &optional arg)
-  "Look up the definition of the word at point (or selection)."
-  (interactive
-   (list
-    (or
-     (doom-thing-at-point-or-region 'word)
-     (read-string "Look up in dictionary: "))
-    current-prefix-arg))
-  (if (equal major-mode 'pdf-view-mode)
-      (setq identifier (car (pdf-view-active-region-text))))
-  (message "Looking up dictionary definition for %S" identifier)
-  (cond
-   ((and IS-MAC
-         (require 'osx-dictionary nil t))
-    (osx-dictionary--view-result identifier))
-   ((and +lookup-dictionary-prefer-offline
-         (require 'wordnut nil t))
-    (if
-        (executable-find wordnut-cmd)
-        nil
-      (user-error "Couldn't find %S installed on your system" wordnut-cmd))
-    (wordnut-search identifier))
-   ((require 'define-word nil t)
-    (define-word identifier nil arg))
-   ((user-error "No dictionary backend is available"))))
-
 
 
 (defun salih/banner ()
@@ -556,7 +519,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 
 
 
-(require 'vulpea)
 (defun vulpea-project-p ()
   "Return non-nil if current buffer has any todo entry.
 
@@ -661,7 +623,6 @@ tasks."
 
 
 
-(require 'auth-source)
 (defun salih/get-mail-password ()
   (interactive)
   (let* ((auth-info (auth-source-search :host "mail.gmx.com"
@@ -696,7 +657,7 @@ tasks."
 
 
 (defun salih/open-current-url-in-chrome ()
-  "Open the current URL in Chrome"
+  "Open the current URL (from kill-ring) in Chrome"
   (interactive)
   (let ((_ (xwidget-webkit-current-url)))
     (salih/open-url-in-chrome (car kill-ring))))
@@ -858,7 +819,7 @@ and 0 means insert a single space in between the headline and the tags."
             ;; Just leave one normal space width
             (remove-text-properties blank-start (1+  blank-start)
                                     '(salih/display nil))
-          (message "In here: %s" lpref)
+          ;; (message "In here: %s" lpref)
           (let ((align-expr
                  (if (> to-col 0)
                      ;; Left-align positive values
@@ -881,5 +842,31 @@ and 0 means insert a single space in between the headline and the tags."
   (org-align-tags t))
 
 
+(defun salih/org-calendar-goto-agenda ()
+  (interactive)
+  (let ((org-agenda-span 1))
+    (org-calendar-goto-agenda)))
+
+
+
+(defun salih/polyphasic-sleep (start n)
+  (if (or org-agenda-show-future-repeats (time-equal-p (awqat--today) date))
+      (cond
+       ((= n 1) (salih/polyphasic-sleep--1 start))
+       ((= n 2) (salih/polyphasic-sleep--2 start))
+       ((= n 3) (salih/polyphasic-sleep--3 start))
+       ((= n 4) (salih/polyphasic-sleep--4 start)))))
+
+(defun salih/polyphasic-sleep--1 (s)
+  (format "Sleep (1h.30) %d:30 " (mod (+ s 5) 24)))
+
+(defun salih/polyphasic-sleep--2 (s)
+  (format "Sleep (30m) %d:00 " (mod (+ s 12) 24)))
+
+(defun salih/polyphasic-sleep--3 (s)
+  (format "Sleep (30m) %d:15 " (mod (+ s 17) 24)))
+
+(defun salih/polyphasic-sleep--4 (s)
+  (format "Sleep (1h.30) %d:30 " (mod (+ s 22) 24)))
 
 (provide '+helper)

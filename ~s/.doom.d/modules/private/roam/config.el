@@ -71,7 +71,6 @@
          :immediate-finish t
          :unnarrowed t)
 
-
         ("e" "encrypted knowledge" plain "%?"
          :if-new
          (file+head "main/${slug}.org.gpg" "#+title: ${title}\n#+FILETAGS: permanent")
@@ -85,8 +84,6 @@
          :immediate-finish t
          :unnarrowed t)
 
-
-
         ("f" "fleeting" plain "%?"
          :target
          (file+olp "main/fleet.org" ("${title}"))
@@ -98,16 +95,14 @@
          :target
          (file+head "references/${citekey}.org" "#+title: ${title}\n"))
 
-
-
         ("v"
          "video ref"
-         plain
-         "* %? ${body}\n"
-         :if-new
-         (file+head
-          "webnotes/${slug}.org"
-          "#+title: ${title}\n\n")
+         entry
+         "** ${body}"
+         :target
+         (file+olp
+           "webnotes/yt.org"
+           ("yt" "${title}"))
          :immediate-finish t
          :jump-to-captured t
          :unnarrowed t)))
@@ -116,6 +111,16 @@
 ;; To enable the v (video from youtube) tempplate, uses the following bookmark
 ;; javascript:(function(){  let v = (new URLSearchParams(window.location.search)).get('v');  if(location.href.indexOf("youtube.com")>=0 && v !== null)  {    let seek = (document.getElementsByClassName('video-stream html5-main-video')[0].currentTime).toFixed();    let ytb = "https://youtu.be/" + v;    location.href='org-protocol://roam-ref?template=v&ref=%27 + encodeURIComponent(ytb) + %27&title=%27 + encodeURIComponent(document.title) + %27&body=%27 + %27(%27 +  %27[%27 + %27[%27 + encodeURIComponent(ytb + %27&t=%27 + seek) + %27]%27  + %27[%27 + (new Date(seek * 1000)).toISOString().substr(11,8) + %27]%27 + %27]%27 + %27)%27;  }  else {    location.href=%27org-protocol://roam-ref?template=r&ref=%27 + encodeURIComponent(location.href) + %27&title=%27 + encodeURIComponent(document.title) + %27&body=%27 + encodeURIComponent(window.getSelection())  }})();
 ;; make sure to setup org roam protocl too.
+;; FIXME Currently there is an issue with this function, when you take a note,
+;; you will have manually to move the properties from under the yt section to
+;; your new actual node
+;; FROMATED:
+;; javascript: (function() {
+;;             let v = (new URLSearchParams(window.location.search)).get('v');
+;;             if (location.href.indexOf("youtube.com") >= 0 && v !== null) {
+;;                 let seek = (document.getElementsByClassName('video-stream html5-main-video')[0].currentTime).toFixed();
+;;                 let ytb = "https://youtu.be/" + v;
+;;                 location.href = 'org-protocol://roam-ref?template=v&ref=%27%20+%20encodeURIComponent(ytb)%20+%20%27&title=%27%20+%20encodeURIComponent(document.title)%20+%20%27&body=%27%20+%20%27(%27%20+%20%20%27[%27%20+%20%27[%27%20+%20encodeURIComponent(ytb%20+%20%27&t=%27%20+%20seek)%20+%20%27]%27%20%20+%20%27[%27%20+%20(new%20Date(seek%20*%201000)).toISOString().substr(11,8)%20+%20%27]%27%20+%20%27]%27%20+%20%27)%27;%20%20}%20%20else%20{%20%20%20%20location.href=%27org-protocol://roam-ref?template=r&ref=%27%20+%20encodeURIComponent(location.href)%20+%20%27&title=%27%20+%20encodeURIComponent(document.title)%20+%20%27&body=%27%20+%20encodeURIComponent(window.getSelection())%20%20}})();
 
 (cl-defmethod org-roam-node-type ((node org-roam-node))
   "Return the TYPE of NODE."
