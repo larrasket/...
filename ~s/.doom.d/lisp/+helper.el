@@ -827,7 +827,7 @@ and 0 means insert a single space in between the headline and the tags."
             ;; Just leave one normal space width
             (remove-text-properties blank-start (1+  blank-start)
                                     '(salih/display nil))
-          (message "In here: %s" lpref)
+          ;; (message "In here: %s" lpref)
           (let ((align-expr
                  (if (> to-col 0)
                      ;; Left-align positive values
