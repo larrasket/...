@@ -1206,6 +1206,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Mosegrodd - Song of the Valkyries.ogg
 /home/l/me/music/lik/Motorama - Red Drop.ogg
 /home/l/me/music/class/Toccata and Fugue in D Minor (Best Version Ever).mp3
+/home/l/me/music/1769 - the ＂Industrial Revolution＂ incident (Trollge).mp3
 /home/l/me/music/lik/Mr & Mrs Cello - Tu Sei - Arr. for Two Cellos.ogg
 /home/l/me/music/menshawy/سورة ابراهيم المنشاوي الاذاعة المصرية.mp3
 /home/l/me/music/menshawy/سورة الاحزاب المنشاوي الاذاعة المصرية.mp3
