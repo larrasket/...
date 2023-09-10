@@ -1,11 +1,16 @@
 ;;; configs/~s/.doom.d/+hooks.el -*- lexical-binding: t; -*-
 
-(add-hook 'prog-mode-hook (lambda ()
-                            (highltier)
-                            (column-enforce-mode)
-                            (auto-fill-mode)
-                            (setq-default indent-tabs-mode nil)))
 
+
+
+(set-face-background 'highlight-indent-guides-odd-face "darkgray")
+(set-face-background 'highlight-indent-guides-odd-face "darkgray")
+(set-face-background 'highlight-indent-guides-even-face "dimgray")
+(set-face-foreground 'highlight-indent-guides-character-face "dimgray")
+
+(add-hook 'prog-mode-hook 'column-enforce-mode)
+(add-hook 'prog-mode-hook 'auto-fill-mode)
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
 (add-hook 'csv-mode-hook          #'csv-align-mode)
 (plist-put +popup-defaults :modeline t)
 

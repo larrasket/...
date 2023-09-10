@@ -18,6 +18,8 @@
 (setq-default frame-title-format                        '("%b")
               bidi-paragraph-direction                  'left-to-right
               org-download-image-dir                    "~/roam/media"
+              indent-tabs-mode                          nil
+              highlight-indent-guides-auto-enabled      nil
               pdf-view-display-size                     'fit-width)
 
 (defvar IS-PLASMA (let ((output (shell-command-to-string "pgrep -x plasmashell")))

@@ -216,14 +216,6 @@ Version 2019-11-04 2021-02-16"
   (end-of-add-hook 'go-mode))
 
 
-
-(defun highltier ()
-  (interactive)
-  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
-  (set-face-background 'highlight-indent-guides-even-face "dimgray")
-  (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
-  (highlight-indent-guides-mode))
-
 ;; school
 
 (defun salih/open-book ()
