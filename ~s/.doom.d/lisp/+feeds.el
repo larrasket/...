@@ -12,7 +12,6 @@
                      ("https://williamdavies.blog/feed/"                                                        consumption philosophy)
                      ("http://chomsky.info/feed/"                                                               chomsky philosophy)
                      ("https://blog.giovanh.com/feeds/atom.xml"                                                 g cs)
-                     ("https://www.theatlantic.com/feed/best-of/"                                               atlantic politics)
                      ("https://daily.jstor.org//feed"                                                           jstore science)
                      ("https://protesilaos.com/master.xml"                                                      prot blogs emacs philosophy)
                      ("https://stackexchange.com/feeds/questions"                                               questions)

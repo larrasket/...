@@ -300,22 +300,23 @@
 (general-define-key
  :prefix salih/prefix-mode
  :keymaps 'elfeed-search-mode-map
- "C-u" #'elfeed-update)
+ :states 'normal
+ "C-u"  #'elfeed-update
+ "J"    #'elfeed-goodies/split-show-next
+ "K"    #'elfeed-goodies/split-show-prev)
 
-(evil-define-key 'normal elfeed-show-mode-map
-  (kbd "J") 'elfeed-goodies/split-show-next
-  (kbd "c") 'salih/elfeed-copy-url
-  (kbd "O") 'salih/elfeed-open-url
-  (kbd "C") 'salih/elfeed-open-url-in-chrome
-  (kbd "K") 'elfeed-goodies/split-show-prev)
-(evil-define-key 'normal elfeed-search-mode-map
-  (kbd "J") 'elfeed-goodies/split-show-next
-  (kbd "K") 'elfeed-goodies/split-show-prev)
 
-(define-key elfeed-show-mode-map (kbd "F") 'elfeed-tube-fetch)
-(define-key elfeed-show-mode-map [remap save-buffer] 'elfeed-tube-save)
-(define-key elfeed-search-mode-map (kbd "F") 'elfeed-tube-fetch)
-(define-key elfeed-search-mode-map [remap save-buffer] 'elfeed-tube-save)
+(general-define-key
+ :prefix salih/prefix-mode
+ :keymaps 'elfeed-show-mode-map
+ :states 'normal
+ "J" #'elfeed-goodies/split-show-next
+ "c" #'salih/elfeed-copy-url
+ "O" #'salih/elfeed-open-url
+ "C" #'salih/elfeed-open-url-in-chrome
+ "K" #'elfeed-goodies/split-show-prev)
+
+
 
 (define-key embark-url-map (kbd "c") 'salih/open-url-in-chrome)
 (define-key embark-org-link-map (kbd "RET") 'org-web-tools-read-url-as-org)
