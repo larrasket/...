@@ -203,13 +203,25 @@
           (browse-url-browser-function (lambda (url &optional _rest)
                                          (with-output-to-string (call-process "tidy" nil nil nil "-m" "--numeric-entities" "yes" (remove-file-prefix url)))
                                          (xwidget-webkit-browse-url url))))
-      (mu4e-action-view-in-browser msg))))
+      (mu4e-action-view-in-browser msg)))
+
+
+  (defun salih/delete-citation ()
+   (delete-region (point) (point-max)))
+
+  (defun salih/mu4e-reply (prefix)
+    (interactive "P")
+    (setq mu4e-compose-cite-function #'salih/delete-citation)
+    (mu4e-compose-reply))
+
+  (define-key mu4e-view-mode-map    (salih/mode "C-r") #'salih/mu4e-reply)
+  (define-key mu4e-headers-mode-map (salih/mode "C-r") #'salih/mu4e-reply))
+ 
 
 
 ;; this should be called after defining salih/prefix-global
 
 (require '+helper)
-
 (require '+hooks)
 (require '+feeds)
 (require '+bindings)
