@@ -2,7 +2,8 @@
 
 
 (setq elfeed-search-feed-face ":foreground #fff :weight bold"
-      elfeed-feeds '(("https://lukesmith.xyz/index.xml"                                                         luke philosophy)
+      elfeed-feeds '(("http://www.mccaughan.org.uk/g/log/index.rss"                                             Gareth)
+                     ("https://lukesmith.xyz/index.xml"                                                         luke philosophy)
                      ("http://monakareem.blogspot.com/feeds/posts/default?alt=rss"                              mona blogs)
                      ("https://blackaly.github.io//feed.xml"                                                    ali blogs)
                      ("https://sachachua.com/blog/category/monthly/feed"                                        emacs_asian_girl blogs)
@@ -37,9 +38,9 @@
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVpb6nv1igxnoY0SRVhaoEA"            youtube engieering cs)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UC_5ENzPnzYCGRxiOIdtaRug"            youtube ramah aesthetic)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UC99wd4wi8AfaSkqprWo206g"            youtube edits aesthetic)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A"            youtube numberphile math)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A"            youtube numberphile math)))
                      ;; development
-                     ("https://sr.ht/~sircmpwn/sourcehut/feed.rss"                                              devel sourcehut)))
+                     ;; ("https://sr.ht/~sircmpwn/sourcehut/feed.rss"                                              devel sourcehut)))
 
 
 (use-package elfeed-goodies
