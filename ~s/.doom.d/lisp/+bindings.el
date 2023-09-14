@@ -130,6 +130,15 @@
  "C-;"     #'salih/rename-or-iedit
  "C-r C-f" #'consult-org-roam-forward-links)
 
+
+(general-define-key
+ :keymaps 'org-agenda-mode-map
+ "C-=" #'text-scale-increase
+ "C--" #'text-scale-decrease
+ "C-+" #'doom/reset-font-size)
+
+
+
 ;; Lisp
 
 (eval-after-load 'sly
