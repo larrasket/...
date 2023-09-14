@@ -298,16 +298,14 @@
   (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note))
 
 (general-define-key
- :prefix salih/prefix-mode
  :keymaps 'elfeed-search-mode-map
  :states 'normal
- "C-u"  #'elfeed-update
+ "C-c C-u"  #'elfeed-update
  "J"    #'elfeed-goodies/split-show-next
  "K"    #'elfeed-goodies/split-show-prev)
 
 
 (general-define-key
- :prefix salih/prefix-mode
  :keymaps 'elfeed-show-mode-map
  :states 'normal
  "J" #'elfeed-goodies/split-show-next
