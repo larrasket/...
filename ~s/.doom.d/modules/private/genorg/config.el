@@ -139,13 +139,6 @@
                         ((org-ql-block-header "High-priority tasks")))
 
 
-          (org-ql-block '(and
-                          (todo "TODO")
-                          (tags "@check")
-                          (not (tags "@later"))
-                          (not (deadline))
-                          (not (scheduled)))
-                        ((org-ql-block-header "Check this out")))
 
           (org-ql-block '(and
                           (todo "TODO")
@@ -176,6 +169,14 @@
                           (not (scheduled)))
                         ((org-ql-block-header "Write something:")))
 
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@check")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Check this out")))
 
           (org-ql-block '(and
                           (todo "TODO")
