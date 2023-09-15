@@ -3,6 +3,7 @@
 
 (setq elfeed-search-feed-face ":foreground #fff :weight bold"
       elfeed-feeds '(("http://www.mccaughan.org.uk/g/log/index.rss"                                             Gareth)
+                     ("http://norvig.com/rss-feed.xml"                                                          norvig philosophy cs)
                      ("https://lukesmith.xyz/index.xml"                                                         luke philosophy)
                      ("http://monakareem.blogspot.com/feeds/posts/default?alt=rss"                              mona blogs)
                      ("https://blackaly.github.io//feed.xml"                                                    ali blogs)
@@ -17,6 +18,7 @@
                      ("https://stackexchange.com/feeds/questions"                                               questions)
                      ("https://aeon.co/feed.rss"                                                                aeon philosophy)
                      ("https://www.radicalphilosophy.com/feed"                                                  radical_philosophy philosphy)
+                     ("https://rssc.fly.dev/rss?src=https://www.alaraby.co.uk/rss&linkf=opinion"                alaraby)
                      ;; youtube
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCUMZ7gohGI9HcU9VNsr2FJQ"            youtube bloomberg)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkS_HP3m9NXOgswVAKbMeJQ"            youtube thenandnow philosophy)
