@@ -329,5 +329,10 @@
 (consult-org-roam-mode 1)
 
 
+;; see https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
+(after! lsp
+  (delete 'lsp-terraform lsp-client-packages))
+
+
 
 (provide '+hooks)
