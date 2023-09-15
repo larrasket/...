@@ -869,4 +869,23 @@ and 0 means insert a single space in between the headline and the tags."
 (defun salih/polyphasic-sleep--4 (s)
   (format "Sleep (1h.30) %d:30 " (mod (+ s 22) 24)))
 
+
+(defun salih/pacman-pkg-info ()
+  (interactive)
+  (let* ((completions (->> "pacman -Q"
+                           (shell-command-to-string)
+                           (s-trim)
+                           (s-lines)
+                           (--map (car (s-split " " it :no-nulls)))))
+         (name (completing-read "Package: " completions)))
+    (switch-to-buffer (get-buffer-create "*Package Info*"))
+    (erase-buffer)
+    (-> (format "pacman -Qi %s" name)
+        (shell-command-to-string)
+        (s-trim)
+        (insert))
+    (goto-char 0)
+    (conf-mode)))
+
+
 (provide '+helper)
