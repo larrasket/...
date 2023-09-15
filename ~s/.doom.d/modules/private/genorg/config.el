@@ -192,6 +192,60 @@
                           (not (tags "@later"))
                           (not (deadline))
                           (not (scheduled)))
+                        ((org-ql-block-header "Looking for an idea?")))))
+        ("l" "General Later Tasks"
+         ((org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (tags "@later")
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read something:")))
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (tags "project")
+                          (tags "@later")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read a book:")))
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@write")
+                          (tags "@later")
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Write something:")))
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@check")
+                          (tags "@later")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Check this out")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@watch")
+                          (tags "@later")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Your ungoogled watch later:")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@idea")
+                          (tags "@later")
+                          (not (deadline))
+                          (not (scheduled)))
                         ((org-ql-block-header "Looking for an idea?")))))))
 
 

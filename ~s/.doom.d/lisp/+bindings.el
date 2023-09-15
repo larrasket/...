@@ -165,7 +165,7 @@
  "C-c"          (lambda () (interactive) (org-capture nil "f"))
  "C-a"          nil
  "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))
-
+ "C-a C-l"      (lambda () (interactive (org-agenda nil "l")))
  "C-a C-v"      #'salih/open-agenda
  "C-."          #'find-file
  "."            #'find-file
