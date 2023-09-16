@@ -1,4 +1,5 @@
 #+title: .dotfiles
+#+OPTIONS: toc:nil
 
 
 Do not clone the repo and use it directly (if you like the setup); this probably will never
