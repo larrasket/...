@@ -75,7 +75,7 @@
               "vi\\.stackexchange\\.com"))
 
 
-(add-to-list 'elfeed-feeds `(,(format "https://rssc.fly.dev/rss?src=https://stackexchange.com/feeds/questions&titlef=%s" salih/stack-list) philosophy))
+(add-to-list 'elfeed-feeds `(,(format "https://rssc.fly.dev/rss?src=https://stackexchange.com/feeds/questions&titlef=%s" salih/stack-list) questions))
 
 (use-package elfeed-goodies
   :init
