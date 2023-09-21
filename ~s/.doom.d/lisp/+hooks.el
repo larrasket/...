@@ -192,4 +192,11 @@
   (delete 'lsp-terraform lsp-client-packages))
 
 
+(add-hook! '+doom-dashboard-functions :append
+  (insert "\n" (+doom-dashboard--center +doom-dashboard--width
+                                        "The fear of the Lord is the beginning of wisdom; all those who practice it have
+a good understanding. His praise endures forever. ")))
+
+
+
 (provide '+hooks)
