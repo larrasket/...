@@ -891,7 +891,8 @@ and 0 means insert a single space in between the headline and the tags."
 (defun salih/disable-bright ()
   (solaire-mode -1))
 
-(defun centaur-tabs-hide-tab (x)
+(after! centaur-tabs
+  (defun centaur-tabs-hide-tab (x)
   "Do no to show buffer X in tabs."
   (let ((name (format "%s" x)))
     (or
@@ -946,7 +947,8 @@ and 0 means insert a single space in between the headline and the tags."
 
      ;; Is not magit buffer.
      (and (string-prefix-p "magit" name)
-          (not (file-name-extension name))))))
+          (not (file-name-extension name)))))))
+
 
 
 
