@@ -837,7 +837,7 @@ and 0 means insert a single space in between the headline and the tags."
   (setq org-tags-column 70) ;; adjust this
   (advice-add 'org--align-tags-here :override #'salih/org--align-tags-here)
   ;; this is needed to make it work with https://github.com/minad/org-modern:
-  (add-to-list 'char-property-alias-alist '(display salih/display))
+  ;; (add-to-list 'char-property-alias-alist '(display salih/display))
   ;; this is needed to align tags upon opening an org file:
   (org-align-tags t))
 
