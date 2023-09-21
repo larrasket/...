@@ -46,6 +46,7 @@
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
       treemacs-position                                 'right
+      fancy-splash-image                                "~/configs/~s/assets/chomsky.png"
 
 
 

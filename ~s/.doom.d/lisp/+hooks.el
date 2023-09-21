@@ -311,8 +311,7 @@
 
 
 
-(custom-set-variables
- '(all-the-icons-completion-mode nil))
+(custom-set-variables '(all-the-icons-completion-mode nil))
 
 
 ;; init
@@ -333,6 +332,9 @@
 (after! lsp
   (delete 'lsp-terraform lsp-client-packages))
 
-
+(assoc-delete-all "Open org-agenda"             +doom-dashboard-menu-sections)
+(assoc-delete-all "Recently opened files"       +doom-dashboard-menu-sections)
+(assoc-delete-all "Open project"                +doom-dashboard-menu-sections)
+(assoc-delete-all "Jump to bookmark"            +doom-dashboard-menu-sections)
 
 (provide '+hooks)
