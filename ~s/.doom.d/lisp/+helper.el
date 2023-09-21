@@ -888,4 +888,123 @@ and 0 means insert a single space in between the headline and the tags."
     (conf-mode)))
 
 
+(defun salih/disable-bright ()
+  (solaire-mode -1))
+
+(defun centaur-tabs-hide-tab (x)
+  "Do no to show buffer X in tabs."
+  (let ((name (format "%s" x)))
+    (or
+     ;; Current window is not dedicated window.
+     (window-dedicated-p (selected-window))
+
+     ;; Buffer name not match below blacklist.
+     (string-prefix-p "*epc" name)
+     (string-prefix-p "*helm" name)
+     (string-prefix-p "*Helm" name)
+     (string-prefix-p "*Org Agenda*" name)
+     (string-prefix-p "*lsp" name)
+     (string-prefix-p "*LSP" name)
+     (string-prefix-p "*company" name)
+     (string-prefix-p "*Flycheck" name)
+     (string-prefix-p "*tramp" name)
+     (string-prefix-p " *Mini" name)
+     (string-prefix-p "*help" name)
+     (string-prefix-p "*straight" name)
+     (string-prefix-p " *temp" name)
+     (string-prefix-p "*Help" name)
+     (string-prefix-p "*Compile-Log*" name)
+
+     (string-prefix-p "*doom*" name)
+     (string-prefix-p "*Org tags*" name)
+     (string-prefix-p "*scratch*" name)
+     (string-prefix-p "*Semantic" name)
+     (string-prefix-p "*mu4e-headers*" name)
+     (string-prefix-p "*mu4e-main*" name)
+     (string-prefix-p "*mu4e-update" name)
+     (string-prefix-p "*julia" name)
+     (string-prefix-p "*sly-mrepl" name)
+
+
+     (string-prefix-p "*Messages*" name)
+     (string-prefix-p "*Warnings*" name)
+     (string-prefix-p "*httpd*" name)
+     (string-prefix-p "*gopls*" name)
+     (string-prefix-p "*Async-native-compile-log*" name)
+     (string-prefix-p "*Native-compile-Log" name)
+
+
+     (string-prefix-p "*elfeed-log*" name)
+     (string-prefix-p "*Org Clock*" name)
+
+
+     (string-prefix-p "*flycheck" name)
+     (string-prefix-p "*nov" name)
+     (string-prefix-p "*format" name)
+     (string-prefix-p "*Pandoc" name)
+
+
+     ;; Is not magit buffer.
+     (and (string-prefix-p "magit" name)
+          (not (file-name-extension name))))))
+
+
+
+;; lisp
+
+(defvar salih/sly--compile-eval-begin-print-counter 0 "a counter to distinguish compile/eval cycles")
+(defun salih/sly--compile-eval-begin-print (&rest _)
+  "print the counter value into REPL to distinguish compile/eval cycles."
+  ;;(sly-eval-async `(cl:format t "~&----- my advice called from: ~a" (quote ,real-this-command))) ;; debug-code
+  (sly-eval-async `(cl:format t "" ,(cl-incf salih/sly--compile-eval-begin-print-counter))))
+
+(defun salih/sly-eval-with-print (form)
+  "Evaluate FORM in the SLY REPL, wrapping it with a (print ...) form."
+  (interactive "sForm: ")
+  (let* ((form-with-print (format "(print %s)" form))
+         (sly-command (sly-interactive-eval form-with-print)))
+    (sly-eval-last-expression)
+    (message "Evaluated: %s" form-with-print)))
+
+(defun salih/sly-compile-defun-with-print ()
+  "Compile the current toplevel form in SLY, wrapping it with a (print ...) form."
+  (interactive)
+  (let* ((form (sly-sexp-at-point))
+         (form-with-print (format "(print %s)" form))
+         (sly-command (sly-interactive-eval form-with-print)))
+    (sly-compile-defun)
+    (message "Compiled: %s" form-with-print)))
+
+
+
+(defvar salih/consult--source-books
+  `(:name     "File"
+    :narrow   ?f
+    :category file
+    :face     consult-file
+    :history  file-name-history
+    :state    ,#'consult--file-state
+    :new      ,#'consult--file-action
+    :items
+    ,(lambda ()
+       (let ((ht (consult--buffer-file-hash))
+             items)
+         (dolist (file (bound-and-true-p salih/books) (nreverse items))
+           (unless (eq (aref file 0) ?/)
+             (let (file-name-handler-alist)
+               (setq file (expand-file-name file))))
+           (unless (gethash file ht)
+             (push (consult--fast-abbreviate-file-name file) items)))))))
+
+(defun salih/org-roam-get-node-files (node-list)
+  "Applies `org-roam-node-file' function to the cdr of each element in NODE-LIST."
+  (mapcar (lambda (node) (org-roam-node-title (cdr node)))
+          node-list))
+
+
+
+(setq roam-titles (salih/org-roam-get-node-files (org-roam-node-read--completions)))
+(defun salih/get-org-roam-titles ()
+  roam-titles)
+
 (provide '+helper)

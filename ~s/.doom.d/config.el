@@ -227,3 +227,4 @@
 (require '+feeds)
 (require '+bindings)
 (require '+org-tags)
+(require '+custom)
