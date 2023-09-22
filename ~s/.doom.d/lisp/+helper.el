@@ -891,4 +891,50 @@ and 0 means insert a single space in between the headline and the tags."
 (setq roam-titles (salih/org-roam-get-node-files (org-roam-node-read--completions)))
 (defun salih/get-org-roam-titles () roam-titles)
 
+(setq org-roam-buffer-source
+      `(:name     "Org-roam"
+        :hidden   nil
+        :narrow   ,consult-org-roam-buffer-narrow-key
+        :annotate ,(lambda (cand)
+                     (let* ((name (org-roam-node-from-title-or-alias cand)))
+                       (if name (file-name-nondirectory (org-roam-node-file name))
+                         "")))
+
+        :action ,(lambda (name)
+                   (if salih/temp-roam-insert
+                       (progn
+                         (setq salih/temp-roam-insert nil)
+                         (let* ((node (org-roam-node-from-title-or-alias name))
+                                (description (org-roam-node-title node))
+                                (id (org-roam-node-id node)))
+                           (insert (org-link-make-string
+                                    (concat "id:" id)
+                                    description))
+                           (run-hook-with-args 'org-roam-post-node-insert-hook
+                                               id
+                                               description)))
+                     (find-file (org-roam-node-file (org-roam-node-from-title-or-alias name)))))
+
+        :new ,(lambda (name)
+                (let* ((n (org-roam-node-create :title name)))
+                  (org-roam-capture- :node n)
+                  (when salih/temp-roam-insert
+                    (progn
+                      (setq salih/temp-roam-insert nil)
+                      (let* ((node (org-roam-node-from-title-or-alias name))
+                             (description (org-roam-node-title node))
+                             (id (org-roam-node-id node)))
+                        (insert (org-link-make-string
+                                 (concat "id:" id)
+                                 description))
+                        (run-hook-with-args 'org-roam-post-node-insert-hook
+                                            id
+                                            description)))))
+
+
+                (setq roam-titles (salih/org-roam-get-node-files (org-roam-node-read--completions))))
+
+        :items    ,#'salih/get-org-roam-titles))
+
+
 (provide '+helper)
