@@ -108,6 +108,7 @@
  "C-f"     #'org-footnote-action
  "c i"     #'org-clock-in
  "c o"     #'org-clock-out
+ "C-m"     #'org-media-note-hydra/body
  "H-i H-i" #'org-id-get-create
  "H-i C-l" #'org-web-tools-insert-link-for-url
  "H-i C-d" #'org-download-clipboard

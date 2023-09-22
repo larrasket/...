@@ -51,7 +51,7 @@
 
 (package! ox-html-stable-ids
   :recipe (:host github
-                 :repo "larrasket/ox-html-stable-ids.el"))
+           :repo "larrasket/ox-html-stable-ids.el"))
 (package! centaur-tabs)
 
 (package! vulpea)
@@ -66,3 +66,7 @@
 (package! elfeed-tube)
 
 (package! maxima)
+
+
+(package! pretty-hydra)  ;; dependency
+(package! org-media-note :recipe (:host github :repo "yuchen-lea/org-media-note"))
