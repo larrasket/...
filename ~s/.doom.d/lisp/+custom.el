@@ -45,5 +45,6 @@
 
 (plist-put +popup-defaults :modeline t)
 
+(setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
 
 (provide '+custom)

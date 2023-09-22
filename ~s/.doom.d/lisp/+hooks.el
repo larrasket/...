@@ -175,6 +175,7 @@
 (yas-global-mode 1)
 (vertico-buffer-mode)
 (global-wakatime-mode)
+(salih/keyboard-config)
 (salih/consult-preview-at-point)
 (add-hook 'after-init-hook        #'global-flycheck-mode)
 (consult-org-roam-mode 1)

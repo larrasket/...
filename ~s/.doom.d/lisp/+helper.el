@@ -9,8 +9,6 @@
 (defun salih/mode (key-sequence)
   (kbd (concat salih/prefix-mode   key-sequence)))
 
-
-
 ;; fix evil C-g methods
 (defun salih/evil-escape-and-abort-company ()
   (interactive)
@@ -27,23 +25,16 @@
   (and evil-mode (evil-force-normal-state))
   (keyboard-quit))
 
-
-
 ;; org archive
-
 (defun salih/org-archive-done-tasks ()
   (interactive)
   (org-map-entries 'org-archive-subtree "/DONE" 'file))
-
 
 (defun salih/org-archive-killed-tasks ()
   (interactive)
   (org-map-entries 'org-archive-subtree "/KILL" 'file))
 
-
-
 ;; chess
-
 (defun salih/chess-notation-to-symbols ()
   (interactive)
   (let ((piece-symbols '((?K . "🨀")
@@ -59,6 +50,7 @@
               (destination (match-string 0)))
           (replace-match (concat (cdr (assoc piece piece-symbols)) (substring destination 1))
                          t t))))))
+
 (defun chess-notation-to-symbols-region (start end)
   (interactive "r")
   (save-excursion
@@ -66,11 +58,7 @@
       (narrow-to-region start end)
       (salih/chess-notation-to-symbols))))
 
-
-
-
 ;; bidi support
-
 (defun salih/bidi-direction-toggle ()
   (interactive "")
   (setq bidi-display-reordering t)
@@ -80,7 +68,6 @@
   (message "%s" bidi-paragraph-direction))
 
 ;; window management
-
 (defun salih/toggle-maximize-buffer ()
   (interactive)
   (if (= 1 (length (window-list)))
@@ -89,9 +76,7 @@
       (window-configuration-to-register '_)
       (delete-other-windows))))
 
-
 ;; neotree
-
 (defun neotree-project-dir ()
   (let ((project-dir (projectile-project-root))
         (file-name (buffer-file-name)))
@@ -103,10 +88,7 @@
               (neotree-find file-name)))
       (message "Could not find git project root."))))
 
-
-
 ;; editing
-
 (defun salih/comment-or-uncomment-region-or-line ()
   "Comments or uncomments the region or the current line if there's no active
 region."
@@ -118,7 +100,6 @@ region."
     (comment-or-uncomment-region beg end)
     (forward-line)))
 
-
 (defun salih/rename-or-iedit ()
   "If current buffer is in lsp-mode, call lsp-rename. Otherwise, call
 iedit-mode."
@@ -126,7 +107,6 @@ iedit-mode."
   (if (bound-and-true-p lsp-mode)
       (call-interactively #'lsp-rename)
     (call-interactively #'iedit-mode)))
-
 
 (defun salih/find-definition-or-lookup ()
   (interactive)
@@ -139,9 +119,7 @@ lookup."
 (defun insert-now-timestamp()
   (org-insert-time-stamp (current-time) t))
 
-
 ;; dired
-
 (defun salih/open-in-external-app (&optional @fname)
   "Open the current file or dired marked files in external app.
 When called in emacs lisp, if @fname is given, open that.
@@ -175,10 +153,7 @@ Version 2019-11-04 2021-02-16"
          (lambda ($fpath) (let ((process-connection-type nil))
                             (start-process "" nil "xdg-open" $fpath))) $file-list))))))
 
-
-
 ;; compile-and-run methods
-
 (defun salih/compile-and-run-cpp ()
   (interactive)
   (save-buffer)
@@ -188,15 +163,11 @@ Version 2019-11-04 2021-02-16"
                    (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t  ) (other-window t)
   (end-of-add-hook 'c++-mode))
 
-
-
 (defun salih/compile-and-run-csharp ()
   (interactive)
   (save-buffer)
   (compile (concat "dotnet run") t  ) (other-window t)
   (end-of-add-hook 'csharp-mode))
-
-
 
 (defun salih/compile-and-run-go-project ()
   (interactive)
@@ -206,8 +177,6 @@ Version 2019-11-04 2021-02-16"
   (other-window t)
   (end-of-add-hook 'go-mode))
 
-
-
 (defun salih/compile-and-run-go-file ()
   (interactive)
   (save-buffer)
@@ -215,9 +184,7 @@ Version 2019-11-04 2021-02-16"
   (other-window t)
   (end-of-add-hook 'go-mode))
 
-
 ;; school
-
 (defun salih/open-book ()
   "Search for a file in ~/me and open it."
   (interactive)
@@ -225,7 +192,6 @@ Version 2019-11-04 2021-02-16"
     (call-interactively 'find-file)))
 
 ;; let's hope for the best
-
 (defun salih/epa-encrypt-file (recipients)
   "Encrypt the currently opened file for RECIPIENTS and delete the original."
   (interactive
@@ -257,7 +223,6 @@ Version 2019-11-04 2021-02-16"
 	     (file-name-nondirectory file)
 	     (file-name-nondirectory cipher))))
 
-
 (defun salih/epa-dired-do-encrypt ()
   "Encrypt marked files and delete the originals."
   (interactive)
@@ -268,10 +233,7 @@ If no one is selected, symmetric encryption will be performed.  ")))
 	(salih/epa-encrypt-file recipients)))
     (revert-buffer)))
 
-
-
 ;; other handy stuff
-
 (with-eval-after-load 'embark
   (add-hook 'embark-collect-mode-hook  #'salih/consult-preview-at-point-mode))
 
@@ -309,15 +271,9 @@ automatically previewed."
       (let ((xwidget (xwidget-webkit-browse-url (concat "file://" file-path))))
         (message "Opened file %s in an xwidget window." file-path)))))
 
-
-
-
-
-
 (use-package! awqat
   :commands (awqat-display-prayer-time-mode
              awqat-times-for-day))
-
 
 (defun salih/banner ()
   (let* ((banner '(
@@ -344,16 +300,7 @@ automatically previewed."
                "\n"))
      'face 'doom-dashboard-banner)))
 
-
-;; (org-babel-do-load-languages
-;;  'org-babel-load-languages
-;;  '((ksh . t)))
-
-
-
 ;; disable spaces and icons in dashboard
-
-
 (defun doom-dashboard-widget-shortmenu ()
   (let ((all-the-icons-scale-factor 1.45)
         (all-the-icons-default-adjust -0.02))
@@ -408,8 +355,6 @@ automatically previewed."
                        'face 'doom-dashboard-menu-desc))))
            "\n"))))))
 
-
-
 (setq +doom-dashboard-menu-sections
       '(("Reload last session"
          :when (cond ((modulep! :ui workspaces)
@@ -438,7 +383,6 @@ automatically previewed."
   (interactive)
   (org-map-entries (lambda () (org-set-tags nil))))
 
-
 (defun salih/make-nov-white ()
   (interactive)
   (setq buffer-face-mode-face `(:background "white"
@@ -448,7 +392,6 @@ automatically previewed."
   (face-remap-add-relative 'link :foreground "blue")
   (buffer-face-mode t))
 
-
 (defun salih/solaire-mode-real-buffer-custom-p ()
   "Return t if the current buffer is the dashboard or scratch, or is a real (file-visiting) buffer."
   (cond ((string-prefix-p "*sly-mrepl for sbcl*" (buffer-name (buffer-base-buffer)) ) t)
@@ -457,9 +400,6 @@ automatically previewed."
         ((string-prefix-p "*doom*" (buffer-name (buffer-base-buffer)) ) t)
         ((buffer-file-name (buffer-base-buffer)) t)
         (t nil)))
-
-
-
 
 (defun centaur-tabs-buffer-groups ()
   "`centaur-tabs-buffer-groups' control buffers' group rules.
@@ -515,10 +455,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     (t
      (centaur-tabs-get-group-name (current-buffer))))))
 
-
-
-
-
 (defun vulpea-project-p ()
   "Return non-nil if current buffer has any todo entry.
 
@@ -534,7 +470,6 @@ tasks."
        'headline
      (lambda (h)
        (org-element-property :todo-type h)))))
-
 
 (defun vulpea-project-update-tag ()
   "Update PROJECT tag in the current buffer."
@@ -579,9 +514,6 @@ tasks."
   "Update the value of `org-agenda-files'."
   (setq org-agenda-files (vulpea-project-files)))
 
-
-
-
 (defun salih/org-id-get-create-with-custom-id ()
   (interactive)
   (when (org-before-first-heading-p)
@@ -595,9 +527,6 @@ tasks."
       (org-entry-put nil custom-id-property org-id))
     org-id))
 
-
-
-
 (defun salih/eshell-load-bash-aliases ()
   "Read Bash aliases and add them to the list of eshell aliases."
   ;; Bash needs to be run - temporarily - interactively
@@ -608,20 +537,14 @@ tasks."
     (while (re-search-forward "alias \\(.+\\)='\\(.+\\)'$" nil t)
       (eshell/alias (match-string 1) (match-string 2)))))
 
-
 (defun salih/xwidget-open-with-clipboard ()
   (interactive)
   (xwidget-webkit-browse-url (current-kill 0 t)))
-
 
 (defun salih/open-agenda ()
   (interactive)
   (org-agenda-remove-restriction-lock)
   (org-agenda nil "v"))
-
-
-
-
 
 (defun salih/get-mail-password ()
   (interactive)
@@ -630,31 +553,18 @@ tasks."
          (password (funcall (plist-get (car auth-info) :secret))))
     password))
 
-
-
-
-
-
-
-(defun salih/keyboard-config () (when (display-graphic-p)  (keyboard-translate ?\C-i ?\H-i)))
-(salih/keyboard-config)
-
-
-
-
+(defun salih/keyboard-config ()
+  (when (display-graphic-p)
+    (keyboard-translate ?\C-i ?\H-i)))
 
 (defun salih/org-roam-node-insert ()
   (interactive)
   (setq salih/temp-roam-insert t)
   (consult-buffer (list org-roam-buffer-source)))
 
-
 (defun salih/org-roam-node-open ()
   (interactive)
   (consult-buffer (list org-roam-buffer-source)))
-
-
-
 
 (defun salih/open-current-url-in-chrome ()
   "Open the current URL (from kill-ring) in Chrome"
@@ -666,21 +576,16 @@ tasks."
   "Open the current URL in Chrome"
   (start-process "chromium" nil "chromium" url))
 
-
 (defun salih/unescape-string (str)
   "Remove escape characters from a string."
   (replace-regexp-in-string "\\\\(.)" "\\1" str))
 
-
 (defun salih/gomacro--sanitize-string (str)
   (salih/unescape-string str))
-
-
 
 (defun salih/format (format-string arg)
   "Custom format function to replace all %s with the same argument."
   (replace-regexp-in-string "%s" arg format-string))
-
 
 (defun salih/nov-search (pattern)
   (interactive "sEnter search pattern: ")
@@ -716,7 +621,6 @@ tasks."
       (nov-goto-document index)
       (goto-char point))))
 
-
 (defun salih/elfeed-copy-url ()
   (interactive)
   (let ((link (elfeed-entry-link elfeed-show-entry)))
@@ -730,7 +634,6 @@ tasks."
   (let ((link (elfeed-entry-link elfeed-show-entry)))
     (when link
       (browse-url link))))
-
 
 (defun salih/elfeed-open-url-in-chrome ()
   (interactive)
@@ -750,7 +653,6 @@ tasks."
           (insert file-path))
       (message "File does not exist: %s" file-path))))
 
-
 (defun salih/elfeed-tag-sort (a b)
   (let* ((a-tags (format "%s" (elfeed-entry-tags a)))
          (b-tags (format "%s" (elfeed-entry-tags b))))
@@ -758,14 +660,9 @@ tasks."
         (< (elfeed-entry-date b) (elfeed-entry-date a)))
     (string< a-tags b-tags)))
 
-(setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
-
-
-
 (defadvice org-agenda-get-some-entry-text (after modify-agenda-entry-text activate)
   "Modify the text returned by org-agenda-get-some-entry-text."
   (setq ad-return-value (salih/modify-agenda-entry-text ad-return-value)))
-
 
 (defun salih/modify-agenda-entry-text (text)
   "Customize the agenda entry text."
@@ -773,14 +670,10 @@ tasks."
   (replace-regexp-in-string "^[[:space:]]*$\\|^[[:space:]]*>[[:space:]]*$" ""
                             (replace-regexp-in-string "\\[\\[\\([^]]+\\)\\]\\[\\([^]]+\\)\\]\\]" "\\2" text)))
 
-
-
 (defun salih/get-file-todos ()
   (interactive)
   (org-agenda-set-restriction-lock)
   (org-agenda nil "t"))
-
-
 
 (defun salih/org--align-tags-here (to-col)
   "Align tags on the current headline to TO-COL.
@@ -840,13 +733,10 @@ and 0 means insert a single space in between the headline and the tags."
   ;; this is needed to align tags upon opening an org file:
   (org-align-tags t))
 
-
 (defun salih/org-calendar-goto-agenda ()
   (interactive)
   (let ((org-agenda-span 1))
     (org-calendar-goto-agenda)))
-
-
 
 (defun salih/polyphasic-sleep (start n)
   (if (or org-agenda-show-future-repeats (time-equal-p (awqat--today) date))
@@ -868,7 +758,6 @@ and 0 means insert a single space in between the headline and the tags."
 (defun salih/polyphasic-sleep--4 (s)
   (format "Sleep (1h.30) %d:30 " (mod (+ s 22) 24)))
 
-
 (defun salih/pacman-pkg-info ()
   (interactive)
   (let* ((completions (->> "pacman -Q"
@@ -885,7 +774,6 @@ and 0 means insert a single space in between the headline and the tags."
         (insert))
     (goto-char 0)
     (conf-mode)))
-
 
 (defun salih/disable-bright ()
   (solaire-mode -1))
@@ -948,13 +836,11 @@ and 0 means insert a single space in between the headline and the tags."
      (and (string-prefix-p "magit" name)
           (not (file-name-extension name)))))))
 
-
 (defun salih/org-media-note-insert-link (orgin)
   (let ((org-link-file-path-type 'absolute))
     (funcall orgin)))
 
 ;; lisp
-
 (defvar salih/sly--compile-eval-begin-print-counter 0 "a counter to distinguish compile/eval cycles")
 (defun salih/sly--compile-eval-begin-print (&rest _)
   "print the counter value into REPL to distinguish compile/eval cycles."
@@ -977,8 +863,6 @@ and 0 means insert a single space in between the headline and the tags."
          (sly-command (sly-interactive-eval form-with-print)))
     (sly-compile-defun)
     (message "Compiled: %s" form-with-print)))
-
-
 
 (defvar salih/consult--source-books
   `(:name     "File"
@@ -1004,10 +888,7 @@ and 0 means insert a single space in between the headline and the tags."
   (mapcar (lambda (node) (org-roam-node-title (cdr node)))
           node-list))
 
-
-
 (setq roam-titles (salih/org-roam-get-node-files (org-roam-node-read--completions)))
-(defun salih/get-org-roam-titles ()
-  roam-titles)
+(defun salih/get-org-roam-titles () roam-titles)
 
 (provide '+helper)
