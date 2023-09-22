@@ -38,8 +38,8 @@
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVpb6nv1igxnoY0SRVhaoEA"            youtube engieering cs)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UC_5ENzPnzYCGRxiOIdtaRug"            youtube ramah aesthetic)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UC99wd4wi8AfaSkqprWo206g"            youtube edits aesthetic)
-                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A"            youtube numberphile math)))
-
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A"            youtube numberphile math)
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtYLUTtgS3k1Fg4y5tAhLbw"            youtube statquest math)))
 
 
 (defvar salih/common-feeds
@@ -50,29 +50,29 @@
 
 
 (defvar salih/stack-list
-      (concat "stackoverflow\\.com"                             "|"
-              "stats\\.stackexchange\\.com"                     "|"
-              "math\\.stackexchange\\.com"                      "|"
-              "askubuntu\\.com"                                 "|"
-              "academia\\.stackexchange\\.com"                  "|"
-              "money\\.stackexchange\\.com"                     "|"
-              "english\\.stackexchange\\.com"                   "|"
-              "chess\\.stackexchange\\.com"                     "|"
-              "cs\\.stackexchange\\.com"                        "|"
-              "emacs\\.stackexchange\\.com"                     "|"
-              "ell\\.stackexchange\\.com"                       "|"
-              "history\\.stackexchange\\.com"                   "|"
-              "hsm\\.stackexchange\\.com"                       "|"
-              "islam\\.stackexchange\\.com"                     "|"
-              "linguistics\\.stackexchange\\.com"               "|"
-              "literature\\.stackexchange\\.com"                "|"
-              "mathoverflow\\.net"                              "|"
-              "philosophy\\.stackexchange\\.com"                "|"
-              "politics\\.stackexchange\\.com"                  "|"
-              "softwareengineering\\.stackexchange\\.com"       "|"
-              "superuser\\.com"                                 "|"
-              "unix\\.stackexchange\\.com"                      "|"
-              "vi\\.stackexchange\\.com"))
+  (concat "stackoverflow\\.com"                             "|"
+          "stats\\.stackexchange\\.com"                     "|"
+          "math\\.stackexchange\\.com"                      "|"
+          "askubuntu\\.com"                                 "|"
+          "academia\\.stackexchange\\.com"                  "|"
+          "money\\.stackexchange\\.com"                     "|"
+          "english\\.stackexchange\\.com"                   "|"
+          "chess\\.stackexchange\\.com"                     "|"
+          "cs\\.stackexchange\\.com"                        "|"
+          "emacs\\.stackexchange\\.com"                     "|"
+          "ell\\.stackexchange\\.com"                       "|"
+          "history\\.stackexchange\\.com"                   "|"
+          "hsm\\.stackexchange\\.com"                       "|"
+          "islam\\.stackexchange\\.com"                     "|"
+          "linguistics\\.stackexchange\\.com"               "|"
+          "literature\\.stackexchange\\.com"                "|"
+          "mathoverflow\\.net"                              "|"
+          "philosophy\\.stackexchange\\.com"                "|"
+          "politics\\.stackexchange\\.com"                  "|"
+          "softwareengineering\\.stackexchange\\.com"       "|"
+          "superuser\\.com"                                 "|"
+          "unix\\.stackexchange\\.com"                      "|"
+          "vi\\.stackexchange\\.com"))
 
 
 (add-to-list 'elfeed-feeds `(,(format "https://rssc.fly.dev/rss?src=https://stackexchange.com/feeds/questions&titlef=%s" salih/stack-list) questions))
