@@ -10,6 +10,7 @@
 (require 'auth-source)                  ; required for encryption support
 (require 'go-translate)                 ; define trnaslation engine in config.el
 (require 'org-inlinetask)               ; enable org inline tasks
+(require 'org-media-note)               ; for media note taking in org-mode
 (require 'org-roam-protocol)            ; enable org-roam note taking from the browser
 (require 'highlight-indent-guides)      ; enables indent guide
 
@@ -224,6 +225,7 @@
 
 (require '+helper)
 (require '+hooks)
+(require '+advice)
 (require '+feeds)
 (require '+bindings)
 (require '+org-tags)

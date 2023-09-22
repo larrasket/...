@@ -676,7 +676,6 @@ tasks."
   (salih/unescape-string str))
 
 
-(advice-add 'gomacro--sanitize-string :override 'salih/gomacro--sanitize-string)
 
 (defun salih/format (format-string arg)
   "Custom format function to replace all %s with the same argument."
@@ -950,7 +949,9 @@ and 0 means insert a single space in between the headline and the tags."
           (not (file-name-extension name)))))))
 
 
-
+(defun salih/org-media-note-insert-link (orgin)
+  (let ((org-link-file-path-type 'absolute))
+    (funcall orgin)))
 
 ;; lisp
 
