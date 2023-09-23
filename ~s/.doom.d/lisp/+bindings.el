@@ -312,6 +312,7 @@
  :states 'normal
  "C-c C-u"  #'elfeed-update
  "J"    #'elfeed-goodies/split-show-next
+ "C"    #'salih/elfeed-search-open-in-chrome
  "K"    #'elfeed-goodies/split-show-prev)
 
 
