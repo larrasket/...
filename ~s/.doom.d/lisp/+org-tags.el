@@ -28,5 +28,8 @@
 (add-to-list 'org-tags-exclude-from-inheritance "permanent")
 (add-to-list 'org-tags-exclude-from-inheritance "link")
 
+(add-to-list 'org-tags-exclude-from-inheritance "@read")
+(add-to-list 'org-tags-exclude-from-inheritance "noexport")
+(add-to-list 'org-tags-exclude-from-inheritance "project")
 
 (provide '+org-tags)
