@@ -80,6 +80,7 @@
        (julia
         +lsp
         +tree-sitter)
+       ess
        :email
        mu4e
        :app

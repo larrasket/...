@@ -56,15 +56,17 @@
                                         "The fear of the Lord is the beginning of wisdom; all those who practice it have
 a good understanding. His praise endures forever. ")))
 
-(add-to-list 'org-tags-exclude-from-inheritance "@read")
-(add-to-list 'org-tags-exclude-from-inheritance "noexport")
-(add-to-list 'org-tags-exclude-from-inheritance "project")
 (add-to-list 'consult-buffer-sources 'salih/consult--source-books 'append)
 
 ;; Activate the advice
 (ad-activate 'org-agenda-get-some-entry-text)
 
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+
+(add-to-list 'org-babel-load-languages '(julia-vterm . t))
+(org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
+
 
 (run-at-time nil (* 30 60) #'elfeed-update)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)

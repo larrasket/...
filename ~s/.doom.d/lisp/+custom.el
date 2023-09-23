@@ -66,4 +66,7 @@
 
 (setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
 
+(defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
+(defalias 'org-babel-variable-assignments:julia 'org-babel-variable-assignments:julia-vterm)
+
 (provide '+custom)
