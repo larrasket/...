@@ -10,8 +10,9 @@
 (require 'auth-source)                  ; required for encryption support
 (require 'go-translate)                 ; define trnaslation engine in config.el
 (require 'org-inlinetask)               ; enable org inline tasks
+(require 'org-media-note)               ; for media note taking in org-mode
+(require 'org-roam-protocol)            ; enable org-roam note taking from the browser
 (require 'highlight-indent-guides)      ; enables indent guide
-
 
 
 
@@ -46,6 +47,7 @@
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
       treemacs-position                                 'right
+      fancy-splash-image                                "~/configs/~s/assets/chomsky.png"
 
 
 
@@ -203,7 +205,20 @@
           (browse-url-browser-function (lambda (url &optional _rest)
                                          (with-output-to-string (call-process "tidy" nil nil nil "-m" "--numeric-entities" "yes" (remove-file-prefix url)))
                                          (xwidget-webkit-browse-url url))))
-      (mu4e-action-view-in-browser msg))))
+      (mu4e-action-view-in-browser msg)))
+
+
+  (defun salih/delete-citation ()
+   (delete-region (point) (point-max)))
+
+  (defun salih/mu4e-reply (prefix)
+    (interactive "P")
+    (setq mu4e-compose-cite-function #'salih/delete-citation)
+    (mu4e-compose-reply))
+
+  (define-key mu4e-view-mode-map    (salih/mode "C-r") #'salih/mu4e-reply)
+  (define-key mu4e-headers-mode-map (salih/mode "C-r") #'salih/mu4e-reply))
+ 
 
 (set-frame-parameter (selected-frame) 'alpha '(85 85))
 (add-to-list 'default-frame-alist '(alpha 85 85))
@@ -214,9 +229,9 @@
 ;; this should be called after defining salih/prefix-global
 
 (require '+helper)
-
 (require '+hooks)
+(require '+advice)
 (require '+feeds)
 (require '+bindings)
 (require '+org-tags)
-(require 'org-roam-protocol)
+(require '+custom)

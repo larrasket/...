@@ -75,13 +75,12 @@
         +roam2
         +noter)
        (rest +jq)
-       (sh
-        +lsp)
-       (yaml
-        +lsp)
+       sh
+       yaml
        (julia
         +lsp
         +tree-sitter)
+       ess
        :email
        mu4e
        :app

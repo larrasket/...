@@ -2,7 +2,9 @@
 
 
 (setq elfeed-search-feed-face ":foreground #fff :weight bold"
-      elfeed-feeds '(("https://lukesmith.xyz/index.xml"                                                         luke philosophy)
+      elfeed-feeds '(("http://www.mccaughan.org.uk/g/log/index.rss"                                             Gareth)
+                     ("http://norvig.com/rss-feed.xml"                                                          norvig philosophy cs)
+                     ("https://lukesmith.xyz/index.xml"                                                         luke philosophy)
                      ("http://monakareem.blogspot.com/feeds/posts/default?alt=rss"                              mona blogs)
                      ("https://blackaly.github.io//feed.xml"                                                    ali blogs)
                      ("https://sachachua.com/blog/category/monthly/feed"                                        emacs_asian_girl blogs)
@@ -11,12 +13,11 @@
                      ("https://williamdavies.blog/feed/"                                                        consumption philosophy)
                      ("http://chomsky.info/feed/"                                                               chomsky philosophy)
                      ("https://blog.giovanh.com/feeds/atom.xml"                                                 g cs)
-                     ("https://www.theatlantic.com/feed/best-of/"                                               atlantic politics)
                      ("https://daily.jstor.org//feed"                                                           jstore science)
                      ("https://protesilaos.com/master.xml"                                                      prot blogs emacs philosophy)
-                     ("https://stackexchange.com/feeds/questions"                                               questions)
                      ("https://aeon.co/feed.rss"                                                                aeon philosophy)
                      ("https://www.radicalphilosophy.com/feed"                                                  radical_philosophy philosphy)
+                     ("https://rssc.fly.dev/rss?src=https://www.alaraby.co.uk/rss&linkf=opinion"                alaraby)
                      ;; youtube
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCUMZ7gohGI9HcU9VNsr2FJQ"            youtube bloomberg)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkS_HP3m9NXOgswVAKbMeJQ"            youtube thenandnow philosophy)
@@ -38,9 +39,43 @@
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UC_5ENzPnzYCGRxiOIdtaRug"            youtube ramah aesthetic)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UC99wd4wi8AfaSkqprWo206g"            youtube edits aesthetic)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A"            youtube numberphile math)
-                     ;; development
-                     ("https://sr.ht/~sircmpwn/sourcehut/feed.rss"                                              devel sourcehut)))
+                     ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtYLUTtgS3k1Fg4y5tAhLbw"            youtube statquest math)))
 
+
+(defvar salih/common-feeds
+  (list "https://hnrss.org/newest?q=%s"
+        "https://rssc.fly.dev/rss?src=https://www.reddit.com/r/programming/.rss&titlef=(?i)%s&descriptionf=(?i)%s"
+        "https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&titlef=(?i)%s&descriptionf=(?i)%s"
+        "https://rssc.fly.dev/rss?src=https://theconversation.com/articles.atom?language=en&titlef=(?i)%s&descriptionf=(?i)%s"))
+
+
+(defvar salih/stack-list
+  (concat "stackoverflow\\.com"                             "|"
+          "stats\\.stackexchange\\.com"                     "|"
+          "math\\.stackexchange\\.com"                      "|"
+          "askubuntu\\.com"                                 "|"
+          "academia\\.stackexchange\\.com"                  "|"
+          "money\\.stackexchange\\.com"                     "|"
+          "english\\.stackexchange\\.com"                   "|"
+          "chess\\.stackexchange\\.com"                     "|"
+          "cs\\.stackexchange\\.com"                        "|"
+          "emacs\\.stackexchange\\.com"                     "|"
+          "ell\\.stackexchange\\.com"                       "|"
+          "history\\.stackexchange\\.com"                   "|"
+          "hsm\\.stackexchange\\.com"                       "|"
+          "islam\\.stackexchange\\.com"                     "|"
+          "linguistics\\.stackexchange\\.com"               "|"
+          "literature\\.stackexchange\\.com"                "|"
+          "mathoverflow\\.net"                              "|"
+          "philosophy\\.stackexchange\\.com"                "|"
+          "politics\\.stackexchange\\.com"                  "|"
+          "softwareengineering\\.stackexchange\\.com"       "|"
+          "superuser\\.com"                                 "|"
+          "unix\\.stackexchange\\.com"                      "|"
+          "vi\\.stackexchange\\.com"))
+
+
+(add-to-list 'elfeed-feeds `(,(format "https://rssc.fly.dev/rss?src=https://stackexchange.com/feeds/questions&titlef=%s" salih/stack-list) questions))
 
 (use-package elfeed-goodies
   :init
@@ -56,31 +91,31 @@
 
 
 
-(defun salih/add-feeds-by-keyword (keyword-category-list)
-  (let ((urls (list "https://hnrss.org/newest?q=%s"
-                    "https://rssc.fly.dev/rss?src=https://www.reddit.com/r/programming/.rss&titlef=(?i)%s&descriptionf=(?i)%s"
-                    "https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&titlef=(?i)%s&descriptionf=(?i)%s"
-                    "https://rssc.fly.dev/rss?src=https://theconversation.com/articles.atom?language=en&titlef=(?i)%s&descriptionf=(?i)%s")))
-    (dolist (pair keyword-category-list)
+(defun salih/add-feeds-by-keyword (salih/keyword-category-list)
+  (let ((urls salih/common-feeds))
+    (dolist (pair salih/keyword-category-list)
       (let ((keyword (car pair))
             (category (cdr pair)))
         (dolist (url urls)
           (let ((l (salih/format url keyword)))
             (add-to-list 'elfeed-feeds `(,l ,category))))))))
 
-(setq keyword-category-list
-      '(("chomsky"      . philosophy)
-        ("arabic"       . philosophy)
-        ("emacs"        . emacs)
-        ("Egypt"        . politics)
-        ("Algeria"      . politics)
-        ("lisp"         . programming)
-        ("Arab"         . politics)
-        ("Israel"       . politics)
-        ("Palestine"    . politics)
-        ("linguistics"  . philosophy)))
 
-(salih/add-feeds-by-keyword keyword-category-list)
+
+
+(defvar salih/keyword-category-list
+  '(("chomsky"      . philosophy)
+    ("arabic"       . philosophy)
+    ("emacs"        . emacs)
+    ("Egypt"        . politics)
+    ("Algeria"      . politics)
+    ("lisp"         . programming)
+    ("Arab"         . politics)
+    ("Israel"       . politics)
+    ("Palestine"    . politics)
+    ("linguistics"  . philosophy)))
+
+(salih/add-feeds-by-keyword salih/keyword-category-list)
 
 
 (provide '+feeds)

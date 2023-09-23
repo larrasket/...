@@ -108,6 +108,7 @@
  "C-f"     #'org-footnote-action
  "c i"     #'org-clock-in
  "c o"     #'org-clock-out
+ "C-m"     #'org-media-note-hydra/body
  "H-i H-i" #'org-id-get-create
  "H-i C-l" #'org-web-tools-insert-link-for-url
  "H-i C-d" #'org-download-clipboard
@@ -129,6 +130,15 @@
  "C-r C-b" #'consult-org-roam-backlinks
  "C-;"     #'salih/rename-or-iedit
  "C-r C-f" #'consult-org-roam-forward-links)
+
+
+(general-define-key
+ :keymaps 'org-agenda-mode-map
+ "C-=" #'text-scale-increase
+ "C--" #'text-scale-decrease
+ "C-+" #'doom/reset-font-size)
+
+
 
 ;; Lisp
 
@@ -156,7 +166,7 @@
  "C-c"          (lambda () (interactive) (org-capture nil "f"))
  "C-a"          nil
  "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))
-
+ "C-a C-l"      (lambda () (interactive (org-agenda nil "l")))
  "C-a C-v"      #'salih/open-agenda
  "C-."          #'find-file
  "."            #'find-file
@@ -298,24 +308,23 @@
   (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note))
 
 (general-define-key
- :prefix salih/prefix-mode
  :keymaps 'elfeed-search-mode-map
- "C-u" #'elfeed-update)
+ :states 'normal
+ "C-c C-u"  #'elfeed-update
+ "J"    #'elfeed-goodies/split-show-next
+ "K"    #'elfeed-goodies/split-show-prev)
 
-(evil-define-key 'normal elfeed-show-mode-map
-  (kbd "J") 'elfeed-goodies/split-show-next
-  (kbd "c") 'salih/elfeed-copy-url
-  (kbd "O") 'salih/elfeed-open-url
-  (kbd "C") 'salih/elfeed-open-url-in-chrome
-  (kbd "K") 'elfeed-goodies/split-show-prev)
-(evil-define-key 'normal elfeed-search-mode-map
-  (kbd "J") 'elfeed-goodies/split-show-next
-  (kbd "K") 'elfeed-goodies/split-show-prev)
 
-(define-key elfeed-show-mode-map (kbd "F") 'elfeed-tube-fetch)
-(define-key elfeed-show-mode-map [remap save-buffer] 'elfeed-tube-save)
-(define-key elfeed-search-mode-map (kbd "F") 'elfeed-tube-fetch)
-(define-key elfeed-search-mode-map [remap save-buffer] 'elfeed-tube-save)
+(general-define-key
+ :keymaps 'elfeed-show-mode-map
+ :states 'normal
+ "J" #'elfeed-goodies/split-show-next
+ "c" #'salih/elfeed-copy-url
+ "O" #'salih/elfeed-open-url
+ "C" #'salih/elfeed-open-url-in-chrome
+ "K" #'elfeed-goodies/split-show-prev)
+
+
 
 (define-key embark-url-map (kbd "c") 'salih/open-url-in-chrome)
 (define-key embark-org-link-map (kbd "RET") 'org-web-tools-read-url-as-org)
@@ -329,5 +338,7 @@
                            (define-key nov-button-map      (kbd "l")              nil)
                            (define-key shr-map             (kbd "u")              nil)
                            (define-key shr-map             (kbd "w")              nil)))
+
+(define-key evil-motion-state-map (kbd "H-i") 'evil-jump-backward)
 
 (provide '+bindings)
