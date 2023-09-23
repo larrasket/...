@@ -823,6 +823,7 @@ and 0 means insert a single space in between the headline and the tags."
 
 
      (string-prefix-p "*elfeed-log*" name)
+     (string-prefix-p "*elfeed-tube-log*" name)
      (string-prefix-p "*Org Clock*" name)
 
 
