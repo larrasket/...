@@ -20,7 +20,12 @@
    '(org-level-6 ((t (:inherit outline-6 :height 0.8 :weight normal :family "Arial"))))
    '(org-level-7 ((t (:inherit outline-7 :height 0.7 :weight normal :family "Arial"))))
    '(org-level-8 ((t (:inherit outline-8 :height 0.6 :weight normal :family "Arial"))))
-   '(org-document-title ((t (:inherit outline-8 :height 1.4 :weight light :family "Droid Sans"))))))
+   '(org-document-title ((t (:inherit outline-8 :height 1.4 :weight light :family "Droid Sans")))))
+
+  (setq org-babel-default-header-args:julia    (list '(:results . "output")
+                                                     '(:cache   . "yes")
+                                                     '(:exports . "both"))))
+   
 
 
 (custom-set-faces

@@ -209,7 +209,7 @@
 
 
   (defun salih/delete-citation ()
-   (delete-region (point) (point-max)))
+    (delete-region (point) (point-max)))
 
   (defun salih/mu4e-reply (prefix)
     (interactive "P")
@@ -218,7 +218,7 @@
 
   (define-key mu4e-view-mode-map    (salih/mode "C-r") #'salih/mu4e-reply)
   (define-key mu4e-headers-mode-map (salih/mode "C-r") #'salih/mu4e-reply))
- 
+
 
 (set-frame-parameter (selected-frame) 'alpha '(85 85))
 (add-to-list 'default-frame-alist '(alpha 85 85))

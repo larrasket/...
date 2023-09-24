@@ -104,16 +104,16 @@
 
 
 (defvar salih/keyword-category-list
-  '(("chomsky"      . philosophy linguistics chomsky)
-    ("arabic"       . philosophy arabic)
+  '(("chomsky"      . philosophy)
+    ("arabic"       . philosophy)
     ("emacs"        . emacs)
-    ("Egypt"        . politics egypt)
-    ("Algeria"      . politics algeria)
-    ("lisp"         . programming lisp)
+    ("Egypt"        . politics)
+    ("Algeria"      . politics)
+    ("lisp"         . programming)
     ("Arab"         . politics)
-    ("Palestine"    . politics palestine)
-    ("Israel"       . politics israel)
-    ("linguistics"  . philosophy linguistics)))
+    ("Palestine"    . politics)
+    ("Israel"       . politics)
+    ("linguistics"  . philosophy )))
 
 (salih/add-feeds-by-keyword salih/keyword-category-list)
 

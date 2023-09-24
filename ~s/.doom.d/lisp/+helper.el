@@ -639,6 +639,7 @@ tasks."
   (interactive)
   (elfeed-search-yank)
   (salih/open-url-in-chrome (car kill-ring)))
+
 (defun salih/elfeed-open-url-in-chrome ()
   (interactive)
   (let ((link (elfeed-entry-link elfeed-show-entry)))
