@@ -110,10 +110,12 @@
     ("Egypt"        . politics)
     ("Algeria"      . politics)
     ("lisp"         . programming)
+    ("julie"        . programming)
     ("Arab"         . politics)
     ("Palestine"    . politics)
     ("Israel"       . politics)
-    ("linguistics"  . philosophy )))
+    ("linguistics"  . philosophy)
+    ("linguist"     . philosophy)))
 
 (salih/add-feeds-by-keyword salih/keyword-category-list)
 
