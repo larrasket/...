@@ -23,9 +23,13 @@
    '(org-level-8 ((t (:inherit outline-8 :height 0.6 :weight normal :family "Arial"))))
    '(org-document-title ((t (:inherit outline-8 :height 1.4 :weight light :family "Droid Sans"))))))
 
-(defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
-(defalias 'org-babel-variable-assignments:julia 'org-babel-variable-assignments:julia-vterm)
-(setq org-babel-default-header-args:julia    (list '(:results . "output")
+(require 'ob-julia)
+(unless (featurep 'tadwin)
+  (progn
+    (defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
+    (defalias 'org-babel-variable-assignments:julia 'org-babel-variable-assignments:julia-vterm)))
+
+(setq org-babel-default-header-args:julia    (list '(:results . "value")
                                                    '(:cache   . "yes")
                                                    '(:exports . "both")))
 

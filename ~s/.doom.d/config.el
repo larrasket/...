@@ -34,6 +34,8 @@
       ;; appearance
       ;; font `:size` value of 29 is prefect for filming
       doom-font                                         (font-spec :family "PragmataPro Mono Liga" :size 12)
+      ;; with high dpi use (set-frame-font "PragmataPro Mono Liga")
+      ;; or just remove `:size`.
       all-the-icons-color-icons                         nil
       neo-theme                                         'icons
       neo-window-width                                  35
