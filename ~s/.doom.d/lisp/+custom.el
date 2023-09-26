@@ -7,6 +7,7 @@
 (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
 
 
+
 (after! org
   (custom-set-faces
    '(org-link ((t (:inherit link :underline nil :slant italic :weight bold :family "Arial"))))
@@ -21,6 +22,20 @@
    '(org-level-7 ((t (:inherit outline-7 :height 0.7 :weight normal :family "Arial"))))
    '(org-level-8 ((t (:inherit outline-8 :height 0.6 :weight normal :family "Arial"))))
    '(org-document-title ((t (:inherit outline-8 :height 1.4 :weight light :family "Droid Sans"))))))
+
+(require 'ob-julia)
+(unless (featurep 'tadwin)
+  (progn
+    (defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
+    (defalias 'org-babel-variable-assignments:julia 'org-babel-variable-assignments:julia-vterm)))
+
+(setq org-babel-default-header-args:julia    (list '(:results . "value")
+                                                   '(:cache   . "yes")
+                                                   '(:exports . "both")))
+
+(defun advise-once (symbol where function &optional props)
+  (advice-add symbol :after (lambda (&rest _) (advice-remove symbol function)))
+  (advice-add symbol where function props))
 
 
 (custom-set-faces
@@ -66,7 +81,5 @@
 
 (setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
 
-(defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
-(defalias 'org-babel-variable-assignments:julia 'org-babel-variable-assignments:julia-vterm)
 
 (provide '+custom)

@@ -11,9 +11,9 @@
 (require 'go-translate)                 ; define trnaslation engine in config.el
 (require 'org-inlinetask)               ; enable org inline tasks
 (require 'org-media-note)               ; for media note taking in org-mode
+(require 'ob-julia-vterm)               ; for better ob-julia
 (require 'org-roam-protocol)            ; enable org-roam note taking from the browser
 (require 'highlight-indent-guides)      ; enables indent guide
-
 
 
 (setq-default frame-title-format                        '("%b")
@@ -34,6 +34,8 @@
       ;; appearance
       ;; font `:size` value of 29 is prefect for filming
       doom-font                                         (font-spec :family "PragmataPro Mono Liga" :size 12)
+      ;; with high dpi use (set-frame-font "PragmataPro Mono Liga")
+      ;; or just remove `:size`.
       all-the-icons-color-icons                         nil
       neo-theme                                         'icons
       neo-window-width                                  35
@@ -209,7 +211,7 @@
 
 
   (defun salih/delete-citation ()
-   (delete-region (point) (point-max)))
+    (delete-region (point) (point-max)))
 
   (defun salih/mu4e-reply (prefix)
     (interactive "P")

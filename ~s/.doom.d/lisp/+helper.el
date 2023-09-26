@@ -635,6 +635,11 @@ tasks."
     (when link
       (browse-url link))))
 
+(defun salih/elfeed-search-open-in-chrome ()
+  (interactive)
+  (elfeed-search-yank)
+  (salih/open-url-in-chrome (car kill-ring)))
+
 (defun salih/elfeed-open-url-in-chrome ()
   (interactive)
   (let ((link (elfeed-entry-link elfeed-show-entry)))
@@ -823,6 +828,7 @@ and 0 means insert a single space in between the headline and the tags."
 
 
      (string-prefix-p "*elfeed-log*" name)
+     (string-prefix-p "*elfeed-tube-log*" name)
      (string-prefix-p "*Org Clock*" name)
 
 
