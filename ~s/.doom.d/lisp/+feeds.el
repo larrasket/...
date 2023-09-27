@@ -2,7 +2,8 @@
 
 
 (setq elfeed-search-feed-face ":foreground #fff :weight bold"
-      elfeed-feeds '(("http://www.mccaughan.org.uk/g/log/index.rss"                                             Gareth)
+      elfeed-feeds '(("https://michael.orlitzky.com/articles/rss.xml"                                           philosophy math computers)
+                     ("http://www.mccaughan.org.uk/g/log/index.rss"                                             Gareth)
                      ("http://norvig.com/rss-feed.xml"                                                          norvig philosophy cs)
                      ("https://lukesmith.xyz/index.xml"                                                         luke philosophy)
                      ("http://monakareem.blogspot.com/feeds/posts/default?alt=rss"                              mona blogs)
