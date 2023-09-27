@@ -33,7 +33,7 @@
 
       ;; appearance
       ;; font `:size` value of 29 is prefect for filming
-      doom-font                                         (font-spec :family "PragmataPro Mono Liga" :size 12)
+      doom-font                                         "Pragmata Pro:pixelsize=12:antialias=on"
       ;; with high dpi use (set-frame-font "PragmataPro Mono Liga")
       ;; or just remove `:size`.
       all-the-icons-color-icons                         nil
