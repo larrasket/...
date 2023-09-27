@@ -129,6 +129,8 @@
  "C-r C-a" #'org-roam-alias-add
  "C-r C-b" #'consult-org-roam-backlinks
  "C-;"     #'salih/rename-or-iedit
+ "C-c ["   #'previous-buffer
+ "C-c ]"   #'next-buffer
  "C-r C-f" #'consult-org-roam-forward-links)
 
 
