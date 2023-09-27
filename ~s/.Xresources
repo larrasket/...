@@ -41,12 +41,12 @@ URxvt.colorUL:      	 #87afd7
 
 
 Xft.antialias:  1
-Xft.autohint:   0
+Xft.autohint:   1
 Xft.dpi:        96
 Xft.hinting:    1
 Xft.hintstyle:  hintslight
 Xft.lcdfilter:  lcddefault
-Xft.rgba:       vrgb
+Xft.rgba:       rgb
 
 
 !!! get your color schemes from here
