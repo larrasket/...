@@ -2,7 +2,7 @@
 (add-to-list 'org-agenda-files "~/roam/main/life.org")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 
-(require 'awqat)                        ; for praer support in the agenda
+(require 'awqat)                        ; for prayer support in the agenda
 (require 'embark)                       ; for embark action `+helper` specifications
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require 'epa-file)                     ; for encryption function in `+helper`
@@ -50,8 +50,6 @@
       doom-modeline-icon                                nil
       treemacs-position                                 'right
       fancy-splash-image                                "~/configs/~s/assets/chomsky.png"
-
-
 
       ;; set org files
       +org-capture-journal-file                         "~/blog/content/stack.org"
@@ -102,7 +100,6 @@
       awqat-mode-line-format                            " 🕌 ${prayer} (${hours}h${minutes}m) "
 
       ;; school
-
       salih/source-directory                             "~/roam/references/source/"
       salih/books                                       (let (file-list)
                                                           (dolist (file (directory-files-recursively salih/source-directory "" nil t))
