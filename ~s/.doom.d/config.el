@@ -98,6 +98,7 @@
       calendar-latitude                                 30.0
       calendar-longitude                                31.2
       awqat-mode-line-format                            " 🕌 ${prayer} (${hours}h${minutes}m) "
+      salih/awqat-show-mode-line                        t
 
       ;; school
       salih/source-directory                             "~/roam/references/source/"

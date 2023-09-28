@@ -88,6 +88,7 @@ a good understanding. His praise endures forever. ")))
 (salih/keyboard-config)
 (consult-org-roam-mode 1)
 (salih/consult-preview-at-point)
+(when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
 
 
 ;; see https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
