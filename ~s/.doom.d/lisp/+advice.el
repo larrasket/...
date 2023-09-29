@@ -15,4 +15,5 @@
 
 (advice-add 'gomacro--sanitize-string :override 'salih/gomacro--sanitize-string)
 
+(advice-add 'org-noter-pdf--pdf-view-get-precise-info   :override 'salih/org-noter-pdf--pdf-view-get-precise-info)
 (provide '+advice)
