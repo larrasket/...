@@ -100,6 +100,10 @@
  "C-e" #'salih/epa-dired-do-encrypt
  "C-d" #'epa-dired-do-decrypt)
 
+(map!
+ :map c-mode-map
+ :prefix salih/prefix-mode
+ "C-c" #'salih/make-c)
 
 ;; Org-mode
 (map!

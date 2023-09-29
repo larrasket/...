@@ -1,9 +1,6 @@
 ;;; configs/~s/.doom.d/+helper.el -*- lexical-binding: t; -*-
 
-
-
-;; basic definiton for keys.el
-
+;; basic definiton for `+bindings`
 (defun salih/global (key-sequence)
   (kbd (concat salih/prefix-global key-sequence)))
 (defun salih/mode (key-sequence)
@@ -162,6 +159,14 @@ Version 2019-11-04 2021-02-16"
                    (file-name-sans-extension  (file-name-nondirectory (buffer-file-name))) " && rm "
                    (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t  ) (other-window t)
   (end-of-add-hook 'c++-mode))
+
+
+(defun salih/make-c ()
+  (interactive)
+  (save-buffer)
+  (compile "make")
+  (other-window t)
+  (end-of-add-hook 'c-mode))
 
 (defun salih/compile-and-run-csharp ()
   (interactive)
