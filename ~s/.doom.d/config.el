@@ -128,7 +128,7 @@
       salih/prefix-mode                                 "C-c "
 
       ;; browser
-      browse-url-browser-function                       'xwidget-webkit-browse-url
+      browse-url-browser-function                       'eww
       shr-inhibit-images                                nil
 
       ;; vertico
