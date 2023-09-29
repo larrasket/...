@@ -26,9 +26,12 @@
 (defvar IS-PLASMA (let ((output (shell-command-to-string "pgrep -x plasmashell")))
                     (not (string-blank-p output))))
 
-(setq load-prefer-newer                                 t ;; avoid warnings
+(setq user-full-name                                    "Salih Muhammed"
+      user-mail-address                                 "lr0@gmx.com"
+
       ;; emacs settings
       completion-ignore-case                            t
+      load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
 
       ;; appearance
@@ -83,10 +86,6 @@
       ;; might break things in the future, I might consider making PR to
       ;; org-mode making the string customizable.
       org-clock-string-limit                            8
-
-      ;; please don't stalk me
-      user-full-name                                    "Salih Muhammed"
-      user-mail-address                                 "lr0@gmx.com"
 
       ;; I've no idea of any of this.
       org-crypt-key                                     user-mail-address
@@ -185,7 +184,7 @@
 (after! mu4e
   (setq message-send-mail-function 'smtpmail-send-it
         starttls-use-gnutls t
-        mu4e-compose-reply-ignore-address '("no-?reply" "lr0@gmx.com")
+        mu4e-compose-reply-ignore-address `("no-?reply" user-mail-address)
         mu4e-update-interval 200
         mu4e-compose-signature "Regards,\nSalih"
         smtpmail-default-smtp-server "mail.gmx.com"
@@ -222,8 +221,6 @@
 
 (set-frame-parameter (selected-frame) 'alpha '(85 85))
 (add-to-list 'default-frame-alist '(alpha 85 85))
-
-
 
 
 ;; this should be called after defining salih/prefix-global
