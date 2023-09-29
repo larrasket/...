@@ -13,20 +13,17 @@
 
 
 (define-key flyspell-mode-map (kbd "C-;") nil)
-(define-key evil-visual-state-map       (kbd "C-g") #'evil-normal-state)
-(define-key evil-insert-state-map       (kbd "C-g") #'evil-normal-state)
-(define-key evil-replace-state-map      (kbd "C-g") #'evil-normal-state)
-(define-key evil-operator-state-map     (kbd "C-g") #'evil-normal-state)
+(define-key evil-visual-state-map       (kbd "C-g") #'evil-escape)
+(define-key evil-insert-state-map       (kbd "C-g") #'evil-escape)
+(define-key evil-replace-state-map      (kbd "C-g") #'evil-escape)
+(define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
 (define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
-(define-key evil-normal-state-map       (kbd "C-g") (lambda ()
-                                                      (interactive)
-                                                      (evil-normal-state)
-                                                      (evil-ex-nohighlight)))
+(define-key evil-normal-state-map       (kbd "C-g") #'evil-escape)
 
 
 (with-eval-after-load 'company
-  (define-key company-active-map (kbd "C-g") #'salih/evil-escape-and-abort-company)
-  (define-key company-search-map (kbd "C-g") #'salih/evil-escape-and-abort-company))
+  (define-key company-active-map (kbd "C-g") #'evil-escape)
+  (define-key company-search-map (kbd "C-g") #'evil-escape))
 
 
 
