@@ -58,6 +58,7 @@
 
 (add-hook 'pdf-view-mode-hook (lambda ()
                                 (define-key pdf-view-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note)
+                                (define-key pdf-view-mode-map (salih/mode "H-i") #'org-noter-insert-note)
                                 (define-key pdf-view-mode-map (salih/mode "C-d") #'pdf-view-themed-minor-mode)
                                 (evil-local-set-key 'normal (salih/mode "C-c") #'org-noter-insert-precise-note)
                                 (evil-local-set-key 'normal (kbd "J") #' pdf-view-next-page-command)
