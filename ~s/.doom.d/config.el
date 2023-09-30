@@ -2,7 +2,7 @@
 (add-to-list 'org-agenda-files "~/roam/main/life.org")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 
-(require 'awqat)                        ; for praer support in the agenda
+(require 'awqat)                        ; for prayer support in the agenda
 (require 'embark)                       ; for embark action `+helper` specifications
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require 'epa-file)                     ; for encryption function in `+helper`
@@ -26,16 +26,19 @@
 (defvar IS-PLASMA (let ((output (shell-command-to-string "pgrep -x plasmashell")))
                     (not (string-blank-p output))))
 
-(setq load-prefer-newer                                 t ;; avoid warnings
+(setq user-full-name                                    "Salih Muhammed"
+      user-mail-address                                 "lr0@gmx.com"
+
       ;; emacs settings
       completion-ignore-case                            t
+      load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
 
       ;; appearance
       ;; font `:size` value of 29 is prefect for filming
-      doom-font                                         "Pragmata Pro:pixelsize=12:antialias=on"
       ;; with high dpi use (set-frame-font "PragmataPro Mono Liga")
       ;; or just remove `:size`.
+      doom-font                                         "Pragmata Pro:pixelsize=12:antialias=on"
       all-the-icons-color-icons                         nil
       neo-theme                                         'icons
       neo-window-width                                  35
@@ -50,8 +53,6 @@
       doom-modeline-icon                                nil
       treemacs-position                                 'right
       fancy-splash-image                                "~/configs/~s/assets/chomsky.png"
-
-
 
       ;; set org files
       +org-capture-journal-file                         "~/blog/content/stack.org"
@@ -86,10 +87,6 @@
       ;; org-mode making the string customizable.
       org-clock-string-limit                            8
 
-      ;; please don't stalk me
-      user-full-name                                    "Salih Muhammed"
-      user-mail-address                                 "lr0@gmx.com"
-
       ;; I've no idea of any of this.
       org-crypt-key                                     user-mail-address
       epa-file-cache-passphrase-for-symmetric-encryption t
@@ -100,9 +97,9 @@
       calendar-latitude                                 30.0
       calendar-longitude                                31.2
       awqat-mode-line-format                            " 🕌 ${prayer} (${hours}h${minutes}m) "
+      salih/awqat-show-mode-line                        t
 
       ;; school
-
       salih/source-directory                             "~/roam/references/source/"
       salih/books                                       (let (file-list)
                                                           (dolist (file (directory-files-recursively salih/source-directory "" nil t))
@@ -130,7 +127,7 @@
       salih/prefix-mode                                 "C-c "
 
       ;; browser
-      browse-url-browser-function                       'xwidget-webkit-browse-url
+      browse-url-browser-function                       'eww
       shr-inhibit-images                                nil
 
       ;; vertico
@@ -187,7 +184,7 @@
 (after! mu4e
   (setq message-send-mail-function 'smtpmail-send-it
         starttls-use-gnutls t
-        mu4e-compose-reply-ignore-address '("no-?reply" "lr0@gmx.com")
+        mu4e-compose-reply-ignore-address `("no-?reply" user-mail-address)
         mu4e-update-interval 200
         mu4e-compose-signature "Regards,\nSalih"
         smtpmail-default-smtp-server "mail.gmx.com"

@@ -13,20 +13,17 @@
 
 
 (define-key flyspell-mode-map (kbd "C-;") nil)
-(define-key evil-visual-state-map       (kbd "C-g") #'evil-normal-state)
-(define-key evil-insert-state-map       (kbd "C-g") #'evil-normal-state)
-(define-key evil-replace-state-map      (kbd "C-g") #'evil-normal-state)
-(define-key evil-operator-state-map     (kbd "C-g") #'evil-normal-state)
+(define-key evil-visual-state-map       (kbd "C-g") #'evil-escape)
+(define-key evil-insert-state-map       (kbd "C-g") #'evil-escape)
+(define-key evil-replace-state-map      (kbd "C-g") #'evil-escape)
+(define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
 (define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
-(define-key evil-normal-state-map       (kbd "C-g") (lambda ()
-                                                      (interactive)
-                                                      (evil-normal-state)
-                                                      (evil-ex-nohighlight)))
+(define-key evil-normal-state-map       (kbd "C-g") #'evil-escape)
 
 
 (with-eval-after-load 'company
-  (define-key company-active-map (kbd "C-g") #'salih/evil-escape-and-abort-company)
-  (define-key company-search-map (kbd "C-g") #'salih/evil-escape-and-abort-company))
+  (define-key company-active-map (kbd "C-g") #'evil-escape)
+  (define-key company-search-map (kbd "C-g") #'evil-escape))
 
 
 
@@ -58,6 +55,7 @@
 
 (add-hook 'pdf-view-mode-hook (lambda ()
                                 (define-key pdf-view-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note)
+                                (define-key pdf-view-mode-map (salih/mode "H-i") #'org-noter-insert-note)
                                 (define-key pdf-view-mode-map (salih/mode "C-d") #'pdf-view-themed-minor-mode)
                                 (evil-local-set-key 'normal (salih/mode "C-c") #'org-noter-insert-precise-note)
                                 (evil-local-set-key 'normal (kbd "J") #' pdf-view-next-page-command)
@@ -99,6 +97,10 @@
  "C-e" #'salih/epa-dired-do-encrypt
  "C-d" #'epa-dired-do-decrypt)
 
+(map!
+ :map c-mode-map
+ :prefix salih/prefix-mode
+ "C-c" #'salih/make-c)
 
 ;; Org-mode
 (map!
@@ -131,6 +133,10 @@
  "C-;"     #'salih/rename-or-iedit
  "C-r C-f" #'consult-org-roam-forward-links)
 
+(general-define-key
+ :keymaps 'org-mode-map
+ "C-c ["   #'previous-buffer
+ "C-c ]"   #'next-buffer)
 
 (general-define-key
  :keymaps 'org-agenda-mode-map
