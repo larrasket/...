@@ -47,7 +47,8 @@
                                                             'doom-monokai-spectrum
                                                           'doom-ir-black)
       highlight-indent-guides-method                    'bitmap
-      display-line-numbers-type                         'visual
+      display-line-numbers                              t
+      display-line-numbers-type                         'relative
       doom-modeline-height                              17
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
@@ -162,6 +163,10 @@
       centaur-tabs-modified-marker                      "•"
       centaur-tabs-cycle-scope                          'tabs
 
+      ;; performance
+      scroll-conservatively                             101
+      jit-lock-defer-time                               0
+
       ;; other
       company-idle-delay                                0.3
       salih/temp-roam-insert                            nil
@@ -232,3 +237,4 @@
 (require '+bindings)
 (require '+org-tags)
 (require '+custom)
+
