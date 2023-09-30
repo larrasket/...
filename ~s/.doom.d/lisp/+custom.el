@@ -82,4 +82,5 @@
 (setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
 
 
+(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 (provide '+custom)

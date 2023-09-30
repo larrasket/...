@@ -51,6 +51,8 @@
                                             (setq roam-titles
                                                   (salih/org-roam-get-node-files (org-roam-node-read--completions)))))
 
+;; TODO: what about adding some verious quotes here? I can imaging having an RPC
+;; call to some external program to get awsome quotes from there.
 (add-hook! '+doom-dashboard-functions :append
   (insert "\n" (+doom-dashboard--center +doom-dashboard--width
                                         "The fear of the Lord is the beginning of wisdom; all those who practice it have
