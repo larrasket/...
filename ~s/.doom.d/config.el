@@ -222,8 +222,6 @@
 
   (define-key mu4e-view-mode-map    (salih/mode "C-r") #'salih/mu4e-reply)
   (define-key mu4e-headers-mode-map (salih/mode "C-r") #'salih/mu4e-reply))
- 
-
 
 ;; this should be called after defining salih/prefix-global
 
@@ -234,4 +232,3 @@
 (require '+bindings)
 (require '+org-tags)
 (require '+custom)
-
