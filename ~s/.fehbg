@@ -1,2 +1,2 @@
 #!/bin/sh
-feh --no-fehbg --bg-fill '/home/l/me/links/art/land/Carlo-Bossoli-An-extensive-view-of-Constantinople.jpg' 
+feh --no-fehbg --bg-fill '/home/ghd/configs/bg.png' 

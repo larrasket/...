@@ -100,7 +100,8 @@
 (map!
  :map c-mode-map
  :prefix salih/prefix-mode
- "C-c" #'salih/make-c)
+ "C-c"  #'salih/make-c
+ "C-b" #'salih/compile-and-run-c)
 
 ;; Org-mode
 (map!
@@ -169,6 +170,7 @@
 ;; convenient
 (map!
  :prefix salih/prefix-global
+ "C-t"          #'proced
  "C-c"          (lambda () (interactive) (org-capture nil "f"))
  "C-a"          nil
  "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))

@@ -4,6 +4,7 @@
        :completion
        company
        (vertico +icons)
+
        :ui
        vc-gutter
        doom
@@ -32,8 +33,6 @@
        :emacs
        (dired
         +icons)
-
-
        electric
        undo
        vc
@@ -56,9 +55,11 @@
        (lsp +peak)
        (magit)
        pdf
+       debugger
 
        :os
        (tty)
+
        :lang
        (cc +lsp)
        common-lisp
@@ -70,7 +71,6 @@
        (latex +flod
               +latexmk
               +lsp)
-       ;;markdown
        (org
         +roam2
         +noter)
@@ -81,17 +81,20 @@
         +lsp
         +tree-sitter)
        ess
+
        :email
        mu4e
+
        :app
        ;; irc
        rss
+
        :config
        (default ;; +bindings
                 +smartparens)
+
        :private
        compiler
-;
       ;; src==irc
       ;; for the options `erc-prompt-for-password' and
       ;; `erc-prompt-for-nickserv-password', you should have a .authinfo file
@@ -107,7 +110,3 @@
        cite
        roam
        bind)
-
-
-
-(setq package-native-compile t)

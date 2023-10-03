@@ -202,5 +202,6 @@ if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integr
 # END_KITTY_SHELL_INTEGRATION
 export TERM=xterm-256color
 
+shopt -s autocd
 
 source /home/l/.config/broot/launcher/bash/br
