@@ -161,6 +161,15 @@ Version 2019-11-04 2021-02-16"
   (end-of-add-hook 'c++-mode))
 
 
+(defun salih/compile-and-run-c ()
+  (interactive)
+  (save-buffer)
+  (compile (concat "gcc "  (file-name-nondirectory (buffer-file-name)) " -o "
+                   (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./"
+                   (file-name-sans-extension  (file-name-nondirectory (buffer-file-name))) " && rm "
+                   (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t  ) (other-window t)
+  (end-of-add-hook 'c-mode))
+
 (defun salih/make-c ()
   (interactive)
   (save-buffer)

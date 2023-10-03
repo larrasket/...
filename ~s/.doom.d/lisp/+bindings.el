@@ -100,7 +100,8 @@
 (map!
  :map c-mode-map
  :prefix salih/prefix-mode
- "C-c" #'salih/make-c)
+ "C-c"  #'salih/make-c
+ "C-b" #'salih/compile-and-run-c)
 
 ;; Org-mode
 (map!
