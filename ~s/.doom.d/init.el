@@ -91,7 +91,6 @@
                 +smartparens)
        :private
        compiler
-;
       ;; src==irc
       ;; for the options `erc-prompt-for-password' and
       ;; `erc-prompt-for-nickserv-password', you should have a .authinfo file
@@ -107,7 +106,3 @@
        cite
        roam
        bind)
-
-
-
-(setq package-native-compile t)

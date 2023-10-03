@@ -28,8 +28,11 @@
 
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
+      user-first-name                                   (cl-first (split-string user-full-name " "))
 
       ;; emacs settings
+      inhibit-automatic-native-compilation              t
+      package-native-compile                            t
       completion-ignore-case                            t
       load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
@@ -187,17 +190,17 @@
 ;; tidy is required to use with xwidget:
 ;; pacman -S tidy
 (after! mu4e
-  (setq message-send-mail-function 'smtpmail-send-it
-        starttls-use-gnutls t
-        mu4e-compose-reply-ignore-address `("no-?reply" user-mail-address)
-        mu4e-update-interval 200
-        mu4e-compose-signature "Regards,\nSalih"
-        smtpmail-default-smtp-server "mail.gmx.com"
-        smtpmail-smtp-server "mail.gmx.com"
-        smtpmail-smtp-service 587
-        smtpmail-starttls-credentials '(("mail.gmx.com" 465 nil nil))
-        smtpmail-stream-type 'starttls
-        mu4e-modeline-show-global nil)
+  (setq message-send-mail-function              'smtpmail-send-it
+        starttls-use-gnutls                     t
+        mu4e-compose-reply-ignore-address       `("no-?reply" ,user-mail-address)
+        mu4e-update-interval                    200
+        mu4e-compose-signature                  (format "Regards,\n%s" user-first-name)
+        smtpmail-default-smtp-server            "mail.gmx.com"
+        smtpmail-smtp-server                    smtpmail-default-smtp-server
+        smtpmail-smtp-service                   587
+        smtpmail-starttls-credentials           '(("mail.gmx.com" 465 nil nil))
+        smtpmail-stream-type                    'starttls
+        mu4e-modeline-show-global               nil)
 
   (defun remove-file-prefix (url)
     (replace-regexp-in-string "^file://" "" url))

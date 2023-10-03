@@ -968,4 +968,10 @@ and 0 means insert a single space in between the headline and the tags."
                   h-position (cdr click-position)))))
       v-position)))
 
+(use-package proced
+  :custom
+  (proced-enable-color-flag t)
+  (proced-tree-flag t))
+
+
 (provide '+helper)

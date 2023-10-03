@@ -67,7 +67,7 @@ static int swallowfloating =
     0; /* 1 means swallow floating windows by default */
 static int smartgaps =
     0;                  /* 1 means no outer gap when there is only one window */
-static int showbar = 1; /* 0 means no bar */
+static int showbar = 0; /* 0 means no bar */
 static int topbar = 1;  /* 0 means bottom bar */
 static const char *fonts[] = {
     "Mononoki Nerd Font:size=9.5:antialias=true:autohint=true",
