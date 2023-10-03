@@ -227,8 +227,8 @@
   (define-key mu4e-headers-mode-map (salih/mode "C-r") #'salih/mu4e-reply))
 
 
-(set-frame-parameter (selected-frame) 'alpha '(85 85))
-(add-to-list 'default-frame-alist '(alpha 85 85))
+(set-frame-parameter nil 'alpha-background 85)
+(add-to-list 'default-frame-alist '(alpha-background . 85))
 
 
 ;; this should be called after defining salih/prefix-global
