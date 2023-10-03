@@ -42,19 +42,17 @@
       ;; with high dpi use (set-frame-font "PragmataPro Mono Liga")
       ;; or just remove `:size`.
       doom-font                                         "Pragmata Pro:pixelsize=12:antialias=on"
-      all-the-icons-color-icons                         nil
-      neo-theme                                         'icons
-      neo-window-width                                  35
-      +doom-dashboard-ascii-banner-fn                   'salih/banner
-      doom-theme                                        (if IS-PLASMA
-                                                            'doom-monokai-spectrum
-                                                          'doom-ir-black)
-      highlight-indent-guides-method                    'bitmap
-      display-line-numbers                              t
-      display-line-numbers-type                         'relative
       doom-modeline-height                              17
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
+      doom-theme                                        (if IS-PLASMA
+                                                            'doom-monokai-spectrum
+                                                          'doom-ir-black)
+      +doom-dashboard-ascii-banner-fn                   'salih/banner
+      display-line-numbers-type                         'relative
+      display-line-numbers                              t
+      all-the-icons-color-icons                         nil
+      highlight-indent-guides-method                    'bitmap
       treemacs-position                                 'right
       fancy-splash-image                                "~/configs/~s/assets/chomsky.png"
 
