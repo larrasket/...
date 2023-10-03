@@ -169,6 +169,7 @@
 ;; convenient
 (map!
  :prefix salih/prefix-global
+ "C-t"          #'proced
  "C-c"          (lambda () (interactive) (org-capture nil "f"))
  "C-a"          nil
  "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))

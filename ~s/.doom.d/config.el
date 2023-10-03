@@ -172,6 +172,7 @@
 
       ;; other
       company-idle-delay                                0.3
+      proced-auto-update-flag                           t
       salih/temp-roam-insert                            nil
       large-file-warning-threshold                      nil
       save-place-ignore-files-regexp                    "\\(?:COMMIT_EDITMSG\\|hg-editor-[[:alnum:]]+\\.txt\\|svn-commit\\.tmp\\|bzr_log\\.[[:alnum:]]+\\|\\.pdf\\)$"
