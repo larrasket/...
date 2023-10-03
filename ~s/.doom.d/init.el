@@ -4,6 +4,7 @@
        :completion
        company
        (vertico +icons)
+
        :ui
        vc-gutter
        doom
@@ -32,8 +33,6 @@
        :emacs
        (dired
         +icons)
-
-
        electric
        undo
        vc
@@ -56,9 +55,11 @@
        (lsp +peak)
        (magit)
        pdf
+       debugger
 
        :os
        (tty)
+
        :lang
        (cc +lsp)
        common-lisp
@@ -70,7 +71,6 @@
        (latex +flod
               +latexmk
               +lsp)
-       ;;markdown
        (org
         +roam2
         +noter)
@@ -81,14 +81,18 @@
         +lsp
         +tree-sitter)
        ess
+
        :email
        mu4e
+
        :app
        ;; irc
        rss
+
        :config
        (default ;; +bindings
                 +smartparens)
+
        :private
        compiler
       ;; src==irc

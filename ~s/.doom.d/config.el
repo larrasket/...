@@ -90,6 +90,7 @@
       ;; might break things in the future, I might consider making PR to
       ;; org-mode making the string customizable.
       org-clock-string-limit                            8
+      org-agenda-dim-blocked-tasks                      'invisible
 
       ;; I've no idea of any of this.
       org-crypt-key                                     user-mail-address
