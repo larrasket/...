@@ -266,7 +266,7 @@
 (general-define-key
  :prefix (concat salih/prefix-global "C-e")
  "" nil
- "C-e" #'eshell
+ "C-e" #'salih/eshell
  "C-f" #'elfeed)
 
 ;; projectile
