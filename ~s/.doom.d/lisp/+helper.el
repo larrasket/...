@@ -977,6 +977,21 @@ and 0 means insert a single space in between the headline and the tags."
                   h-position (cdr click-position)))))
       v-position)))
 
+
+(defun salih/eshell ()
+  "Run eshell and set its directory to the current buffer's directory if eshell
+is already running."
+  (interactive)
+  (let ((cwd (file-name-directory (or (buffer-file-name) default-directory))))
+    (if (get-buffer "*eshell*")
+      (progn
+        (eshell)
+        (eshell/cd cwd)
+        (eshell-send-input))
+      (eshell))))
+
+
+
 (use-package proced
   :custom
   (proced-enable-color-flag t)

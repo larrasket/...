@@ -41,6 +41,10 @@
            (file+headline +org-capture-todo-file "Inbox")
            "* TODO %?" :prepend t)
 
+          ("p" "Project-local todo" entry  ; {project-root}/todo.org
+           (file +org-capture-project-todo-file)
+           "* TODO %?\n%i\n%a" :prepend t)
+
           ("w" "WATCH" entry
            (file+headline +org-capture-todo-file "Inbox")
            "* TODO %? :@watch:" :prepend t)

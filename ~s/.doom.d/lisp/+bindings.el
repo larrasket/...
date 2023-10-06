@@ -38,6 +38,11 @@
  "C-;"     #'salih/rename-or-iedit
  "M-;"     #'salih/comment-or-uncomment-region-or-line)
 
+(general-define-key
+ :keymaps 'projectile-mode-map
+ :prefix   salih/prefix-mode
+ "C-o"          (lambda () (interactive) (org-capture nil "p")))
+
 
 (general-define-key
  :keymaps 'flycheck-mode-map
@@ -261,7 +266,7 @@
 (general-define-key
  :prefix (concat salih/prefix-global "C-e")
  "" nil
- "C-e" #'eshell
+ "C-e" #'salih/eshell
  "C-f" #'elfeed)
 
 ;; projectile
