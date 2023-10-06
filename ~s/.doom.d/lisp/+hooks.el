@@ -1,12 +1,10 @@
 ;;; configs/~s/.doom.d/+hooks.el -*- lexical-binding: t; -*-
 
-(add-hook 'prog-mode-hook               'column-enforce-mode)
-(add-hook 'prog-mode-hook               'auto-fill-mode)
-(add-hook 'prog-mode-hook               'highlight-indent-guides-mode)
-(add-hook 'elfeed-show-mode-hook        'visual-line-mode)
-(add-hook 'eshell-alias-load-hook       'salih/eshell-load-bash-aliases)
+(add-hook 'prog-mode-hook               #'auto-fill-mode)
 (add-hook 'csv-mode-hook                #'csv-align-mode)
-(add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
+(add-hook 'html-mode-hook               #'format-all-mode)
+(add-hook 'elfeed-show-mode-hook        #'visual-line-mode)
+(add-hook 'prog-mode-hook               #'column-enforce-mode)
 (add-hook 'after-init-hook              #'global-flycheck-mode)
 (add-hook 'maxima-inferior-mode-hook    #'salih/disable-bright)
 (add-hook 'neotree-mode-hook            #'salih/disable-bright)
@@ -21,7 +19,11 @@
 (add-hook 'org-mode-hook                #'centaur-tabs-local-mode)
 (add-hook 'dired-mode-hook              #'centaur-tabs-local-mode)
 (add-hook 'native-comp-limple-mode-hook #'centaur-tabs-local-mode)
-(add-hook 'nov-mode-hook                'nov-xwidget-inject-all-files)
+(add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook               #'highlight-indent-guides-mode)
+(add-hook 'nov-mode-hook                #'nov-xwidget-inject-all-files)
+(add-hook 'eshell-alias-load-hook       'salih/eshell-load-bash-aliases)
+
 (add-hook 'yas-minor-mode               (lambda () (yas-activate-extra-mode 'fundamental-mode)))
 (add-hook 'after-make-frame-functions   (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
 (add-hook 'python-mode-hook             (lambda () (flycheck-mode -1)))
@@ -31,6 +33,7 @@
 (add-hook 'pdf-view-mode-hook           (lambda ()
                                           (set (make-local-variable 'evil-normal-state-cursor) (list nil))
                                           (pdf-view-midnight-minor-mode)))
+
 (add-hook 'org-mode-hook                (lambda ()
                                           (display-line-numbers-mode -1)
                                           (setq truncate-lines 1)
@@ -38,6 +41,7 @@
                                           (add-hook 'find-file-hook #'vulpea-project-update-tag nil 'local)
                                           (git-gutter-mode -1)
                                           (setq org-hide-leading-stars t)))
+
 (add-hook 'nov-mode-hook                (lambda ()
                                           (defface tmp-buffer-local-face
                                             '((t :family "Roboto Condensed" :height 1.0)) "")
