@@ -15,7 +15,7 @@
                      ("http://chomsky.info/feed/"                                                               chomsky philosophy)
                      ("https://blog.giovanh.com/feeds/atom.xml"                                                 g cs)
                      ("https://daily.jstor.org//feed"                                                           jstore science)
-                     ("https://boards.4channel.org/sci/index.rss"                                               science)
+                     ;; ("https://boards.4channel.org/sci/index.rss"                                               science)
                      ("https://protesilaos.com/master.xml"                                                      prot blogs emacs philosophy)
                      ("https://aeon.co/feed.rss"                                                                aeon philosophy)
                      ("https://www.radicalphilosophy.com/feed"                                                  radical_philosophy philosphy)
