@@ -18,6 +18,7 @@
                      ;; ("https://boards.4channel.org/sci/index.rss"                                               science)
                      ("https://protesilaos.com/master.xml"                                                      prot blogs emacs philosophy)
                      ("https://aeon.co/feed.rss"                                                                aeon philosophy)
+                     ("https://psyche.co/feed.rss"                                                              psyche psychology)
                      ("https://www.radicalphilosophy.com/feed"                                                  radical_philosophy philosphy)
                      ("https://rssc.fly.dev/rss?src=https://www.alaraby.co.uk/rss&linkf=opinion"                alaraby)
                      ;; youtube
