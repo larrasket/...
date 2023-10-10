@@ -57,11 +57,16 @@
  "C-t" #'gts-do-translate)
 
 
+(general-define-key
+ :keymaps 'pdf-view-mode-map
+ :prefix salih/prefix-mode
+ "C-c" #'org-noter-insert-precise-note
+ "H-i" #'org-noter-insert-note
+ "C-f" #'salih/zathura-open
+ "C-d" #'pdf-view-themed-minor-mode)
+
 
 (add-hook 'pdf-view-mode-hook (lambda ()
-                                (define-key pdf-view-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note)
-                                (define-key pdf-view-mode-map (salih/mode "H-i") #'org-noter-insert-note)
-                                (define-key pdf-view-mode-map (salih/mode "C-d") #'pdf-view-themed-minor-mode)
                                 (evil-local-set-key 'normal (salih/mode "C-c") #'org-noter-insert-precise-note)
                                 (evil-local-set-key 'normal (kbd "J") #' pdf-view-next-page-command)
                                 (evil-local-set-key 'normal (kbd "K") #' pdf-view-previous-page-command)))
@@ -82,7 +87,6 @@
 ;; C#
 (add-hook 'csharp-mode-hook
           (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-csharp)))
-
 ;; Go
 (add-hook 'go-mode-hook
           (lambda ()

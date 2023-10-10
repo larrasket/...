@@ -998,4 +998,12 @@ is already running."
   (proced-tree-flag t))
 
 
+(defun salih/zathura-open ()
+  (interactive)
+  (let ((process-connection-type nil))
+    (start-process "" nil "zathura" "-P"
+                   (number-to-string
+                    (pdf-view-current-page
+                     (get-buffer-window (current-buffer)))) buffer-file-name)))
+
 (provide '+helper)
