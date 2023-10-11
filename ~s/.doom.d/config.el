@@ -76,7 +76,7 @@
       org-extend-today-until                            0
       org-element-use-cache                             t
       org-noter-auto-save-last-location                 t
-      org-startup-folded                                t
+      org-startup-folded                                'show2levels
       org-image-actual-width                            600
       org-link-file-path-type                           'relative
       org-agenda-entry-text-exclude-regexps             '("- State \"\\S-+\"\\s-+from\\s-+\"\\S-+\"\\s-+\\[\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}[^]]*\\)\\]")

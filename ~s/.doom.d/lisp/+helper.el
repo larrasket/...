@@ -799,62 +799,62 @@ and 0 means insert a single space in between the headline and the tags."
 
 (after! centaur-tabs
   (defun centaur-tabs-hide-tab (x)
-  "Do no to show buffer X in tabs."
-  (let ((name (format "%s" x)))
-    (or
-     ;; Current window is not dedicated window.
-     (window-dedicated-p (selected-window))
+    "Do no to show buffer X in tabs."
+    (let ((name (format "%s" x)))
+      (or
+       ;; Current window is not dedicated window.
+       (window-dedicated-p (selected-window))
 
-     ;; Buffer name not match below blacklist.
-     (string-prefix-p "*epc" name)
-     (string-prefix-p "*helm" name)
-     (string-prefix-p "*Helm" name)
-     (string-prefix-p "*Org Agenda*" name)
-     (string-prefix-p "*lsp" name)
-     (string-prefix-p "*LSP" name)
-     (string-prefix-p "*company" name)
-     (string-prefix-p "*Flycheck" name)
-     (string-prefix-p "*tramp" name)
-     (string-prefix-p " *Mini" name)
-     (string-prefix-p "*help" name)
-     (string-prefix-p "*straight" name)
-     (string-prefix-p " *temp" name)
-     (string-prefix-p "*Help" name)
-     (string-prefix-p "*Compile-Log*" name)
+       ;; Buffer name not match below blacklist.
+       (string-prefix-p "*epc" name)
+       (string-prefix-p "*helm" name)
+       (string-prefix-p "*Helm" name)
+       (string-prefix-p "*Org Agenda*" name)
+       (string-prefix-p "*lsp" name)
+       (string-prefix-p "*LSP" name)
+       (string-prefix-p "*company" name)
+       (string-prefix-p "*Flycheck" name)
+       (string-prefix-p "*tramp" name)
+       (string-prefix-p " *Mini" name)
+       (string-prefix-p "*help" name)
+       (string-prefix-p "*straight" name)
+       (string-prefix-p " *temp" name)
+       (string-prefix-p "*Help" name)
+       (string-prefix-p "*Compile-Log*" name)
 
-     (string-prefix-p "*doom*" name)
-     (string-prefix-p "*Org tags*" name)
-     (string-prefix-p "*scratch*" name)
-     (string-prefix-p "*Semantic" name)
-     (string-prefix-p "*mu4e-headers*" name)
-     (string-prefix-p "*mu4e-main*" name)
-     (string-prefix-p "*mu4e-update" name)
-     (string-prefix-p "*julia" name)
-     (string-prefix-p "*sly-mrepl" name)
-
-
-     (string-prefix-p "*Messages*" name)
-     (string-prefix-p "*Warnings*" name)
-     (string-prefix-p "*httpd*" name)
-     (string-prefix-p "*gopls*" name)
-     (string-prefix-p "*Async-native-compile-log*" name)
-     (string-prefix-p "*Native-compile-Log" name)
+       (string-prefix-p "*doom*" name)
+       (string-prefix-p "*Org tags*" name)
+       (string-prefix-p "*scratch*" name)
+       (string-prefix-p "*Semantic" name)
+       (string-prefix-p "*mu4e-headers*" name)
+       (string-prefix-p "*mu4e-main*" name)
+       (string-prefix-p "*mu4e-update" name)
+       (string-prefix-p "*julia" name)
+       (string-prefix-p "*sly-mrepl" name)
 
 
-     (string-prefix-p "*elfeed-log*" name)
-     (string-prefix-p "*elfeed-tube-log*" name)
-     (string-prefix-p "*Org Clock*" name)
+       (string-prefix-p "*Messages*" name)
+       (string-prefix-p "*Warnings*" name)
+       (string-prefix-p "*httpd*" name)
+       (string-prefix-p "*gopls*" name)
+       (string-prefix-p "*Async-native-compile-log*" name)
+       (string-prefix-p "*Native-compile-Log" name)
 
 
-     (string-prefix-p "*flycheck" name)
-     (string-prefix-p "*nov" name)
-     (string-prefix-p "*format" name)
-     (string-prefix-p "*Pandoc" name)
+       (string-prefix-p "*elfeed-log*" name)
+       (string-prefix-p "*elfeed-tube-log*" name)
+       (string-prefix-p "*Org Clock*" name)
 
 
-     ;; Is not magit buffer.
-     (and (string-prefix-p "magit" name)
-          (not (file-name-extension name)))))))
+       (string-prefix-p "*flycheck" name)
+       (string-prefix-p "*nov" name)
+       (string-prefix-p "*format" name)
+       (string-prefix-p "*Pandoc" name)
+
+
+       ;; Is not magit buffer.
+       (and (string-prefix-p "magit" name)
+            (not (file-name-extension name)))))))
 
 (defun salih/org-media-note-insert-link (orgin)
   (let ((org-link-file-path-type 'absolute))
@@ -984,10 +984,10 @@ is already running."
   (interactive)
   (let ((cwd (file-name-directory (or (buffer-file-name) default-directory))))
     (if (get-buffer "*eshell*")
-      (progn
-        (eshell)
-        (eshell/cd cwd)
-        (eshell-send-input))
+        (progn
+          (eshell)
+          (eshell/cd cwd)
+          (eshell-send-input))
       (eshell))))
 
 
