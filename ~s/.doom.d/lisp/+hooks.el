@@ -29,7 +29,6 @@
 (add-hook 'python-mode-hook             (lambda () (flycheck-mode -1)))
 (add-hook 'bibtex-mode-hook             (lambda () (add-hook 'after-save-hook '+format/buffer)))
 (add-hook 'org-mode-hook                (lambda () (org-bullets-mode 1)))
-(add-hook 'org-mode-hook                #'salih/fix-tag-alignment)
 (add-hook 'pdf-view-mode-hook           (lambda ()
                                           (set (make-local-variable 'evil-normal-state-cursor) (list nil))
                                           (pdf-view-midnight-minor-mode)))

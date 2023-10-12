@@ -89,6 +89,8 @@
       ;; org-mode making the string customizable.
       org-clock-string-limit                            8
       org-agenda-dim-blocked-tasks                      'invisible
+      org-tags-column                                   70
+
 
       ;; I've no idea of any of this.
       org-crypt-key                                     user-mail-address
