@@ -32,7 +32,7 @@
 (add-hook 'pdf-view-mode-hook           (lambda ()
                                           (set (make-local-variable 'evil-normal-state-cursor) (list nil))
                                           (pdf-view-midnight-minor-mode)))
-
+(add-hook! 'org-mode-hook         :append       #'org-align-all-tags)
 (add-hook 'org-mode-hook                (lambda ()
                                           (display-line-numbers-mode -1)
                                           (setq truncate-lines 1)
