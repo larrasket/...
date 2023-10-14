@@ -88,7 +88,13 @@
 
 (setq org-agenda-custom-commands
       '(("f" "Today Tasks"
-         ((agenda ""
+         ((org-ql-block '(and
+                          (priority "A")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "High-priority tasks")))
+
+          (agenda ""
                   ((org-agenda-span 4)))
 
 
@@ -129,6 +135,12 @@
                           (not (scheduled)))
                         ((org-ql-block-header "High-priority tasks")))
 
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@current")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Current:")))
 
 
           (org-ql-block '(and

@@ -217,7 +217,7 @@
  "" nil
  "C-r" #'recentf-open-files
  "C-g" #'magit-find-file
- "C-l" #'projectile-find-file)
+ "C-p" #'projectile-switch-project)
 
 
 ;; search global

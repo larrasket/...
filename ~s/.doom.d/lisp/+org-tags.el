@@ -7,6 +7,7 @@
                         ("@idea" . ?i)
                         ("@write" . ?W)
                         ("@check" . ?c)
+                        ("@current" . ?c)
                         ("@watch" . ?w)
                         (:endgroup)
 
