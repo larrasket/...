@@ -41,7 +41,7 @@
            (file+headline +org-capture-todo-file "Inbox")
            "* TODO %?" :prepend t)
 
-          ("p" "Project-local todo" entry  ; {project-root}/todo.org
+          ("p" "Project-local todo" entry ; {project-root}/todo.org
            (file +org-capture-project-todo-file)
            "* TODO %?\n%i\n%a" :prepend t)
 
@@ -67,15 +67,17 @@
            (file+headline +org-capture-journal-file "Posts")
            "*** %?\n:DATE:\n%<[%Y-%m-%d %a %H:%M]>\n:END:"  :prepend t)))
 
-  (require 'ox))
+  (require 'ox)
+
+  (require 'org-download)
+  (add-hook 'dired-mode-hook 'org-download-enable)
+  (add-hook 'org-mode-hook 'turn-on-auto-fill)
+  (setq org-archive-location "%s_archive.org::"
+        org-agenda-start-with-log-mode t))
+ 
 
 
 
-(require 'org-download)
-(add-hook 'dired-mode-hook 'org-download-enable)
-(add-hook 'org-mode-hook 'turn-on-auto-fill)
-(setq org-archive-location "%s_archive.org::"
-      org-agenda-start-with-log-mode t)
 
 
 
