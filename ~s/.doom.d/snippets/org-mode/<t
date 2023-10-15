@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: blog org tag
+# uuid: tag
+# key: <t
+# condition: t
+# --
+
+#+BEGIN_tag
+{{{t}}} $0
+#+END_tag

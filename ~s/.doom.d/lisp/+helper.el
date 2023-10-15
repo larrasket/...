@@ -679,6 +679,8 @@ tasks."
         (< (elfeed-entry-date b) (elfeed-entry-date a)))
     (string< a-tags b-tags)))
 
+
+
 (defadvice org-agenda-get-some-entry-text (after modify-agenda-entry-text activate)
   "Modify the text returned by org-agenda-get-some-entry-text."
   (setq ad-return-value (salih/modify-agenda-entry-text ad-return-value)))
@@ -694,68 +696,6 @@ tasks."
   (org-agenda-set-restriction-lock)
   (org-agenda nil "t"))
 
-(defun salih/org--align-tags-here (to-col)
-  "Align tags on the current headline to TO-COL.
-Since TO-COL is derived from `org-tags-column', a negative value is
-interpreted as alignment flush-right, a positive value as flush-left,
-and 0 means insert a single space in between the headline and the tags."
-  ;; source: https://list.orgmode.org/20200916225553.hrtxitzt46dzln7i@ionian.linksys.moosehall/
-  (save-excursion
-    (when (org-match-line org-tag-line-re)
-      (let* ((tags-start (match-beginning 1))
-             (tags-end (match-end 1))
-             (tags-pixel-width
-              (car (window-text-pixel-size (selected-window)
-                                           tags-start tags-end)))
-             (blank-start (progn
-                            (goto-char tags-start)
-                            (skip-chars-backward " \t")
-                            (point)))
-             ;; use this to avoid a 0-width space before tags on long lines:
-             (blank-start-col (progn
-                                (goto-char blank-start)
-                                (current-column)))
-             ;; this is to makes it work with org-indent-mode:
-             (lpref (if (org-fold-folded-p) 0
-                      (length (get-text-property (point) 'line-prefix)))))
-        ;; If there is more than one space between the headline and
-        ;; tags, delete the extra spaces.  Might be better to make the
-        ;; delete region one space smaller rather than inserting a new
-        ;; space?
-        (when (> tags-start (1+  blank-start))
-          (delete-region blank-start tags-start)
-          (goto-char blank-start)
-          (insert " "))
-        (if (or (= to-col 0) (< (abs to-col) (1- blank-start-col)))
-            ;; Just leave one normal space width
-            (remove-text-properties blank-start (1+  blank-start)
-                                    '(salih/display nil))
-          ;; (message "In here: %s" lpref)
-          (let ((align-expr
-                 (if (> to-col 0)
-                     ;; Left-align positive values
-                     (+ to-col lpref)
-                   ;; Right-align negative values by subtracting the
-                   ;; width of the tags.  Conveniently, the pixel
-                   ;; specification allows us to mix units,
-                   ;; subtracting a pixel width from a column number.
-                   `(-  ,(- lpref to-col) (,tags-pixel-width)))))
-            (put-text-property blank-start (1+  blank-start)
-                               'salih/display
-                               `(space . (:align-to ,align-expr)))))))))
-
-(defun salih/fix-tag-alignment ()
-  (setq org-tags-column 70) ;; adjust this
-  (advice-add 'org--align-tags-here :override #'salih/org--align-tags-here)
-  ;; this is needed to make it work with https://github.com/minad/org-modern:
-  (add-to-list 'char-property-alias-alist '(display salih/display))
-  ;; this is needed to align tags upon opening an org file:
-  (org-align-tags t))
-
-(defun salih/org-calendar-goto-agenda ()
-  (interactive)
-  (let ((org-agenda-span 1))
-    (org-calendar-goto-agenda)))
 
 (defun salih/polyphasic-sleep (start n)
   (if (or org-agenda-show-future-repeats (time-equal-p (awqat--today) date))
@@ -799,62 +739,62 @@ and 0 means insert a single space in between the headline and the tags."
 
 (after! centaur-tabs
   (defun centaur-tabs-hide-tab (x)
-  "Do no to show buffer X in tabs."
-  (let ((name (format "%s" x)))
-    (or
-     ;; Current window is not dedicated window.
-     (window-dedicated-p (selected-window))
+    "Do no to show buffer X in tabs."
+    (let ((name (format "%s" x)))
+      (or
+       ;; Current window is not dedicated window.
+       (window-dedicated-p (selected-window))
 
-     ;; Buffer name not match below blacklist.
-     (string-prefix-p "*epc" name)
-     (string-prefix-p "*helm" name)
-     (string-prefix-p "*Helm" name)
-     (string-prefix-p "*Org Agenda*" name)
-     (string-prefix-p "*lsp" name)
-     (string-prefix-p "*LSP" name)
-     (string-prefix-p "*company" name)
-     (string-prefix-p "*Flycheck" name)
-     (string-prefix-p "*tramp" name)
-     (string-prefix-p " *Mini" name)
-     (string-prefix-p "*help" name)
-     (string-prefix-p "*straight" name)
-     (string-prefix-p " *temp" name)
-     (string-prefix-p "*Help" name)
-     (string-prefix-p "*Compile-Log*" name)
+       ;; Buffer name not match below blacklist.
+       (string-prefix-p "*epc" name)
+       (string-prefix-p "*helm" name)
+       (string-prefix-p "*Helm" name)
+       (string-prefix-p "*Org Agenda*" name)
+       (string-prefix-p "*lsp" name)
+       (string-prefix-p "*LSP" name)
+       (string-prefix-p "*company" name)
+       (string-prefix-p "*Flycheck" name)
+       (string-prefix-p "*tramp" name)
+       (string-prefix-p " *Mini" name)
+       (string-prefix-p "*help" name)
+       (string-prefix-p "*straight" name)
+       (string-prefix-p " *temp" name)
+       (string-prefix-p "*Help" name)
+       (string-prefix-p "*Compile-Log*" name)
 
-     (string-prefix-p "*doom*" name)
-     (string-prefix-p "*Org tags*" name)
-     (string-prefix-p "*scratch*" name)
-     (string-prefix-p "*Semantic" name)
-     (string-prefix-p "*mu4e-headers*" name)
-     (string-prefix-p "*mu4e-main*" name)
-     (string-prefix-p "*mu4e-update" name)
-     (string-prefix-p "*julia" name)
-     (string-prefix-p "*sly-mrepl" name)
-
-
-     (string-prefix-p "*Messages*" name)
-     (string-prefix-p "*Warnings*" name)
-     (string-prefix-p "*httpd*" name)
-     (string-prefix-p "*gopls*" name)
-     (string-prefix-p "*Async-native-compile-log*" name)
-     (string-prefix-p "*Native-compile-Log" name)
+       (string-prefix-p "*doom*" name)
+       (string-prefix-p "*Org tags*" name)
+       (string-prefix-p "*scratch*" name)
+       (string-prefix-p "*Semantic" name)
+       (string-prefix-p "*mu4e-headers*" name)
+       (string-prefix-p "*mu4e-main*" name)
+       (string-prefix-p "*mu4e-update" name)
+       (string-prefix-p "*julia" name)
+       (string-prefix-p "*sly-mrepl" name)
 
 
-     (string-prefix-p "*elfeed-log*" name)
-     (string-prefix-p "*elfeed-tube-log*" name)
-     (string-prefix-p "*Org Clock*" name)
+       (string-prefix-p "*Messages*" name)
+       (string-prefix-p "*Warnings*" name)
+       (string-prefix-p "*httpd*" name)
+       (string-prefix-p "*gopls*" name)
+       (string-prefix-p "*Async-native-compile-log*" name)
+       (string-prefix-p "*Native-compile-Log" name)
 
 
-     (string-prefix-p "*flycheck" name)
-     (string-prefix-p "*nov" name)
-     (string-prefix-p "*format" name)
-     (string-prefix-p "*Pandoc" name)
+       (string-prefix-p "*elfeed-log*" name)
+       (string-prefix-p "*elfeed-tube-log*" name)
+       (string-prefix-p "*Org Clock*" name)
 
 
-     ;; Is not magit buffer.
-     (and (string-prefix-p "magit" name)
-          (not (file-name-extension name)))))))
+       (string-prefix-p "*flycheck" name)
+       (string-prefix-p "*nov" name)
+       (string-prefix-p "*format" name)
+       (string-prefix-p "*Pandoc" name)
+
+
+       ;; Is not magit buffer.
+       (and (string-prefix-p "magit" name)
+            (not (file-name-extension name)))))))
 
 (defun salih/org-media-note-insert-link (orgin)
   (let ((org-link-file-path-type 'absolute))
@@ -984,10 +924,10 @@ is already running."
   (interactive)
   (let ((cwd (file-name-directory (or (buffer-file-name) default-directory))))
     (if (get-buffer "*eshell*")
-      (progn
-        (eshell)
-        (eshell/cd cwd)
-        (eshell-send-input))
+        (progn
+          (eshell)
+          (eshell/cd cwd)
+          (eshell-send-input))
       (eshell))))
 
 
@@ -997,5 +937,13 @@ is already running."
   (proced-enable-color-flag t)
   (proced-tree-flag t))
 
+
+(defun salih/zathura-open ()
+  (interactive)
+  (let ((process-connection-type nil))
+    (start-process "" nil "zathura" "-P"
+                   (number-to-string
+                    (pdf-view-current-page
+                     (get-buffer-window (current-buffer)))) buffer-file-name)))
 
 (provide '+helper)

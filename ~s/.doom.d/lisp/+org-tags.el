@@ -5,9 +5,10 @@
                         (:grouptags)
                         ("@read" . ?r)
                         ("@idea" . ?i)
-                        ("@write" . ?w)
+                        ("@write" . ?W)
                         ("@check" . ?c)
-                        ("@watch" . ?W)
+                        ("@current" . ?c)
+                        ("@watch" . ?w)
                         (:endgroup)
 
 
