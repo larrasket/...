@@ -204,6 +204,7 @@
  "TAB"          nil
  "TAB d"        #'+workspace/delete
  "SPC"          #'projectile-find-file
+ "C-SPC"        #'projectile-find-file
  "H-i"          #'(lambda ()
                     (interactive)
                     (if (featurep 'mu4e)
@@ -344,8 +345,6 @@
 
 
 
-(define-key embark-url-map (kbd "c") 'salih/open-url-in-chrome)
-(define-key embark-org-link-map (kbd "RET") 'org-web-tools-read-url-as-org)
 
 (evil-define-key 'normal calendar-mode-map (kbd "RET") 'salih/org-calendar-goto-agenda)
 

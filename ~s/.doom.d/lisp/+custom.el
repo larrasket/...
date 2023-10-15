@@ -1,14 +1,10 @@
 ;;; ../configs/~s/.doom.d/lisp/+custom.el -*- lexical-binding: t; -*-
 
 
-(set-face-background 'highlight-indent-guides-odd-face "darkgray")
-(set-face-background 'highlight-indent-guides-odd-face "darkgray")
-(set-face-background 'highlight-indent-guides-even-face "dimgray")
-(set-face-foreground 'highlight-indent-guides-character-face "dimgray")
-
-
-
 (after! org
+  (require 'org-inlinetask)
+  (require 'org-media-note)
+  (require 'org-roam-protocol)
   (custom-set-faces
    '(org-link ((t (:inherit link :underline nil :foreground "#79b58f" :slant normal :weight bold :family "Pragmata Pro"))))
    '(org-roam-dailies-calendar-note ((t (:inherit link :underline nil))))
@@ -23,51 +19,25 @@
    '(org-level-8 ((t (:inherit outline-8 :height 0.6 :weight bold :family "Pragmata Pro"))))
    '(org-document-title ((t (:inherit outline-8 :height 1.8 :weight bold))))))
 
-(require 'ob-julia)
-(unless (featurep 'tadwin)
-  (progn
-    (defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
-    (defalias 'org-babel-variable-assignments:julia 'org-babel-variable-assignments:julia-vterm)))
 
-(setq org-babel-default-header-args:julia    (list '(:results . "value")
-                                                   '(:cache   . "yes")
-                                                   '(:exports . "both")))
+(after! ob-julia
+  (unless (featurep 'tadwin)
+    (progn
+      (defalias 'org-babel-execute:julia 'org-babel-execute:julia-vterm)
+      (defalias 'org-babel-variable-assignments:julia 'org-babel-variable-assignments:julia-vterm)))
 
-(defun advise-once (symbol where function &optional props)
-  (advice-add symbol :after (lambda (&rest _) (advice-remove symbol function)))
-  (advice-add symbol where function props))
-
-
-(custom-set-faces
- '(doom-modeline-buffer-modified ((t (:inherit (doom-modeline-urgent))))))
-
+  (setq org-babel-default-header-args:julia    (list '(:results . "value")
+                                                     '(:cache   . "yes")
+                                                     '(:exports . "both"))))
 (after! julia-repl
   (set-popup-rule! "^\\*julia:*.*\\*$" :quit nil :side 'right :width .5))
-
 
 (after! org-roam
   (setq org-roam-list-files-commands '(find fd fdfind rg)))
 
 
-(after! git-gutter-fringe
-  (setq-default fringes-outside-margins t)
-  (define-fringe-bitmap 'git-gutter-fr:added [224]
-    nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:modified [224]
-    nil nil '(center repeated))
-  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240]
-    nil nil 'bottom))
-
-
-(with-eval-after-load 'flycheck
+(after! flycheck
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
-
-(assoc-delete-all "Open org-agenda"             +doom-dashboard-menu-sections)
-(assoc-delete-all "Recently opened files"       +doom-dashboard-menu-sections)
-(assoc-delete-all "Open project"                +doom-dashboard-menu-sections)
-(assoc-delete-all "Jump to bookmark"            +doom-dashboard-menu-sections)
-
-(custom-set-variables '(all-the-icons-completion-mode nil))
 
 
 (after! neotree
@@ -83,10 +53,30 @@
 (after! sly
   (setq sly-complete-symbol-function 'sly-flex-completions))
 
-(plist-put +popup-defaults :modeline t)
 
-(setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
+(after! git-gutter-fringe
+  (setq-default fringes-outside-margins t)
+  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 
-(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+(after! elfeed
+  (setf elfeed-search-sort-function #'salih/elfeed-tag-sort))
+
+(after! consult
+  (add-to-list 'consult-buffer-sources 'salih/consult--source-books 'append))
+
+(after! embark
+  (define-key embark-url-map            (kbd "c") 'salih/open-url-in-chrome)
+  (define-key embark-org-link-map       (kbd "RET") 'org-web-tools-read-url-as-org))
+
+(after! elfeed
+  (require 'elfeed-tube)
+  (elfeed-tube-setup))
+ 
+ 
+
+
+
 (provide '+custom)

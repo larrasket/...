@@ -946,4 +946,10 @@ is already running."
                     (pdf-view-current-page
                      (get-buffer-window (current-buffer)))) buffer-file-name)))
 
+
+
+(defun salih/advise-once (symbol where function &optional props)
+  (advice-add symbol :after (lambda (&rest _) (advice-remove symbol function)))
+  (advice-add symbol where function props))
+
 (provide '+helper)
