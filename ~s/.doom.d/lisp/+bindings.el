@@ -3,6 +3,7 @@
 
 ;; unbinding
 (define-key org-mode-map (kbd "C-c C-f") nil)
+(define-key org-mode-map (kbd "C-c C-j") nil)
 (global-unset-key        (kbd "C-f"))
 (define-key org-mode-map (salih/mode "]") nil)
 (define-key org-mode-map (salih/mode "[") nil)
@@ -104,6 +105,7 @@
  :prefix salih/prefix-mode
  "C-c" #'salih/open-in-external-app
  "C-e" #'salih/epa-dired-do-encrypt
+ "C-s" #'salih/dired-sort
  "C-d" #'epa-dired-do-decrypt)
 
 (map!
@@ -290,7 +292,7 @@
  "H-i C-u" #'insert-char
  "C-s" nil
  "C-t" #'gts-do-translate
- "C-s" #'centaur-tabs-ace-jump
+ "C-j" #'centaur-tabs-ace-jump
  "]"   #'centaur-tabs-forward
  "["   #'centaur-tabs-backward
  "C-v" #'magit-log-buffer-file)
