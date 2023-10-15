@@ -26,6 +26,7 @@
 (defvar IS-PLASMA (let ((output (shell-command-to-string "pgrep -x plasmashell")))
                     (not (string-blank-p output))))
 
+
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
       user-first-name                                   (cl-first (split-string user-full-name " "))
@@ -36,6 +37,9 @@
       completion-ignore-case                            t
       load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
+      gcmh-high-cons-threshold                          100000000
+      scroll-conservatively                             101
+      jit-lock-defer-time                               0
 
       ;; appearance
       ;; font `:size` value of 29 is prefect for filming
@@ -166,10 +170,6 @@
       centaur-tabs-close-button                         "✕"
       centaur-tabs-modified-marker                      "•"
       centaur-tabs-cycle-scope                          'tabs
-
-      ;; performance
-      scroll-conservatively                             101
-      jit-lock-defer-time                               0
 
       ;; other
       company-idle-delay                                0.3
