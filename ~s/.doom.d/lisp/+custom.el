@@ -70,6 +70,12 @@
 (custom-set-variables '(all-the-icons-completion-mode nil))
 
 
+(after! neotree
+  (setq neo-theme               (if (display-graphic-p) 'icons 'arrow)
+        neo-autorefresh         t
+        neo-smart-open          t
+        neo-window-fixed-size   nil
+        neo-window-width        35))
 
 (after! solaire-mode
   (setq solaire-mode-real-buffer-fn #'salih/solaire-mode-real-buffer-custom-p))
