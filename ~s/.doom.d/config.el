@@ -51,7 +51,7 @@
       doom-modeline-icon                                nil
       doom-theme                                        (if IS-PLASMA
                                                             'doom-monokai-spectrum
-                                                          'doom-ir-black)
+                                                          'kaolin-dark)
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       display-line-numbers-type                         'relative
       display-line-numbers                              t
@@ -229,11 +229,6 @@
   (define-key mu4e-headers-mode-map (salih/mode "C-r") #'salih/mu4e-reply))
 
 
-(set-frame-parameter nil 'alpha-background 85)
-(add-to-list 'default-frame-alist '(alpha-background . 85))
-
-
-;; this should be called after defining salih/prefix-global
 
 (require '+helper)
 (require '+hooks)

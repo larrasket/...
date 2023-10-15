@@ -81,7 +81,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	*/
 	/* class    instance      title       	 tags mask    isfloating * isterminal  noswallow  monitor focusopacity    unfocusopacity */
-	{ "Chromium",     NULL,       NULL,       	    0,       0,           0,         0,        -1 , 0.90f,  0.90f},
+	/* { "Chromium",     NULL,       NULL,       	    0,       0,           0,         0,        -1 , 0.90f,  0.90f}, */
 	/* { "Emacs",     NULL,       NULL,       	    0,       0,           0,         0,        -1 , 0.90f,  0.90f}, */
 	{ TERMCLASS,  NULL,       NULL,       	    0,            0,           1,         0,        -1 , activeopacity,  inactiveopacity},
 	{ NULL,       NULL,       "Event Tester",   0,            0,           0,         1,        -1 , activeopacity,  inactiveopacity},
