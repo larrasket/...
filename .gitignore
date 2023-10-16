@@ -47,3 +47,4 @@ flycheck_config.el
 /~s/.doom.d/feeds.el
 /~s/.fehbg
 /~s/.config/mvi/*
+/~s/fonts/.uuid
