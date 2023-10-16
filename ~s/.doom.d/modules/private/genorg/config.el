@@ -74,7 +74,7 @@
   (add-hook 'org-mode-hook 'turn-on-auto-fill)
   (setq org-archive-location "%s_archive.org::"
         org-agenda-start-with-log-mode t))
- 
+
 
 
 
@@ -139,9 +139,7 @@
 
           (org-ql-block '(and
                           (todo "TODO")
-                          (tags "@current")
-                          (not (deadline))
-                          (not (scheduled)))
+                          (tags "@current"))
                         ((org-ql-block-header "Current:")))
 
 
