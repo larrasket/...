@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: note update
+# key: update
+# --
+
+[`(format-time-string "%Y-%m-%d %a %H:%M")`] /Update/: $0
