@@ -7,7 +7,6 @@
                         ("@idea" . ?i)
                         ("@write" . ?W)
                         ("@check" . ?c)
-                        ("@current" . ?C)
                         ("@watch" . ?w)
                         (:endgroup)
 
@@ -20,6 +19,7 @@
                         ("noexport" . ?n)
                         ("anthology" . ?a)
                         ("@later" . ?l)
+                        ("@current" . ?C)
                         ("@general" . ?g)))
 
 ;; (add-to-list 'org-tags-exclude-from-inheritance "@read")
