@@ -8,7 +8,7 @@ picom &
 dunst &
 xset r rate 200 25
 setxkbmap -layout us,ara -option 'grp:alt_shift_toggle'
-/home/l/go/bin/ang &
+# /home/l/go/bin/ang &
 # feh --bg-fill ~/configs/bg.png
 feh --bg-fill "$(find ~/me/links/art/land -type f | shuf -n 1)"
 # tor &
