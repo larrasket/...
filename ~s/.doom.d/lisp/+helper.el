@@ -717,6 +717,11 @@ tasks."
 (defun salih/polyphasic-sleep--4 (s)
   (format "Sleep (1h.30) %d:30 " (mod (+ s 22) 24)))
 
+(defun salih/org-calendar-goto-agenda ()
+  (interactive)
+  (let ((org-agenda-span 1))
+    (org-calendar-goto-agenda)))
+
 (defun salih/pacman-pkg-info ()
   (interactive)
   (let* ((completions (->> "pacman -Q"
