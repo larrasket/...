@@ -81,6 +81,7 @@
         +lsp
         +tree-sitter)
        ess
+       (java +lsp +tree-sitter)
 
        :email
        mu4e
