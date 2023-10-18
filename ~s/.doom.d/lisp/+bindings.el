@@ -181,7 +181,7 @@
 ;; convenient
 (map!
  :prefix salih/prefix-global
- "C-t"          #'proced
+ "C-t"          #'+vterm/here
  "C-c"          (lambda () (interactive) (org-capture nil "f"))
  "C-a"          nil
  "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))

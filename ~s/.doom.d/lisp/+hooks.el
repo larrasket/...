@@ -11,6 +11,7 @@
 (add-hook 'maxima-inferior-mode-hook    #'salih/disable-bright)
 (add-hook 'neotree-mode-hook            #'salih/disable-bright)
 (add-hook 'sly-mrepl-mode-hook          #'salih/disable-bright)
+(add-hook 'vterm-mode-hook              #'salih/disable-bright)
 (add-hook 'dired-mode-hook              #'salih/disable-bright)
 (add-hook 'mu4e-headers-mode-hook       #'salih/disable-bright)
 (add-hook 'mu4e-view-mode-hook          #'salih/disable-bright)
@@ -25,7 +26,6 @@
 (add-hook 'prog-mode-hook               #'highlight-indent-guides-mode)
 (add-hook 'nov-mode-hook                #'nov-xwidget-inject-all-files)
 (add-hook 'eshell-alias-load-hook       'salih/eshell-load-bash-aliases)
-(remove-hook 'after-change-major-mode-hook #'doom-highlight-non-default-indentation-h)
 (add-hook 'yas-minor-mode               (lambda () (yas-activate-extra-mode 'fundamental-mode)))
 (add-hook 'after-make-frame-functions   (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
 (add-hook 'python-mode-hook             (lambda () (flycheck-mode -1)))
@@ -74,7 +74,11 @@ a good understanding. His praise endures forever. ")))
 
 
 (run-at-time nil (* 30 60) #'elfeed-update)
-(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
+
+(remove-hook 'vterm-mode-hook                   #'hide-mode-line-mode)
+(remove-hook 'after-change-major-mode-hook      #'doom-highlight-non-default-indentation-h)
+(remove-hook '+doom-dashboard-functions         #'doom-dashboard-widget-footer)
+
 (remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook) #'vi-tilde-fringe-mode)
 
 ;; ;; make evil treat "-" and "_" as parts of words when using w or e
