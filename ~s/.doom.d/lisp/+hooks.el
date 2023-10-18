@@ -25,7 +25,7 @@
 (add-hook 'prog-mode-hook               #'highlight-indent-guides-mode)
 (add-hook 'nov-mode-hook                #'nov-xwidget-inject-all-files)
 (add-hook 'eshell-alias-load-hook       'salih/eshell-load-bash-aliases)
-
+(remove-hook 'after-change-major-mode-hook #'doom-highlight-non-default-indentation-h)
 (add-hook 'yas-minor-mode               (lambda () (yas-activate-extra-mode 'fundamental-mode)))
 (add-hook 'after-make-frame-functions   (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
 (add-hook 'python-mode-hook             (lambda () (flycheck-mode -1)))
