@@ -1,5 +1,7 @@
 ;;; configs/~s/.doom.d/+hooks.el -*- lexical-binding: t; -*-
 
+
+
 (add-hook 'prog-mode-hook               #'auto-fill-mode)
 (add-hook 'csv-mode-hook                #'csv-align-mode)
 (add-hook 'html-mode-hook               #'format-all-mode)
@@ -23,7 +25,7 @@
 (add-hook 'prog-mode-hook               #'highlight-indent-guides-mode)
 (add-hook 'nov-mode-hook                #'nov-xwidget-inject-all-files)
 (add-hook 'eshell-alias-load-hook       'salih/eshell-load-bash-aliases)
-
+(remove-hook 'after-change-major-mode-hook #'doom-highlight-non-default-indentation-h)
 (add-hook 'yas-minor-mode               (lambda () (yas-activate-extra-mode 'fundamental-mode)))
 (add-hook 'after-make-frame-functions   (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
 (add-hook 'python-mode-hook             (lambda () (flycheck-mode -1)))
@@ -60,7 +62,6 @@
                                         "The fear of the Lord is the beginning of wisdom; all those who practice it have
 a good understanding. His praise endures forever. ")))
 
-(add-to-list 'consult-buffer-sources 'salih/consult--source-books 'append)
 
 ;; Activate the advice
 (ad-activate 'org-agenda-get-some-entry-text)
@@ -85,7 +86,6 @@ a good understanding. His praise endures forever. ")))
 ;; init
 (epa-file-enable)
 (centaur-tabs-mode)
-(elfeed-tube-setup)
 (yas-global-mode 1)
 (vertico-buffer-mode)
 (global-wakatime-mode)
@@ -95,8 +95,10 @@ a good understanding. His praise endures forever. ")))
 (when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
 
 
+
 ;; see https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
 (after! lsp
   (delete 'lsp-terraform lsp-client-packages))
+
 
 (provide '+hooks)

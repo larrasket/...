@@ -3,16 +3,8 @@
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 
 (require 'awqat)                        ; for prayer support in the agenda
-(require 'embark)                       ; for embark action `+helper` specifications
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
-(require 'epa-file)                     ; for encryption function in `+helper`
-(require 'elfeed-tube)                  ; for reviewing youtube feeds in elfeed
-(require 'auth-source)                  ; required for encryption support
 (require 'go-translate)                 ; define trnaslation engine in config.el
-(require 'org-inlinetask)               ; enable org inline tasks
-(require 'org-media-note)               ; for media note taking in org-mode
-(require 'ob-julia-vterm)               ; for better ob-julia
-(require 'org-roam-protocol)            ; enable org-roam note taking from the browser
 (require 'highlight-indent-guides)      ; enables indent guide
 
 
@@ -45,7 +37,7 @@
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use (set-frame-font "PragmataPro Mono Liga")
       ;; or just remove `:size`.
-      doom-font                                         "Pragmata Pro:pixelsize=12:antialias=on"
+      doom-font                                         "Pragmata Pro:pixelsize=12:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-modeline-height                              17
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
@@ -228,7 +220,7 @@
   (define-key mu4e-view-mode-map    (salih/mode "C-r") #'salih/mu4e-reply)
   (define-key mu4e-headers-mode-map (salih/mode "C-r") #'salih/mu4e-reply))
 
-;; this should be called after defining salih/prefix-global
+
 
 (require '+helper)
 (require '+hooks)
@@ -237,3 +229,4 @@
 (require '+bindings)
 (require '+org-tags)
 (require '+custom)
+(require '+deep)

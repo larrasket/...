@@ -1,4 +1,4 @@
-; -*- no-byte-compile: t; -*-
+                                        ; -*- no-byte-compile: t; -*-
 
 (package! wakatime-mode)
 
@@ -75,3 +75,5 @@
 
 (unpin! ess)
 (package! ess)
+
+(package! kaolin-themes)
