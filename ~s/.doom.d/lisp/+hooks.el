@@ -97,6 +97,7 @@ a good understanding. His praise endures forever. ")))
 (global-wakatime-mode)
 (salih/keyboard-config)
 (consult-org-roam-mode 1)
+(global-visual-line-mode 1)
 (salih/consult-preview-at-point)
 (when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
 
