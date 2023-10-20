@@ -359,5 +359,6 @@
                            (define-key shr-map             (kbd "w")              nil)))
 
 (define-key evil-motion-state-map (kbd "H-i") 'evil-jump-backward)
+(define-key evil-motion-state-map "-" 'er/expand-region)
 
 (provide '+bindings)
