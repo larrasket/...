@@ -78,6 +78,7 @@ a good understanding. His praise endures forever. ")))
 (remove-hook 'vterm-mode-hook                   #'hide-mode-line-mode)
 (remove-hook 'after-change-major-mode-hook      #'doom-highlight-non-default-indentation-h)
 (remove-hook '+doom-dashboard-functions         #'doom-dashboard-widget-footer)
+(advice-add  #'doom-highlight-non-default-indentation-h :override #'ignore)
 
 (remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook) #'vi-tilde-fringe-mode)
 
@@ -85,6 +86,7 @@ a good understanding. His praise endures forever. ")))
 ;; (with-eval-after-load 'evil
 ;;     (defalias #'forward-evil-word #'forward-evil-symbol)
 ;;     (setq-default evil-symbol-word-search t))
+
 
 
 ;; init
