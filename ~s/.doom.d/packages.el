@@ -3,14 +3,11 @@
 (package! wakatime-mode)
 
 (package! org-web-tools)
-(package! org-present)
-(package! org-preview-html)
 
 (package! wiki-summary)
 
 (package! iedit)
 
-(package! protobuf-mode)
 (package! git-auto-commit-mode)
 (package! highlight-indent-guides)
 (package! grip-mode)
@@ -77,3 +74,5 @@
 (package! ess)
 
 (package! kaolin-themes)
+
+(package! flycheck-projectile)
