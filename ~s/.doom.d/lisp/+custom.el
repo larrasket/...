@@ -74,9 +74,11 @@
 (after! elfeed
   (require 'elfeed-tube)
   (elfeed-tube-setup))
- 
- 
 
+
+(after! edebug
+  ;; make edebug not overwrite my keys
+  (setcdr emacs-lisp-mode-map nil))
 
 
 (provide '+custom)
