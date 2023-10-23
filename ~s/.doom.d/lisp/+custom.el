@@ -80,5 +80,7 @@
   ;; make edebug not overwrite my keys
   (setcdr emacs-lisp-mode-map nil))
 
+(after! gud
+  (setcdr gud-global-map nil))
 
 (provide '+custom)

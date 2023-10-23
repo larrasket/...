@@ -20,6 +20,7 @@
 (define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
 (define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
 (define-key evil-normal-state-map       (kbd "C-g") #'evil-escape)
+(define-key evil-normal-state-map       (kbd "g w") #'evil-avy-goto-word-1)
 
 
 (with-eval-after-load 'company
@@ -182,6 +183,7 @@
 (map!
  :prefix salih/prefix-global
  "C-t"          #'+vterm/here
+ "C-j"          #'centaur-tabs-ace-jump
  "C-c"          (lambda () (interactive) (org-capture nil "f"))
  "C-a"          nil
  "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))
@@ -189,7 +191,7 @@
  "C-a C-v"      #'salih/open-agenda
  "C-."          #'find-file
  "."            #'find-file
- "C-,"          #'persp-switch-to-buffer
+ "C-,"          #'persp--to-buffer
  ","            #'persp-switch-to-buffer
  "C-<"          #'switch-to-buffer
  "<"            #'switch-to-buffer
@@ -292,7 +294,6 @@
  "H-i C-u" #'insert-char
  "C-s" nil
  "C-t" #'gts-do-translate
- "C-j" #'centaur-tabs-ace-jump
  "]"   #'centaur-tabs-forward
  "["   #'centaur-tabs-backward
  "C-v" #'magit-log-buffer-file)
