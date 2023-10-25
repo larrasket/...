@@ -81,6 +81,6 @@
   (setcdr emacs-lisp-mode-map nil))
 
 (after! gud
-  (setcdr gud-global-map nil))
+  (salih/set-convenient-keys))
 
 (provide '+custom)

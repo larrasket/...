@@ -180,41 +180,44 @@
 
 
 ;; convenient
-(map!
- :prefix salih/prefix-global
- "C-t"          #'+vterm/here
- "C-j"          #'centaur-tabs-ace-jump
- "C-c"          (lambda () (interactive) (org-capture nil "f"))
- "C-a"          nil
- "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))
- "C-a C-l"      (lambda () (interactive (org-agenda nil "l")))
- "C-a C-v"      #'salih/open-agenda
- "C-."          #'find-file
- "."            #'find-file
- "C-,"          #'persp--to-buffer
- ","            #'persp-switch-to-buffer
- "C-<"          #'switch-to-buffer
- "<"            #'switch-to-buffer
- "RET"          #'switch-to-buffer
- "C-<return>"   #'switch-to-buffer
- "["            #'previous-buffer
- "]"            #'next-buffer
- "C-d"          #'calendar
- "C-k"          #'kill-current-buffer
- "C-l"          nil
- "C-l C-l"      #'leetcode
- "C-r"          nil
- "C-r C-r"      #'doom/sudo-this-file
- "TAB"          nil
- "TAB d"        #'+workspace/delete
- "SPC"          #'projectile-find-file
- "C-SPC"        #'projectile-find-file
- "H-i"          #'(lambda ()
-                    (interactive)
-                    (if (featurep 'mu4e)
-                        (mu4e~headers-jump-to-maildir "/Inbox")
-                      (mu4e)))
- "/"            #'swiper)
+(defun salih/set-convenient-keys ()
+  (map!
+   :prefix salih/prefix-global
+   "C-t"          #'+vterm/here
+   "C-j"          #'centaur-tabs-ace-jump
+   "C-c"          (lambda () (interactive) (org-capture nil "f"))
+   "C-a"          nil
+   "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))
+   "C-a C-l"      (lambda () (interactive (org-agenda nil "l")))
+   "C-a C-v"      #'salih/open-agenda
+   "C-."          #'find-file
+   "."            #'find-file
+   "C-,"          #'persp--to-buffer
+   ","            #'persp-switch-to-buffer
+   "C-<"          #'switch-to-buffer
+   "<"            #'switch-to-buffer
+   "RET"          #'switch-to-buffer
+   "C-<return>"   #'switch-to-buffer
+   "["            #'previous-buffer
+   "]"            #'next-buffer
+   "C-d"          #'calendar
+   "C-k"          #'kill-current-buffer
+   "C-l"          nil
+   "C-l C-l"      #'leetcode
+   "C-r"          nil
+   "C-r C-r"      #'doom/sudo-this-file
+   "TAB"          nil
+   "TAB d"        #'+workspace/delete
+   "SPC"          #'projectile-find-file
+   "C-SPC"        #'projectile-find-file
+   "H-i"          #'(lambda ()
+                      (interactive)
+                      (if (featurep 'mu4e)
+                          (mu4e~headers-jump-to-maildir "/Inbox")
+                        (mu4e)))
+   "/"            #'swiper))
+(salih/set-convenient-keys)
+
 
 ;; file keys
 (general-define-key
