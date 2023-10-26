@@ -76,6 +76,7 @@ a good understanding. His praise endures forever. ")))
 (run-at-time nil (* 30 60) #'elfeed-update)
 
 (remove-hook 'vterm-mode-hook                   #'hide-mode-line-mode)
+(remove-hook 'treemacs-mode-hook                #'doom-themes-hide-modeline)
 (remove-hook 'after-change-major-mode-hook      #'doom-highlight-non-default-indentation-h)
 (remove-hook '+doom-dashboard-functions         #'doom-dashboard-widget-footer)
 (advice-add  #'doom-highlight-non-default-indentation-h :override #'ignore)
