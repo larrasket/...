@@ -48,3 +48,5 @@ flycheck_config.el
 /~s/.fehbg
 /~s/.config/mvi/*
 /~s/fonts/.uuid
+/~s/dwm/dwm
+/~s/.config/cmus/cmusfm.cache
