@@ -7,9 +7,8 @@
 (global-unset-key        (kbd "C-f"))
 (define-key org-mode-map (salih/mode "]") nil)
 (define-key org-mode-map (salih/mode "[") nil)
+(define-key input-decode-map [?\C-m] [C-m])
 (general-auto-unbind-keys)
-
-
 
 
 
@@ -20,6 +19,7 @@
 (define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
 (define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
 (define-key evil-normal-state-map       (kbd "C-g") #'evil-escape)
+(define-key evil-normal-state-map       (kbd "g w") #'evil-avy-goto-char-2)
 
 
 (with-eval-after-load 'company
@@ -27,44 +27,45 @@
   (define-key company-search-map (kbd "C-g") #'evil-escape))
 
 
+(map!
+ :mode wordnut-mode
+ :n
+ "q" #'+workspace/close-window-or-workspace)
 
 (general-define-key
  :keymaps 'prog-mode-map
- :prefix salih/prefix-mode
- "C-c C-d" #'+lookup/definition
- "C-c C-r" #'+lookup/references
- "C-c C-t" #'+lookup/type-definition
- "C-c C-e" #'+default/diagnostics
- "C-c C-g" #'salih/find-definition-or-lookup
- "C-;"     #'salih/rename-or-iedit
- "M-;"     #'salih/comment-or-uncomment-region-or-line)
+ :prefix  salih/prefix-mode
+ "C-d"    #'+lookup/definition
+ "C-r"    #'+lookup/references
+ "C-t"    #'+lookup/type-definition
+ "C-e"    #'+default/diagnostics
+ "C-;"    #'salih/rename-or-iedit)
 
 (general-define-key
  :keymaps 'projectile-mode-map
- :prefix   salih/prefix-mode
- "C-o"          (lambda () (interactive) (org-capture nil "p")))
+ :prefix  salih/prefix-mode
+ "C-o"    (lambda () (interactive) (org-capture nil "p")))
 
 
 (general-define-key
  :keymaps 'flycheck-mode-map
- :prefix salih/prefix-mode
- "C-e C-l" #'flycheck-list-errors
- "C-e C-e" #'flycheck-list-errors)
+ :prefix  salih/prefix-mode
+ "C-e"    #'+default/diagnostics)
 
 
 (general-define-key
  :keymaps 'nov-mode-map
- :prefix salih/prefix-mode
- "C-t" #'gts-do-translate)
+ :prefix  salih/prefix-mode
+ "C-t"    #'gts-do-translate)
 
 
 (general-define-key
  :keymaps 'pdf-view-mode-map
- :prefix salih/prefix-mode
- "C-c" #'org-noter-insert-precise-note
- "H-i" #'org-noter-insert-note
- "C-f" #'salih/zathura-open
- "C-d" #'pdf-view-themed-minor-mode)
+ :prefix  salih/prefix-mode
+ "C-c"    #'org-noter-insert-precise-note
+ "H-i"    #'org-noter-insert-note
+ "C-f"    #'salih/zathura-open
+ "C-d"    #'pdf-view-themed-minor-mode)
 
 
 (add-hook 'pdf-view-mode-hook (lambda ()
@@ -91,12 +92,8 @@
 ;; Go
 (add-hook 'go-mode-hook
           (lambda ()
-            (gomacro-mode)
-            (local-set-key (salih/mode "C-c") #'salih/compile-and-run-go-project)
-            (local-set-key (salih/mode "C-v") #'gomacro-eval-region)
-            (local-set-key (salih/mode "C-f") #'gomacro-eval-file)
-            (local-set-key (salih/mode "C-b") #'gomacro-eval-buffer)
-            (local-set-key (kbd "<f2>") #'salih/compile-and-run-go-project)))
+            (local-set-key (salih/mode "C-c")   #'salih/compile-and-run-go-project)
+            (local-set-key (kbd "<f2>")         #'salih/compile-and-run-go-project)))
 
 
 ;; Dired
@@ -119,10 +116,12 @@
  :map org-mode-map
  :after org
  :prefix salih/prefix-mode
+ "["       #'previous-buffer
+ "]"       #'next-buffer
  "C-f"     #'org-footnote-action
  "c i"     #'org-clock-in
  "c o"     #'org-clock-out
- "C-m"     #'org-media-note-hydra/body
+ "<C-m>"     #'org-media-note-hydra/body
  "H-i H-i" #'org-id-get-create
  "H-i C-l" #'org-web-tools-insert-link-for-url
  "H-i C-d" #'org-download-clipboard
@@ -135,8 +134,6 @@
  "C-n C-k" #'org-noter-kill-session
  "C-e"     nil
  "C-e C-p" #'org-pandoc-export-to-latex-pdf
- "C-e C-t" #'salih/get-file-todos
- "H-i C-r" #'salih/org-roam-node-insert
  "C-r"     nil
  "C-r H-i" #'org-roam-node-insert
  "C-r C-t" #'org-roam-tag-add
@@ -145,13 +142,18 @@
  "C-;"     #'salih/rename-or-iedit
  "C-r C-f" #'consult-org-roam-forward-links)
 
-(general-define-key
- :keymaps 'org-mode-map
- "C-c ["   #'previous-buffer
- "C-c ]"   #'next-buffer)
 
-(general-define-key
- :keymaps 'org-agenda-mode-map
+(map!
+ :map org-mode-map
+ :after org
+ :i
+ "C-r H-i" #'org-roam-node-insert
+ "C-r C-t" #'org-roam-tag-add
+ "C-r C-a" #'org-roam-alias-add)
+
+
+(map!
+ :map org-agenda-mode-map
  "C-=" #'text-scale-increase
  "C--" #'text-scale-decrease
  "C-+" #'doom/reset-font-size)
@@ -162,7 +164,6 @@
 
 (eval-after-load 'sly
   `(define-key sly-mode-map (salih/mode "C-e") 'sly-eval-region))
-
 
 (eval-after-load 'sly
   `(define-key sly-mode-map (salih/mode "C-f") 'sly-eval-buffer))
@@ -179,48 +180,54 @@
 
 
 ;; convenient
-(map!
- :prefix salih/prefix-global
- "C-t"          #'+vterm/here
- "C-c"          (lambda () (interactive) (org-capture nil "f"))
- "C-a"          nil
- "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))
- "C-a C-l"      (lambda () (interactive (org-agenda nil "l")))
- "C-a C-v"      #'salih/open-agenda
- "C-."          #'find-file
- "."            #'find-file
- "C-,"          #'persp-switch-to-buffer
- ","            #'persp-switch-to-buffer
- "C-<"          #'switch-to-buffer
- "<"            #'switch-to-buffer
- "RET"          #'switch-to-buffer
- "C-<return>"   #'switch-to-buffer
- "["            #'previous-buffer
- "]"            #'next-buffer
- "C-d"          #'calendar
- "C-k"          #'kill-current-buffer
- "C-l"          nil
- "C-l C-l"      #'leetcode
- "C-r"          nil
- "C-r C-r"      #'doom/sudo-this-file
- "TAB"          nil
- "TAB d"        #'+workspace/delete
- "SPC"          #'projectile-find-file
- "C-SPC"        #'projectile-find-file
- "H-i"          #'(lambda ()
-                    (interactive)
-                    (if (featurep 'mu4e)
-                        (mu4e~headers-jump-to-maildir "/Inbox")
-                      (mu4e)))
- "/"            #'swiper)
+(defun salih/set-convenient-keys ()
+  (map!
+   :prefix salih/prefix-global
+   "C-t"          #'+vterm/here
+   "C-j"          #'centaur-tabs-ace-jump
+   "C-c"          (lambda () (interactive) (org-capture nil "f"))
+   "C-a"          nil
+   "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))
+   "C-a C-l"      (lambda () (interactive (org-agenda nil "l")))
+   "C-a C-v"      #'salih/open-agenda
+   "C-f"          #'elfeed
+   "C-e"          #'salih/eshell
+   "C-."          #'find-file
+   "."            #'find-file
+   "C-,"          #'persp-switch-to-buffer
+   ","            #'persp-switch-to-buffer
+   "C-<"          #'switch-to-buffer
+   "<"            #'switch-to-buffer
+   "RET"          #'switch-to-buffer
+   "C-<return>"   #'switch-to-buffer
+   "["            #'previous-buffer
+   "]"            #'next-buffer
+   "C-d"          #'calendar
+   "C-k"          #'kill-current-buffer
+   "C-l"          nil
+   "C-r"          nil
+   "TAB"          nil
+   "TAB d"        #'+workspace/delete
+   "SPC"          #'projectile-find-file
+   "C-SPC"        #'projectile-find-file
+   "H-i"          #'(lambda ()
+                      (interactive)
+                      (if (featurep 'mu4e)
+                          (mu4e~headers-jump-to-maildir "/Inbox")
+                        (mu4e)))
+   "/"            #'swiper))
+(salih/set-convenient-keys)
 
-;; file keys
+
+;; files and roam
 (general-define-key
- :prefix (concat salih/prefix-global "C-f")
- "" nil
- "C-r" #'recentf-open-files
- "C-g" #'magit-find-file
- "C-p" #'projectile-switch-project)
+ :prefix "C-f"
+ :states 'normal
+ :keymaps 'override
+ "C-f"  #'org-roam-node-find
+ "C-j"  #'org-roam-dailies-capture-today
+ "C-b"  #'org-roam-buffer-toggle
+ "C-r"  #'recentf-open-files)
 
 
 ;; search global
@@ -238,61 +245,33 @@
 
 ;; notes
 (general-define-key
- :prefix (concat salih/prefix-global "C-n")
- "" nil
- "C-f" #'citar-open-notes
- "C-b" #'citar-open-notes
- "C-o" #'salih/open-book)
-
-;; roam
-(general-define-key
- :prefix (concat salih/prefix-global "C-r")
- ""  nil
- "C-b"  #'org-roam-buffer-toggle
- "c"    #'org-roam-capture
- "C-f"  #'org-roam-node-find
- "C-j"  #'org-roam-dailies-capture-today
- "C-t"  #'org-roam-dailies-goto-today)
+ :states 'normal
+ :keymaps 'override
+ "C-n C-f" #'citar-open-notes
+ "C-n C-b" #'citar-open-notes
+ "C-n C-o" #'salih/open-book)
 
 
 
 ;; magit and vc
 ;; TODO refactor if possible
 (general-define-key
- :prefix (concat salih/prefix-global "C-v")
+ :prefix "<C-m>"
+ :states 'normal
+ :keymaps 'override
  "" nil
- "C-v"   #'magit-status
+ "<C-m>"   #'magit-status
  "C-c"   #'magit-clone
- "C-t"   #'magit-todos-list
  "C-x"   #'magit-file-delete)
 
 
-
-
-;; other
-(general-define-key
- :prefix (concat salih/prefix-global "C-e")
- "" nil
- "C-e" #'salih/eshell
- "C-f" #'elfeed)
-
-;; projectile
-;; TODO add better bindings for it
-;; (projectile-mode +1)
-;; (define-key projectile-mode-map (kbd "C-x p")   #'projectile-command-map)
-;; (define-key projectile-mode-map (kbd "C-x p a") #'projectile-add-known-project)
-
-;; convenient
-
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
-
 
 (map!
  :prefix salih/prefix-mode
  "H-i C-u" #'insert-char
  "C-s" nil
  "C-t" #'gts-do-translate
- "C-j" #'centaur-tabs-ace-jump
  "]"   #'centaur-tabs-forward
  "["   #'centaur-tabs-backward
  "C-v" #'magit-log-buffer-file)
@@ -359,5 +338,6 @@
                            (define-key shr-map             (kbd "w")              nil)))
 
 (define-key evil-motion-state-map (kbd "H-i") 'evil-jump-backward)
+(define-key evil-motion-state-map "-" 'er/expand-region)
 
 (provide '+bindings)

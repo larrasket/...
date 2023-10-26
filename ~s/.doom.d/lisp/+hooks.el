@@ -4,7 +4,6 @@
 
 (add-hook 'prog-mode-hook               #'auto-fill-mode)
 (add-hook 'csv-mode-hook                #'csv-align-mode)
-(add-hook 'html-mode-hook               #'format-all-mode)
 (add-hook 'elfeed-show-mode-hook        #'visual-line-mode)
 (add-hook 'prog-mode-hook               #'column-enforce-mode)
 (add-hook 'after-init-hook              #'global-flycheck-mode)
@@ -23,6 +22,8 @@
 (add-hook 'dired-mode-hook              #'centaur-tabs-local-mode)
 (add-hook 'native-comp-limple-mode-hook #'centaur-tabs-local-mode)
 (add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
+(add-hook 'html-mode-hook               #'sgml-electric-tag-pair-mode)
+(add-hook 'prog-mode-hook               #'salih/format-all-ensure-formatter)
 (add-hook 'prog-mode-hook               #'highlight-indent-guides-mode)
 (add-hook 'nov-mode-hook                #'nov-xwidget-inject-all-files)
 (add-hook 'eshell-alias-load-hook       'salih/eshell-load-bash-aliases)
@@ -76,8 +77,10 @@ a good understanding. His praise endures forever. ")))
 (run-at-time nil (* 30 60) #'elfeed-update)
 
 (remove-hook 'vterm-mode-hook                   #'hide-mode-line-mode)
+(remove-hook 'treemacs-mode-hook                #'doom-themes-hide-modeline)
 (remove-hook 'after-change-major-mode-hook      #'doom-highlight-non-default-indentation-h)
 (remove-hook '+doom-dashboard-functions         #'doom-dashboard-widget-footer)
+(advice-add  #'doom-highlight-non-default-indentation-h :override #'ignore)
 
 (remove-hook! '(prog-mode-hook text-mode-hook conf-mode-hook) #'vi-tilde-fringe-mode)
 
@@ -85,6 +88,7 @@ a good understanding. His praise endures forever. ")))
 ;; (with-eval-after-load 'evil
 ;;     (defalias #'forward-evil-word #'forward-evil-symbol)
 ;;     (setq-default evil-symbol-word-search t))
+
 
 
 ;; init
@@ -95,6 +99,7 @@ a good understanding. His praise endures forever. ")))
 (global-wakatime-mode)
 (salih/keyboard-config)
 (consult-org-roam-mode 1)
+(global-visual-line-mode 1)
 (salih/consult-preview-at-point)
 (when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
 

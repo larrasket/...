@@ -1,5 +1,4 @@
 ;;; init.el -*- lexical-binding: t; -*-
-(setq inhibit-automatic-native-compilation t)
 (doom! :input
        :completion
        company
@@ -15,8 +14,6 @@
         +pragmata-pro)
        modeline
        (popup +defaults)
-       vi-tilde-fringe
-       window-select
        workspaces
 
        :editor
@@ -43,8 +40,7 @@
 
        :checkers
        (syntax +childframe)
-       (spell
-        +flyspell)
+       (spell  +flyspell)
 
        :tools
        biblio
@@ -55,7 +51,7 @@
        (lsp +peak)
        (magit)
        pdf
-       debugger
+       ;; debugger
 
        :os
        (tty)
@@ -92,17 +88,17 @@
 
        :config
        (default ;; +bindings
-                +smartparens)
+        +smartparens)
 
        :private
        compiler
-      ;; src==irc
-      ;; for the options `erc-prompt-for-password' and
-      ;; `erc-prompt-for-nickserv-password', you should have a .authinfo file
-      ;; conatins your password for the nickname. For Example, using
-      ;; yournickname and yourpassword as a NickName and password (repsectively
-      ;; machine irc.libera.chat login yournickname password yourpassword
-      ;; See. https://www.gnu.org/software/emacs/manual/html_node/emacs/Authentication.html
+       ;; src==irc
+       ;; for the options `erc-prompt-for-password' and
+       ;; `erc-prompt-for-nickserv-password', you should have a .authinfo file
+       ;; conatins your password for the nickname. For Example, using
+       ;; yournickname and yourpassword as a NickName and password (repsectively
+       ;; machine irc.libera.chat login yournickname password yourpassword
+       ;; See. https://www.gnu.org/software/emacs/manual/html_node/emacs/Authentication.html
        src
        gen
        genorg

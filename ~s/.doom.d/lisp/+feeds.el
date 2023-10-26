@@ -21,6 +21,7 @@
                      ("https://psyche.co/feed.rss"                                                              psyche psychology)
                      ("https://www.radicalphilosophy.com/feed"                                                  radical_philosophy philosphy)
                      ("https://rssc.fly.dev/rss?src=https://www.alaraby.co.uk/rss&linkf=opinion"                alaraby)
+                     ("https://nintil.com/rss.xml"                                                              nintil history)
                      ;; youtube
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCGVHC4L6gjS13AMe-JMOjHg"            youtube kanb philosophy)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtx9oIT_eWp6jIkoULS-ZdQ"            youtube shabaka)
