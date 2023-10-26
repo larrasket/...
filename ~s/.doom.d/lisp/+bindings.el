@@ -262,7 +262,7 @@
  "" nil
  "<C-m>"   #'magit-status
  "C-c"   #'magit-clone
- "C-x"   #'magit-file-delete)
+ "C-d"   #'magit-file-delete)
 
 
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
