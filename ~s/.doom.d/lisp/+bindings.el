@@ -11,8 +11,6 @@
 
 
 
-
-
 (define-key flyspell-mode-map (kbd "C-;") nil)
 (define-key evil-visual-state-map       (kbd "C-g") #'evil-escape)
 (define-key evil-insert-state-map       (kbd "C-g") #'evil-escape)
@@ -20,7 +18,7 @@
 (define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
 (define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
 (define-key evil-normal-state-map       (kbd "C-g") #'evil-escape)
-(define-key evil-normal-state-map       (kbd "g w") #'evil-avy-goto-word-1)
+(define-key evil-normal-state-map       (kbd "g w") #'evil-avy-goto-char-2)
 
 
 (with-eval-after-load 'company
@@ -31,41 +29,38 @@
 
 (general-define-key
  :keymaps 'prog-mode-map
- :prefix salih/prefix-mode
- "C-c C-d" #'+lookup/definition
- "C-c C-r" #'+lookup/references
- "C-c C-t" #'+lookup/type-definition
- "C-c C-e" #'+default/diagnostics
- "C-c C-g" #'salih/find-definition-or-lookup
- "C-;"     #'salih/rename-or-iedit
- "M-;"     #'salih/comment-or-uncomment-region-or-line)
+ :prefix  salih/prefix-mode
+ "C-d"    #'+lookup/definition
+ "C-r"    #'+lookup/references
+ "C-t"    #'+lookup/type-definition
+ "C-e"    #'+default/diagnostics
+ "C-;"    #'salih/rename-or-iedit)
 
 (general-define-key
  :keymaps 'projectile-mode-map
- :prefix   salih/prefix-mode
- "C-o"          (lambda () (interactive) (org-capture nil "p")))
+ :prefix  salih/prefix-mode
+ "C-o"    (lambda () (interactive) (org-capture nil "p")))
 
 
 (general-define-key
  :keymaps 'flycheck-mode-map
- :prefix salih/prefix-mode
- "C-e C-l" #'flycheck-list-errors
- "C-e C-e" #'flycheck-list-errors)
+ :prefix  salih/prefix-mode
+ "C-e"    #'+default/diagnostics)
 
 
 (general-define-key
  :keymaps 'nov-mode-map
- :prefix salih/prefix-mode
- "C-t" #'gts-do-translate)
+ :prefix  salih/prefix-mode
+ "C-t"    #'gts-do-translate)
 
 
 (general-define-key
  :keymaps 'pdf-view-mode-map
- :prefix salih/prefix-mode
- "C-c" #'org-noter-insert-precise-note
- "H-i" #'org-noter-insert-note
- "C-f" #'salih/zathura-open
- "C-d" #'pdf-view-themed-minor-mode)
+ :prefix  salih/prefix-mode
+ "C-c"    #'org-noter-insert-precise-note
+ "H-i"    #'org-noter-insert-note
+ "C-f"    #'salih/zathura-open
+ "C-d"    #'pdf-view-themed-minor-mode)
 
 
 (add-hook 'pdf-view-mode-hook (lambda ()
@@ -92,8 +87,8 @@
 ;; Go
 (add-hook 'go-mode-hook
           (lambda ()
-            (local-set-key (salih/mode "C-c") #'salih/compile-and-run-go-project)
-            (local-set-key (kbd "<f2>") #'salih/compile-and-run-go-project)))
+            (local-set-key (salih/mode "C-c")   #'salih/compile-and-run-go-project)
+            (local-set-key (kbd "<f2>")         #'salih/compile-and-run-go-project)))
 
 
 ;; Dired
@@ -116,6 +111,8 @@
  :map org-mode-map
  :after org
  :prefix salih/prefix-mode
+ "["       #'previous-buffer
+ "]"       #'next-buffer
  "C-f"     #'org-footnote-action
  "c i"     #'org-clock-in
  "c o"     #'org-clock-out
@@ -132,8 +129,6 @@
  "C-n C-k" #'org-noter-kill-session
  "C-e"     nil
  "C-e C-p" #'org-pandoc-export-to-latex-pdf
- "C-e C-t" #'salih/get-file-todos
- "H-i C-r" #'salih/org-roam-node-insert
  "C-r"     nil
  "C-r H-i" #'org-roam-node-insert
  "C-r C-t" #'org-roam-tag-add
@@ -142,13 +137,18 @@
  "C-;"     #'salih/rename-or-iedit
  "C-r C-f" #'consult-org-roam-forward-links)
 
-(general-define-key
- :keymaps 'org-mode-map
- "C-c ["   #'previous-buffer
- "C-c ]"   #'next-buffer)
 
-(general-define-key
- :keymaps 'org-agenda-mode-map
+(map!
+ :map org-mode-map
+ :after org
+ :i
+ "C-r H-i" #'org-roam-node-insert
+ "C-r C-t" #'org-roam-tag-add
+ "C-r C-a" #'org-roam-alias-add)
+
+
+(map!
+ :map org-agenda-mode-map
  "C-=" #'text-scale-increase
  "C--" #'text-scale-decrease
  "C-+" #'doom/reset-font-size)
@@ -159,7 +159,6 @@
 
 (eval-after-load 'sly
   `(define-key sly-mode-map (salih/mode "C-e") 'sly-eval-region))
-
 
 (eval-after-load 'sly
   `(define-key sly-mode-map (salih/mode "C-f") 'sly-eval-buffer))
@@ -186,9 +185,11 @@
    "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))
    "C-a C-l"      (lambda () (interactive (org-agenda nil "l")))
    "C-a C-v"      #'salih/open-agenda
+   "C-f"          #'elfeed
+   "C-e"          #'salih/eshell
    "C-."          #'find-file
    "."            #'find-file
-   "C-,"          #'persp--to-buffer
+   "C-,"          #'persp-switch-to-buffer
    ","            #'persp-switch-to-buffer
    "C-<"          #'switch-to-buffer
    "<"            #'switch-to-buffer
@@ -199,9 +200,7 @@
    "C-d"          #'calendar
    "C-k"          #'kill-current-buffer
    "C-l"          nil
-   "C-l C-l"      #'leetcode
    "C-r"          nil
-   "C-r C-r"      #'doom/sudo-this-file
    "TAB"          nil
    "TAB d"        #'+workspace/delete
    "SPC"          #'projectile-find-file
@@ -217,11 +216,10 @@
 
 ;; file keys
 (general-define-key
- :prefix (concat salih/prefix-global "C-f")
- "" nil
- "C-r" #'recentf-open-files
- "C-g" #'magit-find-file
- "C-p" #'projectile-switch-project)
+ :prefix "C-f"
+ :states 'normal
+ :keymaps 'override
+ "C-r" #'recentf-open-files)
 
 
 ;; search global
@@ -239,16 +237,15 @@
 
 ;; notes
 (general-define-key
- :prefix (concat salih/prefix-global "C-n")
- "" nil
- "C-f" #'citar-open-notes
- "C-b" #'citar-open-notes
- "C-o" #'salih/open-book)
+ :states 'normal
+ :keymaps 'override
+ "C-n C-f" #'citar-open-notes
+ "C-n C-b" #'citar-open-notes
+ "C-n C-o" #'salih/open-book)
 
 ;; roam
 (general-define-key
  :prefix (concat salih/prefix-global "C-r")
- ""  nil
  "C-b"  #'org-roam-buffer-toggle
  "c"    #'org-roam-capture
  "C-f"  #'org-roam-node-find
@@ -260,33 +257,16 @@
 ;; magit and vc
 ;; TODO refactor if possible
 (general-define-key
- :prefix (concat salih/prefix-global "C-v")
+ :prefix "C-m"
+ :states 'normal
+ :keymaps 'override
  "" nil
- "C-v"   #'magit-status
+ "C-m"   #'magit-status
  "C-c"   #'magit-clone
- "C-t"   #'magit-todos-list
  "C-x"   #'magit-file-delete)
 
 
-
-
-;; other
-(general-define-key
- :prefix (concat salih/prefix-global "C-e")
- "" nil
- "C-e" #'salih/eshell
- "C-f" #'elfeed)
-
-;; projectile
-;; TODO add better bindings for it
-;; (projectile-mode +1)
-;; (define-key projectile-mode-map (kbd "C-x p")   #'projectile-command-map)
-;; (define-key projectile-mode-map (kbd "C-x p a") #'projectile-add-known-project)
-
-;; convenient
-
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
-
 
 (map!
  :prefix salih/prefix-mode

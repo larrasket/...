@@ -973,4 +973,10 @@ Version 2015-07-30"
   (advice-add symbol :after (lambda (&rest _) (advice-remove symbol function)))
   (advice-add symbol where function props))
 
+
+(defun salih/format-all-ensure-formatter ()
+  (interactive)
+  (if (derived-mode-p  'prog-mode)
+      (call-interactively #'format-all-ensure-formatter)))
+
 (provide '+helper)

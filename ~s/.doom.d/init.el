@@ -14,7 +14,6 @@
         +pragmata-pro)
        modeline
        (popup +defaults)
-       vi-tilde-fringe
        workspaces
 
        :editor

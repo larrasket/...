@@ -23,7 +23,7 @@
 (add-hook 'native-comp-limple-mode-hook #'centaur-tabs-local-mode)
 (add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
 (add-hook 'html-mode-hook               #'sgml-electric-tag-pair-mode)
-(add-hook 'format-all-mode-hook         #'format-all-ensure-formatter)
+(add-hook 'prog-mode-hook               #'salih/format-all-ensure-formatter)
 (add-hook 'prog-mode-hook               #'highlight-indent-guides-mode)
 (add-hook 'nov-mode-hook                #'nov-xwidget-inject-all-files)
 (add-hook 'eshell-alias-load-hook       'salih/eshell-load-bash-aliases)
