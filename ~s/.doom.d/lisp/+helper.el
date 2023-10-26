@@ -42,10 +42,12 @@
                          (?P . "🨅"))))
     (save-excursion
       (goto-char (point-min))
-      (while (re-search-forward "\\(K\\|Q\\|R\\|B\\|N\\|P\\)[a-h][1-8]" (point-max) t)
+      (while (re-search-forward "\\(K\\|Q\\|R\\|B\\|N\\|P\\)[a-h][1-8]"
+                                (point-max) t)
         (let ((piece (string-to-char (match-string 1)))
               (destination (match-string 0)))
-          (replace-match (concat (cdr (assoc piece piece-symbols)) (substring destination 1))
+          (replace-match (concat (cdr (assoc piece piece-symbols))
+                                 (substring destination 1))
                          t t))))))
 
 (defun chess-notation-to-symbols-region (start end)
@@ -138,7 +140,11 @@ Version 2019-11-04 2021-02-16"
        ((string-equal system-type "windows-nt")
         (mapc
          (lambda ($fpath)
-           (shell-command (concat "PowerShell -Command \"Invoke-Item -LiteralPath\" " "'" (shell-quote-argument (expand-file-name $fpath )) "'")))
+           (shell-command (concat
+                           "PowerShell -Command \"Invoke-Item -LiteralPath\" "
+                           "'"
+                           (shell-quote-argument
+                            (expand-file-name $fpath )) "'")))
          $file-list))
        ((string-equal system-type "darwin")
         (mapc
@@ -148,16 +154,20 @@ Version 2019-11-04 2021-02-16"
        ((string-equal system-type "gnu/linux")
         (mapc
          (lambda ($fpath) (let ((process-connection-type nil))
-                            (start-process "" nil "xdg-open" $fpath))) $file-list))))))
+                       (start-process "" nil "xdg-open" $fpath))) $file-list))))))
 
 ;; compile-and-run methods
 (defun salih/compile-and-run-cpp ()
   (interactive)
   (save-buffer)
   (compile (concat "g++ "  (file-name-nondirectory (buffer-file-name)) " -o "
-                   (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./"
-                   (file-name-sans-extension  (file-name-nondirectory (buffer-file-name))) " && rm "
-                   (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t  ) (other-window t)
+                   (file-name-sans-extension   (file-name-nondirectory
+                                                (buffer-file-name))) " && ./"
+                   (file-name-sans-extension  (file-name-nondirectory
+                                               (buffer-file-name))) " && rm "
+                   (file-name-sans-extension  (file-name-nondirectory
+                                               (buffer-file-name)))) t  )
+  (other-window t)
   (end-of-add-hook 'c++-mode))
 
 
@@ -165,9 +175,13 @@ Version 2019-11-04 2021-02-16"
   (interactive)
   (save-buffer)
   (compile (concat "gcc "  (file-name-nondirectory (buffer-file-name)) " -o "
-                   (file-name-sans-extension   (file-name-nondirectory (buffer-file-name))) " && ./"
-                   (file-name-sans-extension  (file-name-nondirectory (buffer-file-name))) " && rm "
-                   (file-name-sans-extension  (file-name-nondirectory (buffer-file-name)))) t  ) (other-window t)
+                   (file-name-sans-extension   (file-name-nondirectory
+                                                (buffer-file-name))) " && ./"
+                   (file-name-sans-extension  (file-name-nondirectory
+                                               (buffer-file-name))) " && rm "
+                   (file-name-sans-extension  (file-name-nondirectory
+                                               (buffer-file-name)))) t  )
+  (other-window t)
   (end-of-add-hook 'c-mode))
 
 (defun salih/make-c ()
@@ -210,8 +224,7 @@ Version 2019-11-04 2021-02-16"
   "Encrypt the currently opened file for RECIPIENTS and delete the original."
   (interactive
    (list (epa-select-keys (epg-make-context epa-protocol)
-                          "Select recipients for encryption. If no one is selected, symmetric encryption
-  will be performed.")))
+                          "Select recipients for encryption. If no one is selected, symmetric encryption will be performed.")))
   (let* ((file (buffer-file-name))
          (cipher (concat file
                          (if (eq epa-protocol 'OpenPGP)
@@ -225,7 +238,8 @@ Version 2019-11-04 2021-02-16"
     (epg-context-set-progress-callback context
 				       (cons
 					#'epa-progress-callback-function
-					(format "Encrypting %s..." (file-name-nondirectory file))))
+					(format "Encrypting %s..."
+                                                (file-name-nondirectory file))))
     (message "Encrypting %s..." (file-name-nondirectory file))
     (condition-case error
 	(epg-encrypt-file context file recipients cipher)
@@ -341,7 +355,8 @@ automatically previewed."
                          'follow-link t
                          'help-echo
                          (format "%s (%s)" label
-                                 (propertize (symbol-name action) 'face 'doom-dashboard-menu-desc)))
+                                 (propertize (symbol-name action) 'face
+                                             'doom-dashboard-menu-desc)))
                         (format "%-37s" (buffer-string)))
                       ;; Lookup command keys dynamically
                       (propertize
@@ -349,8 +364,11 @@ automatically previewed."
                            (when-let*
                                ((keymaps
                                  (delq
-                                  nil (list (when (bound-and-true-p evil-local-mode)
-                                              (evil-get-auxiliary-keymap +doom-dashboard-mode-map 'normal))
+                                  nil (list (when
+                                                (bound-and-true-p
+                                                 evil-local-mode)
+                                              (evil-get-auxiliary-keymap
+                                               +doom-dashboard-mode-map 'normal))
                                             +doom-dashboard-mode-map)))
                                 (key
                                  (or (when keymaps
@@ -372,7 +390,8 @@ automatically previewed."
 (setq +doom-dashboard-menu-sections
       '(("Reload last session"
          :when (cond ((modulep! :ui workspaces)
-                      (file-exists-p (expand-file-name persp-auto-save-fname persp-save-dir)))
+                      (file-exists-p (expand-file-name persp-auto-save-fname
+                                                       persp-save-dir)))
                      ((require 'desktop nil t)
                       (file-exists-p (desktop-full-file-name))))
          :face (:inherit (doom-dashboard-menu-title bold))
@@ -407,8 +426,10 @@ automatically previewed."
   (buffer-face-mode t))
 
 (defun salih/solaire-mode-real-buffer-custom-p ()
-  "Return t if the current buffer is the dashboard or scratch, or is a real (file-visiting) buffer."
-  (cond ((string-prefix-p "*sly-mrepl for sbcl*" (buffer-name (buffer-base-buffer)) ) t)
+  "Return t if the current buffer is the dashboard or scratch, or is a real
+(file-visiting) buffer."
+  (cond ((string-prefix-p "*sly-mrepl for sbcl*" (buffer-name
+                                                  (buffer-base-buffer)) ) t)
         ((string-prefix-p "*eshell*" (buffer-name (buffer-base-buffer)) ) t)
         ((string-prefix-p "*julia" (buffer-name (buffer-base-buffer)) ) t)
         ((string-prefix-p "*doom*" (buffer-name (buffer-base-buffer)) ) t)
@@ -418,7 +439,8 @@ automatically previewed."
 (defun centaur-tabs-buffer-groups ()
   "`centaur-tabs-buffer-groups' control buffers' group rules.
 
-Group centaur-tabs with mode if buffer is derived from `eshell-mode' `emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
+Group centaur-tabs with mode if buffer is derived from `eshell-mode'
+`emacs-lisp-mode' `dired-mode' `org-mode' `magit-mode'.
 All buffer name start with * will group to \"Emacs\".
 Other buffer group by `centaur-tabs-get-group-name' with project name."
   (list
@@ -625,12 +647,15 @@ tasks."
                 (while (search-forward pattern nil t)
                   (push (list (format "%d %s" index
                                       (replace-regexp-in-string "\n" " "
-                                                                (thing-at-point 'line)))
+                                                                (thing-at-point
+                                                                 'line)))
                               index (point))
                         results)))))
           (setq index (1+ index)))))
     ;; (print results)))
-    (seq-let (index point) (alist-get (completing-read "Jump to: " (reverse results)) results
+    (seq-let (index point) (alist-get (completing-read "Jump to: " (reverse
+                                                                    results))
+                                      results
                                       nil nil #'string=)
       (nov-goto-document index)
       (goto-char point))))
@@ -667,7 +692,9 @@ tasks."
          (file-path (read-file-name "Insert file path: ")))
     (if (file-exists-p file-path)
         (if current-buffer-file
-            (let ((relative-path (file-relative-name file-path (file-name-directory current-buffer-file))))
+            (let ((relative-path (file-relative-name file-path
+                                                     (file-name-directory
+                                                      current-buffer-file))))
               (insert relative-path))
           (insert file-path))
       (message "File does not exist: %s" file-path))))
@@ -853,7 +880,8 @@ tasks."
   (mapcar (lambda (node) (org-roam-node-title (cdr node)))
           node-list))
 
-(setq roam-titles (salih/org-roam-get-node-files (org-roam-node-read--completions)))
+(setq roam-titles (salih/org-roam-get-node-files
+                   (org-roam-node-read--completions)))
 (defun salih/get-org-roam-titles () roam-titles)
 
 (setq org-roam-buffer-source
@@ -878,7 +906,8 @@ tasks."
                            (run-hook-with-args 'org-roam-post-node-insert-hook
                                                id
                                                description)))
-                     (find-file (org-roam-node-file (org-roam-node-from-title-or-alias name)))))
+                     (find-file (org-roam-node-file
+                                 (org-roam-node-from-title-or-alias name)))))
 
         :new ,(lambda (name)
                 (let* ((n (org-roam-node-create :title name)))
@@ -897,7 +926,8 @@ tasks."
                                             description)))))
 
 
-                (setq roam-titles (salih/org-roam-get-node-files (org-roam-node-read--completions))))
+                (setq roam-titles (salih/org-roam-get-node-files
+                                   (org-roam-node-read--completions))))
 
         :items    ,#'salih/get-org-roam-titles))
 
@@ -916,8 +946,9 @@ tasks."
                            (eq window (posn-window (event-start event)))))
             (setq event (read-event "Click where you want the start of the note to be!")))
           (let* ((col-row (posn-col-row (event-start event)))
-                 (click-position (org-noter--conv-page-scroll-percentage (+ (window-vscroll) (cdr col-row))
-                                                                         (+ (window-hscroll) (car col-row)))))
+                 (click-position (org-noter--conv-page-scroll-percentage
+                                  (+ (window-vscroll) (cdr col-row))
+                                  (+ (window-hscroll) (car col-row)))))
             (setq v-position (car click-position)
                   h-position (cdr click-position)))))
       v-position)))

@@ -21,7 +21,9 @@
 
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
-      user-first-name                                   (cl-first (split-string user-full-name " "))
+      user-first-name                                   (cl-first
+                                                         (split-string
+                                                          user-full-name " "))
 
       ;; emacs settings
       inhibit-automatic-native-compilation              t
@@ -103,25 +105,37 @@
       ;; school
       salih/source-directory                             "~/roam/references/source/"
       salih/books                                       (let (file-list)
-                                                          (dolist (file (directory-files-recursively salih/source-directory "" nil t))
+                                                          (dolist
+                                                              (file
+                                                               (directory-files-recursively
+                                                                salih/source-directory
+                                                                "" nil t))
                                                             (push file file-list))
                                                           file-list)
 
       org-roam-directory                                (file-truename "~/roam")
-      bibtex-completion-library-path                    (list salih/source-directory)
+      bibtex-completion-library-path                    (list
+                                                         salih/source-directory)
       bibtex-completion-notes-path                      "~/roam/reference/"
       bibtex-completion-bibliography                    "/home/l/configs/~s/ref.bib"
-      org-cite-global-bibliography                      (list bibtex-completion-bibliography)
+      org-cite-global-bibliography                      (list
+                                                         bibtex-completion-bibliography)
       org-cite-csl-styles-dir                           "/home/l/configs/~s/assets/csl"
       citar-bibliography                                bibtex-completion-bibliography
-      org-cite-csl--fallback-style-file                 (expand-file-name "chicago-ibid.csl" org-cite-csl-styles-dir)
+      org-cite-csl--fallback-style-file                 (expand-file-name
+                                                         "chicago-ibid.csl"
+                                                         org-cite-csl-styles-dir)
 
       ;; translate
       gts-translate-list                                '(("en" "ar"))
       gts-default-translator                            (gts-translator
-                                                         :picker (gts-prompt-picker)
-                                                         :engines (list (gts-google-engine))
-                                                         :render (gts-buffer-render))
+                                                         :picker
+                                                         (gts-prompt-picker)
+                                                         :engines
+                                                         (list
+                                                          (gts-google-engine))
+                                                         :render
+                                                         (gts-buffer-render))
 
       ;; keyboard
       salih/prefix-global                               "C-x "
@@ -132,7 +146,8 @@
       shr-inhibit-images                                nil
 
       ;; vertico
-      vertico-buffer-display-action                     '(display-buffer-at-bottom (window-height . 20))
+      vertico-buffer-display-action                     '(display-buffer-at-bottom
+                                                          (window-height . 20))
       enable-recursive-minibuffers                      nil
 
       ;; git-auto-commit-mode
@@ -205,7 +220,11 @@
       (mu4e-error "No xwidget support available"))
     (let ((browse-url-handlers nil)
           (browse-url-browser-function (lambda (url &optional _rest)
-                                         (with-output-to-string (call-process "tidy" nil nil nil "-m" "--numeric-entities" "yes" (remove-file-prefix url)))
+                                         (with-output-to-string
+                                           (call-process "tidy" nil nil nil "-m"
+                                                         "--numeric-entities"
+                                                         "yes"
+                                                         (remove-file-prefix url)))
                                          (xwidget-webkit-browse-url url))))
       (mu4e-action-view-in-browser msg)))
 
