@@ -27,6 +27,10 @@
   (define-key company-search-map (kbd "C-g") #'evil-escape))
 
 
+(map!
+ :mode wordnut-mode
+ :n
+ "q" #'+workspace/close-window-or-workspace)
 
 (general-define-key
  :keymaps 'prog-mode-map
