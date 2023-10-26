@@ -7,6 +7,7 @@
 (global-unset-key        (kbd "C-f"))
 (define-key org-mode-map (salih/mode "]") nil)
 (define-key org-mode-map (salih/mode "[") nil)
+(define-key input-decode-map [?\C-m] [C-m])
 (general-auto-unbind-keys)
 
 
@@ -116,7 +117,7 @@
  "C-f"     #'org-footnote-action
  "c i"     #'org-clock-in
  "c o"     #'org-clock-out
- "C-m"     #'org-media-note-hydra/body
+ "<C-m>"     #'org-media-note-hydra/body
  "H-i H-i" #'org-id-get-create
  "H-i C-l" #'org-web-tools-insert-link-for-url
  "H-i C-d" #'org-download-clipboard
@@ -257,11 +258,11 @@
 ;; magit and vc
 ;; TODO refactor if possible
 (general-define-key
- :prefix "C-m"
+ :prefix "<C-m>"
  :states 'normal
  :keymaps 'override
  "" nil
- "C-m"   #'magit-status
+ "<C-m>"   #'magit-status
  "C-c"   #'magit-clone
  "C-x"   #'magit-file-delete)
 
