@@ -4,7 +4,6 @@
 
 (add-hook 'prog-mode-hook               #'auto-fill-mode)
 (add-hook 'csv-mode-hook                #'csv-align-mode)
-(add-hook 'html-mode-hook               #'format-all-mode)
 (add-hook 'elfeed-show-mode-hook        #'visual-line-mode)
 (add-hook 'prog-mode-hook               #'column-enforce-mode)
 (add-hook 'after-init-hook              #'global-flycheck-mode)
@@ -23,6 +22,8 @@
 (add-hook 'dired-mode-hook              #'centaur-tabs-local-mode)
 (add-hook 'native-comp-limple-mode-hook #'centaur-tabs-local-mode)
 (add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
+(add-hook 'html-mode-hook               #'sgml-electric-tag-pair-mode)
+(add-hook 'format-all-mode-hook         #'format-all-ensure-formatter)
 (add-hook 'prog-mode-hook               #'highlight-indent-guides-mode)
 (add-hook 'nov-mode-hook                #'nov-xwidget-inject-all-files)
 (add-hook 'eshell-alias-load-hook       'salih/eshell-load-bash-aliases)

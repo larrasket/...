@@ -165,6 +165,7 @@
 
       ;; other
       company-idle-delay                                0.3
+      format-all-show-errors                            'never
       proced-auto-update-flag                           t
       salih/temp-roam-insert                            nil
       large-file-warning-threshold                      nil
