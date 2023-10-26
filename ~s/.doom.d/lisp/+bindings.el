@@ -219,12 +219,15 @@
 (salih/set-convenient-keys)
 
 
-;; file keys
+;; files and roam
 (general-define-key
  :prefix "C-f"
  :states 'normal
  :keymaps 'override
- "C-r" #'recentf-open-files)
+ "C-f"  #'org-roam-node-find
+ "C-j"  #'org-roam-dailies-capture-today
+ "C-b"  #'org-roam-buffer-toggle
+ "C-r"  #'recentf-open-files)
 
 
 ;; search global
@@ -247,15 +250,6 @@
  "C-n C-f" #'citar-open-notes
  "C-n C-b" #'citar-open-notes
  "C-n C-o" #'salih/open-book)
-
-;; roam
-(general-define-key
- :prefix (concat salih/prefix-global "C-r")
- "C-b"  #'org-roam-buffer-toggle
- "c"    #'org-roam-capture
- "C-f"  #'org-roam-node-find
- "C-j"  #'org-roam-dailies-capture-today
- "C-t"  #'org-roam-dailies-goto-today)
 
 
 
