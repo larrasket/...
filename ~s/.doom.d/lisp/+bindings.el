@@ -7,7 +7,6 @@
 (global-unset-key        (kbd "C-f"))
 (define-key org-mode-map (salih/mode "]") nil)
 (define-key org-mode-map (salih/mode "[") nil)
-(define-key input-decode-map [?\C-m] [C-m])
 (general-auto-unbind-keys)
 
 
@@ -46,11 +45,6 @@
  :prefix  salih/prefix-mode
  "C-o"    (lambda () (interactive) (org-capture nil "p")))
 
-
-(general-define-key
- :keymaps 'flycheck-mode-map
- :prefix  salih/prefix-mode
- "C-e"    #'+default/diagnostics)
 
 
 (general-define-key
@@ -121,7 +115,7 @@
  "C-f"     #'org-footnote-action
  "c i"     #'org-clock-in
  "c o"     #'org-clock-out
- "<C-m>"     #'org-media-note-hydra/body
+ "H-m"     #'org-media-note-hydra/body
  "H-i H-i" #'org-id-get-create
  "H-i C-l" #'org-web-tools-insert-link-for-url
  "H-i C-d" #'org-download-clipboard
@@ -256,12 +250,13 @@
 ;; magit and vc
 ;; TODO refactor if possible
 (general-define-key
- :prefix "<C-m>"
+ :prefix "H-m"
  :states 'normal
  :keymaps 'override
  "" nil
- "<C-m>"   #'magit-status
+ "H-m" #'magit-status
  "C-c"   #'magit-clone
+ "C-l"   #'magit-log-buffer-file
  "C-d"   #'magit-file-delete)
 
 
@@ -339,5 +334,4 @@
 
 (define-key evil-motion-state-map (kbd "H-i") 'evil-jump-backward)
 (define-key evil-motion-state-map "-" 'er/expand-region)
-
 (provide '+bindings)

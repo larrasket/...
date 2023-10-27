@@ -591,6 +591,7 @@ tasks."
 
 (defun salih/keyboard-config ()
   (when (display-graphic-p)
+    (keyboard-translate ?\C-m ?\H-m)
     (keyboard-translate ?\C-i ?\H-i)))
 
 (defun salih/org-roam-node-insert ()
