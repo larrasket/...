@@ -3,10 +3,11 @@
 
 
 
-(package! org-ql
-  :recipe (:host github
-           :repo "luggages/org-ql"
-           :branch "priority"))
+(package! org-ql :recipe
+  (:host github
+   :repo "larrasket/org-ql"
+   :branch "priority"))
+
 
 (unpin! org-roam)
 (package! org-roam-ui)
