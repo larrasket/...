@@ -293,7 +293,7 @@ automatically previewed."
 (defun salih/xwidget-open-html ()
   "Open the current buffer's file path in an xwidget window."
   (interactive)
-  (add-hook 'after-save-hook 'xwidget-webkit-reload)
+  (add-hook 'after-save-hook 'xwidget-webkit-reload nil t)
   (let ((file-path (buffer-file-name)))
     (when file-path
       (let ((xwidget (xwidget-webkit-browse-url (concat "file://" file-path))))
