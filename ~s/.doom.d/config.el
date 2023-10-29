@@ -15,7 +15,8 @@
               highlight-indent-guides-auto-enabled      nil
               pdf-view-display-size                     'fit-width)
 
-(defvar IS-PLASMA (let ((output (shell-command-to-string "pgrep -x plasmashell")))
+(defvar IS-PLASMA (let ((output
+                         (shell-command-to-string "pgrep -x plasmashell")))
                     (not (string-blank-p output))))
 
 
