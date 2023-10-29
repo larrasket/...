@@ -5,7 +5,6 @@ static const char *dmenucmd[] = {"dmenu_run", "-g", "12",    "-l",
 
 
 /* Constants */
-
 static const double activeopacity   = 1.0f;     /* Window opacity when it's focused (0 <= opacity <= 1) */
 static const double inactiveopacity = 1.0f;     /* Window opacity when it's inactive (0 <= opacity <= 1) */
 #define TERMINAL "kitty"
@@ -48,7 +47,7 @@ static int smartgaps          = 0;        /* 1 means no outer gap when there is 
 static int showbar            = 1;        /* 0 means no bar */
 static int topbar             = 1;        /* 0 means bottom bar */
 static char *fonts[]          = { "monospace:size=10", "NotoColorEmoji:pixelsize=10:antialias=true:autohint=true"  };
-static char normbgcolor[]           = "#222222";
+static char normbgcolor[]           = "#000000";
 static char normbordercolor[]       = "#969696";
 static char normfgcolor[]           = "#bbbbbb";
 static char selfgcolor[]            = "#eeeeee";
@@ -316,4 +315,5 @@ static const Button buttons[] = {
 	{ ClkTagBar,		0,		Button5,	shiftview,	{.i = 1} },
 	{ ClkRootWin,		0,		Button2,	togglebar,	{0} },
 };
+
 

@@ -45,7 +45,7 @@
       doom-modeline-icon                                nil
       doom-theme                                        (if IS-PLASMA
                                                             'doom-monokai-spectrum
-                                                          'kaolin-dark)
+                                                          'modus-vivendi)
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       display-line-numbers-type                         'relative
       display-line-numbers                              t
