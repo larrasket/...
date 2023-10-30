@@ -203,9 +203,11 @@
 (after! mu4e
   (setq message-send-mail-function              'smtpmail-send-it
         starttls-use-gnutls                     t
-        mu4e-compose-reply-ignore-address       `("no-?reply" ,user-mail-address)
+        mu4e-compose-reply-ignore-address       `("no-?reply"
+                                                  ,user-mail-address)
         mu4e-update-interval                    200
-        mu4e-compose-signature                  (format "Regards,\n%s" user-first-name)
+        mu4e-compose-signature                  (format "Regards,\n%s"
+                                                        user-first-name)
         smtpmail-default-smtp-server            "mail.gmx.com"
         smtpmail-smtp-server                    smtpmail-default-smtp-server
         smtpmail-smtp-service                   587
