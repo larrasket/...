@@ -1015,12 +1015,13 @@ Version 2015-07-30"
 
 
 (after! git-gutter
-  (modus-themes-with-colors
+  (unless (featurep 'tadwin)
+    (modus-themes-with-colors
     (custom-set-faces
      ;; Replace green with blue if you use `modus-themes-deuteranopia'.
      `(git-gutter-fr:added ((,class :foreground ,green-fringe-bg)))
      ;; `(git-gutter-fr:deleted ((,class :foreground ,red-fringe-bg)))
-     `(git-gutter-fr:modified ((,class :foreground ,yellow-fringe-bg))))))
+     `(git-gutter-fr:modified ((,class :foreground ,yellow-fringe-bg)))))))
 
 
 
