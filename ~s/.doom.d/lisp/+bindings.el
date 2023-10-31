@@ -64,9 +64,16 @@
 
 
 (add-hook 'pdf-view-mode-hook (lambda ()
-                                (evil-local-set-key 'normal (salih/mode "C-c") #'org-noter-insert-precise-note)
-                                (evil-local-set-key 'normal (kbd "J") #' pdf-view-next-page-command)
-                                (evil-local-set-key 'normal (kbd "K") #' pdf-view-previous-page-command)))
+                                (evil-local-set-key 'normal (salih/mode "C-c")
+                                                    #'org-noter-insert-precise-note)
+                                (evil-local-set-key 'normal (kbd "J")
+                                                    #' pdf-view-next-page-command)
+                                (evil-local-set-key 'normal (kbd "<right>")
+                                                    nil)
+                                (evil-local-set-key 'normal (kbd "<left>")
+                                                    nil)
+                                (evil-local-set-key 'normal (kbd "K")
+                                                    #' pdf-view-previous-page-command)))
 
 
 
