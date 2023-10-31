@@ -44,7 +44,6 @@
 
        :tools
        biblio
-       tree-sitter
        (lookup
         +dictionary
         +offline)
@@ -61,8 +60,8 @@
        common-lisp
        (csharp +lsp)
        emacs-lisp
-       (go +lsp
-           +tree-sitter)
+       (go +lsp)
+           
        json
        (latex +flod
               +latexmk
@@ -74,10 +73,10 @@
        sh
        yaml
        (julia
-        +lsp
-        +tree-sitter)
+        +lsp)
+        
        ess
-       (java +lsp +tree-sitter)
+       (java +lsp)
 
        :email
        mu4e
@@ -102,8 +101,6 @@
        src
        gen
        genorg
-       ;; gitcolor
-       ;; chess
        cite
        roam
        bind)
