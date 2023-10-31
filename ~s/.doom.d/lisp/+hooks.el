@@ -31,7 +31,7 @@
 (add-hook 'after-make-frame-functions   (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
 (add-hook 'python-mode-hook             (lambda () (flycheck-mode -1)))
 (add-hook 'bibtex-mode-hook             (lambda () (add-hook 'after-save-hook '+format/buffer)))
-(add-hook 'org-mode-hook                (lambda () (org-bullets-mode 1)))
+;; (add-hook 'org-mode-hook                (lambda () (org-bullets-mode 1)))
 (add-hook 'pdf-view-mode-hook           (lambda ()
                                           (set (make-local-variable 'evil-normal-state-cursor) (list nil))))
 ;; (add-hook 'pdf-view-mode-hook           #'pdf-view-midnight-minor-mode)
