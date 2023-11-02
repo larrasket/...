@@ -11,10 +11,10 @@
       erc-log-channels-directory                        "~/me/irc-log"
       erc-quit-reason                                   'salih/quit-erc
       erc-hide-list                                     '("JOIN" "PART" "MODE"
-                                                          "324" ; modes
-                                                          "329" ; channel creation date
-                                                          "332" ; topic notice
-                                                          "333" ; who set the topic
+                                                          "324"  ; modes
+                                                          "329"  ; channel creation date
+                                                          "332"  ; topic notice
+                                                          "333"  ; who set the topic
                                                           "353") ; Names notice
 
       erc-autojoin-channels-alist                       '((Libera.Chat
@@ -37,7 +37,7 @@
                    :password password)))
 
 (defun salih/quit-erc (s)
-  "quit quote"
+  "quit cute quote"
   "I seek refuge in God, from Satan the rejected")
 
  
