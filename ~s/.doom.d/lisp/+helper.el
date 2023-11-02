@@ -6,6 +6,7 @@
 (defun salih/mode (key-sequence)
   (kbd (concat salih/prefix-mode   key-sequence)))
 
+
 ;; fix evil C-g methods
 (defun salih/evil-escape-and-abort-company ()
   (interactive)
@@ -817,6 +818,9 @@ tasks."
        (string-prefix-p "*elfeed-log*" name)
        (string-prefix-p "*elfeed-tube-log*" name)
        (string-prefix-p "*Org Clock*" name)
+
+
+       (string-prefix-p "*Local Variables" name)
 
 
        (string-prefix-p "*flycheck" name)
