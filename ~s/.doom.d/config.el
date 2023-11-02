@@ -48,8 +48,8 @@
                                                             'doom-monokai-spectrum
                                                           'modus-vivendi)
       +doom-dashboard-ascii-banner-fn                   'salih/banner
-      display-line-numbers-type                         'relative
-      display-line-numbers                              t
+      display-line-numbers-type                         'nil
+      ;; display-line-numbers                              nil
       all-the-icons-color-icons                         nil
       treemacs-position                                 'right
       fancy-splash-image                                "~/configs/~s/assets/chomsky.png"
@@ -171,12 +171,11 @@
 
       ;; tabs
       centaur-tabs-enable-key-bindings                  t
-      centaur-tabs-set-icons                            t
-      centaur-tabs-plain-icons                          t
-      centaur-tabs-set-modified-marker                  t
       centaur-tabs-close-button                         "✕"
       centaur-tabs-modified-marker                      "•"
       centaur-tabs-cycle-scope                          'tabs
+      centaur-tabs-height                               15
+      centaur-tabs-set-icons                            nil
 
       ;; other
       company-idle-delay                                0.3
