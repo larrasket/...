@@ -28,8 +28,8 @@
        word-wrap
 
        :emacs
-       (dired
-        +icons)
+       (dired)
+        
        electric
        undo
        vc
