@@ -19,13 +19,13 @@ local config = {
     -- Change the following lines if the locations of executables differ from the defaults
     -- If set to empty, the path will be guessed.
     ffmpeg_path = "",
-    ffsubsync_path = "",
+    ffsubsync_path = "/home/l/.local/bin/ffsubsync",
     alass_path = "/usr/bin/alass",
 
     -- Choose what tool to use. Allowed options: ffsubsync, alass, ask.
     -- If set to ask, the add-on will ask to choose the tool every time.
-    audio_subsync_tool = "alass",
-    altsub_subsync_tool = "alass",
+    audio_subsync_tool = "ask",
+    altsub_subsync_tool = "ask",
 
     -- After retiming, tell mpv to forget the original subtitle track.
     unload_old_sub = true,
