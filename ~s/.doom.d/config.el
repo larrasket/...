@@ -5,14 +5,12 @@
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require 'go-translate)                 ; define trnaslation engine in config.el
-(require 'highlight-indent-guides)      ; enables indent guide
 
 
 (setq-default frame-title-format                        '("%b")
               bidi-paragraph-direction                  'left-to-right
               org-download-image-dir                    "~/roam/media"
               indent-tabs-mode                          nil
-              highlight-indent-guides-auto-enabled      nil
               pdf-view-display-size                     'fit-width)
 
 (defvar IS-PLASMA (let ((output
@@ -52,7 +50,6 @@
       display-line-numbers-type                         'relative
       display-line-numbers                              t
       all-the-icons-color-icons                         nil
-      highlight-indent-guides-method                    'bitmap
       treemacs-position                                 'right
       fancy-splash-image                                "~/configs/~s/assets/chomsky.png"
 

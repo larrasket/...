@@ -12,9 +12,5 @@
 (custom-set-faces
  '(doom-modeline-buffer-modified ((t (:inherit (doom-modeline-urgent))))))
 
-(set-face-background 'highlight-indent-guides-odd-face "darkgray")
-(set-face-background 'highlight-indent-guides-odd-face "darkgray")
-(set-face-background 'highlight-indent-guides-even-face "dimgray")
-(set-face-foreground 'highlight-indent-guides-character-face "dimgray")
 
 (provide '+deep)
