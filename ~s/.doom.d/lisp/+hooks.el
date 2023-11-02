@@ -4,7 +4,6 @@
 
 (add-hook 'prog-mode-hook               #'auto-fill-mode)
 (add-hook 'csv-mode-hook                #'csv-align-mode)
-(add-hook 'elfeed-show-mode-hook        #'visual-line-mode)
 (add-hook 'prog-mode-hook               #'column-enforce-mode)
 (add-hook 'after-init-hook              #'global-flycheck-mode)
 (add-hook 'maxima-inferior-mode-hook    #'salih/disable-bright)
