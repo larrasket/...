@@ -290,12 +290,13 @@
 (map!
  :prefix salih/prefix-mode
  "H-i C-u" #'insert-char
- "C-k" #'kill-current-buffer
- "C-s" nil
- "C-t" #'gts-do-translate
- "]"   #'centaur-tabs-forward
- "["   #'centaur-tabs-backward
- "C-v" #'magit-log-buffer-file)
+ "C-k"     #'kill-current-buffer
+ "C-w"     #'write-file
+ "C-s"     nil
+ "C-t"     #'gts-do-translate
+ "]"       #'centaur-tabs-forward
+ "["       #'centaur-tabs-backward
+ "C-v"     #'magit-log-buffer-file)
 
 
 ;; resize windows
