@@ -25,6 +25,7 @@
       user-first-name                                   (cl-first
                                                          (split-string
                                                           user-full-name " "))
+      user-short-username                               "lr0"
 
       ;; emacs settings
       inhibit-automatic-native-compilation              t
@@ -252,4 +253,7 @@
 (require '+bindings)
 (require '+org-tags)
 (require '+custom)
+(require '+erc)
 (require '+deep)
+
+

@@ -11,7 +11,10 @@
 
 
 
-(define-key flyspell-mode-map (kbd "C-;") nil)
+(after! flyspell
+  (define-key flyspell-mode-map (kbd "C-;") nil))
+
+
 (define-key evil-visual-state-map       (kbd "C-g") #'evil-force-normal-state)
 (define-key evil-insert-state-map       (kbd "C-g") #'evil-force-normal-state)
 (define-key evil-replace-state-map      (kbd "C-g") #'evil-force-normal-state)
@@ -31,6 +34,13 @@
  :mode wordnut-mode
  :n
  "q" #'+workspace/close-window-or-workspace)
+
+
+(map!
+ :map eww-mode-map
+ :n
+ "C" #'eww-browse-with-external-browser)
+
 
 (general-define-key
  :keymaps 'prog-mode-map
@@ -269,12 +279,18 @@
  "C-l"   #'magit-log-buffer-file
  "C-d"   #'magit-file-delete)
 
+(general-define-key
+ :keymap 'magit-mode-map
+ "C-c C-d" #'magit-file-delete)
+
+
 
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
 
 (map!
  :prefix salih/prefix-mode
  "H-i C-u" #'insert-char
+ "C-k" #'kill-current-buffer
  "C-s" nil
  "C-t" #'gts-do-translate
  "]"   #'centaur-tabs-forward
@@ -328,7 +344,6 @@
  "O" #'salih/elfeed-open-url
  "C" #'salih/elfeed-open-url-in-chrome
  "K" #'elfeed-goodies/split-show-prev)
-
 
 
 

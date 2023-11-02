@@ -98,7 +98,6 @@
        ;; yournickname and yourpassword as a NickName and password (repsectively
        ;; machine irc.libera.chat login yournickname password yourpassword
        ;; See. https://www.gnu.org/software/emacs/manual/html_node/emacs/Authentication.html
-       src
        gen
        genorg
        cite
