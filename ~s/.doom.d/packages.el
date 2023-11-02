@@ -19,15 +19,14 @@
                                         ;
 (package! grip-mode)                    ; I do not remember what's that for but
                                         ; sounds useful
+
 (package! column-enforce-mode)          ; I use this instead of `display-fill-column-indicator`
 
 (package! go-translate)                 ; google API for lingustics
 
-
 (package! consult-org-roam)             ; useful org-roam functions
 
 (package! sage-shell-mode)              ; for me when I like to be a mathematician
-
 
 (package! awqat
   :recipe (:host github
@@ -35,7 +34,8 @@
 
 (unpin! evil-collection)                ; fixes evil for mu4e
 (package! evil-collection
-  :recipe (:repo "luggages/evil-collection" :branch "mu4e-development"))
+  :recipe (:repo "luggages/evil-collection"
+           :branch "mu4e-development"))
 
 
 (package! ox-tufte
@@ -49,12 +49,8 @@
 (package! centaur-tabs)                 ; nice tabs
 
 (package! vulpea)                       ; roam advanced functions
-
-
 (package! nov)                          ; browse epubs from emacs
-
 (package! org-bullets)                  ; nicer org view
-
 (package! elfeed-tube)                  ; see more yt info from elfeed
 
 (package! maxima)                       ; a maxima repl.. not sure about it (and
@@ -62,7 +58,10 @@
 
 
 (package! pretty-hydra)                 ; for the next line
-(package! org-media-note :recipe (:host github :repo "yuchen-lea/org-media-note"))
+
+(package! org-media-note
+  :recipe (:host github
+           :repo "yuchen-lea/org-media-note"))
 
 (package! ob-julia-vterm)
 (unpin! ess)
