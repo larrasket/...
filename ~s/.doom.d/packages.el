@@ -11,11 +11,6 @@
 
 (package! git-auto-commit-mode)         ; auto commit
 
-; (package! highlight-indent-guides)      ; this package needs a lot of
-;;                                         ; improvement or maybe it should be
-;;                                         ; replaced by something native by Emacs.
-;;                                         ; Yet it helps making it a little but
-;;                                         ; more modern
 
 (package! grip-mode)                    ; I do not remember what's that for but
                                         ; sounds useful
@@ -73,3 +68,5 @@
 (package! kaolin-themes)
 (unpin! vertico)
 (package! vertico)
+
+(package! srht)

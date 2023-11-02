@@ -24,6 +24,7 @@
                                                          (split-string
                                                           user-full-name " "))
       user-short-username                               "lr0"
+      srht-username                                     user-short-username
 
       ;; emacs settings
       inhibit-automatic-native-compilation              t
