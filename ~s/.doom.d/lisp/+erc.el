@@ -18,10 +18,8 @@
                                                           "353") ; Names notice
 
       erc-autojoin-channels-alist                       '((Libera.Chat
-                                                           "##tea"
                                                            "#org-mode"
                                                            "#go-nuts"
-                                                           "#archlinux-offtopic"
                                                            "#emacs"
                                                            "##arabic")))
 
