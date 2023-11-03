@@ -24,6 +24,7 @@
 (add-hook 'html-mode-hook               #'sgml-electric-tag-pair-mode)
 (add-hook 'prog-mode-hook               #'salih/format-all-ensure-formatter)
 (add-hook 'nov-mode-hook                #'nov-xwidget-inject-all-files)
+(add-hook 'dired-after-readin-hook      #'dired-git-info-auto-enable)
 (add-hook 'eshell-alias-load-hook       'salih/eshell-load-bash-aliases)
 (add-hook 'yas-minor-mode               (lambda () (yas-activate-extra-mode 'fundamental-mode)))
 (add-hook 'after-make-frame-functions   (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
