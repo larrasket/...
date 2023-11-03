@@ -15,19 +15,21 @@
   (define-key flyspell-mode-map (kbd "C-;") nil))
 
 
-(define-key evil-visual-state-map       (kbd "C-g") #'evil-force-normal-state)
-(define-key evil-insert-state-map       (kbd "C-g") #'evil-force-normal-state)
-(define-key evil-replace-state-map      (kbd "C-g") #'evil-force-normal-state)
-(define-key evil-operator-state-map     (kbd "C-g") #'evil-force-normal-state)
-(define-key evil-emacs-state-map        (kbd "C-g") #'evil-force-normal-state)
-(define-key evil-motion-state-map       (kbd "C-g") #'evil-force-normal-state)
-(define-key evil-normal-state-map       (kbd "C-g") #'evil-force-normal-state)
-(define-key evil-normal-state-map       (kbd "g w") #'evil-avy-goto-char-2)
-(define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
 
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "C-g") #'evil-force-normal-state)
-  (define-key company-search-map (kbd "C-g") #'evil-force-normal-state))
+
+;; (define-key evil-visual-state-map       (kbd "C-g") #'evil-force-normal-state)
+;; (define-key evil-insert-state-map       (kbd "C-g") #'evil-force-normal-state)
+;; (define-key evil-replace-state-map      (kbd "C-g") #'evil-force-normal-state)
+;; (define-key evil-operator-state-map     (kbd "C-g") #'evil-force-normal-state)
+;; (define-key evil-emacs-state-map        (kbd "C-g") #'evil-force-normal-state)
+;; (define-key evil-motion-state-map       (kbd "C-g") #'evil-force-normal-state)
+;; (define-key evil-normal-state-map       (kbd "C-g") #'evil-force-normal-state)
+;; (define-key evil-normal-state-map       (kbd "g w") #'evil-avy-goto-char-2)
+;; (define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
+
+;; (with-eval-after-load 'company
+;;   (define-key company-active-map (kbd "C-g") #'evil-force-normal-state)
+;;   (define-key company-search-map (kbd "C-g") #'evil-force-normal-state))
 
 
 (map!

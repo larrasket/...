@@ -593,7 +593,8 @@ tasks."
 (defun salih/keyboard-config ()
   (when (display-graphic-p)
     (keyboard-translate ?\C-m ?\H-m)
-    (keyboard-translate ?\C-i ?\H-i)))
+    (keyboard-translate ?\C-i ?\H-i))
+  (define-key key-translation-map (kbd "C-g") (kbd "<escape>")))
 
 (defun salih/org-roam-node-insert ()
   (interactive)
