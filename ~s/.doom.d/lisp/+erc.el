@@ -10,7 +10,7 @@
       erc-enable-logging                                t
       erc-log-channels-directory                        "~/me/irc-log"
       erc-quit-reason                                   'salih/quit-erc
-      erc-hide-list                                     '("JOIN" "PART" "MODE"
+      erc-hide-list                                     '("JOIN" "PART" "MODE" "QUIT"
                                                           "324"  ; modes
                                                           "329"  ; channel creation date
                                                           "332"  ; topic notice
