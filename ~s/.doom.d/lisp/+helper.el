@@ -1017,6 +1017,19 @@ Version 2015-07-30"
      ;; `(git-gutter-fr:deleted ((,class :foreground ,red-fringe-bg)))
      `(git-gutter-fr:modified ((,class :foreground ,yellow-fringe-bg)))))))
 
+(defmacro salih/disable-minor-mode-in-hook (hook mode-symbol)
+  `(add-hook ,hook
+             (lambda ()
+               (when (bound-and-true-p ,mode-symbol)
+                 (,mode-symbol -1)))))
+
+
+
+(defun salih/dired-git-info-auto-enable ()
+  "Enable dired-git-info only if there are less than 60 files."
+  (when (< (count-lines (point-min) (point-max)) 60)
+    (dired-git-info-auto-enable)))
+
 
 
 (provide '+helper)
