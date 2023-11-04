@@ -58,6 +58,12 @@
   :recipe (:host github
            :repo "yuchen-lea/org-media-note"))
 
+
+(package! indent-bars
+  :recipe (:host github
+           :repo "jdtsmith/indent-bars"))
+
+
 (package! ob-julia-vterm)
 (unpin! ess)
 (package! ess)

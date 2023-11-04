@@ -22,12 +22,14 @@
 (add-hook 'native-comp-limple-mode-hook #'centaur-tabs-local-mode)
 (add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
 (add-hook 'html-mode-hook               #'sgml-electric-tag-pair-mode)
-(add-hook 'prog-mode-hook               #'salih/format-all-ensure-formatter)
 (add-hook 'nov-mode-hook                #'nov-xwidget-inject-all-files)
-(add-hook 'dired-after-readin-hook      #'dired-git-info-auto-enable)
-(add-hook 'eshell-alias-load-hook       'salih/eshell-load-bash-aliases)
-(add-hook 'yas-minor-mode               (lambda () (yas-activate-extra-mode 'fundamental-mode)))
-(add-hook 'after-make-frame-functions   (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
+(add-hook 'eshell-alias-load-hook       #'salih/eshell-load-bash-aliases)
+(add-hook 'dired-after-readin-hook      #'salih/dired-git-info-auto-enable)
+(add-hook 'prog-mode-hook               #'salih/format-all-ensure-formatter)
+(add-hook 'yas-minor-mode               (lambda ()
+                                          (yas-activate-extra-mode 'fundamental-mode)))
+(add-hook 'after-make-frame-functions   (lambda (frame)
+                                          (with-selected-frame frame (salih/keyboard-config))))
 (add-hook 'python-mode-hook             (lambda () (flycheck-mode -1)))
 (add-hook 'bibtex-mode-hook             (lambda () (add-hook 'after-save-hook '+format/buffer)))
 ;; (add-hook 'org-mode-hook                (lambda () (org-bullets-mode 1)))
@@ -107,6 +109,10 @@ a good understanding. His praise endures forever. ")))
 ;; see https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
 (after! lsp
   (delete 'lsp-terraform lsp-client-packages))
+
+
+(use-package indent-bars
+  :hook ((lsp-mode) . indent-bars-mode))
 
 
 (provide '+hooks)
