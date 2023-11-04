@@ -17,7 +17,6 @@
 /~s/.config/mpv/scripts/run.sh
 /~s/.config/mpv/scripts/time_pairs.txt
 /~s/flycheck_**
-/~s/.doom.d/custom.el
 /~s/mpv/watch_later/
 /~s/.auctex-auto/
 /~s/__pycache__/
