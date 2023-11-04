@@ -24,8 +24,9 @@
 ;; (define-key evil-emacs-state-map        (kbd "C-g") #'evil-force-normal-state)
 ;; (define-key evil-motion-state-map       (kbd "C-g") #'evil-force-normal-state)
 ;; (define-key evil-normal-state-map       (kbd "C-g") #'evil-force-normal-state)
-;; (define-key evil-normal-state-map       (kbd "g w") #'evil-avy-goto-char-2)
-;; (define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
+;;
+(define-key evil-normal-state-map       (kbd "g w") #'evil-avy-goto-char-2)
+(define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
 
 ;; (with-eval-after-load 'company
 ;;   (define-key company-active-map (kbd "C-g") #'evil-force-normal-state)
@@ -82,40 +83,60 @@
  "C-d"    #'pdf-view-themed-minor-mode)
 
 
-(add-hook 'pdf-view-mode-hook (lambda ()
-                                (evil-local-set-key 'normal (salih/mode "C-c")
-                                                    #'org-noter-insert-precise-note)
-                                (evil-local-set-key 'normal (kbd "J")
-                                                    #' pdf-view-next-page-command)
-                                (evil-local-set-key 'normal (kbd "<right>")
-                                                    nil)
-                                (evil-local-set-key 'normal (kbd "<left>")
-                                                    nil)
-                                (evil-local-set-key 'normal (kbd "K")
-                                                    #' pdf-view-previous-page-command)))
+
+
+(general-define-key
+ :keymaps 'pdf-view-mode-map
+ :prefix  salih/prefix-mode
+ "C-c"    #'org-noter-insert-precise-note
+ "H-i"    #'org-noter-insert-note
+ "C-f"    #'salih/zathura-open
+ "C-d"    #'pdf-view-themed-minor-mode)
+
+
+(with-eval-after-load 'pdf-view
+  (evil-define-key 'normal pdf-view-mode-map (kbd "<right>") #'ignore)
+  (evil-define-key 'motion pdf-view-mode-map (kbd "<right>") #'ignore)
+  (evil-define-key 'nroaml pdf-view-mode-map (kbd "<left>") #'ignore)
+  (evil-define-key 'motion pdf-view-mode-map (kbd "<left>") #'ignore))
+
+(add-hook! 'pdf-view-mode-hook
+  (evil-local-set-key 'normal (salih/mode "C-c") #'org-noter-insert-precise-note)
+  (evil-local-set-key 'normal (kbd "J") #'pdf-view-next-page-command)
+  (evil-local-set-key 'normal (kbd "<right>") nil)
+  (evil-local-set-key 'normal (kbd "<left>") nil)
+  (evil-local-set-key 'motion (kbd "<right>") nil)
+  (evil-local-set-key 'motion (kbd "<left>") nil)
+  (evil-local-set-key 'normal (kbd "K") #'pdf-view-previous-page-command))
 
 
 
-(add-hook 'lsp-mode-hook (lambda () (local-set-key (kbd "M-RET") #'lsp-execute-code-action)))
+(general-define-key
+ :keymaps 'lsp-mode-map
+ "M-RET" #'lsp-execute-code-action)
+
+
 ;; Run project
 
 ;; TODO Refactor this. I think this should be rewritten as an only one function
 ;; that is "Run file", which check the mode and map it to the matching running
 ;; method.
 
-;; C++
-(add-hook 'c++-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-cpp)))
+(general-define-key
+ :keymaps 'c++-mode-map
+ :prefix salih/prefix-mode
+ "C-c" #'salih/compile-and-run-cpp)
 
-;; C#
-(add-hook 'csharp-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-csharp)))
-;; Go
-(add-hook 'go-mode-hook
-          (lambda ()
-            (local-set-key (salih/mode "C-c")   #'salih/compile-and-run-go-project)
-            (local-set-key (kbd "<f2>")         #'salih/compile-and-run-go-project)))
+(general-define-key
+ :keymaps 'csharp-mode-map
+ :prefix salih/prefix-mode
+ "C-c" #'salih/compile-and-run-csharp)
 
+(general-define-key
+ :keymaps 'go-mode-map
+ :prefix salih/prefix-mode
+ "C-c"  #'salih/compile-and-run-go-project
+ "<f2>" #'salih/compile-and-run-go-project)
 
 ;; Dired
 (general-define-key
@@ -361,12 +382,28 @@
 
 (add-hook 'nov-mode-hook (lambda ()
                            (evil-collection-define-key 'normal 'nov-mode-map "t"  nil)
-                           (evil-collection-define-key 'normal 'nov-mode-map "h"  nil)
-                           (define-key nov-mode-map        (kbd "l")              nil)
-                           (define-key nov-button-map      (kbd "l")              nil)
-                           (define-key shr-map             (kbd "u")              nil)
-                           (define-key shr-map             (kbd "w")              nil)))
+                           (evil-collection-define-key 'normal 'nov-mode-map "h"  nil)))
+
+
+
+(general-define-key
+ :keymaps 'nov-mode-map
+ "l" nil)
+
+(general-define-key
+ :keymaps 'nov-button-map
+ "l" nil)
+
+(general-define-key
+ :keymaps 'shr-map
+ "u" nil)
+
+(general-define-key
+ :keymaps 'shr-map
+ "w" nil)
+
 
 (define-key evil-motion-state-map (kbd "H-i") 'evil-jump-backward)
+(define-key evil-motion-state-map (kbd "C-o") 'evil-jump-forward)
 (define-key evil-motion-state-map "-" 'er/expand-region)
 (provide '+bindings)
