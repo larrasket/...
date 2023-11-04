@@ -38,6 +38,13 @@
  "q" #'+workspace/close-window-or-workspace)
 
 
+(define-key evil-normal-state-map        (kbd "] ]") #'centaur-tabs-forward)
+(define-key evil-normal-state-map        (kbd "[ [") #'centaur-tabs-backward)
+
+(define-key evil-visual-state-map        (kbd "] ]") #'centaur-tabs-forward)
+(define-key evil-visual-state-map        (kbd "[ [") #'centaur-tabs-backward)
+
+
 (map!
  :map eww-mode-map
  :n
