@@ -305,8 +305,7 @@ automatically previewed."
              awqat-times-for-day))
 
 (defun salih/banner ()
-  (let* ((banner '(
-                   "       d8888                                     8888888888       888    d8b      "
+  (let* ((banner '("       d8888                                     8888888888       888    d8b      "
                    "      d88888                                     888              888    Y8P      "
                    "     d88P888                                     888              888             "
                    "    d88P 888 88888b.d88b.   .d88b.  888d888      8888888  8888b.  888888 888      "
@@ -937,8 +936,6 @@ tasks."
 
         :items    ,#'salih/get-org-roam-titles))
 
-
-
 (defun salih/org-noter-pdf--pdf-view-get-precise-info (mode window)
   (when (eq mode 'pdf-view-mode)
     (let (v-position h-position)
@@ -959,7 +956,6 @@ tasks."
                   h-position (cdr click-position)))))
       v-position)))
 
-
 (defun salih/eshell ()
   "Run eshell and set its directory to the current buffer's directory if eshell
 is already running."
@@ -972,13 +968,10 @@ is already running."
           (eshell-send-input))
       (eshell))))
 
-
-
 (use-package proced
   :custom
   (proced-enable-color-flag t)
   (proced-tree-flag t))
-
 
 (defun salih/zathura-open ()
   (interactive)
@@ -987,7 +980,6 @@ is already running."
                    (number-to-string
                     (pdf-view-current-page
                      (get-buffer-window (current-buffer)))) buffer-file-name)))
-
 
 (defun salih/dired-sort ()
   "Sort dired dir listing in different ways.
@@ -1005,11 +997,9 @@ Version 2015-07-30"
      (t (error "logic error 09535" )))
     (dired-sort-other -arg )))
 
-
 (defun salih/advise-once (symbol where function &optional props)
   (advice-add symbol :after (lambda (&rest _) (advice-remove symbol function)))
   (advice-add symbol where function props))
-
 
 (defun salih/format-all-ensure-formatter ()
   (interactive)
@@ -1017,7 +1007,6 @@ Version 2015-07-30"
       (let ((inhibit-message t)
             (message-log-max nil))
         (call-interactively #'format-all-ensure-formatter))))
-
 
 (after! git-gutter
   (unless (featurep 'tadwin)
