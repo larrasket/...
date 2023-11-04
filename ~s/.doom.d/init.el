@@ -28,7 +28,7 @@
        word-wrap
 
        :emacs
-       (dired)
+       dired
         
        electric
        undo

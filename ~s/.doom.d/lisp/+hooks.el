@@ -21,7 +21,8 @@
 
 
 (add-hook! 'python-mode-hook (flycheck-mode -1))
-(add-hook! 'after-make-frame-functions (salih/keyboard-config))
+(add-hook 'after-make-frame-functions   (lambda (frame)
+                                          (with-selected-frame frame (salih/keyboard-config))))
 (add-hook! 'bibtex-mode-hook (add-hook 'after-save-hook #'+format/buffer nil t))
 (add-hook! 'pdf-view-mode-hook (setq-local evil-normal-state-cursor (list nil)))
 
