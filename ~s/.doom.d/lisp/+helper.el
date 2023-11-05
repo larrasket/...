@@ -781,8 +781,6 @@ tasks."
 
        ;; Buffer name not match below blacklist.
        (string-prefix-p "*epc" name)
-       (string-prefix-p "*helm" name)
-       (string-prefix-p "*Helm" name)
        (string-prefix-p "*Org Agenda*" name)
        (string-prefix-p "*lsp" name)
        (string-prefix-p "*LSP" name)
@@ -827,6 +825,8 @@ tasks."
        (string-prefix-p "*nov" name)
        (string-prefix-p "*format" name)
        (string-prefix-p "*Pandoc" name)
+
+
 
 
        ;; Is not magit buffer.
