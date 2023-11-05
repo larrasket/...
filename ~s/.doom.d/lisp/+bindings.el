@@ -1,5 +1,7 @@
 ;;; ../configs/.doom.d/lisp/+bindings.el -*- lexical-binding: t; -*-
 
+;; TODO refactor `evil-define-key`-like code to use either `general-define-key`
+;; or `map!`.
 
 ;; unbinding
 (define-key org-mode-map (kbd "C-c C-f") nil)
@@ -142,10 +144,15 @@
 (general-define-key
  :keymaps 'dired-mode-map
  :prefix salih/prefix-mode
+ "F"   #'magit-pull
  "C-c" #'salih/open-in-external-app
  "C-e" #'salih/epa-dired-do-encrypt
  "C-s" #'salih/dired-sort
  "C-d" #'epa-dired-do-decrypt)
+
+(evil-define-key 'nomral dired-mode-map (kbd "F") 'magit-pull)
+(evil-define-key 'motion dired-mode-map (kbd "F") 'magit-pull)
+
 
 (map!
  :map c-mode-map
