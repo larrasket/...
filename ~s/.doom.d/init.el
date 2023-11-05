@@ -44,6 +44,7 @@
 
        :tools
        biblio
+       tree-sitter
        (lookup
         +dictionary
         +offline)
@@ -60,8 +61,8 @@
        common-lisp
        (csharp +lsp)
        emacs-lisp
-       (go +lsp)
-           
+       (go +lsp
+           +tree-sitter)
        json
        (latex +flod
               +latexmk
@@ -73,10 +74,10 @@
        sh
        yaml
        (julia
-        +lsp)
-        
+        +lsp
+        +tree-sitter)
        ess
-       (java +lsp)
+       (java +lsp +tree-sitter)
 
        :email
        mu4e
@@ -100,6 +101,8 @@
        ;; See. https://www.gnu.org/software/emacs/manual/html_node/emacs/Authentication.html
        gen
        genorg
+       ;; gitcolor
+       ;; chess
        cite
        roam
        bind)
