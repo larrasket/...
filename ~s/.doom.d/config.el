@@ -55,13 +55,22 @@
       fancy-splash-image                                "~/configs/~s/assets/chomsky.png"
 
       ;; set org files
-      +org-capture-journal-file                         "~/blog/content/stack.org"
-      +org-capture-changelog-file                       "~/blog/content/nice.org"
-      +org-capture-todo-file                            "~/roam/main/life.org"
+      salih/blog-content-path                           "~/blog/content"
+      org-roam-directory                                (file-truename "~/roam")
+      +org-capture-journal-file                         (f-join
+                                                         salih/blog-content-path
+                                                         "stack.org")
+      +org-capture-changelog-file                       (f-join
+                                                         salih/blog-content-path
+                                                         "nice.org")
+      +org-capture-todo-file                            (f-join
+                                                         org-roam-directory
+                                                         "main" "life.org")
       org-bullets-bullet-list                           '("◉" "✸" "✿" "♥" "●")
       org-id-method                                     'org
       org-directory                                     org-roam-directory
-      org-id-locations-file                             "~/roam/.orgids"
+      org-id-locations-file                             (f-join org-roam-directory
+                                                                ".orgids")
       org-roam-ui-open-on-start                         nil
       org-agenda-skip-scheduled-if-done                 nil
       org-use-tag-inheritance                           t
@@ -103,7 +112,10 @@
       salih/awqat-show-mode-line                        t
 
       ;; school
-      salih/source-directory                             "~/roam/references/source/"
+      salih/source-directory                             (f-join
+                                                          org-roam-directory
+                                                          "references"
+                                                          "source")
       salih/books                                       (let (file-list)
                                                           (dolist
                                                               (file
@@ -113,10 +125,11 @@
                                                             (push file file-list))
                                                           file-list)
 
-      org-roam-directory                                (file-truename "~/roam")
       bibtex-completion-library-path                    (list
                                                          salih/source-directory)
-      bibtex-completion-notes-path                      "~/roam/reference/"
+      bibtex-completion-notes-path                      (f-join
+                                                          org-roam-directory
+                                                          "references")
       bibtex-completion-bibliography                    "/home/l/configs/~s/ref.bib"
       org-cite-global-bibliography                      (list
                                                          bibtex-completion-bibliography)
@@ -252,5 +265,3 @@
 (require '+custom)
 (require '+erc)
 (require '+deep)
-
-
