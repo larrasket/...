@@ -76,3 +76,5 @@
 (package! vertico)
 
 (package! srht)
+
+(package! org-drill)

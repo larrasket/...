@@ -83,4 +83,8 @@
 (after! gud
   (salih/set-convenient-keys))
 
+
+(after! org-drill
+  (setq org-drill-scope (list "~/org/drill.org")))
+
 (provide '+custom)

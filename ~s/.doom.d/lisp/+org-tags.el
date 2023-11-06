@@ -20,6 +20,7 @@
                         ("anthology" . ?a)
                         ("@later" . ?l)
                         ("@current" . ?C)
+                        ("drill" . ?d)
                         ("@general" . ?g)))
 
 ;; (add-to-list 'org-tags-exclude-from-inheritance "@read")
