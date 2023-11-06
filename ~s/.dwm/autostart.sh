@@ -16,4 +16,5 @@ feh --bg-fill ~/configs/~s/bg.png
 #pantalaimon --data-path ~/tmp/pant/ &
 flameshot &
 picom --xrender-sync-fence --vsync
-libinput-gestures-setup start
+xmodmap ~/.Xmodmap
+
