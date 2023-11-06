@@ -128,8 +128,8 @@
       bibtex-completion-library-path                    (list
                                                          salih/source-directory)
       bibtex-completion-notes-path                      (f-join
-                                                          org-roam-directory
-                                                          "references")
+                                                         org-roam-directory
+                                                         "references")
       bibtex-completion-bibliography                    "/home/l/configs/~s/ref.bib"
       org-cite-global-bibliography                      (list
                                                          bibtex-completion-bibliography)
@@ -190,12 +190,26 @@
       centaur-tabs-height                               15
       centaur-tabs-set-icons                            nil
 
+      ;; modus theme
+      modus-themes-bold-constructs                      t
+      modus-themes-fringes                              nil
+      modus-themes-italic-constructs                    t
+      modus-themes-mode-line                            '(moody borderless)
+      modus-themes-org-blocks                           'gray-background
+
+      ;; indent highlight
+      indent-bars-highlight-current-depth               nil
+      indent-bars-treesit-support                       t
+
+
+
       ;; other
       company-idle-delay                                0.3
       format-all-show-errors                            'never
       proced-auto-update-flag                           t
       salih/temp-roam-insert                            nil
       large-file-warning-threshold                      nil
+      safe-local-variable-values                        '((org-download-image-dir . "../i") (salih/rebuild . t))
       save-place-ignore-files-regexp                    "\\(?:COMMIT_EDITMSG\\|hg-editor-[[:alnum:]]+\\.txt\\|svn-commit\\.tmp\\|bzr_log\\.[[:alnum:]]+\\|\\.pdf\\)$"
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
