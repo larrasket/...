@@ -720,7 +720,7 @@ tasks."
   (replace-regexp-in-string "^[[:space:]]*$\\|^[[:space:]]*>[[:space:]]*$" ""
                             (replace-regexp-in-string "\\[\\[\\([^]]+\\)\\]\\[\\([^]]+\\)\\]\\]" "\\2" text)))
 
-(defun salih/get-file-todos ()
+(defun salih/get-file-list-todos ()
   (interactive)
   (org-agenda-set-restriction-lock)
   (org-agenda nil "t"))
@@ -880,12 +880,19 @@ tasks."
            (unless (gethash file ht)
              (push (consult--fast-abbreviate-file-name file) items)))))))
 
-(defun salih/org-roam-get-node-files (node-list)
+(defun salih/org-roam-get-node-titles (node-list)
   "Applies `org-roam-node-file' function to the cdr of each element in NODE-LIST."
   (mapcar (lambda (node) (org-roam-node-title (cdr node)))
           node-list))
 
-(setq roam-titles (salih/org-roam-get-node-files
+
+(defun salih/org-roam-get-node-files (node-list)
+  "Applies `org-roam-node-file' function to the cdr of each element in NODE-LIST."
+  (mapcar (lambda (node) (org-roam-node-file (cdr node)))
+          node-list))
+
+
+(setq roam-titles (salih/org-roam-get-node-titles
                    (org-roam-node-read--completions)))
 (defun salih/get-org-roam-titles () roam-titles)
 
@@ -931,7 +938,7 @@ tasks."
                                             description)))))
 
 
-                (setq roam-titles (salih/org-roam-get-node-files
+                (setq roam-titles (salih/org-roam-get-node-titles
                                    (org-roam-node-read--completions))))
 
         :items    ,#'salih/get-org-roam-titles))
