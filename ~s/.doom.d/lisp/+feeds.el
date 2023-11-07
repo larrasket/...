@@ -15,15 +15,14 @@
                      ("http://chomsky.info/feed/"                                                               chomsky philosophy)
                      ("https://blog.giovanh.com/feeds/atom.xml"                                                 g cs)
                      ("https://daily.jstor.org//feed"                                                           jstore science)
-                     ;; ("https://boards.4channel.org/sci/index.rss"                                               science)
                      ("https://protesilaos.com/master.xml"                                                      prot blogs emacs philosophy)
                      ("https://aeon.co/feed.rss"                                                                aeon philosophy)
                      ("https://psyche.co/feed.rss"                                                              psyche psychology)
                      ("https://www.radicalphilosophy.com/feed"                                                  radical_philosophy philosphy)
                      ("https://rssc.fly.dev/rss?src=https://www.alaraby.co.uk/rss&linkf=opinion"                alaraby)
                      ("https://nintil.com/rss.xml"                                                              nintil history)
-                     ;; news
                      ("https://stallman.org/rss/rss.xml"                                                        news rms)
+                     ("https://www.econlib.org/feed/"                                                           economics econlib)
                      ;; youtube
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCGVHC4L6gjS13AMe-JMOjHg"            youtube kanb philosophy)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtx9oIT_eWp6jIkoULS-ZdQ"            youtube shabaka)
