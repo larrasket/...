@@ -199,6 +199,13 @@
         ("l" "General Later Tasks"
          ((org-ql-block '(and
                           (todo "TODO")
+                          (not (tags))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Tag:")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
                           (tags "@read")
                           (tags "@later")
                           (not (tags "project"))
