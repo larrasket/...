@@ -267,6 +267,9 @@
                         (mu4e)))
    "/"            #'swiper))
 (salih/set-convenient-keys)
+(map!
+ :i
+ "H-i C-d" #'salih/insert-current-date)
 
 
 ;; files and roam
@@ -412,6 +415,7 @@
 
 (define-key ctl-x-map (kbd "C-z") nil)
 (define-key global-map (kbd "C-x C-z") nil)
+(define-key global-map (kbd "C-x s") #'save-buffer)
 (define-key evil-motion-state-map (kbd "H-i") 'evil-jump-backward)
 (define-key evil-motion-state-map (kbd "C-o") 'evil-jump-forward)
 (define-key evil-motion-state-map "-" 'er/expand-region)

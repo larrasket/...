@@ -881,7 +881,7 @@ tasks."
              (push (consult--fast-abbreviate-file-name file) items)))))))
 
 (defun salih/org-roam-get-node-titles (node-list)
-  "Applies `org-roam-node-file' function to the cdr of each element in NODE-LIST."
+  "Applies `org-roam-node-title' function to the cdr of each element in NODE-LIST."
   (mapcar (lambda (node) (org-roam-node-title (cdr node)))
           node-list))
 
@@ -1037,6 +1037,10 @@ Version 2015-07-30"
   (when (< (count-lines (point-min) (point-max)) 60)
     (dired-git-info-auto-enable)))
 
+
+(defun salih/insert-current-date ()
+  (interactive)
+  (insert (shell-command-to-string "echo -n $(date +%Y/%m/%d:)")))
 
 
 (provide '+helper)
