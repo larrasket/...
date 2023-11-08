@@ -5,6 +5,7 @@
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require 'go-translate)                 ; define trnaslation engine in config.el
+(require '+early)
 
 
 (setq-default frame-title-format                        '("%b")
@@ -13,18 +14,15 @@
               indent-tabs-mode                          nil
               pdf-view-display-size                     'fit-width)
 
-(defvar IS-PLASMA (let ((output
-                         (shell-command-to-string "pgrep -x plasmashell")))
-                    (not (string-blank-p output))))
-
 
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
-      user-first-name                                   (cl-first
-                                                         (split-string
-                                                          user-full-name " "))
       user-short-username                               "lr0"
+      user-first-name                                   (car (split-string user-full-name " "))
+      user-config-repo-path                             "/home/l/configs/~s"
       srht-username                                     user-short-username
+      salih/blog-content-path                           "~/blog/content"
+      org-roam-directory                                (file-truename "~/roam")
 
       ;; emacs settings
       inhibit-automatic-native-compilation              t
@@ -44,33 +42,20 @@
       doom-modeline-height                              17
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
-      doom-theme                                        (if IS-PLASMA
-                                                            'doom-monokai-spectrum
-                                                          'modus-vivendi)
+      doom-theme                                        'modus-vivendi
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       display-line-numbers-type                         'nil
-      ;; display-line-numbers                              nil
       all-the-icons-color-icons                         nil
       treemacs-position                                 'right
-      fancy-splash-image                                "~/configs/~s/assets/chomsky.png"
 
       ;; set org files
-      salih/blog-content-path                           "~/blog/content"
-      org-roam-directory                                (file-truename "~/roam")
-      +org-capture-journal-file                         (f-join
-                                                         salih/blog-content-path
-                                                         "stack.org")
-      +org-capture-changelog-file                       (f-join
-                                                         salih/blog-content-path
-                                                         "nice.org")
-      +org-capture-todo-file                            (f-join
-                                                         org-roam-directory
-                                                         "main" "life.org")
+      +org-capture-journal-file                         (salih/path-blog "stack.org")
+      +org-capture-changelog-file                       (salih/path-blog "nice.org")
+      +org-capture-todo-file                            (salih/path-roam "main" "life.org")
       org-bullets-bullet-list                           '("◉" "✸" "✿" "♥" "●")
       org-id-method                                     'org
       org-directory                                     org-roam-directory
-      org-id-locations-file                             (f-join org-roam-directory
-                                                                ".orgids")
+      org-id-locations-file                             (salih/path-roam ".orgids")
       org-roam-ui-open-on-start                         nil
       org-agenda-skip-scheduled-if-done                 nil
       org-use-tag-inheritance                           t
@@ -112,43 +97,23 @@
       salih/awqat-show-mode-line                        t
 
       ;; school
-      salih/source-directory                             (f-join
-                                                          org-roam-directory
-                                                          "references"
-                                                          "source")
-      salih/books                                       (let (file-list)
-                                                          (dolist
-                                                              (file
-                                                               (directory-files-recursively
-                                                                salih/source-directory
-                                                                "" nil t))
-                                                            (push file file-list))
-                                                          file-list)
+      salih/source-directory                            (salih/path-roam "source")
+      salih/books                                       (salih/path-list salih/source-directory)
 
-      bibtex-completion-library-path                    (list
-                                                         salih/source-directory)
-      bibtex-completion-notes-path                      (f-join
-                                                         org-roam-directory
-                                                         "references")
-      bibtex-completion-bibliography                    "/home/l/configs/~s/ref.bib"
-      org-cite-global-bibliography                      (list
-                                                         bibtex-completion-bibliography)
-      org-cite-csl-styles-dir                           "/home/l/configs/~s/assets/csl"
+      bibtex-completion-library-path                    (list salih/source-directory)
+      bibtex-completion-notes-path                      (salih/path-roam "references")
+      bibtex-completion-bibliography                    (salih/path-configs "ref.bib")
+      org-cite-global-bibliography                      (list bibtex-completion-bibliography)
+      org-cite-csl-styles-dir                           (salih/path-configs "assets" "csl")
       citar-bibliography                                bibtex-completion-bibliography
-      org-cite-csl--fallback-style-file                 (expand-file-name
-                                                         "chicago-ibid.csl"
-                                                         org-cite-csl-styles-dir)
-
+      org-cite-csl--fallback-style-file                 (f-join org-cite-csl-styles-dir "chicago-ibid.csl")
+                                                         
       ;; translate
       gts-translate-list                                '(("en" "ar"))
       gts-default-translator                            (gts-translator
-                                                         :picker
-                                                         (gts-prompt-picker)
-                                                         :engines
-                                                         (list
-                                                          (gts-google-engine))
-                                                         :render
-                                                         (gts-buffer-render))
+                                                         :picker        (gts-prompt-picker)
+                                                         :engines (list (gts-google-engine))
+                                                         :render        (gts-buffer-render))
 
       ;; keyboard
       salih/prefix-global                               "C-x "
