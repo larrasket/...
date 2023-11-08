@@ -819,6 +819,9 @@ tasks."
 
 
        (string-prefix-p "*Local Variables" name)
+       (string-prefix-p "*Calc" name)
+       (cl-search       "stderr" name)
+
 
 
        (string-prefix-p "*flycheck" name)
