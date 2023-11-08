@@ -37,7 +37,7 @@
 (add-hook! 'pdf-view-mode-hook  (setq-local evil-normal-state-cursor (list nil)))
 (add-hook! 'elfeed-search-mode-hook (visual-line-mode -1))
 (add-hook! 'org-roam-capture-new-node-hook (setq roam-titles
-                                                 (salih/org-roam-get-node-files
+                                                 (salih/org-roam-get-node-titles
                                                   (org-roam-node-read--completions))))
 
 (add-hook! 'prog-mode-hook              #'auto-fill-mode
