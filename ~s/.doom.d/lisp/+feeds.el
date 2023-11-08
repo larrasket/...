@@ -22,6 +22,7 @@
                      ("https://rssc.fly.dev/rss?src=https://www.alaraby.co.uk/rss&linkf=opinion"                alaraby)
                      ("https://nintil.com/rss.xml"                                                              nintil history)
                      ("https://stallman.org/rss/rss.xml"                                                        news rms)
+                     ("https://www.theonion.com/rss"                                                            news onion)
                      ("https://www.econlib.org/feed/"                                                           economics econlib)
                      ;; youtube
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCGVHC4L6gjS13AMe-JMOjHg"            youtube kanb philosophy)
