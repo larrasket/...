@@ -1033,8 +1033,6 @@ Version 2015-07-30"
                (when (bound-and-true-p ,mode-symbol)
                  (,mode-symbol -1)))))
 
-
-
 (defun salih/dired-git-info-auto-enable ()
   "Enable dired-git-info only if there are less than 60 files."
   (when (< (count-lines (point-min) (point-max)) 60)
@@ -1045,5 +1043,9 @@ Version 2015-07-30"
   (interactive)
   (insert (shell-command-to-string "echo -n $(date +%Y/%m/%d:)")))
 
+(defun salih/open-kitty-in-current-directory ()
+  "Open the Kitty terminal in the current working directory."
+  (interactive)
+  (call-process "kitty" nil 0 nil "--directory" default-directory))
 
 (provide '+helper)

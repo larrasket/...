@@ -414,6 +414,10 @@
  :keymaps 'shr-map
  "w" nil)
 
+(map!
+ :map eshell-mode-map
+ "C-c C-f" #'salih/open-kitty-in-current-directory)
+
 
 (define-key ctl-x-map (kbd "C-z") nil)
 (define-key global-map (kbd "C-x C-z") nil)
