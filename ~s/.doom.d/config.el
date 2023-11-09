@@ -18,11 +18,11 @@
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
       user-short-username                               "lr0"
-      user-first-name                                   (car (split-string user-full-name " "))
       user-config-repo-path                             "/home/l/configs/~s"
-      srht-username                                     user-short-username
       salih/blog-content-path                           "~/blog/content"
+      srht-username                                     user-short-username
       org-roam-directory                                (file-truename "~/roam")
+      user-first-name                                   (car (split-string user-full-name " "))
 
       ;; emacs settings
       inhibit-automatic-native-compilation              t
@@ -83,7 +83,6 @@
       org-agenda-dim-blocked-tasks                      'invisible
       org-tags-column                                   70
 
-
       ;; I've no idea of any of this.
       org-crypt-key                                     user-mail-address
       epa-file-cache-passphrase-for-symmetric-encryption t
@@ -124,8 +123,7 @@
       shr-inhibit-images                                nil
 
       ;; vertico
-      vertico-buffer-display-action                     '(display-buffer-at-bottom
-                                                          (window-height . 20))
+      vertico-buffer-display-action                     '(display-buffer-at-bottom (window-height . 20))
       enable-recursive-minibuffers                      nil
 
       ;; git-auto-commit-mode
@@ -165,8 +163,6 @@
       ;; indent highlight
       indent-bars-highlight-current-depth               nil
       indent-bars-treesit-support                       t
-
-
 
       ;; other
       company-idle-delay                                0.3
