@@ -232,6 +232,8 @@
 (defun salih/set-convenient-keys ()
   (map!
    :prefix salih/prefix-global
+   "C-u"          nil
+   "C-n"          nil
    "C-t"          #'+vterm/here
    "C-j"          #'centaur-tabs-ace-jump
    "C-c"          (lambda () (interactive) (org-capture nil "f"))
