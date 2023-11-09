@@ -269,9 +269,10 @@
                         (mu4e)))
    "/"            #'swiper))
 (salih/set-convenient-keys)
-(map!
- :i
- "H-i C-d" #'salih/insert-current-date)
+
+(map! :i "H-i C-d" #'salih/insert-current-date)
+(map! :n ";"       #'embark-act)
+(map!    "C-SPC"   #'projectile-find-file)
 
 
 ;; files and roam
@@ -284,7 +285,6 @@
  "C-j"  #'org-roam-dailies-capture-today
  "C-b"  #'org-roam-buffer-toggle
  "C-r"  #'recentf-open-files)
-
 
 ;; search global
 (map!
