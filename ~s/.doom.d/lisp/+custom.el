@@ -19,7 +19,6 @@
    '(org-level-8 ((t (:inherit outline-8 :height 0.6 :weight bold))))
    '(org-document-title ((t (:inherit outline-8 :height 1.8 :weight bold))))))
 
-
 (after! ob-julia
   (unless (featurep 'tadwin)
     (progn
@@ -35,10 +34,8 @@
 (after! org-roam
   (setq org-roam-list-files-commands '(find fd fdfind rg)))
 
-
 (after! flycheck
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
-
 
 (after! neotree
   (setq neo-theme               (if (display-graphic-p) 'icons 'arrow)
@@ -53,13 +50,11 @@
 (after! sly
   (setq sly-complete-symbol-function 'sly-flex-completions))
 
-
 (after! git-gutter-fringe
   (setq-default fringes-outside-margins t)
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
-
 
 (after! elfeed
   (setf elfeed-search-sort-function #'salih/elfeed-tag-sort))
@@ -75,16 +70,17 @@
   (require 'elfeed-tube)
   (elfeed-tube-setup))
 
-
 (after! edebug
-  ;; make edebug not overwrite my keys
   (setcdr emacs-lisp-mode-map nil))
 
 (after! gud
   (salih/set-convenient-keys))
 
-
 (after! org-drill
   (setq org-drill-scope (list "~/org/drill.org")))
+
+(after! cc-mode
+  (setq c-mode-map (make-sparse-keymap)))
+
 
 (provide '+custom)
