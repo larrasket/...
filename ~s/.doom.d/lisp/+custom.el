@@ -77,7 +77,7 @@
   (salih/set-convenient-keys))
 
 (after! org-drill
-  (setq org-drill-scope (list "~/org/drill.org")))
+  (setq org-drill-scope (salih/path-list "~/org/drill/")))
 
 (after! cc-mode
   (setq c-mode-map (make-sparse-keymap)))
