@@ -4,8 +4,8 @@
 
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
+(require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
-(require '+early)
 
 
 (setq-default frame-title-format                        '("%b")
