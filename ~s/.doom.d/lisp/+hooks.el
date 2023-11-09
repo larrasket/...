@@ -43,6 +43,8 @@
 (add-hook! 'prog-mode-hook              #'auto-fill-mode
                                         #'column-enforce-mode
                                         #'salih/format-all-ensure-formatter)
+
+
 (add-hook 'csv-mode-hook                #'csv-align-mode)
 (add-hook 'after-init-hook              #'global-flycheck-mode)
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)

@@ -7,7 +7,8 @@
 
 
 
-(package! iedit)                        ; JetBrains' rename function. Also see `salih/rename-or-iedit`
+(package! iedit)                        ; JetBrains' rename function.
+                                        ; Also see `salih/rename-or-iedit`
 
 (package! git-auto-commit-mode)         ; auto commit
 
@@ -15,13 +16,15 @@
 (package! grip-mode)                    ; I do not remember what's that for but
                                         ; sounds useful
 
-(package! column-enforce-mode)          ; I use this instead of `display-fill-column-indicator`
+(package! column-enforce-mode)          ; I use this instead of
+                                        ; `display-fill-column-indicator`
 
 (package! go-translate)                 ; google API for lingustics
 
 (package! consult-org-roam)             ; useful org-roam functions
 
-(package! sage-shell-mode)              ; for me when I like to be a mathematician
+(package! sage-shell-mode)              ; for me when I like to be a
+                                        ; mathematician
 
 (package! awqat
   :recipe (:host github
