@@ -3,8 +3,8 @@
 
 
 
-(setq c-default-style "linux"
-      c-basic-offset 4)
+;; (setq c-default-style "linux"
+;;       c-basic-offset 4)
 
 
 ;; I wrote this code many years ago when I was learning elisp for the first time
@@ -40,10 +40,10 @@
 
 (after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
 
-(add-to-list 'display-buffer-alist
-             `(,(rx bos "*Flycheck errors*" eos)
-               (display-buffer-reuse-window
-                display-buffer-in-side-window)
-               (side            . bottom)
-               (reusable-frames . visible)
-               (window-height   . 0.18)))
+;; (add-to-list 'display-buffer-alist
+;;              `(,(rx bos "*Flycheck errors*" eos)
+;;                (display-buffer-reuse-window
+;;                 display-buffer-in-side-window)
+;;                (side            . bottom)
+;;                (reusable-frames . visible)
+;;                (window-height   . 0.18)))
