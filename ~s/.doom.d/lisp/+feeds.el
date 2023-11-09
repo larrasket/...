@@ -24,6 +24,7 @@
                      ("https://stallman.org/rss/rss.xml"                                                        news rms)
                      ("https://www.theonion.com/rss"                                                            news onion)
                      ("https://www.econlib.org/feed/"                                                           economics econlib)
+                     ("https://stackexchange.com/feeds/tagsets/450778/islam?sort=active"                        Islam   sx)
                      ;; youtube
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCGVHC4L6gjS13AMe-JMOjHg"            youtube kanb philosophy)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtx9oIT_eWp6jIkoULS-ZdQ"            youtube shabaka)
@@ -60,6 +61,7 @@
 
 (defvar salih/common-feeds
   (list "https://hnrss.org/newest?q=%s"
+        "https://stackexchange.com/feeds/tagsets/450777/politics?sort=active"
         "https://rssc.fly.dev/rss?src=https://www.reddit.com/r/programming/.rss&titlef=(?i)%s&descriptionf=(?i)%s"
         "https://rssc.fly.dev/rss?src=https://boards.4channel.org/g/index.rss&titlef=(?i)%s&descriptionf=(?i)%s"
         "https://rssc.fly.dev/rss?src=https://theconversation.com/articles.atom?language=en&titlef=(?i)%s&descriptionf=(?i)%s"))
