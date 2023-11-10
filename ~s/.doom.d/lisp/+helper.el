@@ -802,6 +802,7 @@ tasks."
        (string-prefix-p "*mu4e-main*" name)
        (string-prefix-p "*mu4e-update" name)
        (string-prefix-p "*julia" name)
+       (string-prefix-p "*clangd" name)
        (string-prefix-p "*sly-mrepl" name)
 
 
