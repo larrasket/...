@@ -153,12 +153,14 @@
 (evil-define-key 'nomral dired-mode-map (kbd "F") 'magit-pull)
 (evil-define-key 'motion dired-mode-map (kbd "F") 'magit-pull)
 
+(after! cc-mode
+  (setq c-mode-map (make-sparse-keymap))
+  (map!
+   :map c-mode-map
+   :prefix salih/prefix-mode
+   "C-c"  #'salih/make-c
+   "C-b"  #'salih/compile-and-run-c))
 
-(map!
- :map c-mode-map
- :prefix salih/prefix-mode
- "C-c"  #'salih/make-c
- "C-b" #'salih/compile-and-run-c)
 
 ;; Org-mode
 (map!

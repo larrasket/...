@@ -79,8 +79,5 @@
 (after! org-drill
   (setq org-drill-scope (salih/path-list "~/org/drill/")))
 
-(after! cc-mode
-  (setq c-mode-map (make-sparse-keymap)))
-
 
 (provide '+custom)
