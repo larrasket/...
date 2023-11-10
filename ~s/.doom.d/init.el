@@ -57,7 +57,8 @@
        (tty)
 
        :lang
-       (cc +lsp)
+       (cc +lsp
+           +tree-sitter)
        common-lisp
        (csharp +lsp)
        emacs-lisp
