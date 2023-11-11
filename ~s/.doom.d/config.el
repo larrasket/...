@@ -201,9 +201,6 @@
         smtpmail-stream-type                    'starttls
         mu4e-modeline-show-global               nil)
 
-  (defun remove-file-prefix (url)
-    (replace-regexp-in-string "^file://" "" url))
-
   (defun mu4e-action-view-in-xwidget (msg)
     (unless (fboundp 'xwidget-webkit-browse-url)
       (mu4e-error "No xwidget support available"))
@@ -213,7 +210,8 @@
                                            (call-process "tidy" nil nil nil "-m"
                                                          "--numeric-entities"
                                                          "yes"
-                                                         (remove-file-prefix url)))
+                                                         (replace-regexp-in-string
+                                                          "^file://" "" url)))
                                          (xwidget-webkit-browse-url url))))
       (mu4e-action-view-in-browser msg)))
 
