@@ -81,3 +81,5 @@
 (package! srht)
 
 (package! org-drill)
+
+(package! lsp-treemacs)

@@ -11,7 +11,6 @@
              mu4e-main-mode-hook)               #'salih/disable-bright)
 
 (add-hook! '(org-agenda-mode-hook
-             treemacs-mode-hook
              org-mode-hook
              dired-mode-hook
              native-comp-limple-mode-hook)      #'centaur-tabs-local-mode)
@@ -75,7 +74,6 @@ a good understanding. His praise endures forever. ")))
 ;; (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
 
 (remove-hook 'vterm-mode-hook                   #'hide-mode-line-mode)
-(remove-hook 'treemacs-mode-hook                #'doom-themes-hide-modeline)
 (remove-hook '+doom-dashboard-functions         #'doom-dashboard-widget-footer)
 (remove-hook 'after-change-major-mode-hook      #'doom-highlight-non-default-indentation-h)
 
