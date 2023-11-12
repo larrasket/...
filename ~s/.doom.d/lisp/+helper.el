@@ -1039,7 +1039,6 @@ Version 2015-07-30"
   (when (< (count-lines (point-min) (point-max)) 60)
     (dired-git-info-auto-enable)))
 
-
 (defun salih/insert-current-date ()
   (interactive)
   (insert (shell-command-to-string "echo -n $(date +%Y/%m/%d:)")))

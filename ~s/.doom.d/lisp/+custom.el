@@ -28,6 +28,7 @@
   (setq org-babel-default-header-args:julia    (list '(:results . "value")
                                                      '(:cache   . "yes")
                                                      '(:exports . "both"))))
+
 (after! julia-repl
   (set-popup-rule! "^\\*julia:*.*\\*$" :quit nil :side 'right :width .5))
 
@@ -57,7 +58,11 @@
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (after! elfeed
-  (setf elfeed-search-sort-function #'salih/elfeed-tag-sort))
+  (setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
+  (defalias 'salih/elfeed-toggle-star
+    (elfeed-expose #'elfeed-search-toggle-all 'star))
+  (require 'elfeed-tube)
+  (elfeed-tube-setup))
 
 (after! consult
   (add-to-list 'consult-buffer-sources 'salih/consult--source-books 'append))
@@ -65,10 +70,6 @@
 (after! embark
   (define-key embark-url-map            (kbd "c") 'salih/open-url-in-chrome)
   (define-key embark-org-link-map       (kbd "RET") 'org-web-tools-read-url-as-org))
-
-(after! elfeed
-  (require 'elfeed-tube)
-  (elfeed-tube-setup))
 
 (after! edebug
   (setcdr emacs-lisp-mode-map nil))

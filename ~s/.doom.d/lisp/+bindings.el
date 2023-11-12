@@ -282,7 +282,7 @@
  "C-w" #'+lookup/dictionary-definition
  "C-b" #'+default/search-buffer
  "C-p" #'+default/search-project
- "C-g" #'rgrep
+ "<escape>" #'rgrep
  "C-r" #'consult-org-roam-search)
 
 
@@ -363,6 +363,7 @@
  :states 'normal
  "C-c C-u"  #'elfeed-update
  "J"    #'elfeed-goodies/split-show-next
+ "m"    #'salih/elfeed-toggle-star
  "C"    #'salih/elfeed-search-open-in-chrome
  "K"    #'elfeed-goodies/split-show-prev)
 
