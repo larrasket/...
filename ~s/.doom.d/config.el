@@ -7,13 +7,11 @@
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
 
-
 (setq-default frame-title-format                        '("%b")
               bidi-paragraph-direction                  'left-to-right
               org-download-image-dir                    "~/roam/media"
               indent-tabs-mode                          nil
               pdf-view-display-size                     'fit-width)
-
 
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
@@ -30,9 +28,14 @@
       completion-ignore-case                            t
       load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
-      gcmh-high-cons-threshold                          100000000
+      gcmh-high-cons-threshold                          1073741824
       scroll-conservatively                             101
       jit-lock-defer-time                               0
+      read-process-output-max                           1000000
+      lsp-use-plists                                    nil
+      lsp-ui-doc-enable                                 nil
+
+
 
       ;; appearance
       ;; font `:size` value of 29 is prefect for filming
