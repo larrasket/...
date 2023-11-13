@@ -18,9 +18,9 @@
       user-short-username                               "lr0"
       user-config-repo-path                             "/home/l/configs/~s"
       salih/blog-content-path                           "~/blog/content"
-      srht-username                                     user-short-username
+      user-first-name                                   (salih/user-first-name)
       org-roam-directory                                (file-truename "~/roam")
-      user-first-name                                   (car (split-string user-full-name " "))
+      srht-username                                     user-short-username
 
       ;; emacs settings
       inhibit-automatic-native-compilation              t

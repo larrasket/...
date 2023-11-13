@@ -8,6 +8,10 @@
 (defmacro salih/path-configs (&rest args)
   `(f-join user-config-repo-path ,@args))
 
+
+(defmacro salih/user-first-name ()
+  `(car (split-string user-full-name " ")))
+
 (defmacro salih/path-list (source-directory)
   `(mapcar 'file-truename (directory-files-recursively ,source-directory "" nil t)))
 
