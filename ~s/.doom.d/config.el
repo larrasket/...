@@ -35,8 +35,6 @@
       lsp-use-plists                                    nil
       lsp-ui-doc-enable                                 nil
 
-
-
       ;; appearance
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use (set-frame-font "PragmataPro Mono Liga")
@@ -95,18 +93,18 @@
       ;; prayer time
       calendar-latitude                                 30.0
       calendar-longitude                                31.2
-      awqat-mode-line-format                            " 🕌 ${prayer} (${hours}h${minutes}m) "
+      awqat-mode-line-format                            " ${prayer} (${hours}h${minutes}m) "
       salih/awqat-show-mode-line                        t
 
       ;; school
       salih/source-directory                            (salih/path-roam "source")
       salih/books                                       (salih/path-list salih/source-directory)
-
-      bibtex-completion-library-path                    (list salih/source-directory)
-      bibtex-completion-notes-path                      (salih/path-roam "references")
       bibtex-completion-bibliography                    (salih/path-configs "ref.bib")
-      org-cite-global-bibliography                      (list bibtex-completion-bibliography)
+      bibtex-completion-notes-path                      (salih/path-roam "references")
       org-cite-csl-styles-dir                           (salih/path-configs "assets" "csl")
+
+      bibtex-completion-library-path                    `(,salih/source-directory)
+      org-cite-global-bibliography                      `(,bibtex-completion-bibliography)
       citar-bibliography                                bibtex-completion-bibliography
       org-cite-csl--fallback-style-file                 (f-join org-cite-csl-styles-dir "chicago-ibid.csl")
                                                          
@@ -173,16 +171,13 @@
       proced-auto-update-flag                           t
       salih/temp-roam-insert                            nil
       large-file-warning-threshold                      nil
-      safe-local-variable-values                        '((org-download-image-dir . "../i") (salih/rebuild . t))
+      safe-local-variable-values                        '((org-download-image-dir
+                                                           . "../i")
+                                                          (salih/rebuild . t))
       save-place-ignore-files-regexp                    "\\(?:COMMIT_EDITMSG\\|hg-editor-[[:alnum:]]+\\.txt\\|svn-commit\\.tmp\\|bzr_log\\.[[:alnum:]]+\\|\\.pdf\\)$"
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
-      dired-sidebar-refresh-on-special-commands         t
-      org-annotate-file-storage-file                    "~/configs/annotated.org"
-      bmkp-last-as-first-bookmark-file                  "/home/ghd/.emacs.d/.local/etc/bookmarks"
-      pdf-view-restore-filename                         "~/configs/~/.pdf-view-restore")
-
-
+      bmkp-last-as-first-bookmark-file                  "/home/ghd/.emacs.d/.local/etc/bookmarks")
 ;; setup email
 ;; don't forget to setup authinfo
 ;; https://www.emacswiki.org/emacs/GnusAuthinfo
