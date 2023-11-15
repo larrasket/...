@@ -452,30 +452,24 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                             magit-log-mode
                             magit-file-mode
                             magit-blob-mode
-                            magit-blame-mode
-                            )))
-     "Emacs")
-    ((derived-mode-p 'prog-mode)
-     "Editing")
-    ((derived-mode-p 'dired-mode)
-     "Dired")
-    ((memq major-mode '(helpful-mode
-                        help-mode))
-     "Help")
+                            magit-blame-mode))) "Emacs")
 
-    ((memq major-mode '(erc-mode))
-     "Erc")
+    ((derived-mode-p 'prog-mode) "Editing")
+    ((derived-mode-p 'dired-mode) "Dired")
 
 
-    ((memq major-mode '(elfeed-show-mode
-                        elfeed-search-mode))
-     "elfeed")
+    ((memq major-mode '(helpful-mode help-mode)) "Help")
+
+    ((memq major-mode '(erc-mode)) "Erc")
 
 
-    ((memq major-mode '(pdf-view-mode
-                        nov-mode
-                        doc-view-mode))
-     "PDF")
+    ((memq major-mode '(eshell-mode)) "eshell")
+
+
+    ((memq major-mode '(elfeed-show-mode elfeed-search-mode)) "elfeed")
+
+
+    ((memq major-mode '(pdf-view-mode nov-mode doc-view-mode)) "PDF")
 
     ((memq major-mode '(org-mode
                         org-agenda-clockreport-mode
@@ -486,10 +480,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                         org-bullets-mode
                         org-cdlatex-mode
                         org-agenda-log-mode
-                        diary-mode))
-     "OrgMode")
-    (t
-     (centaur-tabs-get-group-name (current-buffer))))))
+                        diary-mode)) "OrgMode")
+    (t (centaur-tabs-get-group-name (current-buffer))))))
 
 (defun vulpea-project-p ()
   "Return non-nil if current buffer has any todo entry.
