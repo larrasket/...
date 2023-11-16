@@ -27,7 +27,7 @@
  "q" #'+workspace/close-window-or-workspace)
 
 ;; abusing evil mode
-(map! :i "C-v" #'evil-paste-after)
+(map! :i "C-v" #'yank)
 (define-key evil-normal-state-map        (kbd "]") #'centaur-tabs-forward)
 (define-key evil-normal-state-map        (kbd "[") #'centaur-tabs-backward)
 (define-key evil-visual-state-map        (kbd "]") #'centaur-tabs-forward)
