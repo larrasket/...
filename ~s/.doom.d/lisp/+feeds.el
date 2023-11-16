@@ -26,6 +26,7 @@
                      ("https://www.econlib.org/feed/"                                                           economics econlib)
                      ("https://stackexchange.com/feeds/tagsets/450778/islam?sort=active"                        Islam   sx)
                      ("https://hnrss.org/replies?id=lr0"                                                        hn lr0)
+                     ("https://stackexchange.com/feeds/tagsets/450949/interpersonal?sort=active"                interpersonal sx)
                      ;; youtube
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCGVHC4L6gjS13AMe-JMOjHg"            youtube kanb philosophy)
                      ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtx9oIT_eWp6jIkoULS-ZdQ"            youtube shabaka)
