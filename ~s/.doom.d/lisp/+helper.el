@@ -811,6 +811,10 @@ tasks."
        (string-prefix-p "*Org Clock*" name)
 
 
+       (string-prefix-p "*Ediff" name)
+       (string-prefix-p "*ediff" name)
+
+
        (string-prefix-p "*Local Variables" name)
        (string-prefix-p "*Calc" name)
        (cl-search       "stderr" name)
