@@ -161,7 +161,6 @@
  "H-m"     #'org-media-note-hydra/body
  "H-i H-i" #'org-id-get-create
  "H-i C-l" #'org-web-tools-insert-link-for-url
- "H-i C-d" #'org-download-clipboard
  "H-i C-c" #'salih/org-id-get-create-with-custom-id
  "H-i C-k" #'citar-insert-citation
  "H-i C-t" #'org-inlinetask-insert-task
@@ -185,6 +184,7 @@
  :after org
  :i
  "C-r H-i" #'org-roam-node-insert
+ "C-c C-d" #'org-download-clipboard
  "C-r C-t" #'org-roam-tag-add
  "C-r C-a" #'org-roam-alias-add)
 
