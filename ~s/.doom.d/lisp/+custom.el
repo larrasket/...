@@ -19,7 +19,6 @@
    '(org-level-8 ((t (:inherit outline-8 :height 0.6 :weight bold))))
    '(org-document-title ((t (:inherit outline-8 :height 1.8 :weight bold))))))
 
-
 (after! ob-julia
   (unless (featurep 'tadwin)
     (progn
@@ -29,16 +28,15 @@
   (setq org-babel-default-header-args:julia    (list '(:results . "value")
                                                      '(:cache   . "yes")
                                                      '(:exports . "both"))))
+
 (after! julia-repl
   (set-popup-rule! "^\\*julia:*.*\\*$" :quit nil :side 'right :width .5))
 
 (after! org-roam
   (setq org-roam-list-files-commands '(find fd fdfind rg)))
 
-
 (after! flycheck
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
-
 
 (after! neotree
   (setq neo-theme               (if (display-graphic-p) 'icons 'arrow)
@@ -53,16 +51,18 @@
 (after! sly
   (setq sly-complete-symbol-function 'sly-flex-completions))
 
-
 (after! git-gutter-fringe
   (setq-default fringes-outside-margins t)
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
-
 (after! elfeed
-  (setf elfeed-search-sort-function #'salih/elfeed-tag-sort))
+  (setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
+  (defalias 'salih/elfeed-toggle-star
+    (elfeed-expose #'elfeed-search-toggle-all 'star))
+  (require 'elfeed-tube)
+  (elfeed-tube-setup))
 
 (after! consult
   (add-to-list 'consult-buffer-sources 'salih/consult--source-books 'append))
@@ -71,16 +71,14 @@
   (define-key embark-url-map            (kbd "c") 'salih/open-url-in-chrome)
   (define-key embark-org-link-map       (kbd "RET") 'org-web-tools-read-url-as-org))
 
-(after! elfeed
-  (require 'elfeed-tube)
-  (elfeed-tube-setup))
-
-
 (after! edebug
-  ;; make edebug not overwrite my keys
   (setcdr emacs-lisp-mode-map nil))
 
 (after! gud
   (salih/set-convenient-keys))
+
+(after! org-drill
+  (setq org-drill-scope (salih/path-list "~/org/drill/")))
+
 
 (provide '+custom)

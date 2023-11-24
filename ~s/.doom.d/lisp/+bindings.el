@@ -1,5 +1,7 @@
 ;;; ../configs/.doom.d/lisp/+bindings.el -*- lexical-binding: t; -*-
 
+;; TODO refactor `evil-define-key`-like code to use either `general-define-key`
+;; or `map!`.
 
 ;; unbinding
 (define-key org-mode-map (kbd "C-c C-f") nil)
@@ -7,30 +9,36 @@
 (global-unset-key        (kbd "C-f"))
 (define-key org-mode-map (salih/mode "]") nil)
 (define-key org-mode-map (salih/mode "[") nil)
-(define-key input-decode-map [?\C-m] [C-m])
 (general-auto-unbind-keys)
 
 
 
-(define-key flyspell-mode-map (kbd "C-;") nil)
-(define-key evil-visual-state-map       (kbd "C-g") #'evil-escape)
-(define-key evil-insert-state-map       (kbd "C-g") #'evil-escape)
-(define-key evil-replace-state-map      (kbd "C-g") #'evil-escape)
-(define-key evil-operator-state-map     (kbd "C-g") #'evil-escape)
-(define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
-(define-key evil-normal-state-map       (kbd "C-g") #'evil-escape)
+(after! flyspell
+  (define-key flyspell-mode-map (kbd "C-;") nil))
+
+
+
 (define-key evil-normal-state-map       (kbd "g w") #'evil-avy-goto-char-2)
-
-
-(with-eval-after-load 'company
-  (define-key company-active-map (kbd "C-g") #'evil-escape)
-  (define-key company-search-map (kbd "C-g") #'evil-escape))
-
+(define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
 
 (map!
  :mode wordnut-mode
  :n
  "q" #'+workspace/close-window-or-workspace)
+
+;; abusing evil mode
+(map! :i "C-v" #'yank)
+(define-key evil-normal-state-map        (kbd "]") #'centaur-tabs-forward)
+(define-key evil-normal-state-map        (kbd "[") #'centaur-tabs-backward)
+(define-key evil-visual-state-map        (kbd "]") #'centaur-tabs-forward)
+(define-key evil-visual-state-map        (kbd "[") #'centaur-tabs-backward)
+
+
+(map!
+ :map eww-mode-map
+ :n
+ "C" #'eww-browse-with-external-browser)
+
 
 (general-define-key
  :keymaps 'prog-mode-map
@@ -46,11 +54,6 @@
  :prefix  salih/prefix-mode
  "C-o"    (lambda () (interactive) (org-capture nil "p")))
 
-
-(general-define-key
- :keymaps 'flycheck-mode-map
- :prefix  salih/prefix-mode
- "C-e"    #'+default/diagnostics)
 
 
 (general-define-key
@@ -68,48 +71,82 @@
  "C-d"    #'pdf-view-themed-minor-mode)
 
 
-(add-hook 'pdf-view-mode-hook (lambda ()
-                                (evil-local-set-key 'normal (salih/mode "C-c") #'org-noter-insert-precise-note)
-                                (evil-local-set-key 'normal (kbd "J") #' pdf-view-next-page-command)
-                                (evil-local-set-key 'normal (kbd "K") #' pdf-view-previous-page-command)))
+
+
+(general-define-key
+ :keymaps 'pdf-view-mode-map
+ :prefix  salih/prefix-mode
+ "C-c"    #'org-noter-insert-precise-note
+ "H-i"    #'org-noter-insert-note
+ "C-f"    #'salih/zathura-open
+ "C-d"    #'pdf-view-themed-minor-mode)
+
+
+(with-eval-after-load 'pdf-view
+  (evil-define-key 'normal pdf-view-mode-map (kbd "<right>") #'ignore)
+  (evil-define-key 'motion pdf-view-mode-map (kbd "<right>") #'ignore)
+  (evil-define-key 'nroaml pdf-view-mode-map (kbd "<left>") #'ignore)
+  (evil-define-key 'motion pdf-view-mode-map (kbd "<left>") #'ignore))
+
+(add-hook! 'pdf-view-mode-hook
+  (evil-local-set-key 'normal (salih/mode "C-c") #'org-noter-insert-precise-note)
+  (evil-local-set-key 'normal (kbd "J") #'pdf-view-next-page-command)
+  (evil-local-set-key 'normal (kbd "<right>") nil)
+  (evil-local-set-key 'normal (kbd "<left>") nil)
+  (evil-local-set-key 'motion (kbd "<right>") nil)
+  (evil-local-set-key 'motion (kbd "<left>") nil)
+  (evil-local-set-key 'normal (kbd "K") #'pdf-view-previous-page-command))
 
 
 
-(add-hook 'lsp-mode-hook (lambda () (local-set-key (kbd "M-RET") #'lsp-execute-code-action)))
+(general-define-key
+ :keymaps 'lsp-mode-map
+ "M-RET" #'lsp-execute-code-action)
+
+
 ;; Run project
 
 ;; TODO Refactor this. I think this should be rewritten as an only one function
 ;; that is "Run file", which check the mode and map it to the matching running
 ;; method.
 
-;; C++
-(add-hook 'c++-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-cpp)))
+(general-define-key
+ :keymaps 'c++-mode-map
+ :prefix salih/prefix-mode
+ "C-c" #'salih/compile-and-run-cpp)
 
-;; C#
-(add-hook 'csharp-mode-hook
-          (lambda () (local-set-key (salih/mode "C-c") #'salih/compile-and-run-csharp)))
-;; Go
-(add-hook 'go-mode-hook
-          (lambda ()
-            (local-set-key (salih/mode "C-c")   #'salih/compile-and-run-go-project)
-            (local-set-key (kbd "<f2>")         #'salih/compile-and-run-go-project)))
+(general-define-key
+ :keymaps 'csharp-mode-map
+ :prefix salih/prefix-mode
+ "C-c" #'salih/compile-and-run-csharp)
 
+(general-define-key
+ :keymaps 'go-mode-map
+ :prefix salih/prefix-mode
+ "C-c"  #'salih/compile-and-run-go-project
+ "<f2>" #'salih/compile-and-run-go-project)
 
 ;; Dired
 (general-define-key
  :keymaps 'dired-mode-map
  :prefix salih/prefix-mode
+ "F"   #'magit-pull
  "C-c" #'salih/open-in-external-app
  "C-e" #'salih/epa-dired-do-encrypt
  "C-s" #'salih/dired-sort
  "C-d" #'epa-dired-do-decrypt)
 
-(map!
- :map c-mode-map
- :prefix salih/prefix-mode
- "C-c"  #'salih/make-c
- "C-b" #'salih/compile-and-run-c)
+(evil-define-key 'nomral dired-mode-map (kbd "F") 'magit-pull)
+(evil-define-key 'motion dired-mode-map (kbd "F") 'magit-pull)
+
+(after! cc-mode
+  (setq c-mode-map (make-sparse-keymap))
+  (map!
+   :map c-mode-map
+   :prefix salih/prefix-mode
+   "C-c"  #'salih/make-c
+   "C-b"  #'salih/compile-and-run-c))
+
 
 ;; Org-mode
 (map!
@@ -121,10 +158,9 @@
  "C-f"     #'org-footnote-action
  "c i"     #'org-clock-in
  "c o"     #'org-clock-out
- "<C-m>"     #'org-media-note-hydra/body
+ "H-m"     #'org-media-note-hydra/body
  "H-i H-i" #'org-id-get-create
  "H-i C-l" #'org-web-tools-insert-link-for-url
- "H-i C-d" #'org-download-clipboard
  "H-i C-c" #'salih/org-id-get-create-with-custom-id
  "H-i C-k" #'citar-insert-citation
  "H-i C-t" #'org-inlinetask-insert-task
@@ -147,7 +183,15 @@
  :map org-mode-map
  :after org
  :i
+ "H-i H-i" #'org-id-get-create
+ "H-i C-b" #'orb-insert-link
+ "H-i C-l" #'org-web-tools-insert-link-for-url
+ "H-i C-c" #'salih/org-id-get-create-with-custom-id
+ "H-i C-k" #'citar-insert-citation
+ "H-i C-t" #'org-inlinetask-insert-task
+
  "C-r H-i" #'org-roam-node-insert
+ "C-c C-d" #'org-download-clipboard
  "C-r C-t" #'org-roam-tag-add
  "C-r C-a" #'org-roam-alias-add)
 
@@ -183,6 +227,8 @@
 (defun salih/set-convenient-keys ()
   (map!
    :prefix salih/prefix-global
+   "C-u"          nil
+   "C-n"          nil
    "C-t"          #'+vterm/here
    "C-j"          #'centaur-tabs-ace-jump
    "C-c"          (lambda () (interactive) (org-capture nil "f"))
@@ -198,6 +244,7 @@
    ","            #'persp-switch-to-buffer
    "C-<"          #'switch-to-buffer
    "<"            #'switch-to-buffer
+   "H-m"          #'magit-status
    "RET"          #'switch-to-buffer
    "C-<return>"   #'switch-to-buffer
    "["            #'previous-buffer
@@ -218,6 +265,10 @@
    "/"            #'swiper))
 (salih/set-convenient-keys)
 
+(map! :i "H-i C-d" #'salih/insert-current-date)
+(map! :n ";"       #'embark-act)
+(map!    "C-SPC"   #'projectile-find-file)
+
 
 ;; files and roam
 (general-define-key
@@ -225,10 +276,10 @@
  :states 'normal
  :keymaps 'override
  "C-f"  #'org-roam-node-find
+ "C-p"  #'projectile-switch-project
  "C-j"  #'org-roam-dailies-capture-today
  "C-b"  #'org-roam-buffer-toggle
  "C-r"  #'recentf-open-files)
-
 
 ;; search global
 (map!
@@ -238,7 +289,7 @@
  "C-w" #'+lookup/dictionary-definition
  "C-b" #'+default/search-buffer
  "C-p" #'+default/search-project
- "C-g" #'rgrep
+ "<escape>" #'rgrep
  "C-r" #'consult-org-roam-search)
 
 
@@ -256,25 +307,38 @@
 ;; magit and vc
 ;; TODO refactor if possible
 (general-define-key
- :prefix "<C-m>"
+ :prefix "H-m"
  :states 'normal
  :keymaps 'override
  "" nil
- "<C-m>"   #'magit-status
+ "H-m" #'magit-status
  "C-c"   #'magit-clone
+ "C-l"   #'magit-log-buffer-file
  "C-d"   #'magit-file-delete)
+
+(general-define-key
+ :keymap 'magit-mode-map
+ "C-c C-d" #'magit-file-delete)
+
 
 
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
 
 (map!
  :prefix salih/prefix-mode
- "H-i C-u" #'insert-char
- "C-s" nil
- "C-t" #'gts-do-translate
- "]"   #'centaur-tabs-forward
- "["   #'centaur-tabs-backward
- "C-v" #'magit-log-buffer-file)
+ "C-k"     #'kill-current-buffer
+ "C-w"     #'write-file
+ "C-s"     nil
+ "C-t"     #'gts-do-translate
+ "]"       #'centaur-tabs-forward
+ "["       #'centaur-tabs-backward
+ "C-v"     #'magit-log-buffer-file)
+
+(map!
+ :i
+  "H-i C-u" #'insert-char)
+
+
 
 
 ;; resize windows
@@ -311,6 +375,7 @@
  :states 'normal
  "C-c C-u"  #'elfeed-update
  "J"    #'elfeed-goodies/split-show-next
+ "m"    #'salih/elfeed-toggle-star
  "C"    #'salih/elfeed-search-open-in-chrome
  "K"    #'elfeed-goodies/split-show-prev)
 
@@ -326,18 +391,39 @@
 
 
 
-
 (evil-define-key 'normal calendar-mode-map (kbd "RET") 'salih/org-calendar-goto-agenda)
 
 (add-hook 'nov-mode-hook (lambda ()
                            (evil-collection-define-key 'normal 'nov-mode-map "t"  nil)
-                           (evil-collection-define-key 'normal 'nov-mode-map "h"  nil)
-                           (define-key nov-mode-map        (kbd "l")              nil)
-                           (define-key nov-button-map      (kbd "l")              nil)
-                           (define-key shr-map             (kbd "u")              nil)
-                           (define-key shr-map             (kbd "w")              nil)))
+                           (evil-collection-define-key 'normal 'nov-mode-map "h"  nil)))
 
+
+
+(general-define-key
+ :keymaps 'nov-mode-map
+ "l" nil)
+
+(general-define-key
+ :keymaps 'nov-button-map
+ "l" nil)
+
+(general-define-key
+ :keymaps 'shr-map
+ "u" nil)
+
+(general-define-key
+ :keymaps 'shr-map
+ "w" nil)
+
+(map!
+ :map eshell-mode-map
+ "C-c C-f" #'salih/open-kitty-in-current-directory)
+
+
+(define-key ctl-x-map (kbd "C-z") nil)
+(define-key global-map (kbd "C-x C-z") nil)
+(define-key global-map (kbd "C-x s") #'save-buffer)
 (define-key evil-motion-state-map (kbd "H-i") 'evil-jump-backward)
+(define-key evil-motion-state-map (kbd "C-o") 'evil-jump-forward)
 (define-key evil-motion-state-map "-" 'er/expand-region)
-
 (provide '+bindings)

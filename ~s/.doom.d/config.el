@@ -4,26 +4,23 @@
 
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
+(require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
-(require 'highlight-indent-guides)      ; enables indent guide
-
 
 (setq-default frame-title-format                        '("%b")
               bidi-paragraph-direction                  'left-to-right
               org-download-image-dir                    "~/roam/media"
               indent-tabs-mode                          nil
-              highlight-indent-guides-auto-enabled      nil
               pdf-view-display-size                     'fit-width)
-
-(defvar IS-PLASMA (let ((output (shell-command-to-string "pgrep -x plasmashell")))
-                    (not (string-blank-p output))))
-
 
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
-      user-first-name                                   (cl-first
-                                                         (split-string
-                                                          user-full-name " "))
+      user-short-username                               "lr0"
+      user-config-repo-path                             "/home/l/configs/~s"
+      salih/blog-content-path                           "~/blog/content"
+      user-first-name                                   (salih/user-first-name)
+      org-roam-directory                                (file-truename "~/roam")
+      srht-username                                     user-short-username
 
       ;; emacs settings
       inhibit-automatic-native-compilation              t
@@ -31,9 +28,12 @@
       completion-ignore-case                            t
       load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
-      gcmh-high-cons-threshold                          100000000
+      gcmh-high-cons-threshold                          1073741824
       scroll-conservatively                             101
       jit-lock-defer-time                               0
+      read-process-output-max                           1000000
+      lsp-use-plists                                    nil
+      lsp-ui-doc-enable                                 nil
 
       ;; appearance
       ;; font `:size` value of 29 is prefect for filming
@@ -43,25 +43,20 @@
       doom-modeline-height                              17
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
-      doom-theme                                        (if IS-PLASMA
-                                                            'doom-monokai-spectrum
-                                                          'kaolin-dark)
+      doom-theme                                        'modus-vivendi
       +doom-dashboard-ascii-banner-fn                   'salih/banner
-      display-line-numbers-type                         'relative
-      display-line-numbers                              t
+      display-line-numbers-type                         'nil
       all-the-icons-color-icons                         nil
-      highlight-indent-guides-method                    'bitmap
       treemacs-position                                 'right
-      fancy-splash-image                                "~/configs/~s/assets/chomsky.png"
 
       ;; set org files
-      +org-capture-journal-file                         "~/blog/content/stack.org"
-      +org-capture-changelog-file                       "~/blog/content/nice.org"
-      +org-capture-todo-file                            "~/roam/main/life.org"
+      +org-capture-journal-file                         (salih/path-blog "stack.org")
+      +org-capture-changelog-file                       (salih/path-blog "nice.org")
+      +org-capture-todo-file                            (salih/path-roam "main" "life.org")
       org-bullets-bullet-list                           '("◉" "✸" "✿" "♥" "●")
       org-id-method                                     'org
       org-directory                                     org-roam-directory
-      org-id-locations-file                             "~/roam/.orgids"
+      org-id-locations-file                             (salih/path-roam ".orgids")
       org-roam-ui-open-on-start                         nil
       org-agenda-skip-scheduled-if-done                 nil
       org-use-tag-inheritance                           t
@@ -89,7 +84,6 @@
       org-agenda-dim-blocked-tasks                      'invisible
       org-tags-column                                   70
 
-
       ;; I've no idea of any of this.
       org-crypt-key                                     user-mail-address
       epa-file-cache-passphrase-for-symmetric-encryption t
@@ -99,43 +93,27 @@
       ;; prayer time
       calendar-latitude                                 30.0
       calendar-longitude                                31.2
-      awqat-mode-line-format                            " 🕌 ${prayer} (${hours}h${minutes}m) "
+      awqat-mode-line-format                            " ${prayer} (${hours}h${minutes}m) "
       salih/awqat-show-mode-line                        t
 
       ;; school
-      salih/source-directory                             "~/roam/references/source/"
-      salih/books                                       (let (file-list)
-                                                          (dolist
-                                                              (file
-                                                               (directory-files-recursively
-                                                                salih/source-directory
-                                                                "" nil t))
-                                                            (push file file-list))
-                                                          file-list)
+      salih/source-directory                            (salih/path-roam "source")
+      salih/books                                       (salih/path-list salih/source-directory)
+      bibtex-completion-bibliography                    (salih/path-configs "ref.bib")
+      bibtex-completion-notes-path                      (salih/path-roam "references")
+      org-cite-csl-styles-dir                           (salih/path-configs "assets" "csl")
 
-      org-roam-directory                                (file-truename "~/roam")
-      bibtex-completion-library-path                    (list
-                                                         salih/source-directory)
-      bibtex-completion-notes-path                      "~/roam/reference/"
-      bibtex-completion-bibliography                    "/home/l/configs/~s/ref.bib"
-      org-cite-global-bibliography                      (list
-                                                         bibtex-completion-bibliography)
-      org-cite-csl-styles-dir                           "/home/l/configs/~s/assets/csl"
+      bibtex-completion-library-path                    `(,salih/source-directory)
+      org-cite-global-bibliography                      `(,bibtex-completion-bibliography)
       citar-bibliography                                bibtex-completion-bibliography
-      org-cite-csl--fallback-style-file                 (expand-file-name
-                                                         "chicago-ibid.csl"
-                                                         org-cite-csl-styles-dir)
-
+      org-cite-csl--fallback-style-file                 (f-join org-cite-csl-styles-dir "chicago-ibid.csl")
+                                                         
       ;; translate
       gts-translate-list                                '(("en" "ar"))
       gts-default-translator                            (gts-translator
-                                                         :picker
-                                                         (gts-prompt-picker)
-                                                         :engines
-                                                         (list
-                                                          (gts-google-engine))
-                                                         :render
-                                                         (gts-buffer-render))
+                                                         :picker        (gts-prompt-picker)
+                                                         :engines (list (gts-google-engine))
+                                                         :render        (gts-buffer-render))
 
       ;; keyboard
       salih/prefix-global                               "C-x "
@@ -146,8 +124,7 @@
       shr-inhibit-images                                nil
 
       ;; vertico
-      vertico-buffer-display-action                     '(display-buffer-at-bottom
-                                                          (window-height . 20))
+      vertico-buffer-display-action                     '(display-buffer-at-bottom (window-height . 20))
       enable-recursive-minibuffers                      nil
 
       ;; git-auto-commit-mode
@@ -171,12 +148,22 @@
 
       ;; tabs
       centaur-tabs-enable-key-bindings                  t
-      centaur-tabs-set-icons                            t
-      centaur-tabs-plain-icons                          t
-      centaur-tabs-set-modified-marker                  t
       centaur-tabs-close-button                         "✕"
       centaur-tabs-modified-marker                      "•"
       centaur-tabs-cycle-scope                          'tabs
+      centaur-tabs-height                               15
+      centaur-tabs-set-icons                            nil
+
+      ;; modus theme
+      modus-themes-bold-constructs                      t
+      modus-themes-fringes                              nil
+      modus-themes-italic-constructs                    t
+      modus-themes-mode-line                            '(moody borderless)
+      modus-themes-org-blocks                           'gray-background
+
+      ;; indent highlight
+      indent-bars-highlight-current-depth               nil
+      indent-bars-treesit-support                       t
 
       ;; other
       company-idle-delay                                0.3
@@ -184,15 +171,13 @@
       proced-auto-update-flag                           t
       salih/temp-roam-insert                            nil
       large-file-warning-threshold                      nil
+      safe-local-variable-values                        '((org-download-image-dir
+                                                           . "../i")
+                                                          (salih/rebuild . t))
       save-place-ignore-files-regexp                    "\\(?:COMMIT_EDITMSG\\|hg-editor-[[:alnum:]]+\\.txt\\|svn-commit\\.tmp\\|bzr_log\\.[[:alnum:]]+\\|\\.pdf\\)$"
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
-      dired-sidebar-refresh-on-special-commands         t
-      org-annotate-file-storage-file                    "~/configs/annotated.org"
-      bmkp-last-as-first-bookmark-file                  "/home/ghd/.emacs.d/.local/etc/bookmarks"
-      pdf-view-restore-filename                         "~/configs/~/.pdf-view-restore")
-
-
+      bmkp-last-as-first-bookmark-file                  "/home/ghd/.emacs.d/.local/etc/bookmarks")
 ;; setup email
 ;; don't forget to setup authinfo
 ;; https://www.emacswiki.org/emacs/GnusAuthinfo
@@ -202,18 +187,17 @@
 (after! mu4e
   (setq message-send-mail-function              'smtpmail-send-it
         starttls-use-gnutls                     t
-        mu4e-compose-reply-ignore-address       `("no-?reply" ,user-mail-address)
+        mu4e-compose-reply-ignore-address       `("no-?reply"
+                                                  ,user-mail-address)
         mu4e-update-interval                    200
-        mu4e-compose-signature                  (format "Regards,\n%s" user-first-name)
+        mu4e-compose-signature                  (format "Regards,\n%s"
+                                                        user-first-name)
         smtpmail-default-smtp-server            "mail.gmx.com"
         smtpmail-smtp-server                    smtpmail-default-smtp-server
         smtpmail-smtp-service                   587
         smtpmail-starttls-credentials           '(("mail.gmx.com" 465 nil nil))
         smtpmail-stream-type                    'starttls
         mu4e-modeline-show-global               nil)
-
-  (defun remove-file-prefix (url)
-    (replace-regexp-in-string "^file://" "" url))
 
   (defun mu4e-action-view-in-xwidget (msg)
     (unless (fboundp 'xwidget-webkit-browse-url)
@@ -224,7 +208,8 @@
                                            (call-process "tidy" nil nil nil "-m"
                                                          "--numeric-entities"
                                                          "yes"
-                                                         (remove-file-prefix url)))
+                                                         (replace-regexp-in-string
+                                                          "^file://" "" url)))
                                          (xwidget-webkit-browse-url url))))
       (mu4e-action-view-in-browser msg)))
 
@@ -249,4 +234,5 @@
 (require '+bindings)
 (require '+org-tags)
 (require '+custom)
+(require '+erc)
 (require '+deep)

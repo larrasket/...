@@ -9,7 +9,6 @@
        doom
        doom-dashboard
        hl-todo
-       (treemacs +lsp)
        (ligatures
         +pragmata-pro)
        modeline
@@ -28,8 +27,8 @@
        word-wrap
 
        :emacs
-       (dired
-        +icons)
+       dired
+        
        electric
        undo
        vc
@@ -57,7 +56,8 @@
        (tty)
 
        :lang
-       (cc +lsp)
+       (cc +lsp
+           +tree-sitter)
        common-lisp
        (csharp +lsp)
        emacs-lisp
@@ -92,18 +92,8 @@
 
        :private
        compiler
-       ;; src==irc
-       ;; for the options `erc-prompt-for-password' and
-       ;; `erc-prompt-for-nickserv-password', you should have a .authinfo file
-       ;; conatins your password for the nickname. For Example, using
-       ;; yournickname and yourpassword as a NickName and password (repsectively
-       ;; machine irc.libera.chat login yournickname password yourpassword
-       ;; See. https://www.gnu.org/software/emacs/manual/html_node/emacs/Authentication.html
-       src
        gen
        genorg
-       ;; gitcolor
-       ;; chess
        cite
        roam
        bind)

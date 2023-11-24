@@ -6,6 +6,7 @@
 (defun salih/mode (key-sequence)
   (kbd (concat salih/prefix-mode   key-sequence)))
 
+
 ;; fix evil C-g methods
 (defun salih/evil-escape-and-abort-company ()
   (interactive)
@@ -216,7 +217,7 @@ Version 2019-11-04 2021-02-16"
 (defun salih/open-book ()
   "Search for a file in ~/me and open it."
   (interactive)
-  (let ((default-directory salih/source-directory))
+  (let ((default-directory (concat salih/source-directory "/")))
     (call-interactively 'find-file)))
 
 ;; let's hope for the best
@@ -293,7 +294,7 @@ automatically previewed."
 (defun salih/xwidget-open-html ()
   "Open the current buffer's file path in an xwidget window."
   (interactive)
-  (add-hook 'after-save-hook 'xwidget-webkit-reload)
+  (add-hook 'after-save-hook 'xwidget-webkit-reload nil t)
   (let ((file-path (buffer-file-name)))
     (when file-path
       (let ((xwidget (xwidget-webkit-browse-url (concat "file://" file-path))))
@@ -304,8 +305,7 @@ automatically previewed."
              awqat-times-for-day))
 
 (defun salih/banner ()
-  (let* ((banner '(
-                   "       d8888                                     8888888888       888    d8b      "
+  (let* ((banner '("       d8888                                     8888888888       888    d8b      "
                    "      d88888                                     888              888    Y8P      "
                    "     d88P888                                     888              888             "
                    "    d88P 888 88888b.d88b.   .d88b.  888d888      8888888  8888b.  888888 888      "
@@ -452,30 +452,24 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                             magit-log-mode
                             magit-file-mode
                             magit-blob-mode
-                            magit-blame-mode
-                            )))
-     "Emacs")
-    ((derived-mode-p 'prog-mode)
-     "Editing")
-    ((derived-mode-p 'dired-mode)
-     "Dired")
-    ((memq major-mode '(helpful-mode
-                        help-mode))
-     "Help")
+                            magit-blame-mode))) "Emacs")
 
-    ((memq major-mode '(erc-mode))
-     "Erc")
+    ((derived-mode-p 'prog-mode) "Editing")
+    ((derived-mode-p 'dired-mode) "Dired")
 
 
-    ((memq major-mode '(elfeed-show-mode
-                        elfeed-search-mode))
-     "elfeed")
+    ((memq major-mode '(helpful-mode help-mode)) "Help")
+
+    ((memq major-mode '(erc-mode)) "Erc")
 
 
-    ((memq major-mode '(pdf-view-mode
-                        nov-mode
-                        doc-view-mode))
-     "PDF")
+    ((memq major-mode '(eshell-mode)) "eshell")
+
+
+    ((memq major-mode '(elfeed-show-mode elfeed-search-mode)) "elfeed")
+
+
+    ((memq major-mode '(pdf-view-mode nov-mode doc-view-mode)) "PDF")
 
     ((memq major-mode '(org-mode
                         org-agenda-clockreport-mode
@@ -486,10 +480,8 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
                         org-bullets-mode
                         org-cdlatex-mode
                         org-agenda-log-mode
-                        diary-mode))
-     "OrgMode")
-    (t
-     (centaur-tabs-get-group-name (current-buffer))))))
+                        diary-mode)) "OrgMode")
+    (t (centaur-tabs-get-group-name (current-buffer))))))
 
 (defun vulpea-project-p ()
   "Return non-nil if current buffer has any todo entry.
@@ -591,7 +583,9 @@ tasks."
 
 (defun salih/keyboard-config ()
   (when (display-graphic-p)
-    (keyboard-translate ?\C-i ?\H-i)))
+    (keyboard-translate ?\C-m ?\H-m)
+    (keyboard-translate ?\C-i ?\H-i))
+  (define-key key-translation-map (kbd "C-g") (kbd "<escape>")))
 
 (defun salih/org-roam-node-insert ()
   (interactive)
@@ -718,7 +712,7 @@ tasks."
   (replace-regexp-in-string "^[[:space:]]*$\\|^[[:space:]]*>[[:space:]]*$" ""
                             (replace-regexp-in-string "\\[\\[\\([^]]+\\)\\]\\[\\([^]]+\\)\\]\\]" "\\2" text)))
 
-(defun salih/get-file-todos ()
+(defun salih/get-file-list-todos ()
   (interactive)
   (org-agenda-set-restriction-lock)
   (org-agenda nil "t"))
@@ -779,8 +773,6 @@ tasks."
 
        ;; Buffer name not match below blacklist.
        (string-prefix-p "*epc" name)
-       (string-prefix-p "*helm" name)
-       (string-prefix-p "*Helm" name)
        (string-prefix-p "*Org Agenda*" name)
        (string-prefix-p "*lsp" name)
        (string-prefix-p "*LSP" name)
@@ -802,6 +794,7 @@ tasks."
        (string-prefix-p "*mu4e-main*" name)
        (string-prefix-p "*mu4e-update" name)
        (string-prefix-p "*julia" name)
+       (string-prefix-p "*clangd" name)
        (string-prefix-p "*sly-mrepl" name)
 
 
@@ -818,10 +811,22 @@ tasks."
        (string-prefix-p "*Org Clock*" name)
 
 
+       (string-prefix-p "*Ediff" name)
+       (string-prefix-p "*ediff" name)
+
+
+       (string-prefix-p "*Local Variables" name)
+       (string-prefix-p "*Calc" name)
+       (cl-search       "stderr" name)
+
+
+
        (string-prefix-p "*flycheck" name)
        (string-prefix-p "*nov" name)
        (string-prefix-p "*format" name)
        (string-prefix-p "*Pandoc" name)
+
+
 
 
        ;; Is not magit buffer.
@@ -875,12 +880,19 @@ tasks."
            (unless (gethash file ht)
              (push (consult--fast-abbreviate-file-name file) items)))))))
 
-(defun salih/org-roam-get-node-files (node-list)
-  "Applies `org-roam-node-file' function to the cdr of each element in NODE-LIST."
+(defun salih/org-roam-get-node-titles (node-list)
+  "Applies `org-roam-node-title' function to the cdr of each element in NODE-LIST."
   (mapcar (lambda (node) (org-roam-node-title (cdr node)))
           node-list))
 
-(setq roam-titles (salih/org-roam-get-node-files
+
+(defun salih/org-roam-get-node-files (node-list)
+  "Applies `org-roam-node-file' function to the cdr of each element in NODE-LIST."
+  (mapcar (lambda (node) (org-roam-node-file (cdr node)))
+          node-list))
+
+
+(setq roam-titles (salih/org-roam-get-node-titles
                    (org-roam-node-read--completions)))
 (defun salih/get-org-roam-titles () roam-titles)
 
@@ -926,12 +938,10 @@ tasks."
                                             description)))))
 
 
-                (setq roam-titles (salih/org-roam-get-node-files
+                (setq roam-titles (salih/org-roam-get-node-titles
                                    (org-roam-node-read--completions))))
 
         :items    ,#'salih/get-org-roam-titles))
-
-
 
 (defun salih/org-noter-pdf--pdf-view-get-precise-info (mode window)
   (when (eq mode 'pdf-view-mode)
@@ -953,7 +963,6 @@ tasks."
                   h-position (cdr click-position)))))
       v-position)))
 
-
 (defun salih/eshell ()
   "Run eshell and set its directory to the current buffer's directory if eshell
 is already running."
@@ -966,13 +975,10 @@ is already running."
           (eshell-send-input))
       (eshell))))
 
-
-
 (use-package proced
   :custom
   (proced-enable-color-flag t)
   (proced-tree-flag t))
-
 
 (defun salih/zathura-open ()
   (interactive)
@@ -981,7 +987,6 @@ is already running."
                    (number-to-string
                     (pdf-view-current-page
                      (get-buffer-window (current-buffer)))) buffer-file-name)))
-
 
 (defun salih/dired-sort ()
   "Sort dired dir listing in different ways.
@@ -999,11 +1004,9 @@ Version 2015-07-30"
      (t (error "logic error 09535" )))
     (dired-sort-other -arg )))
 
-
 (defun salih/advise-once (symbol where function &optional props)
   (advice-add symbol :after (lambda (&rest _) (advice-remove symbol function)))
   (advice-add symbol where function props))
-
 
 (defun salih/format-all-ensure-formatter ()
   (interactive)
@@ -1012,5 +1015,33 @@ Version 2015-07-30"
             (message-log-max nil))
         (call-interactively #'format-all-ensure-formatter))))
 
+(after! git-gutter
+  (unless (featurep 'tadwin)
+    (modus-themes-with-colors
+    (custom-set-faces
+     ;; Replace green with blue if you use `modus-themes-deuteranopia'.
+     `(git-gutter-fr:added ((,class :foreground ,green-fringe-bg)))
+     ;; `(git-gutter-fr:deleted ((,class :foreground ,red-fringe-bg)))
+     `(git-gutter-fr:modified ((,class :foreground ,yellow-fringe-bg)))))))
+
+(defmacro salih/disable-minor-mode-in-hook (hook mode-symbol)
+  `(add-hook ,hook
+             (lambda ()
+               (when (bound-and-true-p ,mode-symbol)
+                 (,mode-symbol -1)))))
+
+(defun salih/dired-git-info-auto-enable ()
+  "Enable dired-git-info only if there are less than 60 files."
+  (when (< (count-lines (point-min) (point-max)) 60)
+    (dired-git-info-auto-enable)))
+
+(defun salih/insert-current-date ()
+  (interactive)
+  (insert (shell-command-to-string "echo -n $(date +%Y/%m/%d:)")))
+
+(defun salih/open-kitty-in-current-directory ()
+  "Open the Kitty terminal in the current working directory."
+  (interactive)
+  (call-process "kitty" nil 0 nil "--directory" default-directory))
 
 (provide '+helper)

@@ -1,0 +1,275 @@
+From 10dd5df95f551d81d0a814dcdb2bde20e405fb91 Mon Sep 17 00:00:00 2001
+From: sympodius <mail@sympodius.net>
+Date: Mon, 13 Mar 2023 16:28:16 +0000
+Subject: [PATCH] [dwm][patch][clientopacity] Adds opacity on a per client
+ basis
+
+---
+ config.h | 80 ++++++++++++++++++++++++++++------------------------
+ dwm.c        | 61 ++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 103 insertions(+), 38 deletions(-)
+
+diff --git a/config.h b/config.h
+index 9efa774..9ca812d 100644
+--- a/config.
++++ b/config.h
+@@ -5,6 +5,8 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
+ static const unsigned int snap      = 32;       /* snap pixel */
+ static const int showbar            = 1;        /* 0 means no bar */
+ static const int topbar             = 1;        /* 0 means bottom bar */
++static const double activeopacity   = 0.9f;     /* Window opacity when it's focused (0 <= opacity <= 1) */
++static const double inactiveopacity = 0.7f;     /* Window opacity when it's inactive (0 <= opacity <= 1) */
+ static const char *fonts[]          = { "monospace:size=10" };
+ static const char dmenufont[]       = "monospace:size=10";
+ static const char col_gray1[]       = "#222222";
+@@ -26,9 +28,9 @@ static const Rule rules[] = {
+ 	 *	WM_CLASS(STRING) = instance, class
+ 	 *	WM_NAME(STRING) = title
+ 	 */
+-	/* class      instance    title       tags mask     isfloating   monitor */
+-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
++	/* class      instance    title       tags mask     isfloating   focusopacity    unfocusopacity     monitor */
++	{ "Gimp",     NULL,       NULL,       0,            1,           1.0,            inactiveopacity,   -1 },
++	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           activeopacity,  inactiveopacity,   -1 },
+ };
+ 
+ /* layout(s) */
+@@ -61,40 +63,44 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
+ static const char *termcmd[]  = { "st", NULL };
+ 
+ static const Key keys[] = {
+-	/* modifier                     key        function        argument */
+-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
+-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
+-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
+-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
+-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
+-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
+-	{ MODKEY,                       XK_Return, zoom,           {0} },
+-	{ MODKEY,                       XK_Tab,    view,           {0} },
+-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
+-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+-	{ MODKEY,                       XK_space,  setlayout,      {0} },
+-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
+-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
+-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
+-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
+-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+-	TAGKEYS(                        XK_1,                      0)
+-	TAGKEYS(                        XK_2,                      1)
+-	TAGKEYS(                        XK_3,                      2)
+-	TAGKEYS(                        XK_4,                      3)
+-	TAGKEYS(                        XK_5,                      4)
+-	TAGKEYS(                        XK_6,                      5)
+-	TAGKEYS(                        XK_7,                      6)
+-	TAGKEYS(                        XK_8,                      7)
+-	TAGKEYS(                        XK_9,                      8)
+-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
++	/* modifier                     key        function              argument */
++	{ MODKEY,                       XK_p,      spawn,                {.v = dmenucmd } },
++	{ MODKEY|ShiftMask,             XK_Return, spawn,                {.v = termcmd } },
++	{ MODKEY,                       XK_b,      togglebar,            {0} },
++	{ MODKEY,                       XK_j,      focusstack,           {.i = +1 } },
++	{ MODKEY,                       XK_k,      focusstack,           {.i = -1 } },
++	{ MODKEY,                       XK_i,      incnmaster,           {.i = +1 } },
++	{ MODKEY,                       XK_d,      incnmaster,           {.i = -1 } },
++	{ MODKEY,                       XK_h,      setmfact,             {.f = -0.05} },
++	{ MODKEY,                       XK_l,      setmfact,             {.f = +0.05} },
++	{ MODKEY,                       XK_Return, zoom,                 {0} },
++	{ MODKEY,                       XK_Tab,    view,                 {0} },
++	{ MODKEY|ShiftMask,             XK_c,      killclient,           {0} },
++	{ MODKEY,                       XK_t,      setlayout,            {.v = &layouts[0]} },
++	{ MODKEY,                       XK_f,      setlayout,            {.v = &layouts[1]} },
++	{ MODKEY,                       XK_m,      setlayout,            {.v = &layouts[2]} },
++	{ MODKEY,                       XK_space,  setlayout,            {0} },
++	{ MODKEY|ShiftMask,             XK_space,  togglefloating,       {0} },
++	{ MODKEY,                       XK_0,      view,                 {.ui = ~0 } },
++	{ MODKEY|ShiftMask,             XK_0,      tag,                  {.ui = ~0 } },
++	{ MODKEY,                       XK_comma,  focusmon,             {.i = -1 } },
++	{ MODKEY,                       XK_period, focusmon,             {.i = +1 } },
++	{ MODKEY|ShiftMask,             XK_comma,  tagmon,               {.i = -1 } },
++	{ MODKEY|ShiftMask,             XK_period, tagmon,               {.i = +1 } },
++        { MODKEY|ShiftMask,             XK_a,      changefocusopacity,   {.f = +0.025}},
++        { MODKEY|ShiftMask,             XK_s,      changefocusopacity,   {.f = -0.025}},
++	{ MODKEY|ShiftMask,             XK_z,      changeunfocusopacity, {.f = +0.025}},
++        { MODKEY|ShiftMask,             XK_x,      changeunfocusopacity, {.f = -0.025}},
++	TAGKEYS(                        XK_1,                            0)
++	TAGKEYS(                        XK_2,                            1)
++	TAGKEYS(                        XK_3,                            2)
++	TAGKEYS(                        XK_4,                            3)
++	TAGKEYS(                        XK_5,                            4)
++	TAGKEYS(                        XK_6,                            5)
++	TAGKEYS(                        XK_7,                            6)
++	TAGKEYS(                        XK_8,                            7)
++	TAGKEYS(                        XK_9,                            8)
++	{ MODKEY|ShiftMask,             XK_q,      quit,                 {0} },
+ };
+ 
+ /* button definitions */
+diff --git a/dwm.c b/dwm.c
+index c2bd871..71cf33c 100644
+--- a/dwm.c
++++ b/dwm.c
+@@ -62,7 +62,7 @@ enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
+ enum { SchemeNorm, SchemeSel }; /* color schemes */
+ enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
+        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
+-       NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
++       NetWMWindowTypeDialog, NetClientList, NetWMWindowsOpacity, NetLast }; /* EWMH atoms */
+ enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
+ enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
+        ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
+@@ -95,6 +95,8 @@ struct Client {
+ 	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
+ 	Client *next;
+ 	Client *snext;
++        double opacity;
++        double unfocusopacity;
+ 	Monitor *mon;
+ 	Window win;
+ };
+@@ -138,6 +140,8 @@ typedef struct {
+ 	const char *title;
+ 	unsigned int tags;
+ 	int isfloating;
++	double opacity;
++        double unfocusopacity;
+ 	int monitor;
+ } Rule;
+ 
+@@ -149,6 +153,8 @@ static void arrangemon(Monitor *m);
+ static void attach(Client *c);
+ static void attachstack(Client *c);
+ static void buttonpress(XEvent *e);
++static void changefocusopacity(const Arg *arg);
++static void changeunfocusopacity(const Arg *arg);
+ static void checkotherwm(void);
+ static void cleanup(void);
+ static void cleanupmon(Monitor *mon);
+@@ -185,6 +191,7 @@ static void monocle(Monitor *m);
+ static void motionnotify(XEvent *e);
+ static void movemouse(const Arg *arg);
+ static Client *nexttiled(Client *c);
++static void opacity(Client *c, double opacity);
+ static void pop(Client *c);
+ static void propertynotify(XEvent *e);
+ static void quit(const Arg *arg);
+@@ -287,6 +294,8 @@ applyrules(Client *c)
+ 	/* rule matching */
+ 	c->isfloating = 0;
+ 	c->tags = 0;
++	c->opacity = activeopacity;
++	c->unfocusopacity = inactiveopacity;
+ 	XGetClassHint(dpy, c->win, &ch);
+ 	class    = ch.res_class ? ch.res_class : broken;
+ 	instance = ch.res_name  ? ch.res_name  : broken;
+@@ -299,6 +308,8 @@ applyrules(Client *c)
+ 		{
+ 			c->isfloating = r->isfloating;
+ 			c->tags |= r->tags;
++			c->opacity = r->opacity;
++			c->unfocusopacity = r->unfocusopacity;
+ 			for (m = mons; m && m->num != r->monitor; m = m->next);
+ 			if (m)
+ 				c->mon = m;
+@@ -457,6 +468,36 @@ buttonpress(XEvent *e)
+ 			buttons[i].func(click == ClkTagBar && buttons[i].arg.i == 0 ? &arg : &buttons[i].arg);
+ }
+ 
++void
++changefocusopacity(const Arg *arg)
++{
++        if (!selmon->sel)
++                return;
++        selmon->sel->opacity+=arg->f;
++        if(selmon->sel->opacity > 1.0)
++                selmon->sel->opacity = 1.0;
++
++        if(selmon->sel->opacity < 0.1)
++                selmon->sel->opacity = 0.1;
++
++        opacity(selmon->sel, selmon->sel->opacity);
++}
++
++void
++changeunfocusopacity(const Arg *arg)
++{
++        if (!selmon->sel)
++                return;
++        selmon->sel->unfocusopacity+=arg->f;
++        if(selmon->sel->unfocusopacity > 1.0)
++                selmon->sel->unfocusopacity = 1.0;
++
++        if(selmon->sel->unfocusopacity < 0.1)
++                selmon->sel->unfocusopacity = 0.1;
++
++        opacity(selmon->sel, selmon->sel->unfocusopacity);
++}
++
+ void
+ checkotherwm(void)
+ {
+@@ -803,6 +844,8 @@ focus(Client *c)
+ 		grabbuttons(c, 1);
+ 		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
+ 		setfocus(c);
++		c->opacity = MIN(1.0, MAX(0, c->opacity));
++		opacity(c, c->opacity);
+ 	} else {
+ 		XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
+ 		XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
+@@ -1052,6 +1095,7 @@ manage(Window w, XWindowAttributes *wa)
+ 		c->mon = selmon;
+ 		applyrules(c);
+ 	}
++	opacity(c, c->opacity);
+ 
+ 	if (c->x + WIDTH(c) > c->mon->wx + c->mon->ww)
+ 		c->x = c->mon->wx + c->mon->ww - WIDTH(c);
+@@ -1209,6 +1253,18 @@ nexttiled(Client *c)
+ 	return c;
+ }
+ 
++void
++opacity(Client *c, double opacity)
++{
++        if(opacity > 0 && opacity < 1) {
++                unsigned long real_opacity[] = { opacity * 0xffffffff };
++                XChangeProperty(dpy, c->win, netatom[NetWMWindowsOpacity], XA_CARDINAL,
++                                32, PropModeReplace, (unsigned char *)real_opacity,
++                                1);
++        } else
++                XDeleteProperty(dpy, c->win, netatom[NetWMWindowsOpacity]);
++}
++
+ void
+ pop(Client *c)
+ {
+@@ -1579,6 +1635,7 @@ setup(void)
+ 	netatom[NetWMWindowType] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE", False);
+ 	netatom[NetWMWindowTypeDialog] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
+ 	netatom[NetClientList] = XInternAtom(dpy, "_NET_CLIENT_LIST", False);
++	netatom[NetWMWindowsOpacity] = XInternAtom(dpy, "_NET_WM_WINDOW_OPACITY", False);
+ 	/* init cursors */
+ 	cursor[CurNormal] = drw_cur_create(drw, XC_left_ptr);
+ 	cursor[CurResize] = drw_cur_create(drw, XC_sizing);
+@@ -1760,6 +1817,8 @@ unfocus(Client *c, int setfocus)
+ 	if (!c)
+ 		return;
+ 	grabbuttons(c, 0);
++	c->unfocusopacity = MIN(1.0, MAX(0, c->unfocusopacity));
++	opacity(c, c->unfocusopacity);
+ 	XSetWindowBorder(dpy, c->win, scheme[SchemeNorm][ColBorder].pixel);
+ 	if (setfocus) {
+ 		XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
+-- 
+2.39.2
+
