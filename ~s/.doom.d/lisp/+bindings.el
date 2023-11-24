@@ -183,6 +183,13 @@
  :map org-mode-map
  :after org
  :i
+ "H-i H-i" #'org-id-get-create
+ "H-i C-b" #'orb-insert-link
+ "H-i C-l" #'org-web-tools-insert-link-for-url
+ "H-i C-c" #'salih/org-id-get-create-with-custom-id
+ "H-i C-k" #'citar-insert-citation
+ "H-i C-t" #'org-inlinetask-insert-task
+
  "C-r H-i" #'org-roam-node-insert
  "C-c C-d" #'org-download-clipboard
  "C-r C-t" #'org-roam-tag-add
@@ -319,7 +326,6 @@
 
 (map!
  :prefix salih/prefix-mode
- "H-i C-u" #'insert-char
  "C-k"     #'kill-current-buffer
  "C-w"     #'write-file
  "C-s"     nil
@@ -327,6 +333,12 @@
  "]"       #'centaur-tabs-forward
  "["       #'centaur-tabs-backward
  "C-v"     #'magit-log-buffer-file)
+
+(map!
+ :i
+  "H-i C-u" #'insert-char)
+
+
 
 
 ;; resize windows
