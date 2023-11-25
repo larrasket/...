@@ -190,7 +190,7 @@
  "H-i C-k" #'citar-insert-citation
  "H-i C-t" #'org-inlinetask-insert-task
 
- "C-r H-i" #'org-roam-node-insert
+ "H-i C-r" #'org-roam-node-insert
  "C-c C-d" #'org-download-clipboard
  "C-r C-t" #'org-roam-tag-add
  "C-r C-a" #'org-roam-alias-add)
@@ -323,6 +323,7 @@
 
 
 (global-set-key (kbd "C-M-g")      #'+lookup/definition)
+(global-set-key (kbd "<f12>")      #'keyboard-quit)
 
 (map!
  :prefix salih/prefix-mode
