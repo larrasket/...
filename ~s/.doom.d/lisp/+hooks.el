@@ -93,7 +93,7 @@ a good understanding. His praise endures forever. ")))
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)
 (salih/consult-preview-at-point)
-(run-at-time nil (* 30 60) #'elfeed-update)
+(run-at-time nil (* 200 60) #'elfeed-update)
 (when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
 
 
