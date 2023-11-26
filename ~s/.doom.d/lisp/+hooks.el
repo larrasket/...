@@ -41,7 +41,14 @@
 
 (add-hook! 'prog-mode-hook              #'auto-fill-mode
                                         #'column-enforce-mode
+                                        #'format-all-mode
                                         #'salih/format-all-ensure-formatter)
+
+
+(add-hook! '(emacs-lisp-mode-hook
+             sql-mode-hook
+             TeX-mode-hook
+             LaTeX-mode-hook) (format-all-mode -1))
 
 
 (add-hook 'csv-mode-hook                #'csv-align-mode)

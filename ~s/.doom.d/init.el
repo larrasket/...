@@ -20,7 +20,6 @@
         +everywhere)
        file-templates
        fold
-       (format +onsave)
        lispy
        parinfer
        snippets
@@ -28,7 +27,7 @@
 
        :emacs
        dired
-        
+
        electric
        undo
        vc

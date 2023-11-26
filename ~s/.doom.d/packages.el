@@ -83,3 +83,5 @@
 (package! org-drill)
 
 (package! lsp-treemacs)
+
+(package! format-all)
