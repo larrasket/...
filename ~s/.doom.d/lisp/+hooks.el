@@ -48,7 +48,7 @@
 (add-hook! '(emacs-lisp-mode-hook
              sql-mode-hook
              TeX-mode-hook
-             LaTeX-mode-hook) (format-all-mode -1))
+             LaTeX-mode-hook)           (format-all-mode -1))
 
 
 (add-hook 'csv-mode-hook                #'csv-align-mode)
