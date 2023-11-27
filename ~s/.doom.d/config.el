@@ -7,6 +7,7 @@
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
 
+
 (setq-default frame-title-format                        '("%b")
               bidi-paragraph-direction                  'left-to-right
               org-download-image-dir                    "~/roam/media"
@@ -230,7 +231,6 @@
 (require '+helper)
 (require '+hooks)
 (require '+advice)
-(require '+feeds)
 (require '+bindings)
 (require '+org-tags)
 (require '+custom)

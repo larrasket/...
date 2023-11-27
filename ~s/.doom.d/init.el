@@ -83,7 +83,7 @@
 
        :app
        ;; irc
-       rss
+       ;; rss
 
        :config
        (default ;; +bindings

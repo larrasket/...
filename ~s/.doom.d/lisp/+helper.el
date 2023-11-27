@@ -466,8 +466,6 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
     ((memq major-mode '(eshell-mode)) "eshell")
 
 
-    ((memq major-mode '(elfeed-show-mode elfeed-search-mode)) "elfeed")
-
 
     ((memq major-mode '(pdf-view-mode nov-mode doc-view-mode)) "PDF")
 
@@ -654,30 +652,7 @@ tasks."
       (nov-goto-document index)
       (goto-char point))))
 
-(defun salih/elfeed-copy-url ()
-  (interactive)
-  (let ((link (elfeed-entry-link elfeed-show-entry)))
-    (when link
-      (kill-new link)
-      (message "URL: %s" link)
-      link)))
 
-(defun salih/elfeed-open-url ()
-  (interactive)
-  (let ((link (elfeed-entry-link elfeed-show-entry)))
-    (when link
-      (browse-url link))))
-
-(defun salih/elfeed-search-open-in-chrome ()
-  (interactive)
-  (elfeed-search-yank)
-  (salih/open-url-in-chrome (car kill-ring)))
-
-(defun salih/elfeed-open-url-in-chrome ()
-  (interactive)
-  (let ((link (elfeed-entry-link elfeed-show-entry)))
-    (when link
-      (salih/open-url-in-chrome link))))
 
 (defun salih/insert-relative-file-path ()
   "Insert a relative file path selected by the user."
@@ -693,12 +668,6 @@ tasks."
           (insert file-path))
       (message "File does not exist: %s" file-path))))
 
-(defun salih/elfeed-tag-sort (a b)
-  (let* ((a-tags (format "%s" (elfeed-entry-tags a)))
-         (b-tags (format "%s" (elfeed-entry-tags b))))
-    (if (string= a-tags b-tags)
-        (< (elfeed-entry-date b) (elfeed-entry-date a)))
-    (string< a-tags b-tags)))
 
 
 
@@ -806,8 +775,6 @@ tasks."
        (string-prefix-p "*Native-compile-Log" name)
 
 
-       (string-prefix-p "*elfeed-log*" name)
-       (string-prefix-p "*elfeed-tube-log*" name)
        (string-prefix-p "*Org Clock*" name)
 
 
@@ -1043,5 +1010,18 @@ Version 2015-07-30"
   "Open the Kitty terminal in the current working directory."
   (interactive)
   (call-process "kitty" nil 0 nil "--directory" default-directory))
+
+(defun salih/open-inbox ()
+  (interactive)
+  (if (featurep 'mu4e)
+      (mu4e~headers-jump-to-maildir "/Inbox")
+    (mu4e)))
+
+(defun salih/open-rss ()
+  (interactive)
+  (if (featurep 'mu4e)
+      (mu4e~headers-jump-to-maildir "/rss")
+    (mu4e)))
+
 
 (provide '+helper)

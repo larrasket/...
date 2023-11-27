@@ -49,7 +49,6 @@
 (package! vulpea)                       ; roam advanced functions
 (package! nov)                          ; browse epubs from emacs
 (package! org-bullets)                  ; nicer org view
-(package! elfeed-tube)                  ; see more yt info from elfeed
 
 (package! maxima)                       ; a maxima repl.. not sure about it (and
                                         ; about using maxima in general)

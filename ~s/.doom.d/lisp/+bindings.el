@@ -216,7 +216,6 @@
   `(define-key sly-mode-map (salih/mode "C-j") 'salih/sly-compile-defun-with-print))
 
 (add-hook 'xwidget-webkit-mode-hook (lambda ()
-                                      (evil-define-key 'nomral xwidget-webkit-mode-map (kbd "O") 'salih/elfeed-open-url)
                                       (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "y" 'xwidget-webkit-copy-selection-as-kill)
                                       (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "C" 'salih/open-current-url-in-chrome)
                                       (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "c" 'xwidget-webkit-current-url)
@@ -236,7 +235,7 @@
    "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))
    "C-a C-l"      (lambda () (interactive (org-agenda nil "l")))
    "C-a C-v"      #'salih/open-agenda
-   "C-f"          #'elfeed
+   "C-f"          #'salih/open-rss
    "C-e"          #'salih/eshell
    "C-."          #'find-file
    "."            #'find-file
@@ -257,11 +256,7 @@
    "TAB d"        #'+workspace/delete
    "SPC"          #'projectile-find-file
    "C-SPC"        #'projectile-find-file
-   "H-i"          #'(lambda ()
-                      (interactive)
-                      (if (featurep 'mu4e)
-                          (mu4e~headers-jump-to-maildir "/Inbox")
-                        (mu4e)))
+   "H-i"          #'salih/open-inbox
    "/"            #'swiper))
 (salih/set-convenient-keys)
 

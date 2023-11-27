@@ -34,7 +34,6 @@
 (add-hook! 'python-mode-hook    (flycheck-mode -1))
 (add-hook! 'bibtex-mode-hook    (add-hook 'after-save-hook #'+format/buffer nil t))
 (add-hook! 'pdf-view-mode-hook  (setq-local evil-normal-state-cursor (list nil)))
-(add-hook! 'elfeed-search-mode-hook (visual-line-mode -1))
 (add-hook! 'org-roam-capture-new-node-hook (setq roam-titles
                                                  (salih/org-roam-get-node-titles
                                                   (org-roam-node-read--completions))))
@@ -100,7 +99,6 @@ a good understanding. His praise endures forever. ")))
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)
 (salih/consult-preview-at-point)
-(run-at-time nil (* 200 60) #'elfeed-update)
 (when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
 
 

@@ -57,13 +57,6 @@
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
-(after! elfeed
-  (setf elfeed-search-sort-function #'salih/elfeed-tag-sort)
-  (defalias 'salih/elfeed-toggle-star
-    (elfeed-expose #'elfeed-search-toggle-all 'star))
-  (require 'elfeed-tube)
-  (elfeed-tube-setup))
-
 (after! consult
   (add-to-list 'consult-buffer-sources 'salih/consult--source-books 'append))
 
