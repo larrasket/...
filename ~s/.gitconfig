@@ -18,3 +18,5 @@
 	required = true
 [http]
 	postBuffer = 157286400
+[core]
+	quotepath = false
