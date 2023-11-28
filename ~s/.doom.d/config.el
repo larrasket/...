@@ -198,7 +198,11 @@
         smtpmail-smtp-service                   587
         smtpmail-starttls-credentials           '(("mail.gmx.com" 465 nil nil))
         smtpmail-stream-type                    'starttls
+        mu4e-alert-interesting-mail-query       (concat "flag:unread"
+                                                        " AND NOT flag:trashed"
+                                                        " AND NOT maildir:" "\"/rss\"")
         mu4e-modeline-show-global               nil)
+
 
   (defun mu4e-action-view-in-xwidget (msg)
     (unless (fboundp 'xwidget-webkit-browse-url)
