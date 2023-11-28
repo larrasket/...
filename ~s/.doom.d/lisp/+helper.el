@@ -600,7 +600,7 @@ tasks."
   (let ((_ (xwidget-webkit-current-url)))
     (salih/open-url-in-chrome (car kill-ring))))
 
-(defun salih/open-url-in-chrome (url)
+(defun salih/open-url-in-chrome (url &optional args)
   "Open the current URL in Chrome"
   (start-process "chromium" nil "chromium" url))
 
@@ -1020,8 +1020,14 @@ Version 2015-07-30"
 (defun salih/open-rss ()
   (interactive)
   (if (featurep 'mu4e)
-      (mu4e~headers-jump-to-maildir "/rss")
+     (mu4e-search "maildir:\"/rss\" flag:unread")
     (mu4e)))
+
+
+(defun salih/mu4e-go-to-url ()
+  (interactive)
+  (setq-local browse-url-browser-function 'salih/open-url-in-chrome)
+  (call-interactively #'mu4e-view-go-to-url))
 
 
 (provide '+helper)

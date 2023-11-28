@@ -200,7 +200,8 @@
         smtpmail-stream-type                    'starttls
         mu4e-alert-interesting-mail-query       (concat "flag:unread"
                                                         " AND NOT flag:trashed"
-                                                        " AND NOT maildir:" "\"/rss\"")
+                                                        " AND NOT maildir:" "\"/rss\""
+                                                        " AND NOT maildir:" "\"/archive\"")
         mu4e-modeline-show-global               nil)
 
 

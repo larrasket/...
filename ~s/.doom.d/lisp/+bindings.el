@@ -416,6 +416,16 @@
  "C-c C-f" #'salih/open-kitty-in-current-directory)
 
 
+(map!
+ :map mu4e-headers-mode-map
+ :n
+ "r" #'mu4e-headers-mark-for-refile)
+
+(map!
+ :map mu4e-view-mode-map
+ :n
+ ";" #'salih/mu4e-go-to-url)
+
 (define-key ctl-x-map (kbd "C-z") nil)
 (define-key global-map (kbd "C-x C-z") nil)
 (define-key global-map (kbd "C-x s") #'save-buffer)
