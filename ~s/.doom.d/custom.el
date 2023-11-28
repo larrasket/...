@@ -28,5 +28,5 @@
  '(org-level-8 ((t (:inherit outline-8 :height 0.6 :weight bold))))
  '(org-link ((t (:inherit link :underline nil :foreground "#79b58f" :slant normal :weight bold :family "Pragmata Pro"))))
  '(org-roam-dailies-calendar-note ((t (:inherit link :underline nil))))
- '(variable-pitch ((t (:family "DejaVu Sans")))))
+ '(variable-pitch ((t (:inherit fixed-pitch :family "Iosevka")))))
 (put 'customize-themes 'disabled nil)
