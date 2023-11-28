@@ -84,3 +84,13 @@
 (package! lsp-treemacs)
 
 (package! format-all)
+
+
+
+
+
+
+(package! explain-pause-mode
+  :recipe (:host github
+           :repo "lastquestion/explain-pause-mode"))
+
