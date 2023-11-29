@@ -152,15 +152,15 @@
       centaur-tabs-close-button                         "✕"
       centaur-tabs-modified-marker                      "•"
       centaur-tabs-cycle-scope                          'tabs
-      centaur-tabs-height                               15
+      centaur-tabs-height                               20
       centaur-tabs-set-icons                            nil
 
       ;; modus theme
       modus-themes-bold-constructs                      t
       modus-themes-fringes                              nil
       modus-themes-italic-constructs                    t
-      modus-themes-mode-line                            '(moody borderless)
       modus-themes-org-blocks                           'gray-background
+      modus-themes-common-palette-overrides             '((border-mode-line-active unspecified) (border-mode-line-inactive unspecified))
 
       ;; indent highlight
       indent-bars-highlight-current-depth               nil

@@ -16,7 +16,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(doom-modeline-buffer-modified ((t (:inherit (doom-modeline-urgent)))))
  '(git-gutter-fr:added ((((class color) (min-colors 89)) :foreground "#006700")))
  '(git-gutter-fr:modified ((((class color) (min-colors 89)) :foreground "#6f4f00")))
  '(org-document-title ((t (:inherit outline-8 :height 1.8 :weight bold))))
@@ -31,5 +30,5 @@
  '(org-link ((t (:inherit link :underline nil :foreground "#79b58f" :slant normal :weight bold :family "Pragmata Pro"))))
  '(org-roam-dailies-calendar-note ((t (:inherit link :underline nil))))
  '(ts-fold-replacement-face ((t (:foreground unspecified :box nil :inherit font-lock-comment-face :weight light))))
- '(variable-pitch ((t (:inherit fixed-pitch :height 1.0 :family "Pragmata Pro")))))
+ '(variable-pitch ((t (:inherit fixed-pitch :family "Iosevka Comfy Duo" :height 1.1)))))
 (put 'customize-themes 'disabled nil)
