@@ -29,7 +29,7 @@
       completion-ignore-case                            t
       load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
-      gcmh-high-cons-threshold                          1073741824
+      ;; gcmh-high-cons-threshold                          1073741824
       scroll-conservatively                             101
       jit-lock-defer-time                               0
       read-process-output-max                           1000000
@@ -231,6 +231,7 @@
   (define-key mu4e-view-mode-map    (salih/mode "C-r") #'salih/mu4e-reply)
   (define-key mu4e-headers-mode-map (salih/mode "C-r") #'salih/mu4e-reply))
 
+(set-fontset-font "fontset-default" 'arabic (font-spec :family "SF Arabic"))
 
 
 (require '+helper)
@@ -244,3 +245,4 @@
 
 
 (explain-pause-mode)
+
