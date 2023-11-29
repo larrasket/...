@@ -94,3 +94,5 @@
   :recipe (:host github
            :repo "lastquestion/explain-pause-mode"))
 
+
+(package! ef-themes)

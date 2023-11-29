@@ -2,6 +2,12 @@
 <!DOCTYPE fontconfig SYSTEM "fonts.dtd">
 <fontconfig>
     <match target="font">
+
+
+        <edit name="dpi" mode="assign">
+            <double>125</double>
+        </edit>
+
         <edit mode="assign" name="hinting" >
             <bool>true</bool>
         </edit>
