@@ -469,6 +469,14 @@ Other buffer group by `centaur-tabs-get-group-name' with project name."
 
     ((memq major-mode '(pdf-view-mode nov-mode doc-view-mode)) "PDF")
 
+    ((memq major-mode '(mu4e-view-mode
+                        mu4e-headers-mode
+                        mu4e-main-mode
+                        mu4e-org-mode
+                        mu4e-compose-mode
+                        mu4e-loading-mode
+                        mu4e-raw-view-mode)) "Mu4eMode")
+
     ((memq major-mode '(org-mode
                         org-agenda-clockreport-mode
                         org-src-mode
@@ -583,6 +591,7 @@ tasks."
   (when (display-graphic-p)
     (keyboard-translate ?\C-m ?\H-m)
     (keyboard-translate ?\C-i ?\H-i))
+  (set-fontset-font "fontset-default" 'arabic (font-spec :family "SF Arabic"))
   (define-key key-translation-map (kbd "C-g") (kbd "<escape>")))
 
 (defun salih/org-roam-node-insert ()
@@ -987,9 +996,9 @@ Version 2015-07-30"
     (modus-themes-with-colors
     (custom-set-faces
      ;; Replace green with blue if you use `modus-themes-deuteranopia'.
-     `(git-gutter-fr:added ((,class :foreground ,green-fringe-bg)))
+     `(git-gutter-fr:added ((,c :foreground ,bg-added-fringe)))
      ;; `(git-gutter-fr:deleted ((,class :foreground ,red-fringe-bg)))
-     `(git-gutter-fr:modified ((,class :foreground ,yellow-fringe-bg)))))))
+     `(git-gutter-fr:modified ((,c :foreground ,bg-changed-fringe)))))))
 
 (defmacro salih/disable-minor-mode-in-hook (hook mode-symbol)
   `(add-hook ,hook
@@ -1028,6 +1037,5 @@ Version 2015-07-30"
   (interactive)
   (setq-local browse-url-browser-function 'salih/open-url-in-chrome)
   (call-interactively #'mu4e-view-go-to-url))
-
 
 (provide '+helper)

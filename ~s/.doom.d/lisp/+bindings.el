@@ -49,12 +49,6 @@
  "C-e"    #'+default/diagnostics
  "C-;"    #'salih/rename-or-iedit)
 
-(general-define-key
- :keymaps 'projectile-mode-map
- :prefix  salih/prefix-mode
- "C-o"    (lambda () (interactive) (org-capture nil "p")))
-
-
 
 (general-define-key
  :keymaps 'nov-mode-map
