@@ -32,7 +32,7 @@
            (text-scale-set 1))
 
 (add-hook! 'python-mode-hook    (flycheck-mode -1))
-(add-hook! 'bibtex-mode-hook    (add-hook 'after-save-hook #'+format/buffer nil t))
+(add-hook! 'bibtex-mode-hook    #'format-all-mode)
 (add-hook! 'pdf-view-mode-hook  (setq-local evil-normal-state-cursor (list nil)))
 (add-hook! 'org-roam-capture-new-node-hook (setq roam-titles
                                                  (salih/org-roam-get-node-titles
