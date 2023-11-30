@@ -32,17 +32,18 @@
            (text-scale-set 1))
 
 (add-hook! 'python-mode-hook    (flycheck-mode -1))
-(add-hook! 'bibtex-mode-hook    #'format-all-mode)
 (add-hook! 'pdf-view-mode-hook  (setq-local evil-normal-state-cursor (list nil)))
+(add-hook! 'mu4e-headers-mode-hook (visual-line-mode -1))
 (add-hook! 'org-roam-capture-new-node-hook (setq roam-titles
                                                  (salih/org-roam-get-node-titles
                                                   (org-roam-node-read--completions))))
 
 (add-hook! 'prog-mode-hook              #'auto-fill-mode
-                                        #'column-enforce-mode
-                                        #'format-all-mode
-                                        #'salih/format-all-ensure-formatter)
+                                        #'column-enforce-mode)
 
+(add-hook! '(bibtex-mode-hook
+             prog-mode-hook)            #'format-all-mode
+                                        #'salih/format-all-ensure-formatter)
 
 (add-hook! '(emacs-lisp-mode-hook
              sql-mode-hook
@@ -57,7 +58,9 @@
 (add-hook 'html-mode-hook               #'sgml-electric-tag-pair-mode)
 (add-hook 'eshell-alias-load-hook       #'salih/eshell-load-bash-aliases)
 (add-hook 'dired-after-readin-hook      #'salih/dired-git-info-auto-enable)
-(add-hook 'after-make-frame-functions   (lambda (frame) (with-selected-frame frame (salih/keyboard-config))))
+(add-hook 'after-make-frame-functions   (lambda (frame)
+                                          (with-selected-frame frame
+                                            (salih/keyboard-config))))
 (if (featurep 'nov-xwidget)
     (add-hook 'nov-mode-hook            #'nov-xwidget-inject-all-files))
 

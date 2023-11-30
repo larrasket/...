@@ -9,8 +9,6 @@
 (assoc-delete-all "Jump to bookmark"            +doom-dashboard-menu-sections)
 
 (custom-set-variables '(all-the-icons-completion-mode nil))
-(custom-set-faces
- '(doom-modeline-buffer-modified ((t (:inherit (doom-modeline-urgent))))))
 
 
 (provide '+deep)

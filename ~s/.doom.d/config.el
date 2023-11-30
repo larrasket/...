@@ -29,7 +29,7 @@
       completion-ignore-case                            t
       load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
-      gcmh-high-cons-threshold                          1073741824
+      ;; gcmh-high-cons-threshold                          1073741824
       scroll-conservatively                             101
       jit-lock-defer-time                               0
       read-process-output-max                           1000000
@@ -40,8 +40,8 @@
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use (set-frame-font "PragmataPro Mono Liga")
       ;; or just remove `:size`.
-      doom-font                                         "Pragmata Pro:pixelsize=12:antialias=true:hinting=true:autohint=false:hintstyle=3"
-      doom-modeline-height                              17
+      doom-font                                         "Pragmata Pro:pixelsize=13:antialias=true:hinting=true:autohint=false:hintstyle=3"
+      doom-modeline-height                              19
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
       doom-theme                                        'modus-vivendi
@@ -152,15 +152,15 @@
       centaur-tabs-close-button                         "✕"
       centaur-tabs-modified-marker                      "•"
       centaur-tabs-cycle-scope                          'tabs
-      centaur-tabs-height                               15
+      centaur-tabs-height                               20
       centaur-tabs-set-icons                            nil
 
       ;; modus theme
       modus-themes-bold-constructs                      t
       modus-themes-fringes                              nil
       modus-themes-italic-constructs                    t
-      modus-themes-mode-line                            '(moody borderless)
       modus-themes-org-blocks                           'gray-background
+      modus-themes-common-palette-overrides             '((border-mode-line-active unspecified) (border-mode-line-inactive unspecified))
 
       ;; indent highlight
       indent-bars-highlight-current-depth               nil
@@ -231,6 +231,7 @@
   (define-key mu4e-view-mode-map    (salih/mode "C-r") #'salih/mu4e-reply)
   (define-key mu4e-headers-mode-map (salih/mode "C-r") #'salih/mu4e-reply))
 
+(set-fontset-font "fontset-default" 'arabic (font-spec :family "SF Arabic"))
 
 
 (require '+helper)
@@ -244,3 +245,4 @@
 
 
 (explain-pause-mode)
+
