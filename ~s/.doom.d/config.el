@@ -243,7 +243,3 @@
 (require '+custom)
 (require '+erc)
 (require '+deep)
-
-
-(explain-pause-mode)
-
