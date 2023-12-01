@@ -71,7 +71,8 @@
   (salih/set-convenient-keys))
 
 (after! org-drill
-  (setq org-drill-scope (salih/path-list "~/org/drill/")))
+  (setq org-drill-scope (salih/path-list "~/org/drill/"))
+  (setq org-drill-maximum-duration 100))
 
 
 (provide '+custom)
