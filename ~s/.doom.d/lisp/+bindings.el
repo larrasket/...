@@ -226,8 +226,9 @@
    "C-j"          #'centaur-tabs-ace-jump
    "C-c"          (lambda () (interactive) (org-capture nil "f"))
    "C-a"          nil
-   "C-a C-a"      (lambda () (interactive (org-agenda nil "f")))
-   "C-a C-l"      (lambda () (interactive (org-agenda nil "l")))
+   "C-a C-a"      (lambda () (interactive) (setq salih/vulpea-show-full nil) (org-agenda nil "f"))
+   "C-a C-l"      (lambda () (interactive) (setq salih/vulpea-show-full nil) (org-agenda nil "l"))
+   "C-a C-f"      (lambda () (interactive) (setq salih/vulpea-show-full t) (org-agenda nil "f"))
    "C-a C-v"      #'salih/open-agenda
    "C-f"          #'salih/open-rss
    "C-e"          #'salih/eshell

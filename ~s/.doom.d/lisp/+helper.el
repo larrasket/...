@@ -497,13 +497,28 @@ function returns nil if current buffer contains only completed
 tasks."
   (seq-find                                 ; (3)
    (lambda (type)
-     (or (eq type 'todo)
-         (eq type 'done)))
+     (or (eq type 'todo)))
    (org-element-map                         ; (2)
        (org-element-parse-buffer 'headline) ; (1)
        'headline
      (lambda (h)
        (org-element-property :todo-type h)))))
+
+(defun vulpea-project-done-p ()
+  "Return non-nil if current buffer has any todo entry.
+
+TODO entries marked as done are ignored, meaning the this
+function returns nil if current buffer contains only completed
+tasks."
+  (seq-find                                 ; (3)
+   (lambda (type)
+     (or (eq type 'done)))
+   (org-element-map                         ; (2)
+       (org-element-parse-buffer 'headline) ; (1)
+       'headline
+     (lambda (h)
+       (org-element-property :todo-type h)))))
+
 
 (defun vulpea-project-update-tag ()
   "Update PROJECT tag in the current buffer."
@@ -516,6 +531,11 @@ tasks."
         (if (vulpea-project-p)
             (setq tags (cons "project" tags))
           (setq tags (remove "project" tags)))
+
+        (cond ((vulpea-project-p) (setq tags (cons "project" tags)))
+              ((vulpea-project-done-p) (setq tags (cons "project_archived" tags)))
+              (t (or (setq tags (remove "project" tags))
+                     (setq tags (remove "project_archived" tags)))))
 
         ;; cleanup duplicates
         (setq tags (seq-uniq tags))
@@ -534,6 +554,20 @@ tasks."
 
 (defun vulpea-project-files ()
   "Return a list of note files containing 'project' tag." ;
+  (if salih/vulpea-show-full
+      (vulpea-project-files-full)
+    (seq-uniq
+     (seq-map
+      #'car
+      (org-roam-db-query
+       [:select [nodes:file]
+        :from tags
+        :left-join nodes
+        :on (= tags:node-id nodes:id)
+        :where (like tag (quote "%\"project\"%"))])))))
+
+(defun vulpea-project-files-full ()
+  "Return a list of note files containing 'project' tag." ;
   (seq-uniq
    (seq-map
     #'car
@@ -542,7 +576,9 @@ tasks."
       :from tags
       :left-join nodes
       :on (= tags:node-id nodes:id)
-      :where (like tag (quote "%\"project\"%"))]))))
+      :where (or (like tag (quote "%\"project\"%"))
+                 (like tag (quote "%\"project_archived\"%")))]))))
+
 
 (defun vulpea-agenda-files-update (&rest _)
   "Update the value of `org-agenda-files'."

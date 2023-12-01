@@ -84,6 +84,8 @@
       org-clock-string-limit                            8
       org-agenda-dim-blocked-tasks                      'invisible
       org-tags-column                                   70
+      org-agenda-sticky                                 t
+      salih/vulpea-show-full                            nil
 
       ;; I've no idea of any of this.
       org-crypt-key                                     user-mail-address
