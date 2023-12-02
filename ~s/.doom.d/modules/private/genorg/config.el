@@ -2,10 +2,6 @@
 
 (after! org
 
-
-
-
-
   (setq org-tags-column -80)
   (setq org-todo-keywords
         '((sequence
