@@ -1022,7 +1022,7 @@ Version 2015-07-30"
 
 (defun salih/format-all-ensure-formatter ()
   (interactive)
-  (if (derived-mode-p  'prog-mode)
+  (if (or (derived-mode-p  'prog-mode) (eq major-mode 'bibtex-mode))
       (let ((inhibit-message t)
             (message-log-max nil))
         (call-interactively #'format-all-ensure-formatter))))
