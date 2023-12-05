@@ -58,6 +58,7 @@
 (add-hook 'html-mode-hook               #'sgml-electric-tag-pair-mode)
 (add-hook 'eshell-alias-load-hook       #'salih/eshell-load-bash-aliases)
 (add-hook 'dired-after-readin-hook      #'salih/dired-git-info-auto-enable)
+(add-hook 'dired-mode-hook              #'dired-auto-readme-mode)
 (add-hook 'after-make-frame-functions   (lambda (frame)
                                           (with-selected-frame frame
                                             (salih/keyboard-config))))
@@ -93,7 +94,6 @@ a good understanding. His praise endures forever. ")))
 
 
 ;; init
-(epa-file-enable)
 (centaur-tabs-mode)
 (yas-global-mode 1)
 (vertico-buffer-mode)

@@ -5,8 +5,6 @@
                                         ; topics. also ueful when writing notes
                                         ; about new things
 
-
-
 (package! iedit)                        ; JetBrains' rename function.
                                         ; Also see `salih/rename-or-iedit`
 
@@ -53,42 +51,38 @@
 (package! maxima)                       ; a maxima repl.. not sure about it (and
                                         ; about using maxima in general)
 
-
 (package! pretty-hydra)                 ; for the next line
 
 (package! org-media-note
   :recipe (:host github
            :repo "yuchen-lea/org-media-note"))
 
-
 (package! indent-bars
   :recipe (:host github
            :repo "jdtsmith/indent-bars"))
 
-
 (package! ob-julia-vterm)
-(unpin! ess)
-(package! ess)
-
-
 
 (package! distinguished-theme)
 (package! kaolin-themes)
+
 (unpin! vertico)
 (package! vertico)
 
+(unpin! ess)
+(package! ess)
+
 (package! srht)
-
 (package! org-drill)
-
-(package! lsp-treemacs)
-
 (package! format-all)
-
-
+(package! lsp-treemacs)
 
 (package! explain-pause-mode
   :recipe (:host github
            :repo "lastquestion/explain-pause-mode"))
+
+(package! dired-auto-readme
+  :recipe (:host github
+           :repo "amno1/dired-auto-readme"))
 
 (package! modus-themes)
