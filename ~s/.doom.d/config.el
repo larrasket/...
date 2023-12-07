@@ -35,12 +35,13 @@
       read-process-output-max                           1000000
       lsp-use-plists                                    nil
       lsp-ui-doc-enable                                 nil
+      lsp-headerline-breadcrumb-enable                  nil
 
       ;; appearance
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use (set-frame-font "PragmataPro Mono Liga")
       ;; or just remove `:size`.
-      doom-font                                         "Pragmata Pro:pixelsize=13:antialias=true:hinting=true:autohint=false:hintstyle=3"
+      doom-font                                         "Pragmata Pro:pixelsize=12:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-modeline-height                              19
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
