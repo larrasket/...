@@ -1,6 +1,3 @@
-(package! wakatime-mode)                ; voluntary tracking
-(package! org-web-tools)                ; viewing urls in org
-
 (package! wiki-summary)                 ; get a wiki line summary for new
                                         ; topics. also ueful when writing notes
                                         ; about new things
@@ -9,7 +6,6 @@
                                         ; Also see `salih/rename-or-iedit`
 
 (package! git-auto-commit-mode)         ; auto commit
-
 
 (package! grip-mode)                    ; I do not remember what's that for but
                                         ; sounds useful
@@ -24,34 +20,22 @@
 (package! sage-shell-mode)              ; for me when I like to be a
                                         ; mathematician
 
-(package! awqat
-  :recipe (:host github
-           :repo "luggages/awqat"))     ; obeying the almighty.
-
-(unpin! evil-collection)                ; fixes evil for mu4e
-(package! evil-collection
-  :recipe (:repo "luggages/evil-collection"
-           :branch "mu4e-development"))
-
-
-(package! ox-tufte
-  :recipe (:host github
-           :repo "luggages/ox-tufte"))  ; for my website.
-
-(package! ox-html-stable-ids
-  :recipe (:host github
-           :repo "larrasket/ox-html-stable-ids.el"))
-
-(package! centaur-tabs)                 ; nice tabs
-
-(package! vulpea)                       ; roam advanced functions
-(package! nov)                          ; browse epubs from emacs
-(package! org-bullets)                  ; nicer org view
-
 (package! maxima)                       ; a maxima repl.. not sure about it (and
                                         ; about using maxima in general)
 
+(package! nov)                          ; browse epubs from emacs
+(package! srht)                         ; sr.ht support. Good for paste.sr.ht
+(package! vulpea)                       ; roam advanced functions
+(package! org-drill)                    ; anki
+(package! format-all)                   ; destroy my code
+(package! org-bullets)                  ; nicer org view
+(package! lsp-treemacs)                 ; make emacs loks like and EDE (ide)
 (package! pretty-hydra)                 ; for the next line
+(package! centaur-tabs)                 ; nice tabs
+(package! modus-themes)                 ; my favorite themes from my greek dude
+(package! wakatime-mode)                ; voluntary tracking
+(package! org-web-tools)                ; viewing urls in org
+(package! ob-julia-vterm)               ; for usage, se maxima or sage-shell
 
 (package! org-media-note
   :recipe (:host github
@@ -61,22 +45,6 @@
   :recipe (:host github
            :repo "jdtsmith/indent-bars"))
 
-(package! ob-julia-vterm)
-
-(package! distinguished-theme)
-(package! kaolin-themes)
-
-(unpin! vertico)
-(package! vertico)
-
-(unpin! ess)
-(package! ess)
-
-(package! srht)
-(package! org-drill)
-(package! format-all)
-(package! lsp-treemacs)
-
 (package! explain-pause-mode
   :recipe (:host github
            :repo "lastquestion/explain-pause-mode"))
@@ -85,4 +53,25 @@
   :recipe (:host github
            :repo "amno1/dired-auto-readme"))
 
-(package! modus-themes)
+(package! ox-tufte
+  :recipe (:host github
+           :repo "luggages/ox-tufte"))  ; for my website.
+
+(package! ox-html-stable-ids
+  :recipe (:host github
+           :repo "larrasket/ox-html-stable-ids.el"))
+
+(package! awqat
+  :recipe (:host github
+           :repo "luggages/awqat"))     ; obeying the almighty.
+
+(unpin! evil-collection)                ; fixes evil for mu4e
+(package! evil-collection
+  :recipe (:repo "luggages/evil-collection"
+           :branch "mu4e-development"))
+
+(unpin! vertico)
+(package! vertico)
+
+(unpin! ess)
+(package! ess)
