@@ -528,14 +528,15 @@ tasks."
       (goto-char (point-min))
       (let* ((tags (vulpea-buffer-tags-get))
              (original-tags tags))
-        (if (vulpea-project-p)
-            (setq tags (cons "project" tags))
-          (setq tags (remove "project" tags)))
 
-        (cond ((vulpea-project-p) (setq tags (cons "project" tags)))
-              ((vulpea-project-done-p) (setq tags (cons "project_archived" tags)))
-              (t (or (setq tags (remove "project" tags))
-                     (setq tags (remove "project_archived" tags)))))
+
+        (cond ((vulpea-project-p) (and (or (setq tags (cons "project" tags)) t)
+                                       (setq tags (remove "project_archived" tags))))
+
+              ((vulpea-project-done-p) (and (or (setq tags (cons "project_archived" tags)) t)
+                                       (setq tags (remove "project" tags))))
+              (t (and (or (setq tags (remove "project" tags)) t)
+                      (or (setq tags (remove "project_archived" tags)) t))))
 
         ;; cleanup duplicates
         (setq tags (seq-uniq tags))
