@@ -49,3 +49,4 @@ flycheck_config.el
 /~s/fonts/.uuid
 /~s/dwm/dwm
 /~s/.config/cmus/cmusfm.cache
+/~s/.config/go/telemetry/
