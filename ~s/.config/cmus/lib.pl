@@ -701,6 +701,121 @@
 /home/l/me/music/jabr/تلاوة من تهجد الحرم المكي من سورتي الأعراف والأنفال - الشيخ علي جابر 29-9-1409هـ.mp3
 /home/l/me/music/jabr/تلاوة من تهجد الحرم المكي من سورتي الأنعام والأعراف - الشيخ علي جابر 28-9-1408هـ.mp3
 /home/l/me/music/jabr/مقطع نادر آخر للشيخ علي جابر وهو يتهيأ للصلاة على الجنازة 25-9-1407هـ.mp3
+/home/l/me/music/jabr-formal/075.mp3
+/home/l/me/music/jabr-formal/076.mp3
+/home/l/me/music/jabr-formal/080.mp3
+/home/l/me/music/jabr-formal/093.mp3
+/home/l/me/music/jabr-formal/044.mp3
+/home/l/me/music/jabr-formal/100.mp3
+/home/l/me/music/jabr-formal/046.mp3
+/home/l/me/music/jabr-formal/033.mp3
+/home/l/me/music/jabr-formal/087.mp3
+/home/l/me/music/jabr-formal/096.mp3
+/home/l/me/music/jabr-formal/006.mp3
+/home/l/me/music/jabr-formal/021.mp3
+/home/l/me/music/jabr-formal/008.mp3
+/home/l/me/music/jabr-formal/029.mp3
+/home/l/me/music/jabr-formal/007.mp3
+/home/l/me/music/jabr-formal/103.mp3
+/home/l/me/music/jabr-formal/098.mp3
+/home/l/me/music/jabr-formal/090.mp3
+/home/l/me/music/jabr-formal/002.mp3
+/home/l/me/music/jabr-formal/085.mp3
+/home/l/me/music/jabr-formal/089.mp3
+/home/l/me/music/jabr-formal/113.mp3
+/home/l/me/music/jabr-formal/048.mp3
+/home/l/me/music/jabr-formal/001.mp3
+/home/l/me/music/jabr-formal/105.mp3
+/home/l/me/music/jabr-formal/025.mp3
+/home/l/me/music/jabr-formal/088.mp3
+/home/l/me/music/jabr-formal/057.mp3
+/home/l/me/music/jabr-formal/022.mp3
+/home/l/me/music/jabr-formal/069.mp3
+/home/l/me/music/jabr-formal/059.mp3
+/home/l/me/music/jabr-formal/015.mp3
+/home/l/me/music/jabr-formal/049.mp3
+/home/l/me/music/jabr-formal/104.mp3
+/home/l/me/music/jabr-formal/112.mp3
+/home/l/me/music/jabr-formal/003.mp3
+/home/l/me/music/jabr-formal/082.mp3
+/home/l/me/music/jabr-formal/084.mp3
+/home/l/me/music/jabr-formal/017.mp3
+/home/l/me/music/jabr-formal/045.mp3
+/home/l/me/music/jabr-formal/072.mp3
+/home/l/me/music/jabr-formal/062.mp3
+/home/l/me/music/jabr-formal/109.mp3
+/home/l/me/music/jabr-formal/018.mp3
+/home/l/me/music/jabr-formal/108.mp3
+/home/l/me/music/jabr-formal/092.mp3
+/home/l/me/music/jabr-formal/070.mp3
+/home/l/me/music/jabr-formal/005.mp3
+/home/l/me/music/jabr-formal/111.mp3
+/home/l/me/music/jabr-formal/107.mp3
+/home/l/me/music/jabr-formal/074.mp3
+/home/l/me/music/jabr-formal/058.mp3
+/home/l/me/music/jabr-formal/067.mp3
+/home/l/me/music/jabr-formal/023.mp3
+/home/l/me/music/jabr-formal/060.mp3
+/home/l/me/music/jabr-formal/063.mp3
+/home/l/me/music/jabr-formal/077.mp3
+/home/l/me/music/jabr-formal/083.mp3
+/home/l/me/music/jabr-formal/073.mp3
+/home/l/me/music/jabr-formal/097.mp3
+/home/l/me/music/jabr-formal/068.mp3
+/home/l/me/music/jabr-formal/054.mp3
+/home/l/me/music/jabr-formal/101.mp3
+/home/l/me/music/jabr-formal/028.mp3
+/home/l/me/music/jabr-formal/056.mp3
+/home/l/me/music/jabr-formal/078.mp3
+/home/l/me/music/jabr-formal/016.mp3
+/home/l/me/music/jabr-formal/053.mp3
+/home/l/me/music/jabr-formal/027.mp3
+/home/l/me/music/jabr-formal/114.mp3
+/home/l/me/music/jabr-formal/110.mp3
+/home/l/me/music/jabr-formal/079.mp3
+/home/l/me/music/jabr-formal/004.mp3
+/home/l/me/music/jabr-formal/024.mp3
+/home/l/me/music/jabr-formal/013.mp3
+/home/l/me/music/jabr-formal/055.mp3
+/home/l/me/music/jabr-formal/030.mp3
+/home/l/me/music/jabr-formal/091.mp3
+/home/l/me/music/jabr-formal/094.mp3
+/home/l/me/music/jabr-formal/026.mp3
+/home/l/me/music/jabr-formal/042.mp3
+/home/l/me/music/jabr-formal/061.mp3
+/home/l/me/music/jabr-formal/037.mp3
+/home/l/me/music/jabr-formal/032.mp3
+/home/l/me/music/jabr-formal/064.mp3
+/home/l/me/music/jabr-formal/066.mp3
+/home/l/me/music/jabr-formal/102.mp3
+/home/l/me/music/jabr-formal/081.mp3
+/home/l/me/music/jabr-formal/065.mp3
+/home/l/me/music/jabr-formal/086.mp3
+/home/l/me/music/jabr-formal/009.mp3
+/home/l/me/music/jabr-formal/095.mp3
+/home/l/me/music/jabr-formal/052.mp3
+/home/l/me/music/jabr-formal/099.mp3
+/home/l/me/music/jabr-formal/051.mp3
+/home/l/me/music/jabr-formal/043.mp3
+/home/l/me/music/jabr-formal/039.mp3
+/home/l/me/music/jabr-formal/035.mp3
+/home/l/me/music/jabr-formal/041.mp3
+/home/l/me/music/jabr-formal/040.mp3
+/home/l/me/music/jabr-formal/011.mp3
+/home/l/me/music/jabr-formal/014.mp3
+/home/l/me/music/jabr-formal/031.mp3
+/home/l/me/music/jabr-formal/019.mp3
+/home/l/me/music/jabr-formal/047.mp3
+/home/l/me/music/jabr-formal/071.mp3
+/home/l/me/music/jabr-formal/050.mp3
+/home/l/me/music/jabr-formal/106.mp3
+/home/l/me/music/jabr-formal/034.mp3
+/home/l/me/music/jabr-formal/038.mp3
+/home/l/me/music/jabr-formal/020.mp3
+/home/l/me/music/jabr-formal/036.mp3
+/home/l/me/music/jabr-formal/010.mp3
+/home/l/me/music/jabr-formal/012.mp3
+/home/l/me/music/pa/لبيك اسلام البطولة أداء فرقة الروابي الفنية Alrawabi Band.mp3
 /home/l/me/music/lik/America - A Horse with No Name.ogg
 /home/l/me/music/selec/Arvo Pärt ＂Spiegel im Spiegel＂ for Violin & Piano.mp3
 /home/l/me/music/class/Beethoven - Moonlight Sonata (FULL).mp3
@@ -841,6 +956,7 @@
 /home/l/me/music/lik/Elijah Who - it's finally raining again.ogg
 /home/l/me/music/lik/Elliott Smith - Needle In The Hay.ogg
 /home/l/me/music/lik/Elliott Smith - Son Of Sam.ogg
+/home/l/me/music/pa/Shayed Kosoorak.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Elyvilon - Ere the Dawn's Rays Chase Night's Mists Away.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Elyvilon - Noonday Feast of the Jolly Friar.ogg
 /home/l/me/music/jabr/تلاوة أبكت الملايين للشيخ علي جابر.mp3
@@ -953,6 +1069,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Haxan Dreams - Love and The Abyss.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Haxan Dreams - Battle of Twin Mountains.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Haxan Dreams - Forest of Idran.ogg
+/home/l/me/music/pa/ريحانةُ الحور I نورٌ على نورٍ على نورٍ على نورِ I الرادود حسين خير الدين.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Henbane - Intet Lys.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Henbane - Ensomheden.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Henbane - Ruinernes Væsner.ogg
@@ -1096,6 +1213,7 @@
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/020. Ludwig van Beethoven - (1824) Symphony No. 9 In D Minor, Op. 125 Choral (II. Molto vivace; Presto).mp3
 /home/l/me/music/lik/Luke Faulkner - Comptine d'un autre été No. 2.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Machina Coeli - Approaching the Forgotten Lake.ogg
+/home/l/me/music/pa/احلف  بسمها وتربها لعبد الحليم حافظ.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Malfet - Farewell to Gaste Forest.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Malfet - Lost in Broceliande.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Malfet - Joyeuse Garde Idyll.ogg
@@ -1176,6 +1294,7 @@
 /home/l/me/music/selec/Max Richter - Dream 3 (in the midst of my life).mp3
 /home/l/me/music/selec/Max Richter - Mercy (Official Music Video by Yulia Mahr).mp3
 /home/l/me/music/selec/Lang Lang -- Träumerei (Kinderszenen, Op. 15 No. 7), Schumann.mp3
+/home/l/me/music/pa/( حلاويلا يا حلاويلا ) الشيخ امام ＊ أحمد فؤاد نجم.mp3
 /home/l/me/music/selec/Elgar - Nimrod (from ＂Enigma Variations＂).mp3
 /home/l/me/music/31may/Hit the road jack - Ray Charles.mp3
 /home/l/me/music/lik/Michael Jackson - Billie Jean.ogg
@@ -1461,6 +1580,7 @@
 /home/l/me/music/lik/Rusted Doors - Memories of a Ghost.ogg
 /home/l/me/music/class/Erik Satie - Gymnopédies.mp3
 /home/l/me/music/lik/Sakin - Yağmur Güncesi.ogg
+/home/l/me/music/shia/في درب فاطمة ｜ حسين خيرالدين.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/040. Samuel Barber - (1934) Adagio for Strings.mp3
 /home/l/me/music/lik/Sean Dagher - Leave Her Johnny.ogg
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/035. Sergei Prokofiev - (1929) Symphony No. 4, Op. 112 (III_ Moderato quasi allegretto).mp3
@@ -1468,6 +1588,8 @@
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/043. Sergei Prokofiev - (1938) Romeo and Juliet (Scene II_ No. 13, Dance of the knights).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/038. Sergei Rachmaninov - (1932) Rhapsody on a Theme of Paganini, Op. 43.mp3
 /home/l/me/music/lik/Shamrain - To Leave.ogg
+/home/l/me/music/pa/نحن النسور - القوميين العرب.mp3
+/home/l/me/music/pa/نشيد الجيش العربي - اناشيد القومية العربية - موطني.mp3
 /home/l/me/music/lik/Sheikh Imam - Yaeish Ahl Balady - Live.ogg
 /home/l/me/music/lik/Sheikh Imam - Dally El Shekara.ogg
 /home/l/me/music/lik/Sheikh Imam - Eza El Shams Gherket.ogg
@@ -1623,6 +1745,22 @@
 /home/l/me/music/lik/Yom - Everywhere Home.ogg
 /home/l/me/music/lik/Youn Sun Nah - Jockey Full of Bourbon.ogg
 /home/l/me/music/lik/Владимир Высоцкий - Вариации на цыганские темы.ogg
+/home/l/me/music/pa/لطيفة التونسية - لبيك يا علم العروبة مع الكلمات.mp3
+/home/l/me/music/pa/نشيد حزب البعث القومي العربي مع الكلمات.mp3
+/home/l/me/music/pa/نشيد سورية يا حبيبتي مع الكلمات.mp3
+/home/l/me/music/pa/نشيد طلائع البعث مع الكلمات.mp3
+/home/l/me/music/pa/نشيد ليبيا السابق： الله أكبر فوق كيد المعتدي (مع الكلمات).mp3
+/home/l/me/music/mystical/n/إذا رضوني أهل الوصال.mp3
+/home/l/me/music/mystical/بالهوى قلبي تعلق.mp3
+/home/l/me/music/mystical/رفعت ليلى الستورا.mp3
+/home/l/me/music/mystical/n/زدني بفرط الحب فيك تحيرا.mp3
+/home/l/me/music/mystical/كشف المحبوب عني الغطي.mp3
+/home/l/me/music/mystical/ملكتم فؤادي.mp3
+/home/l/me/music/mystical/وقفت بالذل في أبواب عزكم.mp3
+/home/l/me/music/mystical/يا سائق الأفكار.mp3
+/home/l/me/music/mystical/n/يا ظاهرا في المظاهر.mp3
+/home/l/me/music/pa/أخبرني ⧸ حسين خير الدين.mp3
+/home/l/me/music/pa/اذان العشق ｜ سيد سلام الحسيني [ محرم 1445 هجري ].mp3
 /home/l/me/music/kamil.mp3
 /home/l/me/music/31may2/دعاء كميل بصوت الشهيد محمد أبو الحسن.mp3
 /home/l/me/music/31may2/ناد عليا مظهر العجائب - باسم الكربلائي.mp3
