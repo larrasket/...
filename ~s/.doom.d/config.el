@@ -193,6 +193,7 @@
         starttls-use-gnutls                     t
         mu4e-compose-reply-ignore-address       `("no-?reply"
                                                   ,user-mail-address)
+        mu4e-headers-visible-lines              10
         mu4e-update-interval                    200
         mu4e-compose-signature                  (format "Regards,\n%s"
                                                         user-first-name)
