@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: abstract
+# uuid:
+# key: <abs
+# condition: t
+# --
+
+#+begin_abstract
+$0
+#+end_abstract
