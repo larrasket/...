@@ -81,12 +81,6 @@ a good understanding. His praise endures forever. ")))
 (ad-activate 'org-agenda-get-some-entry-text)
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 (add-to-list 'org-babel-load-languages '(julia-vterm . t))
-(add-to-list 'golden-ratio-inhibit-functions (lambda ()
-                                               (if which-key--buffer
-                                                   (window-live-p
-                                                    (get-buffer-window
-                                                     which-key--buffer))
-                                                 (not buffer-file-name))))
 
 ;; (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
 
@@ -107,7 +101,6 @@ a good understanding. His praise endures forever. ")))
 (global-wakatime-mode)
 (salih/keyboard-config)
 (global-hl-line-mode -1)
-(golden-ratio-mode)
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)
 (salih/consult-preview-at-point)
