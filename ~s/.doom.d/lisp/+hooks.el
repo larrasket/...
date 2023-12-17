@@ -58,7 +58,7 @@
 (add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
 (add-hook 'html-mode-hook               #'sgml-electric-tag-pair-mode)
 (add-hook 'eshell-alias-load-hook       #'salih/eshell-load-bash-aliases)
-(add-hook 'dired-after-readin-hook      #'salih/dired-git-info-auto-enable)
+;; (add-hook 'dired-after-readin-hook      #'salih/dired-git-info-auto-enable)
 (add-hook 'org-roam-find-file-hook      #'git-auto-commit-mode)
 (add-hook 'dired-mode-hook              #'dired-auto-readme-mode)
 (add-hook 'after-make-frame-functions   (lambda (frame)
