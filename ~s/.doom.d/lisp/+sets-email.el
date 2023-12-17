@@ -16,7 +16,7 @@
         mu4e-update-interval                    500
         mu4e-compose-signature                  (format "Regards,\n%s"
                                                         user-first-name)
-        smtpmail-default-smtp-server
+        smtpmail-default-smtp-server            user-stmp-server
         smtpmail-smtp-server                    smtpmail-default-smtp-server
         smtpmail-smtp-service                   user-stmp-port
         smtpmail-stream-type                    'starttls

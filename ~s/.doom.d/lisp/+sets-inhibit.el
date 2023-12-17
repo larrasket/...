@@ -1,6 +1,7 @@
 ;; settings that i'm unlikely to change
 
 
+(require 'golden-ratio)
 (setq inhibit-automatic-native-compilation              t
       package-native-compile                            t
       completion-ignore-case                            t
