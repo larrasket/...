@@ -82,10 +82,11 @@ a good understanding. His praise endures forever. ")))
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 (add-to-list 'org-babel-load-languages '(julia-vterm . t))
 (add-to-list 'golden-ratio-inhibit-functions (lambda ()
-                                               (and which-key--buffer
-                                                    (window-live-p
-                                                     (get-buffer-window
-                                                      which-key--buffer)))))
+                                               (if which-key--buffer
+                                                   (window-live-p
+                                                    (get-buffer-window
+                                                     which-key--buffer))
+                                                 (not buffer-file-name))))
 
 ;; (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
 

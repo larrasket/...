@@ -114,6 +114,18 @@
       epa-file-cache-passphrase-for-symmetric-encryption t
       epa-file-select-keys                              'silent
       epa-file-encrypt-to                               user-mail-address
+      golden-ratio-exclude-buffer-names                 '("*Org tags*"
+                                                          "*Org todo*"
+                                                          "*info*"
+                                                          "*Messages*")
+      golden-ratio-exclude-modes                        '("calendar-mode"
+                                                          "org-agenda-mode"
+                                                          "help-mode"
+                                                          "helpful-mode"
+
+                                                          "neotree-mode"
+                                                          "lsp-symbols-mode"
+                                                          "treemacs-mode")
       golden-ratio-extra-commands                       (append golden-ratio-extra-commands '(evil-window-left
                                                                                               evil-window-right
                                                                                               evil-window-up
