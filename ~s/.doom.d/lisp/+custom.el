@@ -74,5 +74,7 @@
   (setq org-drill-scope (salih/path-list "~/org/drill/"))
   (setq org-drill-maximum-duration 100))
 
+(after! eshell
+  (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
 
 (provide '+custom)

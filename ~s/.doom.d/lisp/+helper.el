@@ -1075,4 +1075,76 @@ Version 2015-07-30"
   (setq-local browse-url-browser-function 'salih/open-url-in-chrome)
   (call-interactively #'mu4e-view-go-to-url))
 
+
+(defun salih/org-ql-view--format-element (orig-fun &rest args)
+  "This function will intercept the original function and
+add the category to the result.
+
+ARGS is `element' in `org-ql-view--format-element'"
+  (if (not args)
+      ""
+    (let* ((element args)
+           (properties (cadar element))
+           (result (apply orig-fun element))
+           (smt "")
+           (category (org-entry-get (plist-get properties :org-marker) "CATEGORY")))
+      (if (> (length category) 11)
+          (setq category (substring category 0 10)))
+      (if (< (length category) 11)
+          (setq smt (make-string (- 11 (length category)) ?\s)))
+      (org-add-props
+          (format "   %-8s %s" (concat category ":" smt) result)
+          (text-properties-at 0 result)))))
+
+(defun cm/deft-parse-title (file contents)
+  "Parse the given FILE and CONTENTS and determine the title.
+  If `deft-use-filename-as-title' is nil, the title is taken to
+  be the first non-empty line of the FILE.  Else the base name of the FILE is
+  used as title."
+  (let ((begin (string-match "^#\\+[tT][iI][tT][lL][eE]: .*$" contents)))
+    (if begin
+	(string-trim (substring contents begin (match-end 0)) "#\\+[tT][iI][tT][lL][eE]: *" "[\n\t ]+")
+      (deft-base-filename file))))
+
+(cl-defmethod org-roam-node-type ((node org-roam-node))
+  "Return the TYPE of NODE."
+  (condition-case nil
+      (file-name-nondirectory
+       (directory-file-name
+        (file-name-directory
+         (file-relative-name (org-roam-node-file node) org-roam-directory))))
+    (error "")))
+
+
+(defvar org-roam-list-most-linked-count 5)
+(cl-defmethod org-roam-node-backlinkscount-number ((node org-roam-node))
+  "Access slot \"backlinks\" of org-roam-node struct CL-X. This is identical
+toorg-roam-node-backlinkscount' with the difference that it returns a number
+instead of a fromatted string. This is to be used in
+`org-roam-node-sort-by-backlinks'"
+  (let* ((count (caar (org-roam-db-query [:select (funcall count source)
+                                          :from links :where (= dest $s1)
+                                          :and (= type "id")]
+                                         (org-roam-node-id node)))))
+    count))
+
+(defun org-roam-node-sort-by-backlinks (completion-a completion-b)
+  "Sorting function for org-roam that sorts the list of nodes by the number of
+backlinks. This is the sorting function in `org-roam-node-find-by-backlinks'"
+  (let ((node-a (cdr completion-a))
+        (node-b (cdr completion-b)))
+    (>= (org-roam-node-backlinkscount-number node-a)
+        (org-roam-node-backlinkscount-number node-b))))
+
+(defun org-roam-node-find-by-backlinks ()
+  "Essentially works like
+org-roam-node-find' (although it uses a combination offind-file' and
+org-roam-node-read' to accomplish that and notorg-roam-node-find' as only
+org-roam-node-read' can take a sorting function as an argument) but the list of
+nodes is sorted by the number of backlinks instead of most recent nodes. Sorting
+is done with org-roam-node-sort-by-backlinks'"
+  (interactive)
+  (find-file (org-roam-node-file (org-roam-node-read nil nil #'org-roam-node-sort-by-backlinks))))
+
+
 (provide '+helper)

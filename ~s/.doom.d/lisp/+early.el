@@ -1,4 +1,11 @@
 
+(setq-default frame-title-format                        '("%b")
+              shr-inhibit-images                        t
+              bidi-paragraph-direction                  'left-to-right
+              org-download-image-dir                    "~/roam/media"
+              indent-tabs-mode                          nil
+              pdf-view-display-size                     'fit-width)
+
 (defmacro salih/path-blog (filename)
   `(f-join salih/blog-content-path ,filename))
 

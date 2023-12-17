@@ -1,4 +1,4 @@
-;;; mine/gitcolor/config.el -*- lexical-binding: t; -*-
+;;; ../../../../:/home/l/configs/~s/.doom.d/lisp/+sets-gutter.el -*- lexical-binding: t; -*-
 
 
 (use-package git-gutter

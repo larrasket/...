@@ -87,12 +87,4 @@
 
        :config
        (default ;; +bindings
-        +smartparens)
-
-       :private
-       compiler
-       gen
-       genorg
-       cite
-       roam
-       bind)
+        +smartparens))

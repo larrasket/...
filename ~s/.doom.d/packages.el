@@ -75,3 +75,42 @@
 
 (unpin! ess)
 (package! ess)
+
+(package! company-box)
+
+
+
+
+
+(package! org-ref)
+(package! org-roam-bibtex
+  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+(unpin! org-roam)
+
+(unpin! bibtex-completion helm-bibtex ivy-bibtex)
+(package! citar)
+(package! citar-org-roam)
+
+
+(package! emacs-neotree)
+(package! csv-mode)
+
+
+(package! ob-mermaid)
+(package! plantuml-mode)
+(package! org-download)
+
+
+(package! git-gutter)
+(package! git-gutter-fringe)
+
+(package! org-ql :recipe
+  (:host github
+   :repo "larrasket/org-ql"
+   :branch "priority"))
+
+
+(unpin! org-roam)
+(package! org-roam-ui)
+(package! emacsql-sqlite3)
+(package! emacsql-sqlite-module)
