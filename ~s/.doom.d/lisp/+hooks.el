@@ -38,6 +38,7 @@
                                                  (salih/org-roam-get-node-titles
                                                   (org-roam-node-read--completions))))
 
+(add-hook  'org-mode-hook               #'auto-fill-mode)
 (add-hook! 'prog-mode-hook              #'auto-fill-mode
                                         #'column-enforce-mode)
 
@@ -60,7 +61,7 @@
 (add-hook 'eshell-alias-load-hook       #'salih/eshell-load-bash-aliases)
 ;; (add-hook 'dired-after-readin-hook      #'salih/dired-git-info-auto-enable)
 (add-hook 'org-roam-find-file-hook      #'git-auto-commit-mode)
-(add-hook 'dired-mode-hook              #'dired-auto-readme-mode)
+;; (add-hook 'dired-mode-hook              #'dired-auto-readme-mode)
 (add-hook 'after-make-frame-functions   (lambda (frame)
                                           (with-selected-frame frame
                                             (salih/keyboard-config))))

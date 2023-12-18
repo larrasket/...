@@ -6,5 +6,5 @@
 
 :DATE:
 [`(format-time-string "%Y-%m-%d %a %H:%M")`]
-:DATE:
+:END:
 $0
