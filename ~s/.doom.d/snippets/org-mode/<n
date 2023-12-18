@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: note
+# uuid:
+# key: <n
+# condition: t
+# --
+
+#+begin_postscript
+$0
+#+end_postscript
