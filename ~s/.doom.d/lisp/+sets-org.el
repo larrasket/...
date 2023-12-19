@@ -24,6 +24,20 @@
 
 
 (after! org
+  (setq org-todo-keywords       '((sequence "TODO(t)" "DAILY(e)" "PROJ(p)"
+                                   "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)"
+                                   "IDEA(i)" "|" "DONE(d)" "KILL(k)")
+                                  (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
+                                  (sequence "|" "OKAY(o)" "YES(y)" "NO(n)"))
+        org-todo-keyword-faces '(("[-]" . +org-todo-active)
+                                 ("STRT" . +org-todo-active)
+                                 ("DAILY" . +org-todo-project)
+                                 ("[?]" . +org-todo-onhold)
+                                 ("WAIT" . +org-todo-onhold)
+                                 ("HOLD" . +org-todo-onhold)
+                                 ("PROJ" . +org-todo-project)
+                                 ("NO" . +org-todo-cancel)
+                                 ("KILL" . +org-todo-cancel)))
   (setq org-hide-leading-stars            't
         org-tags-column                   -80
         org-archive-location              "%s_archive.org::"
@@ -104,8 +118,7 @@
 
                                             ("j" "Journal" entry
                                              (file+headline +org-capture-journal-file "Posts")
-                                             "*** %?\n:DATE:\n%<[%Y-%m-%d %a
-                                            %H:%M]>\n:END:"  :prepend t))
+                                             "*** %?\n:DATE:\n%<[%Y-%m-%d %a %H:%M]>\n:END:"  :prepend t))
 
 
 
