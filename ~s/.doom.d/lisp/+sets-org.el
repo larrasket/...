@@ -286,7 +286,42 @@
                                                        (tags "@later")
                                                        (not (deadline))
                                                        (not (scheduled)))
-                                                     ((org-ql-block-header "Looking for an idea?"))))))))
+                                                     ((org-ql-block-header
+                                                       "Looking for an
+                                                       idea?")))))))
+
+
+  (setq org-tag-alist   '((:startgroup)
+                          ("@personal" . nil)
+                          (:grouptags)
+                          ("@read" . ?r)
+                          ("@idea" . ?i)
+                          ("@write" . ?W)
+                          ("@check" . ?c)
+                          ("@watch" . ?w)
+                          (:endgroup)
+
+
+                          (:startgroup)
+                          ("@nothing" . ?N)
+                          (:grouptags)
+                          ("@people" . ?p)
+                          (:endgroup)
+                          ("noexport" . ?n)
+                          ("anthology" . ?a)
+                          ("@later" . ?l)
+                          ("@current" . ?C)
+                          ("drill" . ?d)
+                          ("@general" . ?g)))
+ (add-to-list 'org-tags-exclude-from-inheritance "noexport")
+ (add-to-list 'org-tags-exclude-from-inheritance "project")
+ (add-to-list 'org-tags-exclude-from-inheritance "permanent")
+ (add-to-list 'org-tags-exclude-from-inheritance "link")
+
+ (add-to-list 'org-tags-exclude-from-inheritance "@read")
+ (add-to-list 'org-tags-exclude-from-inheritance "noexport")
+ (add-to-list 'org-tags-exclude-from-inheritance "project"))
+ 
 
 
 (provide '+sets-org)

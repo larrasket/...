@@ -1,6 +1,5 @@
 (add-to-list 'load-path "~/.doom.d/lisp/")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
-
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
@@ -86,13 +85,12 @@
 (require '+sets-org)                    ; org mode settings
 (require '+sets-inhibit)                ; other settings
 (require '+bind)                        ; set doom bindings (not mine)
+(require '+helper)                      ; my salih/*
 
 
-(require '+helper)
 (require '+hooks)
 (require '+advice)
 (require '+bindings)
-(require '+org-tags)
 (require '+custom)
 (require '+erc)
 (require '+deep)
