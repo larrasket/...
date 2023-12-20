@@ -5,31 +5,30 @@
        (vertico +icons)
 
        :ui
-       vc-gutter
-       doom
+       vc-gutter                        ; git annotions
+       doom                             ; doom emacs
        doom-dashboard
-       hl-todo
-       (ligatures
-        +pragmata-pro)
+       hl-todo                          ; make TODO, FIXME, KILLYOURSELF, more
+                                        ; visible in your source tree.
+       (ligatures +pragmata-pro)
+       (popup +defaults)                ; doom better management for pop-ups
        modeline
-       (popup +defaults)
        workspaces
 
        :editor
-       (evil
-        +everywhere)
-       file-templates
-       fold
-       lispy
-       parinfer
+       (evil +everywhere)
+       file-templates                   ; automatically fill files with sane
+                                        ; templates
+       fold                             ; activate za in evil mode
+       lispy                            ; better lisp edit
+       parinfer                         ; (better lisp edit)
        snippets
        word-wrap
 
        :emacs
        dired
-
-       electric
-       undo
+       electric                         ; better tabs
+       undo                             ; better undo tree
        vc
 
        :term
@@ -38,53 +37,36 @@
 
        :checkers
        (syntax +childframe)
-       (spell  +flyspell)
+       (spell +flyspell)
 
        :tools
        biblio
        tree-sitter
-       (lookup
-        +dictionary
-        +offline)
+       (lookup +dictionary +offline)
        (lsp +peak)
-       (magit)
+       magit
        pdf
-       ;; debugger
 
        :os
        (tty)
 
        :lang
-       (cc +lsp
-           +tree-sitter)
-       common-lisp
-       (csharp +lsp)
-       emacs-lisp
-       (go +lsp
-           +tree-sitter)
-       json
-       (latex +flod
-              +latexmk
-              +lsp)
-       (org
-        +roam2
-        +noter)
-       (rest +jq)
-       sh
-       yaml
-       (julia
-        +lsp
-        +tree-sitter)
-       ess
+       (latex +flod +latexmk +lsp)
+       (julia +lsp +tree-sitter)
        (java +lsp +tree-sitter)
+       (cc +lsp +tree-sitter)           ; C
+       (go +lsp +tree-sitter)
+       (org +roam2 +noter)
+       (rest +jq)
+       common-lisp
+       emacs-lisp
+       yaml
+       json
+       ess                              ; R and other stuff
+       sh
 
        :email
        mu4e
 
-       :app
-       ;; irc
-       ;; rss
-
        :config
-       (default ;; +bindings
-        +smartparens))
+       (default +smartparens))
