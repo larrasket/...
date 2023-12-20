@@ -114,5 +114,3 @@
 (package! org-roam-ui)
 (package! emacsql-sqlite3)
 (package! emacsql-sqlite-module)
-
-(package! golden-ratio)

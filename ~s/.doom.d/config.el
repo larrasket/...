@@ -85,7 +85,7 @@
 (require '+sets-org)                    ; org mode settings
 (require '+sets-inhibit)                ; other settings
 (require '+bind)                        ; set doom bindings (not mine)
-(require '+helper)                      ; my salih/*
+(require '+helper)                      ; salih/*
 
 
 (require '+hooks)
