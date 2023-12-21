@@ -1,5 +1,4 @@
-
-(after! org-roam
+(jfter! org-roam
   (org-roam-db-autosync-mode)
   (setq org-roam-dailies-capture-templates      '(("d" "default" entry "* %<%H:%M> \n %?"
                                                    :if-new
@@ -24,6 +23,31 @@
 
 
 (after! org
+  (setq org-bullets-bullet-list                           '("◉" "✸" "✿" "♥" "●")
+        org-id-method                                     'org
+        org-roam-ui-open-on-start                         nil
+        org-agenda-skip-scheduled-if-done                 nil
+        org-use-tag-inheritance                           t
+        org-agenda-block-separator                        9472
+        org-clock-mode-line-total                         'today
+        org-element-use-cache                             t
+        org-noter-auto-save-last-location                 t
+        org-startup-folded                                'show2levels
+        org-image-actual-width                            600
+        org-link-file-path-type                           'relative
+        org-agenda-show-future-repeats                    nil
+        org-clock-mode-line-total                         'current
+        ;; FIXME this is useful to hide the title name from the org clock, however
+        ;; it might be inconsistent. Better should be redefining
+        ;; `org-clock-get-clock-string'. I wouldn't overwrite it myself since it
+        ;; might break things in the future, I might consider making PR to
+        ;; org-mode making the string customizable.
+        org-clock-string-limit                            8
+        org-agenda-dim-blocked-tasks                      'invisible
+        org-tags-column                                   70
+        org-agenda-sticky                                 t
+        org-crypt-key                                     user-mail-address)
+   
   (setq org-todo-keywords       '((sequence "TODO(t)" "DAILY(e)" "PROJ(p)"
                                    "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)"
                                    "IDEA(i)" "|" "DONE(d)" "KILL(k)")
@@ -89,7 +113,6 @@
                                              (file+headline +org-capture-todo-file "Inbox")
                                              "* TODO %? :@general:" :prepend t)
 
-
                                             ("f" "Empty" entry
                                              (file+headline +org-capture-todo-file "Inbox")
                                              "* TODO %?" :prepend t)
@@ -111,6 +134,9 @@
                                              (file+headline +org-capture-todo-file "Inbox")
                                              "* TODO %? :@check:" :prepend t)
 
+                                            ("n" "Now doing " entry (file+headline +org-capture-todo-file "Inbox")
+                                             "* TODO %?\n%U"  :clock-in t
+                                             :clock-keep t)
 
                                             ("i" "Got a new idea?" entry
                                              (file+headline +org-capture-todo-file "Inbox")

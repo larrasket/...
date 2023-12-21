@@ -226,6 +226,7 @@
    "C-t"          #'+vterm/here
    "C-j"          #'centaur-tabs-ace-jump
    "C-c"          (lambda () (interactive) (org-capture nil "f"))
+   "C-l"          (lambda () (interactive) (org-capture nil "n"))
    "C-a"          nil
    "C-a C-a"      (lambda () (interactive) (setq salih/vulpea-show-full nil) (org-agenda nil "f"))
    "C-a C-l"      (lambda () (interactive) (setq salih/vulpea-show-full nil) (org-agenda nil "l"))
@@ -246,7 +247,6 @@
    "]"            #'next-buffer
    "C-d"          #'calendar
    "C-k"          #'kill-current-buffer
-   "C-l"          nil
    "C-r"          nil
    "TAB"          nil
    "TAB d"        #'+workspace/delete
