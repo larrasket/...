@@ -25,6 +25,8 @@
 (after! org
   (setq org-bullets-bullet-list                           '("◉" "✸" "✿" "♥" "●")
         org-id-method                                     'org
+        org-log-into-drawer                               t
+        org-log-done                                      t
         org-roam-ui-open-on-start                         nil
         org-agenda-skip-scheduled-if-done                 nil
         org-use-tag-inheritance                           t
@@ -135,7 +137,7 @@
                                              "* TODO %? :@check:" :prepend t)
 
                                             ("n" "Now doing " entry (file+headline +org-capture-todo-file "Inbox")
-                                             "* TODO %?\n%U"  :clock-in t
+                                             "* TODO %?"  :clock-in t
                                              :clock-keep t)
 
                                             ("i" "Got a new idea?" entry
