@@ -1,4 +1,4 @@
-(jfter! org-roam
+(after! org-roam
   (org-roam-db-autosync-mode)
   (setq org-roam-dailies-capture-templates      '(("d" "default" entry "* %<%H:%M> \n %?"
                                                    :if-new
