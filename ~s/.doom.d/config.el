@@ -1,9 +1,11 @@
 (add-to-list 'load-path "~/.doom.d/lisp/")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
+
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
+
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
       user-stmp-server                                  "mail.gmx.com"
@@ -44,8 +46,6 @@
       ;; until your day is done.
       org-extend-today-until                            0
 
-
-
       ;; school
       salih/source-directory                            (s/path-roam "source")
       salih/books                                       (s/path-list salih/source-directory)
@@ -55,14 +55,16 @@
       bibtex-completion-library-path                    `(,salih/source-directory)
       org-cite-global-bibliography                      `(,bibtex-completion-bibliography)
       citar-bibliography                                bibtex-completion-bibliography
-      org-cite-csl--fallback-style-file                 (f-join org-cite-csl-styles-dir "chicago-ibid.csl")
-
+      org-cite-csl--fallback-style-file                 (f-join
+                                                         org-cite-csl-styles-dir
+                                                         "chicago-ibid.csl")
       ;; modus theme
       modus-themes-bold-constructs                      t
       modus-themes-fringes                              nil
       modus-themes-italic-constructs                    t
       modus-themes-org-blocks                           'gray-background
-      modus-themes-common-palette-overrides             '((border-mode-line-active unspecified) (border-mode-line-inactive unspecified))
+      modus-themes-common-palette-overrides             '((border-mode-line-active unspecified)
+                                                          (border-mode-line-inactive unspecified))
 
       ;; indent highlight
       indent-bars-highlight-current-depth               nil
@@ -72,8 +74,6 @@
       safe-local-variable-values                        '((org-download-image-dir
                                                            . "../i")
                                                           (salih/rebuild . t)))
-
-
 
 
 
