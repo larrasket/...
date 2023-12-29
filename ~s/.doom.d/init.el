@@ -29,7 +29,7 @@
        dired
        electric                         ; better tabs
        undo                             ; better undo tree
-       vc
+       vc                               ; magit
 
        :term
        eshell
@@ -67,6 +67,5 @@
 
        :email
        mu4e
-
        :config
        (default +smartparens))

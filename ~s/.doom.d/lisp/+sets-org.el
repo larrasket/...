@@ -26,7 +26,7 @@
   (setq org-bullets-bullet-list                           '("◉" "✸" "✿" "♥" "●")
         org-id-method                                     'org
         org-log-into-drawer                               t
-        org-log-done                                      t
+        org-log-done                                      nil
         org-roam-ui-open-on-start                         nil
         org-agenda-skip-scheduled-if-done                 nil
         org-use-tag-inheritance                           t
@@ -39,12 +39,12 @@
         org-link-file-path-type                           'relative
         org-agenda-show-future-repeats                    nil
         org-clock-mode-line-total                         'current
-        ;; FIXME this is useful to hide the title name from the org clock, however
-        ;; it might be inconsistent. Better should be redefining
+        ;; FIXME this is useful to hide the title name from the org clock,
+        ;; however it might be inconsistent. Better should be redefining
         ;; `org-clock-get-clock-string'. I wouldn't overwrite it myself since it
         ;; might break things in the future, I might consider making PR to
         ;; org-mode making the string customizable.
-        org-clock-string-limit                            8
+        org-clock-string-limit                            7
         org-agenda-dim-blocked-tasks                      'invisible
         org-tags-column                                   70
         org-agenda-sticky                                 t
@@ -117,7 +117,7 @@
 
                                             ("f" "Empty" entry
                                              (file+headline +org-capture-todo-file "Inbox")
-                                             "* TODO %?" :prepend t)
+                                             "* TODO %?\n%U" :prepend t)
 
                                             ("p" "Project-local todo" entry ; {project-root}/todo.org
                                              (file +org-capture-project-todo-file)
