@@ -73,7 +73,11 @@
       ;; other
       safe-local-variable-values                        '((org-download-image-dir
                                                            . "../i")
-                                                          (salih/rebuild . t)))
+                                                          (salih/rebuild . t))
+      ;; currently org causes some annoying warnings because of org-element
+      ;; breaking api updates.
+      warning-minimum-level                             :error)
+ 
 
 
 
