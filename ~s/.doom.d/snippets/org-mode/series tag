@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: tag blog
+# key: <sr
+# --
+#+BEGIN_propert
+{{{s}}} $1
+#+END_propert
+$0

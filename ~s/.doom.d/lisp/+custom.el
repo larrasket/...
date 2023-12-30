@@ -5,6 +5,7 @@
   (require 'org-inlinetask)
   (require 'org-media-note)
   (require 'org-roam-protocol)
+  (require 'org-download)
   (custom-set-faces
    '(org-link ((t (:inherit link :underline nil :foreground "#79b58f" :slant normal :weight bold :family "Pragmata Pro"))))
    '(org-roam-dailies-calendar-note ((t (:inherit link :underline nil))))
@@ -74,5 +75,7 @@
   (setq org-drill-scope (salih/path-list "~/org/drill/"))
   (setq org-drill-maximum-duration 100))
 
+(after! eshell
+  (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
 
 (provide '+custom)

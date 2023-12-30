@@ -38,6 +38,7 @@
                                                  (salih/org-roam-get-node-titles
                                                   (org-roam-node-read--completions))))
 
+(add-hook  'org-mode-hook               #'auto-fill-mode)
 (add-hook! 'prog-mode-hook              #'auto-fill-mode
                                         #'column-enforce-mode)
 
@@ -52,13 +53,15 @@
 
 
 (add-hook 'csv-mode-hook                #'csv-align-mode)
+(add-hook 'company-mode-hook            #'company-box-mode)
 (add-hook 'after-init-hook              #'global-flycheck-mode)
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 (add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
 (add-hook 'html-mode-hook               #'sgml-electric-tag-pair-mode)
 (add-hook 'eshell-alias-load-hook       #'salih/eshell-load-bash-aliases)
-(add-hook 'dired-after-readin-hook      #'salih/dired-git-info-auto-enable)
-(add-hook 'dired-mode-hook              #'dired-auto-readme-mode)
+;; (add-hook 'dired-after-readin-hook      #'salih/dired-git-info-auto-enable)
+(add-hook 'org-roam-find-file-hook      #'git-auto-commit-mode)
+;; (add-hook 'dired-mode-hook              #'dired-auto-readme-mode)
 (add-hook 'after-make-frame-functions   (lambda (frame)
                                           (with-selected-frame frame
                                             (salih/keyboard-config))))
@@ -80,7 +83,6 @@ a good understanding. His praise endures forever. ")))
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 (add-to-list 'org-babel-load-languages '(julia-vterm . t))
 
-
 ;; (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
 
 (remove-hook 'vterm-mode-hook                   #'hide-mode-line-mode)
@@ -99,9 +101,9 @@ a good understanding. His praise endures forever. ")))
 (vertico-buffer-mode)
 (global-wakatime-mode)
 (salih/keyboard-config)
+(global-hl-line-mode -1)
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)
-(global-hl-line-mode -1)
 (salih/consult-preview-at-point)
 (when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
 
@@ -115,3 +117,4 @@ a good understanding. His praise endures forever. ")))
 
 
 (provide '+hooks)
+

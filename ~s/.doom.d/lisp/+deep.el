@@ -7,7 +7,6 @@
 (assoc-delete-all "Recently opened files"       +doom-dashboard-menu-sections)
 (assoc-delete-all "Open project"                +doom-dashboard-menu-sections)
 (assoc-delete-all "Jump to bookmark"            +doom-dashboard-menu-sections)
-
 (custom-set-variables '(all-the-icons-completion-mode nil))
 
 

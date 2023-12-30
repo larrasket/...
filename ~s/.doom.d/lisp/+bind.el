@@ -286,3 +286,6 @@
 ;;; :tools
 (when (modulep! :tools eval)
   (map! "M-r" #'+eval/buffer))
+
+
+(provide '+bind)
