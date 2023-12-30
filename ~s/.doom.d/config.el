@@ -19,12 +19,12 @@
 
       ;; appearanc
       ;; font `:size` value of 29 is prefect for filming
-      ;; with high dpi use (set-frame-font "PragmataPro Mono Liga")
+      ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
       ;; or just remove `:size`.
       doom-font                                         "Pragmata Pro:pixelsize=12:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-theme                                        'modus-vivendi
       +doom-dashboard-ascii-banner-fn                   'salih/banner
-      display-line-numbers-type                         'nil
+      display-line-numbers-type                         nil
       all-the-icons-color-icons                         nil
       treemacs-position                                 'right
 
