@@ -6,19 +6,17 @@
 
        :ui
        vc-gutter                        ; git annotions
-       doom                             ; doom emacs
+       doom
        doom-dashboard
-       hl-todo                          ; make TODO, FIXME, KILLYOURSELF, more
-                                        ; visible in your source tree.
+       hl-todo
        (ligatures +pragmata-pro)
-       (popup +defaults)                ; doom better management for pop-ups
+       (popup +defaults)
        modeline
        workspaces
 
        :editor
        (evil +everywhere)
-       file-templates                   ; automatically fill files with sane
-                                        ; templates
+       file-templates
        fold                             ; activate za in evil mode
        lispy                            ; better lisp edit
        parinfer                         ; (better lisp edit)
@@ -27,8 +25,8 @@
 
        :emacs
        dired
-       electric                         ; better tabs
-       undo                             ; better undo tree
+       electric                         ; better tabs (as in tabs vs spaces)
+       undo
        vc                               ; magit
 
        :term
