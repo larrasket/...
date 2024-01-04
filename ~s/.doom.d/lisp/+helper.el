@@ -1050,8 +1050,10 @@ Version 2015-07-30"
 
 (defun salih/insert-current-date ()
   (interactive)
-  (insert (shell-command-to-string "echo -n $(date +%Y/%m/%d:)")))
-
+    (let ((current-prefix-arg '(16)))
+      (call-interactively 'org-time-stamp-inactive)
+      (insert ": ")))
+current-prefix-arg
 (defun salih/open-kitty-in-current-directory ()
   "Open the Kitty terminal in the current working directory."
   (interactive)
