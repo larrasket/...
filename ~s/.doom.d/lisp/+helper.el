@@ -1061,6 +1061,7 @@ current-prefix-arg
 
 (defun salih/open-inbox ()
   (interactive)
+  (setq mu4e-search-threads t)
   (if (featurep 'mu4e)
       (mu4e~headers-jump-to-maildir "/Inbox")
     (mu4e)))
@@ -1068,8 +1069,13 @@ current-prefix-arg
 (defun salih/open-rss ()
   (interactive)
   (if (featurep 'mu4e)
-     (mu4e-search "maildir:\"/rss\" flag:unread")
-    (mu4e)))
+      (progn
+        (setq mu4e-search-threads nil)
+        (mu4e-search "maildir:\"/rss\" flag:unread")
+        (message "done"))
+    (progn
+      (setq mu4e-search-threads t)
+      (mu4e))))
 
 
 (defun salih/mu4e-go-to-url ()
