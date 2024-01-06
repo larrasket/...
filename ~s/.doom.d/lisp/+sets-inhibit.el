@@ -6,7 +6,8 @@
       completion-ignore-case                            t
       load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
-      ;; gcmh-high-cons-threshold                          1073741824
+      gcmh-high-cons-threshold                          1073741824
+      gcmh-idle-delay                                   15
       scroll-conservatively                             101
       jit-lock-defer-time                               0
       read-process-output-max                           1000000
