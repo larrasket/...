@@ -116,7 +116,8 @@ lookup."
       (call-interactively #'lsp-find-definition)
     (call-interactively #'+lookup/file)))
 
-(defun insert-now-timestamp()
+(defun salih/insert-now-timestamp()
+  (interactive)
   (org-insert-time-stamp (current-time) t))
 
 ;; dired
@@ -1051,6 +1052,8 @@ Version 2015-07-30"
 (defun salih/insert-current-date ()
   (interactive)
     (let ((current-prefix-arg '(16)))
+      (if (eq major-mode 'org-mode)
+          (insert "- "))
       (call-interactively 'org-time-stamp-inactive)
       (insert ": ")))
 current-prefix-arg
