@@ -71,6 +71,7 @@ alias djvu2pdf='docker run --rm -u $(id -u):$(id -g) -v $(pwd):/opt/work ilyabys
 alias docker='sudo docker'
 
 alias killall='killall -9'
+alias tadwin='EMACS=/home/l/.emacs.db/ && /home/l/blog/tadwin.el'
 
 xhost +local:root > /dev/null 2>&1
 complete -cf sudo
