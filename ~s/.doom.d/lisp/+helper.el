@@ -1072,7 +1072,7 @@ current-prefix-arg
       (progn
         (setq mu4e-search-threads nil)
         (mu4e-search "maildir:\"/rss\" flag:unread")
-        (message "done"))
+        (mu4e-search-change-sorting :from))
     (progn
       (setq mu4e-search-threads t)
       (mu4e))))
