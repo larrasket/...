@@ -280,8 +280,9 @@
  "C-w" #'+lookup/dictionary-definition
  "C-b" #'+default/search-buffer
  "C-p" #'+default/search-project
+ "C-o" #'occur
  "<escape>" #'rgrep
- "C-r" #'consult-org-roam-search)
+ "C-r" #'salih/consult-org-roam-search-org-only)
 
 
 

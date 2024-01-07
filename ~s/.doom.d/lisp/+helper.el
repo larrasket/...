@@ -1157,5 +1157,13 @@ is done with org-roam-node-sort-by-backlinks'"
   (interactive)
   (find-file (org-roam-node-file (org-roam-node-read nil nil #'org-roam-node-sort-by-backlinks))))
 
+(defun salih/consult-org-roam-search-org-only ()
+  (interactive)
+  (let ((consult-ripgrep-args
+         (concat
+          consult-ripgrep-args
+          " -g *.org")))
+    (consult-org-roam-search)))
+
 
 (provide '+helper)

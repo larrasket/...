@@ -61,6 +61,9 @@
 (after! consult
   (add-to-list 'consult-buffer-sources 'salih/consult--source-books 'append))
 
+(after! consult-org-roam
+  (setq consult-org-roam-grep-func #'consult-ripgrep))
+
 (after! embark
   (define-key embark-url-map            (kbd "c") 'salih/open-url-in-chrome)
   (define-key embark-org-link-map       (kbd "RET") 'org-web-tools-read-url-as-org))
