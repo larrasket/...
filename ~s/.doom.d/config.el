@@ -27,6 +27,7 @@
       display-line-numbers-type                         nil
       all-the-icons-color-icons                         nil
       treemacs-position                                 'right
+      doom-modeline-enable-word-count                   t
 
       ;; prayer time
       calendar-latitude                                 30.0

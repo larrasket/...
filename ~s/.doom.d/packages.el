@@ -35,7 +35,7 @@
 (package! modus-themes)                 ; my favorite themes from my greek dude
 (package! wakatime-mode)                ; voluntary tracking
 (package! org-web-tools)                ; viewing urls in org
-(package! ob-julia-vterm)               ; for usage, se maxima or sage-shell
+(package! ob-julia-vterm)               ; for usage, see maxima or sage-shell
 
 (package! org-media-note
   :recipe (:host github
