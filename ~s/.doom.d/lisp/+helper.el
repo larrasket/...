@@ -1173,3 +1173,30 @@ is done with org-roam-node-sort-by-backlinks'"
 
 
 (provide '+helper)
+
+
+(defun salih/mu4e-compose-include-message (msg &optional)
+  "Like mu4e-compose-attach-message, but include MSG as an inline attachment
+instead."
+  (let ((path (plist-get msg :path)))
+    (unless (file-exists-p path)
+      (mu4e-warn "Message file not found"))
+    (mml-attach-file
+     path
+     "message/rfc822"
+     (or (plist-get msg :subject) "No subject")
+     "inline")))
+
+(defun salih/mu4e-forward-html ()
+  "Like `mu4e-compose-attach-captured-message’, but place the last captured
+message as an inline attachment."
+  (interactive)
+  (message-goto-body)
+  (let* ((plain (buffer-substring-no-properties (point) (point-max)))
+         (msg mu4e-captured-message))
+    (delete-region (point) (point-max))
+    (insert "\n<#multipart type=alternative>\n<#part type=text/plain>\n")
+    (insert plain)
+    (salih/mu4e-compose-include-message msg)
+    (insert "<#/multipart>\n")
+    (message-goto-to)))
