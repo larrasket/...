@@ -223,6 +223,7 @@
    :prefix salih/prefix-global
    "C-u"          nil
    "C-n"          nil
+   "f6"           #'salih/open-neotree-and-lsp
    "C-t"          #'+vterm/here
    "C-j"          #'centaur-tabs-ace-jump
    "C-c"          (lambda () (interactive) (org-capture nil "f"))
@@ -346,22 +347,18 @@
 ;; commenting lines
 (global-set-key (kbd "M-;") 'salih/comment-or-uncomment-region-or-line)
 
-(global-set-key [f6]
-                (lambda ()
-                  (interactive)
-                  (neotree-project-dir)
-                  (lsp-treemacs-symbols)))
+
+;; this was one of my first written elisp. I will comment it only for historical
+;; reasons :)
+
+;; (global-set-key [f6]
+;;                 (lambda ()
+;;                   (interactive)
+;;                   (neotree-project-dir)
+;;                   (lsp-treemacs-symbols)))
 
 
-(after! org-noter
-  (defun salih/org-noter-sync-current-note-and-switch-window ()
-    (interactive)
-    (let ((prev-window (selected-window)))
-      (org-noter-sync-current-note)
-      (select-window prev-window)))
-  (define-key org-noter-notes-mode-map (salih/mode "C-j")
-              #'salih/org-noter-sync-current-note-and-switch-window)
-  (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note))
+
 
 (general-define-key
  :keymaps 'elfeed-search-mode-map
@@ -422,6 +419,17 @@
  :map mu4e-view-mode-map
  :n
  ";" #'salih/mu4e-go-to-url)
+
+
+(after! org-noter
+  (defun salih/org-noter-sync-current-note-and-switch-window ()
+    (interactive)
+    (let ((prev-window (selected-window)))
+      (org-noter-sync-current-note)
+      (select-window prev-window)))
+  (define-key org-noter-notes-mode-map (salih/mode "C-j")
+              #'salih/org-noter-sync-current-note-and-switch-window)
+  (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note))
 
 (define-key ctl-x-map (kbd "C-z") nil)
 (define-key global-map (kbd "C-x C-z") nil)

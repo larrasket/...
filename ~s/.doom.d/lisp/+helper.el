@@ -1165,5 +1165,11 @@ is done with org-roam-node-sort-by-backlinks'"
           " -g *.org")))
     (consult-org-roam-search)))
 
+(defun salih/open-neotree-and-lsp ()
+  (interactive)
+  (neotree-project-dir)
+  (lsp-treemacs-symbols)
+  (call-interactively #'other-window))
+
 
 (provide '+helper)

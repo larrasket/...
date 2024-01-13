@@ -49,6 +49,7 @@
        (tty)
 
        :lang
+       (clojure +lsp +tree-sitter)
        (latex +flod +latexmk +lsp)
        (julia +lsp +tree-sitter)
        (java +lsp +tree-sitter)
