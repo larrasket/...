@@ -21,13 +21,14 @@
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
       ;; or just remove `:size`.
-      doom-font                                         "Pragmata Pro:pixelsize=12:antialias=true:hinting=true:autohint=false:hintstyle=3"
+      doom-font                                         "Iosevka Term:pixelsize=14:antialias=true:hinting=true:autohint=false:hintstyle=3"
+      doom-modeline-height                              23
+      centaur-tabs-height                               22
       doom-theme                                        'modus-vivendi
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       display-line-numbers-type                         nil
       all-the-icons-color-icons                         nil
       treemacs-position                                 'right
-      doom-modeline-enable-word-count                   t
 
       ;; prayer time
       calendar-latitude                                 30.0
@@ -60,12 +61,17 @@
                                                          org-cite-csl-styles-dir
                                                          "chicago-ibid.csl")
       ;; modus theme
-      modus-themes-bold-constructs                      t
+      modus-themes-bold-constructs                      nil
       modus-themes-fringes                              nil
       modus-themes-italic-constructs                    t
       modus-themes-org-blocks                           'gray-background
-      modus-themes-common-palette-overrides             '((border-mode-line-active unspecified)
-                                                          (border-mode-line-inactive unspecified))
+      modus-themes-common-palette-overrides             '((bg-mode-line-active bg-inactive)
+                                                          (fg-mode-line-active fg-main)
+                                                          (bg-mode-line-inactive bg-inactive)
+                                                          (fg-mode-line-active fg-dim)
+                                                          (border-mode-line-active bg-main)
+                                                          (border-mode-line-inactive bg-inactive))
+                                                          
 
       ;; indent highlight
       indent-bars-highlight-current-depth               nil
@@ -98,3 +104,30 @@
 (require '+custom)
 (require '+erc)
 (require '+deep)
+
+
+(defun salih/mu4e-compose-include-message (msg &optional)
+  "Like mu4e-compose-attach-message, but include MSG as an inline attachment
+instead."
+  (let ((path (plist-get msg :path)))
+    (unless (file-exists-p path)
+      (mu4e-warn "Message file not found"))
+    (mml-attach-file
+     path
+     "message/rfc822"
+     (or (plist-get msg :subject) "No subject")
+     "inline")))
+
+(defun salih/mu4e-forward-html ()
+  "Like `mu4e-compose-attach-captured-message’, but place the last captured
+message as an inline attachment."
+  (interactive)
+  (message-goto-body)
+  (let* ((plain (buffer-substring-no-properties (point) (point-max)))
+         (msg mu4e-captured-message))
+    (delete-region (point) (point-max))
+    (insert "\n<#multipart type=alternative>\n<#part type=text/plain>\n")
+    (insert plain)
+    (salih/mu4e-compose-include-message msg)
+    (insert "<#/multipart>\n")
+    (message-goto-to)))

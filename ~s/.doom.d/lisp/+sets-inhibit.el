@@ -12,7 +12,7 @@
       jit-lock-defer-time                               0
       read-process-output-max                           1000000
 
-      doom-modeline-height                              19
+      doom-modeline-enable-word-count                   t
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
 
@@ -26,7 +26,6 @@
       centaur-tabs-close-button                         "✕"
       centaur-tabs-modified-marker                      "•"
       centaur-tabs-cycle-scope                          'tabs
-      centaur-tabs-height                               20
       centaur-tabs-set-icons                            nil
 
       company-idle-delay                                0.3

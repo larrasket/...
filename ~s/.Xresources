@@ -40,13 +40,13 @@ URxvt.colorBD:      	 #F9F9F9
 URxvt.colorUL:      	 #87afd7
 
 
-Xft.antialias:  1
-Xft.autohint:   1
-Xft.dpi:        100
-Xft.hinting:    1
-Xft.hintstyle:  hintslight
-Xft.lcdfilter:  lcddefault
-Xft.rgba:       rgb
+xft.antialias:  1
+xft.autohint:   1
+xft.dpi:        100
+xft.hinting:    1
+xft.hintstyle:  hintslight
+xft.lcdfilter:  lcddefault
+xft.rgba:       rgb
 
 
 !!! get your color schemes from here
