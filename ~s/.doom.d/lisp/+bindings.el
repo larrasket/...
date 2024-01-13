@@ -197,6 +197,10 @@
  "C--" #'text-scale-decrease
  "C-+" #'doom/reset-font-size)
 
+(map!
+ :map lispy-mode-map
+ "M-RET" #'lsp-execute-code-action
+ "M-<return>" #'lsp-execute-code-action)
 
 
 ;; Lisp
@@ -223,7 +227,7 @@
    :prefix salih/prefix-global
    "C-u"          nil
    "C-n"          nil
-   "f6"           #'salih/open-neotree-and-lsp
+   "<f6>"           #'salih/open-neotree-and-lsp
    "C-t"          #'+vterm/here
    "C-j"          #'centaur-tabs-ace-jump
    "C-c"          (lambda () (interactive) (org-capture nil "f"))

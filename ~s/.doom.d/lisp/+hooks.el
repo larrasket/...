@@ -116,7 +116,10 @@ a good understanding. His praise endures forever. ")))
   (delete 'lsp-terraform lsp-client-packages))
 
 (use-package indent-bars
-  :hook ((lsp-mode) . indent-bars-mode))
+  :hook ((lsp-mode) . indent-bars-mode)
+  :config
+  (setq indent-bars-prefer-character t
+        indent-bars-no-stipple-char 9474))
 
 
 (provide '+hooks)
