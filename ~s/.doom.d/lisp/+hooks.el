@@ -31,6 +31,9 @@
            (setq-local left-fringe-width  0)
            (text-scale-set 1))
 
+(add-hook! 'org-agenda-mode-hook
+                                (set-fontset-font t 'arabic "PragmataPro" nil `prepend))
+
 (add-hook! 'python-mode-hook    (flycheck-mode -1))
 (add-hook! 'pdf-view-mode-hook  (setq-local evil-normal-state-cursor (list nil)))
 (add-hook! 'mu4e-headers-mode-hook (visual-line-mode -1))
