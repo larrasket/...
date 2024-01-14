@@ -1066,7 +1066,9 @@ current-prefix-arg
   (interactive)
   (setq mu4e-search-threads t)
   (if (featurep 'mu4e)
-      (mu4e~headers-jump-to-maildir "/Inbox")
+      (progn
+        (mu4e~headers-jump-to-maildir "/Inbox")
+        (mu4e-search-change-sorting :date 'descending))
     (mu4e)))
 
 (defun salih/open-rss ()
@@ -1075,7 +1077,7 @@ current-prefix-arg
       (progn
         (setq mu4e-search-threads nil)
         (mu4e-search "maildir:\"/rss\" flag:unread")
-        (mu4e-search-change-sorting :from))
+        (mu4e-search-change-sorting :from 'descending))
     (progn
       (setq mu4e-search-threads t)
       (mu4e))))
