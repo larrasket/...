@@ -12,24 +12,5 @@
  '(warning-minimum-level :error))
  
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(git-gutter-fr:added ((((class color) (min-colors 89)) :foreground "#006700")))
- '(git-gutter-fr:modified ((((class color) (min-colors 89)) :foreground "#6f4f00")))
- '(org-document-title ((t (:inherit outline-8 :height 1.8 :weight bold))))
- '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight bold))))
- '(org-level-2 ((t (:inherit outline-2 :height 1.2 :weight bold))))
- '(org-level-3 ((t (:inherit outline-3 :height 1.2 :weight bold))))
- '(org-level-4 ((t (:inherit outline-4 :height 1.0 :weight bold))))
- '(org-level-5 ((t (:inherit outline-5 :height 0.9 :weight bold))))
- '(org-level-6 ((t (:inherit outline-6 :height 0.8 :weight bold))))
- '(org-level-7 ((t (:inherit outline-7 :height 0.7 :weight bold))))
- '(org-level-8 ((t (:inherit outline-8 :height 0.6 :weight bold))))
- '(org-link ((t (:inherit link :underline nil :foreground "#79b58f" :slant normal :weight bold :family "Pragmata Pro"))))
- '(org-roam-dailies-calendar-note ((t (:inherit link :underline nil))))
- '(ts-fold-replacement-face ((t (:foreground unspecified :box nil :inherit font-lock-comment-face :weight light))))
- '(variable-pitch ((t (:inherit fixed-pitch :height 1.0 :family "Pragmata Pro")))))
+
 (put 'customize-themes 'disabled nil)
