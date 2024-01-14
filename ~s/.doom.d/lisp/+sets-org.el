@@ -200,6 +200,10 @@
                                                        (tags "@current"))
                                                      ((org-ql-block-header "Current:")))
 
+                                       (org-ql-block '(and
+                                                       (todo "TODO")
+                                                       (tags "@long"))
+                                                     ((org-ql-block-header "Long term goals:")))
 
                                        (org-ql-block '(and
                                                        (todo "TODO")
@@ -253,7 +257,10 @@
                                                        (not (tags "@later"))
                                                        (not (deadline))
                                                        (not (scheduled)))
-                                                     ((org-ql-block-header "Looking for an idea?")))))
+                                                     ((org-ql-block-header
+                                                       "Looking for an idea?")))))
+
+                                       
                                      ("l" "General Later Tasks"
                                       ((org-ql-block '(and
                                                        (todo "TODO")
@@ -339,6 +346,7 @@
                           ("anthology" . ?a)
                           ("@later" . ?l)
                           ("@current" . ?C)
+                          ("@long" . ?L)
                           ("drill" . ?d)
                           ("@general" . ?g)))
  (add-to-list 'org-tags-exclude-from-inheritance "noexport")
