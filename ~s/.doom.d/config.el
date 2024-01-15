@@ -17,6 +17,7 @@
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
 
+      global-hl-line-modes                              nil
       ;; appearanc
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
