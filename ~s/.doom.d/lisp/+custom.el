@@ -85,5 +85,7 @@
   (setq modus-themes-bold-constructs                      t
         modus-themes-italic-constructs                    nil))
 
+(after! epg
+  (fset 'epg-wait-for-status 'ignore))
 
 (provide '+custom)
