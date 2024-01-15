@@ -81,4 +81,9 @@
 (after! eshell
   (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
 
+(after! modus-themes
+  (setq modus-themes-bold-constructs                      t
+        modus-themes-italic-constructs                    nil))
+
+
 (provide '+custom)

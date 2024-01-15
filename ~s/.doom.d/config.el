@@ -17,7 +17,10 @@
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
 
+      all-the-icons-completion-mode                     nil
       global-hl-line-modes                              nil
+      scroll-margin                                     4
+
       ;; appearanc
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
@@ -62,9 +65,6 @@
                                                          org-cite-csl-styles-dir
                                                          "chicago-ibid.csl")
       ;; modus theme
-      modus-themes-bold-constructs                      nil
-      modus-themes-fringes                              nil
-      modus-themes-italic-constructs                    t
       modus-themes-org-blocks                           'gray-background
       modus-themes-common-palette-overrides             '((bg-mode-line-active bg-inactive)
                                                           (fg-mode-line-active fg-main)
@@ -84,7 +84,8 @@
                                                           (salih/rebuild . t))
       ;; currently org causes some annoying warnings because of org-element
       ;; breaking api updates.
-      warning-minimum-level                             :error)
+      warning-minimum-level                             :error
+      projectile-switch-project-action                  'projectile-dired)
  
 
 
