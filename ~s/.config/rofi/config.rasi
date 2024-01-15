@@ -150,7 +150,4 @@ modi: "window,drun,ssh,run";
 /*  me-accept-custom: "Control+MouseDPrimary";*/
 }
 //@theme "/usr/share/rofi/themes/android_notification.rasi"
-/*  window { fullscreen: true; } */@theme "/usr/share/rofi/themes/paper-float.rasi"
-//@theme "/usr/share/rofi/themes/Arc-Tory.rasi"
-//@theme "/usr/local/share/rofi/themes/paper-float.rasi"
-@theme "/usr/local/share/rofi/themes/glue_pro_blue.rasi"
+/*  window { fullscreen: true; } */@theme "/usr/share/rofi/themes/glue_pro_blue.rasi"
