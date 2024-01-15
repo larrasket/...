@@ -1,0 +1,10 @@
+[Unit]
+Description=Fetches RSS feeds and send them to email
+Wants=rss2email.timer
+
+[Service]
+ExecStart=/usr/bin/r2e run
+
+[Install]
+WantedBy=multi-user.target
+

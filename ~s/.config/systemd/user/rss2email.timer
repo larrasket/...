@@ -1,0 +1,12 @@
+[Unit]
+Description=calling rss2email peridically
+Requires=rss2email.service
+
+[Timer]
+Unit=rss2email.service
+OnUnitActiveSec=15min
+OnBootSec=5min
+
+[Install]
+WantedBy=timers.target
+
