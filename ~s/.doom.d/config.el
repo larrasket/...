@@ -84,8 +84,8 @@
                                                           (salih/rebuild . t))
       ;; currently org causes some annoying warnings because of org-element
       ;; breaking api updates.
-      warning-minimum-level                             :error
-      projectile-switch-project-action                  'projectile-dired)
+      warning-minimum-level                             :error)
+      
  
 
 

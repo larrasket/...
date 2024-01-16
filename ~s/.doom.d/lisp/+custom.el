@@ -88,4 +88,7 @@
 (after! epg
   (fset 'epg-wait-for-status 'ignore))
 
+(after! projectile
+  (setq projectile-switch-project-action 'projectile-dired))
+
 (provide '+custom)
