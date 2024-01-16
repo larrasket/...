@@ -111,7 +111,7 @@ a good understanding. His praise endures forever. ")))
 
 
 ;; see https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
-(after! lsp
+(after! lsp-mode
   (delete 'lsp-terraform lsp-client-packages))
 
 (use-package indent-bars
