@@ -24,5 +24,7 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export GTK_USE_PORTAL=gedit
+export _JAVA_AWT_WM_NONREPARENTING=1
+export EDITOR="/usr/bin/vim"
 xrdb -merge ~/.Xresources
 source /home/l/.config/broot/launcher/bash/br

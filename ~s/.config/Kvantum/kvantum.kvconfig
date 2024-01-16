@@ -1,0 +1,5 @@
+[General]
+theme=KvArcDark
+
+[Applications]
+KvGnomeDark=virtualbox

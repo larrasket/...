@@ -1,0 +1,5 @@
+doom: true
+emacsInitFile: /home/l/.doom.d/
+scanInt: 300
+beforeNotification: 5
+doomScriptLoc: /home/l/.emacs.d/bin/doomscript

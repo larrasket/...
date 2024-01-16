@@ -31,6 +31,9 @@
            (setq-local left-fringe-width  0)
            (text-scale-set 1))
 
+(add-hook! 'org-agenda-mode-hook
+                                (set-fontset-font t 'arabic "PragmataPro" nil `prepend))
+
 (add-hook! 'python-mode-hook    (flycheck-mode -1))
 (add-hook! 'pdf-view-mode-hook  (setq-local evil-normal-state-cursor (list nil)))
 (add-hook! 'mu4e-headers-mode-hook (visual-line-mode -1))
@@ -101,7 +104,6 @@ a good understanding. His praise endures forever. ")))
 (vertico-buffer-mode)
 (global-wakatime-mode)
 (salih/keyboard-config)
-(global-hl-line-mode -1)
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)
 (salih/consult-preview-at-point)
@@ -109,11 +111,14 @@ a good understanding. His praise endures forever. ")))
 
 
 ;; see https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
-(after! lsp
+(after! lsp-mode
   (delete 'lsp-terraform lsp-client-packages))
 
 (use-package indent-bars
-  :hook ((lsp-mode) . indent-bars-mode))
+  :hook ((lsp-mode) . indent-bars-mode)
+  :config
+  (setq indent-bars-prefer-character t
+        indent-bars-no-stipple-char 9474))
 
 
 (provide '+hooks)

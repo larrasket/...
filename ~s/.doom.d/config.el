@@ -17,17 +17,22 @@
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
 
+      all-the-icons-completion-mode                     nil
+      global-hl-line-modes                              nil
+      scroll-margin                                     4
+
       ;; appearanc
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
       ;; or just remove `:size`.
-      doom-font                                         "Pragmata Pro:pixelsize=12:antialias=true:hinting=true:autohint=false:hintstyle=3"
+      doom-font                                         "Iosevka Term:pixelsize=14:antialias=true:hinting=true:autohint=false:hintstyle=3"
+      doom-modeline-height                              23
+      centaur-tabs-height                               22
       doom-theme                                        'modus-vivendi
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       display-line-numbers-type                         nil
       all-the-icons-color-icons                         nil
       treemacs-position                                 'right
-      doom-modeline-enable-word-count                   t
 
       ;; prayer time
       calendar-latitude                                 30.0
@@ -60,12 +65,14 @@
                                                          org-cite-csl-styles-dir
                                                          "chicago-ibid.csl")
       ;; modus theme
-      modus-themes-bold-constructs                      t
-      modus-themes-fringes                              nil
-      modus-themes-italic-constructs                    t
       modus-themes-org-blocks                           'gray-background
-      modus-themes-common-palette-overrides             '((border-mode-line-active unspecified)
-                                                          (border-mode-line-inactive unspecified))
+      modus-themes-common-palette-overrides             '((bg-mode-line-active bg-inactive)
+                                                          (fg-mode-line-active fg-main)
+                                                          (bg-mode-line-inactive bg-inactive)
+                                                          (fg-mode-line-active fg-dim)
+                                                          (border-mode-line-active bg-main)
+                                                          (border-mode-line-inactive bg-inactive))
+                                                          
 
       ;; indent highlight
       indent-bars-highlight-current-depth               nil
@@ -78,6 +85,7 @@
       ;; currently org causes some annoying warnings because of org-element
       ;; breaking api updates.
       warning-minimum-level                             :error)
+      
  
 
 

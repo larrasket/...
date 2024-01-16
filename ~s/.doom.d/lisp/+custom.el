@@ -7,7 +7,7 @@
   (require 'org-roam-protocol)
   (require 'org-download)
   (custom-set-faces
-   '(org-link ((t (:inherit link :underline nil :foreground "#79b58f" :slant normal :weight bold :family "Pragmata Pro"))))
+   '(org-link ((t (:inherit link :underline nil :foreground "#79b58f" :slant normal :weight bold))))
    '(org-roam-dailies-calendar-note ((t (:inherit link :underline nil))))
    '(variable-pitch ((t (:inherit fixed-pitch :height 1.0 :family "Pragmata Pro"))))
    '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight bold))))
@@ -80,5 +80,15 @@
 
 (after! eshell
   (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
+
+(after! modus-themes
+  (setq modus-themes-bold-constructs                      t
+        modus-themes-italic-constructs                    nil))
+
+(after! epg
+  (fset 'epg-wait-for-status 'ignore))
+
+(after! projectile
+  (setq projectile-switch-project-action 'projectile-dired))
 
 (provide '+custom)
