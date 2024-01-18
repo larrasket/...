@@ -77,7 +77,7 @@
       (delete-other-windows))))
 
 ;; neotree
-(defun neotree-project-dir ()
+(defun salih/neotree-project-dir ()
   (let ((project-dir (projectile-project-root))
         (file-name (buffer-file-name)))
     (neotree-toggle)
@@ -1169,9 +1169,9 @@ is done with org-roam-node-sort-by-backlinks'"
 
 (defun salih/open-neotree-and-lsp ()
   (interactive)
-  (neotree-project-dir)
+  (neotree-show)
   (lsp-treemacs-symbols)
-  (call-interactively #'other-window))
+  (call-interactively #'evil-window-left))
 
 
 (provide '+helper)
