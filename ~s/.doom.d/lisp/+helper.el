@@ -1227,3 +1227,8 @@ message as an inline attachment."
                                     (current-time)
                                     rating))
              (message nice-message))))))))
+
+(defun salih/pdf-occure ()
+  (interactive)
+  (save-window-excursion
+    (pdf-occur-goto-occurrence)))

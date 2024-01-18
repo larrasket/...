@@ -64,6 +64,10 @@
  "C-f"    #'salih/zathura-open
  "C-d"    #'pdf-view-themed-minor-mode)
 
+(map!
+ :map pdf-occur-buffer-mode-map
+ :n
+ "RET" #'salih/pdf-occure)
 
 
 
