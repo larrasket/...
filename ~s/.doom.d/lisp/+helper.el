@@ -1202,3 +1202,28 @@ message as an inline attachment."
     (salih/mu4e-compose-include-message msg)
     (insert "<#/multipart>\n")
     (message-goto-to)))
+(defun salih/org-add-update-rating ()
+  "Add or update a rating for the entry"
+  (interactive)
+  (let* ((node (org-roam-node-from-title-or-alias "2024 ratings"))
+         (nodebuf (find-file-noselect (org-roam-node-file node))))
+    (with-current-buffer nodebuf
+      (let* ((today (format-time-string "%Y-%m-%d"))
+             (node-point (org-roam-node-point node))
+             (existing-rating (org-entry-get node-point today)))
+       (if existing-rating
+           (message "Rating already exists for today.")
+         (progn
+           (let* ((rating (completing-read "Choose a rating: "
+                                           '("amazing" "good"
+                                             "meh" "bad" "awful")))
+                  (nice-message (cond ((string= rating "amazing") "Great!")
+                                      ((string= rating "good") "Keep going!")
+                                      ((string= rating "meh") "Better days are comming.")
+                                      ((string= rating "bad") "Don't forget the sunshie on a rainy day.")
+                                      ((string= rating "awful") "This too shall pass."))))
+             (org-entry-put node-point today
+                            (format "(%s . \"%s\")"
+                                    (current-time)
+                                    rating))
+             (message nice-message))))))))
