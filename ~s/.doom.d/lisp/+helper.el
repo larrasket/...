@@ -1228,7 +1228,16 @@ message as an inline attachment."
                                     rating))
              (message nice-message))))))))
 
+
 (defun salih/pdf-occure ()
   (interactive)
   (save-window-excursion
     (pdf-occur-goto-occurrence)))
+
+
+(defun salih/mu4e-compose-forward-html ()
+  (interactive)
+  (mu4e-action-capture-message (mu4e-message-at-point))
+  (mu4e-compose-forward)
+  (salih/mu4e-forward-html))
+

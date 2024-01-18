@@ -426,7 +426,8 @@
 (map!
  :map mu4e-view-mode-map
  :n
- ";" #'salih/mu4e-go-to-url)
+ ";" #'salih/mu4e-go-to-url
+ "F" 'salih/mu4e-compose-forward-html)
 
 
 (after! org-noter
