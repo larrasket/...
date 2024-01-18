@@ -1202,6 +1202,8 @@ message as an inline attachment."
     (salih/mu4e-compose-include-message msg)
     (insert "<#/multipart>\n")
     (message-goto-to)))
+
+
 (defun salih/org-add-update-rating ()
   "Add or update a rating for the entry"
   (interactive)
