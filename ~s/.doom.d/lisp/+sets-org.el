@@ -263,11 +263,13 @@
                                        
                                      ("l" "General Later Tasks"
                                       ((org-ql-block '(and
-                                                       (todo "TODO")
+                                                       (or (todo) (done))
+                                                       ;; (not (tags "@later"))
+                                                       ;; (or (not (tags)) (tags "@general") (tags "@check"))
                                                        (not (tags))
                                                        (not (deadline))
                                                        (not (scheduled)))
-                                                     ((org-ql-block-header "Tag:")))
+                                                     ((org-ql-block-header "Tag title:")))
 
                                        (org-ql-block '(and
                                                        (todo "TODO")
