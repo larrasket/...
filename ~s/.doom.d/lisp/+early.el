@@ -6,20 +6,20 @@
               indent-tabs-mode                          nil
               pdf-view-display-size                     'fit-width)
 
-(defmacro s/path-blog (filename)
+(defmacro s/pb (filename)
   `(f-join salih/blog-content-path ,filename))
 
-(defmacro s/path-roam (&rest args)
+(defmacro s/pr (&rest args)
   `(f-join org-roam-directory ,@args))
 
-(defmacro s/path-configs (&rest args)
+(defmacro s/pc (&rest args)
   `(f-join user-config-repo-path ,@args))
 
 
-(defmacro s/user-first-name ()
+(defmacro s/ufn ()
   `(car (split-string user-full-name " ")))
 
-(defmacro s/path-list (source-directory)
+(defmacro s/pl (source-directory)
   `(mapcar 'file-truename (directory-files-recursively ,source-directory "" nil t)))
 
 

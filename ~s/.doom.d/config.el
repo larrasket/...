@@ -13,7 +13,7 @@
       user-short-username                               "lr0"
       user-config-repo-path                             "/home/l/configs/~s"
       salih/blog-content-path                           "~/blog/content"
-      user-first-name                                   (s/user-first-name)
+      user-first-name                                   (s/ufn)
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
 
@@ -41,10 +41,10 @@
       salih/awqat-show-mode-line                        t
 
       ;; org
-      +org-capture-journal-file                         (s/path-blog "stack.org")
-      +org-capture-changelog-file                       (s/path-blog "nice.org")
-      +org-capture-todo-file                            (s/path-roam "main" "life.org")
-      org-id-locations-file                             (s/path-roam ".orgids")
+      +org-capture-journal-file                         (s/pb "stack.org")
+      +org-capture-changelog-file                       (s/pb "nice.org")
+      +org-capture-todo-file                            (s/pr "main" "life.org")
+      org-id-locations-file                             (s/pr ".orgids")
       org-directory                                     org-roam-directory
       ;; this option is useful when you are up after 00:00. set 0 to the value
       ;; yoe sleep at. if you sleep at 02:00 it should be 2, if you sleep at
@@ -53,11 +53,11 @@
       org-extend-today-until                            0
 
       ;; school
-      salih/source-directory                            (s/path-roam "source")
-      salih/books                                       (s/path-list salih/source-directory)
-      bibtex-completion-bibliography                    (s/path-configs "ref.bib")
-      bibtex-completion-notes-path                      (s/path-roam "references")
-      org-cite-csl-styles-dir                           (s/path-configs "assets" "csl")
+      salih/source-directory                            (s/pr "source")
+      salih/books                                       (s/pl salih/source-directory)
+      bibtex-completion-bibliography                    (s/pc "ref.bib")
+      bibtex-completion-notes-path                      (s/pr "references")
+      org-cite-csl-styles-dir                           (s/pc "assets" "csl")
       bibtex-completion-library-path                    `(,salih/source-directory)
       org-cite-global-bibliography                      `(,bibtex-completion-bibliography)
       citar-bibliography                                bibtex-completion-bibliography
@@ -106,3 +106,5 @@
 (require '+custom)
 (require '+erc)
 (require '+deep)
+
+;; Check `gcs-done` variable from time to time to maintain performance.
