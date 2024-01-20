@@ -1,13 +1,12 @@
 ;; settings that i'm unlikely to change
 
-
 (setq inhibit-automatic-native-compilation              t
       package-native-compile                            t
       completion-ignore-case                            t
       load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
       gcmh-high-cons-threshold                          1073741824
-      gcmh-idle-delay                                   15
+      gcmh-idle-delay                                   150
       scroll-conservatively                             101
       jit-lock-defer-time                               0
       read-process-output-max                           1000000
