@@ -6,7 +6,7 @@
       load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
       gcmh-high-cons-threshold                          1073741824
-      gcmh-idle-delay                                   150
+      gcmh-idle-delay                                   300
       scroll-conservatively                             101
       jit-lock-defer-time                               0
       read-process-output-max                           1000000
