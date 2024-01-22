@@ -153,6 +153,7 @@
  :prefix salih/prefix-mode
  "["       #'previous-buffer
  "]"       #'next-buffer
+ "8"       #'org-toggle-heading
  "C-f"     #'org-footnote-action
  "c i"     #'org-clock-in
  "c o"     #'org-clock-out
