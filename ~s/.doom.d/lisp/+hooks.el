@@ -68,6 +68,10 @@
 (add-hook 'after-make-frame-functions   (lambda (frame)
                                           (with-selected-frame frame
                                             (salih/keyboard-config))))
+
+
+(add-hook 'org-capture-prepare-finalize-hook 'salih/org-roam-capture-create-id)
+
 (if (featurep 'nov-xwidget)
     (add-hook 'nov-mode-hook            #'nov-xwidget-inject-all-files))
 

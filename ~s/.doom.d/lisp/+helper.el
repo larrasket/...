@@ -1251,3 +1251,9 @@ it with org)."
   (interactive)
   (call-interactively 'org-store-link)
   (org-capture nil "f"))
+
+(defun salih/org-roam-capture-create-id ()
+  "Create id for captured note and add it to org-roam-capture-template."
+  (when (and (not org-note-abort)
+             (org-roam-capture-p))
+    (org-roam-capture--put :id (org-id-get-create)))))

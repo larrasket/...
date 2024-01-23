@@ -91,7 +91,7 @@
 
                                             ("f" "fleeting" plain "%?"
                                              :target
-                                             (file+olp "main/fleet.org" ("${title}"))
+                                             (file+olp "main/lr.org" ("notes" "${title}"))
                                              :immediate-finish t
                                              :unnarrowed nil)
 

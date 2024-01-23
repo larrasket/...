@@ -237,6 +237,7 @@
    "C-j"          #'centaur-tabs-ace-jump
    "C-c"          (lambda () (interactive) (org-capture nil "f"))
    "C-l"          (lambda () (interactive) (org-capture nil "n"))
+   "C-n"          (lambda () (interactive) (org-roam-capture nil "f"))
    "C-a"          nil
    "C-a C-a"      (lambda () (interactive) (setq salih/vulpea-show-full nil) (org-agenda nil "f"))
    "C-a C-l"      (lambda () (interactive) (setq salih/vulpea-show-full nil) (org-agenda nil "l"))
