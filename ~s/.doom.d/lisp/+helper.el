@@ -1256,4 +1256,4 @@ it with org)."
   "Create id for captured note and add it to org-roam-capture-template."
   (when (and (not org-note-abort)
              (org-roam-capture-p))
-    (org-roam-capture--put :id (org-id-get-create)))))
+    (org-roam-capture--put :id (org-id-get-create))))
