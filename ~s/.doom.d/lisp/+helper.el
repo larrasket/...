@@ -1243,3 +1243,11 @@ message as an inline attachment."
   (mu4e-compose-forward)
   (salih/mu4e-forward-html))
 
+
+(defun salih/mu4e-org-store-and-capture ()
+  "Store a link to the current message or query.
+\(depending on `mu4e-org-link-query-in-headers-mode', and capture
+it with org)."
+  (interactive)
+  (call-interactively 'org-store-link)
+  (org-capture nil "f"))
