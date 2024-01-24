@@ -41,9 +41,8 @@
                                                  (salih/org-roam-get-node-titles
                                                   (org-roam-node-read--completions))))
 
-(add-hook  'org-mode-hook               #'auto-fill-mode)
-(add-hook! 'prog-mode-hook              #'auto-fill-mode
-                                        #'column-enforce-mode)
+(add-hook! '(org-mode-hook markdown-mode-hook prog-mode-hook) #'auto-fill-mode)
+(add-hook! 'prog-mode-hook                                    #'column-enforce-mode)
 
 (add-hook! '(bibtex-mode-hook
              prog-mode-hook)            #'format-all-mode
