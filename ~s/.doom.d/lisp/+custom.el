@@ -91,4 +91,17 @@
 (after! projectile
   (setq projectile-switch-project-action 'projectile-dired))
 
+(after! git-gutter
+  (unless (featurep 'tadwin)
+    (modus-themes-with-colors
+     (custom-set-faces
+      ;; Replace green with blue if you use `modus-themes-deuteranopia'.
+      `(git-gutter-fr:added ((,c :foreground ,bg-added-fringe)))
+      ;; `(git-gutter-fr:deleted ((,class :foreground ,red-fringe-bg)))
+      `(git-gutter-fr:modified ((,c :foreground ,bg-changed-fringe)))))))
+
+;; other handy stuff
+(with-eval-after-load 'embark
+  (add-hook 'embark-collect-mode-hook  #'salih/consult-preview-at-point-mode))
+
 (provide '+custom)

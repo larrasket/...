@@ -6,8 +6,6 @@
 (defun salih/mode (key-sequence)
   (kbd (concat salih/prefix-mode   key-sequence)))
 
-
-;; fix evil C-g methods
 (defun salih/evil-escape-and-abort-company ()
   (interactive)
   (company-abort)
@@ -23,8 +21,7 @@
   (and evil-mode (evil-force-normal-state))
   (keyboard-quit))
 
-;; org archive
-(defun salih/org-archive-done-tasks ()
+(defun salih/org-archive-done-tasks () ;; org archive
   (interactive)
   (org-map-entries 'org-archive-subtree "/DONE" 'file))
 
@@ -32,8 +29,7 @@
   (interactive)
   (org-map-entries 'org-archive-subtree "/KILL" 'file))
 
-;; chess
-(defun salih/chess-notation-to-symbols ()
+(defun salih/chess-notation-to-symbols () ;; chess
   (interactive)
   (let ((piece-symbols '((?K . "🨀")
                          (?Q . "🨁")
@@ -58,8 +54,7 @@
       (narrow-to-region start end)
       (salih/chess-notation-to-symbols))))
 
-;; bidi support
-(defun salih/bidi-direction-toggle ()
+(defun salih/bidi-direction-toggle () ;; bidi support
   (interactive "")
   (setq bidi-display-reordering t)
   (if (equal bidi-paragraph-direction 'right-to-left)
@@ -67,8 +62,7 @@
     (setq bidi-paragraph-direction 'right-to-left))
   (message "%s" bidi-paragraph-direction))
 
-;; window management
-(defun salih/toggle-maximize-buffer ()
+(defun salih/toggle-maximize-buffer () ;; window management
   (interactive)
   (if (= 1 (length (window-list)))
       (jump-to-register '_)
@@ -76,8 +70,7 @@
       (window-configuration-to-register '_)
       (delete-other-windows))))
 
-;; neotree
-(defun salih/neotree-project-dir ()
+(defun salih/neotree-project-dir () ;; neotree
   (let ((project-dir (projectile-project-root))
         (file-name (buffer-file-name)))
     (neotree-toggle)
@@ -88,8 +81,7 @@
               (neotree-find file-name)))
       (message "Could not find git project root."))))
 
-;; editing
-(defun salih/comment-or-uncomment-region-or-line ()
+(defun salih/comment-or-uncomment-region-or-line () ;; editing
   "Comments or uncomments the region or the current line if there's no active
 region."
   (interactive)
@@ -120,8 +112,7 @@ lookup."
   (interactive)
   (org-insert-time-stamp (current-time) t))
 
-;; dired
-(defun salih/open-in-external-app (&optional @fname)
+(defun salih/open-in-external-app (&optional @fname) ;; dired
   "Open the current file or dired marked files in external app.
 When called in emacs lisp, if @fname is given, open that.
 URL `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html'
@@ -158,8 +149,7 @@ Version 2019-11-04 2021-02-16"
          (lambda ($fpath) (let ((process-connection-type nil))
                        (start-process "" nil "xdg-open" $fpath))) $file-list))))))
 
-;; compile-and-run methods
-(defun salih/compile-and-run-cpp ()
+(defun salih/compile-and-run-cpp () ;; compile-and-run methods
   (interactive)
   (save-buffer)
   (compile (concat "g++ "  (file-name-nondirectory (buffer-file-name)) " -o "
@@ -171,7 +161,6 @@ Version 2019-11-04 2021-02-16"
                                                (buffer-file-name)))) t  )
   (other-window t)
   (end-of-add-hook 'c++-mode))
-
 
 (defun salih/compile-and-run-c ()
   (interactive)
@@ -214,15 +203,13 @@ Version 2019-11-04 2021-02-16"
   (other-window t)
   (end-of-add-hook 'go-mode))
 
-;; school
 (defun salih/open-book ()
   "Search for a file in ~/me and open it."
   (interactive)
   (let ((default-directory (concat salih/source-directory "/")))
     (call-interactively 'find-file)))
 
-;; let's hope for the best
-(defun salih/epa-encrypt-file (recipients)
+(defun salih/epa-encrypt-file (recipients) ;; let's hope for the best
   "Encrypt the currently opened file for RECIPIENTS and delete the original."
   (interactive
    (list (epa-select-keys (epg-make-context epa-protocol)
@@ -262,10 +249,6 @@ If no one is selected, symmetric encryption will be performed.  ")))
       (with-current-buffer (find-file-noselect file)
 	(salih/epa-encrypt-file recipients)))
     (revert-buffer)))
-
-;; other handy stuff
-(with-eval-after-load 'embark
-  (add-hook 'embark-collect-mode-hook  #'salih/consult-preview-at-point-mode))
 
 (define-minor-mode salih/consult-preview-at-point-mode
   "Preview minor mode for an *Embark Collect* buffer.
@@ -520,7 +503,6 @@ tasks."
      (lambda (h)
        (org-element-property :todo-type h)))))
 
-
 (defun vulpea-project-update-tag ()
   "Update PROJECT tag in the current buffer."
   (when (and (not (active-minibuffer-window))
@@ -580,7 +562,6 @@ tasks."
       :on (= tags:node-id nodes:id)
       :where (or (like tag (quote "%\"project\"%"))
                  (like tag (quote "%\"project_archived\"%")))]))))
-
 
 (defun vulpea-agenda-files-update (&rest _)
   "Update the value of `org-agenda-files'."
@@ -699,8 +680,6 @@ tasks."
       (nov-goto-document index)
       (goto-char point))))
 
-
-
 (defun salih/insert-relative-file-path ()
   "Insert a relative file path selected by the user."
   (interactive)
@@ -714,9 +693,6 @@ tasks."
               (insert relative-path))
           (insert file-path))
       (message "File does not exist: %s" file-path))))
-
-
-
 
 (defadvice org-agenda-get-some-entry-text (after modify-agenda-entry-text activate)
   "Modify the text returned by org-agenda-get-some-entry-text."
@@ -732,7 +708,6 @@ tasks."
   (interactive)
   (org-agenda-set-restriction-lock)
   (org-agenda nil "t"))
-
 
 (defun salih/polyphasic-sleep (start n)
   (if (or org-agenda-show-future-repeats (time-equal-p (awqat--today) date))
@@ -813,7 +788,6 @@ tasks."
        (string-prefix-p "*clangd" name)
        (string-prefix-p "*sly-mrepl" name)
 
-
        (string-prefix-p "*Messages*" name)
        (string-prefix-p "*Warnings*" name)
        (string-prefix-p "*httpd*" name)
@@ -821,27 +795,19 @@ tasks."
        (string-prefix-p "*Async-native-compile-log*" name)
        (string-prefix-p "*Native-compile-Log" name)
 
-
        (string-prefix-p "*Org Clock*" name)
-
 
        (string-prefix-p "*Ediff" name)
        (string-prefix-p "*ediff" name)
-
 
        (string-prefix-p "*Local Variables" name)
        (string-prefix-p "*Calc" name)
        (cl-search       "stderr" name)
 
-
-
        (string-prefix-p "*flycheck" name)
        (string-prefix-p "*nov" name)
        (string-prefix-p "*format" name)
        (string-prefix-p "*Pandoc" name)
-
-
-
 
        ;; Is not magit buffer.
        (and (string-prefix-p "magit" name)
@@ -899,12 +865,10 @@ tasks."
   (mapcar (lambda (node) (org-roam-node-title (cdr node)))
           node-list))
 
-
 (defun salih/org-roam-get-node-files (node-list)
   "Applies `org-roam-node-file' function to the cdr of each element in NODE-LIST."
   (mapcar (lambda (node) (org-roam-node-file (cdr node)))
           node-list))
-
 
 (setq roam-titles (salih/org-roam-get-node-titles
                    (org-roam-node-read--completions)))
@@ -989,11 +953,6 @@ is already running."
           (eshell-send-input))
       (eshell))))
 
-(use-package proced
-  :custom
-  (proced-enable-color-flag t)
-  (proced-tree-flag t))
-
 (defun salih/zathura-open ()
   (interactive)
   (let ((process-connection-type nil))
@@ -1028,15 +987,6 @@ Version 2015-07-30"
       (let ((inhibit-message t)
             (message-log-max nil))
         (call-interactively #'format-all-ensure-formatter))))
-
-(after! git-gutter
-  (unless (featurep 'tadwin)
-    (modus-themes-with-colors
-    (custom-set-faces
-     ;; Replace green with blue if you use `modus-themes-deuteranopia'.
-     `(git-gutter-fr:added ((,c :foreground ,bg-added-fringe)))
-     ;; `(git-gutter-fr:deleted ((,class :foreground ,red-fringe-bg)))
-     `(git-gutter-fr:modified ((,c :foreground ,bg-changed-fringe)))))))
 
 (defmacro salih/disable-minor-mode-in-hook (hook mode-symbol)
   `(add-hook ,hook
@@ -1082,12 +1032,10 @@ current-prefix-arg
       (setq mu4e-search-threads t)
       (mu4e))))
 
-
 (defun salih/mu4e-go-to-url ()
   (interactive)
   (setq-local browse-url-browser-function 'salih/open-url-in-chrome)
   (call-interactively #'mu4e-view-go-to-url))
-
 
 (defun salih/org-ql-view--format-element (orig-fun &rest args)
   "This function will intercept the original function and
@@ -1127,7 +1075,6 @@ ARGS is `element' in `org-ql-view--format-element'"
         (file-name-directory
          (file-relative-name (org-roam-node-file node) org-roam-directory))))
     (error "")))
-
 
 (defvar org-roam-list-most-linked-count 5)
 (cl-defmethod org-roam-node-backlinkscount-number ((node org-roam-node))
@@ -1173,10 +1120,6 @@ is done with org-roam-node-sort-by-backlinks'"
   (lsp-treemacs-symbols)
   (call-interactively #'evil-window-left))
 
-
-(provide '+helper)
-
-
 (defun salih/mu4e-compose-include-message (msg &optional)
   "Like mu4e-compose-attach-message, but include MSG as an inline attachment
 instead."
@@ -1202,7 +1145,6 @@ message as an inline attachment."
     (salih/mu4e-compose-include-message msg)
     (insert "<#/multipart>\n")
     (message-goto-to)))
-
 
 (defun salih/org-add-update-rating ()
   "Add or update a rating for the entry"
@@ -1270,3 +1212,7 @@ it with org)."
 (defun salih/org-roam-capture-fleet ()
   (interactive)
   (salih/capture-- 'org-roam-capture "f"))
+
+
+
+(provide '+helper)
