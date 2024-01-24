@@ -232,12 +232,12 @@
    :prefix salih/prefix-global
    "C-u"          nil
    "C-n"          nil
-   "<f6>"           #'salih/open-neotree-and-lsp
+   "<f6>"         #'salih/open-neotree-and-lsp
    "C-t"          #'+vterm/here
    "C-j"          #'centaur-tabs-ace-jump
-   "C-c"          (lambda () (interactive) (org-capture nil "f"))
-   "C-l"          (lambda () (interactive) (org-capture nil "n"))
-   "C-n"          (lambda () (interactive) (org-roam-capture nil "f"))
+   "C-c"          #'salih/org-capture-general
+   "C-l"          #'salih/org-capture-log
+   "C-n"          #'salih/org-roam-capture-fleet
    "C-a"          nil
    "C-a C-a"      (lambda () (interactive) (setq salih/vulpea-show-full nil) (org-agenda nil "f"))
    "C-a C-l"      (lambda () (interactive) (setq salih/vulpea-show-full nil) (org-agenda nil "l"))

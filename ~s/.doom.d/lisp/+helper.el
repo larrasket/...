@@ -1230,19 +1230,16 @@ message as an inline attachment."
                                     rating))
              (message nice-message))))))))
 
-
 (defun salih/pdf-occure ()
   (interactive)
   (save-window-excursion
     (pdf-occur-goto-occurrence)))
-
 
 (defun salih/mu4e-compose-forward-html ()
   (interactive)
   (mu4e-action-capture-message (mu4e-message-at-point))
   (mu4e-compose-forward)
   (salih/mu4e-forward-html))
-
 
 (defun salih/mu4e-org-store-and-capture ()
   "Store a link to the current message or query.
@@ -1257,3 +1254,19 @@ it with org)."
   (when (and (not org-note-abort)
              (org-roam-capture-p))
     (org-roam-capture--put :id (org-id-get-create))))
+
+(defun salih/capture-- (fn key)
+  (with-current-buffer (find-file-noselect +org-capture-todo-file)
+    (funcall fn nil key)))
+
+(defun salih/org-capture-general ()
+  (interactive)
+  (salih/capture-- 'org-capture "f"))
+
+(defun salih/org-capture-log ()
+  (interactive)
+  (salih/capture-- 'org-capture "n"))
+
+(defun salih/org-roam-capture-fleet ()
+  (interactive)
+  (salih/capture-- 'org-roam-capture "f"))
