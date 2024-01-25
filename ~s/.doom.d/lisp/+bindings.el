@@ -310,14 +310,15 @@
 ;; magit and vc
 ;; TODO refactor if possible
 (general-define-key
- :prefix "H-m"
- :states 'normal
+ :prefix  "H-m"
+ :states  'normal
  :keymaps 'override
  "" nil
- "H-m" #'magit-status
- "C-c"   #'magit-clone
- "C-l"   #'magit-log-buffer-file
- "C-d"   #'magit-file-delete)
+ "H-m"    #'magit-status
+ "C-c"    #'magit-checkout
+ "M-c"    #'magit-clone
+ "C-l"    #'magit-log-buffer-file
+ "C-d"    #'magit-file-delete)
 
 (general-define-key
  :keymap 'magit-mode-map
