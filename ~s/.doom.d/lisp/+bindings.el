@@ -278,6 +278,7 @@
  :states 'normal
  :keymaps 'override
  "C-f"  #'org-roam-node-find
+ "C-c"  #'salih/org-roam-capture-fleet
  "C-p"  #'projectile-switch-project
  "C-j"  #'org-roam-dailies-capture-today
  "C-b"  #'org-roam-buffer-toggle
