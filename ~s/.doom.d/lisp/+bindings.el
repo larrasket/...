@@ -193,7 +193,8 @@
  "H-i C-f" #'org-roam-node-insert
  "C-c C-d" #'org-download-clipboard
  "C-r C-t" #'org-roam-tag-add
- "C-r C-a" #'org-roam-alias-add)
+ "C-r C-a" #'org-roam-alias-add
+ "C-n C-s" #'org-toggle-narrow-to-subtree)
 
 
 (map!
