@@ -174,6 +174,7 @@
  "C-r C-t" #'org-roam-tag-add
  "C-r C-a" #'org-roam-alias-add
  "C-r C-b" #'consult-org-roam-backlinks
+ "C-r C-d" #'salih/org-roam-extract-subtree
  "C-;"     #'salih/rename-or-iedit
  "C-r C-f" #'consult-org-roam-forward-links)
 

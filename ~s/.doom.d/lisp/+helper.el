@@ -1213,6 +1213,49 @@ it with org)."
   (interactive)
   (salih/capture-- 'org-roam-capture "f"))
 
-
+(defun salih/org-roam-extract-subtree ()
+  "Same as `org-roam-extract-subtree', but with main/ as top-level directory and
+without history in the file name."
+  "Convert current subtree at point to a node, and extract it into a new file."
+  (interactive)
+  (save-excursion
+    (org-back-to-heading-or-point-min t)
+    (when (bobp) (user-error "Already a top-level node"))
+    (org-id-get-create)
+    (save-buffer)
+    (org-roam-db-update-file)
+    (let* ((template-info nil)
+           (node (org-roam-node-at-point))
+           (template (org-roam-format-template
+                      (string-trim (org-capture-fill-template "${slug}.org"))
+                      (lambda (key default-val)
+                        (let ((fn (intern key))
+                              (node-fn (intern (concat "org-roam-node-" key)))
+                              (ksym (intern (concat ":" key))))
+                          (cond
+                           ((fboundp fn)
+                            (funcall fn node))
+                           ((fboundp node-fn)
+                            (funcall node-fn node))
+                           (t (let ((r (read-from-minibuffer (format "%s: " key) default-val)))
+                                (plist-put template-info ksym r)
+                                r)))))))
+           (file-path
+            (expand-file-name
+             (read-file-name "Extract node to: "
+                             (file-name-as-directory (f-join
+                                                      org-roam-directory "main"))
+                             template nil template)
+             org-roam-directory)))
+      (when (file-exists-p file-path)
+        (user-error "%s exists. Aborting" file-path))
+      (org-cut-subtree)
+      (save-buffer)
+      (with-current-buffer (find-file-noselect file-path)
+        (org-paste-subtree)
+        (while (> (org-current-level) 1) (org-promote-subtree))
+        (save-buffer)
+        (org-roam-promote-entire-buffer)
+        (save-buffer)))))
 
 (provide '+helper)
