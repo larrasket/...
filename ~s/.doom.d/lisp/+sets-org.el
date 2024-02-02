@@ -154,7 +154,7 @@
                                       ((org-ql-block '(and
                                                        (priority "A")
                                                        (not (deadline))
-                                                       (not (scheduled)))
+                                                       (or (not (scheduled)) (ts :on today)))
                                                      ((org-ql-block-header "High-priority tasks")))
 
                                        (agenda ""

@@ -1,6 +1,5 @@
 (add-to-list 'load-path "~/.doom.d/lisp/")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
-
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
@@ -50,7 +49,7 @@
       ;; yoe sleep at. if you sleep at 02:00 it should be 2, if you sleep at
       ;; 02:30 it should be 3 and so on. Org agenda for the day will not overlap
       ;; until your day is done.
-      org-extend-today-until                            0
+      org-extend-today-until                            5
 
       ;; school
       salih/source-directory                            (s/pr "source")
