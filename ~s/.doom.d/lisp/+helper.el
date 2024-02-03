@@ -1195,7 +1195,9 @@ it with org)."
   "Create id for captured note and add it to org-roam-capture-template."
   (when (and (not org-note-abort)
              (org-roam-capture-p))
-    (org-roam-capture--put :id (org-id-get-create))))
+    (unless salih/org-roam-dailies-capture-p
+      (org-roam-capture--put :id (org-id-get-create))
+      (setq salih/org-roam-dailies-capture-p nil))))
 
 (defun salih/capture-- (fn key)
   (with-current-buffer (find-file-noselect +org-capture-todo-file)
@@ -1257,5 +1259,11 @@ without history in the file name."
         (save-buffer)
         (org-roam-promote-entire-buffer)
         (save-buffer)))))
+
+(defvar salih/org-roam-dailies-capture-p nil)
+(defun salih/org-roam-dailies-capture-today ()
+  (interactive)
+  (setq salih/org-roam-dailies-capture-p t)
+  (call-interactively #'org-roam-dailies-capture-today))
 
 (provide '+helper)
