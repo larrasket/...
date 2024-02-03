@@ -1266,4 +1266,10 @@ without history in the file name."
   (setq salih/org-roam-dailies-capture-p t)
   (call-interactively #'org-roam-dailies-capture-today))
 
+
+(defun salih/read-al-akhbar ()
+  (when (time-equal-p (awqat--today) date)
+      (format "Read 00:30am [[https://al-akhbar.com/Editions/%s][Today's Akhbar]]"
+              (format-time-string "%Y/%m/%d"))))
+
 (provide '+helper)
