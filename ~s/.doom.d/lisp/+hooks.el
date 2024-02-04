@@ -45,14 +45,19 @@
 (add-hook! 'prog-mode-hook                                    #'column-enforce-mode)
 
 (add-hook! '(bibtex-mode-hook
-             prog-mode-hook)            #'format-all-mode
-                                        #'salih/format-all-ensure-formatter)
+             prog-mode-hook)              #'format-all-mode
+                                          #'salih/format-all-ensure-formatter)
 
 (add-hook! '(emacs-lisp-mode-hook
              sql-mode-hook
              TeX-mode-hook
-             LaTeX-mode-hook)           (format-all-mode -1))
+             LaTeX-mode-hook)             (format-all-mode -1))
 
+(after! indent-bars-mode
+ (add-hook! 'prog-mode-hook                (indent-bars-mode 1))
+ (add-hook! '(clojure-mode-hook
+              emacs-lisp-mode-hook
+              lisp-mode-hook)              (indent-bars-mode -1)))
 
 (add-hook 'csv-mode-hook                #'csv-align-mode)
 (add-hook 'company-mode-hook            #'company-box-mode)
@@ -118,7 +123,7 @@ a good understanding. His praise endures forever. ")))
   (delete 'lsp-terraform lsp-client-packages))
 
 (use-package indent-bars
-  :hook ((lsp-mode) . indent-bars-mode)
+  ;; :hook ((lsp-mode) . indent-bars-mode)
   :config
   (setq indent-bars-prefer-character t
         indent-bars-no-stipple-char 9474))
