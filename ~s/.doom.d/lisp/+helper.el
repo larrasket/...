@@ -1195,9 +1195,9 @@ it with org)."
   "Create id for captured note and add it to org-roam-capture-template."
   (when (and (not org-note-abort)
              (org-roam-capture-p))
-    (unless salih/org-roam-dailies-capture-p
-      (org-roam-capture--put :id (org-id-get-create))
-      (setq salih/org-roam-dailies-capture-p nil))))
+    (if salih/org-roam-dailies-capture-p
+        (setq salih/org-roam-dailies-capture-p nil)
+        (org-roam-capture--put :id (org-id-get-create)))))
 
 (defun salih/capture-- (fn key)
   (with-current-buffer (find-file-noselect +org-capture-todo-file)
@@ -1248,7 +1248,7 @@ without history in the file name."
                              (file-name-as-directory (f-join
                                                       org-roam-directory "main"))
                              template nil template)
-             org-roam-directory)))
+             (f-join org-roam-directory "main"))))
       (when (file-exists-p file-path)
         (user-error "%s exists. Aborting" file-path))
       (org-cut-subtree)
