@@ -49,7 +49,7 @@
       ;; yoe sleep at. if you sleep at 02:00 it should be 2, if you sleep at
       ;; 02:30 it should be 3 and so on. Org agenda for the day will not overlap
       ;; until your day is done.
-      org-extend-today-until                            5
+      ;; org-extend-today-until                            9
 
       ;; school
       salih/source-directory                            (s/pr "source")
@@ -95,10 +95,10 @@
 (require '+sets-school)                 ; school settings (TeX)
 (require '+sets-org)                    ; org mode settings
 (require '+sets-inhibit)                ; other settings
+
+
 (require '+bind)                        ; set doom bindings (not mine)
 (require '+helper)                      ; salih/*
-
-
 (require '+hooks)
 (require '+advice)
 (require '+bindings)
