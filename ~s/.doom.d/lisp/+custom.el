@@ -100,8 +100,17 @@
       ;; `(git-gutter-fr:deleted ((,class :foreground ,red-fringe-bg)))
       `(git-gutter-fr:modified ((,c :foreground ,bg-changed-fringe)))))))
 
+(after! indent-bars-mode
+ (add-hook! 'prog-mode-hook                (indent-bars-mode 1))
+ (add-hook! '(clojure-mode-hook
+              emacs-lisp-mode-hook
+              lisp-mode-hook)              (indent-bars-mode -1)))
+
+
+
 ;; other handy stuff
 (with-eval-after-load 'embark
   (add-hook 'embark-collect-mode-hook  #'salih/consult-preview-at-point-mode))
+
 
 (provide '+custom)

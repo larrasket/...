@@ -53,11 +53,15 @@
              TeX-mode-hook
              LaTeX-mode-hook)             (format-all-mode -1))
 
-(after! indent-bars-mode
- (add-hook! 'prog-mode-hook                (indent-bars-mode 1))
- (add-hook! '(clojure-mode-hook
-              emacs-lisp-mode-hook
-              lisp-mode-hook)              (indent-bars-mode -1)))
+(add-hook! 'clojure-mode-hook (flycheck-mode -1))
+(add-hook! 'clojure-mode-hook (flymake-mode 1))
+(add-hook! 'clojure-mode-hook
+           (setq-local lsp-diagnostics-provider :none
+                       lsp-ui-sideline-enable nil
+                       lsp-ui-sideline-enable nil
+                       lsp-modeline-diagnostics-enable nil
+                       lsp-modeline-code-actions-enable nil
+                       lsp-eldoc-enable-hover nil))
 
 (add-hook 'csv-mode-hook                #'csv-align-mode)
 (add-hook 'company-mode-hook            #'company-box-mode)

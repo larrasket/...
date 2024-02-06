@@ -435,6 +435,9 @@
  ";" #'salih/mu4e-go-to-url
  "C-c C-c" #'salih/mu4e-org-store-and-capture)
 
+(map!
+ :map cider-repl-mode-map
+ "C-c C-e" #'cider-repl-clear-buffer)
 
 
 

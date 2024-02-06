@@ -87,10 +87,6 @@
       
  
 
-
-
-  
-
 (require '+sets-email)                  ; mu4e
 (require '+sets-school)                 ; school settings (TeX)
 (require '+sets-org)                    ; org mode settings
