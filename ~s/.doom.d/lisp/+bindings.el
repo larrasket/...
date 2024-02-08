@@ -440,6 +440,11 @@
  "C-c C-e" #'cider-repl-clear-buffer)
 
 
+(map!
+ :map cider-mode-map
+ :after cider
+ "C-x C-e" nil)
+
 
 (after! org-noter
   (defun salih/org-noter-sync-current-note-and-switch-window ()
