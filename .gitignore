@@ -50,3 +50,6 @@ flycheck_config.el
 /~s/dwm/dwm
 /~s/.config/cmus/cmusfm.cache
 /~s/.config/go/telemetry/
+/~s/.config/Jackett/Indexers/*.json
+/~s/.config/Jackett/Indexers/*.bak
+/~s/.config/Jackett/log.txt
