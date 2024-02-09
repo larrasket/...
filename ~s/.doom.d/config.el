@@ -16,10 +16,6 @@
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
 
-      all-the-icons-completion-mode                     nil
-      global-hl-line-modes                              nil
-      scroll-margin                                     4
-
       ;; appearanc
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
@@ -27,7 +23,6 @@
       doom-font                                         "Iosevka Term:pixelsize=14:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-modeline-height                              23
       centaur-tabs-height                               22
-      doom-theme                                        'modus-vivendi
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       display-line-numbers-type                         nil
       all-the-icons-color-icons                         nil
@@ -36,8 +31,6 @@
       ;; prayer time
       calendar-latitude                                 30.0
       calendar-longitude                                31.2
-      awqat-mode-line-format                            " ${prayer} (${hours}h${minutes}m) "
-      awqat-update-interval                             70
       salih/awqat-show-mode-line                        t
 
       ;; org
@@ -65,6 +58,7 @@
                                                          org-cite-csl-styles-dir
                                                          "chicago-ibid.csl")
       ;; modus theme
+      doom-theme                                        'modus-vivendi
       modus-themes-org-blocks                           'gray-background
       modus-themes-common-palette-overrides             '((bg-mode-line-active bg-inactive)
                                                           (fg-mode-line-active fg-main)

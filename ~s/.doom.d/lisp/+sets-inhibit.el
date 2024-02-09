@@ -16,6 +16,12 @@
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
 
+      all-the-icons-completion-mode                     nil
+      global-hl-line-modes                              nil
+      scroll-margin                                     4
+
+      awqat-mode-line-format                            " ${prayer} (${hours}h${minutes}m) "
+      awqat-update-interval                             70
 
       ;; consult
       consult-preview-key                               nil
