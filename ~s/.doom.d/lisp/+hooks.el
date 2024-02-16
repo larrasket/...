@@ -47,21 +47,25 @@
 (add-hook! '(bibtex-mode-hook
              prog-mode-hook)              #'format-all-mode
                                           #'salih/format-all-ensure-formatter)
-
 (add-hook! '(emacs-lisp-mode-hook
              sql-mode-hook
              TeX-mode-hook
              LaTeX-mode-hook)             (format-all-mode -1))
 
+(add-hook! '(julia-mode-hook
+             java-mode-hook
+             c-mode-hook
+             go-mode-hook
+             yaml-mode-hook)              #'indent-bars-mode)
+
 (add-hook! 'clojure-mode-hook (flycheck-mode -1))
 (add-hook! 'clojure-mode-hook (flymake-mode 1))
-(add-hook! 'clojure-mode-hook
-           (setq-local lsp-diagnostics-provider :none
-                       lsp-ui-sideline-enable nil
-                       lsp-ui-sideline-enable nil
-                       lsp-modeline-diagnostics-enable nil
-                       lsp-modeline-code-actions-enable nil
-                       lsp-eldoc-enable-hover nil))
+(add-hook! 'clojure-mode-hook (setq-local lsp-diagnostics-provider :none
+                                          lsp-ui-sideline-enable nil
+                                          lsp-ui-sideline-enable nil
+                                          lsp-modeline-diagnostics-enable nil
+                                          lsp-modeline-code-actions-enable nil
+                                          lsp-eldoc-enable-hover nil))
 
 (add-hook 'csv-mode-hook                #'csv-align-mode)
 (add-hook 'company-mode-hook            #'company-box-mode)
