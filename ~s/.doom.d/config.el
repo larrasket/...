@@ -34,11 +34,13 @@
       salih/awqat-show-mode-line                        t
 
       ;; org
-      +org-capture-journal-file                         (s/pb "stack.org")
-      +org-capture-changelog-file                       (s/pb "nice.org")
-      +org-capture-todo-file                            (s/pr "main" "life.org")
-      org-id-locations-file                             (s/pr ".orgids")
       org-directory                                     org-roam-directory
+      org-log-into-drawer                               "STATS"
+      org-id-locations-file                             (s/pr ".orgids")
+      +org-capture-changelog-file                       (s/pb "nice.org")
+      +org-capture-journal-file                         (s/pb "stack.org")
+      salih/org-roam-fleet-file                         (s/pr "main" "lr.org")
+      +org-capture-todo-file                            (s/pr "main" "life.org")
       ;; this option is useful when you are up after 00:00. set 0 to the value
       ;; yoe sleep at. if you sleep at 02:00 it should be 2, if you sleep at
       ;; 02:30 it should be 3 and so on. Org agenda for the day will not overlap
