@@ -90,9 +90,9 @@
 (require '+sets-inhibit)                ; other settings
 
 
-(require '+bind)                        ; set doom bindings (not mine)
-(require '+helper)                      ; salih/*
-(require '+hooks)
+(require '+bind)
+(require '+helper)
+(unless (featurep 'tadwin) (require '+hooks))
 (require '+advice)
 (require '+bindings)
 (require '+custom)

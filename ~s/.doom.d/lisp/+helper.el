@@ -1199,8 +1199,10 @@ it with org)."
         (setq salih/org-roam-dailies-capture-p nil)
         (org-roam-capture--put :id (org-id-get-create)))))
 
-(defun salih/capture-- (fn key)
-  (with-current-buffer (find-file-noselect +org-capture-todo-file)
+(defun salih/capture-- (fn key &optional fleet?)
+  (with-current-buffer (find-file-noselect (if fleet?
+                                               salih/org-roam-fleet-file
+                                             +org-capture-todo-file))
     (funcall fn nil key)))
 
 (defun salih/org-capture-general ()
