@@ -53,3 +53,4 @@ flycheck_config.el
 /~s/.config/Jackett/Indexers/*.json
 /~s/.config/Jackett/Indexers/*.bak
 /~s/.config/Jackett/log.txt
+/~s/.doom.d/custom.el
