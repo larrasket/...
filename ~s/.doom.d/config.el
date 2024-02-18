@@ -35,7 +35,6 @@
 
       ;; org
       org-directory                                     org-roam-directory
-      org-log-into-drawer                               "STATS"
       org-id-locations-file                             (s/pr ".orgids")
       +org-capture-changelog-file                       (s/pb "nice.org")
       +org-capture-journal-file                         (s/pb "stack.org")

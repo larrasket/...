@@ -25,7 +25,7 @@
 (after! org
   (setq org-bullets-bullet-list                           '("◉" "✸" "✿" "♥" "●")
         org-id-method                                     'org
-        org-log-into-drawer                               t
+        org-log-into-drawer                               "STATS"
         org-log-done                                      nil
         org-roam-ui-open-on-start                         nil
         org-agenda-skip-scheduled-if-done                 nil
