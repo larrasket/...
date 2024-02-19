@@ -1275,4 +1275,9 @@ without history in the file name."
       (format "Read 00:30am [[https://al-akhbar.com/Editions/%s][Today's Akhbar]]"
               (format-time-string "%Y/%m/%d"))))
 
+(defun salih/toggle-logbook-on (&rest _)
+  (setq org-log-into-drawer t))
+(defun salih/toggle-stats-on (&rest _)
+  (setq org-log-into-drawer "STATS"))
+
 (provide '+helper)
