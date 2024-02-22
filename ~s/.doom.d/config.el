@@ -21,6 +21,7 @@
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
       ;; or just remove `:size`.
       doom-font                                         "Iosevka Term:pixelsize=14:antialias=true:hinting=true:autohint=false:hintstyle=3"
+      doom-unicode-font                                 "PragmataPro:pixelsize=13:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-modeline-height                              23
       centaur-tabs-height                               22
       +doom-dashboard-ascii-banner-fn                   'salih/banner
