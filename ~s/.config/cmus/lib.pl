@@ -845,6 +845,7 @@
 /home/l/me/music/selec/Tchaikovsky： Violin Concerto op.35 & Romeo and Juliet Fantasy Overture - Live Concert HD.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Basarabian Hills - Snowflakes.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Basarabian Hills - Phantasmagoria.ogg
+/home/l/me/music/shi/جدّاه ｜ الرادود باسم الكربلائي.mp3
 /home/l/me/music/lik/Beautiful Death - In the Forest.ogg
 /home/l/me/music/selec/Schumann    Arabeske    Op 18        Rubinstein   Rec 1969.wmv.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/048. Bedřich Smetana - (1877) Má vlast (Vltava).mp3
