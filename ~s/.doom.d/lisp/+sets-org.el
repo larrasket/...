@@ -150,12 +150,11 @@
 
 
 
-        org-agenda-custom-commands '(("f" "Today Tasks"
+        org-agenda-custom-commands '(("f" "Agenda Tasks"
                                       ((org-ql-block '(and
-                                                       (priority "A")
-                                                       (not (deadline))
-                                                       (or (not (scheduled)) (ts :on today)))
-                                                     ((org-ql-block-header "High-priority tasks")))
+                                                       (todo "TODO")
+                                                       (scheduled :to today))
+                                                     ((org-ql-block-header "Today's tasks")))
 
                                        (agenda ""
                                                ((org-agenda-span 4)))
@@ -197,6 +196,8 @@
 
                                        (org-ql-block '(and
                                                        (todo "TODO")
+                                                       (not (scheduled))
+                                                       (not (deadline))
                                                        (tags "@current"))
                                                      ((org-ql-block-header "Current:")))
 
@@ -357,6 +358,7 @@
  (add-to-list 'org-tags-exclude-from-inheritance "link")
 
  (add-to-list 'org-tags-exclude-from-inheritance "@read")
+ (add-to-list 'org-tags-exclude-from-inheritance "@current")
  (add-to-list 'org-tags-exclude-from-inheritance "noexport")
  (add-to-list 'org-tags-exclude-from-inheritance "project"))
  
