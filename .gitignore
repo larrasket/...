@@ -55,3 +55,4 @@ flycheck_config.el
 /~s/.config/Jackett/log.txt
 /~s/.doom.d/custom.el
 /~s/.config/Jackett/*.txt
+/~s/.config/Jackett/DataProtection/*.xml
