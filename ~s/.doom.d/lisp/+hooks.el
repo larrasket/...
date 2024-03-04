@@ -57,7 +57,7 @@
 
 (add-hook! 'clojure-mode-hook (flycheck-mode -1))
 (add-hook! 'clojure-mode-hook (flymake-mode 1))
-(add-hook! 'clojure-mode-hook (lsp-mode 1))
+(add-hook! 'clojure-mode-hook (lsp))
 (add-hook! 'clojure-mode-hook (setq-local lsp-diagnostics-provider :none
                                           lsp-ui-sideline-enable nil
                                           lsp-ui-sideline-enable nil
