@@ -13611,3 +13611,6 @@
 2023-12-03 09:08:25.4983 Info Killing process 112923
 2023-12-03 09:08:28.5232 Info Process 112923 didn't exit within 2 seconds after a SIGTERM
 2023-12-03 09:08:28.6650 Info Starting Jackett: "/home/(removed)/tmp/Jackett/jackett"  
+2024-02-11 10:11:33.2015 Info Jackett Updater v0.21.1323
+2024-02-11 10:11:33.3517 Info Options ""
+2024-02-11 10:11:33.3696 Info Jackett variant: CoreLinuxAmdx64

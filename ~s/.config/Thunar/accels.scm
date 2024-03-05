@@ -1,4 +1,4 @@
-; Thunar GtkAccelMap rc-file         -*- scheme -*-
+; thunar GtkAccelMap rc-file         -*- scheme -*-
 ; this file is an automated accelerator map dump
 ;
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/5875027b6bc46f2c79efa658f0d26e39" "")
@@ -22,8 +22,9 @@
 ; (gtk_accel_path "<Actions>/ThunarActionManager/open" "<Primary>o")
 ; (gtk_accel_path "<Actions>/ThunarStandardView/sort-ascending" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/toggle-split-view" "F3")
-; (gtk_accel_path "<Actions>/ThunarActionManager/copy-2" "<Primary>Insert")
 ; (gtk_accel_path "<Actions>/ThunarActionManager/trash-delete" "Delete")
+; (gtk_accel_path "<Actions>/ThunarActionManager/copy-2" "<Primary>Insert")
+; (gtk_accel_path "<Actions>/ThunarBookmarks/28a2ff777a9a102e3e827b762f56bef2" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/open-recent" "")
 ; (gtk_accel_path "<Actions>/ThunarStandardView/forward" "<Alt>Right")
 ; (gtk_accel_path "<Actions>/ThunarWindow/view-configure-toolbar" "")
@@ -54,9 +55,9 @@
 ; (gtk_accel_path "<Actions>/ThunarWindow/zoom-out" "<Primary>minus")
 ; (gtk_accel_path "<Actions>/ThunarShortcutsPane/sendto-shortcuts" "<Primary>d")
 ; (gtk_accel_path "<Actions>/ThunarActionManager/undo" "<Primary>z")
-; (gtk_accel_path "<Actions>/ThunarWindow/reload-alt" "F5")
-; (gtk_accel_path "<Actions>/ThunarBookmarks/6e85ef1d7dc634ccad21c672f5d7d743" "")
 ; (gtk_accel_path "<Actions>/ThunarStandardView/toggle-sort-order" "")
+; (gtk_accel_path "<Actions>/ThunarBookmarks/6e85ef1d7dc634ccad21c672f5d7d743" "")
+; (gtk_accel_path "<Actions>/ThunarWindow/reload-alt" "F5")
 ; (gtk_accel_path "<Actions>/ThunarWindow/view-location-selector-entry" "")
 ; (gtk_accel_path "<Actions>/ThunarActionManager/paste" "<Primary>v")
 ; (gtk_accel_path "<Actions>/ThunarWindow/zoom-in-alt1" "<Primary>KP_Add")
@@ -90,6 +91,7 @@
 ; (gtk_accel_path "<Actions>/ThunarWindow/view-as-icons" "<Primary>1")
 ; (gtk_accel_path "<Actions>/ThunarActionManager/delete-2" "<Shift>Delete")
 ; (gtk_accel_path "<Actions>/ThunarWindow/zoom-in" "<Primary>plus")
+; (gtk_accel_path "<Actions>/ThunarStandardView/configure-columns" "")
 ; (gtk_accel_path "<Actions>/ThunarStandardView/rename" "F2")
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/a7b5c54e8f739f53c64a3585095e8771" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/open-location" "<Primary>l")
