@@ -89,7 +89,6 @@
 (require '+sets-org)                    ; org mode settings
 (require '+sets-inhibit)                ; other settings
 
-
 (require '+bind)
 (require '+helper)
 (unless (featurep 'tadwin) (require '+hooks))
@@ -100,3 +99,4 @@
 (require '+deep)
 
 ;; Check `gcs-done` variable from time to time to maintain performance.
+(explain-pause-mode)

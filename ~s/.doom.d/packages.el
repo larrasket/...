@@ -104,7 +104,8 @@
 (package! git-gutter)
 (package! git-gutter-fringe)
 
-(package! org-ql :recipe
+(package! org-ql
+  :recipe
   (:host github
    :repo "larrasket/org-ql"
    :branch "priority"))
