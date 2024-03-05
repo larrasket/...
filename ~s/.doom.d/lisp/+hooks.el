@@ -40,6 +40,7 @@
 
 (add-hook! '(org-mode-hook markdown-mode-hook prog-mode-hook) #'auto-fill-mode)
 (add-hook! 'prog-mode-hook                                    #'column-enforce-mode)
+(add-hook! 'prog-mode-hook                                    (smartparens-mode 1))
 
 (add-hook! '(bibtex-mode-hook
              prog-mode-hook)              #'format-all-mode
@@ -103,9 +104,9 @@ a good understanding. His praise endures forever. ")))
 ;; (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
 
 (remove-hook 'vterm-mode-hook                   #'hide-mode-line-mode)
+(remove-hook 'doom-first-input-hook             #'evil-snipe-mode)
 (remove-hook '+doom-dashboard-functions         #'doom-dashboard-widget-footer)
 (remove-hook 'after-change-major-mode-hook      #'doom-highlight-non-default-indentation-h)
-
 
 
 

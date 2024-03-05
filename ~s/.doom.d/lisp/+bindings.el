@@ -46,9 +46,15 @@
  "C-d"    #'+lookup/definition
  "C-r"    #'+lookup/references
  "C-t"    #'+lookup/type-definition
- "C-e"    #'+default/diagnostics
  "C-;"    #'salih/rename-or-iedit)
 
+
+
+(general-define-key
+ :keymaps 'prog-mode-map
+ :prefix  "C-l"
+ ""       nil
+ "C-e"    #'+default/diagnostics)
 
 (general-define-key
  :keymaps 'nov-mode-map
@@ -78,7 +84,6 @@
  "H-i"    #'org-noter-insert-note
  "C-f"    #'salih/zathura-open
  "C-d"    #'pdf-view-themed-minor-mode)
-
 
 (with-eval-after-load 'pdf-view
   (evil-define-key 'normal pdf-view-mode-map (kbd "<right>") #'ignore)
@@ -204,13 +209,7 @@
  "C--" #'text-scale-decrease
  "C-+" #'doom/reset-font-size)
 
-(map!
- :map lispy-mode-map
- "M-RET" #'lsp-execute-code-action
- "M-<return>" #'lsp-execute-code-action)
-
-
-;; Lisp
+;; Common lisp
 
 (eval-after-load 'sly
   `(define-key sly-mode-map (salih/mode "C-e") 'sly-eval-region))
@@ -270,7 +269,6 @@
 (salih/set-convenient-keys)
 
 (map! :i "H-i C-d" #'salih/insert-current-date)
-(map! :n ";"       #'embark-act)
 (map!    "C-SPC"   #'projectile-find-file)
 
 
@@ -462,4 +460,20 @@
 (define-key evil-motion-state-map (kbd "H-i") 'evil-jump-backward)
 (define-key evil-motion-state-map (kbd "C-o") 'evil-jump-forward)
 (define-key evil-motion-state-map "-" 'er/expand-region)
+;; (define-key evil-motion-state-map ";" nil)
+
+(map!
+ :map prog-mode-map
+ :prefix ";"
+ "" nil
+ :nve "f" #'sp-forward-sexp
+ :nve "b" #'sp-backward-sexp
+ :nvm "u" #'sp-unwrap-sexp
+ :ne "k" #'sp-kill-sexp
+ :ne "s" #'sp-split-sexp
+ :ne "(" #'sp-wrap-round
+ :ne "[" #'sp-wrap-square
+ :ne "{" #'sp-wrap-curly)
+
 (provide '+bindings)
+
