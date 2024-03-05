@@ -22,5 +22,7 @@
 (defmacro s/pl (source-directory)
   `(mapcar 'file-truename (directory-files-recursively ,source-directory "" nil t)))
 
+(defmacro s/cm (m)
+  `(concat "/" user-mail-address ,m))
 
 (provide '+early)

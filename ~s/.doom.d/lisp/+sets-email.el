@@ -8,6 +8,7 @@
 ;; tidy is required to use with xwidget:
 ;; pacman -S tidy
 (after! mu4e
+  (require 'mu4e-thread-folding)
   (setq message-send-mail-function              'smtpmail-send-it
         starttls-use-gnutls                     t
         mu4e-compose-reply-ignore-address       `("no-?reply"
@@ -20,13 +21,36 @@
         smtpmail-smtp-server                    smtpmail-default-smtp-server
         smtpmail-smtp-service                   user-stmp-port
         smtpmail-stream-type                    'starttls
+        mu4e-drafts-folder                      (s/cm mu4e-drafts-folder)
+        mu4e-refile-folder                      (s/cm mu4e-refile-folder)
+        mu4e-sent-folder                        (s/cm mu4e-sent-folder)
+        mu4e-trash-folder                       (s/cm mu4e-trash-folder)
+        mu4e-rss-folder                         (s/cm "/rss")
+        mu4e-read-folder                        (s/cm "/read")
         mu4e-alert-interesting-mail-query       (concat "flag:unread"
                                                         " AND NOT flag:trashed"
-                                                        " AND NOT maildir:" "\"/rss\""
-                                                        " AND NOT maildir:" "\"/read\""
-                                                        " AND NOT maildir:" "\"/archive\"")
-        mu4e-modeline-show-global               nil)
+                                                        " AND NOT maildir:"
+                                                        "\"" mu4e-rss-folder "\""
+                                                        " AND NOT maildir:"
+                                                        "\"" mu4e-read-folder "\""
+                                                        " AND NOT maildir:"
+                                                        "\"" mu4e-refile-folder "\"")
+        mu4e-modeline-show-global               nil
+        mu4e-headers-fields                     '((:fast-folding . 2)
+                                                  (:human-date . 12)
+                                                  (:flags . 6)
+                                                  (:mailing-list . 10)
+                                                  (:from . 22)
+                                                  (:subject)))
 
+
+  (defun mu4e-fast-folding-info (msg)
+   (let* ((thread (mu4e-message-field msg :thread))
+          (prefix (mu4e~headers-thread-prefix thread))
+          (unread (memq 'unread (mu4e-message-field msg :flags))))
+     (concat
+      (if (= (length prefix) 0) " " " ")
+      (if unread "•" " "))))
 
   (defun mu4e-action-view-in-xwidget (msg)
     (unless (fboundp 'xwidget-webkit-browse-url)
@@ -40,6 +64,18 @@
                                                          (replace-regexp-in-string
                                                           "^file://" "" url)))
                                          (xwidget-webkit-browse-url url))))
-      (mu4e-action-view-in-browser msg))))
+      (mu4e-action-view-in-browser msg)))
+
+  (add-to-list 'mu4e-header-info-custom '(:fast-folding . (:name "fast-folding"
+                                                           :shortname ""
+                                                           :function mu4e-fast-folding-info))))
+
+
+   ;; Specific character to later detect unread
+
+
+
+
+
 
 (provide '+sets-email)

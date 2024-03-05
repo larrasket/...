@@ -1017,7 +1017,7 @@ current-prefix-arg
   (setq mu4e-search-threads t)
   (if (featurep 'mu4e)
       (progn
-        (mu4e~headers-jump-to-maildir "/Inbox")
+        (mu4e~headers-jump-to-maildir "/lr0@gmx.com/Inbox")
         (mu4e-search-change-sorting :date 'descending))
     (mu4e)))
 
@@ -1026,7 +1026,7 @@ current-prefix-arg
   (if (featurep 'mu4e)
       (progn
         (setq mu4e-search-threads nil)
-        (mu4e-search "maildir:\"/rss\" flag:unread")
+        (mu4e-search "maildir:\"/lr0@gmx.com/rss\" flag:unread")
         (mu4e-search-change-sorting :from 'descending))
     (progn
       (setq mu4e-search-threads t)
