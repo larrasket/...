@@ -610,7 +610,6 @@ tasks."
   (when (display-graphic-p)
     (keyboard-translate ?\C-m ?\H-m)
     (keyboard-translate ?\C-i ?\H-i))
-  (set-fontset-font "fontset-default" 'arabic (font-spec :family "SF Arabic"))
   (define-key key-translation-map (kbd "C-g") (kbd "<escape>")))
 
 (defun salih/org-roam-node-insert ()

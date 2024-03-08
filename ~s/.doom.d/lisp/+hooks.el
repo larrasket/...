@@ -78,6 +78,7 @@
 ;; (add-hook 'dired-mode-hook              #'dired-auto-readme-mode)
 (add-hook 'after-make-frame-functions   (lambda (frame)
                                           (with-selected-frame frame
+                                            (set-fringe-style '(3 . 1))
                                             (salih/keyboard-config))))
 
 
