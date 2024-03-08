@@ -85,7 +85,7 @@
 
                                             ("l" "links" plain "%?"
                                              :if-new
-                                             (file+head "main/${slug}.org" "#+title: ${title}\n#+FILETAGS: link\n")
+                                             (file+head "things/${slug}.org" "#+title: ${title}\n#+FILETAGS: link\n")
                                              :immediate-finish t
                                              :unnarrowed t)
 
