@@ -92,13 +92,14 @@
   (setq projectile-switch-project-action 'projectile-dired))
 
 (after! git-gutter
-  (unless (featurep 'tadwin)
-    (modus-themes-with-colors
-     (custom-set-faces
-      ;; Replace green with blue if you use `modus-themes-deuteranopia'.
-      `(git-gutter-fr:added ((,c :foreground ,bg-added-fringe)))
-      ;; `(git-gutter-fr:deleted ((,class :foreground ,red-fringe-bg)))
-      `(git-gutter-fr:modified ((,c :foreground ,bg-changed-fringe)))))))
+  (and (not (featurep 'tadwin))
+       (featurep 'modus-themes)
+       (modus-themes-with-colors
+            (custom-set-faces
+             ;; Replace green with blue if you use `modus-themes-deuteranopia'.
+             `(git-gutter-fr:added ((,c :foreground ,bg-added-fringe)))
+             ;; `(git-gutter-fr:deleted ((,class :foreground ,red-fringe-bg)))
+             `(git-gutter-fr:modified ((,c :foreground ,bg-changed-fringe)))))))
 
 (after! indent-bars-mode
  (add-hook! 'prog-mode-hook                (indent-bars-mode 1))
