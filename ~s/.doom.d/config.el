@@ -5,6 +5,7 @@
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
 
+
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
       user-stmp-server                                  "mail.gmx.com"
@@ -20,9 +21,11 @@
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
       ;; or just remove `:size`.
-      doom-font                                         "Iosevka Term:pixelsize=14:antialias=true:hinting=true:autohint=false:hintstyle=3"
+
+      doom-theme                                        (salih/get-random-theme)
+      doom-font                                         "Iosevka Term:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-unicode-font                                 "PragmataPro:pixelsize=13:antialias=true:hinting=true:autohint=false:hintstyle=3"
-      doom-modeline-height                              23
+      doom-modeline-height                              27
       centaur-tabs-height                               22
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       display-line-numbers-type                         nil
@@ -59,8 +62,6 @@
       org-cite-csl--fallback-style-file                 (f-join
                                                          org-cite-csl-styles-dir
                                                          "chicago-ibid.csl")
-      ;; modus theme
-      doom-theme                                        'modus-vivendi
       modus-themes-org-blocks                           'gray-background
       modus-themes-common-palette-overrides             '((bg-mode-line-active bg-inactive)
                                                           (fg-mode-line-active fg-main)
@@ -97,6 +98,9 @@
 (require '+custom)
 (require '+erc)
 (require '+deep)
+(require '+line)
 
 ;; Check `gcs-done` variable from time to time to maintain performance.
 (explain-pause-mode)
+(set-frame-parameter nil 'alpha-background 95)
+(add-to-list 'default-frame-alist '(alpha-background . 95))

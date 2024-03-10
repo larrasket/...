@@ -117,7 +117,7 @@ a good understanding. His praise endures forever. ")))
 ;; init
 (centaur-tabs-mode)
 (yas-global-mode 1)
-(vertico-buffer-mode)
+;; (vertico-buffer-mode)
 (global-wakatime-mode)
 (salih/keyboard-config)
 (consult-org-roam-mode 1)
