@@ -8,7 +8,6 @@
 ;; tidy is required to use with xwidget:
 ;; pacman -S tidy
 (after! mu4e
-  (require 'mu4e-thread-folding)
   (setq message-send-mail-function              'smtpmail-send-it
         starttls-use-gnutls                     t
         mu4e-compose-reply-ignore-address       `("no-?reply"
