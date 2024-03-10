@@ -1279,4 +1279,9 @@ without history in the file name."
 (defun salih/toggle-stats-on (&rest _)
   (setq org-log-into-drawer "STATS"))
 
+
+(defun salih/load-random-theme ()
+  (interactive)
+  (load-theme (salih/get-random-theme)))
+
 (provide '+helper)
