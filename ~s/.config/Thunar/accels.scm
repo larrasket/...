@@ -1,4 +1,4 @@
-; thunar GtkAccelMap rc-file         -*- scheme -*-
+; Thunar GtkAccelMap rc-file         -*- scheme -*-
 ; this file is an automated accelerator map dump
 ;
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/5875027b6bc46f2c79efa658f0d26e39" "")
@@ -30,8 +30,8 @@
 ; (gtk_accel_path "<Actions>/ThunarWindow/view-configure-toolbar" "")
 ; (gtk_accel_path "<Actions>/ThunarActionManager/restore" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/open-location-alt" "<Alt>d")
-; (gtk_accel_path "<Actions>/ThunarStandardView/select-by-pattern" "<Primary>s")
 ; (gtk_accel_path "<Actions>/ThunarWindow/zoom-out-alt" "<Primary>KP_Subtract")
+; (gtk_accel_path "<Actions>/ThunarStandardView/select-by-pattern" "<Primary>s")
 ; (gtk_accel_path "<Actions>/ThunarWindow/open-file-menu" "F10")
 ; (gtk_accel_path "<Actions>/ThunarWindow/contents" "F1")
 ; (gtk_accel_path "<Actions>/ThunarWindow/show-highlight" "")
@@ -66,8 +66,9 @@
 ; (gtk_accel_path "<Actions>/ThunarWindow/open-desktop" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/view-as-detailed-list" "<Primary>2")
 ; (gtk_accel_path "<Actions>/ThunarActionManager/restore-show" "")
-; (gtk_accel_path "<Actions>/ThunarWindow/sendto-menu" "")
 ; (gtk_accel_path "<Actions>/ThunarStatusBar/toggle-display-name" "")
+; (gtk_accel_path "<Actions>/ThunarWindow/sendto-menu" "")
+; (gtk_accel_path "<Actions>/ThunarBookmarks/01fc8b5b220d81846f7ce100d1bb876f" "")
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/bb734a6fa8df45fbf7bfd0557b38941c" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/go-menu" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/remove-from-recent" "")
@@ -123,11 +124,10 @@
 ; (gtk_accel_path "<Actions>/ThunarStandardView/back-alt" "BackSpace")
 ; (gtk_accel_path "<Actions>/ThunarWindow/preferences" "")
 ; (gtk_accel_path "<Actions>/ThunarActionManager/delete" "")
-; (gtk_accel_path "<Actions>/ThunarBookmarks/665a991e64f6dac3a9c98fcb6e8caf37" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/view-side-pane-tree" "<Primary>e")
 ; (gtk_accel_path "<Actions>/ThunarWindow/open-file-system" "")
-; (gtk_accel_path "<Actions>/ThunarStandardView/make-link" "")
-; (gtk_accel_path "<Actions>/ThunarActionManager/sendto-desktop" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/open-network" "")
+; (gtk_accel_path "<Actions>/ThunarActionManager/sendto-desktop" "")
+; (gtk_accel_path "<Actions>/ThunarStandardView/make-link" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/zoom-reset-alt" "<Primary>KP_0")
 ; (gtk_accel_path "<Actions>/ThunarWindow/about" "")

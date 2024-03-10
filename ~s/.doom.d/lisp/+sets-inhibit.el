@@ -5,11 +5,11 @@
       completion-ignore-case                            t
       load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
-      gcmh-high-cons-threshold                          (* 1024 1024 1024)
-      gcmh-idle-delay                                   'auto
-      gcmh-auto-idle-delay-factor                       10
+      ;; gcmh-high-cons-threshold                          (* 1024 1024 1024)
+      ;; gcmh-idle-delay                                   'auto
+      ;; gcmh-auto-idle-delay-factor                       10
+      ;; jit-lock-defer-time                               0
       scroll-conservatively                             101
-      jit-lock-defer-time                               0
       read-process-output-max                           1000000
 
       doom-modeline-enable-word-count                   t
