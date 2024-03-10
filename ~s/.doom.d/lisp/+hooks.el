@@ -10,10 +10,10 @@
              mu4e-view-mode-hook
              mu4e-main-mode-hook)               #'salih/disable-bright)
 
-(add-hook! '(org-agenda-mode-hook
-             org-mode-hook
-             dired-mode-hook
-             native-comp-limple-mode-hook)      #'centaur-tabs-local-mode)
+;; (add-hook! '(org-agenda-mode-hook
+;;              org-mode-hook
+;;              dired-mode-hook
+;;              native-comp-limple-mode-hook)      #'centaur-tabs-local-mode)
 
 (add-hook! 'org-mode-hook
            (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
@@ -115,7 +115,7 @@ a good understanding. His praise endures forever. ")))
 
 
 ;; init
-(centaur-tabs-mode)
+;; (centaur-tabs-mode)
 (yas-global-mode 1)
 ;; (vertico-buffer-mode)
 (global-wakatime-mode)

@@ -28,10 +28,10 @@
 
 ;; abusing evil mode
 (map! :i "C-v" #'yank)
-(define-key evil-normal-state-map        (kbd "]") #'centaur-tabs-forward)
-(define-key evil-normal-state-map        (kbd "[") #'centaur-tabs-backward)
-(define-key evil-visual-state-map        (kbd "]") #'centaur-tabs-forward)
-(define-key evil-visual-state-map        (kbd "[") #'centaur-tabs-backward)
+;; (define-key evil-normal-state-map        (kbd "]") #'centaur-tabs-forward)
+;; (define-key evil-normal-state-map        (kbd "[") #'centaur-tabs-backward)
+;; (define-key evil-visual-state-map        (kbd "]") #'centaur-tabs-forward)
+;; (define-key evil-visual-state-map        (kbd "[") #'centaur-tabs-backward)
 
 
 (map!
@@ -235,7 +235,7 @@
    "C-n"          nil
    "<f6>"         #'salih/open-neotree-and-lsp
    "C-t"          #'+vterm/here
-   "C-j"          #'centaur-tabs-ace-jump
+   ;; "C-j"          #'centaur-tabs-ace-jump
    "C-c"          #'salih/org-capture-general
    "C-l"          #'salih/org-capture-log
    "C-n"          #'salih/org-roam-capture-fleet
@@ -336,8 +336,8 @@
  "C-w"     #'write-file
  "C-s"     nil
  "C-t"     #'gts-do-translate
- "]"       #'centaur-tabs-forward
- "["       #'centaur-tabs-backward
+ ;; "]"       #'centaur-tabs-forward
+ ;; "["       #'centaur-tabs-backward
  "C-v"     #'magit-log-buffer-file)
 
 (map!
