@@ -116,3 +116,4 @@
 (package! emacsql-sqlite3)
 (package! emacsql-sqlite-module)
 (package! evil-snipe :disable t)
+(package! ef-themes)
