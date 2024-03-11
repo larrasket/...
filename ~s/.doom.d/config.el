@@ -67,6 +67,8 @@
                                                           (fg-mode-line-active fg-main)
                                                           (bg-mode-line-inactive bg-inactive)
                                                           (fg-mode-line-active fg-dim)
+                                                          (bg-line-number-active unspecified)
+                                                          (bg-line-number-inactive unspecified)
                                                           (border-mode-line-active bg-main)
                                                           (border-mode-line-inactive bg-inactive))
                                                           
