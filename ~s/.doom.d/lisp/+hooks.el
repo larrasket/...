@@ -19,7 +19,7 @@
            (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
            (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local)
            (setq org-hide-leading-stars t)
-           (display-line-numbers-mode -1)
+           ;; (display-line-numbers-mode -1)
            (setq-local truncate-lines t)
            (git-gutter-mode -1))
 
@@ -116,6 +116,7 @@ a good understanding. His praise endures forever. ")))
 
 ;; init
 ;; (centaur-tabs-mode)
+(breadcrumb-mode)
 (yas-global-mode 1)
 ;; (vertico-buffer-mode)
 (global-wakatime-mode)

@@ -52,12 +52,9 @@
   "Return capitalized `major-mode' as a string."
   (capitalize (symbol-name major-mode)))
 
+
 (defvar-local my-modeline-major-mode
-    '(:eval
-      (list
-       (propertize "λ" 'face 'shadow)
-       " "
-       (propertize (my-modeline--major-mode-name) 'face 'bold)))
+    '
   "Mode line construct to display the major mode.")
 
 (put 'my-modeline-major-mode 'risky-local-variable t)
@@ -83,11 +80,19 @@ or not."
               '("%e"
                 (:eval (doom-modeline-segment--bar))
                 " "
-                my-modeline-major-mode
-                "; "
-                (:eval (buffer-name))
+                (:eval (list
+                        (all-the-icons--icon-info-for-buffer)
+                        " " (propertize
+                             (my-modeline--major-mode-name) 'face 'bold)))
+                "  "
+                (:eval (list (propertize (buffer-name)
+                      'face (cond
+                             ((buffer-modified-p) 'doom-modeline-buffer-modified)
+                             ((doom-modeline--active) 'doom-modeline-buffer-file)
+                             (t 'mode-line-inactive))
+                      'help-echo "Buffer name mouse-1: Previous buffer\nmouse-3: Next buffer"
+                      'local-map mode-line-buffer-identification-keymap)))
                 "  "
                 (:eval (doom-modeline-format--salih-line))))
 
-(breadcrumb-mode)
 (provide '+line)
