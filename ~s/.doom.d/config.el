@@ -104,5 +104,3 @@
 
 ;; Check `gcs-done` variable from time to time to maintain performance.
 (explain-pause-mode)
-(set-frame-parameter nil 'alpha-background 95)
-(add-to-list 'default-frame-alist '(alpha-background . 95))

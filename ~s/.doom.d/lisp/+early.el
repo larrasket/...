@@ -38,9 +38,9 @@
                               modus-vivendi-deuteranopia
                               modus-vivendi
                               ef-autumn ef-bio ef-cherie ef-elea-dark
-                              ef-frost ef-maris-dark ef-maris-light
+                              ef-maris-dark
                               ef-melissa-dark ef-night ef-symbiosis
-                              ef-winter doom-1337 doom-Iosvkem))
+                              ef-winter))
                               
 
 (provide '+early)

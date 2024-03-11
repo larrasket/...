@@ -9,5 +9,10 @@
 ;; (assoc-delete-all "Jump to bookmark"            +doom-dashboard-menu-sections)
 (custom-set-variables '(all-the-icons-completion-mode nil))
 
+(when (or (eq doom-theme 'modus-vivendi-tritanopia)
+          (eq doom-theme 'modus-vivendi-deuteranopia)
+          (eq doom-theme 'modus-vivendi))
+  (set-frame-parameter nil 'alpha-background 95)
+  (add-to-list 'default-frame-alist '(alpha-background . 95)))
 
 (provide '+deep)
