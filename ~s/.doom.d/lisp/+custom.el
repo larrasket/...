@@ -94,6 +94,7 @@
 (after! git-gutter
   (and (not (featurep 'tadwin))
        (featurep 'modus-themes)
+       (modus-themes--modus-p doom-theme)
        (modus-themes-with-colors
             (custom-set-faces
              ;; Replace green with blue if you use `modus-themes-deuteranopia'.

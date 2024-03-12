@@ -27,9 +27,10 @@
 
 
 (defun salih/get-random-theme ()
-  (nth
-   (random (length salih/prefered-themes))
-   salih/prefered-themes))
+  (let* ((current-day (string-to-number (format-time-string "%d")))
+         (list-length (length salih/prefered-themes)))
+    (nth (mod current-day list-length) salih/prefered-themes)))
+
 
 
 
