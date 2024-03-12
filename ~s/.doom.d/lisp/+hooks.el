@@ -138,5 +138,6 @@ a good understanding. His praise endures forever. ")))
         indent-bars-no-stipple-char 9474))
 
 
+(spacious-padding-mode)
 (provide '+hooks)
 

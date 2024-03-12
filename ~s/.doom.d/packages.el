@@ -114,3 +114,5 @@
 (package! evil-snipe :disable t)
 (package! ef-themes)
 (package! breadcrumb)
+
+(package! spacious-padding)
