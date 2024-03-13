@@ -9,7 +9,7 @@
   (custom-set-faces
    '(org-link ((t (:inherit link :underline nil :foreground "#79b58f" :slant normal :weight bold))))
    '(org-roam-dailies-calendar-note ((t (:inherit link :underline nil))))
-   '(variable-pitch ((t (:inherit fixed-pitch :height 1.0 :family "Pragmata Pro"))))
+   '(variable-pitch ((t (:inherit fixed-pitch))))
    '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight bold))))
    '(org-level-2 ((t (:inherit outline-2 :height 1.2 :weight bold))))
    '(org-level-3 ((t (:inherit outline-3 :height 1.2 :weight bold))))
