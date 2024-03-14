@@ -126,6 +126,16 @@ a good understanding. His praise endures forever. ")))
 (salih/consult-preview-at-point)
 (when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
 
+(if (or (eq doom-theme 'modus-vivendi-tritanopia)
+        (eq doom-theme 'modus-vivendi-deuteranopia)
+        (eq doom-theme 'modus-vivendi))
+    (progn
+      (set-frame-parameter nil 'alpha-background 95)
+      (add-to-list 'default-frame-alist '(alpha-background . 95)))
+  (progn
+      (set-frame-parameter nil 'alpha-background 100)
+      (add-to-list 'default-frame-alist '(alpha-background . 100))))
+
 
 ;; see https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
 (after! lsp-mode
