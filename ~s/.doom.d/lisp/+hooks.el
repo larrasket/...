@@ -136,6 +136,8 @@ a good understanding. His praise endures forever. ")))
       (set-frame-parameter nil 'alpha-background 100)
       (add-to-list 'default-frame-alist '(alpha-background . 100))))
 
+(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
+
 
 ;; see https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
 (after! lsp-mode
