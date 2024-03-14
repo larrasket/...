@@ -65,6 +65,11 @@
   (setq consult-org-roam-grep-func #'consult-ripgrep))
 
 (after! embark
+  (add-to-list 'embark-keymap-alist '(org-timestamp embark-org-timestamp-map))
+  (defvar-keymap embark-org-timestamp-map
+   :doc "Keymap for actions on an org timestamp."
+   :parent embark-general-map
+   "t" #'salih/org-add-week-to-timestamp)
   (define-key embark-url-map            (kbd "c") 'salih/open-url-in-chrome)
   (define-key embark-org-link-map       (kbd "RET") 'org-web-tools-read-url-as-org))
 

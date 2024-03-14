@@ -1284,4 +1284,11 @@ without history in the file name."
   (interactive)
   (load-theme (salih/get-random-theme)))
 
+(defun salih/org-add-week-to-timestamp ()
+  "Add a week to the org timestamp at point."
+  (interactive)
+  (unless (org-at-timestamp-p 'lax)
+    (error "Not at an org timestamp"))
+  (dotimes (_ 7) (org-timestamp-up-day)))
+
 (provide '+helper)
