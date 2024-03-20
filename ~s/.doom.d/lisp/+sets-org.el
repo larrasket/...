@@ -48,6 +48,9 @@
         org-agenda-dim-blocked-tasks                      'invisible
         org-tags-column                                   70
         org-agenda-sticky                                 t
+        org-plantuml-jar-path                           (expand-file-name
+                                                         (s/pc "assets"
+                                                               "plantuml-1.2024.3.jar"))
         org-crypt-key                                     user-mail-address)
    
   (setq org-todo-keywords       '((sequence "TODO(t)" "DAILY(e)" "PROJ(p)"
@@ -363,5 +366,6 @@
  (add-to-list 'org-tags-exclude-from-inheritance "project"))
  
 
-
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
 (provide '+sets-org)
