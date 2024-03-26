@@ -5,7 +5,6 @@
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
 
-
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
       user-stmp-server                                  "mail.gmx.com"
@@ -103,4 +102,4 @@
 (require '+line)
 
 ;; Check `gcs-done` variable from time to time to maintain performance.
-(explain-pause-mode)
+;; (explain-pause-mode)
