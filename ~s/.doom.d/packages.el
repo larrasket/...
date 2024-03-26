@@ -65,10 +65,6 @@
   :recipe (:host github
            :repo "luggages/awqat"))     ; obeying the almighty.
 
-(unpin! evil-collection)                ; fixes evil for mu4e
-(package! evil-collection
-  :recipe (:repo "luggages/evil-collection"
-           :branch "mu4e-development"))
 
 (unpin! vertico)
 (package! vertico)
@@ -117,3 +113,6 @@
 (package! emacsql-sqlite-module)
 (package! evil-snipe :disable t)
 (package! ef-themes)
+(package! breadcrumb)
+
+(package! spacious-padding)

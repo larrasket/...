@@ -2,6 +2,7 @@
 
 
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+(add-to-list 'auto-mode-alist '("\\.tmpl\\'" . html-mode))
 (plist-put +popup-defaults :modeline t)
 ;; (assoc-delete-all "Open org-agenda"             +doom-dashboard-menu-sections)
 ;; (assoc-delete-all "Recently opened files"       +doom-dashboard-menu-sections)
@@ -9,5 +10,8 @@
 ;; (assoc-delete-all "Jump to bookmark"            +doom-dashboard-menu-sections)
 (custom-set-variables '(all-the-icons-completion-mode nil))
 
+(setq lsp-use-plists t)
+
+  
 
 (provide '+deep)

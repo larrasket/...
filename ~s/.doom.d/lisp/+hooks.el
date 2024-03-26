@@ -10,16 +10,16 @@
              mu4e-view-mode-hook
              mu4e-main-mode-hook)               #'salih/disable-bright)
 
-(add-hook! '(org-agenda-mode-hook
-             org-mode-hook
-             dired-mode-hook
-             native-comp-limple-mode-hook)      #'centaur-tabs-local-mode)
+;; (add-hook! '(org-agenda-mode-hook
+;;              org-mode-hook
+;;              dired-mode-hook
+;;              native-comp-limple-mode-hook)      #'centaur-tabs-local-mode)
 
 (add-hook! 'org-mode-hook
            (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
            (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local)
            (setq org-hide-leading-stars t)
-           (display-line-numbers-mode -1)
+           ;; (display-line-numbers-mode -1)
            (setq-local truncate-lines t)
            (git-gutter-mode -1))
 
@@ -115,15 +115,28 @@ a good understanding. His praise endures forever. ")))
 
 
 ;; init
-(centaur-tabs-mode)
+;; (centaur-tabs-mode)
+(breadcrumb-mode)
 (yas-global-mode 1)
-(vertico-buffer-mode)
+;; (vertico-buffer-mode)
 (global-wakatime-mode)
 (salih/keyboard-config)
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)
 (salih/consult-preview-at-point)
 (when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
+
+(if (or (eq doom-theme 'modus-vivendi-tritanopia)
+        (eq doom-theme 'modus-vivendi-deuteranopia)
+        (eq doom-theme 'modus-vivendi))
+    (progn
+      (set-frame-parameter nil 'alpha-background 95)
+      (add-to-list 'default-frame-alist '(alpha-background . 95)))
+  (progn
+      (set-frame-parameter nil 'alpha-background 100)
+      (add-to-list 'default-frame-alist '(alpha-background . 100))))
+
+(remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 
 
 ;; see https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
@@ -137,5 +150,6 @@ a good understanding. His praise endures forever. ")))
         indent-bars-no-stipple-char 9474))
 
 
+(spacious-padding-mode)
 (provide '+hooks)
 

@@ -114,8 +114,9 @@ leinn() {
 }
 
 # Conv
-alias land='sudo rm -R /var/cache/minidlna/ && sudo minidlnad'
 alias wife='nmtui'
+alias gotmp='git clone https://github.com/tarqeem/template . && ./init.sh '
+alias goent="go run -mod=mod entgo.io/ent/cmd/ent"
 alias hd='nmcli con up'
 alias s='setsid rsblocks '
 alias htop='gotop'

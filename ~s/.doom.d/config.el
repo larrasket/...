@@ -20,9 +20,11 @@
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
       ;; or just remove `:size`.
-      doom-font                                         "Iosevka Term:pixelsize=14:antialias=true:hinting=true:autohint=false:hintstyle=3"
+
+      doom-theme                                        (salih/get-random-theme)
+      doom-font                                         "Iosevka Term:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-unicode-font                                 "PragmataPro:pixelsize=13:antialias=true:hinting=true:autohint=false:hintstyle=3"
-      doom-modeline-height                              23
+      doom-modeline-height                              27
       centaur-tabs-height                               22
       +doom-dashboard-ascii-banner-fn                   'salih/banner
       display-line-numbers-type                         nil
@@ -59,13 +61,13 @@
       org-cite-csl--fallback-style-file                 (f-join
                                                          org-cite-csl-styles-dir
                                                          "chicago-ibid.csl")
-      ;; modus theme
-      doom-theme                                        'modus-vivendi
       modus-themes-org-blocks                           'gray-background
       modus-themes-common-palette-overrides             '((bg-mode-line-active bg-inactive)
                                                           (fg-mode-line-active fg-main)
                                                           (bg-mode-line-inactive bg-inactive)
                                                           (fg-mode-line-active fg-dim)
+                                                          (bg-line-number-active unspecified)
+                                                          (bg-line-number-inactive unspecified)
                                                           (border-mode-line-active bg-main)
                                                           (border-mode-line-inactive bg-inactive))
                                                           
@@ -97,6 +99,7 @@
 (require '+custom)
 (require '+erc)
 (require '+deep)
+(require '+line)
 
 ;; Check `gcs-done` variable from time to time to maintain performance.
-(explain-pause-mode)
+;; (explain-pause-mode)

@@ -1279,4 +1279,16 @@ without history in the file name."
 (defun salih/toggle-stats-on (&rest _)
   (setq org-log-into-drawer "STATS"))
 
+
+(defun salih/load-random-theme ()
+  (interactive)
+  (load-theme (salih/get-random-theme)))
+
+(defun salih/org-add-week-to-timestamp ()
+  "Add a week to the org timestamp at point."
+  (interactive)
+  (unless (org-at-timestamp-p 'lax)
+    (error "Not at an org timestamp"))
+  (dotimes (_ 7) (org-timestamp-up-day)))
+
 (provide '+helper)

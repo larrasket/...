@@ -9,7 +9,7 @@
   (custom-set-faces
    '(org-link ((t (:inherit link :underline nil :foreground "#79b58f" :slant normal :weight bold))))
    '(org-roam-dailies-calendar-note ((t (:inherit link :underline nil))))
-   '(variable-pitch ((t (:inherit fixed-pitch :height 1.0 :family "Pragmata Pro"))))
+   '(variable-pitch ((t (:inherit fixed-pitch))))
    '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight bold))))
    '(org-level-2 ((t (:inherit outline-2 :height 1.2 :weight bold))))
    '(org-level-3 ((t (:inherit outline-3 :height 1.2 :weight bold))))
@@ -65,6 +65,11 @@
   (setq consult-org-roam-grep-func #'consult-ripgrep))
 
 (after! embark
+  (add-to-list 'embark-keymap-alist '(org-timestamp embark-org-timestamp-map))
+  (defvar-keymap embark-org-timestamp-map
+   :doc "Keymap for actions on an org timestamp."
+   :parent embark-general-map
+   "t" #'salih/org-add-week-to-timestamp)
   (define-key embark-url-map            (kbd "c") 'salih/open-url-in-chrome)
   (define-key embark-org-link-map       (kbd "RET") 'org-web-tools-read-url-as-org))
 
@@ -94,6 +99,7 @@
 (after! git-gutter
   (and (not (featurep 'tadwin))
        (featurep 'modus-themes)
+       (modus-themes--modus-p doom-theme)
        (modus-themes-with-colors
             (custom-set-faces
              ;; Replace green with blue if you use `modus-themes-deuteranopia'.

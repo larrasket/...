@@ -1,6 +1,6 @@
 #! /bin/bash
 for f in /etc/X11/xinit/xinitrc.d/*.sh; do
-    source "$f"
+	source "$f"
 done
 ~/.dwm/screen.sh
 ~/.dwm/keyboard.sh
@@ -9,3 +9,4 @@ feh --bg-fill ~/configs/~s/bg.png &
 flameshot &
 picom --xrender-sync-fence --vsync &
 rygel -g 5 &
+feh --bg-fill "$(find ~/me/links/.art/land -type f | shuf -n 1)"

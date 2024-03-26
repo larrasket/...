@@ -24,7 +24,7 @@
        word-wrap
 
        :emacs
-       dired
+       (dired +icons)
        electric                         ; better tabs (as in tabs vs spaces)
        undo
        vc                               ; magit

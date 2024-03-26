@@ -25,4 +25,23 @@
 (defmacro s/cm (m)
   `(concat "/" user-mail-address ,m))
 
+
+(defun salih/get-random-theme ()
+  (let* ((current-day (string-to-number (format-time-string "%d")))
+         (list-length (length salih/prefered-themes)))
+    (nth (mod current-day list-length) salih/prefered-themes)))
+
+
+
+
+(setq salih/prefered-themes '(modus-vivendi-tritanopia
+                              modus-vivendi-tinted
+                              modus-vivendi-deuteranopia
+                              modus-vivendi
+                              ef-autumn ef-bio ef-cherie ef-elea-dark
+                              ef-maris-dark
+                              ef-melissa-dark ef-night ef-symbiosis
+                              ef-winter))
+                              
+
 (provide '+early)
