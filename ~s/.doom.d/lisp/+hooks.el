@@ -38,9 +38,14 @@
                                                  (salih/org-roam-get-node-titles
                                                   (org-roam-node-read--completions))))
 
-(add-hook! '(org-mode-hook markdown-mode-hook prog-mode-hook) #'auto-fill-mode)
-(add-hook! 'prog-mode-hook                                    #'column-enforce-mode)
-(add-hook! 'prog-mode-hook                                    (smartparens-mode 1))
+(add-hook! '(org-mode-hook
+             markdown-mode-hook
+             prog-mode-hook)
+           #'auto-fill-mode)
+
+(add-hook! '(prog-mode-hook)
+  (column-enforce-mode)
+  (smartparens-mode 1))
 
 (add-hook! '(bibtex-mode-hook
              prog-mode-hook)              #'format-all-mode
@@ -56,22 +61,27 @@
              go-mode-hook
              yaml-mode-hook)              #'indent-bars-mode)
 
-(add-hook! 'clojure-mode-hook (flycheck-mode -1))
-(add-hook! 'clojure-mode-hook (flymake-mode 1))
-(add-hook! 'clojure-mode-hook (lsp))
-(add-hook! 'clojure-mode-hook (setq-local lsp-diagnostics-provider :none
-                                          lsp-ui-sideline-enable nil
-                                          lsp-ui-sideline-enable nil
-                                          lsp-modeline-diagnostics-enable nil
-                                          lsp-modeline-code-actions-enable nil
-                                          lsp-eldoc-enable-hover nil))
+(add-hook! '(clojure-mode-hook)
+  (setq-local lsp-diagnostics-provider :none
+              lsp-ui-sideline-enable nil
+              lsp-ui-sideline-enable nil
+              lsp-modeline-diagnostics-enable nil
+              lsp-modeline-code-actions-enable nil
+              lsp-eldoc-enable-hover nil)
+  (flycheck-mode -1)
+  (flymake-mode 1)
+  (lsp))
+
+(add-hook! '(html-mode-hook)             (sgml-electric-tag-pair-mode)
+                                         (flycheck-mode -1))
+
 
 (add-hook 'csv-mode-hook                #'csv-align-mode)
 (add-hook 'company-mode-hook            #'company-box-mode)
 (add-hook 'after-init-hook              #'global-flycheck-mode)
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 (add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
-(add-hook 'html-mode-hook               #'sgml-electric-tag-pair-mode)
+
 (add-hook 'eshell-alias-load-hook       #'salih/eshell-load-bash-aliases)
 ;; (add-hook 'dired-after-readin-hook      #'salih/dired-git-info-auto-enable)
 (add-hook 'org-roam-find-file-hook      #'git-auto-commit-mode)
