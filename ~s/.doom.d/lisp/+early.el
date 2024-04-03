@@ -36,7 +36,6 @@
 
 (setq salih/prefered-themes '(modus-vivendi-tritanopia
                               modus-vivendi-tinted
-                              modus-vivendi-deuteranopia
                               modus-vivendi
                               ef-autumn ef-bio ef-cherie ef-elea-dark
                               ef-maris-dark
