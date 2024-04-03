@@ -22,7 +22,7 @@
       ;; or just remove `:size`.
 
       doom-theme                                        (salih/get-random-theme)
-      doom-font                                         "Iosevka Term:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
+      doom-font                                         "Pragmasevka:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-unicode-font                                 "PragmataPro:pixelsize=13:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-modeline-height                              27
       centaur-tabs-height                               22
