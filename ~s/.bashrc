@@ -144,6 +144,7 @@ alias djvu2pdf='docker run --rm -u $(id -u):$(id -g) -v $(pwd):/opt/work ilyabys
 alias tadwin='EMACS=/home/l/.emacs.db/ && /home/l/blog/tadwin.el'
 alias pub='cd ~/blog && tadwin && cd public && flyctl deploy'
 alias cljp='function _cljp(){ lein new simple-layout "$1" -- 1.11.0};_cljp'
+alias docker='sudo docker'
 
 # alias po='castero'
 # not deleting this line for nostalgia. :). I wrote it in my

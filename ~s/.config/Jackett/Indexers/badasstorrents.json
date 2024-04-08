@@ -9,7 +9,7 @@
     "id": "cookieheader",
     "type": "hiddendata",
     "name": "CookieHeader",
-    "value": null
+    "value": ""
   },
   {
     "id": "lasterror",
@@ -35,28 +35,6 @@
     "options": {
       "/download/": ".torrent",
       "magnet:?xt=": "magnet"
-    }
-  },
-  {
-    "id": "sortrequestedfromsite",
-    "type": "inputselect",
-    "name": "Sort requested from site",
-    "value": "date",
-    "options": {
-      "date": "created",
-      "seeds": "seeders",
-      "size": "size",
-      "title": "title"
-    }
-  },
-  {
-    "id": "orderrequestedfromsite",
-    "type": "inputselect",
-    "name": "Order requested from site",
-    "value": "desc",
-    "options": {
-      "desc": "desc",
-      "asc": "asc"
     }
   },
   {

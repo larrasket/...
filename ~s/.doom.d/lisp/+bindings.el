@@ -49,6 +49,9 @@
  "C-;"    #'salih/rename-or-iedit)
 
 
+(map! :nv "C-c C-;" #'iedit-mode)
+
+
 
 (general-define-key
  :keymaps 'prog-mode-map
