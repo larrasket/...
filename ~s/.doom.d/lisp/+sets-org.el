@@ -193,6 +193,7 @@
                                      ("v" "General Tasks"
                                       ((org-ql-block '(and
                                                        (priority "A")
+                                                       (todo "TODO")
                                                        (not (deadline))
                                                        (not (scheduled)))
                                                      ((org-ql-block-header "High-priority tasks")))

@@ -49,7 +49,7 @@
  "C-;"    #'salih/rename-or-iedit)
 
 
-(map! :nv "C-c C-;" #'iedit-mode)
+(map! :nv "C-c C-;" #'salih/rename-or-iedit)
 
 
 
