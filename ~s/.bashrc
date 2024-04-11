@@ -114,6 +114,7 @@ leinn() {
 }
 
 # Conv
+alias sudo='sudo ' # Fix sudo in alias
 alias wife='nmtui'
 alias gotmp='git clone https://github.com/tarqeem/template . && ./init.sh '
 alias goent="go run -mod=mod entgo.io/ent/cmd/ent"
