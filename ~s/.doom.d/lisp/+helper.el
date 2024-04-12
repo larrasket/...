@@ -1004,7 +1004,7 @@ Version 2015-07-30"
       (if (eq major-mode 'org-mode)
           (insert "- "))
       (call-interactively 'org-time-stamp-inactive)
-      (insert ": ")))
+      (insert " ")))
 current-prefix-arg
 (defun salih/open-kitty-in-current-directory ()
   "Open the Kitty terminal in the current working directory."
@@ -1296,5 +1296,8 @@ without history in the file name."
   (org-id-get-create)
   (org-set-tags ":drill"))
 
+(defun salih/doom-theme? ()
+  (string-prefix-p "doom-"
+                   (symbol-name doom-theme)))
 
 (provide '+helper)

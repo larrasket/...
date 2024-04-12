@@ -23,6 +23,7 @@
            (setq-local truncate-lines t)
            (git-gutter-mode -1))
 
+
 (add-hook! 'nov-mode-hook
            (defface tmp-buffer-local-face '((t :family "Roboto Condensed" :height 1.0)) "")
            (buffer-face-set 'tmp-buffer-local-face)
@@ -88,7 +89,9 @@
 ;; (add-hook 'dired-mode-hook              #'dired-auto-readme-mode)
 (add-hook 'after-make-frame-functions   (lambda (frame)
                                           (with-selected-frame frame
-                                            (set-fringe-style '(3 . 1))
+                                            (if (salih/doom-theme?)
+                                                (set-fringe-style '(8 . 8))
+                                             (set-fringe-style '(3 . 1)))
                                             (salih/keyboard-config))))
 
 
@@ -160,6 +163,10 @@ a good understanding. His praise endures forever. ")))
         indent-bars-no-stipple-char 9474))
 
 
-(spacious-padding-mode)
+
+(unless (salih/doom-theme?)
+    (spacious-padding-mode))
+
+
 (provide '+hooks)
 

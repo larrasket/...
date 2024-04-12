@@ -34,12 +34,30 @@
 
 
 
-(setq salih/prefered-themes '(modus-vivendi-tritanopia
-                              modus-vivendi-tinted
-                              modus-vivendi
-                              ef-autumn ef-bio ef-cherie ef-elea-dark
+(setq salih/prefered-themes '(ef-autumn
+                              doom-challenger-deep
+                              doom-feather-dark
+                              doom-flatwhite
+                              doom-gruvbox
+                              doom-monokai-pro
+                              doom-monokai-spectrum
+                              doom-old-hope
+                              doom-outrun-electric
+                              doom-palenight
+                              doom-peacock
+                              doom-rouge
+                              doom-snazzy
+                              doom-spacegrey
+                              ef-bio
+                              ef-cherie
+                              ef-dark
+                              ef-deuteranopia-dark
+                              ef-duo-dark
+                              ef-elea-dark
                               ef-maris-dark
-                              ef-melissa-dark ef-night ef-symbiosis
+                              ef-melissa-dark
+                              ef-night
+                              ef-symbiosis
                               ef-winter))
                               
 
