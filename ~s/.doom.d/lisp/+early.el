@@ -28,8 +28,10 @@
 
 (defun salih/get-random-theme ()
   (let* ((current-day (string-to-number (format-time-string "%d")))
-         (list-length (length salih/prefered-themes)))
-    (nth (mod current-day list-length) salih/prefered-themes)))
+         (list-length (length salih/prefered-themes))
+         (selected (nth (mod current-day list-length) salih/prefered-themes)))
+    selected))
+    
 
 
 
@@ -46,8 +48,6 @@
                               doom-palenight
                               doom-peacock
                               doom-rouge
-                              doom-snazzy
-                              doom-spacegrey
                               ef-bio
                               ef-cherie
                               ef-dark

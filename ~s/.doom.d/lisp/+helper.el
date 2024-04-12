@@ -1296,8 +1296,5 @@ without history in the file name."
   (org-id-get-create)
   (org-set-tags ":drill"))
 
-(defun salih/doom-theme? ()
-  (string-prefix-p "doom-"
-                   (symbol-name doom-theme)))
 
 (provide '+helper)
