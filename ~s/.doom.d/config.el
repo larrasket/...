@@ -101,5 +101,3 @@
 (require '+deep)
 (require '+line)
 
-;; Check `gcs-done` variable from time to time to maintain performance.
-;; (explain-pause-mode)
