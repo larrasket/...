@@ -1291,4 +1291,10 @@ without history in the file name."
     (error "Not at an org timestamp"))
   (dotimes (_ 7) (org-timestamp-up-day)))
 
+(defun salih/org-add-to-anthology ()
+  (interactive)
+  (org-id-get-create)
+  (org-set-tags ":drill"))
+
+
 (provide '+helper)
