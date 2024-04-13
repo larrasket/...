@@ -22,6 +22,8 @@
 (advice-add 'sly-eval-with-transcript           :before #'salih/sly--compile-eval-begin-print)
 (advice-add 'deft-parse-title                   :override #'cm/deft-parse-title)
 
+(advice-add 'lsp-resolve-final-command          :around #'lsp-booster--advice-final-command)
+
 
 ;;(advice-add 'sly-compile-region               :before 'salih/sly--compile-eval-begin-print) ;; `sly-compile-region' already done by `sly-compile-string'
 
