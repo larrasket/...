@@ -50,7 +50,6 @@
                               doom-rouge
                               ef-bio
                               ef-cherie
-                              ef-dark
                               ef-deuteranopia-dark
                               ef-duo-dark
                               ef-elea-dark
