@@ -4,13 +4,15 @@
 (advice-add 'org-agenda                         :before #'vulpea-agenda-files-update)
 (advice-add 'org-clock-in                       :before #'salih/toggle-logbook-on)
 (advice-add 'org-clock-in                       :after  #'salih/toggle-stats-on)
-(advice-add 'org-add-note                       :before #'salih/toggle-stats-on)
-(advice-add 'org-add-note                       :after  #'salih/toggle-logbook-on)
 (advice-add 'org-todo-list                      :before #'vulpea-agenda-files-update)
 (advice-add 'org-agenda-quit                    :before #'org-save-all-org-buffers)
-(advice-add 'org-log-beginning                  :before #'salih/toggle-stats-on)
+
+(advice-add 'org-log-beginning                  :before #'salih/toggle-log-int-drawer-off)
 (advice-add 'org-log-beginning                  :after  #'salih/toggle-logbook-on)
-(advice-add 'org-agenda-add-note                :before #'salih/toggle-stats-on)
+
+(advice-add 'org-add-note                       :before #'salih/toggle-log-int-drawer-off)
+(advice-add 'org-add-note                       :after  #'salih/toggle-logbook-on)
+(advice-add 'org-agenda-add-note                :before #'salih/toggle-log-int-drawer-off)
 (advice-add 'org-agenda-add-note                :after  #'salih/toggle-logbook-on)
 
 

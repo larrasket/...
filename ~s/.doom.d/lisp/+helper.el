@@ -1276,9 +1276,12 @@ without history in the file name."
 
 (defun salih/toggle-logbook-on (&rest _)
   (setq org-log-into-drawer t))
+
 (defun salih/toggle-stats-on (&rest _)
   (setq org-log-into-drawer "STATS"))
 
+(defun salih/toggle-log-int-drawer-off (&rest _)
+  (setq org-log-into-drawer nil))
 
 (defun salih/load-random-theme ()
   (interactive)
