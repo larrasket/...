@@ -186,6 +186,11 @@
  "C-;"     #'salih/rename-or-iedit
  "C-r C-f" #'consult-org-roam-forward-links)
 
+(map!
+ :map org-mode-map
+ :after org
+ :n
+ "C-c C-d" #'org-deadline)
 
 (map!
  :map org-mode-map
@@ -197,7 +202,6 @@
  "H-i C-c" #'salih/org-id-get-create-with-custom-id
  "H-i C-k" #'citar-insert-citation
  "H-i C-t" #'org-inlinetask-insert-task
-
  "H-i C-r" #'org-roam-node-insert
  "H-i C-f" #'org-roam-node-insert
  "C-c C-d" #'org-download-clipboard
@@ -446,6 +450,16 @@
  :after cider
  "C-x C-e" nil)
 
+
+(map!
+ :map text-mode-map
+ :n
+ ";" #'embark-act)
+
+;; (map!
+;;  :map org-mode-map
+;;  :n
+;;  ";" #'embark-act)
 
 (after! org-noter
   (defun salih/org-noter-sync-current-note-and-switch-window ()
