@@ -155,6 +155,10 @@
 
         org-agenda-custom-commands '(("f" "Agenda Tasks"
                                       ((org-ql-block '(and
+                                                       (priority "A")
+                                                       (todo "TODO"))
+                                                     ((org-ql-block-header "High-priority tasks")))
+                                       (org-ql-block '(and
                                                        (todo "TODO")
                                                        (scheduled :to today))
                                                      ((org-ql-block-header "Today's tasks")))

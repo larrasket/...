@@ -7,11 +7,23 @@
 (advice-add 'org-todo-list                      :before #'vulpea-agenda-files-update)
 (advice-add 'org-agenda-quit                    :before #'org-save-all-org-buffers)
 
+(setq salih/adding-note? nil)
+
+(defun salih/finish-note ()
+  (setq salih/adding-note? nil))
+
+(defun salih/start-note ()
+  (setq salih/adding-note? t))
+
+
 (advice-add 'org-log-beginning                  :before #'salih/toggle-log-int-drawer-off)
 (advice-add 'org-log-beginning                  :after  #'salih/toggle-logbook-on)
 
+(advice-add 'org-add-note                       :before #'salih/start-note)
 (advice-add 'org-add-note                       :before #'salih/toggle-log-int-drawer-off)
 (advice-add 'org-add-note                       :after  #'salih/toggle-logbook-on)
+
+(advice-add 'org-agenda-add-note                :before #'salih/start-note)
 (advice-add 'org-agenda-add-note                :before #'salih/toggle-log-int-drawer-off)
 (advice-add 'org-agenda-add-note                :after  #'salih/toggle-logbook-on)
 
