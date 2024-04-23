@@ -129,6 +129,7 @@ alias d='yt-dlp -f "mp4" -o "%(title)s.%(ext)s" '
 alias c='clear'
 alias w4='function _convertwebm(){ ffmpeg  -fflags +genpts -i "$1" -r 24 -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" "${1%.webm}.mp4" && rm "$1"; };_convertwebm'
 alias mp3='yt-dlp -o '\''%(title)s.%(ext)s'\'' --extract-audio --audio-format mp3 --add-metadata'
+alias convertmp4tomp3='function _convertmp4tomp3() { ffmpeg -i "$1" "${1%.*}.mp3"; }; _convertmp4tomp3'
 alias cp="cp -i"
 alias i='sudo pacman -S '
 alias r='sudo pacman -Rs'
@@ -185,3 +186,7 @@ export TERM=xterm-256color
 shopt -s autocd
 
 source /home/l/.config/broot/launcher/bash/br
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
