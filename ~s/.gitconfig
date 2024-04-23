@@ -20,3 +20,5 @@
 	postBuffer = 157286400
 [core]
 	quotepath = false
+[init]
+	defaultBranch = master
