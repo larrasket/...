@@ -37,9 +37,7 @@
 
 
 (setq salih/prefered-themes '(ef-autumn
-                              doom-challenger-deep
                               doom-feather-dark
-                              doom-flatwhite
                               doom-gruvbox
                               doom-monokai-pro
                               doom-monokai-spectrum
