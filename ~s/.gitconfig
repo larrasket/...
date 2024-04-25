@@ -11,11 +11,6 @@
 [user]
 	email = lr0@gmx.com
 	name = Salih Muhammed
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
 [http]
 	postBuffer = 157286400
 [core]
