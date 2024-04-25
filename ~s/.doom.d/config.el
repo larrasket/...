@@ -82,6 +82,9 @@
                                                           (salih/rebuild . t))
       ;; currently org causes some annoying warnings because of org-element
       ;; breaking api updates.
+      ;; [2024-04-26 Fri 02:01] I wrote "currently" above a long time ago
+      ;; (perhaps can be detected from the git history, too lazy tho). Not sure
+      ;; if it is still the case
       warning-minimum-level                             :error)
       
  
