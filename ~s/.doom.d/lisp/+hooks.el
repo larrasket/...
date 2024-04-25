@@ -143,8 +143,8 @@ a good understanding. His praise endures forever. ")))
         (eq doom-theme 'modus-vivendi-deuteranopia)
         (eq doom-theme 'modus-vivendi))
     (progn
-      (set-frame-parameter nil 'alpha-background 95)
-      (add-to-list 'default-frame-alist '(alpha-background . 95)))
+      (set-frame-parameter nil 'alpha-background 98)
+      (add-to-list 'default-frame-alist '(alpha-background . 98)))
   (progn
       (set-frame-parameter nil 'alpha-background 100)
       (add-to-list 'default-frame-alist '(alpha-background . 100))))
