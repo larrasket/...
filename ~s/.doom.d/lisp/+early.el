@@ -42,7 +42,6 @@
                               doom-monokai-pro
                               doom-monokai-spectrum
                               doom-old-hope
-                              doom-outrun-electric
                               doom-palenight
                               doom-peacock
                               doom-rouge
