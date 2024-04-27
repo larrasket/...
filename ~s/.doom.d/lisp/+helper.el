@@ -1334,4 +1334,21 @@ without history in the file name."
           (cons "emacs-lsp-booster" orig-result))
       orig-result)))
 
+(defun salih/get-org-roam-nodes-with-tag (tag)
+  "Get all Org Roam nodes that have the specified TAG."
+  (org-roam-db-query
+   [:select :distinct [nodes:file nodes:title]
+            :from tags
+            :left :join nodes
+            :on (= tags:node-id nodes:id)
+            :where (like tags:tag $s1)]
+   tag))
+
+
+
+(defun get-unique-file-paths-for-tag (tag)
+  "Get unique file paths for Org Roam nodes with the specified TAG."
+  (let ((nodes (salih/get-org-roam-nodes-with-tag "drill")))
+    (delete-dups (mapcar 'car nodes))))
+
 (provide '+helper)

@@ -80,7 +80,9 @@
   (salih/set-convenient-keys))
 
 (after! org-drill
-  (setq org-drill-scope (salih/path-list "~/org/drill/"))
+  (setq org-drill-scope (let ((nodes
+                               (salih/get-org-roam-nodes-with-tag "drill")))
+                          (delete-dups (mapcar 'car nodes))))
   (setq org-drill-maximum-duration 100))
 
 (after! eshell
