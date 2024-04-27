@@ -165,6 +165,9 @@ a good understanding. His praise endures forever. ")))
 
 
 
-(add-hook! 'doom-init-ui-hook :append (if (doom-theme?) (spacious-padding-mode -1)))
+(add-hook! 'doom-init-ui-hook :append (when (doom-theme?)
+                                        (spacious-padding-mode -1)
+                                        (remove-hook! 'dired-mode-hook #'all-the-icons-dired-mode)))
+
 
 (provide '+hooks)
