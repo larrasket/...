@@ -89,7 +89,7 @@
 ;; (add-hook 'dired-mode-hook              #'dired-auto-readme-mode)
 (add-hook 'after-make-frame-functions   (lambda (frame)
                                           (with-selected-frame frame
-                                            (if nil
+                                            (if (doom-theme?)
                                                 (set-fringe-style '(8 . 8))
                                              (set-fringe-style '(3 . 1)))
                                             (salih/keyboard-config))))
@@ -163,8 +163,8 @@ a good understanding. His praise endures forever. ")))
         indent-bars-no-stipple-char 9474))
 
 
-(spacious-padding-mode 1)
-;; (if (doom-theme?)
-;;     (spacious-padding-mode -1))
+
+
+(add-hook! 'doom-init-ui-hook :append (if (doom-theme?) (spacious-padding-mode -1)))
 
 (provide '+hooks)

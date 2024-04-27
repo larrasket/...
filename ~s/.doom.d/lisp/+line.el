@@ -81,7 +81,8 @@ or not."
                 (:eval (doom-modeline-segment--bar))
                 " "
                 (:eval (list
-                        (all-the-icons--icon-info-for-buffer)
+                        (when spacious-padding-mode
+                            (all-the-icons--icon-info-for-buffer))
                         " " (propertize
                              (my-modeline--major-mode-name) 'face 'bold)))
                 "  "
