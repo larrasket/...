@@ -1,4 +1,5 @@
 (add-to-list 'load-path "~/.doom.d/lisp/")
+(add-to-list 'load-path "~/.doom.d/pkg/")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
