@@ -48,6 +48,7 @@
         org-agenda-dim-blocked-tasks                      'invisible
         org-tags-column                                   70
         org-agenda-sticky                                 t
+        org-agenda-skip-function-global                   '(org-agenda-skip-entry-if 'nottodo '("TODO" "DAILY" "DONE"))
         org-plantuml-jar-path                           (expand-file-name
                                                          (s/pc "assets"
                                                                "plantuml-1.2024.3.jar"))
