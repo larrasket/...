@@ -76,6 +76,8 @@
       ;; indent highlight
       indent-bars-highlight-current-depth               nil
       indent-bars-treesit-support                       t
+      indent-bars-pattern                               "."
+      indent-bars-width-frac                            0.25
 
       ;; other
       safe-local-variable-values                        '((org-download-image-dir

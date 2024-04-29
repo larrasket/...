@@ -156,16 +156,12 @@ a good understanding. His praise endures forever. ")))
 (after! lsp-mode
   (delete 'lsp-terraform lsp-client-packages))
 
-(use-package indent-bars
-  ;; :hook ((lsp-mode) . indent-bars-mode)
-  :config
-  (setq indent-bars-prefer-character t
-        indent-bars-no-stipple-char 9474))
 
-
-
-
-(add-hook! 'doom-init-ui-hook :append (when (doom-theme?)
+(add-hook! 'doom-init-ui-hook :append (when
+                                          t
+                                        ;; usually I disable it only w/ doom
+                                        ;; themes.
+                                        ;; (doom-theme?)
                                         (spacious-padding-mode -1)
                                         (remove-hook! 'dired-mode-hook #'all-the-icons-dired-mode)))
 
