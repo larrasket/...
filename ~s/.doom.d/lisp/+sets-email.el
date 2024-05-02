@@ -67,7 +67,16 @@
 
   (add-to-list 'mu4e-header-info-custom '(:fast-folding . (:name "fast-folding"
                                                            :shortname ""
-                                                           :function mu4e-fast-folding-info))))
+                                                           :function mu4e-fast-folding-info)))
+
+  ;; [2024-05-02 Thu 07:00] I find the look with doom theme quite annoying.
+  (when (doom-theme?)
+    (custom-set-faces
+     '(mu4e-highlight-face ((t (:inherit mu4e-header-face :background nil)))))))
+
+
+
+  
 
 
    ;; Specific character to later detect unread
