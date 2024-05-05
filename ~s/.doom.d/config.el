@@ -5,6 +5,7 @@
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
+(require 'org-fc)
 
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
@@ -16,6 +17,10 @@
       user-first-name                                   (s/ufn)
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
+      org-fc-flashcard-tag                              "drill"
+      org-fc-directories                                `(,(s/pr "main")
+                                                          ,(s/pr "other")
+                                                          ,(s/pr "references"))
 
       ;; appearanc
       ;; font `:size` value of 29 is prefect for filming

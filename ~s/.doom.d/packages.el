@@ -26,7 +26,7 @@
 (package! nov)                          ; browse epubs from emacs
 (package! srht)                         ; sr.ht support. Good for paste.sr.ht
 (package! vulpea)                       ; roam advanced functions
-(package! org-drill)                    ; anki
+;; (package! org-drill)                    ; anki
 (package! format-all)                   ; destroy my code
 (package! org-bullets)                  ; nicer org view
 (package! lsp-treemacs)                 ; make emacs loks like and EDE (ide)
@@ -116,3 +116,5 @@
 (package! breadcrumb)
 
 (package! spacious-padding)
+
+(package! org-fc)
