@@ -180,7 +180,7 @@
  "C-r"     nil
  "C-r H-i" #'org-roam-node-insert
  "C-r C-t" #'org-roam-tag-add
- "C-r C-a" #'salih/org-add-to-anthology
+ "C-r C-a" #'org-fc-type-normal-init
  "C-r C-b" #'consult-org-roam-backlinks
  "C-r C-d" #'salih/org-roam-extract-subtree
  "C-;"     #'salih/rename-or-iedit
