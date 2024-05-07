@@ -84,6 +84,7 @@
       indent-bars-width-frac                            0.25
 
       ;; other
+      dired-preview-delay                               0.1
       safe-local-variable-values                        '((org-download-image-dir
                                                            . "../i")
                                                           (salih/rebuild . t))

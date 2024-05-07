@@ -118,3 +118,4 @@
 (package! spacious-padding)
 
 (package! org-fc)
+(package! dired-preview)
