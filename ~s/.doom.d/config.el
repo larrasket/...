@@ -5,7 +5,6 @@
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
-(require 'org-fc)
 
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"

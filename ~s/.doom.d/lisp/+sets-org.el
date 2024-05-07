@@ -23,6 +23,7 @@
 
 
 (after! org
+  (require 'org-fc)
   (setq org-bullets-bullet-list                           '("◉" "✸" "✿" "♥" "●")
         org-id-method                                     'org
         org-log-into-drawer                               "STATS"
