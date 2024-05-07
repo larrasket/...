@@ -37,16 +37,35 @@
 
 
 (setq salih/prefered-themes '(ef-autumn
+                              doom-ayu-dark
+                              doom-ayu-mirage
+                              doom-badger
+                              doom-challenger-deep
+                              doom-ephemeral
                               doom-feather-dark
-                              doom-gruvbox
+                              doom-henna
+                              doom-horizon
+                              doom-lantern
+                              doom-material
+                              doom-material-dark
+                              doom-monokai-classic
                               doom-monokai-pro
                               doom-monokai-spectrum
                               doom-old-hope
-                              doom-palenight
                               doom-peacock
                               doom-rouge
+                              kaolin-aurora
+                              kaolin-blossom
+                              kaolin-bubblegum
+                              kaolin-dark
+                              kaolin-eclipse
+                              kaolin-galaxy
+                              kaolin-ocean
+                              kaolin-temple
+                              kaolin-valley-dark
                               ef-bio
                               ef-cherie
+                              ef-dark
                               ef-deuteranopia-dark
                               ef-duo-dark
                               ef-elea-dark
@@ -54,7 +73,10 @@
                               ef-melissa-dark
                               ef-night
                               ef-symbiosis
+                              ef-trio-dark
                               ef-winter))
+
+
                               
 
 (provide '+early)
