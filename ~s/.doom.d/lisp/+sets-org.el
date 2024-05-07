@@ -32,14 +32,13 @@
         org-agenda-skip-scheduled-if-done                 nil
         org-use-tag-inheritance                           t
         org-agenda-block-separator                        9472
-        org-clock-mode-line-total                         'today
         org-element-use-cache                             t
         org-noter-auto-save-last-location                 t
         org-startup-folded                                'show2levels
         org-image-actual-width                            600
         org-link-file-path-type                           'relative
         org-agenda-show-future-repeats                    nil
-        org-clock-mode-line-total                         'current
+        org-clock-mode-line-total                         'today
         ;; FIXME this is useful to hide the title name from the org clock,
         ;; however it might be inconsistent. Better should be redefining
         ;; `org-clock-get-clock-string'. I wouldn't overwrite it myself since it
