@@ -1,3 +1,8 @@
+/home/l/me/music/30jan/شاهد ركلات الترجيح من مباراة السنغال وكوت ديفوار (5-4).mp3
+/home/l/me/music/30jan/شاهد ركلات الترجيح من مباراة السنغال وكوت ديفوار (5-4).webm
+/home/l/me/music/ewis/Abdulaziz ELmuanna _ La عبدالعزيز المعنّى _ لا.mp3
+/home/l/me/music/ewis/Mudnak (مُضْنَاكَ جَفَاهُ مَرْقَدُهُ  ( أداء صوتي  - للمطربة المصريَّة  - أنغام.mp3
+/home/l/me/music/ewis/( طلال مداح - أنا راجع أشوفك ) (192 kbps).mp3
 /home/l/me/music/n/100.mp3
 /home/l/me/music/n/101.mp3
 /home/l/me/music/n/102.mp3
@@ -526,10 +531,78 @@
 /home/l/me/music/st/89.mp3
 /home/l/me/music/st/8.mp3
 /home/l/me/music/st/9.mp3
+/home/l/me/music/trnm/4_5767139161442093285.m4a
+/home/l/me/music/trnm/4_5767396060615936071.m4a
+/home/l/me/music/trnm/4_5769199568923137439.m4a
+/home/l/me/music/trnm/4_5769199568923137440.m4a
+/home/l/me/music/trnm/4_5769199568923137441.m4a
+/home/l/me/music/trnm/4_5769199568923137442.m4a
+/home/l/me/music/trnm/4_5769199568923137443.m4a
+/home/l/me/music/trnm/4_5769199568923137444.m4a
+/home/l/me/music/trnm/4_5769343768155129677.m4a
+/home/l/me/music/trnm/4_5769647860429621206.m4a
+/home/l/me/music/trnm/4_5773671037900163496.m4a
+/home/l/me/music/trnm/4_5773671037900163547.m4a
+/home/l/me/music/trnm/4_5773671037900163551.m4a
+/home/l/me/music/trnm/4_5773671037900163554.m4a
+/home/l/me/music/trnm/4_5778471570091542614.m4a
+/home/l/me/music/trnm/4_5780384625834592349.m4a
+/home/l/me/music/trnm/4_5791755702074607043.m4a
+/home/l/me/music/trnm/4_5794185335009183482.m4a
+/home/l/me/music/trnm/4_5814612478641833944.m4a
+/home/l/me/music/trnm/4_5828182028381587041.m4a
+/home/l/me/music/trnm/4_5839357906947933976.m4a
+/home/l/me/music/trnm/4_5841532281386174029.m4a
+/home/l/me/music/trnm/4_5841532281386174030.m4a
+/home/l/me/music/trnm/4_5857200360736688267.m4a
+/home/l/me/music/trnm/4_5866186892608801423.m4a
+/home/l/me/music/trnm/4_5875110821037606405.m4a
+/home/l/me/music/trnm/4_5875175791007893814.m4a
+/home/l/me/music/trnm/4_5877254207286807219.m4a
+/home/l/me/music/trnm/4_5897993225674688024.m4a
+/home/l/me/music/trnm/4_5900151073078774009.m4a
+/home/l/me/music/trnm/4_5913544945771219038.m4a
+/home/l/me/music/trnm/4_5936022631345032002.m4a
+/home/l/me/music/trnm/4_5936022631345032003.m4a
+/home/l/me/music/trnm/4_5944845868560550169.m4a
+/home/l/me/music/trnm/4_5944845868560550170.m4a
+/home/l/me/music/trnm/4_5947478236836399624.m4a
+/home/l/me/music/trnm/4_5949423277200901723.m4a
+/home/l/me/music/trnm/4_5949423277200901725.m4a
+/home/l/me/music/trnm/4_5949423277200901726.m4a
+/home/l/me/music/trnm/4_5949423277200901728.m4a
+/home/l/me/music/trnm/4_5956301551361329277.m4a
+/home/l/me/music/trnm/4_5958760707901097656.m4a
+/home/l/me/music/trnm/4_5960554569711748495.m4a
+/home/l/me/music/trnm/4_5960820548446455206.m4a
+/home/l/me/music/trnm/4_5963190751918556497.m4a
+/home/l/me/music/trnm/4_5965226381733267173.m4a
+/home/l/me/music/trnm/4_5967275381781169902.m4a
+/home/l/me/music/trnm/4_5967564222626793035.m4a
+/home/l/me/music/trnm/4_5974501831760414469.m4a
+/home/l/me/music/trnm/4_5976759833506876857.m4a
+/home/l/me/music/trnm/4_5978687960290166305.m4a
+/home/l/me/music/trnm/4_5978687960290166707.m4a
+/home/l/me/music/trnm/4_5980939760103852526.m4a
+/home/l/me/music/trnm/4_5985576916034258803.m4a
+/home/l/me/music/trnm/4_5990080515661629147.m4a
+/home/l/me/music/trnm/4_5992553252887988946.m4a
+/home/l/me/music/trnm/4_6019147020369921230.mp3
+/home/l/me/music/trnm/4_6021471387951039966.m4a
+/home/l/me/music/trnm/4_6023671227250378320.m4a
+/home/l/me/music/trnm/4_6025923027064063265.m4a
+/home/l/me/music/trnm/4_6026167848789869958.m4a
+/home/l/me/music/trnm/4_6043925129082177041.m4a
+/home/l/me/music/trnm/4_6046205958579816828.m4a
+/home/l/me/music/trnm/4_6050707586817198017.m4a
+/home/l/me/music/trnm/4_6050722000727442927.m4a
+/home/l/me/music/trnm/4_6050722000727442934.m4a
+/home/l/me/music/الخوف رسولي.mp3
 /home/l/me/music/selec/GEORGIAN LEGEND SAMAIA~1.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Aardia - The Prophecy.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Aaron Dunn - The Music of the Ainur.ogg
 /home/l/me/music/lik/a balladeer - Happy New Year - reprise.ogg
+/home/l/me/music/30jan/لَقَد ظَفِرت بحبلِ اللهِ فَاعْتصِمِ ｜ بُردة المديح.mp3
 /home/l/me/music/selec/Frédéric Chopin - The Nocturnes ｜ Maria João Pires, live recital.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Adamantum - Gates of the Forest Kingdom.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Adamantum - Forest Guards.ogg
@@ -537,14 +610,19 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Adrian Von Ziegler - Moonsong.ogg
 /home/l/me/music/lik/Aerosmith - Dream On.ogg
 /home/l/me/music/lik/Agalloch - A Celebration For The Death Of Man.ogg
+/home/l/me/music/31dec/ألا يا أيها الساقي أدر كأسا وناولها.mp3
 /home/l/me/music/lik/Ahmad Kaabour - Ounadikom.ogg
+/home/l/me/music/2019/reading/Chet Baker - Estate.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Aindulmedir - Wind-Bitten.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Aindulmedir - Winter And Slumber.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Aindulmedir - Snow Above Blue Fire.ogg
+/home/l/me/music/ewis/Akher Zapheer - آخر زفير - Unknown Akher Zapheer - آخر زفير -  - Akherto Lahen Hazeen - اخرتو لحن حزين.mp3
 /home/l/me/music/selec/Dvorak - Romance for piano and violin, Op.11.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Alex Crispin - Endless Dark.ogg
+/home/l/me/music/ewis/Al Farabi Music - الفارابي - Unknown Al Farabi Music - الفارابي -  - Story of a King - قصة ملك.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Alhazred - The Nameless City.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Alhazred - The Great Old Ones.ogg
+/home/l/me/music/2019/ليت العيون جماله تتأمل - المسجد الأقصى.mp3
 /home/l/me/music/lik/Alicia Keys - Fallin'.ogg
 /home/l/me/music/jabr/آخر الأحزاب - تراويح 1407هـ الشيخ علي جابر Ali Jaber.mp3
 /home/l/me/music/jabr/آخر الشورى تراويح 24-9-1407هـ الشيخ علي جابر Ali Jaber.mp3
@@ -817,6 +895,7 @@
 /home/l/me/music/jabr-formal/012.mp3
 /home/l/me/music/pa/لبيك اسلام البطولة أداء فرقة الروابي الفنية Alrawabi Band.mp3
 /home/l/me/music/lik/America - A Horse with No Name.ogg
+/home/l/me/music/ewis/Amira Meftahi - Unknown Amira Meftahi -  - TARABBAND - Baghdad Choby طرب باند بغداد شوبي.mp3
 /home/l/me/music/selec/Arvo Pärt ＂Spiegel im Spiegel＂ for Violin & Piano.mp3
 /home/l/me/music/class/Beethoven - Moonlight Sonata (FULL).mp3
 /home/l/me/music/lik/Angel Olsen - Unfucktheworld.ogg
@@ -835,6 +914,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Arath - In Misty Forests.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Arcana - Somnolence.ogg
 /home/l/me/music/lik/Armistice - City Lights Cry.ogg
+/home/l/me/music/2019/reading/Out of time - مُنتهي.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Arthuros - As I Pass Through The Moongate.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Arthuros - The Vision Of The Northern Star.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Arthuros - Genesis Of A New Goddess.._.ogg
@@ -843,9 +923,13 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Asgar - In the Eternity.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Asgar - Bifrost.ogg
 /home/l/me/music/selec/Tchaikovsky： Violin Concerto op.35 & Romeo and Juliet Fantasy Overture - Live Concert HD.mp3
+/home/l/me/music/30jan/موكب العشاق فدوى المالكى .mp3.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Basarabian Hills - Snowflakes.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Basarabian Hills - Phantasmagoria.ogg
 /home/l/me/music/shi/جدّاه ｜ الرادود باسم الكربلائي.mp3
+/home/l/me/music/shi/قارورة ｜ الرادود باسم الكربلائي.mp3
+/home/l/me/music/shi/سواد الطف ｜ الرادود باسم الكربلائي.mp3
+/home/l/me/music/shi/يا أحلامي ｜ الرادود باسم الكربلائي.mp3
 /home/l/me/music/lik/Beautiful Death - In the Forest.ogg
 /home/l/me/music/selec/Schumann    Arabeske    Op 18        Rubinstein   Rec 1969.wmv.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/048. Bedřich Smetana - (1877) Má vlast (Vltava).mp3
@@ -862,6 +946,7 @@
 /home/l/me/music/lik/Black Sabbath - Solitude.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Blakagir - Mystery From Grave.ogg
 /home/l/me/music/lik/Blueneck - Seven.ogg
+/home/l/me/music/09feb/قصيدة المنفرجة - آداء حسن عريبي.mp3
 /home/l/me/music/lik/Brazzaville - Magura.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Burzum - Dunkelheit.ogg
 /home/l/me/music/My Playlist #23/02 - Calexico - Banderilla.ogg
@@ -907,6 +992,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/David Terry - Slowly, Slowly, Up Into The Rain We Fell.ogg
 /home/l/me/music/lik/Death In June - The Mourner's Bench.ogg
 /home/l/me/music/lik/Death In June - Little Black Angel.ogg
+/home/l/me/music/03/Runes and Men.mp3
 /home/l/me/music/lik/Declan McKenna - Brazil.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Den Sorte Død - Ensomhedens Slette.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Den Sorte Død - Undergangen.ogg
@@ -918,6 +1004,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/DIM - Edge of Town.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/DIM - Sellsword's Grotto.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/DIM - Ellendrial's Lullaby.ogg
+/home/l/me/music/2019/reading/Modigliani - soundtrack.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Diplodocus - Prowl of the Concavenator.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Diplodocus - Encased in Amber.ogg
 /home/l/me/music/lik/Dire Straits - Sultans Of Swing.ogg
@@ -926,6 +1013,7 @@
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/033. Dmitri Shostakovich - (1927) Symphony No. 2 in B Major, Op. 14 (Chorus_ _To October_).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/045. Dmitri Shostakovich - (1940) Piano Quintet (III. Scherzo).mp3
 /home/l/me/music/lik/Doctor Flake - Lonely Road.ogg
+/home/l/me/music/2019/Idir - A Vava Inouva.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Drachenfeuer - Valar.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Draped in Shadows - Arrival of the Hunted.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Draped in Shadows - Farewell.ogg
@@ -980,12 +1068,16 @@
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/028. Ernest Bloch - (1920) Violin Sonata No. 1 (Molto quieto).mp3
 /home/l/me/music/lik/Ernesto Cortazar - Beethoven's Silence.ogg
 /home/l/me/music/lik/Ernest Ranglin - Surfin'.ogg
+/home/l/me/music/2019/يمكن لو - Yemken law.mp3
 /home/l/me/music/lik/Evgeny Grinko - Valse.ogg
 /home/l/me/music/lik/Evgeny Grinko - Carousel.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Evilfeast - Solitude Apotheosis.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Evilfeast - Winter Descent's Eve... I Become the Journey.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Evilnox - Beauty Never Dies.ogg
 /home/l/me/music/تريز سليمان شهرزاد - SHAHRZAD music video.mp3
+/home/l/me/music/2019/Before The Storm.mp3
+/home/l/me/music/2019/reading/IF.mp3
+/home/l/me/music/30jan/فدوى المالكي - قلبي يُحدّثني بأنّك مُتلِفي ⧸ قصيدة ابن الفارض.mp3
 /home/l/me/music/lik/Faia Younan - Ohebbou Yadayka.ogg
 /home/l/me/music/lik/Fairuz - Saaltak Habiby_1.ogg
 /home/l/me/music/My Playlist #23/01 - Fairuz - Al Bostah.ogg
@@ -1041,6 +1133,7 @@
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/046. Georges Bizet - (1875) Carmen (Act 1 - Sur la place).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/004. Georges Bizet - (1885) The Pearl Fishers (Act I Scene 1).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/005. Georg Friedrich Haendel - (1741) Messiah (Comfort Ye My People).mp3
+/home/l/me/music/09feb/محمد رويشة ايناس اناس Rwicha nasi nass.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/025. Giacomo Meyerbeer - (1836) Les Huguenots (Act I).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/032. Giacomo Puccini - (1926) Turandot (Act III_ Nessun dorma).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/018. Gioachino Rossini - (1816) Il barbiere di Siviglia (The Barber of Seville) (Act I_ Cavatina_ Largo al factotum della citta).mp3
@@ -1065,6 +1158,7 @@
 /home/l/me/music/selec/The Best of Baroque Music.mp3
 /home/l/me/music/selec/Bach： Cello Collection.mp3
 /home/l/me/music/lik/Hammock - We Watched You Disappear.ogg
+/home/l/me/music/shi/ياليل اهاتك وحروف حسراتك - محمد الجنامي  ريح الدموع محرم 1441 جديد⁩.a.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/050. Hans Werner Henze - (1949) Symphony No. 2 (II_ Allegro molto vivace).mp3
 /home/l/me/music/lik/Hawa Dafi - Shebak Zgher.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Haxan Dreams - Love and The Abyss.ogg
@@ -1076,6 +1170,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Henbane - Ruinernes Væsner.ogg
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/025. Henry Fillmore - (1916) Rolling Thunder.mp3
 /home/l/me/music/lik/Henry Purcell - Purcell _ Arr. Pluhar_ The Mock Marriage, Z. 605_ No. 2, Twas Within a Furlong.ogg
+/home/l/me/music/30jan/‎فدوى المالكي _ لا تَعـذَلِيـه.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Hermit Knight - once.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Hermit Knight - it's time to rest my friend (the rainbow bridge is calling).ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Hewer of Caves - Mountain Summit Tavern.ogg
@@ -1088,6 +1183,7 @@
 /home/l/me/music/selec/Brahms： 4. Sinfonie ∙ hr-Sinfonieorchester ∙ Andrés Orozco-Estrada.mp3
 /home/l/me/music/selec/Schubert： 7. Sinfonie (»Unvollendete«) ∙ hr-Sinfonieorchester ∙ Andrés Orozco-Estrada.mp3
 /home/l/me/music/selec/Saint-Saëns： 1. Cellokonzert ∙ hr-Sinfonieorchester ∙ Bruno Philippe ∙ Christoph Eschenbach.mp3
+/home/l/me/music/2019/reading/farväl.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Iagon - Blood Passage.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Iagon - The Crystal Wizard.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Iagon - Through the Darkness.ogg
@@ -1099,6 +1195,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Ildjarn - Blackened Might.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Ildjarn - Svarte Hjerter.ogg
 /home/l/me/music/lik/I Monster - Daydream In Blue.ogg
+/home/l/me/music/2019/reading/inPersian ｜ Kayhan Kalhor - Where Are You.mp3
 /home/l/me/music/lik/Interpol - Rest My Chemistry.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Isegrimm - Hiltibrant Enti Hadubrant.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Isegrimm - Ort Widar Orte.ogg
@@ -1138,8 +1235,12 @@
 /home/l/me/music/lik/Joy Division - Love Will Tear Us Apart - 2020 Remaster.ogg
 /home/l/me/music/lik/j^p^n - Bloom.ogg
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/012. Jules Massenet - (1897) Méditation (Thaïs).mp3
+/home/l/me/music/03/جوليا بطرس - عاب مجدك (مقاومة) ⧸ لايف في بلاتيا  ｜ Julia Boutros - 3aba Majdaka Platea 2014.mp3
 /home/l/me/music/lik/KALEO - Break My Baby.ogg
 /home/l/me/music/lik/KALEO - Alter Ego.ogg
+/home/l/me/music/music/شهرزاد   تريز سليمان - شتا.mp3
+/home/l/me/music/30jan/Requiem For A Dream - Kate Chruscicka - Electric Violinist  - Clint Mansell.mp3
+/home/l/me/music/03/فدوى المالكي⧸ وحقك أنت المنى والطلب.mp3
 /home/l/me/music/lik/Kid Kio - House of Sand.ogg
 /home/l/me/music/lik/Kirsty McGee - Sandman.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Kobold - No Way Out.ogg
@@ -1191,6 +1292,7 @@
 /home/l/me/music/selec/F. Liszt - ＂Ständchen＂ Piano Transcriptions After Schubert - Khatia Buniatishvili.mp3
 /home/l/me/music/lik/Les Discrets - Linceul d'hiver.ogg
 /home/l/me/music/lik/Lhasa De Sela - Love Came Here.ogg
+/home/l/me/music/fab/Al Farabi - story of a king ⧸ الفارابي - قصة ملك.mp3
 /home/l/me/music/lik/Lilium - Sleeping Inside.ogg
 /home/l/me/music/lik/Lilium - Goodbye Llano.ogg
 /home/l/me/music/lik/Lin Pesto - Maazallah (YGA).ogg
@@ -1214,10 +1316,25 @@
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/020. Ludwig van Beethoven - (1824) Symphony No. 9 In D Minor, Op. 125 Choral (II. Molto vivace; Presto).mp3
 /home/l/me/music/lik/Luke Faulkner - Comptine d'un autre été No. 2.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Machina Coeli - Approaching the Forgotten Lake.ogg
+/home/l/me/music/03/فدوى المالكي-عبده الحامولي-أراك عصي الدمع.mp3
 /home/l/me/music/pa/احلف  بسمها وتربها لعبد الحليم حافظ.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Malfet - Farewell to Gaste Forest.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Malfet - Lost in Broceliande.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Malfet - Joyeuse Garde Idyll.ogg
+/home/l/me/music/03/فدوى المالكي والجبالي .. قصيدة ⧸ اهوى حبيبى.mp3
+/home/l/me/music/03/فدوي المالكي ⧸ قصيدة  موكب العشاق.mp3
+/home/l/me/music/30jan/قصيدة أضحي التنائي ⧸ فدوى المالكي.mp3
+/home/l/me/music/03/قصيدة أذاب التبر في كاس اللجين ⧸ فدوي المالكي.mp3
+/home/l/me/music/30jan/قصيدة أذاب التبر في كاس اللجين ⧸ فدوي المالكي.mp3
+/home/l/me/music/03/قصيدة  ادر ذكر من اهوي . فدوي المالكي.mp3
+/home/l/me/music/30jan/بردة المديح للامام البوصيري ⧸ فدوي المالكي.mp3
+/home/l/me/music/30jan/قصيدة جادك الغيث ⧸ فدوي المالكي.mp3
+/home/l/me/music/30jan/قصيدة ياظبية البان ⧸ فدوي المالكي.mp3
+/home/l/me/music/30jan/ياليل الصب متي غده ⧸  فدوي المالكي.mp3
+/home/l/me/music/30jan/قصيدة نالت علي يدها ⧸ فدوي المالكي.mp3
+/home/l/me/music/03/قصيدة قلبي يحدثني ⧸ فدوي المالكي 🎶.mp3
+/home/l/me/music/30jan/قصيدة والله ماطلعت شمس ولاغربت ⧸ فدوي المالكي 🎶.mp3
+/home/l/me/music/30jan/‎⁨قلبي يحدثُني - فدوى المالكي ⁩.mp3
 /home/l/me/music/class/Mozart - Requiem - Dies irae - Herreweghe.mp3
 /home/l/me/music/lik/Marika Hackman - Claude's Girl.ogg
 /home/l/me/music/selec/Samuel Barber - Adagio for Strings.mp3
@@ -1297,6 +1414,7 @@
 /home/l/me/music/selec/Lang Lang -- Träumerei (Kinderszenen, Op. 15 No. 7), Schumann.mp3
 /home/l/me/music/pa/( حلاويلا يا حلاويلا ) الشيخ امام ＊ أحمد فؤاد نجم.mp3
 /home/l/me/music/selec/Elgar - Nimrod (from ＂Enigma Variations＂).mp3
+/home/l/me/music/2019/reading/Peyman yazdanian . Suiet.mp3
 /home/l/me/music/31may/Hit the road jack - Ray Charles.mp3
 /home/l/me/music/lik/Michael Jackson - Billie Jean.ogg
 /home/l/me/music/lik/Midlake - The Fairest Way.ogg
@@ -1305,6 +1423,7 @@
 /home/l/me/music/class/Mozart： Requiem in D minor, K. 626 - III. Sequentia： Confutatis (Chorus) ⧸ Karl Böhm.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Mistigo Varggoth Darkestra - The Key To The Gates Of Apocalypses.ogg
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/001. Modest Mussorsky - (1881) A Night On Bald Mountain.mp3
+/home/l/me/music/03/فدوى المالكي - الأوله في الغرام.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Moloch - Die Stille in mir (rehearsal piano).ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Moloch - Enthroned! Thy Unholy Spirit!.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Monastery - Part I_ A Violet Vigil.ogg
@@ -1324,10 +1443,12 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Mortiis - Bleed Like You - Merzbow Version.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Mosegrodd - Tales of the Ancient Era.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Mosegrodd - Song of the Valkyries.ogg
+/home/l/me/music/30jan/فدوى المالكي - السيف أصدق.mp3
 /home/l/me/music/lik/Motorama - Red Drop.ogg
 /home/l/me/music/class/Toccata and Fugue in D Minor (Best Version Ever).mp3
 /home/l/me/music/1769 - the ＂Industrial Revolution＂ incident (Trollge).mp3
 /home/l/me/music/lik/Mr & Mrs Cello - Tu Sei - Arr. for Two Cellos.ogg
+/home/l/me/music/2019/reading/Khaled Mouzanar -Un Air de Liberté.mp3
 /home/l/me/music/menshawy/سورة ابراهيم المنشاوي الاذاعة المصرية.mp3
 /home/l/me/music/menshawy/سورة الاحزاب المنشاوي الاذاعة المصرية.mp3
 /home/l/me/music/menshawy/سورة الاحقاف المنشاوي الاذاعة المصرية.mp3
@@ -1442,6 +1563,7 @@
 /home/l/me/music/menshawy/سورة يوسف المنشاوي الاذاعة المصرية.mp3
 /home/l/me/music/menshawy/سورة يونس المنشاوي الاذاعة المصرية.mp3
 /home/l/me/music/menshawy/سورة الإنسان المنشاوي الإذاعة المصرية.mp3
+/home/l/me/music/2019/reading/Karim Baggili Featuring Le Trio Jubran - Ella & Jad الثلاثي جبران.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Müldeponie - The Other Side, Pt. 1.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Murgrind - Gate of Stone.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Murgrind - Palace of Oblivion.ogg
@@ -1484,6 +1606,8 @@
 /home/l/me/music/lik/No Blues - Empty Bottle.ogg
 /home/l/me/music/lik/No Blues - The Whisper.ogg
 /home/l/me/music/lik/No Blues - Hela Hela Live.ogg
+/home/l/me/music/last/Hard Killing Floor.mp3
+/home/l/me/music/03/Into the Caravan.mp3
 /home/l/me/music/lik/No Blues - Into the Caravan.ogg
 /home/l/me/music/lik/No Blues - Imta.ogg
 /home/l/me/music/lik/No Blues - Two Trains.ogg
@@ -1533,6 +1657,7 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Pendragon - Uther's Lust.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Pendragon - Morgana (A Calling A Journey An Ambition).ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Penitent - Det Sorte Tjern.ogg
+/home/l/me/music/2019/reading/On the wind.mp3
 /home/l/me/music/lik/Piers Faccini - The Beggar & the Thief.ogg
 /home/l/me/music/lik/Piers Faccini - Lay Low to Lie.ogg
 /home/l/me/music/lik/Pink Floyd - Julia Dream.ogg
@@ -1552,9 +1677,11 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Quest Master - Cathedral of Glistening Hope.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Quest Master - Cloudy Gateways.ogg
 /home/l/me/music/lik/Racha Rizk - Yimkin Law.ogg
+/home/l/me/music/09feb/Ya Rayah.mp3
 /home/l/me/music/lik/Radiohead - Nude.ogg
 /home/l/me/music/lik/Radiohead - Jigsaw Falling Into Place.ogg
 /home/l/me/music/class/Swan Lake, Op. 20, Act II： No. 13, Dances of the Swans.mp3
+/home/l/me/music/2019/reading/L.Michelini - Desolation.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/020. Ralph Vaughan Williams - (1910) Fantasia on a Theme by Thomas Tallis.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/029. Ralph Vaughan Williams - (1921) The Lark Ascending.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/030. Ralph Vaughan Williams - (1923) English Folk Song Suite (II_ Intermezzo My Bonny Boy).mp3
@@ -1569,7 +1696,9 @@
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/034. Richard Wagner - (1856) Die Walküre, WWV 86B (Ride of the Valkyries).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/037. Richard Wagner - (1865) Tristan and Isolde, WWV. 90.mp3
 /home/l/me/music/lik/Rise Against - Savior.ogg
+/home/l/me/music/2019/reading/Christoph Rezaei - Kanaan (soundtrack).mp3
 /home/l/me/music/lik/Riverside - The Day After.ogg
+/home/l/me/music/shi/مواطنٌ بلاوطن، قصيدة للشاعر الكبير عبدالله البردوني مُغناةً بصوت عبدالفتاح القباطي.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD1/033. Robert Schumann - (1852) Symphony No. 4, D minor, Op. 120 (IV. Langsam - Lebhaft).mp3
 /home/l/me/music/lik/Rogér Fakhr - Sad Sad Songs.ogg
 /home/l/me/music/class/Mozart - Lacrimosa.mp3
@@ -1580,10 +1709,12 @@
 /home/l/me/music/dung/The Sound of Dungeon Synth/Rune Realms - Call of the Glow Wisp.ogg
 /home/l/me/music/lik/Rusted Doors - Memories of a Ghost.ogg
 /home/l/me/music/class/Erik Satie - Gymnopédies.mp3
+/home/l/me/music/2019/reading/آب و آتش - پیمان یزدانیان ⧸ Water & Fire - Peyman Yazdanian.mp3
 /home/l/me/music/lik/Sakin - Yağmur Güncesi.ogg
 /home/l/me/music/shia/في درب فاطمة ｜ حسين خيرالدين.mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/040. Samuel Barber - (1934) Adagio for Strings.mp3
 /home/l/me/music/lik/Sean Dagher - Leave Her Johnny.ogg
+/home/l/me/music/2019/پالیوشکا پولیه  (Полюшко-поле).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/035. Sergei Prokofiev - (1929) Symphony No. 4, Op. 112 (III_ Moderato quasi allegretto).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/039. Sergei Prokofiev - (1933) Lieutenant Kije, Op. 60 (Troika).mp3
 /home/l/me/music/VA - 100 Best Ever Pieces of the Greatest Classical Music (2021) Mp3 320kbps [PMEDIA] ⭐️/CD2/043. Sergei Prokofiev - (1938) Romeo and Juliet (Scene II_ No. 13, Dance of the knights).mp3
@@ -1614,12 +1745,14 @@
 /home/l/me/music/lik/Silent Whale Becomes a Dream - Sweet Burning Melancholia.ogg
 /home/l/me/music/lik/Sleep Party People - Notes to You.ogg
 /home/l/me/music/lik/Slowdive - Dagger.ogg
+/home/l/me/music/2019/Rebuilding Memories.mp3
 /home/l/me/music/dung/The Sound of Dungeon Synth/Sojourner - Relics of the Natural Realm.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Sombre Arcane - Far from the Hold of the Sea Princes.ogg
 /home/l/me/music/dung/The Sound of Dungeon Synth/Sombre Arcane - Return from Dragonspear.ogg
 /home/l/me/music/lik/Sorry - Starstruck - Single Version.ogg
 /home/l/me/music/lik/Souad Massi - Ghir Enta.ogg
 /home/l/me/music/selec/Mischa Maisky plays Bach Cello Suite No.1 in G (full).mp3
+/home/l/me/music/31dec/Black Mirror OST - Bing Abi.mp3
 /home/l/me/music/lik/Sting - Englishman In New York.ogg
 /home/l/me/music/lik/Stone Sour - Wicked Game - Acoustic; Live.ogg
 /home/l/me/music/lik/Stone Sour - Home Again.ogg
@@ -1688,6 +1821,8 @@
 /home/l/me/music/Camille Saint-Saëns - Danse Macabre, OP. 40 - Leopold Stokowski - National Philharmonic Orchestra.mp3
 /home/l/me/music/lik/Trapt - Headstrong.ogg
 /home/l/me/music/lik/Travis - Happy To Hang Around.ogg
+/home/l/me/music/2019/reading/El valse (Eleni Karaindrou).mp3
+/home/l/me/music/2019/reading/Besame Mucho.mp3
 /home/l/me/music/lik/Trygve Seim - Sol’s Song.ogg
 /home/l/me/music/lik/TSU! - Prince Of Gumbay.ogg
 /home/l/me/music/lik/Turkish Delight - Cascade.ogg
@@ -1746,6 +1881,7 @@
 /home/l/me/music/lik/Yom - Everywhere Home.ogg
 /home/l/me/music/lik/Youn Sun Nah - Jockey Full of Bourbon.ogg
 /home/l/me/music/lik/Владимир Высоцкий - Вариации на цыганские темы.ogg
+/home/l/me/music/31dec/لامية أبي طالب ｜ ولما رأيت القوم لا وُد فيهمُ ..｜ ملحنة.mp3
 /home/l/me/music/pa/لطيفة التونسية - لبيك يا علم العروبة مع الكلمات.mp3
 /home/l/me/music/pa/نشيد حزب البعث القومي العربي مع الكلمات.mp3
 /home/l/me/music/pa/نشيد سورية يا حبيبتي مع الكلمات.mp3
@@ -1760,8 +1896,41 @@
 /home/l/me/music/mystical/وقفت بالذل في أبواب عزكم.mp3
 /home/l/me/music/mystical/يا سائق الأفكار.mp3
 /home/l/me/music/mystical/n/يا ظاهرا في المظاهر.mp3
+/home/l/me/music/30jan/قصيده يامصطفى لشاعر عبدالله البردوني.mp3
 /home/l/me/music/pa/أخبرني ⧸ حسين خير الدين.mp3
 /home/l/me/music/pa/اذان العشق ｜ سيد سلام الحسيني [ محرم 1445 هجري ].mp3
+/home/l/me/music/03/فدوى المالكي - أدر ذكر من أهوى...mp3
+/home/l/me/music/shi2/يا عدتي في كربتي ｜ باسم الكربلائي.mp3
 /home/l/me/music/kamil.mp3
 /home/l/me/music/31may2/دعاء كميل بصوت الشهيد محمد أبو الحسن.mp3
+/home/l/me/music/ewis/10 Eh Fi Amal.mp3
+/home/l/me/music/ewis/Ams_Entaheyna.mp3
+/home/l/me/music/ewis/Qadeesh_Kan_Fee_Nas.mp3
+/home/l/me/music/ewis/Saalone_El_Nas.mp3
+/home/l/me/music/laquran/سورة آل عمران - لفضيلة الشيخ عبدالله القرافي حفظه الله تلاوة مميزة.mp3
+/home/l/me/music/laquran/سورة إبراهيم لفضيلة الشيخ عبدالله القرافي تلاوة ابداعية مُحبّرة.mp3
+/home/l/me/music/laquran/سورة الأعراف - فضيلة الشيخ عبدالله القرافي  تلاوة مؤثرة خاشعة.mp3
+/home/l/me/music/laquran/سورة الأنبياء تلاوة تفسيرية جميلة لفضيلة الشيخ عبدالله القرافي.mp3
+/home/l/me/music/laquran/سورة الأنعام لفضيلة الشيخ عبدالله القرافي تلاوة محبّرة خاشعة.mp3
+/home/l/me/music/laquran/سورة الأنفال - لفضيلة الشيخ عبدالله القرافي تلاوة خاشعة تفسيرية.mp3
+/home/l/me/music/laquran/سورة الإسراء لفضيلة الشيخ عبدالله القرافي تلاوة حجازية ماتعة.mp3
+/home/l/me/music/laquran/سورة البقرة - لفضيلة الشيخ عبدالله القرافي حفظه الله.mp3
+/home/l/me/music/laquran/سورة التوبة فضيلة الشيخ عبدالله القرافي حفظه الله تلاوة خاشعة محبّرة.mp3
+/home/l/me/music/laquran/سورة الحجر لفضيلة الشيخ عبدالله القرافي تلاوة خاشعة.mp3
+/home/l/me/music/laquran/سورة الحج لفضيلة الشيخ عبدالله القرافي تلاوة خاشعة مؤثرة.mp3
+/home/l/me/music/laquran/سورة الرعد لفضيلة الشيخ عبدالله القرافي تلاوة خاشعة مؤثرة.mp3
+/home/l/me/music/laquran/سورة الفاتحة - لفضيلة الشيخ عبدالله القرافي حفظه الله.mp3
+/home/l/me/music/laquran/سورة الكهف لفضيلة الشيخ عبدالله القرافي تلاوة جميلة خاشعة.mp3
+/home/l/me/music/laquran/سورة المؤمنون تلاوة هادئة مميزة للشيخ عبدالله القرافي.mp3
+/home/l/me/music/laquran/سورة المائدة لفضيلة الشيخ عبدالله القرافي تلاوة أخّاذة خاشعة.mp3
+/home/l/me/music/laquran/سورة النحل لفضيلة الشيخ عبدالله القرافي حفظه الله تلاوة متقنة جميلة.mp3
+/home/l/me/music/laquran/سورة النساء - لفضيلة الشيخ عبدالله القرافي حفظه الله تلاوة متقنة تفسيرية.mp3
+/home/l/me/music/laquran/سورة النور تلاوة جميلة للشيخ عبدالله القرافي حفظه الله.mp3
+/home/l/me/music/laquran/سورة طه لفضيلة الشيخ عبدالله القرافي تلاوة خاشعة متقنة.mp3
+/home/l/me/music/laquran/سورة مريم لفضيلة الشيخ عبدالله القرافي تلاوة مميزة محبرة.mp3
+/home/l/me/music/laquran/سورة هود تلاوة استثنائية ابداعية للشيخ عبدالله القرافي.mp3
+/home/l/me/music/laquran/سورة يوسف لفضيلة الشيخ عبدالله القرافي تلاوة ابداعية أخّاذة.mp3
+/home/l/me/music/laquran/سورة يونس لفضيلة الشيخ عبدالله القرافي تلاوة جميلة محبرة.mp3
+/home/l/me/music/laquran/سورة يوسف ｜ تلاوة آسرة شجيّة حزينة لفضيلة الشيخ عبدالله القرافي حفظه الله.mp3
+/home/l/me/music/31dec/ليث المعركة ｜  محمد الخياط ｜ Video Clip 2018.mp3
 /home/l/me/music/31may2/ناد عليا مظهر العجائب - باسم الكربلائي.mp3
