@@ -37,8 +37,6 @@
 
 
 (setq salih/prefered-themes '(ef-autumn
-                              doom-ayu-dark
-                              doom-ayu-mirage
                               doom-badger
                               doom-challenger-deep
                               doom-ephemeral
