@@ -52,8 +52,6 @@
                               doom-old-hope
                               doom-peacock
                               doom-rouge
-                              kaolin-aurora
-                              kaolin-blossom
                               kaolin-bubblegum
                               kaolin-dark
                               doom-monokai-spectrum
