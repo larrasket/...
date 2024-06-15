@@ -98,10 +98,10 @@
 
 
       ;; translation
-      gts-translate-list                                '(("en" "ar"))
-      gts-default-translator                            (gts-translator
-                                                         :picker        (gts-prompt-picker)
-                                                         :engines (list (gts-google-engine))
-                                                         :render        (gts-buffer-render)))
+      gt-langs                                          '(("en" "ar"))
+      gt-default-translator                             (gts-translator
+                                                         :taker   (gt-taker :text 'buffer :pick 'paragraph)
+                                                         :engines (list (gt-google-engine))
+                                                         :render        (gt-buffer-render)))
 
 (provide '+sets-inhibit)
