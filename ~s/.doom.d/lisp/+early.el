@@ -56,14 +56,17 @@
                               kaolin-blossom
                               kaolin-bubblegum
                               kaolin-dark
+                              doom-monokai-spectrum
                               kaolin-eclipse
                               kaolin-galaxy
                               kaolin-ocean
                               kaolin-temple
                               kaolin-valley-dark
+                              doom-monokai-spectrum
                               ef-bio
                               ef-cherie
                               ef-dark
+                              doom-monokai-spectrum
                               ef-deuteranopia-dark
                               ef-duo-dark
                               ef-elea-dark
@@ -73,7 +76,6 @@
                               ef-symbiosis
                               ef-trio-dark
                               ef-winter))
-
 
                               
 
