@@ -99,7 +99,7 @@
 
       ;; translation
       gt-langs                                          '(("en" "ar"))
-      gt-default-translator                             (gts-translator
+      gt-default-translator                             (gt-translator
                                                          :taker   (gt-taker :text 'buffer :pick 'paragraph)
                                                          :engines (list (gt-google-engine))
                                                          :render        (gt-buffer-render)))
