@@ -37,21 +37,9 @@
 (package! org-web-tools)                ; viewing urls in org
 (package! ob-julia-vterm)               ; for usage, see maxima or sage-shell
 
-(package! org-media-note
-  :recipe (:host github
-           :repo "yuchen-lea/org-media-note"))
-
 (package! indent-bars
   :recipe (:host github
            :repo "jdtsmith/indent-bars"))
-
-(package! explain-pause-mode
-  :recipe (:host github
-           :repo "lastquestion/explain-pause-mode"))
-
-(package! dired-auto-readme
-  :recipe (:host github
-           :repo "amno1/dired-auto-readme"))
 
 (package! ox-tufte
   :recipe (:host github
@@ -115,7 +103,7 @@
 (package! ef-themes)
 (package! breadcrumb)
 
-(package! spacious-padding)
+(package! spacious-padding :disable t)
 
 (package! org-fc)
 (package! dired-preview)

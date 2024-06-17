@@ -3,7 +3,6 @@
 
 (after! org
   (require 'org-inlinetask)
-  (require 'org-media-note)
   (require 'org-roam-protocol)
   (require 'org-download)
   (custom-set-faces

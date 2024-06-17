@@ -86,7 +86,6 @@
 (add-hook 'eshell-alias-load-hook       #'salih/eshell-load-bash-aliases)
 ;; (add-hook 'dired-after-readin-hook      #'salih/dired-git-info-auto-enable)
 (add-hook 'org-roam-find-file-hook      #'git-auto-commit-mode)
-;; (add-hook 'dired-mode-hook              #'dired-auto-readme-mode)
 (add-hook 'after-make-frame-functions   (lambda (frame)
                                           (with-selected-frame frame
                                             (if (doom-theme?)
@@ -162,7 +161,7 @@ a good understanding. His praise endures forever. ")))
                                         ;; usually I disable it only w/ doom
                                         ;; themes.
                                         ;; (doom-theme?)
-                                        (spacious-padding-mode -1)
+                                        ;; (spacious-padding-mode -1)
                                         (remove-hook! 'dired-mode-hook #'all-the-icons-dired-mode)))
 
 
