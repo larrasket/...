@@ -895,8 +895,7 @@ tasks."
                            (run-hook-with-args 'org-roam-post-node-insert-hook
                                                id
                                                description)))
-                     (find-file (org-roam-node-file
-                                 (org-roam-node-from-title-or-alias name)))))
+                     (org-roam-node-visit (org-roam-node-from-title-or-alias name))))
 
         :new ,(lambda (name)
                 (let* ((n (org-roam-node-create :title name)))
