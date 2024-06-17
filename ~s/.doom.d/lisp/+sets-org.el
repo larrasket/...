@@ -369,7 +369,8 @@
  (add-to-list 'org-tags-exclude-from-inheritance "@read")
  (add-to-list 'org-tags-exclude-from-inheritance "@current")
  (add-to-list 'org-tags-exclude-from-inheritance "noexport")
- (add-to-list 'org-tags-exclude-from-inheritance "project"))
+ (add-to-list 'org-tags-exclude-from-inheritance "project")
+ (add-to-list 'org-tags-exclude-from-inheritance "drill"))
  
 
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
