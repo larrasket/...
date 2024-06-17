@@ -79,21 +79,20 @@ or not."
 (setq-default mode-line-format
               '("%e"
                 (:eval (doom-modeline-segment--bar))
-                " "
-                (:eval (list
+                " " (:eval (list
                         (when spacious-padding-mode
-                            (all-the-icons--icon-info-for-buffer))
-                        " " (propertize
-                             (my-modeline--major-mode-name) 'face 'bold)))
-                "  "
-                (:eval (list (propertize (buffer-name)
-                      'face (cond
-                             ((buffer-modified-p) 'doom-modeline-buffer-modified)
-                             ((doom-modeline--active) 'doom-modeline-buffer-file)
-                             (t 'mode-line-inactive))
-                      'help-echo "Buffer name mouse-1: Previous buffer\nmouse-3: Next buffer"
-                      'local-map mode-line-buffer-identification-keymap)))
-                "  "
-                (:eval (doom-modeline-format--salih-line))))
+                          (all-the-icons--icon-info-for-buffer))
+                        " " (propertize (my-modeline--major-mode-name) 'face 'bold)))
+                "  " (:eval (list
+                             (propertize (buffer-name)
+                                         'face (cond
+                                                ((buffer-modified-p) 'doom-modeline-buffer-modified)
+                                                ((doom-modeline--active) 'doom-modeline-buffer-file)
+                                                (t 'mode-line-inactive))
+                                         'help-echo "Buffer name mouse-1: Previous buffer\nmouse-3: Next buffer"
+                                         'local-map mode-line-buffer-identification-keymap)))
+                "  " (:eval (list (if (derived-mode-p 'pdf-view-mode)
+                                      (propertize doom-modeline--pdf-pages) "")))
+                "  " (:eval (doom-modeline-format--salih-line))))
 
 (provide '+line)
