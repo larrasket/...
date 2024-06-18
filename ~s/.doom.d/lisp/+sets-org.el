@@ -367,6 +367,7 @@
  (add-to-list 'org-tags-exclude-from-inheritance "link")
 
  (add-to-list 'org-tags-exclude-from-inheritance "@read")
+ (add-to-list 'org-tags-exclude-from-inheritance "@write")
  (add-to-list 'org-tags-exclude-from-inheritance "@current")
  (add-to-list 'org-tags-exclude-from-inheritance "noexport")
  (add-to-list 'org-tags-exclude-from-inheritance "project")

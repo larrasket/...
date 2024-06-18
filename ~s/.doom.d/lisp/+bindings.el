@@ -62,7 +62,7 @@
 (general-define-key
  :keymaps 'nov-mode-map
  :prefix  salih/prefix-mode
- "C-t"    #'gts-do-translate)
+ "C-t"    #'gt-do-translate)
 
 
 (general-define-key
@@ -175,6 +175,7 @@
  "H-i C-b" #'orb-insert-link
  "C-n C-n" #'org-noter
  "C-n C-k" #'org-noter-kill-session
+ "C-n C-z" #'salih/org-noter-open-in-zathura
  "C-e"     nil
  "C-e C-p" #'org-pandoc-export-to-latex-pdf
  "C-r"     nil
@@ -191,6 +192,13 @@
  :after org
  :n
  "C-c C-d" #'org-deadline)
+
+(map!
+ :map org-mode-map
+ :after org
+ :v
+ "C-c C-t" #'gt-do-translate)
+
 
 (map!
  :map org-mode-map
@@ -342,9 +350,7 @@
  "C-k"     #'kill-current-buffer
  "C-w"     #'write-file
  "C-s"     nil
- "C-t"     #'gts-do-translate
- ;; "]"       #'centaur-tabs-forward
- ;; "["       #'centaur-tabs-backward
+ "C-t"     #'gt-do-translate
  "C-v"     #'magit-log-buffer-file)
 
 (map!

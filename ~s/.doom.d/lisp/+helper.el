@@ -1350,4 +1350,15 @@ without history in the file name."
   (let ((nodes (salih/get-org-roam-nodes-with-tag "drill")))
     (delete-dups (mapcar 'car nodes))))
 
+
+(defun salih/org-noter-open-in-zathura ()
+  "Get the value of a PROPERTY from the current Org heading."
+  (interactive)
+  (let ((path (org-entry-get nil "NOTER_DOCUMENT"))
+        (page (org-entry-get nil "NOTER_PAGE")))
+    (if page
+        (start-process "" nil "zathura" "-P" page path)
+      (start-process "" nil "zathura" path))))
+
+
 (provide '+helper)
