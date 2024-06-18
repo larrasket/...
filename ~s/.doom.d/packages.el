@@ -103,7 +103,7 @@
 (package! ef-themes)
 (package! breadcrumb)
 
-(package! spacious-padding :disable t)
+(package! spacious-padding)
 
 (package! org-fc)
 (package! dired-preview)
