@@ -36,44 +36,50 @@
 
 
 
-(setq salih/prefered-themes '(ef-autumn
-                              doom-badger
-                              doom-challenger-deep
-                              doom-ephemeral
-                              doom-feather-dark
-                              doom-henna
-                              doom-horizon
-                              doom-lantern
-                              doom-material
-                              doom-material-dark
-                              doom-monokai-classic
-                              doom-monokai-pro
+(setq salih/prefered-themes '(doom-peacock
+                              ef-symbiosis
                               doom-monokai-spectrum
-                              doom-old-hope
-                              doom-peacock
-                              doom-rouge
-                              kaolin-bubblegum
-                              kaolin-dark
-                              doom-monokai-spectrum
-                              kaolin-eclipse
-                              kaolin-galaxy
-                              kaolin-ocean
-                              kaolin-temple
-                              kaolin-valley-dark
-                              doom-monokai-spectrum
+                              ef-autumn
                               ef-bio
                               ef-cherie
-                              ef-dark
+                              kaolin-eclipse
+                              ef-winter
+                              kaolin-valley-dark
+                              doom-monokai-pro
+                              kaolin-temple
+                              kaolin-galaxy
+                              doom-badger
+                              kaolin-ocean
                               doom-monokai-spectrum
-                              ef-deuteranopia-dark
+                              doom-ephemeral
+                              kaolin-temple
+                              doom-monokai-spectrum
+                              doom-monokai-classic
+                              kaolin-bubblegum
+                              doom-lantern
                               ef-duo-dark
-                              ef-elea-dark
+                              doom-rouge
+                              kaolin-temple
+                              doom-material
+                              doom-horizon
                               ef-maris-dark
+                              doom-challenger-deep
+                              ef-elea-dark
                               ef-melissa-dark
-                              ef-night
-                              ef-symbiosis
+                              ef-dark
+                              kaolin-dark
                               ef-trio-dark
-                              ef-winter))
+                              doom-old-hope
+                              ef-deuteranopia-dark
+                              kaolin-temple
+                              doom-henna
+                              doom-feather-dark
+                              doom-monokai-spectrum
+                              kaolin-temple
+                              doom-material-dark
+                              ef-night))
+
+
 
                               
 
