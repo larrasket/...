@@ -60,7 +60,6 @@
                               ef-duo-dark
                               doom-rouge
                               kaolin-temple
-                              doom-material
                               doom-horizon
                               ef-maris-dark
                               doom-challenger-deep
@@ -76,7 +75,6 @@
                               doom-feather-dark
                               doom-monokai-spectrum
                               kaolin-temple
-                              doom-material-dark
                               ef-night))
 
 

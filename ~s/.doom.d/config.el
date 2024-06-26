@@ -67,14 +67,14 @@
                                                          org-cite-csl-styles-dir
                                                          "chicago-ibid.csl")
       modus-themes-org-blocks                           'gray-background
-      modus-themes-common-palette-overrides             '((bg-mode-line-active bg-inactive)
-                                                          (fg-mode-line-active fg-main)
-                                                          (bg-mode-line-inactive bg-inactive)
-                                                          (fg-mode-line-active fg-dim)
-                                                          (bg-line-number-active unspecified)
-                                                          (bg-line-number-inactive unspecified)
-                                                          (border-mode-line-active bg-main)
-                                                          (border-mode-line-inactive bg-inactive))
+      modus-themes-common-palette-overrides             '((bg-mode-line-active          bg-inactive)
+                                                          (fg-mode-line-active          fg-main)
+                                                          (bg-mode-line-inactive        bg-inactive)
+                                                          (fg-mode-line-active          fg-dim)
+                                                          (bg-line-number-active        unspecified)
+                                                          (bg-line-number-inactive      unspecified)
+                                                          (border-mode-line-active      bg-main)
+                                                          (border-mode-line-inactive    bg-inactive))
                                                           
 
       ;; indent highlight
@@ -84,6 +84,7 @@
       indent-bars-width-frac                            0.25
 
       ;; other
+      auto-save-no-message                              t
       dired-preview-delay                               0.1
       safe-local-variable-values                        '((org-download-image-dir
                                                            . "../i")
@@ -111,4 +112,3 @@
 (require '+erc)
 (require '+deep)
 (require '+line)
-
