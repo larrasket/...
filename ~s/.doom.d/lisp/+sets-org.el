@@ -207,6 +207,7 @@
                                                        (todo "TODO")
                                                        (not (scheduled))
                                                        (not (deadline))
+                                                       (not (tags "@later"))
                                                        (tags "@current"))
                                                      ((org-ql-block-header "Current:")))
 

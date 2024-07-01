@@ -16,16 +16,11 @@
       user-first-name                                   (s/ufn)
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
-      org-fc-flashcard-tag                              "drill"
-      org-fc-directories                                `(,(s/pr "main")
-                                                          ,(s/pr "other")
-                                                          ,(s/pr "references"))
 
       ;; appearanc
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
       ;; or just remove `:size`.
-
       doom-theme                                        (salih/get-random-theme)
       doom-font                                         "Pragmasevka:pixelsize=17:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-unicode-font                                 "Noto Naskh Arabic UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
@@ -48,6 +43,7 @@
       +org-capture-journal-file                         (s/pb "stack.org")
       salih/org-roam-fleet-file                         (s/pr "main" "lr.org")
       +org-capture-todo-file                            (s/pr "main" "life.org")
+
       ;; this option is useful when you are up after 00:00. set 0 to the value
       ;; yoe sleep at. if you sleep at 02:00 it should be 2, if you sleep at
       ;; 02:30 it should be 3 and so on. Org agenda for the day will not overlap
@@ -66,6 +62,11 @@
       org-cite-csl--fallback-style-file                 (f-join
                                                          org-cite-csl-styles-dir
                                                          "chicago-ibid.csl")
+      org-fc-flashcard-tag                              "drill"
+      org-fc-directories                                `(,(s/pr "main")
+                                                          ,(s/pr "other")
+                                                          ,(s/pr "references"))
+
       modus-themes-org-blocks                           'gray-background
       modus-themes-common-palette-overrides             '((bg-mode-line-active          bg-inactive)
                                                           (fg-mode-line-active          fg-main)
