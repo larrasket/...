@@ -25,6 +25,12 @@
 (defmacro s/cm (m)
   `(concat "/" user-mail-address ,m))
 
+(defmacro s/require (&rest packages)
+  `(progn
+     ,@(mapcar (lambda (pkg) `(require ,pkg)) packages)))
+
+
+
 
 (defun salih/get-random-theme ()
   (let* ((current-day (string-to-number (format-time-string "%d")))

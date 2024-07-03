@@ -96,20 +96,11 @@
       ;; (perhaps can be detected from the git history, too lazy tho). Not sure
       ;; if it is still the case
       warning-minimum-level                             :error)
-      
- 
 
-(require '+sets-email)                  ; mu4e
-(require '+sets-school)                 ; school settings (TeX)
-(require '+sets-org)                    ; org mode settings
-(require '+sets-inhibit)                ; other settings
 
-(require '+bind)
-(require '+helper)
-(unless (featurep 'tadwin) (require '+hooks))
-(require '+advice)
-(require '+bindings)
-(require '+custom)
-(require '+erc)
-(require '+deep)
-(require '+line)
+(s/require
+ '+sets-email                           ; mu4e
+ '+sets-school                          ; school settings (TeX)
+ '+sets-org                             ; org mode settings
+ '+sets-inhibit                         ; other settings
+ '+bind '+helper '+hooks '+advice '+bindings '+custom '+erc '+deep '+line)
