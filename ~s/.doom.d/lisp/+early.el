@@ -48,10 +48,8 @@
                               ef-autumn
                               ef-bio
                               ef-cherie
-                              kaolin-eclipse
                               ef-winter
                               kaolin-valley-dark
-                              doom-monokai-pro
                               kaolin-temple
                               kaolin-galaxy
                               doom-badger
