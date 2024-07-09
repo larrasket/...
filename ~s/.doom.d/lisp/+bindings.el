@@ -210,7 +210,7 @@
  "H-i C-c" #'salih/org-id-get-create-with-custom-id
  "H-i C-k" #'citar-insert-citation
  "H-i C-t" #'org-inlinetask-insert-task
- "H-i C-r" #'org-roam-node-insert
+ "H-i C-r" #'salih/org-roam-node-insert
  "H-i C-f" #'org-roam-node-insert
  "C-c C-d" #'org-download-clipboard
  "C-r C-t" #'org-roam-tag-add
