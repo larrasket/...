@@ -55,7 +55,6 @@
                               doom-badger
                               kaolin-ocean
                               doom-monokai-spectrum
-                              doom-ephemeral
                               kaolin-temple
                               doom-monokai-spectrum
                               doom-monokai-classic
