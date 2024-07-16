@@ -108,3 +108,5 @@
 (package! org-fc)
 (package! dired-preview)
 (package! kaolin-themes)
+
+(package! mixed-pitch)

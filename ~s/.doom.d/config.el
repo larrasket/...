@@ -23,7 +23,8 @@
       ;; or just remove `:size`.
       doom-theme                                        (salih/get-random-theme)
       doom-font                                         "Pragmasevka:pixelsize=17:antialias=true:hinting=true:autohint=false:hintstyle=3"
-      doom-unicode-font                                 "Noto Naskh Arabic UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
+      doom-unicode-font                                 "Amiri UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
+      doom-variable-pitch-font                          (font-spec :family "Arimo")
       doom-modeline-height                              27
       centaur-tabs-height                               22
       +doom-dashboard-ascii-banner-fn                   'salih/banner
