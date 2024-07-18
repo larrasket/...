@@ -59,7 +59,6 @@
                               doom-monokai-spectrum
                               doom-monokai-classic
                               kaolin-bubblegum
-                              doom-lantern
                               ef-duo-dark
                               doom-rouge
                               kaolin-temple

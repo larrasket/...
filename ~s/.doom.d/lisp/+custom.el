@@ -7,7 +7,8 @@
   (require 'org-download)
   (custom-set-faces
    '(org-document-title ((t (:inherit outline-8 :height 1.9 :weight bold :family "Arimo"))))
-   ;; '(org-tag ((t (:inherit org-tag :family "Arimo" :weight bold))))
+   '(org-tag ((t (:weight bold))))
+   ;; '(org-link ((t (:weight bold)))), but not when it's on titles too.
    '(org-level-1 ((t (:inherit outline-1 :height 1.2 :weight bold :family "Input Mono Condensed"))))
    '(org-level-2 ((t (:inherit outline-2 :height 1.2 :weight bold :family "Input Mono Condensed"))))
    '(org-level-3 ((t (:inherit outline-3 :height 1.0 :weight bold :family "Input Mono Condensed"))))
