@@ -1371,6 +1371,19 @@ without history in the file name."
           ((inhibit-field-text-motion t))
         (sort-subr nil 'forward-line 'end-of-line nil nil
                    (lambda (s1 s2) (eq (random 2) 0)))))))
+(defun salih/org-save-all-org-buffers ()
+  "Save all Org buffers without user confirmation asynchronously."
+  (interactive)
+  (message "Saving all Org buffers...")
+  (async-start
+   (lambda ()
+     (require 'org)
+     (save-some-buffers t (lambda () (and (derived-mode-p 'org-mode) t)))
+     (when (featurep 'org-id) (org-id-locations-save)))
+   (lambda (_)
+     (message "Saving all Org buffers... done"))))
+
+
 
 
 
