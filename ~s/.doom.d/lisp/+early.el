@@ -39,9 +39,6 @@
     selected))
     
 
-
-
-
 (setq salih/prefered-themes '(doom-peacock
                               ef-symbiosis
                               doom-monokai-spectrum
@@ -55,16 +52,12 @@
                               doom-badger
                               kaolin-ocean
                               doom-monokai-spectrum
-                              kaolin-temple
-                              doom-monokai-spectrum
                               doom-monokai-classic
                               kaolin-bubblegum
                               ef-duo-dark
                               doom-rouge
-                              kaolin-temple
                               doom-horizon
                               ef-maris-dark
-                              doom-challenger-deep
                               ef-elea-dark
                               ef-melissa-dark
                               ef-dark
@@ -72,11 +65,9 @@
                               ef-trio-dark
                               doom-old-hope
                               ef-deuteranopia-dark
-                              kaolin-temple
                               doom-henna
                               doom-feather-dark
                               doom-monokai-spectrum
-                              kaolin-temple
                               ef-night))
 
 
