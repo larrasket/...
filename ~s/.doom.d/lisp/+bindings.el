@@ -303,13 +303,13 @@
 (map!
  :prefix "C-s"
  :map 'override
- "C-d" #'+default/search-cwd
- "C-w" #'+lookup/dictionary-definition
- "C-b" #'+default/search-buffer
- "C-p" #'+default/search-project
- "C-o" #'occur
- "<escape>" #'rgrep
- "C-r" #'salih/consult-org-roam-search-org-only)
+ "C-d"          #'+default/search-cwd
+ "C-w"          #'+lookup/dictionary-definition
+ "C-b"          #'+default/search-buffer
+ "C-p"          #'+default/search-project
+ "C-o"          #'occur
+ "<escape>"     #'rgrep
+ "C-r"          #'salih/consult-org-roam-search-org-only)
 
 
 
