@@ -209,6 +209,18 @@ Version 2019-11-04 2021-02-16"
   (let ((default-directory (concat salih/source-directory "/")))
     (call-interactively 'find-file)))
 
+(defun salih/open-book-zathura ()
+  "Search for a file in ~/me and open it. If the file is a PDF, open it in Zathura."
+  (interactive)
+  (let ((default-directory (concat salih/source-directory "/")))
+    (let ((file (read-file-name "Select file: " default-directory)))
+      (if (string-equal (file-name-extension file) "pdf")
+          (start-process "zathura" nil "zathura"
+                         (expand-file-name file default-directory))
+        (find-file file)))))
+
+
+
 (defun salih/epa-encrypt-file (recipients) ;; let's hope for the best
   "Encrypt the currently opened file for RECIPIENTS and delete the original."
   (interactive

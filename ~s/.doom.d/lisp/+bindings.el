@@ -317,9 +317,10 @@
 (general-define-key
  :states 'normal
  :keymaps 'override
- "C-n C-f" #'citar-open-notes
- "C-n C-b" #'citar-open-notes
- "C-n C-o" #'salih/open-book)
+ "C-n C-f"     #'citar-open-notes
+ "C-n C-b"     #'citar-open-notes
+ "C-n C-o"     #'salih/open-book
+ "C-n C-c C-o" #'salih/open-book-zathura)
 
 
 
