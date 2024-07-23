@@ -347,6 +347,7 @@
                           ("@write" . ?W)
                           ("@check" . ?c)
                           ("@watch" . ?w)
+                          ("@else" . ?e)
                           (:endgroup)
 
 

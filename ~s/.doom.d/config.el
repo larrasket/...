@@ -101,7 +101,7 @@
 
 (s/require
  '+sets-email                           ; mu4e
- '+sets-school                          ; school settings (TeX)
+ '+sets-school                          ; school settings (TeX & BibTeX)
  '+sets-org                             ; org mode settings
  '+sets-inhibit                         ; other settings
  '+bind '+helper '+hooks '+advice '+bindings '+custom '+erc '+deep '+line)
