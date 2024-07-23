@@ -7,7 +7,7 @@
 (advice-add 'org-clock-in                       :after  #'salih/toggle-stats-on)
 
 (advice-add 'org-todo-list                      :before #'vulpea-agenda-files-update)
-(advice-add 'org-agenda-quit                    :before #'salih/org-save-all-org-buffers)
+(advice-add 'org-agenda-quit                    :before #'org-save-all-org-buffers)
 
 (setq salih/adding-note? nil)
 
