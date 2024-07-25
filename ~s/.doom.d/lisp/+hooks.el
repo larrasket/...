@@ -136,6 +136,10 @@ a good understanding. His praise endures forever. ")))
 ;; (vertico-buffer-mode)
 (global-wakatime-mode)
 (salih/keyboard-config)
+
+(if (eq (cdr (salih/get-random-theme)) 'nour)
+    (spacious-padding-mode 1))
+                                      
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)
 (salih/consult-preview-at-point)

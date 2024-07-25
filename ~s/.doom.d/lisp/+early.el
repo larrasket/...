@@ -39,36 +39,46 @@
     selected))
     
 
-(setq salih/prefered-themes '(doom-peacock
-                              ef-symbiosis
-                              doom-monokai-spectrum
-                              ef-autumn
-                              ef-bio
-                              ef-cherie
-                              ef-winter
-                              kaolin-valley-dark
-                              kaolin-temple
-                              kaolin-galaxy
-                              doom-badger
-                              kaolin-ocean
-                              doom-monokai-spectrum
-                              doom-monokai-classic
-                              kaolin-bubblegum
-                              ef-duo-dark
-                              doom-rouge
-                              doom-horizon
-                              ef-maris-dark
-                              ef-elea-dark
-                              ef-melissa-dark
-                              ef-dark
-                              kaolin-dark
-                              ef-trio-dark
-                              doom-old-hope
-                              ef-deuteranopia-dark
-                              doom-henna
-                              doom-feather-dark
-                              doom-monokai-spectrum
-                              ef-night))
+(setq salih/prefered-themes '((doom-peacock             . dark)
+                              (doom-rouge               . dark)
+                              (doom-henna               . dark)
+                              (doom-monokai-classic     . dark)
+                              (kaolin-galaxy            . dark)
+                              (ef-maris-dark            . dark)
+                              (ef-deuteranopia-light    . day)
+                              (ef-elea-dark             . dark)
+                              (ef-cherie                . dark)
+                              (doom-horizon             . dark)
+                              (ef-bio                   . dark)
+                              (doom-feather-dark        . dark)
+                              (ef-summer                . day)
+                              (ef-melissa-dark          . dark)
+                              (ef-duo-dark              . dark)
+                              (ef-spring                . day)
+                              (kaolin-valley-dark       . dark)
+                              (ef-dark                  . dark)
+                              (ef-trio-dark             . dark)
+                              (doom-monokai-spectrum    . dark)
+                              (kaolin-dark              . dark)
+                              (ef-day                   . day)
+                              (ef-duo-light             . day)
+                              (ef-deuteranopia-dark     . dark)
+                              (doom-monokai-spectrum    . dark)
+                              (ef-trio-light            . day)
+                              (doom-badger              . dark)
+                              (ef-symbiosis             . dark)
+                              (doom-monokai-spectrum    . dark)
+                              (ef-autumn                . dark)
+                              (ef-frost                 . day)
+                              (ef-light                 . day)
+                              (ef-winter                . dark)
+                              (kaolin-temple            . dark)
+                              (ef-cyprus                . nour)
+                              (kaolin-ocean             . dark)
+                              (ef-maris-light           . day)
+                              (ef-trio-light            . day)
+                              (kaolin-bubblegum         . dark)
+                              (ef-night                 . dark)))
 
 
 
