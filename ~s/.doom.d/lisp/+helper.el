@@ -1298,7 +1298,11 @@ without history in the file name."
 
 (defun salih/load-random-theme ()
   (interactive)
-  (load-theme (car (salih/get-random-theme))))
+  (load-theme (car (salih/get-random-theme 0))))
+
+(defun salih/load-tomorrow-theme ()
+  (interactive)
+  (load-theme (car (salih/get-random-theme 1))))
 
 (defun salih/org-add-week-to-timestamp ()
   "Add a week to the org timestamp at point."
