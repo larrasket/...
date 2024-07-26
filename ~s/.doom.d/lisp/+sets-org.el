@@ -172,7 +172,7 @@
                                        (org-ql-block '(and
                                                        (scheduled)
                                                        (not (done))
-                                                       (ts :from today :to today :scheduled))
+                                                       (ts-active :on today))
                                         ((org-ql-block-header "Today's tasks only")))
 
 
