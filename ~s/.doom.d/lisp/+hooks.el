@@ -20,7 +20,7 @@
            (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local)
            (setq org-hide-leading-stars t
                  fill-column 90)
-           ;; (display-line-numbers-mode -1)
+           (display-line-numbers-mode -1)
            (setq-local truncate-lines t)
            (mixed-pitch-mode)
            (git-gutter-mode -1))
@@ -137,7 +137,7 @@ a good understanding. His praise endures forever. ")))
 (global-wakatime-mode)
 (salih/keyboard-config)
 
-(if (eq (cdr (salih/get-random-theme)) 'nour)
+(if (eq (cdr (salih/get-random-theme 0)) 'nour)
     (spacious-padding-mode 1))
                                       
 (consult-org-roam-mode 1)

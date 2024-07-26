@@ -28,7 +28,7 @@
       doom-modeline-height                              27
       centaur-tabs-height                               22
       +doom-dashboard-ascii-banner-fn                   'salih/banner
-      display-line-numbers-type                         nil
+      display-line-numbers-type                         'relative
       all-the-icons-color-icons                         nil
       treemacs-position                                 'right
 
