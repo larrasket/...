@@ -24,6 +24,7 @@
 
 (after! org
   (require 'org-fc)
+  (require 'ts)
   (setq org-bullets-bullet-list                           '("◉" "✸" "✿" "♥" "●")
         org-id-method                                     'org
         org-log-into-drawer                               "STATS"
@@ -154,15 +155,27 @@
 
 
 
-        org-agenda-custom-commands '(("f" "Agenda Tasks"
+        org-agenda-custom-commands `(("f" "Agenda Tasks"
                                       ((org-ql-block '(and
                                                        (priority "A")
                                                        (todo "TODO"))
                                                      ((org-ql-block-header "High-priority tasks")))
+
+
+
                                        (org-ql-block '(and
                                                        (todo "TODO")
-                                                       (scheduled :to today))
-                                                     ((org-ql-block-header "Today's tasks")))
+                                                       (scheduled  :to ,(ts-adjust 'day -1 (ts-now))))
+                                        ((org-ql-block-header "Late tasks")))
+
+
+                                       (org-ql-block '(and
+                                                       (scheduled)
+                                                       (not (done))
+                                                       (ts :from today :to today :scheduled))
+                                        ((org-ql-block-header "Today's tasks only")))
+
+
 
                                        (agenda ""
                                                ((org-agenda-span 4)))
