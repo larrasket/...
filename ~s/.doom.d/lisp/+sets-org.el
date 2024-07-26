@@ -192,10 +192,8 @@
                                                      ((org-ql-block-header "Get something done")))
 
                                        (org-ql-block '(and
-                                                       (todo "DAILY")
-                                                       (or (and (not (deadline))
-                                                                (not (scheduled)))
-                                                           (tags "@general")))
+                                                       (todo "TODO")
+                                                       (tags "@daily"))
                                                      ((org-ql-block-header "Daily Task")))
 
 
@@ -375,6 +373,7 @@
                           ("@current" . ?C)
                           ("@long" . ?L)
                           ("drill" . ?d)
+                          ("@daily" . ?D)
                           ("@general" . ?g)))
  (add-to-list 'org-tags-exclude-from-inheritance "noexport")
  (add-to-list 'org-tags-exclude-from-inheritance "project")
