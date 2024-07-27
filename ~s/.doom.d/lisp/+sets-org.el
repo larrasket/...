@@ -358,10 +358,10 @@
                           ("@write" . ?W)
                           ("@check" . ?c)
                           ("@watch" . ?w)
-                          ("@else" . ?e)
+                          ("@else" . ?e) ;; if there's a note that have an else
+                                         ;; and general tag, then general
+                                         ;; prevails
                           (:endgroup)
-
-
                           (:startgroup)
                           ("@nothing" . ?N)
                           (:grouptags)
