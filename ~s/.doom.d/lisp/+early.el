@@ -27,7 +27,7 @@
 
 (defmacro s/require (&rest packages)
   `(progn
-     ,@(mapcar (lambda (pkg) `(require ,pkg)) packages)))
+     ,@(mapcar (lambda (pkg) `(if ,pkg (require ,pkg))) packages)))
 
 
 

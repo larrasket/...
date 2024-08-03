@@ -104,4 +104,5 @@
  '+sets-school                          ; school settings (TeX & BibTeX)
  '+sets-org                             ; org mode settings
  '+sets-inhibit                         ; other settings
- '+bind '+helper '+hooks '+advice '+bindings '+custom '+erc '+deep '+line)
+ '+bind '+helper '+advice '+bindings '+custom '+erc '+deep '+line
+ (unless (featurep 'tadwin) '+hooks))
