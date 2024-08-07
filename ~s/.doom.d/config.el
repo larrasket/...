@@ -21,6 +21,7 @@
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
       ;; or just remove `:size`.
+      ;; [2024-08-06 Tue 06:33] `ef-deuteranopia-light' is an amazing light theme.
       doom-theme                                        (car (salih/get-random-theme 0))
       doom-font                                         "Pragmasevka:pixelsize=17:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-unicode-font                                 "Amiri UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
@@ -49,7 +50,9 @@
       ;; yoe sleep at. if you sleep at 02:00 it should be 2, if you sleep at
       ;; 02:30 it should be 3 and so on. Org agenda for the day will not overlap
       ;; until your day is done.
-      ;; org-extend-today-until                            9
+      ;; [2024-08-07 Wed 19:43] currently I sleep at 07:00.
+      ;; [2024-08-08 Wed 23:41] Not anymore.
+      ;; org-extend-today-until                            7
 
       ;; school
       salih/source-directory                            (s/pr "source")
