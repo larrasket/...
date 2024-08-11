@@ -63,9 +63,6 @@
 (package! company-box)
 
 
-
-
-
 (package! org-ref)
 (package! org-roam-bibtex
   :recipe (:host github :repo "org-roam/org-roam-bibtex"))

@@ -39,6 +39,13 @@
  :n
  "C" #'eww-browse-with-external-browser)
 
+(evil-define-key 'normal clojure-mode-map (kbd "K") #'cider-doc)
+
+(map!
+ :map clojure-mode-map
+ :niv
+ "C-9" #'lispy-wrap-round)
+
 
 (general-define-key
  :keymaps 'prog-mode-map
@@ -276,7 +283,7 @@
    "C-k"          #'kill-current-buffer
    "C-r"          nil
    "TAB"          nil
-   "TAB d"        #'+workspace/delete
+   "TAB d"        #'+workspace:delete
    "SPC"          #'projectile-find-file
    "C-SPC"        #'projectile-find-file
    "H-i"          #'salih/open-inbox

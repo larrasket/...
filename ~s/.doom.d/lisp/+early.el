@@ -37,7 +37,7 @@
          (list-length (length salih/prefered-themes))
          (selected (nth (mod current-day list-length) salih/prefered-themes)))
     selected))
-    
+
 
 (setq salih/prefered-themes '((doom-peacock             . dark)
                               (doom-rouge               . dark)
@@ -51,7 +51,7 @@
                               (doom-horizon             . dark)
                               (ef-bio                   . dark)
                               (doom-feather-dark        . dark)
-                              (ef-summer                . nour)
+                              ;; (ef-summer                . nour) that's too happy for me
                               (ef-melissa-dark          . dark)
                               (ef-duo-dark              . dark)
                               (ef-spring                . nour)
@@ -89,6 +89,6 @@
 
 
 
-                              
+
 
 (provide '+early)
