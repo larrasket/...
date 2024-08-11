@@ -69,7 +69,6 @@
 (package! org-ref)
 (package! org-roam-bibtex
   :recipe (:host github :repo "org-roam/org-roam-bibtex"))
-(unpin! org-roam)
 
 (unpin! bibtex-completion helm-bibtex ivy-bibtex)
 (package! citar)
@@ -97,8 +96,6 @@
 
 (unpin! org-roam)
 (package! org-roam-ui)
-(package! emacsql-sqlite3)
-(package! emacsql-sqlite-module)
 (package! evil-snipe :disable t)
 (package! ef-themes)
 (package! breadcrumb)
