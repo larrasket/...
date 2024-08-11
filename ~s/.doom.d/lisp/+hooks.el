@@ -67,11 +67,12 @@
 
 (add-hook! '(clojure-mode-hook)
   (setq-local lsp-diagnostics-provider :none
-              lsp-ui-sideline-enable nil
-              lsp-ui-sideline-enable nil
               lsp-modeline-diagnostics-enable nil
               lsp-modeline-code-actions-enable nil
-              lsp-eldoc-enable-hover nil)
+              lsp-eldoc-enable-hover nil
+              completion-at-point-functions (list #'cider-complete-at-point
+                                                  #'lsp-completion-at-point
+                                                  #'lispy-clojure-complete-at-point))
   (flycheck-mode -1)
   (flymake-mode 1)
   (lsp))
