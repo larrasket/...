@@ -41,6 +41,8 @@
 
 (evil-define-key 'normal clojure-mode-map (kbd "K") #'cider-doc)
 
+(evil-define-key 'normal org-mode-map (kbd "C-n C-z") #'org-add-note)
+
 (map!
  :map clojure-mode-map
  :niv
@@ -521,4 +523,3 @@
   (kbd "q") 'org-fc-review-quit)
 
 (provide '+bindings)
-
