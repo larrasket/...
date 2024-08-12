@@ -500,11 +500,11 @@
  :nve "f" #'sp-forward-sexp
  :nve "b" #'sp-backward-sexp
  :nvm "u" #'sp-unwrap-sexp
- :ne "k" #'sp-kill-sexp
- :ne "s" #'sp-split-sexp
- :ne "(" #'sp-wrap-round
- :ne "[" #'sp-wrap-square
- :ne "{" #'sp-wrap-curly)
+ :nve "k" #'sp-kill-sexp
+ :nve "s" #'sp-split-sexp
+ :nve "(" #'sp-wrap-round
+ :nve "[" #'sp-wrap-square
+ :nve "{" #'sp-wrap-curly)
 
 (evil-define-minor-mode-key '(normal insert emacs) 'org-fc-review-flip-mode
   (kbd "r") 'org-fc-review-flip
