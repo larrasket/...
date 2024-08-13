@@ -27,11 +27,7 @@
       doom-unicode-font                                 "Amiri UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-variable-pitch-font                          (font-spec :family "Arimo")
       doom-modeline-height                              27
-      centaur-tabs-height                               22
-      +doom-dashboard-ascii-banner-fn                   'salih/banner
       display-line-numbers-type                         'relative
-      all-the-icons-color-icons                         nil
-      treemacs-position                                 'right
 
       ;; prayer time
       calendar-latitude                                 30.0
@@ -70,18 +66,6 @@
       org-fc-directories                                `(,(s/pr "main")
                                                           ,(s/pr "other")
                                                           ,(s/pr "references"))
-
-      modus-themes-org-blocks                           'gray-background
-      modus-themes-common-palette-overrides             '((bg-mode-line-active          bg-inactive)
-                                                          (fg-mode-line-active          fg-main)
-                                                          (bg-mode-line-inactive        bg-inactive)
-                                                          (fg-mode-line-active          fg-dim)
-                                                          (bg-line-number-active        unspecified)
-                                                          (bg-line-number-inactive      unspecified)
-                                                          (border-mode-line-active      bg-main)
-                                                          (border-mode-line-inactive    bg-inactive))
-                                                          
-
       ;; indent highlight
       indent-bars-highlight-current-depth               nil
       indent-bars-treesit-support                       t

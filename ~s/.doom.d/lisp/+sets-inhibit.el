@@ -5,13 +5,10 @@
       completion-ignore-case                            t
       load-prefer-newer                                 t
       bidi-paragraph-direction                          'left-to-right
-      ;; gcmh-high-cons-threshold                          (* 1024 1024 1024)
-      ;; gcmh-idle-delay                                   'auto
-      ;; gcmh-auto-idle-delay-factor                       10
-      ;; jit-lock-defer-time                               0
       scroll-conservatively                             101
       read-process-output-max                           1000000
 
+      ;; modeline
       doom-modeline-enable-word-count                   t
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
@@ -20,6 +17,7 @@
       global-hl-line-modes                              nil
       scroll-margin                                     4
 
+      ;; awqat
       awqat-mode-line-format                            " ${prayer} (${hours}h${minutes}m) "
       awqat-update-interval                             70
 
@@ -45,16 +43,11 @@
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
 
-
-
-
-
       ;; org-noter
       org-noter-always-create-frame                     nil
       org-noter-kill-frame-at-session-end               nil
       org-noter-swap-window                             nil
       nov-text-width                                    140
-
 
       ;; julia
       lsp-julia-default-environment                     "~/.julia/environments/v1.9"
@@ -65,10 +58,8 @@
       gac-debounce-interval                             200
       gac-silent-message-p                              t
 
-
       vertico-buffer-display-action                     '(display-buffer-at-bottom (window-height . 20))
       enable-recursive-minibuffers                      nil
-
 
       salih/prefix-global                               "C-x "
       salih/prefix-mode                                 "C-c "
@@ -90,11 +81,28 @@
       lsp-ui-sideline-show-diagnostics                  t
       lsp-completion-show-kind                          t
 
-
+      ;; epa? what does that mean. I've no idea about this.
       salih/vulpea-show-full                            nil
       epa-file-cache-passphrase-for-symmetric-encryption t
       epa-file-select-keys                              'silent
       epa-file-encrypt-to                               user-mail-address
+
+      ;; modus
+      modus-themes-org-blocks                           'gray-background
+      modus-themes-common-palette-overrides             '((bg-mode-line-active          bg-inactive)
+                                                          (fg-mode-line-active          fg-main)
+                                                          (bg-mode-line-inactive        bg-inactive)
+                                                          (fg-mode-line-active          fg-dim)
+                                                          (bg-line-number-active        unspecified)
+                                                          (bg-line-number-inactive      unspecified)
+                                                          (border-mode-line-active      bg-main)
+                                                          (border-mode-line-inactive    bg-inactive))
+
+      centaur-tabs-height                               22
+      +doom-dashboard-ascii-banner-fn                   'salih/banner
+      all-the-icons-color-icons                         nil
+      treemacs-position                                 'right
+
 
 
       ;; translation
