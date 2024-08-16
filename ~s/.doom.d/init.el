@@ -52,12 +52,10 @@
        (clojure +lsp +tree-sitter)
        (latex +flod +latexmk +lsp)
        (julia +lsp +tree-sitter)
-       (java +lsp +tree-sitter)
        (cc +lsp +tree-sitter)           ; C
        (go +lsp +tree-sitter)
        (org +roam2 +noter)
        (rest +jq)
-       common-lisp
        emacs-lisp
        yaml
        json
