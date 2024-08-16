@@ -57,6 +57,7 @@
 (add-hook! '(emacs-lisp-mode-hook
              sql-mode-hook
              TeX-mode-hook
+             clojure-mode-hook
              LaTeX-mode-hook)             (format-all-mode -1))
 
 (add-hook! '(julia-mode-hook
