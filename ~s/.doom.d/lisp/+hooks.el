@@ -68,7 +68,7 @@
              yaml-mode-hook)              #'indent-bars-mode)
 
 (add-hook! '(clojure-mode-hook)
-  (setq-local lsp-diagnostics-provider :none
+  (setq       lsp-diagnostics-provider :none
               lsp-modeline-diagnostics-enable nil
               lsp-modeline-code-actions-enable nil
               lsp-eldoc-enable-hover nil
