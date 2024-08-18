@@ -54,6 +54,7 @@
        (julia +lsp +tree-sitter)
        (cc +lsp +tree-sitter)           ; C
        (go +lsp +tree-sitter)
+       (javascript +lsp)
        (org +roam2 +noter)
        (rest +jq)
        emacs-lisp
