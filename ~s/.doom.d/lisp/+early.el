@@ -1,4 +1,3 @@
-
 (setq-default frame-title-format                        '("%b")
               shr-inhibit-images                        t
               bidi-paragraph-direction                  'left-to-right
@@ -6,6 +5,7 @@
               indent-tabs-mode                          nil
               pdf-view-display-size                     'fit-width)
 
+(defalias 'l 'list)
 (defmacro s/pb (filename)
   `(f-join salih/blog-content-path ,filename))
 

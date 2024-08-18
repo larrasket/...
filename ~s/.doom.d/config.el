@@ -30,6 +30,7 @@
       display-line-numbers-type                         'relative
 
       ;; prayer time
+
       calendar-latitude                                 30.0
       calendar-longitude                                31.2
       salih/awqat-show-mode-line                        t
@@ -56,16 +57,12 @@
       bibtex-completion-bibliography                    (s/pc "ref.bib")
       bibtex-completion-notes-path                      (s/pr "references")
       org-cite-csl-styles-dir                           (s/pc "assets" "csl")
-      bibtex-completion-library-path                    `(,salih/source-directory)
-      org-cite-global-bibliography                      `(,bibtex-completion-bibliography)
+      bibtex-completion-library-path                    (l salih/source-directory)
+      org-cite-global-bibliography                      (l bibtex-completion-bibliography)
       citar-bibliography                                bibtex-completion-bibliography
-      org-cite-csl--fallback-style-file                 (f-join
-                                                         org-cite-csl-styles-dir
-                                                         "chicago-ibid.csl")
+      org-cite-csl--fallback-style-file                 (f-join org-cite-csl-styles-dir "chicago-ibid.csl")
       org-fc-flashcard-tag                              "drill"
-      org-fc-directories                                `(,(s/pr "main")
-                                                          ,(s/pr "other")
-                                                          ,(s/pr "references"))
+      org-fc-directories                                (l (s/pr "main") (s/pr "other") (s/pr "references"))
       ;; indent highlight
       indent-bars-highlight-current-depth               nil
       indent-bars-treesit-support                       t
