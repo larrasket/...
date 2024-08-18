@@ -251,6 +251,9 @@
                                       (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "SPC" 'xwidget-webkit-scroll-up)))
 
 
+
+
+
 ;; convenient
 (defun salih/set-convenient-keys ()
   (map!
@@ -264,9 +267,9 @@
    "C-l"          #'salih/org-capture-log
    "C-n"          #'salih/org-roam-capture-fleet
    "C-a"          nil
-   "C-a C-a"      (lambda () (interactive) (setq salih/vulpea-show-full nil) (org-agenda nil "f"))
-   "C-a C-l"      (lambda () (interactive) (setq salih/vulpea-show-full nil) (org-agenda nil "l"))
-   "C-a C-f"      (lambda () (interactive) (setq salih/vulpea-show-full t) (org-agenda nil "f"))
+   "C-a C-a"      #'salih/org-agenda-no-full-f
+   "C-a C-l"      #'salih/org-agenda-no-full-l
+   "C-a C-f"      #'salih/org-agenda-full-f
    "C-a C-v"      #'salih/open-agenda
    "C-f"          #'salih/open-rss
    "C-e"          #'salih/eshell

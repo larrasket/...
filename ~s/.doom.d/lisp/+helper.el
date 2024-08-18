@@ -1389,7 +1389,20 @@ without history in the file name."
    (lambda (_)
      (message "Saving all Org buffers... done"))))
 
+(defun salih/org-agenda-no-full-f ()
+  (interactive)
+  (setq salih/vulpea-show-full nil)
+  (org-agenda nil "f"))
 
+(defun salih/org-agenda-no-full-l ()
+  (interactive)
+  (setq salih/vulpea-show-full nil)
+  (org-agenda nil "l"))
+
+(defun salih/org-agenda-full-f ()
+  (interactive)
+  (setq salih/vulpea-show-full t)
+  (org-agenda nil "f"))
 
 
 
