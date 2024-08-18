@@ -384,26 +384,12 @@ automatically previewed."
            "\n"))))))
 
 (setq +doom-dashboard-menu-sections
-      '(("Reload last session"
-         :when (cond ((modulep! :ui workspaces)
-                      (file-exists-p (expand-file-name persp-auto-save-fname
-                                                       persp-save-dir)))
-                     ((require 'desktop nil t)
-                      (file-exists-p (desktop-full-file-name))))
-         :face (:inherit (doom-dashboard-menu-title bold))
-         :action doom/quickload-session)
-        ("Open org-agenda"
-         :when (fboundp 'org-agenda)
-         :action org-agenda)
-        ("Recently opened files"
+      '(("Recently opened files"
          :action recentf-open-files)
         ("Open project"
          :action projectile-switch-project)
         ("Jump to bookmark"
          :action bookmark-jump)
-        ("Open private configuration"
-         :when (file-directory-p doom-user-dir)
-         :action doom/open-private-config)
         ("Open documentation"
          :action doom/help)))
 
