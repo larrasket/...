@@ -34,13 +34,14 @@
            (setq-local left-fringe-width  0)
            (text-scale-set 1))
 
+
+(add-hook! 'prog-mode-hook      (setq prettify-symbols-alist '(("lambda" . 923))))
 (add-hook! 'python-mode-hook    (flycheck-mode -1))
 (add-hook! 'pdf-view-mode-hook  (setq-local evil-normal-state-cursor (list nil)))
 (add-hook! 'mu4e-headers-mode-hook (visual-line-mode -1))
 (add-hook! 'org-roam-capture-new-node-hook (setq roam-titles
                                                  (salih/org-roam-get-node-titles
                                                   (org-roam-node-read--completions))))
-
 
 (add-hook! '(org-mode-hook
              markdown-mode-hook
@@ -141,7 +142,7 @@ a good understanding. His praise endures forever. ")))
 
 (if (eq (cdr (salih/get-random-theme 0)) 'nour)
     (spacious-padding-mode 1))
-                                      
+
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)
 (salih/consult-preview-at-point)
