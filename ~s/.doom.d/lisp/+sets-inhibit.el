@@ -103,7 +103,11 @@
       all-the-icons-color-icons                         nil
       treemacs-position                                 'right
 
-
+      ;; indent highlight
+      indent-bars-highlight-current-depth               nil
+      indent-bars-treesit-support                       t
+      indent-bars-pattern                               "."
+      indent-bars-width-frac                            0.25
 
       ;; translation
       gt-langs                                          `("en" "ar")

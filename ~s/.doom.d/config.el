@@ -30,7 +30,6 @@
       display-line-numbers-type                         'relative
 
       ;; prayer time
-
       calendar-latitude                                 30.0
       calendar-longitude                                31.2
       salih/awqat-show-mode-line                        t
@@ -63,11 +62,6 @@
       org-cite-csl--fallback-style-file                 (f-join org-cite-csl-styles-dir "chicago-ibid.csl")
       org-fc-flashcard-tag                              "drill"
       org-fc-directories                                (l (s/pr "main") (s/pr "other") (s/pr "references"))
-      ;; indent highlight
-      indent-bars-highlight-current-depth               nil
-      indent-bars-treesit-support                       t
-      indent-bars-pattern                               "."
-      indent-bars-width-frac                            0.25
 
       ;; other
       auto-save-no-message                              t
