@@ -71,13 +71,14 @@
   (setq       lsp-diagnostics-provider :none
               lsp-modeline-diagnostics-enable nil
               lsp-modeline-code-actions-enable nil
-              lsp-eldoc-enable-hover nil
-              completion-at-point-functions (list #'cider-complete-at-point
-                                                  #'lsp-completion-at-point
-                                                  #'lispy-clojure-complete-at-point))
+              lsp-eldoc-enable-hover nil)
   (flycheck-mode -1)
   (flymake-mode 1)
-  (lsp))
+  (lsp)
+  ;; must be after lsp
+  (setq completion-at-point-functions (list #'cider-complete-at-point
+                                                  #'lsp-completion-at-point
+                                                  #'lispy-clojure-complete-at-point)))
 
 (add-hook! '(html-mode-hook)             (sgml-electric-tag-pair-mode)
                                          (flycheck-mode -1))
