@@ -73,16 +73,26 @@ or not."
   	       (eq window (minibuffer-selected-window)))))
 (setq doom-modeline-mode-alist nil)
 
-(doom-modeline-mode -1)
+;; show with percent
+(defun salih/doom-modeline-update-pdf-pages ()
+  "Update PDF pages."
+  (setq doom-modeline--pdf-pages
+        (format "  %d/%d (%s٪)"
+                (or (eval `(pdf-view-current-page)) 0)
+                (pdf-cache-number-of-pages)
+                (truncate
+                 (* 100
+                    (/ (float (or (eval `(pdf-view-current-page)) 0))
+                       (pdf-cache-number-of-pages)) )))))
 
 
 (setq-default mode-line-format
               '("%e"
                 (:eval (doom-modeline-segment--bar))
                 " " (:eval (list
-                        (when spacious-padding-mode
-                          (all-the-icons--icon-info-for-buffer))
-                        " " (propertize (my-modeline--major-mode-name) 'face 'bold)))
+                            (when spacious-padding-mode
+                              (all-the-icons--icon-info-for-buffer))
+                            " " (propertize (my-modeline--major-mode-name) 'face 'bold)))
                 "  " (:eval (list
                              (propertize (buffer-name)
                                          'face (cond
@@ -92,7 +102,7 @@ or not."
                                          'help-echo "Buffer name mouse-1: Previous buffer\nmouse-3: Next buffer"
                                          'local-map mode-line-buffer-identification-keymap)))
                 "  " (:eval (list (if (derived-mode-p 'pdf-view-mode)
-                                      (propertize doom-modeline--pdf-pages) "")))
+                                      (propertize salih/doom-modeline-update-pdf-pages) "")))
                 "  " (:eval (doom-modeline-format--salih-line))))
 
 (provide '+line)
