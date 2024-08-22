@@ -1404,6 +1404,11 @@ without history in the file name."
   (setq salih/vulpea-show-full t)
   (org-agenda nil "f"))
 
-
+(defun salih/fix-clojure-completion (&rest args)
+  "Currently there's an issue with LSP completion, cider's work best."
+  (setq completion-at-point-functions
+        (list #'cider-complete-at-point
+              #'lsp-completion-at-point
+              #'lispy-clojure-complete-at-point)))
 
 (provide '+helper)

@@ -28,6 +28,8 @@
 (advice-add 'org-agenda-add-note                :after  #'salih/toggle-stats-on)
 
 
+(advice-add 'cider-jack-in                      :after  #'salih/fix-clojure-completion)
+(advice-add 'cider-jack-in-clj                  :after  #'salih/fix-clojure-completion)
 (advice-add 'org-media-note-insert-link         :around #'salih/org-media-note-insert-link)
 (advice-add 'org-ql-view--format-element        :around #'salih/org-ql-view--format-element)
 (advice-add 'sly-compile-string                 :before #'salih/sly--compile-eval-begin-print)
