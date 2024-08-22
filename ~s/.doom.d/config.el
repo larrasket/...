@@ -61,7 +61,9 @@
       citar-bibliography                                bibtex-completion-bibliography
       org-cite-csl--fallback-style-file                 (f-join org-cite-csl-styles-dir "chicago-ibid.csl")
       org-fc-flashcard-tag                              "drill"
-      org-fc-directories                                (l (s/pr "main") (s/pr "other") (s/pr "references"))
+      org-fc-directories                                (l (s/pr "main")
+                                                           (s/pr "other")
+                                                           (s/pr "references"))
 
       ;; other
       auto-save-no-message                              t
