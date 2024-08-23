@@ -2,29 +2,66 @@
 
 (require 'doom-modeline)
 
-(setq helm-ag-show-status-function #'doom-modeline-set-helm-modeline)
-
-(defface my-modeline-background
+(defface salih/modeline-background
   '((t :background "#3355bb" :foreground "white" :inherit bold))
   "Face with a red background for use on the mode line.")
 
+(setq breadcrumb-project-max-length             0.5
+      breadcrumb-project-crumb-separator        "/"
+      breadcrumb-imenu-max-length               1.0
+      breadcrumb-imenu-crumb-separator          " > "
+      helm-ag-show-status-function              #'doom-modeline-set-helm-modeline
+      mode-line-format                          nil)
 
-(setq breadcrumb-project-max-length 0.5)
-(setq breadcrumb-project-crumb-separator "/")
-(setq breadcrumb-imenu-max-length 1.0)
-(setq breadcrumb-imenu-crumb-separator " > ")
+(doom-modeline-def-segment salih/selection-info
+  "Information about the current selection.
+Such as how many characters and lines are selected, or the NxM dimensions of a
+block selection."
+  (when (and (or mark-active (and (bound-and-true-p evil-local-mode)
+                                  (eq evil-state 'visual)))
+             (doom-modeline--active))
+    (cl-destructuring-bind (beg . end)
+      (if (and (bound-and-true-p evil-local-mode) (eq evil-state 'visual))
+          (cons evil-visual-beginning evil-visual-end)
+        (cons (region-beginning) (region-end)))
+      (propertize
+       (let ((lines (count-lines beg (min end (point-max)))))
+         (concat (doom-modeline-spc)
+                 (cond ((or (bound-and-true-p rectangle-mark-mode)
+                            (and (bound-and-true-p evil-visual-selection)
+                                 (eq 'block evil-visual-selection)))
+                        (let ((cols (abs (- (doom-modeline-column end)
+                                            (doom-modeline-column beg)))))
+                          (format "%dx%dB" lines cols)))
+                       ((and (bound-and-true-p evil-visual-selection)
+                             (eq evil-visual-selection 'line))
+                        (format "%dL" lines))
+                       ((> lines 1)
+                        (format "%dC %dL" (- end beg) lines))
+                       (t
+                        (format "%dC" (- end beg))))
+                 (doom-modeline-spc)))
+       'face 'doom-modeline-emphasis))))
 
-;;;
-;;;
 
-(setq mode-line-format nil)
+(doom-modeline-def-segment salih/word-count
+  "The buffer word count.
+Displayed when in a major mode in `doom-modeline-continuous-word-count-modes'.
+Respects `doom-modeline-enable-word-count'."
+  (when (and doom-modeline-enable-word-count
+             (member major-mode doom-modeline-continuous-word-count-modes)
+             (derived-mode-p 'org-mode))
+    (propertize (format " %dW" (count-words (point-min) (point-max)))
+                'face (doom-modeline-face))))
+
 (doom-modeline-def-modeline 'salih-line
   '(eldoc
     workspace-name
     window-number
-    follow remote-host  word-count
+    follow remote-host
+    salih/word-count
     parrot)
-  '(selection-info matches
+  '(salih/selection-info matches
     buffer-position compilation
     objed-state misc-info persp-name
     battery grip irc
@@ -34,7 +71,7 @@
     buffer-encoding
     process vcs check time))
 
-(defface my-modeline-background
+(defface salih/modeline-background
   '((t :background "#3355bb" :foreground "white" :inherit bold))
   "Face with a red background for use on the mode line.")
 
@@ -45,7 +82,7 @@
 (defvar-local my-modeline-buffer-name
     '(:eval
       (when (mode-line-window-selected-p)
-        (propertize (my-modeline--buffer-name) 'face 'my-modeline-background)))
+        (propertize (my-modeline--buffer-name) 'face 'salih/modeline-background)))
   "Mode line construct to display the buffer name.")
 
 (defun my-modeline--major-mode-name ()
