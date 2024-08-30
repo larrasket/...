@@ -52,7 +52,8 @@
        (clojure +lsp +tree-sitter)
        (latex +flod +latexmk +lsp)
        (julia +lsp +tree-sitter)
-       (cc +lsp +tree-sitter)           ; C
+       (cc +lsp +tree-sitter)           ; C [2024-08-29 Thu 14:46] why I've this "C"? here
+       (csharp +lsp +dotnet +tree-sitter)
        (go +lsp +tree-sitter)
        (javascript +lsp)
        (org +roam2 +noter)
