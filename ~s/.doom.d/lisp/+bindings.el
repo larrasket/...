@@ -261,7 +261,7 @@
    "C-u"          nil
    "C-n"          nil
    "<f6>"         #'salih/open-neotree-and-lsp
-   "C-t"          #'+vterm/here
+   "C-t"          #'salih/vterm
    ;; "C-j"          #'centaur-tabs-ace-jump
    "C-c"          #'salih/org-capture-general
    "C-l"          #'salih/org-capture-log
@@ -447,6 +447,9 @@
  :map eshell-mode-map
  "C-c C-f" #'salih/open-kitty-in-current-directory)
 
+(map!
+ :map vterm-mode-map
+ "C-c C-f" #'salih/open-kitty-in-current-directory)
 
 (map!
  :map mu4e-headers-mode-map
