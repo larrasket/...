@@ -22,6 +22,7 @@
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
       ;; or just remove `:size`.
       ;; [2024-08-06 Tue 06:33] `ef-deuteranopia-light' is an amazing light theme.
+      ;; [2024-09-01 Sun 00:43] `doom-rouge` is an amazing dark theme
       doom-theme                                        (car (salih/get-random-theme 0))
       doom-font                                         "Pragmasevka:pixelsize=17:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-unicode-font                                 "Amiri UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
