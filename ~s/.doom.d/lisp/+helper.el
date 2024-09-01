@@ -937,6 +937,19 @@ tasks."
                   h-position (cdr click-position)))))
       v-position)))
 
+(defun salih/vterm ()
+  "Run vterm and set its directory to the current buffer's directory if vterm
+is already running."
+  (interactive)
+  (let ((cwd (file-name-directory (or (buffer-file-name) default-directory)))
+        (vterm-buffer (get-buffer "*vterm*")))
+    (if vterm-buffer
+        (progn
+          (switch-to-buffer vterm-buffer)
+          (vterm-send-string (concat "cd " cwd))
+          (vterm-send-return))
+       (+vterm/here t))))
+
 (defun salih/eshell ()
   "Run eshell and set its directory to the current buffer's directory if eshell
 is already running."
@@ -1017,16 +1030,60 @@ current-prefix-arg
         (mu4e-search-change-sorting :date 'descending))
     (mu4e)))
 
+(defvar salih/open-rss-lock-file (f-join doom-cache-dir "rss-locker")
+  "File used to store the last execution time of `salih/open-rss`.")
+
+(defun salih/load-last-open-rss-time ()
+  "Load the last execution time from the cache file."
+  (when (f-exists? salih/open-rss-lock-file)
+    (with-temp-buffer
+      (insert-file-contents salih/open-rss-lock-file)
+      (read (current-buffer)))))
+
+(defun salih/save-last-open-rss-time (time)
+  "Save the last execution TIME to the cache file."
+  (with-temp-file salih/open-rss-lock-file
+    (insert (format "%S" time))))
+
+
+(defun salih/different-day-p (last-time current-time)
+  (let* ((next-day-p (or
+                      (not (= (nth 4 (decode-time last-time)) (nth 4 (decode-time current-time))))
+                      (not (= (nth 3 (decode-time last-time)) (nth 3 (decode-time current-time))))
+                      (not (= (nth 5 (decode-time last-time)) (nth 5 (decode-time current-time)))))))
+    next-day-p))
+
+(defun salih/within-hour-window-p (last-time current-time)
+  "Check if CURRENT-TIME is within one hour of LAST-TIME."
+  (let* ((hour (nth 2 (decode-time last-time)))
+         (next-day-p (or
+                      (not (= (nth 4 (decode-time last-time)) (nth 4 (decode-time current-time))))
+                      (not (= (nth 3 (decode-time last-time)) (nth 3 (decode-time current-time))))
+                      (not (= (nth 5 (decode-time last-time)) (nth 5 (decode-time current-time))))))
+         (next-hour (time-add last-time (seconds-to-time 3600))))
+    (or next-day-p (< (float-time current-time) (float-time next-hour)))))
+
 (defun salih/open-rss ()
+  "Open RSS using mu4e, only callable once per hour within the same day."
   (interactive)
-  (if (featurep 'mu4e)
-      (progn
-        (setq mu4e-search-threads nil)
-        (mu4e-search "maildir:\"/lr0@gmx.com/rss\" flag:unread")
-        (mu4e-search-change-sorting :from 'descending))
-    (progn
-      (setq mu4e-search-threads t)
-      (mu4e))))
+  (let* ((now (current-time))
+         (last-open-time (salih/load-last-open-rss-time)))
+    (if (or (not last-open-time)
+            (salih/within-hour-window-p last-open-time now))
+        (progn
+          ;; Save only the first time within the hour window, not on subsequent calls
+          (when (salih/different-day-p last-open-time now)
+            (salih/save-last-open-rss-time now))
+          ;; Execute the main command
+          (if (featurep 'mu4e)
+              (progn
+                (setq mu4e-search-threads nil)
+                (mu4e-search "maildir:\"/lr0@gmx.com/rss\" flag:unread")
+                (mu4e-search-change-sorting :from 'descending))
+            (progn
+              (setq mu4e-search-threads t)
+              (mu4e))))
+      (message "This command can only be called once within the same hour of a day."))))
 
 (defun salih/mu4e-go-to-url ()
   (interactive)
