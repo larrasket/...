@@ -149,6 +149,12 @@ alias pub='cd ~/blog && tadwin && cd public && flyctl deploy'
 alias docker='sudo docker'
 alias anydesk='docker run --rm --name="anydesk" --device="/dev/dri:/dev/dri" --env="DISPLAY=$DISPLAY" --env="XAUTHORITY=/home/udocker/.XAuthority" --env="PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native" --mount="type=bind,source=$(pwd)/udocker,target=/home/udocker" --mount="type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix" --mount="type=bind,source=$XAUTHORITY,target=/home/udocker/.XAuthority" --mount="type=bind,source=${XDG_RUNTIME_DIR}/pulse/native,target=${XDG_RUNTIME_DIR}/pulse/native" --net="host" alireaza/anydesk'
 
+compress-video() {
+	input="$1"
+	output="${input%.*}_compressed.mp4"
+	ffmpeg -i "$input" -vcodec libx264 -crf 28 -preset fast -acodec aac -b:a 128k "$output"
+}
+
 # alias po='castero'
 # not deleting this line for nostalgia. :). I wrote it in my
 # first year of using linux. I was trying to get a cli podcast aggregator. Those
