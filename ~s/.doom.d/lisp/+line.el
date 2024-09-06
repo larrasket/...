@@ -139,7 +139,7 @@ or not."
                                          'help-echo "Buffer name mouse-1: Previous buffer\nmouse-3: Next buffer"
                                          'local-map mode-line-buffer-identification-keymap)))
                 "  " (:eval (list (if (derived-mode-p 'pdf-view-mode)
-                                      (propertize salih/doom-modeline-update-pdf-pages) "")))
+                                      (propertize (salih/doom-modeline-update-pdf-pages)) "")))
                 "  " (:eval (doom-modeline-format--salih-line))))
 
 (provide '+line)
