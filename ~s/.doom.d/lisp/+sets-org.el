@@ -54,7 +54,7 @@
                                                          (s/pc "assets"
                                                                "plantuml-1.2024.3.jar"))
         org-crypt-key                                     user-mail-address)
-   
+
   (setq org-todo-keywords       '((sequence "TODO(t)" "DAILY(e)" "PROJ(p)"
                                    "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)"
                                    "IDEA(i)" "|" "DONE(d)" "KILL(k)")
@@ -201,7 +201,8 @@
 
                                        (org-ql-block '(and
                                                        (todo "TODO")
-                                                       (or (scheduled)
+                                                       (not (tags "@daily"))
+                                                       (or (scheduled :from today :to +10)
                                                            (deadline)))
                                                      ((org-ql-block-header "Soon")))))
 
@@ -236,6 +237,13 @@
                                                        (not (scheduled)))
                                                      ((org-ql-block-header "Read something:")))
 
+                                       (org-ql-block '(and
+                                                       (todo "TODO")
+                                                       (tags "@read")
+                                                       (tags "project")
+                                                       (scheduled :from today :to +100))
+                                                     ((org-ql-block-header
+                                                       "Scheduled readings")))
 
                                        (org-ql-block '(and
                                                        (todo "TODO")
@@ -282,7 +290,7 @@
                                                      ((org-ql-block-header
                                                        "Looking for an idea?")))))
 
-                                       
+
                                      ("l" "General Later Tasks"
                                       ((org-ql-block '(and
                                                        (or (todo) (done))
@@ -386,7 +394,7 @@
  (add-to-list 'org-tags-exclude-from-inheritance "noexport")
  (add-to-list 'org-tags-exclude-from-inheritance "project")
  (add-to-list 'org-tags-exclude-from-inheritance "drill"))
- 
+
 
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 (org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
