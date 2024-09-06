@@ -6,6 +6,7 @@
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
 
+
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
       user-stmp-server                                  "mail.gmx.com"
@@ -30,7 +31,10 @@
       doom-unicode-font                                 "Amiri UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-variable-pitch-font                          (font-spec :family "Arimo")
       doom-modeline-height                              27
-      display-line-numbers-type                         'relative
+      display-line-numbers-type                         (when (not (and
+                                                                    (doom-theme?)
+                                                                    (< (random 100) 90)))
+                                                          'relative)
 
       ;; prayer time
       calendar-latitude                                 30.0

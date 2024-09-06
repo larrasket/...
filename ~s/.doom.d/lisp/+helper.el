@@ -1365,9 +1365,6 @@ without history in the file name."
   (org-entry-put (point) "CUSTOM_ID" (org-id-get)))
 
 
-(defun doom-theme? ()
-  (string-prefix-p "doom-" (symbol-name doom-theme)))
-
 (defun lsp-booster--advice-json-parse (old-fn &rest args)
   "Try to parse bytecode instead of json."
   (or

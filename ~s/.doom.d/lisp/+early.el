@@ -29,7 +29,8 @@
   `(progn
      ,@(mapcar (lambda (pkg) `(if ,pkg (require ,pkg))) packages)))
 
-
+(defun doom-theme? ()
+  (string-prefix-p "doom-" (symbol-name doom-theme)))
 
 
 (defun salih/get-random-theme (inc)
@@ -49,6 +50,7 @@
                               (ef-cherie                . dark)
                               (doom-horizon             . dark)
                               (ef-bio                   . dark)
+                              (doom-rouge               . dark)
                               (doom-feather-dark        . dark)
                               ;; (ef-summer                . nour) that's too happy for me
                               (ef-melissa-dark          . dark)
@@ -57,6 +59,7 @@
                               (kaolin-valley-dark       . dark)
                               (ef-dark                  . dark)
                               (ef-trio-dark             . dark)
+                              (doom-rouge               . dark)
                               (kaolin-dark              . dark)
                               (ef-day                   . nour)
                               (ef-duo-light             . nour)
@@ -66,12 +69,14 @@
                               (ef-symbiosis             . dark)
                               (ef-autumn                . dark)
                               (ef-frost                 . nour)
+                              (doom-rouge               . dark)
                               (ef-light                 . nour)
                               (ef-winter                . dark)
                               (kaolin-temple            . dark)
                               (ef-cyprus                . nour)
                               (kaolin-ocean             . dark)
                               (ef-maris-light           . nour)
+                              (doom-rouge               . dark)
                               (ef-trio-light            . nour)
                               (kaolin-bubblegum         . dark)
                               (ef-night                 . dark)))
