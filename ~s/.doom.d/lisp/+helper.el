@@ -1075,7 +1075,11 @@ current-prefix-arg
           (when (salih/different-day-p last-open-time now)
             (salih/save-last-open-rss-time now))
           ;; Execute the main command
-          (if (featurep 'mu4e)
+          (salih/feeds--))
+      (message "This command can only be called once within the same hour of a day."))))
+
+(defun salih/feeds-- ()
+  (if (featurep 'mu4e)
               (progn
                 (setq mu4e-search-threads nil)
                 (mu4e-search "maildir:\"/lr0@gmx.com/rss\" flag:unread")
@@ -1083,7 +1087,6 @@ current-prefix-arg
             (progn
               (setq mu4e-search-threads t)
               (mu4e))))
-      (message "This command can only be called once within the same hour of a day."))))
 
 (defun salih/mu4e-go-to-url ()
   (interactive)
