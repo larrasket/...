@@ -31,9 +31,9 @@
       doom-unicode-font                                 "Amiri UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-variable-pitch-font                          (font-spec :family "Arimo")
       doom-modeline-height                              27
-      display-line-numbers-type                         (when (not (and
-                                                                    (doom-theme?)
-                                                                    (< (random 100) 90)))
+      display-line-numbers-type                         (when (s/not
+                                                                (doom-theme?)
+                                                                (< (random 100) 90))
                                                           'relative)
 
       ;; prayer time

@@ -9,6 +9,10 @@
 (defmacro s/pb (filename)
   `(f-join salih/blog-content-path ,filename))
 
+(defmacro s/not (&rest args)
+  "Wrap multiple arguments in `and` and then in `not`."
+  `(not (and ,@args)))
+
 (defmacro s/pr (&rest args)
   `(f-join org-roam-directory ,@args))
 
@@ -48,11 +52,10 @@
                               (ef-deuteranopia-light    . nour)
                               (ef-elea-dark             . dark)
                               (ef-cherie                . dark)
-                              (doom-horizon             . dark)
                               (ef-bio                   . dark)
                               (doom-rouge               . dark)
                               (doom-feather-dark        . dark)
-                              ;; (ef-summer                . nour) that's too happy for me
+                              (ef-summer                . nour) ; that's too happy for me
                               (ef-melissa-dark          . dark)
                               (ef-duo-dark              . dark)
                               (ef-spring                . nour)
