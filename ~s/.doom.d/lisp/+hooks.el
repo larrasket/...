@@ -141,8 +141,8 @@ a good understanding. His praise endures forever. ")))
 (global-wakatime-mode)
 (salih/keyboard-config)
 
-(if (eq (cdr (salih/get-random-theme 0)) 'nour)
-    (spacious-padding-mode 1))
+;; (if (eq (cdr (salih/get-random-theme 0)) 'nour)
+;;     (spacious-padding-mode 1))
 
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)

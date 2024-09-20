@@ -109,6 +109,14 @@
       indent-bars-pattern                               "."
       indent-bars-width-frac                            0.25
 
+      breadcrumb-project-max-length                     0.5
+      breadcrumb-project-crumb-separator                "/"
+      breadcrumb-imenu-max-length                       1.0
+      breadcrumb-imenu-crumb-separator                  " > "
+      helm-ag-show-status-function                      #'doom-modeline-set-helm-modeline
+      mode-line-format                                  nil
+
+
       ;; translation
       gt-langs                                          `("en" "ar")
       gt-default-translator                             (gt-translator

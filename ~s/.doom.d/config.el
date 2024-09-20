@@ -1,6 +1,7 @@
 (add-to-list 'load-path "~/.doom.d/lisp/")
 (add-to-list 'load-path "~/.doom.d/pkg/")
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
+(require 'doom-modeline)
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
@@ -94,5 +95,6 @@
  '+sets-school                          ; school settings (TeX & BibTeX)
  '+sets-org                             ; org mode settings
  '+sets-inhibit                         ; other settings
- '+bind '+helper '+advice '+bindings '+custom '+erc '+deep '+line
+ '+bind
+ '+helper '+advice '+bindings '+custom '+erc '+deep
  (unless (featurep 'tadwin) '+hooks))
