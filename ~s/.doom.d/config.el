@@ -32,13 +32,15 @@
       doom-variable-pitch-font                          (font-spec :family "Arimo")
       doom-modeline-height                              27
       display-line-numbers-type                         (when (s/not
-                                                                (doom-theme?)
-                                                                (< (random 100) 90))
+                                                               (doom-theme?)
+                                                               (< (random 100)
+                                                                  90))
                                                           'relative)
 
       ;; prayer time
       calendar-latitude                                 30.0
       calendar-longitude                                31.2
+
       salih/awqat-show-mode-line                        t
 
       ;; org
@@ -59,6 +61,7 @@
 
       ;; school
       salih/source-directory                            (s/pr "source")
+
       salih/books                                       (s/pl salih/source-directory)
       bibtex-completion-bibliography                    (s/pc "ref.bib")
       bibtex-completion-notes-path                      (s/pr "references")
