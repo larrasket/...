@@ -140,7 +140,8 @@
   (set-lookup-handlers! 'clj-refactor-mode nil))
 
 (after! mixed-pitch
-    (dolist (face '(org-special-keyword org-document-title org-drawer org-date)))
-    (add-to-list 'mixed-pitch-fixed-pitch-faces face))
+    (dolist (face '(org-special-keyword org-document-title org-drawer org-date))
+      (add-to-list 'mixed-pitch-fixed-pitch-faces face)))
+
 
 (provide '+custom)

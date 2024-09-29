@@ -43,6 +43,13 @@
          (selected (nth (mod current-day list-length) salih/prefered-themes)))
     selected))
 
+(defun salih/get-random-nour-theme (inc)
+  (let* ((salih/prefered-themes '((ef-frost . nour)
+                                  (ef-light . nour))))
+    (salih/get-random-theme inc)))
+
+
+;;
 
 (setq salih/prefered-themes '((doom-peacock             . dark)
                               (doom-rouge               . dark)
