@@ -1,74 +1,50 @@
-(after! org-roam
-  (org-roam-db-autosync-mode)
-  (setq org-roam-dailies-capture-templates      '(("d" "default" entry "* %<%H:%M> \n %?"
-                                                   :if-new
-                                                   (file+head "%<%Y-%m-%d>.org.gpg"
-                                                              "#+title: %^{daily-title}\n#+DATE: <%<%Y-%m-%d>>\n#+FILETAGS: journal\n- tags :: [[roam:Journaling]] \n")
-                                                   :unnarrowed t))
-        org-roam-database-connector             'sqlite
-        org-roam-dailies-directory              "journal/"))
-
-
-(use-package! websocket
-  :after org-roam)
-
-
-(use-package! org-roam-ui
-  :after org-roam ;; or :after org
-  :config
-  (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t))
-
 
 (after! org
   (require 'org-fc)
   (require 'ts)
-  (setq org-bullets-bullet-list                           '("◉" "✸" "✿" "♥" "●")
-        org-id-method                                     'org
-        org-log-into-drawer                               "STATS"
-        org-log-done                                      nil
-        org-roam-ui-open-on-start                         nil
-        org-agenda-skip-scheduled-if-done                 nil
-        org-use-tag-inheritance                           t
-        org-agenda-block-separator                        9472
-        org-element-use-cache                             t
-        org-noter-auto-save-last-location                 t
-        org-startup-folded                                'show2levels
-        org-image-actual-width                            600
-        org-link-file-path-type                           'relative
-        org-agenda-show-future-repeats                    nil
-        org-clock-mode-line-total                         'today
+  (setq org-bullets-bullet-list                                 '("◉" "✸" "✿" "♥" "●")
+        org-id-method                                           'org
+        org-log-into-drawer                                     "STATS"
+        org-log-done                                            nil
+        org-roam-ui-open-on-start                               nil
+        org-agenda-skip-scheduled-if-done                       nil
+        org-use-tag-inheritance                                 t
+        org-agenda-block-separator                              9472
+        org-element-use-cache                                   t
+        org-noter-auto-save-last-location                       t
+        org-startup-folded                                      'show2levels
+        org-image-actual-width                                  600
+        org-link-file-path-type                                 'relative
+        org-agenda-show-future-repeats                          nil
+        org-clock-mode-line-total                               'current
         ;; FIXME this is useful to hide the title name from the org clock,
         ;; however it might be inconsistent. Better should be redefining
         ;; `org-clock-get-clock-string'. I wouldn't overwrite it myself since it
         ;; might break things in the future, I might consider making PR to
         ;; org-mode making the string customizable.
-        org-clock-string-limit                            7
-        org-agenda-dim-blocked-tasks                      'invisible
-        org-tags-column                                   70
-        org-agenda-sticky                                 t
-        ;; org-agenda-skip-function-global                   '(org-agenda-skip-entry-if 'nottodo '("TODO" "DAILY" "DONE"))
-        org-plantuml-jar-path                           (expand-file-name
-                                                         (s/pc "assets"
-                                                               "plantuml-1.2024.3.jar"))
-        org-crypt-key                                     user-mail-address)
+        org-clock-string-limit                                  7
+        org-agenda-dim-blocked-tasks                            'invisible
+        org-tags-column                                         70
+        org-agenda-sticky                                       t
+        ;; org-agenda-skip-function-global                      '(org-agenda-skip-entry-if 'nottodo '("TODO" "DAILY" "DONE"))
+        org-plantuml-jar-path                                   (expand-file-name (s/pc "assets" "plantuml-1.2024.3.jar"))
+        org-crypt-key                                           user-mail-address
+        org-todo-keywords                                       '((sequence
+                                                                   "TODO(t)" "DAILY(e)" "PROJ(p)"
+                                                                   "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)"
+                                                                   "IDEA(i)" "|" "DONE(d)" "KILL(k)")
+                                                                  (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
+                                                                  (sequence "|" "OKAY(o)" "YES(y)" "NO(n)"))
+        org-todo-keyword-faces                                  '(("[-]"        . +org-todo-active)
+                                                                  ("STRT"       . +org-todo-active)
+                                                                  ("DAILY"      . +org-todo-project)
+                                                                  ("[?]"        . +org-todo-onhold)
+                                                                  ("WAIT"       . +org-todo-onhold)
+                                                                  ("HOLD"       . +org-todo-onhold)
+                                                                  ("PROJ"       . +org-todo-project)
+                                                                  ("NO"         . +org-todo-cancel)
+                                                                  ("KILL"       . +org-todo-cancel)))
 
-  (setq org-todo-keywords       '((sequence "TODO(t)" "DAILY(e)" "PROJ(p)"
-                                   "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)"
-                                   "IDEA(i)" "|" "DONE(d)" "KILL(k)")
-                                  (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
-                                  (sequence "|" "OKAY(o)" "YES(y)" "NO(n)"))
-        org-todo-keyword-faces '(("[-]" . +org-todo-active)
-                                 ("STRT" . +org-todo-active)
-                                 ("DAILY" . +org-todo-project)
-                                 ("[?]" . +org-todo-onhold)
-                                 ("WAIT" . +org-todo-onhold)
-                                 ("HOLD" . +org-todo-onhold)
-                                 ("PROJ" . +org-todo-project)
-                                 ("NO" . +org-todo-cancel)
-                                 ("KILL" . +org-todo-cancel)))
   (setq org-hide-leading-stars            't
         org-tags-column                   -80
         org-archive-location              "%s_archive.org::"
@@ -103,19 +79,8 @@
                                             ("r" "bibliography reference" plain
                                              (file "~/configs/~s/orb")
                                              :target
-                                             (file+head "references/${citekey}.org" "#+title: ${title}\n"))
+                                             (file+head "references/${citekey}.org" "#+title: ${title}\n")))
 
-                                            ("v"
-                                             "video ref"
-                                             entry
-                                             "** ${body}"
-                                             :target
-                                             (file+olp
-                                              "webnotes/yt.org"
-                                              ("yt" "${title}"))
-                                             :immediate-finish t
-                                             :jump-to-captured t
-                                             :unnarrowed t))
         org-capture-templates             '(("t" "Personal todo" entry
                                              (file+headline +org-capture-todo-file "Inbox")
                                              "* TODO %? :@general:" :prepend t)
@@ -166,14 +131,14 @@
                                        (org-ql-block '(and
                                                        (todo "TODO")
                                                        (scheduled  :to ,(ts-adjust 'day -1 (ts-now))))
-                                        ((org-ql-block-header "Late tasks")))
+                                                     ((org-ql-block-header "Late tasks")))
 
 
                                        (org-ql-block '(and
                                                        (scheduled)
                                                        (not (done))
                                                        (ts-active :on today))
-                                        ((org-ql-block-header "Today's tasks only")))
+                                                     ((org-ql-block-header "Today's tasks only")))
 
 
 
@@ -355,7 +320,26 @@
                                                        (not (scheduled)))
                                                      ((org-ql-block-header
                                                        "Looking for an
-                                                       idea?")))))))
+                                                       idea?"))))))))
+
+
+(after! org-roam
+  (org-roam-db-autosync-mode)
+  (setq org-roam-dailies-capture-templates      '(("d" "default" entry "* %<%H:%M> \n %?"
+                                                   :if-new
+                                                   (file+head "%<%Y-%m-%d>.org.gpg"
+                                                              "#+title: %^{daily-title}\n#+DATE: <%<%Y-%m-%d>>\n#+FILETAGS: journal\n- tags :: [[roam:Journaling]] \n")
+                                                   :unnarrowed t))
+        org-roam-database-connector             'sqlite
+        org-roam-dailies-directory              "journal/")
+  (use-package! websocket :after org-roam)
+  (use-package! org-roam-ui
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
+
 
 
   (setq org-tag-alist   '((:startgroup)
@@ -367,8 +351,8 @@
                           ("@check" . ?c)
                           ("@watch" . ?w)
                           ("@else" . ?e) ;; if there's a note that have an else
-                                         ;; and general tag, then general
-                                         ;; prevails
+                          ;; and general tag, then general
+                          ;; prevails
                           (:endgroup)
                           (:startgroup)
                           ("@nothing" . ?N)
@@ -383,17 +367,17 @@
                           ("drill" . ?d)
                           ("@daily" . ?D)
                           ("@general" . ?g)))
- (add-to-list 'org-tags-exclude-from-inheritance "noexport")
- (add-to-list 'org-tags-exclude-from-inheritance "project")
- (add-to-list 'org-tags-exclude-from-inheritance "permanent")
- (add-to-list 'org-tags-exclude-from-inheritance "link")
 
- (add-to-list 'org-tags-exclude-from-inheritance "@read")
- (add-to-list 'org-tags-exclude-from-inheritance "@write")
- (add-to-list 'org-tags-exclude-from-inheritance "@current")
- (add-to-list 'org-tags-exclude-from-inheritance "noexport")
- (add-to-list 'org-tags-exclude-from-inheritance "project")
- (add-to-list 'org-tags-exclude-from-inheritance "drill"))
+  (add-to-list 'org-tags-exclude-from-inheritance "noexport")
+  (add-to-list 'org-tags-exclude-from-inheritance "project")
+  (add-to-list 'org-tags-exclude-from-inheritance "permanent")
+  (add-to-list 'org-tags-exclude-from-inheritance "link")
+  (add-to-list 'org-tags-exclude-from-inheritance "@read")
+  (add-to-list 'org-tags-exclude-from-inheritance "@write")
+  (add-to-list 'org-tags-exclude-from-inheritance "@current")
+  (add-to-list 'org-tags-exclude-from-inheritance "noexport")
+  (add-to-list 'org-tags-exclude-from-inheritance "project")
+  (add-to-list 'org-tags-exclude-from-inheritance "drill"))
 
 
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
