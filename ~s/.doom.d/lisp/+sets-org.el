@@ -368,16 +368,17 @@
                           ("@daily" . ?D)
                           ("@general" . ?g)))
 
-  (add-to-list 'org-tags-exclude-from-inheritance "noexport")
-  (add-to-list 'org-tags-exclude-from-inheritance "project")
-  (add-to-list 'org-tags-exclude-from-inheritance "permanent")
-  (add-to-list 'org-tags-exclude-from-inheritance "link")
-  (add-to-list 'org-tags-exclude-from-inheritance "@read")
-  (add-to-list 'org-tags-exclude-from-inheritance "@write")
-  (add-to-list 'org-tags-exclude-from-inheritance "@current")
-  (add-to-list 'org-tags-exclude-from-inheritance "noexport")
-  (add-to-list 'org-tags-exclude-from-inheritance "project")
-  (add-to-list 'org-tags-exclude-from-inheritance "drill"))
+
+  (dolist (tag '("noexport"
+                 "project"
+                 "permanent"
+                 "link"
+                 "@read"
+                 "@write"
+                 "@current"
+                 "drill"))
+   (add-to-list 'org-tags-exclude-from-inheritance tag)))
+
 
 
 (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
