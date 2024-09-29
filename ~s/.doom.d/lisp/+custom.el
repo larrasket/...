@@ -6,7 +6,7 @@
   (require 'org-roam-protocol)
   (require 'org-download)
   (custom-set-faces
-   '(org-document-title ((t (:inherit outline-8 :height 2.0 :weight bold :family "Arimo"))))
+   '(org-document-title ((t (:inherit outline-8 :height 2.0 :weight bold))))
    '(org-tag ((t (:weight bold))))
    '(org-todo ((t (:weight bold))))
    ;; '(org-link ((t (:weight bold)))), but not when it's on titles too.
@@ -138,5 +138,9 @@
 (after! clojure-mode
   (set-lookup-handlers! 'cider-mode nil)
   (set-lookup-handlers! 'clj-refactor-mode nil))
+
+(after! mixed-pitch
+    (dolist (face '(org-special-keyword org-document-title org-drawer org-date)))
+    (add-to-list 'mixed-pitch-fixed-pitch-faces face))
 
 (provide '+custom)
