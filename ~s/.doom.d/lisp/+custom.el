@@ -6,17 +6,19 @@
   (require 'org-roam-protocol)
   (require 'org-download)
   (custom-set-faces
-   '(org-document-title ((t (:inherit outline-8 :height 2.0 :weight bold))))
-   '(org-tag ((t (:weight bold))))
+   '(org-document-title ((t (:inherit outline-8 :height 2.0 :weight normal))))
+   '(org-tag ((t (:weight normal))))
    '(org-todo ((t (:weight bold))))
+   '(org-done ((t (:weight bold))))
+   '(org-headline-done ((t (:weight normal))))
    ;; '(org-link ((t (:weight bold)))), but not when it's on titles too.
-   '(org-level-1 ((t (:inherit outline-1 :height 1.45 :weight bold :family "JetBrains Mono"))))
-   '(org-level-2 ((t (:inherit outline-2 :height 1.2 :weight bold :family "JetBrains Mono"))))
-   '(org-level-3 ((t (:inherit outline-3 :height 1.05 :weight bold :family "JetBrains Mono"))))
-   '(org-level-4 ((t (:inherit outline-4 :height 0.9 :weight bold :family "JetBrains Mono"))))
-   '(org-level-5 ((t (:inherit outline-5 :height 0.7 :weight bold :family "JetBrains Mono"))))
-   '(org-level-6 ((t (:inherit outline-6 :height 0.6 :weight bold :family "JetBrains Mono"))))
-   '(org-level-7 ((t (:inherit outline-7 :height 0.5 :weight bold :family "JetBrains Mono"))))))
+   '(org-level-1 ((t (:inherit outline-1 :height 1.45 :weight normal :family "JetBrains Mono"))))
+   '(org-level-2 ((t (:inherit outline-2 :height 1.2  :weight normal :family "JetBrains Mono"))))
+   '(org-level-3 ((t (:inherit outline-3 :height 1.05 :weight normal :family "JetBrains Mono"))))
+   '(org-level-4 ((t (:inherit outline-4 :height 0.9  :weight normal :family "JetBrains Mono"))))
+   '(org-level-5 ((t (:inherit outline-5 :height 0.7  :weight normal :family "JetBrains Mono"))))
+   '(org-level-6 ((t (:inherit outline-6 :height 0.6  :weight normal :family "JetBrains Mono"))))
+   '(org-level-7 ((t (:inherit outline-7 :height 0.5  :weight normal :family "JetBrains Mono"))))))
 
 
 

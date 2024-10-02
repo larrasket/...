@@ -21,7 +21,6 @@
 
       erc-autojoin-channels-alist                       '((Libera.Chat
                                                            "#org-mode"
-                                                           "#go-nuts"
                                                            "#emacs"
                                                            "##arabic")))
 
