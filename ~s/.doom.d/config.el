@@ -41,7 +41,6 @@
       ;; prayer time
       calendar-latitude                                 30.0
       calendar-longitude                                31.2
-
       salih/awqat-show-mode-line                        t
 
       ;; org
