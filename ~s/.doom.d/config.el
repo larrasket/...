@@ -26,7 +26,7 @@
       ;; [2024-09-01 Sun 00:43] `doom-rouge` is an amazing dark theme
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark` too.
       ;; [2024-09-04 Wed 02:03] `ef-maris-dark` too.
-      doom-theme                                        (car (salih/get-random-nour-theme 0))
+      doom-theme                                        (car (salih/get-random-theme 0))
       doom-font                                         "Pragmasevka:pixelsize=17:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-unicode-font                                 "Amiri UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-variable-pitch-font                          (font-spec :family "Arimo")
