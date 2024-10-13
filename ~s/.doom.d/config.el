@@ -5,7 +5,7 @@
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
-(require 'doom-modeline)
+(require 'cocaine-line)
 
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"

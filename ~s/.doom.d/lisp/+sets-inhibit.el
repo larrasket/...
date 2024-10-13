@@ -19,7 +19,7 @@
 
       ;; awqat
       awqat-mode-line-format                            " ${prayer} (${hours}h${minutes}m) "
-      awqat-update-interval                             70
+      awqat-update-interval                             (* 60 5)
 
       ;; consult
       consult-preview-key                               nil
@@ -116,6 +116,10 @@
       helm-ag-show-status-function                      #'doom-modeline-set-helm-modeline
       mode-line-format                                  nil
 
+      cocaine-show-buffer-position                      nil
+      cocaine-show-column-info                          nil
+      cocaine-show-misc-info                            nil
+      cocaine-show-processes-info                       t
 
       ;; translation
       gt-langs                                          `("en" "ar")

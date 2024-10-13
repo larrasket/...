@@ -136,6 +136,7 @@ a good understanding. His praise endures forever. ")))
 ;; init
 ;; (centaur-tabs-mode)
 (breadcrumb-mode)
+(cocaine-line-mode)
 (yas-global-mode 1)
 ;; (vertico-buffer-mode)
 (global-wakatime-mode)

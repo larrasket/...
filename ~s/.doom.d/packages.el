@@ -97,10 +97,16 @@
 (package! ef-themes)
 (package! breadcrumb)
 
-(package! spacious-padding)
+;; (package! spacious-padding)
 
 (package! org-fc)
 (package! dired-preview)
 (package! kaolin-themes)
 
 (package! mixed-pitch)
+
+(package! nerd-icons)
+(package! cocaine-line
+  :recipe
+  (:host github
+   :repo "luggages/cocaine-line"))

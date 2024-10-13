@@ -3,7 +3,8 @@
               bidi-paragraph-direction                  'left-to-right
               org-download-image-dir                    "~/roam/media"
               indent-tabs-mode                          nil
-              pdf-view-display-size                     'fit-width)
+              pdf-view-display-size                     'fit-width
+              display-line-numbers-width 8)
 
 (defalias 'l 'list)
 (defmacro s/pb (filename)
@@ -97,7 +98,6 @@
 ;;       (seq-filter (lambda (theme)
 ;;                     (not (eq (cdr theme) 'nour)))
 ;;                   salih/prefered-themes))
-
 
 
 
