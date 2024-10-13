@@ -1638,4 +1638,5 @@ or not."
                 "  " (:eval (doom-modeline-format--salih-line))))
 
 
+
 (provide '+helper)

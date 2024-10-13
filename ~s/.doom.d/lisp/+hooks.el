@@ -19,11 +19,12 @@
            (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
            (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local)
            (setq org-hide-leading-stars t
-                 fill-column 90)
-           (display-line-numbers-mode -1)
+                 fill-column 90
+                 display-line-numbers-width 3)
            (setq-local truncate-lines t)
+           (display-line-numbers-mode -1)
            (mixed-pitch-mode)
-           (git-gutter-mode -1))
+           (git-gutter-mode))
 
 
 (add-hook! 'nov-mode-hook

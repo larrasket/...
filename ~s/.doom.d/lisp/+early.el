@@ -4,7 +4,7 @@
               org-download-image-dir                    "~/roam/media"
               indent-tabs-mode                          nil
               pdf-view-display-size                     'fit-width
-              display-line-numbers-width 8)
+              display-line-numbers-width                8)
 
 (defalias 'l 'list)
 (defmacro s/pb (filename)
@@ -100,6 +100,14 @@
 ;;                   salih/prefered-themes))
 
 
+(defun salih/really-random-theme ()
+  (let* ((themes (custom-available-themes))
+         (random-theme (nth (random (length themes)) themes)))
+    random-theme))
+
+(defun salih/really-really-random-theme-load ()
+  (interactive)
+  (load-theme (salih/really-random-theme)))
 
 
 (provide '+early)
