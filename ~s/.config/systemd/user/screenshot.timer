@@ -4,7 +4,7 @@ Requires=screenshot.timer
 
 [Timer]
 Unit=screenshot.service
-OnUnitActiveSec=20min
+OnUnitActiveSec=80min
 OnBootSec=10min
 
 [Install]
