@@ -9,6 +9,7 @@
    '(org-document-title ((t (:inherit outline-8 :height 2.0 :weight normal))))
    '(org-tag ((t (:weight normal))))
    '(org-todo ((t (:weight bold))))
+   '(org-link ((t (:weight normal))))
    '(org-done ((t (:weight bold))))
    '(org-headline-done ((t (:weight normal))))
    ;; '(org-link ((t (:weight bold)))), but not when it's on titles too.
@@ -110,6 +111,7 @@
 (after! projectile
   (setq projectile-switch-project-action 'projectile-dired))
 
+
 (after! git-gutter
   (and (not (featurep 'tadwin))
        (featurep 'modus-themes)
@@ -120,13 +122,6 @@
              `(git-gutter-fr:added ((,c :foreground ,bg-added-fringe)))
              ;; `(git-gutter-fr:deleted ((,class :foreground ,red-fringe-bg)))
              `(git-gutter-fr:modified ((,c :foreground ,bg-changed-fringe)))))))
-
-(after! indent-bars-mode
- (add-hook! 'prog-mode-hook                (indent-bars-mode 1))
- (add-hook! '(clojure-mode-hook
-              emacs-lisp-mode-hook
-              lisp-mode-hook)              (indent-bars-mode -1)))
-
 
 
 ;; other handy stuff
