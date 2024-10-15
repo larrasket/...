@@ -8,11 +8,15 @@
       scroll-conservatively                             101
       read-process-output-max                           1000000
 
+      ;; fonts
+      doom-font                                         "Pragmasevka:pixelsize=17:antialias=true:hinting=true:autohint=false:hintstyle=3"
+      doom-unicode-font                                 "Amiri UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
+      doom-variable-pitch-font                          (font-spec :family "Arimo")
+
       ;; modeline
       doom-modeline-enable-word-count                   t
       doom-modeline-buffer-state-icon                   nil
       doom-modeline-icon                                nil
-
       all-the-icons-completion-mode                     nil
       global-hl-line-modes                              nil
       scroll-margin                                     4

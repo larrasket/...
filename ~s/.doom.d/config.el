@@ -27,9 +27,6 @@
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark` too.
       ;; [2024-09-04 Wed 02:03] `ef-maris-dark` too.
       doom-theme                                        (salih/really-random-theme)
-      doom-font                                         "Pragmasevka:pixelsize=17:antialias=true:hinting=true:autohint=false:hintstyle=3"
-      doom-unicode-font                                 "Amiri UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
-      doom-variable-pitch-font                          (font-spec :family "Arimo")
       doom-modeline-height                              27
       display-line-numbers-type                         'relative
 
