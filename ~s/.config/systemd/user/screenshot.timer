@@ -1,0 +1,11 @@
+[Unit]
+Description=Timer to take a screenshot every 15 minutes
+Requires=screenshot.timer
+
+[Timer]
+Unit=screenshot.service
+OnUnitActiveSec=20min
+OnBootSec=10min
+
+[Install]
+WantedBy=timers.target

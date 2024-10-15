@@ -1,0 +1,9 @@
+[Unit]
+Description=Take a screenshot every 15 minutes
+Wants=screenshot.timer
+
+[Service]
+ExecStart=/bin/take_screenshot.sh
+
+[Install]
+WantedBy=multi-user.target
