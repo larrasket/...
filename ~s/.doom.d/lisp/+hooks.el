@@ -54,8 +54,13 @@
   (smartparens-mode 1))
 
 (add-hook! '(bibtex-mode-hook
-             prog-mode-hook)              #'format-all-mode
-                                          #'salih/format-all-ensure-formatter)
+             prog-mode-hook)
+           #'format-all-mode
+           #'salih/format-all-ensure-formatter)
+
+
+(add-hook! 'prog-mode-hook :append #'indent-bars-mode)
+
 (add-hook! '(emacs-lisp-mode-hook
              sql-mode-hook
              TeX-mode-hook
@@ -68,18 +73,21 @@
              go-mode-hook
              yaml-mode-hook)              #'indent-bars-mode)
 
+(add-hook 'lsp-after-open-hook 'indent-bars-mode)
 (add-hook! '(clojure-mode-hook)
   (setq       lsp-diagnostics-provider :none
               lsp-modeline-diagnostics-enable nil
               lsp-modeline-code-actions-enable nil
               lsp-eldoc-enable-hover nil)
+  (add-hook! 'lsp-after-open-hook :local
+    (setq completion-at-point-functions (list #'cider-complete-at-point)
+          #'lsp-completion-at-point
+          #'lispy-clojure-complete-at-point))
   (flycheck-mode -1)
   (flymake-mode 1)
-  (lsp)
-  ;; must be after lsp
-  (setq completion-at-point-functions (list #'cider-complete-at-point
-                                                  #'lsp-completion-at-point
-                                                  #'lispy-clojure-complete-at-point)))
+  (lsp))
+
+
 
 (add-hook! '(html-mode-hook)             (sgml-electric-tag-pair-mode)
                                          (flycheck-mode -1))
