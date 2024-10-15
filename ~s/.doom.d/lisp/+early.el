@@ -100,14 +100,25 @@
 ;;                   salih/prefered-themes))
 
 
+
 (defun salih/really-random-theme ()
-  (let* ((themes (custom-available-themes))
+  (let* ((themes '(modus-vivendi-tritanopia kaolin-dark doom-nord
+                   doom-nord-aurora doom-opera doom-oceanic-next
+                   kaolin-aurora kaolin-bubblegum
+                   kaolin-ocean doom-gruvbox doom-material-dark
+                   ef-trio-light
+                   doom-material doom-molokai
+                   doom-monokai-machine doom-monokai-octagon
+                   doom-monokai-pro doom-moonlight
+                   doom-nord-aurora doom-oceanic-next doom-one doom-palenight
+                   doom-shades-of-purple doom-solarized-dark
+                   doom-spacegrey doom-vibrant
+                   doom-wilmersdorf misterioso wombat))
          (random-theme (nth (random (length themes)) themes)))
     random-theme))
 
 (defun salih/really-really-random-theme-load ()
   (interactive)
   (load-theme (salih/really-random-theme)))
-
 
 (provide '+early)
