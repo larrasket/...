@@ -31,11 +31,7 @@
       doom-unicode-font                                 "Amiri UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
       doom-variable-pitch-font                          (font-spec :family "Arimo")
       doom-modeline-height                              27
-      display-line-numbers-type                         (when (s/not
-                                                               (doom-theme?)
-                                                               (< (random 100)
-                                                                  90))
-                                                          'relative)
+      display-line-numbers-type                         'relative
 
       ;; prayer time
       calendar-latitude                                 30.0
@@ -73,7 +69,6 @@
       org-fc-directories                                (l (s/pr "main")
                                                            (s/pr "other")
                                                            (s/pr "references"))
-
       ;; other
       auto-save-no-message                              t
       dired-preview-delay                               0.1
@@ -96,4 +91,3 @@
  '+bind
  '+helper '+advice '+bindings '+custom '+erc '+deep
  (unless (featurep 'tadwin) '+hooks))
-
