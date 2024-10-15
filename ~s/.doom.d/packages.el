@@ -1,45 +1,37 @@
-(package! wiki-summary)                 ; get a wiki line summary for new
-                                        ; topics. also ueful when writing notes
-                                        ; about new things
-
+(package! wiki-summary)                 ; get a wiki line summary.
 (package! iedit)                        ; JetBrains' rename function.
-                                        ; Also see `salih/rename-or-iedit`
-
 (package! git-auto-commit-mode)         ; auto commit
 
-(package! grip-mode)                    ; I do not remember what's that for but
-                                        ; sounds useful
+;; [2024-10-15 Tue 06:19] I'm back to using the native emacs way
+;; (package! column-enforce-mode)          ; instead of `display-fill-column`
 
-(package! column-enforce-mode)          ; I use this instead of
-                                        ; `display-fill-column-indicator`
 
-(package! go-translate)                 ; google API for lingustics
+;; [2024-10-15 Tue 06:19] I'm not bein a mathematician anymore (for now )
+;; (package! sage-shell-mode)              ; I like to be a mathematician
+;; (package! maxima)                       ; a maxima repl.. not sure about it
 
+
+;; [2024-10-15 Tue 06:17]  commented both currently as I'm not using tabs
+;; (package! pretty-hydra)                 ; needed for the next line
+;; (package! centaur-tabs)                 ; nice tabs
+
+
+;; [2024-10-15 Tue 06:18] Not writing in Julia anymore.
+;; (package! ob-julia-vterm)               ; for usage, see maxima or sage-shell
+
+(package! go-translate)                 ; google API for translations
 (package! consult-org-roam)             ; useful org-roam functions
 
-(package! sage-shell-mode)              ; for me when I like to be a
-                                        ; mathematician
-
-(package! maxima)                       ; a maxima repl.. not sure about it (and
-                                        ; about using maxima in general)
 
 (package! nov)                          ; browse epubs from emacs
 (package! srht)                         ; sr.ht support. Good for paste.sr.ht
 (package! vulpea)                       ; roam advanced functions
-;; (package! org-drill)                    ; anki
 (package! format-all)                   ; destroy my code
-(package! org-bullets)                  ; nicer org view
 (package! lsp-treemacs)                 ; make emacs loks like and EDE (ide)
-(package! pretty-hydra)                 ; for the next line
-(package! centaur-tabs)                 ; nice tabs
 (package! modus-themes)                 ; my favorite themes from my greek dude
 (package! wakatime-mode)                ; voluntary tracking
 (package! org-web-tools)                ; viewing urls in org
-(package! ob-julia-vterm)               ; for usage, see maxima or sage-shell
-
-(package! indent-bars
-  :recipe (:host github
-           :repo "jdtsmith/indent-bars"))
+(package! indent-bars)                  ; best package for that
 
 (package! ox-tufte
   :recipe (:host github
@@ -47,7 +39,7 @@
 
 (package! ox-html-stable-ids
   :recipe (:host github
-           :repo "larrasket/ox-html-stable-ids.el"))
+           :repo "luggages/ox-html-stable-ids.el"))
 
 (package! awqat
   :recipe (:host github
@@ -55,58 +47,46 @@
 
 
 (unpin! vertico)
-(package! vertico)
-
-(unpin! ess)
-(package! ess)
-
-(package! company-box)
+(package! vertico)                      ; not sure why I unpin this
 
 
+(package! company-box)                  ; makes it look better
+
+
+;; school
 (package! org-ref)
-(package! org-roam-bibtex
-  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
-
+(package! org-roam-bibtex)
 (unpin! bibtex-completion helm-bibtex ivy-bibtex)
 (package! citar)
 (package! citar-org-roam)
+(unpin! ess) (package! ess)
 
+(package! emacs-neotree)                ; better side panal
 
-(package! emacs-neotree)
-(package! csv-mode)
+(package! org-download)                 ; for screenshots
 
-
-(package! ob-mermaid)
-(package! plantuml-mode)
-(package! org-download)
-
-
-(package! git-gutter)
+(package! git-gutter)                   ; sick git
 (package! git-gutter-fringe)
 
 (package! org-ql
   :recipe
   (:host github
    :repo "larrasket/org-ql"
-   :branch "priority"))
+   :branch "priority"))                 ; Lispy SQL for your org life
 
 
 (unpin! org-roam)
 (package! org-roam-ui)
-(package! evil-snipe :disable t)
-(package! ef-themes)
-(package! breadcrumb)
+(package! evil-snipe :disable t)        ; don't remember why I disabled it
+(package! ef-themes)                    ; sick themes
+(package! breadcrumb)                   ; sick line
+;; (package! spacious-padding)             ; sick padding
 
-;; (package! spacious-padding)
-
-(package! org-fc)
-(package! dired-preview)
-(package! kaolin-themes)
-
-(package! mixed-pitch)
-
-(package! nerd-icons)
+(package! org-fc)                       ; the true anki for Org
+(package! kaolin-themes)                ; sick sick themes
+(package! mixed-pitch)                  ; I like to use variable pitch for org
+(package! nerd-icons)                   ; for the next package
 (package! cocaine-line
   :recipe
   (:host github
-   :repo "luggages/cocaine-line"))
+   :repo "luggages/cocaine-line"))      ; sick modeline
