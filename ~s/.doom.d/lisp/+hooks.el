@@ -16,24 +16,24 @@
 ;;              native-comp-limple-mode-hook)      #'centaur-tabs-local-mode)
 
 (add-hook! 'org-mode-hook
-           (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
-           (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local)
-           (setq org-hide-leading-stars t
-                 fill-column 90
-                 display-line-numbers-width 3)
-           (setq-local truncate-lines t)
-           (display-line-numbers-mode -1)
-           (mixed-pitch-mode)
-           (git-gutter-mode))
+  (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
+  (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local)
+  (setq org-hide-leading-stars t
+        fill-column 90
+        display-line-numbers-width 3)
+  (setq-local truncate-lines t)
+  (display-line-numbers-mode -1)
+  (mixed-pitch-mode)
+  (git-gutter-mode))
 
 
 (add-hook! 'nov-mode-hook
-           (defface tmp-buffer-local-face '((t :family "Roboto Condensed" :height 1.0)) "")
-           (buffer-face-set 'tmp-buffer-local-face)
-           (setq-local right-fringe-width 0)
-           (setq-local left-margin-width  4)
-           (setq-local left-fringe-width  0)
-           (text-scale-set 1))
+  (defface tmp-buffer-local-face '((t :family "Roboto Condensed" :height 1.0)) "")
+  (buffer-face-set 'tmp-buffer-local-face)
+  (setq-local right-fringe-width 0)
+  (setq-local left-margin-width  4)
+  (setq-local left-fringe-width  0)
+  (text-scale-set 1))
 
 
 (add-hook! 'prog-mode-hook      (setq prettify-symbols-alist '(("lambda" . 923))))
@@ -50,7 +50,6 @@
            #'auto-fill-mode)
 
 (add-hook! '(prog-mode-hook)
-  (column-enforce-mode)
   (smartparens-mode 1))
 
 (add-hook! '(bibtex-mode-hook
@@ -60,12 +59,20 @@
 
 
 (add-hook! 'prog-mode-hook :append #'indent-bars-mode)
+(add-hook! 'prog-mode-hook :append #'display-fill-column-indicator-mode)
+
+(add-hook! '(emacs-lisp-mode-hook
+             sql-mode-hook
+             TeX-mode-hook
+             clojure-mode-hook
+             LaTeX-mode-hook)             (indent-bars-mode -1))
 
 (add-hook! '(emacs-lisp-mode-hook
              sql-mode-hook
              TeX-mode-hook
              clojure-mode-hook
              LaTeX-mode-hook)             (format-all-mode -1))
+
 
 (add-hook! '(julia-mode-hook
              java-mode-hook
@@ -90,7 +97,7 @@
 
 
 (add-hook! '(html-mode-hook)             (sgml-electric-tag-pair-mode)
-                                         (flycheck-mode -1))
+  (flycheck-mode -1))
 
 
 (add-hook 'csv-mode-hook                #'csv-align-mode)
@@ -106,7 +113,7 @@
                                           (with-selected-frame frame
                                             (if (doom-theme?)
                                                 (set-fringe-style '(8 . 8))
-                                             (set-fringe-style '(3 . 1)))
+                                              (set-fringe-style '(3 . 1)))
                                             (salih/keyboard-config))))
 
 
@@ -166,8 +173,8 @@ a good understanding. His praise endures forever. ")))
       (set-frame-parameter nil 'alpha-background 98)
       (add-to-list 'default-frame-alist '(alpha-background . 98)))
   (progn
-      (set-frame-parameter nil 'alpha-background 100)
-      (add-to-list 'default-frame-alist '(alpha-background . 100))))
+    (set-frame-parameter nil 'alpha-background 100)
+    (add-to-list 'default-frame-alist '(alpha-background . 100))))
 
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 

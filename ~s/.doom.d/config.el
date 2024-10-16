@@ -22,7 +22,7 @@
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
       ;; or just remove `:size`.
-      ;; [2024-08-06 Tue 06:33] `ef-deuteranopia-light' is an amazing light theme.
+      ;; [2024-08-06 Tue 06:33] `ef-deuteranopia-light' is amazing light theme.
       ;; [2024-09-01 Sun 00:43] `doom-rouge` is an amazing dark theme
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark` too.
       ;; [2024-09-04 Wed 02:03] `ef-maris-dark` too.
