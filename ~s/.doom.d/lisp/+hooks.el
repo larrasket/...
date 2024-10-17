@@ -10,10 +10,11 @@
              mu4e-view-mode-hook
              mu4e-main-mode-hook)               #'salih/disable-bright)
 
-;; (add-hook! '(org-agenda-mode-hook
-;;              org-mode-hook
-;;              dired-mode-hook
-;;              native-comp-limple-mode-hook)      #'centaur-tabs-local-mode)
+(when (featurep 'centaur-tabs-mode)
+  (add-hook! '(org-agenda-mode-hook)
+             org-mode-hook
+             dired-mode-hook
+             native-comp-limple-mode-hook)      #'centaur-tabs-local-mode)
 
 (add-hook! 'org-mode-hook
   (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
@@ -28,7 +29,8 @@
 
 
 (add-hook! 'nov-mode-hook
-  (defface tmp-buffer-local-face '((t :family "Roboto Condensed" :height 1.0)) "")
+  (defface tmp-buffer-local-face
+    '((t :family "Roboto Condensed" :height 1.0)) "")
   (buffer-face-set 'tmp-buffer-local-face)
   (setq-local right-fringe-width 0)
   (setq-local left-margin-width  4)
@@ -36,13 +38,16 @@
   (text-scale-set 1))
 
 
-(add-hook! 'prog-mode-hook      (setq prettify-symbols-alist '(("lambda" . 923))))
+(add-hook!
+ 'prog-mode-hook      (setq prettify-symbols-alist '(("lambda" . 923))))
 (add-hook! 'python-mode-hook    (flycheck-mode -1))
-(add-hook! 'pdf-view-mode-hook  (setq-local evil-normal-state-cursor (list nil)))
+(add-hook!
+ 'pdf-view-mode-hook  (setq-local evil-normal-state-cursor (list nil)))
 (add-hook! 'mu4e-headers-mode-hook (visual-line-mode -1))
-(add-hook! 'org-roam-capture-new-node-hook (setq roam-titles
-                                                 (salih/org-roam-get-node-titles
-                                                  (org-roam-node-read--completions))))
+(add-hook!
+ 'org-roam-capture-new-node-hook (setq roam-titles
+                                       (salih/org-roam-get-node-titles
+                                        (org-roam-node-read--completions))))
 
 (add-hook! '(org-mode-hook
              markdown-mode-hook
@@ -126,10 +131,16 @@
 
 ;; TODO: what about adding some verious quotes here? I can imaging having an RPC
 ;; call to some external program to get awsome quotes from there.
-(add-hook! '+doom-dashboard-functions :append
-  (insert "\n" (+doom-dashboard--center +doom-dashboard--width
-                                        "The fear of the Lord is the beginning of wisdom; all those who practice it have
-a good understanding. His praise endures forever. ")))
+(add-hook!
+ '+doom-dashboard-functions :append
+ (insert "\n"
+         (+doom-dashboard--center
+          +doom-dashboard--width
+          (concat
+           "The fear of the Lord is the beginning"
+           " of wisdom; all those who practice it have\na good understanding."
+           " His praise endures forever."))))
+
 
 
 ;; Activate the advice
@@ -137,12 +148,11 @@ a good understanding. His praise endures forever. ")))
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 (add-to-list 'org-babel-load-languages '(julia-vterm . t))
 
-;; (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages)
-
 (remove-hook 'vterm-mode-hook                   #'hide-mode-line-mode)
 (remove-hook 'doom-first-input-hook             #'evil-snipe-mode)
 (remove-hook '+doom-dashboard-functions         #'doom-dashboard-widget-footer)
-(remove-hook 'after-change-major-mode-hook      #'doom-highlight-non-default-indentation-h)
+(remove-hook 'after-change-major-mode-hook
+             #'doom-highlight-non-default-indentation-h)
 
 
 
@@ -184,13 +194,14 @@ a good understanding. His praise endures forever. ")))
   (delete 'lsp-terraform lsp-client-packages))
 
 
-(add-hook! 'doom-init-ui-hook :append (when
-                                          t
-                                        ;; usually I disable it only w/ doom
-                                        ;; themes.
-                                        ;; (doom-theme?)
-                                        ;; (spacious-padding-mode -1)
-                                        (remove-hook! 'dired-mode-hook #'all-the-icons-dired-mode)))
+(add-hook! 'doom-init-ui-hook :append
+  (when
+      t
+    ;; usually I disable it only w/ doom
+    ;; themes.
+    ;; (doom-theme?)
+    ;; (spacious-padding-mode -1)
+    (remove-hook! 'dired-mode-hook #'all-the-icons-dired-mode)))
 
 
 (provide '+hooks)

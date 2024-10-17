@@ -104,7 +104,8 @@
   (evil-define-key 'motion pdf-view-mode-map (kbd "<left>") #'ignore))
 
 (add-hook! 'pdf-view-mode-hook
-  (evil-local-set-key 'normal (salih/mode "C-c") #'org-noter-insert-precise-note)
+  (evil-local-set-key 'normal
+                      (salih/mode "C-c") #'org-noter-insert-precise-note)
   (evil-local-set-key 'normal (kbd "J") #'pdf-view-next-page-command)
   (evil-local-set-key 'normal (kbd "<right>") nil)
   (evil-local-set-key 'normal (kbd "<left>") nil)
@@ -242,13 +243,23 @@
   `(define-key sly-mode-map (salih/mode "C-f") 'sly-eval-buffer))
 
 (eval-after-load 'sly
-  `(define-key sly-mode-map (salih/mode "C-j") 'salih/sly-compile-defun-with-print))
+  `(define-key sly-mode-map
+    (salih/mode "C-j") 'salih/sly-compile-defun-with-print))
 
-(add-hook 'xwidget-webkit-mode-hook (lambda ()
-                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "y" 'xwidget-webkit-copy-selection-as-kill)
-                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "C" 'salih/open-current-url-in-chrome)
-                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "c" 'xwidget-webkit-current-url)
-                                      (evil-collection-define-key 'normal 'xwidget-webkit-mode-map "SPC" 'xwidget-webkit-scroll-up)))
+(add-hook 'xwidget-webkit-mode-hook
+          (lambda ()
+            (evil-collection-define-key
+              'normal 'xwidget-webkit-mode-map
+              "y" 'xwidget-webkit-copy-selection-as-kill)
+            (evil-collection-define-key
+              'normal
+              'xwidget-webkit-mode-map "C" 'salih/open-current-url-in-chrome)
+            (evil-collection-define-key
+              'normal
+              'xwidget-webkit-mode-map "c" 'xwidget-webkit-current-url)
+            (evil-collection-define-key
+              'normal 'xwidget-webkit-mode-map
+              "SPC" 'xwidget-webkit-scroll-up)))
 
 
 
@@ -368,7 +379,7 @@
 
 (map!
  :i
-  "H-i C-u" #'insert-char)
+ "H-i C-u" #'insert-char)
 
 
 
@@ -419,11 +430,13 @@
 
 
 
-(evil-define-key 'normal calendar-mode-map (kbd "RET") 'salih/org-calendar-goto-agenda)
+(evil-define-key 'normal calendar-mode-map (kbd "RET")
+  'salih/org-calendar-goto-agenda)
 
-(add-hook 'nov-mode-hook (lambda ()
-                           (evil-collection-define-key 'normal 'nov-mode-map "t"  nil)
-                           (evil-collection-define-key 'normal 'nov-mode-map "h"  nil)))
+(add-hook 'nov-mode-hook
+          (lambda ()
+            (evil-collection-define-key 'normal 'nov-mode-map "t"  nil)
+            (evil-collection-define-key 'normal 'nov-mode-map "h"  nil)))
 
 
 
@@ -491,7 +504,8 @@
       (select-window prev-window)))
   (define-key org-noter-notes-mode-map (salih/mode "C-j")
               #'salih/org-noter-sync-current-note-and-switch-window)
-  (define-key org-noter-doc-mode-map (salih/mode "C-c") #'org-noter-insert-precise-note))
+  (define-key org-noter-doc-mode-map
+              (salih/mode "C-c") #'org-noter-insert-precise-note))
 
 (define-key ctl-x-map (kbd "C-z") nil)
 (define-key global-map (kbd "C-x C-z") nil)

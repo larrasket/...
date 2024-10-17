@@ -13,11 +13,11 @@
                                                           "PART"
                                                           "MODE"
                                                           "QUIT"
-                                                          "324"  ; modes
-                                                          "329"  ; channel creation date
-                                                          "332"  ; topic notice
-                                                          "333"  ; who set the topic
-                                                          "353") ; Names notice
+                                                          "324"
+                                                          "329"
+                                                          "332"
+                                                          "333"
+                                                          "353")
 
       erc-autojoin-channels-alist                       '((Libera.Chat
                                                            "#org-mode"
@@ -39,11 +39,11 @@
       (error "No auth entry found for %s@%s:%s" user host port))))
 
 (defun irc (&optional arg)
-    (interactive "P")
-    (let ((pass (salih/lookup-password "irc.libera.chat" "lr0" 80)))
-      (erc
-       :server "irc.libera.chat"
-       :nick user-short-username
-       :password pass)))
+  (interactive "P")
+  (let ((pass (salih/lookup-password "irc.libera.chat" "lr0" 80)))
+    (erc
+     :server "irc.libera.chat"
+     :nick user-short-username
+     :password pass)))
 
 (provide '+erc)

@@ -26,14 +26,15 @@
         mu4e-trash-folder                       (s/cm mu4e-trash-folder)
         mu4e-rss-folder                         (s/cm "/rss")
         mu4e-read-folder                        (s/cm "/read")
-        mu4e-alert-interesting-mail-query       (concat "flag:unread"
-                                                        " AND NOT flag:trashed"
-                                                        " AND NOT maildir:"
-                                                        "\"" mu4e-rss-folder "\""
-                                                        " AND NOT maildir:"
-                                                        "\"" mu4e-read-folder "\""
-                                                        " AND NOT maildir:"
-                                                        "\"" mu4e-refile-folder "\"")
+        mu4e-alert-interesting-mail-query       (concat
+                                                 "flag:unread"
+                                                 " AND NOT flag:trashed"
+                                                 " AND NOT maildir:"
+                                                 "\"" mu4e-rss-folder "\""
+                                                 " AND NOT maildir:"
+                                                 "\"" mu4e-read-folder "\""
+                                                 " AND NOT maildir:"
+                                                 "\"" mu4e-refile-folder "\"")
         mu4e-modeline-show-global               nil
         mu4e-headers-fields                     '((:fast-folding . 2)
                                                   (:human-date . 12)
@@ -44,12 +45,12 @@
 
 
   (defun mu4e-fast-folding-info (msg)
-   (let* ((thread (mu4e-message-field msg :thread))
-          (prefix (mu4e~headers-thread-prefix thread))
-          (unread (memq 'unread (mu4e-message-field msg :flags))))
-     (concat
-      (if (= (length prefix) 0) " " " ")
-      (if unread "•" " "))))
+    (let* ((thread (mu4e-message-field msg :thread))
+           (prefix (mu4e~headers-thread-prefix thread))
+           (unread (memq 'unread (mu4e-message-field msg :flags))))
+      (concat
+       (if (= (length prefix) 0) " " " ")
+       (if unread "•" " "))))
 
   (defun mu4e-action-view-in-xwidget (msg)
     (unless (fboundp 'xwidget-webkit-browse-url)
@@ -57,17 +58,19 @@
     (let ((browse-url-handlers nil)
           (browse-url-browser-function (lambda (url &optional _rest)
                                          (with-output-to-string
-                                           (call-process "tidy" nil nil nil "-m"
-                                                         "--numeric-entities"
-                                                         "yes"
-                                                         (replace-regexp-in-string
-                                                          "^file://" "" url)))
+                                           (call-process
+                                            "tidy" nil nil nil "-m"
+                                            "--numeric-entities"
+                                            "yes"
+                                            (replace-regexp-in-string
+                                             "^file://" "" url)))
                                          (xwidget-webkit-browse-url url))))
       (mu4e-action-view-in-browser msg)))
 
-  (add-to-list 'mu4e-header-info-custom '(:fast-folding . (:name "fast-folding"
-                                                           :shortname ""
-                                                           :function mu4e-fast-folding-info)))
+  (add-to-list 'mu4e-header-info-custom '(:fast-folding .
+                                          (:name "fast-folding"
+                                           :shortname ""
+                                           :function mu4e-fast-folding-info)))
 
   ;; [2024-05-02 Thu 07:00] I find the look with doom theme quite annoying.
   (when (doom-theme?)
@@ -76,14 +79,10 @@
 
 
 
-  
-
-
-   ;; Specific character to later detect unread
 
 
 
-
+;; Specific character to later detect unread
 
 
 (provide '+sets-email)

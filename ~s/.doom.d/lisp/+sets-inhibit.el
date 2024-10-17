@@ -8,10 +8,19 @@
       scroll-conservatively                             101
       read-process-output-max                           1000000
 
+
       ;; fonts
-      doom-font                                         "Pragmasevka:pixelsize=17:antialias=true:hinting=true:autohint=false:hintstyle=3"
-      doom-unicode-font                                 "Amiri UI:pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3"
-      doom-variable-pitch-font                          (font-spec :family "Arimo")
+      doom-font
+      (concat
+       "Pragmasevka:pixelsize=17"
+       ":antialias=true:hinting=true:autohint=false:hintstyle=3")
+
+      doom-unicode-font
+      (concat
+       "Amiri UI"
+       ":pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3")
+      doom-variable-pitch-font
+      (font-spec :family "Arimo")
 
       ;; modeline
       doom-modeline-enable-word-count                   t
@@ -22,7 +31,8 @@
       scroll-margin                                     4
 
       ;; awqat
-      awqat-mode-line-format                            " ${prayer} (${hours}h${minutes}m) "
+      awqat-mode-line-format
+      " ${prayer} (${hours}h${minutes}m) "
       awqat-update-interval                             (* 60 5)
 
       ;; consult
@@ -43,7 +53,35 @@
       large-file-warning-threshold                      nil
 
 
-      save-place-ignore-files-regexp                    "\\(?:COMMIT_EDITMSG\\|hg-editor-[[:alnum:]]+\\.txt\\|svn-commit\\.tmp\\|bzr_log\\.[[:alnum:]]+\\|\\.pdf\\)$"
+
+
+      ;; school
+      salih/source-directory                            (s/pr "source")
+
+      salih/books
+      (s/pl salih/source-directory)
+      bibtex-completion-bibliography                    (s/pc "ref.bib")
+      bibtex-completion-notes-path                      (s/pr "references")
+      org-cite-csl-styles-dir                           (s/pc "assets" "csl")
+      bibtex-completion-library-path
+      (l salih/source-directory)
+      org-cite-global-bibliography
+      (l bibtex-completion-bibliography)
+      citar-bibliography
+      bibtex-completion-bibliography
+      org-cite-csl--fallback-style-file
+      (f-join org-cite-csl-styles-dir "chicago-ibid.csl")
+      org-fc-flashcard-tag                              "drill"
+      org-fc-directories                                (l (s/pr "main")
+                                                           (s/pr "other")
+                                                           (s/pr "references"))
+
+
+
+      save-place-ignore-files-regexp
+      (concat
+       "\\(?:COMMIT_EDITMSG\\|hg-editor-[[:alnum:]]"
+       "+\\.txt\\|svn-commit\\.tmp\\|bzr_log\\.[[:alnum:]]+\\|\\.pdf\\)$")
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
 
@@ -54,16 +92,19 @@
       nov-text-width                                    140
 
       ;; julia
-      lsp-julia-default-environment                     "~/.julia/environments/v1.9"
       lsp-julia-package-dir                             nil
-      lsp-julia-flags                                   `("-J/home/l/configs/~s/assets/languageserver.so")
+      lsp-julia-default-environment
+      "~/.julia/environments/v1.9"
+      lsp-julia-flags
+      `("-J/home/l/configs/~s/assets/languageserver.so")
 
       ;; git-auto-commit-mode
       gac-debounce-interval                             200
       gac-silent-message-p                              t
 
-      vertico-buffer-display-action                     '(display-buffer-at-bottom (window-height . 20))
       enable-recursive-minibuffers                      nil
+      vertico-buffer-display-action
+      '(display-buffer-at-bottom (window-height . 20))
 
       salih/prefix-global                               "C-x "
       salih/prefix-mode                                 "C-c "
@@ -93,14 +134,15 @@
 
       ;; modus
       modus-themes-org-blocks                           'gray-background
-      modus-themes-common-palette-overrides             '((bg-mode-line-active          bg-inactive)
-                                                          (fg-mode-line-active          fg-main)
-                                                          (bg-mode-line-inactive        bg-inactive)
-                                                          (fg-mode-line-active          fg-dim)
-                                                          (bg-line-number-active        unspecified)
-                                                          (bg-line-number-inactive      unspecified)
-                                                          (border-mode-line-active      bg-main)
-                                                          (border-mode-line-inactive    bg-inactive))
+      modus-themes-common-palette-overrides
+      '((bg-mode-line-active          bg-inactive)
+        (fg-mode-line-active          fg-main)
+        (bg-mode-line-inactive        bg-inactive)
+        (fg-mode-line-active          fg-dim)
+        (bg-line-number-active        unspecified)
+        (bg-line-number-inactive      unspecified)
+        (border-mode-line-active      bg-main)
+        (border-mode-line-inactive    bg-inactive))
 
       centaur-tabs-height                               22
       +doom-dashboard-ascii-banner-fn                   'salih/banner
@@ -117,7 +159,8 @@
       breadcrumb-project-crumb-separator                "/"
       breadcrumb-imenu-max-length                       1.0
       breadcrumb-imenu-crumb-separator                  " > "
-      helm-ag-show-status-function                      #'doom-modeline-set-helm-modeline
+      helm-ag-show-status-function
+      #'doom-modeline-set-helm-modeline
       mode-line-format                                  nil
 
       cocaine-show-buffer-position                      nil
@@ -127,10 +170,10 @@
 
       ;; translation
       gt-langs                                          `("en" "ar")
-      gt-default-translator                             (gt-translator
-                                                         :taker   (gt-taker :text 'buffer :pick 'paragraph)
-                                                         :engines (list (gt-google-engine))
-                                                         :render        (gt-buffer-render)))
+      gt-default-translator
+      (gt-translator
+       :taker   (gt-taker :text 'buffer :pick 'paragraph)
+       :engines (list (gt-google-engine))
+       :render        (gt-buffer-render)))
 
 (provide '+sets-inhibit)
-

@@ -25,7 +25,8 @@
   `(car (split-string user-full-name " ")))
 
 (defmacro s/pl (source-directory)
-  `(mapcar 'file-truename (directory-files-recursively ,source-directory "" nil t)))
+  `(mapcar 'file-truename
+    (directory-files-recursively ,source-directory "" nil t)))
 
 (defmacro s/cm (m)
   `(concat "/" user-mail-address ,m))
@@ -63,7 +64,7 @@
                               (ef-bio                   . dark)
                               (doom-rouge               . dark)
                               (doom-feather-dark        . dark)
-                              (ef-summer                . nour) ; that's too happy for me
+                              (ef-summer                . nour)
                               (ef-melissa-dark          . dark)
                               (ef-duo-dark              . dark)
                               (ef-spring                . nour)
@@ -120,5 +121,66 @@
 (defun salih/really-really-random-theme-load ()
   (interactive)
   (load-theme (salih/really-random-theme)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(defun salih/banner ()
+  (let* ((banner '("       d8888                                     8888888888       888    d8b      "
+                   "      d88888                                     888              888    Y8P      "
+                   "     d88P888                                     888              888             "
+                   "    d88P 888 88888b.d88b.   .d88b.  888d888      8888888  8888b.  888888 888      "
+                   "   d88P  888 888 \"888 \"88b d88\"\"88b 888P\"        888         \"88b 888    888      "
+                   "  d88P   888 888  888  888 888  888 888          888     .d888888 888    888      "
+                   " d8888888888 888  888  888 Y88..88P 888          888     888  888 Y88b.  888      "
+                   "d88P     888 888  888  888  \"Y88P\"  888          888     \"Y888888  \"Y888 888      "
+                   ""
+                   ""
+                   ""
+                   ""))
+
+         (longest-line (apply #'max (mapcar #'length banner))))
+    (put-text-property
+     (point)
+     (dolist (line banner (point))
+       (insert (+doom-dashboard--center
+                +doom-dashboard--width
+                (concat line (make-string (max 0 (- longest-line (length line))) 32)))
+               "\n"))
+     'face 'doom-dashboard-banner)))
+
+
+
+
+
+
+
+
+
 
 (provide '+early)

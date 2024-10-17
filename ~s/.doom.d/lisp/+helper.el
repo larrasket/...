@@ -147,7 +147,8 @@ Version 2019-11-04 2021-02-16"
        ((string-equal system-type "gnu/linux")
         (mapc
          (lambda ($fpath) (let ((process-connection-type nil))
-                       (start-process "" nil "xdg-open" $fpath))) $file-list))))))
+                       (start-process
+                        "" nil "xdg-open" $fpath))) $file-list))))))
 
 (defun salih/compile-and-run-cpp () ;; compile-and-run methods
   (interactive)
@@ -210,7 +211,8 @@ Version 2019-11-04 2021-02-16"
     (call-interactively 'find-file)))
 
 (defun salih/open-book-zathura ()
-  "Search for a file in ~/me and open it. If the file is a PDF, open it in Zathura."
+  "Search for a file in ~/me and open it. If the file is a PDF, open it in
+Zathura."
   (interactive)
   (let ((default-directory (concat salih/source-directory "/")))
     (let ((file (read-file-name "Select file: " default-directory)))
@@ -225,7 +227,10 @@ Version 2019-11-04 2021-02-16"
   "Encrypt the currently opened file for RECIPIENTS and delete the original."
   (interactive
    (list (epa-select-keys (epg-make-context epa-protocol)
-                          "Select recipients for encryption. If no one is selected, symmetric encryption will be performed.")))
+                          (concat
+                           "Select recipients for encryption. "
+                           "If no one is selected, symmetric encryption"
+                           " will be performed."))))
   (let* ((file (buffer-file-name))
          (cipher (concat file
                          (if (eq epa-protocol 'OpenPGP)
@@ -255,8 +260,12 @@ Version 2019-11-04 2021-02-16"
 (defun salih/epa-dired-do-encrypt ()
   "Encrypt marked files and delete the originals."
   (interactive)
-  (let ((recipients (epa-select-keys (epg-make-context) "Select recipients for encryption.
-If no one is selected, symmetric encryption will be performed.  ")))
+  (let ((recipients (epa-select-keys (epg-make-context)
+                                     (concat
+                                      "Select recipients for encryption. "
+                                      "If no one is selected, "
+                                      "symmetric encryption"
+                                      " will be performed."))))
     (dolist (file (dired-get-marked-files))
       (with-current-buffer (find-file-noselect file)
 	(salih/epa-encrypt-file recipients)))
@@ -300,29 +309,7 @@ automatically previewed."
   :commands (awqat-display-prayer-time-mode
              awqat-times-for-day))
 
-(defun salih/banner ()
-  (let* ((banner '("       d8888                                     8888888888       888    d8b      "
-                   "      d88888                                     888              888    Y8P      "
-                   "     d88P888                                     888              888             "
-                   "    d88P 888 88888b.d88b.   .d88b.  888d888      8888888  8888b.  888888 888      "
-                   "   d88P  888 888 \"888 \"88b d88\"\"88b 888P\"        888         \"88b 888    888      "
-                   "  d88P   888 888  888  888 888  888 888          888     .d888888 888    888      "
-                   " d8888888888 888  888  888 Y88..88P 888          888     888  888 Y88b.  888      "
-                   "d88P     888 888  888  888  \"Y88P\"  888          888     \"Y888888  \"Y888 888      "
-                   ""
-                   ""
-                   ""
-                   ""))
 
-         (longest-line (apply #'max (mapcar #'length banner))))
-    (put-text-property
-     (point)
-     (dolist (line banner (point))
-       (insert (+doom-dashboard--center
-                +doom-dashboard--width
-                (concat line (make-string (max 0 (- longest-line (length line))) 32)))
-               "\n"))
-     'face 'doom-dashboard-banner)))
 
 ;; disable spaces and icons in dashboard
 (defun doom-dashboard-widget-shortmenu ()
@@ -345,8 +332,9 @@ automatically previewed."
                          label
                          'action
                          `(lambda (_)
-                            (call-interactively (or (command-remapping #',action)
-                                                    #',action)))
+                            (call-interactively
+                             (or (command-remapping #',action)
+                                 #',action)))
                          'face (or face 'doom-dashboard-menu-title)
                          'follow-link t
                          'help-echo
@@ -364,7 +352,8 @@ automatically previewed."
                                                 (bound-and-true-p
                                                  evil-local-mode)
                                               (evil-get-auxiliary-keymap
-                                               +doom-dashboard-mode-map 'normal))
+                                               +doom-dashboard-mode-map
+                                               'normal))
                                             +doom-dashboard-mode-map)))
                                 (key
                                  (or (when keymaps
@@ -511,11 +500,13 @@ tasks."
              (original-tags tags))
 
 
-        (cond ((vulpea-project-p) (and (or (setq tags (cons "project" tags)) t)
-                                       (setq tags (remove "project_archived" tags))))
+        (cond ((vulpea-project-p)
+               (and (or (setq tags (cons "project" tags)) t)
+                    (setq tags (remove "project_archived" tags))))
 
-              ((vulpea-project-done-p) (and (or (setq tags (cons "project_archived" tags)) t)
-                                       (setq tags (remove "project" tags))))
+              ((vulpea-project-done-p)
+               (and (or (setq tags (cons "project_archived" tags)) t)
+                    (setq tags (remove "project" tags))))
               (t (and (or (setq tags (remove "project" tags)) t)
                       (or (setq tags (remove "project_archived" tags)) t))))
 
@@ -691,15 +682,18 @@ tasks."
           (insert file-path))
       (message "File does not exist: %s" file-path))))
 
-(defadvice org-agenda-get-some-entry-text (after modify-agenda-entry-text activate)
+(defadvice org-agenda-get-some-entry-text
+    (after modify-agenda-entry-text activate)
   "Modify the text returned by org-agenda-get-some-entry-text."
   (setq ad-return-value (salih/modify-agenda-entry-text ad-return-value)))
 
 (defun salih/modify-agenda-entry-text (text)
   "Customize the agenda entry text."
   ;; Modify the 'text' variable as needed here
-  (replace-regexp-in-string "^[[:space:]]*$\\|^[[:space:]]*>[[:space:]]*$" ""
-                            (replace-regexp-in-string "\\[\\[\\([^]]+\\)\\]\\[\\([^]]+\\)\\]\\]" "\\2" text)))
+  (replace-regexp-in-string
+   "^[[:space:]]*$\\|^[[:space:]]*>[[:space:]]*$" ""
+   (replace-regexp-in-string "\\[\\[\\([^]]+\\)\\]\\[\\([^]]+\\)\\]\\]" "\\2"
+                             text)))
 
 (defun salih/get-file-list-todos ()
   (interactive)
@@ -815,11 +809,12 @@ tasks."
     (funcall orgin)))
 
 ;; lisp
-(defvar salih/sly--compile-eval-begin-print-counter 0 "a counter to distinguish compile/eval cycles")
+(defvar salih/sly--compile-eval-begin-print-counter 0
+  "a counter to distinguish compile/eval cycles")
 (defun salih/sly--compile-eval-begin-print (&rest _)
   "print the counter value into REPL to distinguish compile/eval cycles."
-  ;;(sly-eval-async `(cl:format t "~&----- my advice called from: ~a" (quote ,real-this-command))) ;; debug-code
-  (sly-eval-async `(cl:format t "" ,(cl-incf salih/sly--compile-eval-begin-print-counter))))
+  (sly-eval-async
+   `(cl:format t "" ,(cl-incf salih/sly--compile-eval-begin-print-counter))))
 
 (defun salih/sly-eval-with-print (form)
   "Evaluate FORM in the SLY REPL, wrapping it with a (print ...) form."
@@ -830,7 +825,8 @@ tasks."
     (message "Evaluated: %s" form-with-print)))
 
 (defun salih/sly-compile-defun-with-print ()
-  "Compile the current toplevel form in SLY, wrapping it with a (print ...) form."
+  "Compile the current toplevel form in SLY, wrapping it with a (print ...)
+form."
   (interactive)
   (let* ((form (sly-sexp-at-point))
          (form-with-print (format "(print %s)" form))
@@ -858,12 +854,14 @@ tasks."
              (push (consult--fast-abbreviate-file-name file) items)))))))
 
 (defun salih/org-roam-get-node-titles (node-list)
-  "Applies `org-roam-node-title' function to the cdr of each element in NODE-LIST."
+  "Applies `org-roam-node-title' function to the cdr of each element in
+NODE-LIST."
   (mapcar (lambda (node) (org-roam-node-title (cdr node)))
           node-list))
 
 (defun salih/org-roam-get-node-files (node-list)
-  "Applies `org-roam-node-file' function to the cdr of each element in NODE-LIST."
+  "Applies `org-roam-node-file' function to the cdr of each element in
+NODE-LIST."
   (mapcar (lambda (node) (org-roam-node-file (cdr node)))
           node-list))
 
@@ -877,8 +875,8 @@ tasks."
         :narrow   ,consult-org-roam-buffer-narrow-key
         :annotate ,(lambda (cand)
                      (let* ((name (org-roam-node-from-title-or-alias cand)))
-                       (if name (file-name-nondirectory (org-roam-node-file name))
-                         "")))
+                       (if name (file-name-nondirectory
+                                 (org-roam-node-file name)) "")))
 
         :action ,(lambda (name)
                    (if salih/temp-roam-insert
@@ -893,7 +891,8 @@ tasks."
                            (run-hook-with-args 'org-roam-post-node-insert-hook
                                                id
                                                description)))
-                     (org-roam-node-visit (org-roam-node-from-title-or-alias name))))
+                     (org-roam-node-visit
+                      (org-roam-node-from-title-or-alias name))))
 
         :new ,(lambda (name)
                 (let* ((n (org-roam-node-create :title name)))
@@ -928,7 +927,9 @@ tasks."
         (let ((event nil))
           (while (not (and (eq 'mouse-1 (car event))
                            (eq window (posn-window (event-start event)))))
-            (setq event (read-event "Click where you want the start of the note to be!")))
+            (setq event
+                  (read-event
+                   "Click where you want the start of the note to be!")))
           (let* ((col-row (posn-col-row (event-start event)))
                  (click-position (org-noter--conv-page-scroll-percentage
                                   (+ (window-vscroll) (cdr col-row))
@@ -948,7 +949,7 @@ is already running."
           (switch-to-buffer vterm-buffer)
           (vterm-send-string (concat "cd " cwd))
           (vterm-send-return))
-       (+vterm/here t))))
+      (+vterm/here t))))
 
 (defun salih/eshell ()
   "Run eshell and set its directory to the current buffer's directory if eshell
@@ -977,12 +978,14 @@ URL `http://ergoemacs.org/emacs/dired_sort.html'
 Version 2015-07-30"
   (interactive)
   (let (-sort-by -arg)
-    (setq -sort-by (ido-completing-read "Sort by:" '( "date" "size" "name" "dir")))
+    (setq -sort-by
+          (ido-completing-read "Sort by:" '( "date" "size" "name" "dir")))
     (cond
      ((equal -sort-by "name") (setq -arg "-Al --si --time-style long-iso "))
      ((equal -sort-by "date") (setq -arg "-Al --si --time-style long-iso -t"))
      ((equal -sort-by "size") (setq -arg "-Al --si --time-style long-iso -S"))
-     ((equal -sort-by "dir") (setq -arg "-Al --si --time-style long-iso --group-directories-first"))
+     ((equal -sort-by "dir")
+      (setq -arg "-Al --si --time-style long-iso --group-directories-first"))
      (t (error "logic error 09535" )))
     (dired-sort-other -arg )))
 
@@ -999,9 +1002,9 @@ Version 2015-07-30"
 
 (defmacro salih/disable-minor-mode-in-hook (hook mode-symbol)
   `(add-hook ,hook
-             (lambda ()
-               (when (bound-and-true-p ,mode-symbol)
-                 (,mode-symbol -1)))))
+    (lambda ()
+      (when (bound-and-true-p ,mode-symbol)
+        (,mode-symbol -1)))))
 
 (defun salih/dired-git-info-auto-enable ()
   "Enable dired-git-info only if there are less than 60 files."
@@ -1010,11 +1013,11 @@ Version 2015-07-30"
 
 (defun salih/insert-current-date ()
   (interactive)
-    (let ((current-prefix-arg '(16)))
-      (if (eq major-mode 'org-mode)
-          (insert "- "))
-      (call-interactively 'org-time-stamp-inactive)
-      (insert " ")))
+  (let ((current-prefix-arg '(16)))
+    (if (eq major-mode 'org-mode)
+        (insert "- "))
+    (call-interactively 'org-time-stamp-inactive)
+    (insert " ")))
 current-prefix-arg
 (defun salih/open-kitty-in-current-directory ()
   "Open the Kitty terminal in the current working directory."
@@ -1048,18 +1051,24 @@ current-prefix-arg
 
 (defun salih/different-day-p (last-time current-time)
   (let* ((next-day-p (or
-                      (not (= (nth 4 (decode-time last-time)) (nth 4 (decode-time current-time))))
-                      (not (= (nth 3 (decode-time last-time)) (nth 3 (decode-time current-time))))
-                      (not (= (nth 5 (decode-time last-time)) (nth 5 (decode-time current-time)))))))
+                      (not (= (nth 4 (decode-time last-time))
+                              (nth 4 (decode-time current-time))))
+                      (not (= (nth 3 (decode-time last-time))
+                              (nth 3 (decode-time current-time))))
+                      (not (= (nth 5 (decode-time last-time))
+                              (nth 5 (decode-time current-time)))))))
     next-day-p))
 
 (defun salih/within-hour-window-p (last-time current-time)
   "Check if CURRENT-TIME is within one hour of LAST-TIME."
   (let* ((hour (nth 2 (decode-time last-time)))
          (next-day-p (or
-                      (not (= (nth 4 (decode-time last-time)) (nth 4 (decode-time current-time))))
-                      (not (= (nth 3 (decode-time last-time)) (nth 3 (decode-time current-time))))
-                      (not (= (nth 5 (decode-time last-time)) (nth 5 (decode-time current-time))))))
+                      (not (= (nth 4 (decode-time last-time))
+                              (nth 4 (decode-time current-time))))
+                      (not (= (nth 3 (decode-time last-time))
+                              (nth 3 (decode-time current-time))))
+                      (not (= (nth 5 (decode-time last-time))
+                              (nth 5 (decode-time current-time))))))
          (next-hour (time-add last-time (seconds-to-time 3600))))
     (or next-day-p (< (float-time current-time) (float-time next-hour)))))
 
@@ -1071,22 +1080,24 @@ current-prefix-arg
     (if (or (not last-open-time)
             (salih/within-hour-window-p last-open-time now))
         (progn
-          ;; Save only the first time within the hour window, not on subsequent calls
+          ;; Save only the first time within the hour window, not on subsequent
+          ;; calls
           (when (salih/different-day-p last-open-time now)
             (salih/save-last-open-rss-time now))
           ;; Execute the main command
           (salih/feeds--))
-      (message "This command can only be called once within the same hour of a day."))))
+      (message
+       "This command can only be called once within the same hour of a day."))))
 
 (defun salih/feeds-- ()
   (if (featurep 'mu4e)
-              (progn
-                (setq mu4e-search-threads nil)
-                (mu4e-search "maildir:\"/lr0@gmx.com/rss\" flag:unread")
-                (mu4e-search-change-sorting :from 'descending))
-            (progn
-              (setq mu4e-search-threads t)
-              (mu4e))))
+      (progn
+        (setq mu4e-search-threads nil)
+        (mu4e-search "maildir:\"/lr0@gmx.com/rss\" flag:unread")
+        (mu4e-search-change-sorting :from 'descending))
+    (progn
+      (setq mu4e-search-threads t)
+      (mu4e))))
 
 (defun salih/mu4e-go-to-url ()
   (interactive)
@@ -1104,7 +1115,8 @@ ARGS is `element' in `org-ql-view--format-element'"
            (properties (cadar element))
            (result (apply orig-fun element))
            (smt "")
-           (category (org-entry-get (plist-get properties :org-marker) "CATEGORY")))
+           (category (org-entry-get (plist-get properties :org-marker)
+                                    "CATEGORY")))
       (if (> (length category) 11)
           (setq category (substring category 0 10)))
       (if (< (length category) 11)
@@ -1120,7 +1132,8 @@ ARGS is `element' in `org-ql-view--format-element'"
   used as title."
   (let ((begin (string-match "^#\\+[tT][iI][tT][lL][eE]: .*$" contents)))
     (if begin
-	(string-trim (substring contents begin (match-end 0)) "#\\+[tT][iI][tT][lL][eE]: *" "[\n\t ]+")
+	(string-trim (substring contents begin (match-end 0))
+                     "#\\+[tT][iI][tT][lL][eE]: *" "[\n\t ]+")
       (deft-base-filename file))))
 
 (cl-defmethod org-roam-node-type ((node org-roam-node))
@@ -1160,7 +1173,8 @@ org-roam-node-read' can take a sorting function as an argument) but the list of
 nodes is sorted by the number of backlinks instead of most recent nodes. Sorting
 is done with org-roam-node-sort-by-backlinks'"
   (interactive)
-  (find-file (org-roam-node-file (org-roam-node-read nil nil #'org-roam-node-sort-by-backlinks))))
+  (find-file (org-roam-node-file
+              (org-roam-node-read nil nil #'org-roam-node-sort-by-backlinks))))
 
 (defun salih/consult-org-roam-search-org-only ()
   (interactive)
@@ -1211,22 +1225,26 @@ message as an inline attachment."
       (let* ((today (format-time-string "%Y-%m-%d"))
              (node-point (org-roam-node-point node))
              (existing-rating (org-entry-get node-point today)))
-       (if existing-rating
-           (message "Rating already exists for today.")
-         (progn
-           (let* ((rating (completing-read "Choose a rating: "
-                                           '("amazing" "good"
-                                             "meh" "bad" "awful")))
-                  (nice-message (cond ((string= rating "amazing") "Great!")
-                                      ((string= rating "good") "Keep going!")
-                                      ((string= rating "meh") "Better days are comming.")
-                                      ((string= rating "bad") "Don't forget the sunshie on a rainy day.")
-                                      ((string= rating "awful") "This too shall pass."))))
-             (org-entry-put node-point today
-                            (format "(%s . \"%s\")"
-                                    (current-time)
-                                    rating))
-             (message nice-message))))))))
+        (if existing-rating
+            (message "Rating already exists for today.")
+          (progn
+            (let* ((rating (completing-read "Choose a rating: "
+                                            '("amazing" "good"
+                                              "meh" "bad" "awful")))
+                   (nice-message (cond
+                                  ((string= rating "amazing") "Great!")
+                                  ((string= rating "good") "Keep going!")
+                                  ((string= rating "meh")
+                                   "Better days are comming.")
+                                  ((string= rating "bad")
+                                   "Don't forget the sunshie on a rainy day.")
+                                  ((string= rating "awful")
+                                   "This too shall pass."))))
+              (org-entry-put node-point today
+                             (format "(%s . \"%s\")"
+                                     (current-time)
+                                     rating))
+              (message nice-message))))))))
 
 (defun salih/pdf-occure ()
   (interactive)
@@ -1253,7 +1271,7 @@ it with org)."
              (org-roam-capture-p))
     (if salih/org-roam-dailies-capture-p
         (setq salih/org-roam-dailies-capture-p nil)
-        (org-roam-capture--put :id (org-id-get-create)))))
+      (org-roam-capture--put :id (org-id-get-create)))))
 
 (defun salih/capture-- (fn key &optional fleet?)
   (with-current-buffer (find-file-noselect (if fleet?
@@ -1297,14 +1315,16 @@ without history in the file name."
                             (funcall fn node))
                            ((fboundp node-fn)
                             (funcall node-fn node))
-                           (t (let ((r (read-from-minibuffer (format "%s: " key) default-val)))
+                           (t (let ((r (read-from-minibuffer
+                                        (format "%s: " key) default-val)))
                                 (plist-put template-info ksym r)
                                 r)))))))
            (file-path
             (expand-file-name
              (read-file-name "Extract node to: "
-                             (file-name-as-directory (f-join
-                                                      org-roam-directory "main"))
+                             (file-name-as-directory
+                              (f-join
+                               org-roam-directory "main"))
                              template nil template)
              (f-join org-roam-directory "main"))))
       (when (file-exists-p file-path)
@@ -1326,10 +1346,10 @@ without history in the file name."
 
 (defun salih/read-al-akhbar ()
   (when (and (time-equal-p (awqat--today) date) (/= (string-to-number
-                                                        (format-time-string
-                                                         "%u")) 7))
-      (format "Read 00:30am [[https://al-akhbar.com/Editions/%s][Today's Akhbar]]"
-              (format-time-string "%Y/%m/%d"))))
+                                                     (format-time-string
+                                                      "%u")) 7))
+    (format "Read 00:30am [[https://al-akhbar.com/Editions/%s][Today's Akhbar]]"
+            (format-time-string "%Y/%m/%d"))))
 
 (defun salih/toggle-stats-on (&rest _)
   (setq org-log-into-drawer "STATS"))
@@ -1386,10 +1406,10 @@ without history in the file name."
 (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
   "Prepend emacs-lsp-booster command to lsp CMD."
   (let ((orig-result (funcall old-fn cmd test?)))
-    (if (and (not test?)                             ;; for check lsp-server-present?
-             (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+    (if (and (not test?)
+             (not (file-remote-p default-directory))
              lsp-use-plists
-             (not (functionp 'json-rpc-connection))  ;; native json-rpc
+             (not (functionp 'json-rpc-connection))
              (executable-find "emacs-lsp-booster"))
         (progn
           (message "Using emacs-lsp-booster for %s!" orig-result)
@@ -1400,10 +1420,10 @@ without history in the file name."
   "Get all Org Roam nodes that have the specified TAG."
   (org-roam-db-query
    [:select :distinct [nodes:file nodes:title]
-            :from tags
-            :left :join nodes
-            :on (= tags:node-id nodes:id)
-            :where (like tags:tag $s1)]
+    :from tags
+    :left :join nodes
+    :on (= tags:node-id nodes:id)
+    :where (like tags:tag $s1)]
    tag))
 
 
@@ -1482,9 +1502,9 @@ block selection."
                                   (eq evil-state 'visual)))
              (doom-modeline--active))
     (cl-destructuring-bind (beg . end)
-      (if (and (bound-and-true-p evil-local-mode) (eq evil-state 'visual))
-          (cons evil-visual-beginning evil-visual-end)
-        (cons (region-beginning) (region-end)))
+        (if (and (bound-and-true-p evil-local-mode) (eq evil-state 'visual))
+            (cons evil-visual-beginning evil-visual-end)
+          (cons (region-beginning) (region-end)))
       (propertize
        (let ((lines (count-lines beg (min end (point-max)))))
          (concat (doom-modeline-spc)
@@ -1542,7 +1562,8 @@ Respects `doom-modeline-enable-word-count'."
 (defvar-local salih/modeline-buffer-name
     '(:eval
       (when (mode-line-window-selected-p)
-        (propertize (salih/modeline--buffer-name) 'face 'salih/modeline-background)))
+        (propertize (salih/modeline--buffer-name)
+                    'face 'salih/modeline-background)))
   "Mode line construct to display the buffer name.")
 
 (defun salih/modeline--major-mode-name ()
@@ -1552,7 +1573,7 @@ Respects `doom-modeline-enable-word-count'."
 
 (defvar-local salih/modeline-major-mode
     '
-  "Mode line construct to display the major mode.")
+    "Mode line construct to display the major mode.")
 (put 'salih/modeline-major-mode 'risky-local-variable t)
 
 (defun mode-line-window-selected-p ()
@@ -1563,9 +1584,9 @@ on whether the mode line belongs to the currently selected window
 or not."
   (let ((window (selected-window)))
     (or (eq window (old-selected-window))))
-  	(and (minibuffer-window-active-p (minibuffer-window))
-  	     (with-selected-window (minibuffer-window)
-  	       (eq window (minibuffer-selected-window)))))
+  (and (minibuffer-window-active-p (minibuffer-window))
+       (with-selected-window (minibuffer-window)
+  	 (eq window (minibuffer-selected-window)))))
 (setq doom-modeline-mode-alist nil)
 
 ;; page show with percent
@@ -1616,24 +1637,26 @@ or not."
                         " ")
                        'face 'bold)))
 
-                "  " (:eval
-                      (list
-                       (propertize
-                        (buffer-name)
-                        'face
-                        (cond
-                         ((buffer-modified-p) 'doom-modeline-buffer-modified)
-                         ((doom-modeline--active) 'doom-modeline-buffer-file)
-                         (t 'mode-line-inactive))
-                        'help-echo
-                        "Buffer name mouse-1: Previous buffer\nmouse-3: Next buffer"
-                        'local-map mode-line-buffer-identification-keymap)))
+                "  "
+                (:eval
+                 (list
+                  (propertize
+                   (buffer-name)
+                   'face
+                   (cond
+                    ((buffer-modified-p) 'doom-modeline-buffer-modified)
+                    ((doom-modeline--active) 'doom-modeline-buffer-file)
+                    (t 'mode-line-inactive))
+                   'help-echo
+                   "Buffer name mouse-1: Previous buffer\nmouse-3: Next buffer"
+                   'local-map mode-line-buffer-identification-keymap)))
 
-                "  " (:eval
-                      (list
-                       (if (derived-mode-p 'pdf-view-mode)
-                           (propertize
-                            (salih/doom-modeline-update-pdf-pages-no-percent)) "")))
+                "  "
+                (:eval
+                 (list
+                  (if (derived-mode-p 'pdf-view-mode)
+                      (propertize
+                       (salih/doom-modeline-update-pdf-pages-no-percent)) "")))
 
                 "  " (:eval (doom-modeline-format--salih-line))))
 

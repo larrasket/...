@@ -26,7 +26,8 @@
       ;; [2024-09-01 Sun 00:43] `doom-rouge` is an amazing dark theme
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark` too.
       ;; [2024-09-04 Wed 02:03] `ef-maris-dark` too.
-      doom-theme                                        (salih/really-random-theme)
+      doom-theme
+      (salih/really-random-theme)
       doom-modeline-height                              27
       display-line-numbers-type                         'relative
 
@@ -51,33 +52,20 @@
       ;; [2024-08-08 Wed 23:41] Not anymore.
       ;; org-extend-today-until                            7
 
-      ;; school
-      salih/source-directory                            (s/pr "source")
-
-      salih/books                                       (s/pl salih/source-directory)
-      bibtex-completion-bibliography                    (s/pc "ref.bib")
-      bibtex-completion-notes-path                      (s/pr "references")
-      org-cite-csl-styles-dir                           (s/pc "assets" "csl")
-      bibtex-completion-library-path                    (l salih/source-directory)
-      org-cite-global-bibliography                      (l bibtex-completion-bibliography)
-      citar-bibliography                                bibtex-completion-bibliography
-      org-cite-csl--fallback-style-file                 (f-join org-cite-csl-styles-dir "chicago-ibid.csl")
-      org-fc-flashcard-tag                              "drill"
-      org-fc-directories                                (l (s/pr "main")
-                                                           (s/pr "other")
-                                                           (s/pr "references"))
       ;; other
       auto-save-no-message                              t
       dired-preview-delay                               0.1
-      safe-local-variable-values                        '((org-download-image-dir
-                                                           . "../i")
-                                                          (salih/rebuild . t))
+      safe-local-variable-values
+      '((org-download-image-dir
+         . "../i")
+        (salih/rebuild . t))
       ;; currently org causes some annoying warnings because of org-element
       ;; breaking api updates.
       ;; [2024-04-26 Fri 02:01] I wrote "currently" above a long time ago
       ;; (perhaps can be detected from the git history, too lazy tho). Not sure
       ;; if it is still the case
       warning-minimum-level                             :error)
+
 
 
 (s/require
