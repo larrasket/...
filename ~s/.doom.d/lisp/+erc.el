@@ -1,5 +1,5 @@
 (after! circe
-  (defun my-nickserv-password (server)
+  (defun salih/nickserv-password (server)
     (salih/fetch-password :user user-short-username :host "irc.libera.chat"))
   (set-irc-server! "irc.libera.chat"
     '(:tls t
@@ -7,8 +7,8 @@
       :nick "lr0"
       :sasl-strict t
       :sasl-username "lr0"
-      :sasl-password my-nickserv-password
-      :channels ("#emacs" "#org-mode" "##arabic")))
+      :sasl-password salih/nickserv-password
+      :channels ("#emacs" "#org-mode" "##arabic" "#philosophy" "#books")))
 
   (circe-set-display-handler "JOIN" (lambda (&rest ignored) nil))
   (circe-set-display-handler "PART" (lambda (&rest ignored) nil))
@@ -16,16 +16,13 @@
   (circe-set-display-handler "QUIT" (lambda (&rest ignored) nil))
   (circe-set-display-handler "324" (lambda (&rest ignored) nil))
   (circe-set-display-handler "329" (lambda (&rest ignored) nil))
-
-
   (circe-set-display-handler "332" (lambda (&rest ignored) nil))
   (circe-set-display-handler "333" (lambda (&rest ignored) nil))
   (circe-set-display-handler "353" (lambda (&rest ignored) nil))
   (require 'lui-autopaste)
   (add-hook 'circe-channel-mode-hook 'enable-lui-autopaste)
 
-  (setq erc-user-full-name                                user-full-name
-        lui-flyspell-p                                    t
+  (setq lui-flyspell-p                                    t
         circe-default-quit-message
         "I seek refuge in God, from Satan the rejected"
         lui-logging-directory                             "~/irc-log"
