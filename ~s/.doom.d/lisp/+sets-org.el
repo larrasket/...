@@ -332,12 +332,12 @@
 (after! org-roam
   (org-roam-db-autosync-mode)
   (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry "* %<%H:%M> \n %?"
+        `(("d" "default" entry "* %<%H:%M> \n %?"
            :if-new
            (file+head
             "%<%Y-%m-%d>.org.gpg"
-            (concat "#+title: %^{daily-title}\n#+DATE: <%<%Y-%m-%d>>"
-                    "\n#+FILETAGS: journal\n- tags :: [[roam:Journaling]] \n"))
+            ,(concat "#+title: %^{daily-title}\n#+DATE: <%<%Y-%m-%d>>"
+                     "\n#+FILETAGS: journal\n- tags :: [[roam:Journaling]] \n"))
            :unnarrowed t))
         org-roam-database-connector             'sqlite
         org-roam-dailies-directory              "journal/")
