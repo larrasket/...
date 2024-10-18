@@ -23,12 +23,16 @@
   (circe-set-display-handler "353" (lambda (&rest ignored) nil))
   (require 'lui-autopaste)
   (add-hook 'circe-channel-mode-hook 'enable-lui-autopaste)
-  (setq lui-flyspell-p t)
+
   (setq erc-user-full-name                                user-full-name
+        lui-flyspell-p                                    t
+        circe-default-quit-message
+        "I seek refuge in God, from Satan the rejected"
         lui-logging-directory                             "~/irc-log"
         circe-reduce-lurker-spam                          t)
 
   (load "lui-logging" nil t)
+
   (enable-lui-logging-globally)
 
   (defun salih/quit-erc (s)
@@ -47,7 +51,8 @@
 
   (defun irc (&optional arg)
     (interactive "P")
-    (let ((pass (salih/lookup-password "irc.libera.chat" "lr0" 80)))
+    (let ((pass (salih/lookup-password "irc.libera.chat"
+                                       user-short-username 80)))
       (erc
        :server "irc.libera.chat"
        :nick user-short-username
