@@ -1661,5 +1661,13 @@ or not."
                 "  " (:eval (doom-modeline-format--salih-line))))
 
 
+(defun salih/fetch-password (&rest params)
+  (let ((match (car (apply #'auth-source-search params))))
+    (if match (let ((secret (plist-get match :secret)))
+                (if (functionp secret)
+                    (funcall secret)
+                  secret))
+      (error "Password not found for %S" params))))
+
 
 (provide '+helper)

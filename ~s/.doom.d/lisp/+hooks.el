@@ -4,6 +4,11 @@
 (add-hook! '(maxima-inferior-mode-hook
              neotree-mode-hook
              sly-mrepl-mode-hook
+             circe-mode
+             circe-server-mode
+             circe-chat-mode
+             circe-channel-mode
+             circe-query-mode
              vterm-mode-hook
              dired-mode-hook
              mu4e-headers-mode-hook
