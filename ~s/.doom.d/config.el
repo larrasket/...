@@ -5,7 +5,7 @@
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
-(require 'cocaine-line)
+(require 'cocaine-line)                 ; new modeline
 
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
@@ -72,7 +72,5 @@
  '+sets-email                           ; mu4e
  '+sets-school                          ; school settings (TeX & BibTeX)
  '+sets-org                             ; org mode settings
- '+sets-inhibit                         ; other settings
- '+bind
- '+helper '+advice '+bindings '+custom '+erc '+deep
- (unless (featurep 'tadwin) '+hooks))
+ '+sets-inhibit '+bind '+helper '+advice '+bindings '+custom '+erc '+deep
+ (unless (featurep 'tadwin) '+hooks)) ; other settings
