@@ -72,5 +72,12 @@
  '+sets-email                           ; mu4e
  '+sets-school                          ; school settings (TeX & BibTeX)
  '+sets-org                             ; org mode settings
- '+sets-inhibit '+bind '+helper '+advice '+bindings '+custom '+erc '+deep
- (unless (featurep 'tadwin) '+hooks)) ; other settings
+ '+sets-inhibit                         ; other settings
+ '+bind                                 ; doom bindings
+ '+helper                               ; functions
+ '+advice                               ; advices
+ '+bindings                             ; personal key bindings
+ '+custom                               ; specials
+ '+erc                                  ; erc
+ '+deep                                 ; other
+ (unless (featurep 'tadwin) '+hooks))   ; hooks
