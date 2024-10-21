@@ -165,7 +165,7 @@
 
       cocaine-show-buffer-position                      nil
       cocaine-show-column-info                          nil
-      cocaine-show-misc-info                            nil
+      cocaine-show-misc-info                            t
       cocaine-show-processes-info                       t
 
       ;; translation
