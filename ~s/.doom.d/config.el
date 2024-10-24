@@ -1,6 +1,5 @@
 (add-to-list 'load-path "~/.doom.d/lisp/")
 (add-to-list 'load-path "~/.doom.d/pkg/")
-(add-to-list 'doom-emoji-fallback-font-families "Symbola")
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
@@ -65,8 +64,6 @@
       ;; (perhaps can be detected from the git history, too lazy tho). Not sure
       ;; if it is still the case
       warning-minimum-level                             :error)
-
-
 
 (s/require
  '+sets-email                           ; mu4e
