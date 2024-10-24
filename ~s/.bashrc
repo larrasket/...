@@ -152,7 +152,7 @@ alias anydesk='docker run --rm --name="anydesk" --device="/dev/dri:/dev/dri" --e
 compress-video() {
 	input="$1"
 	output="${input%.*}_compressed.mp4"
-	ffmpeg -i "$input" -vcodec libx264 -crf 32 -preset fast -acodec aac -b:a 128k "$output"
+	ffmpeg -i "$input" -vcodec libx264 -crf 28 -preset fast -acodec aac -b:a 128k "$output"
 }
 
 # alias po='castero'
