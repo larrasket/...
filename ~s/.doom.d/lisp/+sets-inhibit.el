@@ -46,6 +46,7 @@
       centaur-tabs-cycle-scope                          'tabs
       centaur-tabs-set-icons                            nil
 
+      company-idle-delay                                0.3
       format-all-show-errors                            'never
       proced-auto-update-flag                           t
       salih/temp-roam-insert                            nil

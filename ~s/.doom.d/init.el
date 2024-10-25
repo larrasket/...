@@ -2,7 +2,7 @@
 (doom! :input
        :completion
        (vertico +icons)
-       (corfu +icons +orderless)
+       company
 
        :ui
        vc-gutter                        ; git annotions
@@ -69,4 +69,4 @@
        :app
        irc
        :config
-       (default +smartparens))
+       (default +smartparens +bindings))

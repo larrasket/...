@@ -5,7 +5,6 @@
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
 (require 'cocaine-line)                 ; new modeline
-
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
       user-stmp-server                                  "mail.gmx.com"
@@ -25,8 +24,7 @@
       ;; [2024-09-01 Sun 00:43] `doom-rouge` is an amazing dark theme
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark` too.
       ;; [2024-09-04 Wed 02:03] `ef-maris-dark` too.
-      doom-theme
-      (salih/really-random-theme)
+      doom-them (salih/really-random-theme)
       doom-modeline-height                              27
       display-line-numbers-type                         'relative
 
@@ -64,13 +62,11 @@
       ;; (perhaps can be detected from the git history, too lazy tho). Not sure
       ;; if it is still the case
       warning-minimum-level                             :error)
-
 (s/require
  '+sets-email                           ; mu4e
  '+sets-school                          ; school settings (TeX & BibTeX)
  '+sets-org                             ; org mode settings
  '+sets-inhibit                         ; other settings
- '+bind                                 ; doom bindings
  '+helper                               ; functions
  '+advice                               ; advices
  '+bindings                             ; personal key bindings
