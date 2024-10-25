@@ -46,7 +46,6 @@
       centaur-tabs-cycle-scope                          'tabs
       centaur-tabs-set-icons                            nil
 
-      company-idle-delay                                0.3
       format-all-show-errors                            'never
       proced-auto-update-flag                           t
       salih/temp-roam-insert                            nil
@@ -91,12 +90,8 @@
       org-noter-swap-window                             nil
       nov-text-width                                    140
 
+      ;; TODO update julia conf with eglot
       ;; julia
-      lsp-julia-package-dir                             nil
-      lsp-julia-default-environment
-      "~/.julia/environments/v1.9"
-      lsp-julia-flags
-      `("-J/home/l/configs/~s/assets/languageserver.so")
 
       ;; git-auto-commit-mode
       gac-debounce-interval                             200
@@ -109,22 +104,6 @@
       salih/prefix-global                               "C-x "
       salih/prefix-mode                                 "C-c "
       shr-inhibit-images                                nil
-
-      lsp-use-plists                                    nil
-      lsp-ui-doc-enable                                 nil
-      lsp-headerline-breadcrumb-enable                  nil
-      lsp-enable-symbol-highlighting                    t
-      lsp-ui-sideline-enable                            t
-      lsp-modeline-code-actions-enable                  t
-      lsp-eldoc-enable-hover                            t
-      lsp-modeline-diagnostics-enable                   t
-      lsp-signature-auto-activate                       t
-      lsp-signature-render-documentation                t
-      lsp-completion-show-detail                        t
-      lsp-lens-enable                                   t
-      lsp-ui-sideline-enable                            t
-      lsp-ui-sideline-show-diagnostics                  t
-      lsp-completion-show-kind                          t
 
       ;; epa? what does that mean. I've no idea about this.
       salih/vulpea-show-full                            nil

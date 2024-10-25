@@ -1,8 +1,8 @@
 ;;; init.el -*- lexical-binding: t; -*-
 (doom! :input
        :completion
-       company
        (vertico +icons)
+       (corfu +icons +orderless)
 
        :ui
        vc-gutter                        ; git annotions
@@ -41,7 +41,7 @@
        biblio
        tree-sitter
        (lookup +dictionary +offline)
-       (lsp +peak)
+       (lsp +peak +eglot)
        magit
        pdf
 

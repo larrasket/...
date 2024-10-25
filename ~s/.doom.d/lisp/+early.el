@@ -1,6 +1,7 @@
 (setq-default frame-title-format                        '("%b")
               shr-inhibit-images                        t
               bidi-paragraph-direction                  'left-to-right
+              salih/me-location                         "~/me"
               org-download-image-dir                    "~/roam/media"
               indent-tabs-mode                          nil
               pdf-view-display-size                     'fit-width
@@ -20,6 +21,8 @@
 (defmacro s/pc (&rest args)
   `(f-join user-config-repo-path ,@args))
 
+(defmacro s/me (&rest args)
+  `(f-join salih/me-location ,@args))
 
 (defmacro s/ufn ()
   `(car (split-string user-full-name " ")))

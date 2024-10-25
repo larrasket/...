@@ -90,19 +90,19 @@
              go-mode-hook
              yaml-mode-hook)              #'indent-bars-mode)
 
-(add-hook 'lsp-after-open-hook 'indent-bars-mode)
+(add-hook 'eglot-managed-mode-hook 'indent-bars-mode)
+
 (add-hook! '(clojure-mode-hook)
-  (setq       lsp-diagnostics-provider :none
-              lsp-modeline-diagnostics-enable nil
-              lsp-modeline-code-actions-enable nil
-              lsp-eldoc-enable-hover nil)
-  (add-hook! 'lsp-after-open-hook :local
-    (setq completion-at-point-functions (list #'cider-complete-at-point)
-          #'lsp-completion-at-point
-          #'lispy-clojure-complete-at-point))
   (flycheck-mode -1)
   (flymake-mode 1)
-  (lsp))
+  (add-hook! 'eglot-managed-mode-hook :local
+    (setq completion-at-point-functions
+          (list #'cider-complete-at-point
+              #'eglot-completion-at-point
+              #'lispy-clojure-complete-at-point
+              #'yasnippet-capf))))
+
+
 
 
 
@@ -111,7 +111,6 @@
 
 
 (add-hook 'csv-mode-hook                #'csv-align-mode)
-(add-hook 'company-mode-hook            #'company-box-mode)
 (add-hook 'after-init-hook              #'global-flycheck-mode)
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 (add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
@@ -141,11 +140,12 @@
  (insert "\n"
          (+doom-dashboard--center
           +doom-dashboard--width
-          (concat
-           "The fear of the Lord is the beginning"
-           " of wisdom; all those who practice it have\na good understanding."
-           " His praise endures forever."))))
+           "Love is not boastful or self-seeking. It does not insist on its own
+way; it is not irritable or resentful; it does not rejoice in wrongdoing, but
+rejoices in the truth. It bears all things, hopes all things, endures all
+things. Corinthians 13:4-7.")))
 
+(setq fancy-splash-image "/home/l/ner.png")
 
 
 ;; Activate the advice
@@ -193,10 +193,6 @@
 
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 
-
-;; see https://github.com/emacs-lsp/lsp-mode/issues/3577#issuecomment-1709232622
-(after! lsp-mode
-  (delete 'lsp-terraform lsp-client-packages))
 
 
 (add-hook! 'doom-init-ui-hook :append

@@ -24,11 +24,6 @@
             :around #'salih/org-ql-view--format-element)
 
 
-(advice-add 'cider-jack-in
-            :after  #'salih/fix-clojure-completion)
-(advice-add 'cider-jack-in-clj
-            :after  #'salih/fix-clojure-completion)
-
 
 (advice-add 'sly-compile-string
             :before #'salih/sly--compile-eval-begin-print)

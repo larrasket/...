@@ -93,19 +93,19 @@ region."
     (forward-line)))
 
 (defun salih/rename-or-iedit ()
-  "If current buffer is in lsp-mode, call lsp-rename. Otherwise, call
+  "If current buffer is in eglot-mode, call eglot-rename. Otherwise, call
 iedit-mode."
   (interactive)
-  (if (bound-and-true-p lsp-mode)
-      (call-interactively #'lsp-rename)
+  (if (eglot-managed-p)
+      (call-interactively #'eglot-rename)
     (call-interactively #'iedit-mode)))
 
 (defun salih/find-definition-or-lookup ()
   (interactive)
-  "If current buffer is in lsp-mode, call lsp-find-definition. Otherwise, call
+  "If current buffer is in eglot-mode, call eglot-find-definition. Otherwise, call
 lookup."
-  (if (bound-and-true-p lsp-mode)
-      (call-interactively #'lsp-find-definition)
+  (if (eglot-managed-p)
+      (call-interactively #'xref-find-definitions)
     (call-interactively #'+lookup/file)))
 
 (defun salih/insert-now-timestamp()
@@ -756,8 +756,6 @@ tasks."
        ;; Buffer name not match below blacklist.
        (string-prefix-p "*epc" name)
        (string-prefix-p "*Org Agenda*" name)
-       (string-prefix-p "*lsp" name)
-       (string-prefix-p "*LSP" name)
        (string-prefix-p "*company" name)
        (string-prefix-p "*Flycheck" name)
        (string-prefix-p "*tramp" name)
@@ -1184,12 +1182,6 @@ is done with org-roam-node-sort-by-backlinks'"
           " -g *.org")))
     (consult-org-roam-search)))
 
-(defun salih/open-neotree-and-lsp ()
-  (interactive)
-  (neotree-show)
-  (lsp-treemacs-symbols)
-  (call-interactively #'evil-window-left))
-
 (defun salih/mu4e-compose-include-message (msg &optional)
   "Like mu4e-compose-attach-message, but include MSG as an inline attachment
 instead."
@@ -1388,33 +1380,10 @@ without history in the file name."
   (org-entry-put (point) "CUSTOM_ID" (org-id-get)))
 
 
-(defun lsp-booster--advice-json-parse (old-fn &rest args)
-  "Try to parse bytecode instead of json."
-  (or
-   (when (equal (following-char) ?#)
-     (let ((bytecode (read (current-buffer))))
-       (when (byte-code-function-p bytecode)
-         (funcall bytecode))))
-   (apply old-fn args)))
-(advice-add (if (progn (require 'json)
-                       (fboundp 'json-parse-buffer))
-                'json-parse-buffer
-              'json-read)
-            :around
-            #'lsp-booster--advice-json-parse)
 
-(defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
-  "Prepend emacs-lsp-booster command to lsp CMD."
-  (let ((orig-result (funcall old-fn cmd test?)))
-    (if (and (not test?)
-             (not (file-remote-p default-directory))
-             lsp-use-plists
-             (not (functionp 'json-rpc-connection))
-             (executable-find "emacs-lsp-booster"))
-        (progn
-          (message "Using emacs-lsp-booster for %s!" orig-result)
-          (cons "emacs-lsp-booster" orig-result))
-      orig-result)))
+
+
+
 
 (defun salih/get-org-roam-nodes-with-tag (tag)
   "Get all Org Roam nodes that have the specified TAG."
@@ -1481,12 +1450,7 @@ without history in the file name."
   (setq salih/vulpea-show-full t)
   (org-agenda nil "f"))
 
-(defun salih/fix-clojure-completion (&rest args)
-  "Currently there's an issue with LSP completion, cider's work best."
-  (setq completion-at-point-functions
-        (list #'cider-complete-at-point
-              #'lsp-completion-at-point
-              #'lispy-clojure-complete-at-point)))
+
 
 ;; modeline
 

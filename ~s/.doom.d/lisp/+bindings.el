@@ -116,8 +116,8 @@
 
 
 (general-define-key
- :keymaps 'lsp-mode-map
- "M-RET" #'lsp-execute-code-action)
+ :keymaps 'eglot-mode-map
+ "M-RET" #'eglot-code-actions)
 
 
 ;; Run project
@@ -271,7 +271,6 @@
    :prefix salih/prefix-global
    "C-u"          nil
    "C-n"          nil
-   "<f6>"         #'salih/open-neotree-and-lsp
    "C-t"          #'salih/vterm
    ;; "C-j"          #'centaur-tabs-ace-jump
    "C-c"          #'salih/org-capture-general
@@ -396,7 +395,7 @@
 ;; commenting lines
 (global-set-key (kbd "M-;") 'salih/comment-or-uncomment-region-or-line)
 
-
+;; AuthorDate: Sat Jan 13 03:09:16 2024 +0200
 ;; this was one of my first written elisp. I will comment it only for historical
 ;; reasons :)
 
@@ -406,6 +405,7 @@
 ;;                   (neotree-project-dir)
 ;;                   (lsp-treemacs-symbols)))
 
+;; [2024-10-24 Thu 22:29] I miss this time.
 
 
 
