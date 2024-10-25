@@ -25,7 +25,7 @@
   (setq lui-flyspell-p                                    t
         circe-default-quit-message
         "I seek refuge in God, from Satan the rejected"
-        lui-logging-directory                             "~/irc-log"
+        lui-logging-directory                             (s/me "irc-logs")
         circe-reduce-lurker-spam                          t)
 
   (load "lui-logging" nil t)
