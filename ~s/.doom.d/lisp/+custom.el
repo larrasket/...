@@ -141,19 +141,27 @@
   (dolist (face '(org-special-keyword org-document-title org-drawer org-date))
     (add-to-list 'mixed-pitch-fixed-pitch-faces face)))
 
+
+
+
+
+
 (after! corfu
   (setf (alist-get 'border-width corfu--frame-parameters) 3
         (alist-get 'internal-border-width corfu--frame-parameters) 2
         (alist-get 'child-frame-border-width corfu--frame-parameters) 2)
- (custom-set-faces
-  '(corfu-bar ((t (:background "#a8a8a8" :height 1.0 :box nil))))
-  '(corfu-border ((t (:background "#323232" :height 2.0 :box nil)))))
+  (custom-set-faces
+   '(corfu-bar ((t (:background "#a8a8a8" :height 1.0 :box nil))))
+   '(corfu-border ((t (:background "#323232" :height 2.0 :box nil)))))
 
 
- (setq kind-icon-blend-background t)
- (setq kind-icon-default-face 'corfu-default)
+  (setq kind-icon-blend-background t)
+  (setq kind-icon-default-face 'corfu-default)
+  (setq corfu-preselect 'directory))
 
- (setq corfu-popupinfo-delay '(0.2 . 0.2)
-       corfu-min-width 30))
+(after! corfu-popupinfo
+  (setq corfu-popupinfo-delay '(0.2 . 0.2)
+        corfu-min-width 30
+        corfu-max-width 80))
 
 (provide '+custom)

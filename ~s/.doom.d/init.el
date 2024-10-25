@@ -3,6 +3,7 @@
        :completion
        (vertico +icons)
        company
+       (corfu +icons)
 
        :ui
        vc-gutter                        ; git annotions

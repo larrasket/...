@@ -29,6 +29,8 @@
         display-line-numbers-width 3)
   (setq-local truncate-lines t)
   (display-line-numbers-mode -1)
+  (corfu-mode -1)
+  (company-mode 1)
   (mixed-pitch-mode)
   (git-gutter-mode))
 
@@ -194,8 +196,7 @@ things. Corinthians 13:4-7.")))
 
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 
-
-
+(add-hook! 'after-init-hook :append (company-mode -1) (global-company-mode -1))
 (add-hook! 'doom-init-ui-hook :append
   (when
       t
