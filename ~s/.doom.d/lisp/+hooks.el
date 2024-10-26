@@ -34,6 +34,7 @@
   (mixed-pitch-mode)
   (git-gutter-mode))
 
+(add-hook! 'mu4e-compose-mode-hook (corfu-mode -1) (company-mode 1))
 
 (add-hook! 'nov-mode-hook
   (defface tmp-buffer-local-face
