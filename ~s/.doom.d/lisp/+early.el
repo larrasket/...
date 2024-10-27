@@ -108,14 +108,14 @@
 (defun salih/really-random-theme ()
   (let* ((themes '(modus-vivendi-tritanopia kaolin-dark doom-nord
                    doom-opera
-                   kaolin-aurora kaolin-bubblegum
+                   kaolin-aurora
                    kaolin-ocean doom-gruvbox doom-material-dark
                    ef-trio-light
                    doom-material doom-molokai
                    doom-monokai-machine doom-monokai-octagon
                    doom-monokai-pro doom-moonlight
-                   doom-one doom-palenight
-                   doom-shades-of-purple doom-solarized-dark
+                   doom-palenight
+                   doom-solarized-dark
                    doom-spacegrey doom-vibrant
                    doom-wilmersdorf misterioso wombat))
          (random-theme (nth (random (length themes)) themes)))

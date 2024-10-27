@@ -14,6 +14,7 @@
         org-startup-folded                                      'show2levels
         org-image-actual-width                                  600
         org-link-file-path-type                                 'relative
+        org-ellipsis                                            nil
         org-agenda-show-future-repeats                          nil
         org-clock-mode-line-total                               'current
         ;; FIXME this is useful to hide the title name from the org clock,
@@ -45,9 +46,9 @@
           ("HOLD"       . +org-todo-onhold)
           ("PROJ"       . +org-todo-project)
           ("NO"         . +org-todo-cancel)
-          ("KILL"       . +org-todo-cancel)))
+          ("KILL"       . +org-todo-cancel))
 
-  (setq org-hide-leading-stars            't
+        org-hide-leading-stars            't
         org-tags-column                   -80
         org-archive-location              "%s_archive.org::"
         org-agenda-start-on-weekday       nil

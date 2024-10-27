@@ -24,7 +24,7 @@
       ;; [2024-09-01 Sun 00:43] `doom-rouge` is an amazing dark theme
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark` too.
       ;; [2024-09-04 Wed 02:03] `ef-maris-dark` too.
-      doom-them (salihreally-random-theme)
+      doom-them (salih/really-random-theme)
       doom-modeline-height                              27
       display-line-numbers-type                         'relative
 
@@ -74,3 +74,4 @@
  '+erc                                  ; erc
  '+deep                                 ; other
  (unless (featurep 'tadwin) '+hooks))   ; hooks
+
