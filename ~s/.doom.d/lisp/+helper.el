@@ -96,9 +96,10 @@ region."
   "If current buffer is in eglot-mode, call eglot-rename. Otherwise, call
 iedit-mode."
   (interactive)
-  (if (eglot-managed-p)
+  (if (and (featurep 'eglot) (eglot-managed-p))
       (call-interactively #'eglot-rename)
     (call-interactively #'iedit-mode)))
+
 
 (defun salih/find-definition-or-lookup ()
   (interactive)
@@ -1529,5 +1530,9 @@ or not."
                   secret))
       (error "Password not found for %S" params))))
 
+(defun salih/tracking-next-buffer--always-switch (&rest _args)
+  "Advice to always switch to the next unread buffer, bypassing the `circe-mode`
+check."
+  (tracking-next-buffer))
 
 (provide '+helper)

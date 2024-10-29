@@ -41,12 +41,12 @@
 (advice-add 'lsp-resolve-final-command
             :around #'lsp-booster--advice-final-command)
 
+(advice-add '+irc/tracking-next-buffer
+            :override #'salih/tracking-next-buffer--always-switch)
 
 ;; `sly-compile-region' already done by `sly-compile-string'
 ;; (advice-add 'sly-compile-region
 ;;             :before 'salih/sly--compile-eval-begin-print)
-
-
 
 (advice-add 'gomacro--sanitize-string :override 'salih/gomacro--sanitize-string)
 

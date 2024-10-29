@@ -15,7 +15,7 @@
        "Pragmasevka:pixelsize=17"
        ":antialias=true:hinting=true:autohint=false:hintstyle=3")
 
-      doom-unicode-font
+      doom-symbol-font
       (concat
        "Amiri UI"
        ":pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3")
