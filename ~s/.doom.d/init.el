@@ -1,12 +1,12 @@
 ;;; init.el -*- lexical-binding: t; -*-
 (doom! :input
        :completion
-       (vertico +icons)
+       (vertico)
        company
        (corfu +icons)
 
        :ui
-       vc-gutter                        ; git annotions
+       (vc-gutter +pretty)                        ; git annotions
        doom
        doom-dashboard
        hl-todo

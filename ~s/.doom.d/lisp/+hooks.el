@@ -31,8 +31,7 @@
   (display-line-numbers-mode -1)
   (corfu-mode -1)
   (company-mode 1)
-  (mixed-pitch-mode)
-  (git-gutter-mode))
+  (mixed-pitch-mode))
 
 (add-hook! 'mu4e-compose-mode-hook (corfu-mode -1) (company-mode 1))
 
@@ -171,14 +170,12 @@ things. Corinthians 13:4-7.")))
 ;; init
 ;; (centaur-tabs-mode)
 (breadcrumb-mode)
-(cocaine-line-mode)
+;; (cocaine-line-mode)                     ;
 (yas-global-mode 1)
 ;; (vertico-buffer-mode)
 (global-wakatime-mode)
 (salih/keyboard-config)
 
-;; (if (eq (cdr (salih/get-random-theme 0)) 'nour)
-;;     (spacious-padding-mode 1))
 
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)
@@ -197,15 +194,17 @@ things. Corinthians 13:4-7.")))
 
 (remove-hook 'doom-first-buffer-hook #'smartparens-global-mode)
 
-(add-hook! 'after-init-hook :append (company-mode -1) (global-company-mode -1))
+
+(remove-hook! 'doom-after-init-hook #'doom-modeline-mode)
+(add-hook! 'doom-after-init-hook #'cocaine-line-mode)
+
+
 (add-hook! 'doom-init-ui-hook :append
   (when
-      t
+      t))
     ;; usually I disable it only w/ doom
     ;; themes.
     ;; (doom-theme?)
-    ;; (spacious-padding-mode -1)
-    (remove-hook! 'dired-mode-hook #'all-the-icons-dired-mode)))
 
 
 (provide '+hooks)

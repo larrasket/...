@@ -65,9 +65,6 @@
 
 (package! org-download)                 ; for screenshots
 
-(package! git-gutter)                   ; sick git
-(package! git-gutter-fringe)
-
 (package! org-ql
   :recipe
   (:host github
@@ -80,13 +77,15 @@
 (package! evil-snipe :disable t)        ; don't remember why I disabled it
 (package! ef-themes)                    ; sick themes
 (package! breadcrumb)                   ; sick line
-;; (package! spacious-padding)             ; sick padding
 
 (package! org-fc)                       ; the true anki for Org
 (package! kaolin-themes)                ; sick sick themes
 (package! mixed-pitch)                  ; I like to use variable pitch for org
-(package! nerd-icons)                   ; for the next package
+
+
 (package! cocaine-line
   :recipe
   (:host github
    :repo "luggages/cocaine-line"))      ; sick modeline
+
+(package! mu4e-alert)

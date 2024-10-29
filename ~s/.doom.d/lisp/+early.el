@@ -106,10 +106,48 @@
 
 
 (defun salih/really-random-theme ()
-  (let* ((themes '(modus-vivendi-tritanopia kaolin-dark doom-nord
+  (let* ((themes '(doom-peacock
+                   kaolin-galaxy
+                   ef-maris-dark
+                   ef-deuteranopia-light
+                   ef-elea-dark
+                   ef-cherie
+                   ef-bio
+                   doom-rouge
+                   doom-feather-dark
+                   ef-summer
+                   ef-melissa-dark
+                   ef-duo-dark
+                   ef-spring
+                   kaolin-valley-dark
+                   ef-dark
+                   ef-trio-dark
+                   doom-rouge
+                   kaolin-dark
+                   ef-day
+                   ef-duo-light
+                   ef-deuteranopia-dark
+                   ef-trio-light
+                   doom-badger
+                   ef-symbiosis
+                   ef-autumn
+                   ef-frost
+                   doom-rouge
+                   ef-light
+                   ef-winter
+                   kaolin-temple
+                   ef-cyprus
+                   kaolin-ocean
+                   ef-maris-light
+                   doom-rouge
+                   ef-trio-light
+                   kaolin-bubblegum
+                   ef-night
+
+                   modus-vivendi-tritanopia kaolin-dark doom-nord
                    doom-opera
                    kaolin-aurora
-                   kaolin-ocean doom-gruvbox doom-material-dark
+                   doom-gruvbox doom-material-dark
                    ef-trio-light
                    doom-material doom-molokai
                    doom-monokai-machine doom-monokai-octagon
@@ -117,7 +155,7 @@
                    doom-palenight
                    doom-solarized-dark
                    doom-spacegrey doom-vibrant
-                   doom-wilmersdorf misterioso wombat))
+                   misterioso wombat))
          (random-theme (nth (random (length themes)) themes)))
     random-theme))
 

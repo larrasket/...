@@ -1,6 +1,4 @@
 ;;; ../configs/~s/.doom.d/lisp/+custom.el -*- lexical-binding: t; -*-
-
-
 (after! org
   (require 'org-inlinetask)
   (require 'org-roam-protocol)
@@ -64,13 +62,11 @@
 (after! sly
   (setq sly-complete-symbol-function 'sly-flex-completions))
 
-(after! git-gutter-fringe
-  (setq-default fringes-outside-margins t)
-  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
-  (define-fringe-bitmap
-    'git-gutter-fr:modified [224] nil nil '(center repeated))
-  (define-fringe-bitmap
-    'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+;; (after! git-gutter-fringe
+;;   (setq-default fringes-outside-margins t)
+;;   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+;;   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+;;   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (after! consult
   (add-to-list 'consult-buffer-sources 'salih/consult--source-books 'append))
@@ -141,11 +137,6 @@
   (dolist (face '(org-special-keyword org-document-title org-drawer org-date))
     (add-to-list 'mixed-pitch-fixed-pitch-faces face)))
 
-
-
-
-
-
 (after! corfu
   (setf (alist-get 'border-width corfu--frame-parameters) 3
         (alist-get 'internal-border-width corfu--frame-parameters) 2
@@ -153,8 +144,6 @@
   (custom-set-faces
    '(corfu-bar ((t (:background "#a8a8a8" :height 1.0 :box nil))))
    '(corfu-border ((t (:background "#323232" :height 2.0 :box nil)))))
-
-
   (setq kind-icon-blend-background t)
   (setq kind-icon-default-face 'corfu-default)
   (setq corfu-preselect 'directory))
@@ -163,5 +152,7 @@
   (setq corfu-popupinfo-delay '(0.2 . 0.2)
         corfu-min-width 30
         corfu-max-width 80))
+(after! company
+  (remove-hook! 'doom-first-input-hook #'global-company-mode))
 
 (provide '+custom)

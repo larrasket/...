@@ -44,6 +44,7 @@
                                                   (:subject)))
 
 
+
   (defun mu4e-fast-folding-info (msg)
     (let* ((thread (mu4e-message-field msg :thread))
            (prefix (mu4e~headers-thread-prefix thread))
@@ -67,6 +68,7 @@
                                          (xwidget-webkit-browse-url url))))
       (mu4e-action-view-in-browser msg)))
 
+
   (add-to-list 'mu4e-header-info-custom '(:fast-folding .
                                           (:name "fast-folding"
                                            :shortname ""
@@ -75,7 +77,8 @@
   ;; [2024-05-02 Thu 07:00] I find the look with doom theme quite annoying.
   (when (doom-theme?)
     (custom-set-faces
-     '(mu4e-highlight-face ((t (:inherit mu4e-header-face :background nil)))))))
+     '(mu4e-highlight-face ((t (:inherit mu4e-header-face :background nil))))))
+  (mu4e-alert-enable-mode-line-display))
 
 
 

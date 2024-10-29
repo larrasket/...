@@ -310,68 +310,6 @@ automatically previewed."
              awqat-times-for-day))
 
 
-
-;; disable spaces and icons in dashboard
-(defun doom-dashboard-widget-shortmenu ()
-  (let ((all-the-icons-scale-factor 1.45)
-        (all-the-icons-default-adjust -0.02))
-    (insert "\n")
-    (dolist (section +doom-dashboard-menu-sections)
-      (cl-destructuring-bind (label &key icon action when face key) section
-        (when (and (fboundp action)
-                   (or (null when)
-                       (eval when t)))
-          (insert
-           (+doom-dashboard--center
-            (- +doom-dashboard--width 1)
-            (let ((icon (if (stringp icon) icon (eval icon t))))
-              (format (format "%s%%s%%-10s" (if icon "%3s\t" "%3s"))
-                      (or icon "")
-                      (with-temp-buffer
-                        (insert-text-button
-                         label
-                         'action
-                         `(lambda (_)
-                            (call-interactively
-                             (or (command-remapping #',action)
-                                 #',action)))
-                         'face (or face 'doom-dashboard-menu-title)
-                         'follow-link t
-                         'help-echo
-                         (format "%s (%s)" label
-                                 (propertize (symbol-name action) 'face
-                                             'doom-dashboard-menu-desc)))
-                        (format "%-37s" (buffer-string)))
-                      ;; Lookup command keys dynamically
-                      (propertize
-                       (or key
-                           (when-let*
-                               ((keymaps
-                                 (delq
-                                  nil (list (when
-                                                (bound-and-true-p
-                                                 evil-local-mode)
-                                              (evil-get-auxiliary-keymap
-                                               +doom-dashboard-mode-map
-                                               'normal))
-                                            +doom-dashboard-mode-map)))
-                                (key
-                                 (or (when keymaps
-                                       (where-is-internal action keymaps t))
-                                     (where-is-internal action nil t))))
-                             (with-temp-buffer
-                               (save-excursion (insert (key-description key)))
-                               (while (re-search-forward "<\\([^>]+\\)>" nil t)
-                                 (let ((str (match-string 1)))
-                                   (replace-match
-                                    (upcase (if (< (length str) 3)
-                                                str
-                                              (substring str 0 3))))))
-                               (buffer-string)))
-                           "")
-                       'face 'doom-dashboard-menu-desc))))
-           "\n"))))))
-
 (setq +doom-dashboard-menu-sections
       '(("Recently opened files"
          :action recentf-open-files)
@@ -1581,48 +1519,6 @@ or not."
                  (* 100
                     (/ (float (or (eval `(pdf-view-current-page)) 0))
                        (pdf-cache-number-of-pages)) )))))
-
-(setq-default mode-line-format
-              '("%e"
-
-                (:eval (doom-modeline-segment--bar))
-
-                " " (:eval
-                     (list
-                      (when spacious-padding-mode
-                        (all-the-icons--icon-info-for-buffer))
-                      " "
-                      (propertize
-                       (concat
-                        (if (derived-mode-p 'pdf-view-mode)
-                            (salih/doom-modeline-update-pdf-pages-only-percent)
-                          "")
-                        (salih/modeline--major-mode-name)
-                        " ")
-                       'face 'bold)))
-
-                "  "
-                (:eval
-                 (list
-                  (propertize
-                   (buffer-name)
-                   'face
-                   (cond
-                    ((buffer-modified-p) 'doom-modeline-buffer-modified)
-                    ((doom-modeline--active) 'doom-modeline-buffer-file)
-                    (t 'mode-line-inactive))
-                   'help-echo
-                   "Buffer name mouse-1: Previous buffer\nmouse-3: Next buffer"
-                   'local-map mode-line-buffer-identification-keymap)))
-
-                "  "
-                (:eval
-                 (list
-                  (if (derived-mode-p 'pdf-view-mode)
-                      (propertize
-                       (salih/doom-modeline-update-pdf-pages-no-percent)) "")))
-
-                "  " (:eval (doom-modeline-format--salih-line))))
 
 
 (defun salih/fetch-password (&rest params)

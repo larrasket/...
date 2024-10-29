@@ -4,7 +4,10 @@
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
-(require 'cocaine-line)                 ; new modeline
+(require 'doom-modeline)
+(require 'cocaine-line)
+
+
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
       user-stmp-server                                  "mail.gmx.com"
@@ -15,7 +18,6 @@
       user-first-name                                   (s/ufn)
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
-
       ;; appearanc
       ;; font `:size` value of 29 is prefect for filming
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")`
@@ -24,7 +26,17 @@
       ;; [2024-09-01 Sun 00:43] `doom-rouge` is an amazing dark theme
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark` too.
       ;; [2024-09-04 Wed 02:03] `ef-maris-dark` too.
-      doom-them (salih/really-random-theme)
+      ;; doom-opera
+      ;; doom-spacegrey
+      ;; doom-rouge
+      ;; doom-molokai
+      ;; doom-badger
+      ;; doom-monokai-octagon
+      ;; doom-monokai-pro
+      ;; doom-monokai-ristretto
+      ;; doom-monokai-spectrum
+      doom-theme                                        'doom-monokai-octagon
+      doom-modeline-icon                                t
       doom-modeline-height                              27
       display-line-numbers-type                         'relative
 
@@ -62,6 +74,7 @@
       ;; (perhaps can be detected from the git history, too lazy tho). Not sure
       ;; if it is still the case
       warning-minimum-level                             :error)
+
 (s/require
  '+sets-email                           ; mu4e
  '+sets-school                          ; school settings (TeX & BibTeX)
@@ -74,4 +87,3 @@
  '+erc                                  ; erc
  '+deep                                 ; other
  (unless (featurep 'tadwin) '+hooks))   ; hooks
-
