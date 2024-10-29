@@ -8,3 +8,7 @@
 
 
 (provide '+deep)
+
+(assoc-delete-all "Open project"                +doom-dashboard-menu-sections)
+(assoc-delete-all "Open documentation"          +doom-dashboard-menu-sections)
+(assoc-delete-all "Jump to bookmark"            +doom-dashboard-menu-sections)

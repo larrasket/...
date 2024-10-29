@@ -148,7 +148,6 @@ way; it is not irritable or resentful; it does not rejoice in wrongdoing, but
 rejoices in the truth. It bears all things, hopes all things, endures all
 things. Corinthians 13:4-7.")))
 
-(setq fancy-splash-image "/home/l/ner.png")
 
 
 ;; Activate the advice
