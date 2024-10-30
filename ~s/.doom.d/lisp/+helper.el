@@ -1012,19 +1012,21 @@ current-prefix-arg
 (defun salih/open-rss ()
   "Open RSS using mu4e, only callable once per hour within the same day."
   (interactive)
-  (let* ((now (current-time))
-         (last-open-time (salih/load-last-open-rss-time)))
-    (if (or (not last-open-time)
-            (salih/within-hour-window-p last-open-time now))
-        (progn
-          ;; Save only the first time within the hour window, not on subsequent
-          ;; calls
-          (when (salih/different-day-p last-open-time now)
-            (salih/save-last-open-rss-time now))
-          ;; Execute the main command
-          (salih/feeds--))
-      (message
-       "This command can only be called once within the same hour of a day."))))
+  ;; [2024-10-30 Wed 22:41] Currently, Just run it
+  (if t (salih/feeds--)
+      (let* ((now (current-time))
+             (last-open-time (salih/load-last-open-rss-time)))
+        (if (or (not last-open-time)
+                (salih/within-hour-window-p last-open-time now))
+            (progn
+              ;; Save only the first time within the hour window, not on
+              ;; subsequent calls
+              (when (salih/different-day-p last-open-time now)
+                (salih/save-last-open-rss-time now))
+              ;; Execute the main command
+              (salih/feeds--))
+          (message
+           "This command can only be called once within the same hour of a day.")))))
 
 (defun salih/feeds-- ()
   (if (featurep 'mu4e)

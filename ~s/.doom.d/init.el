@@ -54,7 +54,7 @@
        (clojure +lsp +tree-sitter)
        (latex +flod +latexmk +lsp)
        (julia +lsp +tree-sitter)
-       (cc +lsp +tree-sitter)           ; C [2024-08-29 Thu 14:46] why I've this "C"? here
+       (cc +lsp +tree-sitter)
        (go +lsp +tree-sitter)
        (org +roam2 +noter)
        (javascript +lsp)
@@ -62,7 +62,7 @@
        emacs-lisp
        yaml
        json
-       ess                              ; R and other stuff
+       ess
        sh
 
        :email

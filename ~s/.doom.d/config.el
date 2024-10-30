@@ -7,7 +7,6 @@
 (require 'doom-modeline)
 (require 'cocaine-line)
 
-
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
       user-stmp-server                                  "mail.gmx.com"
@@ -35,11 +34,10 @@
       ;; doom-monokai-pro
       ;; doom-monokai-ristretto
       ;; doom-monokai-spectrum
-      doom-theme                                        'doom-monokai-octagon
+      doom-theme                                        'doom-badger
       doom-modeline-icon                                t
       doom-modeline-height                              27
       display-line-numbers-type                         'relative
-
       ;; prayer time
       calendar-latitude                                 30.0
       calendar-longitude                                31.2
