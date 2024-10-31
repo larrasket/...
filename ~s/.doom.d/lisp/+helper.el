@@ -1013,7 +1013,7 @@ current-prefix-arg
   "Open RSS using mu4e, only callable once per hour within the same day."
   (interactive)
   ;; [2024-10-30 Wed 22:41] Currently, Just run it
-  (if t (salih/feeds--)
+  (if nil (salih/feeds--)
       (let* ((now (current-time))
              (last-open-time (salih/load-last-open-rss-time)))
         (if (or (not last-open-time)
