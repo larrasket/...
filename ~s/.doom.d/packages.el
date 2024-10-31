@@ -65,11 +65,7 @@
 
 (package! org-download)                 ; for screenshots
 
-(package! org-ql
-  :recipe
-  (:host github
-   :repo "larrasket/org-ql"
-   :branch "priority"))                 ; Lispy SQL for your org life
+(package! org-ql)
 
 
 (unpin! org-roam)

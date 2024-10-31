@@ -26,7 +26,6 @@
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark` too.
       ;; [2024-09-04 Wed 02:03] `ef-maris-dark` too.
       ;; doom-opera
-      ;; doom-spacegrey
       ;; doom-rouge
       ;; doom-molokai
       ;; doom-badger

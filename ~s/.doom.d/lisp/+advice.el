@@ -20,6 +20,7 @@
 (advice-add 'org-agenda-add-note :after  #'salih/toggle-stats-on)
 (advice-add 'org-media-note-insert-link
             :around #'salih/org-media-note-insert-link)
+
 (advice-add 'org-ql-view--format-element
             :around #'salih/org-ql-view--format-element)
 

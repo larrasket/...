@@ -3,6 +3,9 @@
   (require 'org-inlinetask)
   (require 'org-roam-protocol)
   (require 'org-download)
+  (custom-set-faces!
+    '(font-lock-keyword-face  :weight bold :slant normal)
+    '(font-lock-constant-face :weight bold :slant normal))
   (custom-set-faces
    '(org-document-title ((t (:inherit outline-8 :height 2.0 :weight normal))))
    '(org-tag ((t (:weight normal))))
@@ -154,5 +157,9 @@
         corfu-max-width 80))
 (after! company
   (remove-hook! 'doom-first-input-hook #'global-company-mode))
+
+(after! org
+  (custom-set-faces! '(org-done :strike-through nil)))
+
 
 (provide '+custom)
