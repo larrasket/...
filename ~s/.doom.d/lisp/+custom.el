@@ -7,27 +7,26 @@
     '(font-lock-keyword-face  :weight bold :slant normal)
     '(font-lock-constant-face :weight bold :slant normal))
   (custom-set-faces
-   '(org-document-title ((t (:inherit outline-8 :height 2.0 :weight normal))))
-   '(org-tag ((t (:weight normal))))
+   ;; '(org-tag ((t (:weight bold))))
    '(org-todo ((t (:weight bold))))
-   '(org-link ((t (:weight normal))))
    '(org-done ((t (:weight bold))))
-   '(org-headline-done ((t (:weight normal))))
-   ;; '(org-link ((t (:weight bold)))), but not when it's on titles too.
-   '(org-level-1 ((t (:inherit outline-1 :height 1.45 :weight normal :family
+   '(org-agenda-done ((t (:strike-through nil))))
+   ;; '(org-headuine-done ((t (:weight bold))))
+   '(org-document-title ((t (:weight bold :height 2.0 :family "JetBrains Mono"))))
+   '(org-level-1 ((t (:inherit outline-1 :height 1.45 :weight bold :family "JetBrains Mono"))))
+   '(org-level-2 ((t (:inherit outline-2 :height 1.2  :weight bold :family
                                "JetBrains Mono"))))
-   '(org-level-2 ((t (:inherit outline-2 :height 1.2  :weight normal :family
+   '(org-level-3 ((t (:inherit outline-3 :height 1.05 :weight bold :family
                                "JetBrains Mono"))))
-   '(org-level-3 ((t (:inherit outline-3 :height 1.05 :weight normal :family
+   '(org-level-4 ((t (:inherit outline-4 :height 0.9  :weight bold :family
                                "JetBrains Mono"))))
-   '(org-level-4 ((t (:inherit outline-4 :height 0.9  :weight normal :family
+   '(org-level-5 ((t (:inherit outline-5 :height 0.7  :weight bold :family
                                "JetBrains Mono"))))
-   '(org-level-5 ((t (:inherit outline-5 :height 0.7  :weight normal :family
+   '(org-level-6 ((t (:inherit outline-6 :height 0.6  :weight bold :family
                                "JetBrains Mono"))))
-   '(org-level-6 ((t (:inherit outline-6 :height 0.6  :weight normal :family
-                               "JetBrains Mono"))))
-   '(org-level-7 ((t (:inherit outline-7 :height 0.5  :weight normal :family
+   '(org-level-7 ((t (:inherit outline-7 :height 0.5  :weight bold :family
                                "JetBrains Mono"))))))
+
 
 
 
@@ -64,12 +63,6 @@
 
 (after! sly
   (setq sly-complete-symbol-function 'sly-flex-completions))
-
-;; (after! git-gutter-fringe
-;;   (setq-default fringes-outside-margins t)
-;;   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
-;;   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
-;;   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (after! consult
   (add-to-list 'consult-buffer-sources 'salih/consult--source-books 'append))
@@ -137,7 +130,7 @@
   (set-lookup-handlers! 'clj-refactor-mode nil))
 
 (after! mixed-pitch
-  (dolist (face '(org-special-keyword org-document-title org-drawer org-date))
+  (dolist (face '(org-special-keyword org-drawer org-date))
     (add-to-list 'mixed-pitch-fixed-pitch-faces face)))
 
 (after! corfu

@@ -31,7 +31,6 @@
 (package! modus-themes)                 ; my favorite themes from my greek dude
 (package! wakatime-mode)                ; voluntary tracking
 (package! org-web-tools)                ; viewing urls in org
-(package! indent-bars)                  ; best package for that
 
 (package! ox-tufte
   :recipe (:host github
@@ -87,3 +86,5 @@
 (package! mu4e-alert)
 
 (package! org-noter :pin "9d42ebc626981b6736b8078fb216b30cc5e34d21")
+
+(unpin! org)

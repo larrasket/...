@@ -30,8 +30,7 @@
   (setq-local truncate-lines t)
   (display-line-numbers-mode -1)
   (corfu-mode -1)
-  (company-mode 1)
-  (mixed-pitch-mode))
+  (company-mode 1))
 
 (add-hook! 'mu4e-compose-mode-hook (corfu-mode -1) (company-mode 1))
 

@@ -14,6 +14,7 @@
        (popup +defaults)
        modeline
        workspaces
+       indent-guides
 
        :editor
        (evil +everywhere)
