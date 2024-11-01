@@ -8,39 +8,10 @@
               display-line-numbers-width                8)
 
 (defalias 'l 'list)
-(defmacro s/pb (filename)
-  `(f-join salih/blog-content-path ,filename))
-
-(defmacro s/not (&rest args)
-  "Wrap multiple arguments in `and` and then in `not`."
-  `(not (and ,@args)))
-
-(defmacro s/pr (&rest args)
-  `(f-join org-roam-directory ,@args))
-
-(defmacro s/pc (&rest args)
-  `(f-join user-config-repo-path ,@args))
-
-(defmacro s/me (&rest args)
-  `(f-join salih/me-location ,@args))
-
-(defmacro s/ufn ()
-  `(car (split-string user-full-name " ")))
-
-(defmacro s/pl (source-directory)
-  `(mapcar 'file-truename
-    (directory-files-recursively ,source-directory "" nil t)))
-
-(defmacro s/cm (m)
-  `(concat "/" user-mail-address ,m))
-
 (defmacro s/require (&rest packages)
-  `(progn
-     ,@(mapcar (lambda (pkg) `(if ,pkg (require ,pkg))) packages)))
+  `(progn ,@(mapcar (lambda (pkg) `(if ,pkg (require ,pkg))) packages)))
 
-(defun doom-theme? ()
-  (string-prefix-p "doom-" (symbol-name doom-theme)))
-
+(defun doom-theme? () (string-prefix-p "doom-" (symbol-name doom-theme)))
 
 (defun salih/get-random-theme (inc)
   (let* ((current-day (+ inc (string-to-number (format-time-string "%d"))))
@@ -95,6 +66,7 @@
                               (ef-trio-light            . nour)
                               (kaolin-bubblegum         . dark)
                               (ef-night                 . dark)))
+
 
 ;; [2024-07-25 Thu 06:45] currently, my glasses do not help me well with light
 ;; themes.

@@ -8,7 +8,7 @@
       :sasl-strict t
       :sasl-username "lr0"
       :sasl-password salih/nickserv-password
-      :channels ("#emacs" "#org-mode" "##arabic" "#philosophy" "#books")))
+      :channels ("##arabic")))
 
   (circe-set-display-handler "JOIN" (lambda (&rest ignored) nil))
   (circe-set-display-handler "PART" (lambda (&rest ignored) nil))
@@ -25,7 +25,7 @@
   (setq lui-flyspell-p                                    t
         circe-default-quit-message
         "I seek refuge in God, from Satan the rejected"
-        lui-logging-directory                             (s/me "irc-logs")
+        lui-logging-directory                             "~/me/irc-logs"
         circe-reduce-lurker-spam                          t)
 
   (load "lui-logging" nil t)

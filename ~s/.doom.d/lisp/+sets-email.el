@@ -20,12 +20,12 @@
         smtpmail-smtp-server                    smtpmail-default-smtp-server
         smtpmail-smtp-service                   user-stmp-port
         smtpmail-stream-type                    'starttls
-        mu4e-drafts-folder                      (s/cm mu4e-drafts-folder)
-        mu4e-refile-folder                      (s/cm mu4e-refile-folder)
-        mu4e-sent-folder                        (s/cm mu4e-sent-folder)
-        mu4e-trash-folder                       (s/cm mu4e-trash-folder)
-        mu4e-rss-folder                         (s/cm "/rss")
-        mu4e-read-folder                        (s/cm "/read")
+        mu4e-drafts-folder                      (email-dir mu4e-drafts-folder)
+        mu4e-refile-folder                      (email-dir mu4e-refile-folder)
+        mu4e-sent-folder                        (email-dir mu4e-sent-folder)
+        mu4e-trash-folder                       (email-dir mu4e-trash-folder)
+        mu4e-rss-folder                         (email-dir "/rss")
+        mu4e-read-folder                        (email-dir "/read")
         mu4e-alert-interesting-mail-query       (concat
                                                  "flag:unread"
                                                  " AND NOT flag:trashed"

@@ -1537,4 +1537,7 @@ or not."
 check."
   (tracking-next-buffer))
 
+(defmacro email-dir (m)
+  `(concat "/" user-mail-address ,m))
+
 (provide '+helper)

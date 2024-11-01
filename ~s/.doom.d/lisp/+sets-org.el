@@ -27,7 +27,7 @@
         org-tags-column                                         70
         org-agenda-sticky                                       t
         org-plantuml-jar-path
-        (expand-file-name (s/pc "assets" "plantuml-1.2024.3.jar"))
+        (expand-file-name "~/configs/~s/assets/plantuml-1.2024.3.jar")
         org-crypt-key
         user-mail-address
         org-todo-keywords

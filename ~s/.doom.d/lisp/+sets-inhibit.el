@@ -56,13 +56,15 @@
 
 
       ;; school
-      salih/source-directory                            (s/pr "source")
+      salih/source-directory                            "~/roam/source"
 
       salih/books
-      (s/pl salih/source-directory)
-      bibtex-completion-bibliography                    (s/pc "ref.bib")
-      bibtex-completion-notes-path                      (s/pr "references")
-      org-cite-csl-styles-dir                           (s/pc "assets" "csl")
+      (mapcar 'file-truename
+              (directory-files-recursively salih/source-directory "" nil t))
+
+      bibtex-completion-bibliography                    "~/configs/~s/ref.bib"
+      bibtex-completion-notes-path                      "~/roam/references"
+      org-cite-csl-styles-dir                           "~/configs/~s/assets/csl"
       bibtex-completion-library-path
       (l salih/source-directory)
       org-cite-global-bibliography
@@ -72,9 +74,9 @@
       org-cite-csl--fallback-style-file
       (f-join org-cite-csl-styles-dir "chicago-ibid.csl")
       org-fc-flashcard-tag                              "drill"
-      org-fc-directories                                (l (s/pr "main")
-                                                           (s/pr "other")
-                                                           (s/pr "references"))
+      org-fc-directories                                (l "~/roam/main"
+                                                           "~/roam/other"
+                                                           "~/roam/references")
 
 
 

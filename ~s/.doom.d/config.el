@@ -14,7 +14,7 @@
       user-short-username                               "lr0"
       user-config-repo-path                             "/home/l/configs/~s"
       salih/blog-content-path                           "~/blog/content"
-      user-first-name                                   (s/ufn)
+      user-first-name                                   "Salih"
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
       ;; appearanc
@@ -44,11 +44,11 @@
 
       ;; org
       org-directory                                     org-roam-directory
-      org-id-locations-file                             (s/pr ".orgids")
-      +org-capture-changelog-file                       (s/pb "nice.org")
-      +org-capture-journal-file                         (s/pb "stack.org")
-      salih/org-roam-fleet-file                         (s/pr "main" "lr.org")
-      +org-capture-todo-file                            (s/pr "main" "life.org")
+      org-id-locations-file                             "~/roam/.orgids"
+      +org-capture-changelog-file                       "~/blog/content/nice.org"
+      +org-capture-journal-file                         "~/blog/content/stack.org"
+      salih/org-roam-fleet-file                         "~/roam/main/lr.org"
+      +org-capture-todo-file                            "~/roam/main/life.org"
 
       ;; this option is useful when you are up after 00:00. set 0 to the value
       ;; yoe sleep at. if you sleep at 02:00 it should be 2, if you sleep at
