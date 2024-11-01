@@ -1,4 +1,5 @@
 (require 'citar-org-roam)
+
 (use-package citar-org-roam
   :after citar org-roam
   :no-require
@@ -29,13 +30,6 @@
                             "container-title collection-title}.\n"))
         (note . "Notes on ${author editor}, ${title}"))
 
-      ;; citar-symbols
-      ;; `((file ,(all-the-icons-faicon
-      ;;           "file-o" :face 'all-the-icons-green :v-adjust -0.1) . " ")
-      ;;   (note ,(all-the-icons-material
-      ;;           "speaker_notes" :face 'all-the-icons-blue :v-adjust -0.3) . " ")
-      ;;   (link ,(all-the-icons-octicon
-      ;;           "link" :face 'all-the-icons-orange :v-adjust 0.01) . " "))
       bibtex-autokey-year-length                        4
       citar-symbol-separator                            "  "
       bibtex-autokey-name-year-separator                "-"
@@ -53,5 +47,41 @@
         (incollection  . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
         (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
         (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}")))
+
+
+(setq citar-indicator-notes-icons
+  (citar-indicator-create
+   :symbol (nerd-icons-mdicon
+            "nf-md-notebook"
+            :face 'nerd-icons-blue
+            :v-adjust -0.3)
+   :function #'citar-has-notes
+   :padding "  "
+   :tag "has:notes"))
+
+(defvar citar-indicator-links-icons
+  (citar-indicator-create
+   :symbol (nerd-icons-octicon
+            "nf-oct-link"
+            :face 'nerd-icons-orange
+            :v-adjust -0.1)
+   :function #'citar-has-links
+   :padding "  "
+   :tag "has:links"))
+
+(defvar citar-indicator-files-icons
+  (citar-indicator-create
+   :symbol (nerd-icons-faicon
+            "nf-fa-file"
+            :face 'nerd-icons-green
+            :v-adjust -0.1)
+   :function #'citar-has-files
+   :padding "  "
+   :tag "has:files"))
+
+(setq citar-indicators
+  (list citar-indicator-files-icons
+        citar-indicator-notes-icons
+        citar-indicator-links-icons))
 
 (provide '+sets-school)

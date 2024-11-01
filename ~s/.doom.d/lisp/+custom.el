@@ -11,9 +11,10 @@
    '(org-todo ((t (:weight bold))))
    '(org-done ((t (:weight bold))))
    '(org-agenda-done ((t (:strike-through nil))))
-   ;; '(org-headuine-done ((t (:weight bold))))
-   '(org-document-title ((t (:weight bold :height 2.0 :family "JetBrains Mono"))))
-   '(org-level-1 ((t (:inherit outline-1 :height 1.45 :weight bold :family "JetBrains Mono"))))
+   '(org-document-title ((t (:weight bold :height 2.0
+                             :family "JetBrains Mono"))))
+   '(org-level-1 ((t (:inherit outline-1 :height 1.45
+                      :weight bold :family "JetBrains Mono"))))
    '(org-level-2 ((t (:inherit outline-2 :height 1.2  :weight bold :family
                                "JetBrains Mono"))))
    '(org-level-3 ((t (:inherit outline-3 :height 1.05 :weight bold :family
