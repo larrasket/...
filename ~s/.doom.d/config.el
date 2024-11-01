@@ -10,7 +10,7 @@
       user-stmp-server                                  "mail.gmx.com"
       user-stmp-port                                    587
       user-short-username                               "lr0"
-      user-config-repo-path                             "/home/l/configs/~s"
+      user-config-repo-path                             "~/configs/~s"
       salih/blog-content-path                           "~/blog/content"
       user-first-name                                   "Salih"
       org-roam-directory                                (file-truename "~/roam")
@@ -70,14 +70,6 @@
       ;; if it is still the case
       warning-minimum-level                             :error)
 
-(setq-default
-      frame-title-format                                     '("%b")
-      shr-inhibit-images                                     t
-      bidi-paragraph-direction                               'left-to-right
-      org-download-image-dir                                 "~/roam/media"
-      indent-tabs-mode                                       nil
-      pdf-view-display-size                                  'fit-width
-      display-line-numbers-width                             8)
 
 (s/require
  '+sets-email                           ; mu4e
