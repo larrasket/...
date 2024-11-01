@@ -72,3 +72,6 @@
        irc
        :config
        (default +smartparens +bindings))
+
+(add-to-list 'load-path "~/.doom.d/lisp/")
+(add-to-list 'load-path "~/.doom.d/pkg/")

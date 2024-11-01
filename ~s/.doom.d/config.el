@@ -1,11 +1,9 @@
-(add-to-list 'load-path "~/.doom.d/lisp/")
-(add-to-list 'load-path "~/.doom.d/pkg/")
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define trnaslation engine in config.el
-(require 'doom-modeline)
-(require 'cocaine-line)
+(require 'doom-modeline)                ; I use it for segment definition only
+(require 'cocaine-line)                 ; my modeline.
 
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
@@ -71,6 +69,15 @@
       ;; (perhaps can be detected from the git history, too lazy tho). Not sure
       ;; if it is still the case
       warning-minimum-level                             :error)
+
+(setq-default
+      frame-title-format                                     '("%b")
+      shr-inhibit-images                                     t
+      bidi-paragraph-direction                               'left-to-right
+      org-download-image-dir                                 "~/roam/media"
+      indent-tabs-mode                                       nil
+      pdf-view-display-size                                  'fit-width
+      display-line-numbers-width                             8)
 
 (s/require
  '+sets-email                           ; mu4e

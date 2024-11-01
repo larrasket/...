@@ -1,4 +1,3 @@
-
 (after! org
   (require 'org-fc)
   (require 'ts)

@@ -2,8 +2,7 @@
 
 (setq salih/adding-note? nil)
 
-(defun salih/start-note ()
-  (setq salih/adding-note? t))
+(defun salih/start-note () (setq salih/adding-note? t))
 
 (advice-add 'org-agenda          :before #'vulpea-agenda-files-update)
 (advice-add 'org-clock-in        :before #'salih/toggle-logbook-on)

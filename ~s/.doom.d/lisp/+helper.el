@@ -292,7 +292,7 @@ automatically previewed."
     (if (setq node (get-text-property (point) 'node))
         ;; `org-roam-node-visit' does not return the buffer visited
         (progn
-          (unless (featurep 'org-roam)(require 'org-roam))
+          (unless (featurep 'org-roam) (require 'org-roam))
           (org-roam-node-visit node :other-window)
           (switch-to-buffer-other-window cbuf))
       (push-button))))
@@ -1364,6 +1364,7 @@ without history in the file name."
           ((inhibit-field-text-motion t))
         (sort-subr nil 'forward-line 'end-of-line nil nil
                    (lambda (s1 s2) (eq (random 2) 0)))))))
+
 (defun salih/org-save-all-org-buffers ()
   "Save all Org buffers without user confirmation asynchronously."
   (interactive)
