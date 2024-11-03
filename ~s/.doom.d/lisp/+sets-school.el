@@ -49,7 +49,7 @@
         (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}")))
 
 
-(setq citar-indicator-notes-icons
+(defvar citar-indicator-notes-icons
   (citar-indicator-create
    :symbol (nerd-icons-mdicon
             "nf-md-notebook"

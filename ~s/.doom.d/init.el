@@ -68,8 +68,10 @@
 
        :email
        mu4e
+
        :app
        irc
+
        :config
        (default +smartparens +bindings))
 
