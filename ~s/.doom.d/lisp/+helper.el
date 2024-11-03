@@ -1518,7 +1518,7 @@ or not."
 (defun salih/doom-modeline-update-pdf-pages-only-percent ()
   "Update PDF pages."
   (setq doom-modeline--pdf-pages
-        (format "[%s٪] "
+        (format "[%s％󠀥] "
                 (truncate
                  (* 100
                     (/ (float (or (eval `(pdf-view-current-page)) 0))

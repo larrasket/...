@@ -67,15 +67,12 @@
                               (kaolin-bubblegum         . dark)
                               (ef-night                 . dark)))
 
-
 ;; [2024-07-25 Thu 06:45] currently, my glasses do not help me well with light
 ;; themes.
 ;; (setq salih/prefered-themes
 ;;       (seq-filter (lambda (theme)
 ;;                     (not (eq (cdr theme) 'nour)))
 ;;                   salih/prefered-themes))
-
-
 
 (defun salih/really-random-theme ()
   (let* ((themes '(doom-peacock
