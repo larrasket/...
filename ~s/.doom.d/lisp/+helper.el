@@ -1009,24 +1009,26 @@ current-prefix-arg
          (next-hour (time-add last-time (seconds-to-time 3600))))
     (or next-day-p (< (float-time current-time) (float-time next-hour)))))
 
-(defun salih/open-rss ()
+
+(defun salih/read-feeds-anyway () (interactive) (salih/open-rss t))
+(defun salih/read-feeds () (interactive) (salih/open-rss nil))
+(defun salih/open-rss (readanywayg)
   "Open RSS using mu4e, only callable once per hour within the same day."
-  (interactive)
   ;; [2024-10-30 Wed 22:41] Currently, Just run it
-  (if nil (salih/feeds--)
-      (let* ((now (current-time))
-             (last-open-time (salih/load-last-open-rss-time)))
-        (if (or (not last-open-time)
-                (salih/within-hour-window-p last-open-time now))
-            (progn
-              ;; Save only the first time within the hour window, not on
-              ;; subsequent calls
-              (when (salih/different-day-p last-open-time now)
-                (salih/save-last-open-rss-time now))
-              ;; Execute the main command
-              (salih/feeds--))
-          (message
-           "This command can only be called once within the same hour of a day.")))))
+  (if readanywayg (salih/feeds--)
+    (let* ((now (current-time))
+           (last-open-time (salih/load-last-open-rss-time)))
+      (if (or (not last-open-time)
+              (salih/within-hour-window-p last-open-time now))
+          (progn
+            ;; Save only the first time within the hour window, not on
+            ;; subsequent calls
+            (when (salih/different-day-p last-open-time now)
+              (salih/save-last-open-rss-time now))
+            ;; Execute the main command
+            (salih/feeds--))
+        (message
+         "This command can only be called once within the same hour of a day.")))))
 
 (defun salih/feeds-- ()
   (if (featurep 'mu4e)

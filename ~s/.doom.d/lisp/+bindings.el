@@ -281,7 +281,8 @@
    "C-a C-l"      #'salih/org-agenda-no-full-l
    "C-a C-f"      #'salih/org-agenda-full-f
    "C-a C-v"      #'salih/open-agenda
-   "C-f"          #'salih/open-rss
+   "C-f"          #'salih/read-feeds
+   "C-u C-f"      #'salih/read-feeds-anyway
    "C-e"          #'salih/eshell
    "C-."          #'find-file
    "."            #'find-file
