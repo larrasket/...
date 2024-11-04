@@ -1543,4 +1543,9 @@ check."
 (defmacro email-dir (m)
   `(concat "/" user-mail-address ,m))
 
+(defun salih/set-custom-id-to-id (&rest _)
+  "Set the CUSTOM_ID property to match the ID property in the current entry."
+  (when-let ((id (org-entry-get nil "ID")))
+    (org-entry-put nil "CUSTOM_ID" id)))
+
 (provide '+helper)

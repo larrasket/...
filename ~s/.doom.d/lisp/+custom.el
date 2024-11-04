@@ -80,11 +80,9 @@
   (define-key embark-url-map (kbd "c") 'salih/open-url-in-chrome)
   (define-key embark-org-link-map (kbd "RET") 'org-web-tools-read-url-as-org))
 
-(after! edebug
-  (setcdr emacs-lisp-mode-map nil))
+(after! edebug (setcdr emacs-lisp-mode-map nil))
 
-(after! gud
-  (salih/set-convenient-keys))
+(after! gud (salih/set-convenient-keys))
 
 (after! org-drill
   (setq org-drill-scope (let ((nodes
@@ -92,19 +90,15 @@
                           (delete-dups (mapcar 'car nodes))))
   (setq org-drill-maximum-duration 100))
 
-(after! eshell
-  (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
+(after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
 
 (after! modus-themes
   (setq modus-themes-bold-constructs                      t
         modus-themes-italic-constructs                    nil))
 
-(after! epg
-  (fset 'epg-wait-for-status 'ignore))
+(after! epg (fset 'epg-wait-for-status 'ignore))
 
-(after! projectile
-  (setq projectile-switch-project-action 'projectile-dired))
-
+(after! projectile (setq projectile-switch-project-action 'projectile-dired))
 
 (after! git-gutter
   (and (not (featurep 'tadwin))
@@ -117,11 +111,9 @@
          ;; `(git-gutter-fr:deleted ((,class :foreground ,red-fringe-bg)))
          `(git-gutter-fr:modified ((,c :foreground ,bg-changed-fringe)))))))
 
-
 ;; other handy stuff
 (with-eval-after-load 'embark
   (add-hook 'embark-collect-mode-hook  #'salih/consult-preview-at-point-mode))
-
 
 (set-popup-rules!
   '(("^\\*cider-doc" :slot -1 :size 0.3 :select t)))
@@ -135,25 +127,23 @@
     (add-to-list 'mixed-pitch-fixed-pitch-faces face)))
 
 (after! corfu
-  (setf (alist-get 'border-width corfu--frame-parameters) 3
-        (alist-get 'internal-border-width corfu--frame-parameters) 2
+  (setf (alist-get 'border-width             corfu--frame-parameters) 3
+        (alist-get 'internal-border-width    corfu--frame-parameters) 2
         (alist-get 'child-frame-border-width corfu--frame-parameters) 2)
-  (custom-set-faces
-   '(corfu-bar ((t (:background "#a8a8a8" :height 1.0 :box nil))))
-   '(corfu-border ((t (:background "#323232" :height 2.0 :box nil)))))
-  (setq kind-icon-blend-background t)
-  (setq kind-icon-default-face 'corfu-default)
-  (setq corfu-preselect 'directory))
+
+  (setq kind-icon-blend-background t
+        kind-icon-default-face     'corfu-default
+        corfu-preselect            'directory))
 
 (after! corfu-popupinfo
-  (setq corfu-popupinfo-delay '(0.2 . 0.2)
-        corfu-min-width 30
-        corfu-max-width 80))
+  (setq corfu-popupinfo-delay      '(0.2 . 0.2)
+        corfu-min-width            30
+        corfu-max-width            80))
+
 (after! company
   (remove-hook! 'doom-first-input-hook #'global-company-mode))
 
 (after! org
   (custom-set-faces! '(org-done :strike-through nil)))
-
 
 (provide '+custom)

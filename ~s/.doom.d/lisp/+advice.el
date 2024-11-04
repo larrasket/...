@@ -23,26 +23,25 @@
 (advice-add 'org-ql-view--format-element
             :around #'salih/org-ql-view--format-element)
 
-
-
 (advice-add 'sly-compile-string
             :before #'salih/sly--compile-eval-begin-print)
 (advice-add 'sly-compile-file
             :before #'salih/sly--compile-eval-begin-print)
 ;; `C-j' in `sly-scratch' buffer
 (advice-add 'sly-eval-print-last-expression
-            :before #'salih/sly--compile-eval-begin-print)
+            :before   #'salih/sly--compile-eval-begin-print)
 (advice-add 'sly-eval-with-transcript
-            :before #'salih/sly--compile-eval-begin-print)
-
-(advice-add 'deft-parse-title
-            :override #'cm/deft-parse-title)
+            :before   #'salih/sly--compile-eval-begin-print)
 
 (advice-add 'lsp-resolve-final-command
-            :around #'lsp-booster--advice-final-command)
+            :around   #'lsp-booster--advice-final-command)
 
 (advice-add '+irc/tracking-next-buffer
             :override #'salih/tracking-next-buffer--always-switch)
+
+(advice-add 'deft-parse-title  :override #'cm/deft-parse-title)
+(advice-add 'org-id-get-create :after    #'salih/set-custom-id-to-id)
+
 
 ;; `sly-compile-region' already done by `sly-compile-string'
 ;; (advice-add 'sly-compile-region
