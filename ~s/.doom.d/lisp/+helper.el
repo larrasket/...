@@ -241,22 +241,22 @@ Zathura."
     (setf (epg-context-armor context) epa-armor)
     (setf (epg-context-textmode context) epa-textmode)
     (epg-context-set-passphrase-callback context
-					 #'epa-passphrase-callback-function)
+                                         #'epa-passphrase-callback-function)
     (epg-context-set-progress-callback context
-				       (cons
-					#'epa-progress-callback-function
-					(format "Encrypting %s..."
+                                       (cons
+                                        #'epa-progress-callback-function
+                                        (format "Encrypting %s..."
                                                 (file-name-nondirectory file))))
     (message "Encrypting %s..." (file-name-nondirectory file))
     (condition-case error
-	(epg-encrypt-file context file recipients cipher)
+        (epg-encrypt-file context file recipients cipher)
       (error
        (epa-display-error context)
        (signal (car error) (cdr error))))
     (delete-file file)
     (message "Encrypting %s...wrote %s and deleted original file"
-	     (file-name-nondirectory file)
-	     (file-name-nondirectory cipher))))
+             (file-name-nondirectory file)
+             (file-name-nondirectory cipher))))
 
 (defun salih/epa-dired-do-encrypt ()
   "Encrypt marked files and delete the originals."
@@ -269,7 +269,7 @@ Zathura."
                                       " will be performed."))))
     (dolist (file (dired-get-marked-files))
       (with-current-buffer (find-file-noselect file)
-	(salih/epa-encrypt-file recipients)))
+        (salih/epa-encrypt-file recipients)))
     (revert-buffer)))
 
 (define-minor-mode salih/consult-preview-at-point-mode
@@ -1073,7 +1073,7 @@ ARGS is `element' in `org-ql-view--format-element'"
   used as title."
   (let ((begin (string-match "^#\\+[tT][iI][tT][lL][eE]: .*$" contents)))
     (if begin
-	(string-trim (substring contents begin (match-end 0))
+        (string-trim (substring contents begin (match-end 0))
                      "#\\+[tT][iI][tT][lL][eE]: *" "[\n\t ]+")
       (deft-base-filename file))))
 
@@ -1494,7 +1494,7 @@ or not."
     (or (eq window (old-selected-window))))
   (and (minibuffer-window-active-p (minibuffer-window))
        (with-selected-window (minibuffer-window)
-  	 (eq window (minibuffer-selected-window)))))
+         (eq window (minibuffer-selected-window)))))
 (setq doom-modeline-mode-alist nil)
 
 ;; page show with percent
