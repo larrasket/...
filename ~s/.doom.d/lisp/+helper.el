@@ -148,8 +148,8 @@ Version 2019-11-04 2021-02-16"
        ((string-equal system-type "gnu/linux")
         (mapc
          (lambda ($fpath) (let ((process-connection-type nil))
-                       (start-process
-                        "" nil "xdg-open" $fpath))) $file-list))))))
+                           (start-process
+                            "" nil "xdg-open" $fpath))) $file-list))))))
 
 (defun salih/compile-and-run-cpp () ;; compile-and-run methods
   (interactive)
@@ -160,7 +160,7 @@ Version 2019-11-04 2021-02-16"
                    (file-name-sans-extension  (file-name-nondirectory
                                                (buffer-file-name))) " && rm "
                    (file-name-sans-extension  (file-name-nondirectory
-                                               (buffer-file-name)))) t  )
+                                               (buffer-file-name)))) t)
   (other-window t)
   (end-of-add-hook 'c++-mode))
 
@@ -173,7 +173,7 @@ Version 2019-11-04 2021-02-16"
                    (file-name-sans-extension  (file-name-nondirectory
                                                (buffer-file-name))) " && rm "
                    (file-name-sans-extension  (file-name-nondirectory
-                                               (buffer-file-name)))) t  )
+                                               (buffer-file-name)))) t)
   (other-window t)
   (end-of-add-hook 'c-mode))
 
@@ -923,8 +923,8 @@ Version 2015-07-30"
      ((equal -sort-by "size") (setq -arg "-Al --si --time-style long-iso -S"))
      ((equal -sort-by "dir")
       (setq -arg "-Al --si --time-style long-iso --group-directories-first"))
-     (t (error "logic error 09535" )))
-    (dired-sort-other -arg )))
+     (t (error "logic error 09535")))
+    (dired-sort-other -arg)))
 
 (defun salih/advise-once (symbol where function &optional props)
   (advice-add symbol :after (lambda (&rest _) (advice-remove symbol function)))
@@ -1323,11 +1323,6 @@ without history in the file name."
   (org-entry-put (point) "CUSTOM_ID" (org-id-get)))
 
 
-
-
-
-
-
 (defun salih/get-org-roam-nodes-with-tag (tag)
   "Get all Org Roam nodes that have the specified TAG."
   (org-roam-db-query
@@ -1337,8 +1332,6 @@ without history in the file name."
     :on (= tags:node-id nodes:id)
     :where (like tags:tag $s1)]
    tag))
-
-
 
 (defun get-unique-file-paths-for-tag (tag)
   "Get unique file paths for Org Roam nodes with the specified TAG."
@@ -1394,108 +1387,25 @@ without history in the file name."
   (setq salih/vulpea-show-full t)
   (org-agenda nil "f"))
 
-
-
-;; modeline
-
-(defface salih/modeline-background
-  '((t :background "#3355bb" :foreground "white" :inherit bold))
-  "Face with a red background for use on the mode line.")
-
-(doom-modeline-def-segment salih/selection-info
-  "Information about the current selection.
-Such as how many characters and lines are selected, or the NxM dimensions of a
-block selection."
-  (when (and (or mark-active (and (bound-and-true-p evil-local-mode)
-                                  (eq evil-state 'visual)))
-             (doom-modeline--active))
-    (cl-destructuring-bind (beg . end)
-        (if (and (bound-and-true-p evil-local-mode) (eq evil-state 'visual))
-            (cons evil-visual-beginning evil-visual-end)
-          (cons (region-beginning) (region-end)))
-      (propertize
-       (let ((lines (count-lines beg (min end (point-max)))))
-         (concat (doom-modeline-spc)
-                 (cond ((or (bound-and-true-p rectangle-mark-mode)
-                            (and (bound-and-true-p evil-visual-selection)
-                                 (eq 'block evil-visual-selection)))
-                        (let ((cols (abs (- (doom-modeline-column end)
-                                            (doom-modeline-column beg)))))
-                          (format "%dx%dB" lines cols)))
-                       ((and (bound-and-true-p evil-visual-selection)
-                             (eq evil-visual-selection 'line))
-                        (format "%dL" lines))
-                       ((> lines 1)
-                        (format "%dC %dL" (- end beg) lines))
-                       (t
-                        (format "%dC" (- end beg))))
-                 (doom-modeline-spc)))
-       'face 'doom-modeline-emphasis))))
-
-(doom-modeline-def-segment salih/word-count
-  "The buffer word count.
-Displayed when in a major mode in `doom-modeline-continuous-word-count-modes'.
-Respects `doom-modeline-enable-word-count'."
-  (when (and doom-modeline-enable-word-count
-             (member major-mode doom-modeline-continuous-word-count-modes)
-             (derived-mode-p 'org-mode))
-    (propertize (format " %dW" (count-words (point-min) (point-max)))
-                'face (doom-modeline-face))))
-
-(doom-modeline-def-modeline 'salih-line
-  '(eldoc
-    workspace-name
-    window-number
-    follow remote-host
-    salih/word-count
-    parrot)
-  '(salih/selection-info matches
-    buffer-position compilation
-    objed-state misc-info persp-name
-    battery grip irc
-    mu4e gnus
-    github debug repl lsp minor-modes
-    input-method indent-info
-    buffer-encoding
-    process vcs check time))
-
-(defface salih/modeline-background
-  '((t :background "#3355bb" :foreground "white" :inherit bold))
-  "Face with a red background for use on the mode line.")
-
 (defun salih/modeline--buffer-name ()
   "Return `buffer-name' with spaces around it."
   (format " %s " (buffer-name)))
-
-(defvar-local salih/modeline-buffer-name
-    '(:eval
-      (when (mode-line-window-selected-p)
-        (propertize (salih/modeline--buffer-name)
-                    'face 'salih/modeline-background)))
-  "Mode line construct to display the buffer name.")
 
 (defun salih/modeline--major-mode-name ()
   "Return capitalized `major-mode' as a string."
   (capitalize (symbol-name major-mode)))
 
-
-(defvar-local salih/modeline-major-mode
-    '
-    "Mode line construct to display the major mode.")
-(put 'salih/modeline-major-mode 'risky-local-variable t)
-
 (defun mode-line-window-selected-p ()
-  "Return non-nil if we're updating the mode line for the selected window.
+   "Return non-nil if we're updating the mode line for the selected window.
 This function is meant to be called in `:eval' mode line
 constructs to allow altering the look of the mode line depending
 on whether the mode line belongs to the currently selected window
 or not."
-  (let ((window (selected-window)))
-    (or (eq window (old-selected-window))))
-  (and (minibuffer-window-active-p (minibuffer-window))
-       (with-selected-window (minibuffer-window)
-         (eq window (minibuffer-selected-window)))))
-(setq doom-modeline-mode-alist nil)
+   (let ((window (selected-window)))
+     (or (eq window (old-selected-window))))
+   (and (minibuffer-window-active-p (minibuffer-window))
+        (with-selected-window (minibuffer-window)
+          (eq window (minibuffer-selected-window)))))
 
 ;; page show with percent
 (defun salih/doom-modeline-update-pdf-pages ()
@@ -1507,7 +1417,7 @@ or not."
                 (truncate
                  (* 100
                     (/ (float (or (eval `(pdf-view-current-page)) 0))
-                       (pdf-cache-number-of-pages)) )))))
+                       (pdf-cache-number-of-pages)))))))
 
 (defun salih/doom-modeline-update-pdf-pages-no-percent ()
   "Update PDF pages."
@@ -1516,7 +1426,6 @@ or not."
                 (or (eval `(pdf-view-current-page)) 0)
                 (pdf-cache-number-of-pages))))
 
-
 (defun salih/doom-modeline-update-pdf-pages-only-percent ()
   "Update PDF pages."
   (setq doom-modeline--pdf-pages
@@ -1524,8 +1433,7 @@ or not."
                 (truncate
                  (* 100
                     (/ (float (or (eval `(pdf-view-current-page)) 0))
-                       (pdf-cache-number-of-pages)) )))))
-
+                       (pdf-cache-number-of-pages)))))))
 
 (defun salih/fetch-password (&rest params)
   (let ((match (car (apply #'auth-source-search params))))

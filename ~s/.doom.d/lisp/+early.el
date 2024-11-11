@@ -8,10 +8,15 @@
               display-line-numbers-width                8)
 
 (defalias 'l 'list)
+
 (defmacro s/require (&rest packages)
   `(progn ,@(mapcar (lambda (pkg) `(if ,pkg (require ,pkg))) packages)))
 
 (defun doom-theme? () (string-prefix-p "doom-" (symbol-name doom-theme)))
+
+(defface salih/modeline-background
+   '((t :background "#3355bb" :foreground "white" :inherit bold))
+   "Face with a red background for use on the mode line.")
 
 (defun salih/get-random-theme (inc)
   (let* ((current-day (+ inc (string-to-number (format-time-string "%d"))))
@@ -19,13 +24,26 @@
          (selected (nth (mod current-day list-length) salih/prefered-themes)))
     selected))
 
+
 (defun salih/get-random-nour-theme (inc)
   (let* ((salih/prefered-themes '((ef-frost . nour)
                                   (ef-light . nour))))
     (salih/get-random-theme inc)))
 
+(defvar-local salih/modeline-buffer-name
+     '(:eval
+       (when (mode-line-window-selected-p)
+         (propertize (salih/modeline--buffer-name)
+                     'face 'salih/modeline-background)))
+   "Mode line construct to display the buffer name.")
 
-;;
+(setq doom-modeline-mode-alist nil)
+
+(defvar-local salih/modeline-major-mode
+     '
+     "Mode line construct to display the major mode.")
+
+(put 'salih/modeline-major-mode 'risky-local-variable t)
 
 (setq salih/prefered-themes '((doom-peacock             . dark)
                               (doom-rouge               . dark)
