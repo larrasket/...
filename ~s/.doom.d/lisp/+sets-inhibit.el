@@ -8,11 +8,10 @@
       scroll-conservatively                             101
       read-process-output-max                           1000000
 
-
       ;; fonts
       doom-font
       (concat
-       "Pragmasevka:pixelsize=17"
+       "Pragmasevka:pixelsize=16"
        ":antialias=true:hinting=true:autohint=false:hintstyle=3")
 
       doom-symbol-font
@@ -51,9 +50,6 @@
       proced-auto-update-flag                           t
       salih/temp-roam-insert                            nil
       large-file-warning-threshold                      nil
-
-
-
 
       ;; school
       salih/source-directory                            "~/roam/source"

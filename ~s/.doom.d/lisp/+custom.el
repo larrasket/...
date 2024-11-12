@@ -201,4 +201,17 @@ Respects `doom-modeline-enable-word-count'."
 (after! org
   (custom-set-faces! '(org-done :strike-through nil)))
 
+(when (eq doom-theme 'doom-monokai-machine)
+ (set-face-attribute 'fill-column-indicator nil :height 1.1)
+ (custom-set-faces!
+   '(font-lock-keyword-face :weight bold :slant normal)
+   ;; '(font-lock-variable-name-face :weight normal :foreground "#a3d8ff")
+   ;; '(font-lock-variable-name-face :weight normal :foreground "#9be2ef")
+   '(font-lock-variable-name-face :weight normal :foreground "#b0e0e6")
+   ;; '(font-lock-variable-name-face :weight normal :foreground "#b3e5fc")
+   ;; '(font-lock-variable-name-face :weight normal :foreground "#61cdff")
+  (custom-set-faces!
+    '(line-number              :slant normal)
+    '(line-number-current-line :slant normal))))
+
 (provide '+custom)
