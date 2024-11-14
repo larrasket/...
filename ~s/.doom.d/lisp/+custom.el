@@ -214,4 +214,7 @@ Respects `doom-modeline-enable-word-count'."
     '(line-number              :slant normal)
     '(line-number-current-line :slant normal))))
 
+
+(put 'salih/modeline-major-mode 'risky-local-variable t)
+
 (provide '+custom)

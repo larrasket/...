@@ -1,3 +1,5 @@
+(defalias 'l 'list)
+
 (setq-default frame-title-format                        '("%b")
               shr-inhibit-images                        t
               bidi-paragraph-direction                  'left-to-right
@@ -7,23 +9,16 @@
               pdf-view-display-size                     'fit-width
               display-line-numbers-width                8)
 
-(defalias 'l 'list)
-
 (defmacro s/require (&rest packages)
   `(progn ,@(mapcar (lambda (pkg) `(if ,pkg (require ,pkg))) packages)))
 
 (defun doom-theme? () (string-prefix-p "doom-" (symbol-name doom-theme)))
-
-(defface salih/modeline-background
-   '((t :background "#3355bb" :foreground "white" :inherit bold))
-   "Face with a red background for use on the mode line.")
 
 (defun salih/get-random-theme (inc)
   (let* ((current-day (+ inc (string-to-number (format-time-string "%d"))))
          (list-length (length salih/prefered-themes))
          (selected (nth (mod current-day list-length) salih/prefered-themes)))
     selected))
-
 
 (defun salih/get-random-nour-theme (inc)
   (let* ((salih/prefered-themes '((ef-frost . nour)
@@ -37,53 +32,50 @@
                      'face 'salih/modeline-background)))
    "Mode line construct to display the buffer name.")
 
-(setq doom-modeline-mode-alist nil)
 
 (defvar-local salih/modeline-major-mode
      '
      "Mode line construct to display the major mode.")
 
-(put 'salih/modeline-major-mode 'risky-local-variable t)
-
-(setq salih/prefered-themes '((doom-peacock             . dark)
-                              (doom-rouge               . dark)
-                              (doom-henna               . dark)
-                              (kaolin-galaxy            . dark)
-                              (ef-maris-dark            . dark)
-                              (ef-deuteranopia-light    . nour)
-                              (ef-elea-dark             . dark)
-                              (ef-cherie                . dark)
-                              (ef-bio                   . dark)
-                              (doom-rouge               . dark)
-                              (doom-feather-dark        . dark)
-                              (ef-summer                . nour)
-                              (ef-melissa-dark          . dark)
-                              (ef-duo-dark              . dark)
-                              (ef-spring                . nour)
-                              (kaolin-valley-dark       . dark)
-                              (ef-dark                  . dark)
-                              (ef-trio-dark             . dark)
-                              (doom-rouge               . dark)
-                              (kaolin-dark              . dark)
-                              (ef-day                   . nour)
-                              (ef-duo-light             . nour)
-                              (ef-deuteranopia-dark     . dark)
-                              (ef-trio-light            . nour)
-                              (doom-badger              . dark)
-                              (ef-symbiosis             . dark)
-                              (ef-autumn                . dark)
-                              (ef-frost                 . nour)
-                              (doom-rouge               . dark)
-                              (ef-light                 . nour)
-                              (ef-winter                . dark)
-                              (kaolin-temple            . dark)
-                              (ef-cyprus                . nour)
-                              (kaolin-ocean             . dark)
-                              (ef-maris-light           . nour)
-                              (doom-rouge               . dark)
-                              (ef-trio-light            . nour)
-                              (kaolin-bubblegum         . dark)
-                              (ef-night                 . dark)))
+(defvar salih/prefered-themes '((doom-peacock             . dark)
+                                (doom-rouge               . dark)
+                                (doom-henna               . dark)
+                                (kaolin-galaxy            . dark)
+                                (ef-maris-dark            . dark)
+                                (ef-deuteranopia-light    . nour)
+                                (ef-elea-dark             . dark)
+                                (ef-cherie                . dark)
+                                (ef-bio                   . dark)
+                                (doom-rouge               . dark)
+                                (doom-feather-dark        . dark)
+                                (ef-summer                . nour)
+                                (ef-melissa-dark          . dark)
+                                (ef-duo-dark              . dark)
+                                (ef-spring                . nour)
+                                (kaolin-valley-dark       . dark)
+                                (ef-dark                  . dark)
+                                (ef-trio-dark             . dark)
+                                (doom-rouge               . dark)
+                                (kaolin-dark              . dark)
+                                (ef-day                   . nour)
+                                (ef-duo-light             . nour)
+                                (ef-deuteranopia-dark     . dark)
+                                (ef-trio-light            . nour)
+                                (doom-badger              . dark)
+                                (ef-symbiosis             . dark)
+                                (ef-autumn                . dark)
+                                (ef-frost                 . nour)
+                                (doom-rouge               . dark)
+                                (ef-light                 . nour)
+                                (ef-winter                . dark)
+                                (kaolin-temple            . dark)
+                                (ef-cyprus                . nour)
+                                (kaolin-ocean             . dark)
+                                (ef-maris-light           . nour)
+                                (doom-rouge               . dark)
+                                (ef-trio-light            . nour)
+                                (kaolin-bubblegum         . dark)
+                                (ef-night                 . dark)))
 
 ;; [2024-07-25 Thu 06:45] currently, my glasses do not help me well with light
 ;; themes.
@@ -150,7 +142,9 @@
   (interactive)
   (load-theme (salih/really-random-theme)))
 
-
+(defface salih/modeline-background
+   '((t :background "#3355bb" :foreground "white" :inherit bold))
+   "Face with a red background for use on the mode line.")
 
 
 
@@ -201,14 +195,5 @@
                 (concat line (make-string (max 0 (- longest-line (length line))) 32)))
                "\n"))
      'face 'doom-dashboard-banner)))
-
-
-
-
-
-
-
-
-
 
 (provide '+early)

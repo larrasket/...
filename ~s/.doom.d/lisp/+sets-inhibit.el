@@ -28,6 +28,7 @@
       all-the-icons-completion-mode                     nil
       global-hl-line-modes                              nil
       scroll-margin                                     4
+      doom-modeline-mode-alist                          nil
 
       ;; awqat
       awqat-mode-line-format
