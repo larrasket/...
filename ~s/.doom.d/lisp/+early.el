@@ -1,3 +1,4 @@
+(require 'f)
 (defalias 'l 'list)
 
 (setq-default frame-title-format                        '("%b")
