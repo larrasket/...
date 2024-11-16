@@ -204,5 +204,8 @@ things. Corinthians 13:4-7.")))
     ;; themes.
     ;; (doom-theme?)
 
+(use-package! awqat
+  :commands (awqat-display-prayer-time-mode
+             awqat-times-for-day))
 
 (provide '+hooks)

@@ -81,9 +81,7 @@ automatically previewed."
 
 (defvar salih/org-roam-dailies-capture-p nil)
 
-(use-package! awqat
-  :commands (awqat-display-prayer-time-mode
-             awqat-times-for-day))
+
 
 (defvar salih/prefered-themes '((doom-peacock             . dark)
                                 (doom-rouge               . dark)
