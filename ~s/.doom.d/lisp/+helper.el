@@ -70,7 +70,7 @@
       (window-configuration-to-register '_)
       (delete-other-windows))))
 
-(defun salih/neotree-project-dir () ;; neotree
+(defun salih/neotree-project-dir ()
   (let ((project-dir (projectile-project-root))
         (file-name (buffer-file-name)))
     (neotree-toggle)
@@ -81,7 +81,7 @@
               (neotree-find file-name)))
       (message "Could not find git project root."))))
 
-(defun salih/comment-or-uncomment-region-or-line () ;; editing
+(defun salih/comment-or-uncomment-region-or-line ()
   "Comments or uncomments the region or the current line if there's no active
 region."
   (interactive)
@@ -113,7 +113,7 @@ lookup."
   (interactive)
   (org-insert-time-stamp (current-time) t))
 
-(defun salih/open-in-external-app (&optional @fname) ;; dired
+(defun salih/open-in-external-app (&optional @fname)
   "Open the current file or dired marked files in external app.
 When called in emacs lisp, if @fname is given, open that.
 URL `http://xahlee.info/emacs/emacs/emacs_dired_open_file_in_ext_apps.html'
@@ -151,7 +151,9 @@ Version 2019-11-04 2021-02-16"
                            (start-process
                             "" nil "xdg-open" $fpath))) $file-list))))))
 
-(defun salih/compile-and-run-cpp () ;; compile-and-run methods
+(defun salih/compile-and-run-cpp ()
+  "Compile and run cpp files. One of the first functions I've ever written, when
+I was learning competitive programming :)"
   (interactive)
   (save-buffer)
   (compile (concat "g++ "  (file-name-nondirectory (buffer-file-name)) " -o "
@@ -165,6 +167,8 @@ Version 2019-11-04 2021-02-16"
   (end-of-add-hook 'c++-mode))
 
 (defun salih/compile-and-run-c ()
+  "Compile and run cpp files. One of the first functions I've ever written, when
+I was learning competitive programming :)"
   (interactive)
   (save-buffer)
   (compile (concat "gcc "  (file-name-nondirectory (buffer-file-name)) " -o "
@@ -222,9 +226,7 @@ Zathura."
                          (expand-file-name file default-directory))
         (find-file file)))))
 
-
-
-(defun salih/epa-encrypt-file (recipients) ;; let's hope for the best
+(defun salih/epa-encrypt-file (recipients)
   "Encrypt the currently opened file for RECIPIENTS and delete the original."
   (interactive
    (list (epa-select-keys (epg-make-context epa-protocol)
@@ -272,15 +274,6 @@ Zathura."
         (salih/epa-encrypt-file recipients)))
     (revert-buffer)))
 
-(define-minor-mode salih/consult-preview-at-point-mode
-  "Preview minor mode for an *Embark Collect* buffer.
-When moving around in the *Embark Collect* buffer, the candidate at point is
-automatically previewed."
-  :init-value nil :group 'consult
-  (if salih/consult-preview-at-point-mode
-      (add-hook 'post-command-hook #'salih/consult-preview-at-point nil 'local)
-    (remove-hook 'post-command-hook #'salih/consult-preview-at-point 'local)))
-
 (defun salih/consult-preview-at-point ()
   "Preview candidate at point in an *Embark Collect* buffer."
   (interactive)
@@ -305,21 +298,6 @@ automatically previewed."
     (when file-path
       (let ((xwidget (xwidget-webkit-browse-url (concat "file://" file-path))))
         (message "Opened file %s in an xwidget window." file-path)))))
-
-(use-package! awqat
-  :commands (awqat-display-prayer-time-mode
-             awqat-times-for-day))
-
-
-(setq +doom-dashboard-menu-sections
-      '(("Recently opened files"
-         :action recentf-open-files)
-        ("Open project"
-         :action projectile-switch-project)
-        ("Jump to bookmark"
-         :action bookmark-jump)
-        ("Open documentation"
-         :action doom/help)))
 
 (defun salih/org-remove-all-tags ()
   "Remove all tags from all headlines in the current Org mode buffer."
@@ -745,14 +723,6 @@ tasks."
   (let ((org-link-file-path-type 'absolute))
     (funcall orgin)))
 
-;; lisp
-(defvar salih/sly--compile-eval-begin-print-counter 0
-  "a counter to distinguish compile/eval cycles")
-(defun salih/sly--compile-eval-begin-print (&rest _)
-  "print the counter value into REPL to distinguish compile/eval cycles."
-  (sly-eval-async
-   `(cl:format t "" ,(cl-incf salih/sly--compile-eval-begin-print-counter))))
-
 (defun salih/sly-eval-with-print (form)
   "Evaluate FORM in the SLY REPL, wrapping it with a (print ...) form."
   (interactive "sForm: ")
@@ -771,25 +741,6 @@ form."
     (sly-compile-defun)
     (message "Compiled: %s" form-with-print)))
 
-(defvar salih/consult--source-books
-  `(:name     "File"
-    :narrow   ?f
-    :category file
-    :face     consult-file
-    :history  file-name-history
-    :state    ,#'consult--file-state
-    :new      ,#'consult--file-action
-    :items
-    ,(lambda ()
-       (let ((ht (consult--buffer-file-hash))
-             items)
-         (dolist (file (bound-and-true-p salih/books) (nreverse items))
-           (unless (eq (aref file 0) ?/)
-             (let (file-name-handler-alist)
-               (setq file (expand-file-name file))))
-           (unless (gethash file ht)
-             (push (consult--fast-abbreviate-file-name file) items)))))))
-
 (defun salih/org-roam-get-node-titles (node-list)
   "Applies `org-roam-node-title' function to the cdr of each element in
 NODE-LIST."
@@ -802,56 +753,7 @@ NODE-LIST."
   (mapcar (lambda (node) (org-roam-node-file (cdr node)))
           node-list))
 
-(setq roam-titles (salih/org-roam-get-node-titles
-                   (org-roam-node-read--completions)))
 (defun salih/get-org-roam-titles () roam-titles)
-
-(setq org-roam-buffer-source
-      `(:name     "Org-roam"
-        :hidden   nil
-        :narrow   ,consult-org-roam-buffer-narrow-key
-        :annotate ,(lambda (cand)
-                     (let* ((name (org-roam-node-from-title-or-alias cand)))
-                       (if name (file-name-nondirectory
-                                 (org-roam-node-file name)) "")))
-
-        :action ,(lambda (name)
-                   (if salih/temp-roam-insert
-                       (progn
-                         (setq salih/temp-roam-insert nil)
-                         (let* ((node (org-roam-node-from-title-or-alias name))
-                                (description (org-roam-node-title node))
-                                (id (org-roam-node-id node)))
-                           (insert (org-link-make-string
-                                    (concat "id:" id)
-                                    description))
-                           (run-hook-with-args 'org-roam-post-node-insert-hook
-                                               id
-                                               description)))
-                     (org-roam-node-visit
-                      (org-roam-node-from-title-or-alias name))))
-
-        :new ,(lambda (name)
-                (let* ((n (org-roam-node-create :title name)))
-                  (org-roam-capture- :node n)
-                  (when salih/temp-roam-insert
-                    (progn
-                      (setq salih/temp-roam-insert nil)
-                      (let* ((node (org-roam-node-from-title-or-alias name))
-                             (description (org-roam-node-title node))
-                             (id (org-roam-node-id node)))
-                        (insert (org-link-make-string
-                                 (concat "id:" id)
-                                 description))
-                        (run-hook-with-args 'org-roam-post-node-insert-hook
-                                            id
-                                            description)))))
-
-
-                (setq roam-titles (salih/org-roam-get-node-titles
-                                   (org-roam-node-read--completions))))
-
-        :items    ,#'salih/get-org-roam-titles))
 
 (defun salih/org-noter-pdf--pdf-view-get-precise-info (mode window)
   (when (eq mode 'pdf-view-mode)
@@ -955,7 +857,7 @@ Version 2015-07-30"
         (insert "- "))
     (call-interactively 'org-time-stamp-inactive)
     (insert " ")))
-current-prefix-arg
+
 (defun salih/open-kitty-in-current-directory ()
   "Open the Kitty terminal in the current working directory."
   (interactive)
@@ -970,9 +872,6 @@ current-prefix-arg
         (mu4e-search-change-sorting :date 'descending))
     (mu4e)))
 
-(defvar salih/open-rss-lock-file (f-join doom-cache-dir "rss-locker")
-  "File used to store the last execution time of `salih/open-rss`.")
-
 (defun salih/load-last-open-rss-time ()
   "Load the last execution time from the cache file."
   (when (f-exists? salih/open-rss-lock-file)
@@ -984,7 +883,6 @@ current-prefix-arg
   "Save the last execution TIME to the cache file."
   (with-temp-file salih/open-rss-lock-file
     (insert (format "%S" time))))
-
 
 (defun salih/different-day-p (last-time current-time)
   (let* ((next-day-p (or
@@ -1009,9 +907,10 @@ current-prefix-arg
          (next-hour (time-add last-time (seconds-to-time 3600))))
     (or next-day-p (< (float-time current-time) (float-time next-hour)))))
 
-
 (defun salih/read-feeds-anyway () (interactive) (salih/open-rss t))
+
 (defun salih/read-feeds () (interactive) (salih/open-rss nil))
+
 (defun salih/open-rss (readanywayg)
   "Open RSS using mu4e, only callable once per hour within the same day."
   ;; [2024-10-30 Wed 22:41] Currently, Just run it
@@ -1086,7 +985,6 @@ ARGS is `element' in `org-ql-view--format-element'"
          (file-relative-name (org-roam-node-file node) org-roam-directory))))
     (error "")))
 
-(defvar org-roam-list-most-linked-count 5)
 (cl-defmethod org-roam-node-backlinkscount-number ((node org-roam-node))
   "Access slot \"backlinks\" of org-roam-node struct CL-X. This is identical
 toorg-roam-node-backlinkscount' with the difference that it returns a number
@@ -1209,9 +1107,10 @@ it with org)."
       (org-roam-capture--put :id (org-id-get-create)))))
 
 (defun salih/capture-- (fn key &optional fleet?)
-  (with-current-buffer (find-file-noselect (if fleet?
-                                               salih/org-roam-fleet-file
-                                             +org-capture-todo-file))
+  (with-current-buffer
+      (find-file-noselect (if fleet?
+                              salih/org-roam-fleet-file
+                            +org-capture-todo-file))
     (funcall fn nil key)))
 
 (defun salih/org-capture-general ()
@@ -1273,7 +1172,6 @@ without history in the file name."
         (org-roam-promote-entire-buffer)
         (save-buffer)))))
 
-(defvar salih/org-roam-dailies-capture-p nil)
 (defun salih/org-roam-dailies-capture-today ()
   (interactive)
   (setq salih/org-roam-dailies-capture-p t)
@@ -1322,7 +1220,6 @@ without history in the file name."
   (org-set-tags ":drill")
   (org-entry-put (point) "CUSTOM_ID" (org-id-get)))
 
-
 (defun salih/get-org-roam-nodes-with-tag (tag)
   "Get all Org Roam nodes that have the specified TAG."
   (org-roam-db-query
@@ -1333,11 +1230,10 @@ without history in the file name."
     :where (like tags:tag $s1)]
    tag))
 
-(defun get-unique-file-paths-for-tag (tag)
+(defun salih/get-unique-file-paths-for-tag (tag)
   "Get unique file paths for Org Roam nodes with the specified TAG."
   (let ((nodes (salih/get-org-roam-nodes-with-tag "drill")))
     (delete-dups (mapcar 'car nodes))))
-
 
 (defun salih/org-noter-open-in-zathura ()
   "Get the value of a PROPERTY from the current Org heading."
@@ -1407,7 +1303,6 @@ or not."
         (with-selected-window (minibuffer-window)
           (eq window (minibuffer-selected-window)))))
 
-;; page show with percent
 (defun salih/doom-modeline-update-pdf-pages ()
   "Update PDF pages."
   (setq doom-modeline--pdf-pages

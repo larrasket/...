@@ -7,6 +7,16 @@
       bidi-paragraph-direction                          'left-to-right
       scroll-conservatively                             101
       read-process-output-max                           1000000
+      +doom-dashboard-menu-sections                     '(("Recently opened files"
+                                                           :action
+                                                           recentf-open-files)
+                                                          ("Open project"
+                                                           :action
+                                                           projectile-switch-project)
+                                                          ("Jump to bookmark"
+                                                           :action bookmark-jump)
+                                                          ("Open documentation"
+                                                           :action doom/help))
 
       ;; fonts
       doom-font
