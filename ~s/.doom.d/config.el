@@ -35,6 +35,7 @@
       doom-modeline-icon                                t
       doom-modeline-height                              27
       display-line-numbers-type                         'relative
+
       ;; prayer time
       calendar-latitude                                 30.0
       calendar-longitude                                31.2

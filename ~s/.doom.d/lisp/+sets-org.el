@@ -370,6 +370,7 @@
                           (:endgroup)
                           ("noexport" . ?n)
                           ("anthology" . ?a)
+                          ("selected" . ?s)
                           ("@later" . ?l)
                           ("@current" . ?C)
                           ("@long" . ?L)
