@@ -57,8 +57,8 @@
        (julia +lsp +tree-sitter)
        (cc +lsp +tree-sitter)
        (go +lsp +tree-sitter)
-       (org +roam2)
        (javascript +lsp)
+       (org +roam2)
        (rest +jq)
        emacs-lisp
        yaml
@@ -75,5 +75,5 @@
        :config
        (default +smartparens +bindings))
 
-(add-to-list 'load-path "~/.doom.d/lisp/")
-(add-to-list 'load-path "~/.doom.d/pkg/")
+(add-to-list 'load-path (expand-file-name "lisp" doom-user-dir))
+(add-to-list 'load-path (expand-file-name "pkg"  doom-user-dir))
