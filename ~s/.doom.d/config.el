@@ -63,13 +63,14 @@
       safe-local-variable-values
       '((org-download-image-dir
          . "../i")
-        (salih/rebuild . t))
+        (salih/rebuild . t)))
       ;; currently org causes some annoying warnings because of org-element
       ;; breaking api updates.
       ;; [2024-04-26 Fri 02:01] I wrote "currently" above a long time ago
       ;; (perhaps can be detected from the git history, too lazy tho). Not sure
       ;; if it is still the case
-      warning-minimum-level                             :error)
+      ;; [2024-11-20 Wed 11:45] Let's try without it!
+      ;; warning-minimum-level                             :error)
 
 
 (s/require

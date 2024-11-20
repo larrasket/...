@@ -151,8 +151,6 @@ Respects `doom-modeline-enable-word-count'."
   (setq modus-themes-bold-constructs                      t
         modus-themes-italic-constructs                    nil))
 
-(after! epg (fset 'epg-wait-for-status 'ignore))
-
 (after! projectile (setq projectile-switch-project-action 'projectile-dired))
 
 (after! git-gutter
