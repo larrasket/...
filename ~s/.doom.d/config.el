@@ -31,7 +31,7 @@
       ;; doom-monokai-pro
       ;; doom-monokai-ristretto
       ;; doom-monokai-spectrum
-      doom-theme                                        'doom-monokai-machine
+      doom-theme                                        (car (salih/get-random-theme 0))
       doom-modeline-icon                                t
       doom-modeline-height                              27
       display-line-numbers-type                         'relative
@@ -85,3 +85,5 @@
  '+erc                                  ; erc
  '+deep                                 ; other
  (unless (featurep 'tadwin) '+hooks))   ; hooks
+
+

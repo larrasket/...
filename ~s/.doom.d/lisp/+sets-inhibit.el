@@ -34,11 +34,12 @@
       ;; modeline
       doom-modeline-enable-word-count                   t
       doom-modeline-buffer-state-icon                   nil
-      doom-modeline-icon                                nil
+      doom-modeline-icon                                t
       all-the-icons-completion-mode                     nil
       global-hl-line-modes                              nil
       scroll-margin                                     4
       doom-modeline-mode-alist                          nil
+      doom-modeline-modal-icon                          nil
 
       ;; awqat
       awqat-mode-line-format
