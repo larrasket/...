@@ -339,7 +339,7 @@
             ,(concat "#+title: %^{daily-title}\n#+DATE: <%<%Y-%m-%d>>"
                      "\n#+FILETAGS: journal\n- tags :: [[roam:Journaling]] \n"))
            :unnarrowed t))
-        org-roam-database-connector             'sqlite
+        ;; org-roam-database-connector             'sqlite
         org-roam-dailies-directory              "journal/")
   (use-package! websocket :after org-roam)
   (use-package! org-roam-ui
