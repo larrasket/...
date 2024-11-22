@@ -6,27 +6,18 @@
   (custom-set-faces!
     '(font-lock-keyword-face  :weight bold :slant normal)
     '(font-lock-constant-face :weight bold :slant normal))
-  (custom-set-faces
-   ;; '(org-tag ((t (:weight bold))))
-   '(org-todo ((t (:weight bold))))
-   '(org-done ((t (:weight bold))))
-   '(org-agenda-done ((t (:strike-through nil))))
-   '(org-document-title ((t (:weight bold :height 2.0
-                             :family "JetBrains Mono"))))
-   '(org-level-1 ((t (:inherit outline-1 :height 1.45
-                      :weight bold :family "JetBrains Mono"))))
-   '(org-level-2 ((t (:inherit outline-2 :height 1.2  :weight bold :family
-                               "JetBrains Mono"))))
-   '(org-level-3 ((t (:inherit outline-3 :height 1.05 :weight bold :family
-                               "JetBrains Mono"))))
-   '(org-level-4 ((t (:inherit outline-4 :height 0.9  :weight bold :family
-                               "JetBrains Mono"))))
-   '(org-level-5 ((t (:inherit outline-5 :height 0.7  :weight bold :family
-                               "JetBrains Mono"))))
-   '(org-level-6 ((t (:inherit outline-6 :height 0.6  :weight bold :family
-                               "JetBrains Mono"))))
-   '(org-level-7 ((t (:inherit outline-7 :height 0.5  :weight bold :family
-                               "JetBrains Mono"))))))
+  (custom-set-faces!
+    '(org-todo :weight bold)
+    '(org-done :weight bold)
+    '(org-agenda-done :strike-through nil)
+    '(org-document-title :height 2.0)
+    '(org-level-1 :weight bold :height 1.25)
+    '(org-level-2 :weight bold)
+    '(org-level-3 :weight bold)
+    '(org-level-4 :weight bold)
+    '(org-level-5 :weight bold)
+    '(org-level-6 :weight bold)
+    '(org-level-7 :weight bold)))
 
 (after! doom-modeline
  (doom-modeline-def-segment salih/selection-info
