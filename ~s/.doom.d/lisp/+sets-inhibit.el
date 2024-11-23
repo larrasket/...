@@ -40,6 +40,7 @@
       scroll-margin                                     4
       doom-modeline-mode-alist                          nil
       doom-modeline-modal-icon                          nil
+      doom-modeline-lsp-icon                            nil
 
       ;; awqat
       awqat-mode-line-format
