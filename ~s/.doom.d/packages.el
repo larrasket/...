@@ -90,3 +90,7 @@
 (package! dired-preview)
 
 (unpin! parsebib)
+
+
+(package! git-gutter)
+(package! git-gutter-fringe)

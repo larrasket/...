@@ -178,7 +178,6 @@ things. Corinthians 13:4-7.")))
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)
 (salih/consult-preview-at-point)
-(when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
 
 (if (or (eq doom-theme 'modus-vivendi-tritanopia)
         (eq doom-theme 'modus-vivendi-deuteranopia)
@@ -207,5 +206,16 @@ things. Corinthians 13:4-7.")))
 (use-package! awqat
   :commands (awqat-display-prayer-time-mode
              awqat-times-for-day))
+
+(use-package git-gutter
+  :hook (prog-mode . git-gutter-mode)
+  :config
+  (setq git-gutter:update-interval 0.5))
+
+(use-package git-gutter-fringe
+  :config
+  (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
+  (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
 
 (provide '+hooks)
