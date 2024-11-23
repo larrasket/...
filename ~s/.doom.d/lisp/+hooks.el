@@ -25,7 +25,7 @@
   (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
   (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local)
   (setq org-hide-leading-stars t
-        fill-column 90
+        fill-column 80
         display-line-numbers-width 3)
   (setq-local truncate-lines t)
   (display-line-numbers-mode -1)
