@@ -33,7 +33,7 @@
       ;; doom-monokai-spectrum
       doom-theme                                        (car (salih/get-random-theme 0))
       doom-modeline-icon                                t
-      doom-modeline-height                              27
+      doom-modeline-height                              32
       display-line-numbers-type                         'relative
 
       ;; prayer time
@@ -86,5 +86,6 @@
  '+erc                                  ; erc
  '+deep                                 ; other
  (unless (featurep 'tadwin) '+hooks))   ; hooks
+
 
 

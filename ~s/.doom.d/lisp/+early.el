@@ -168,7 +168,6 @@ automatically previewed."
                    ef-trio-light
                    kaolin-bubblegum
                    ef-night
-
                    modus-vivendi-tritanopia kaolin-dark doom-nord
                    doom-opera
                    kaolin-aurora

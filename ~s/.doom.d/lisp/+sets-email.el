@@ -76,7 +76,7 @@
 
   ;; [2024-05-02 Thu 07:00] I find the look with doom theme quite annoying.
   (when (doom-theme?)
-    (custom-set-faces
+    (custom-set-faces!
      '(mu4e-highlight-face ((t (:inherit mu4e-header-face :background nil))))))
   (mu4e-alert-enable-mode-line-display))
 
