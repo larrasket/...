@@ -203,14 +203,17 @@ things. Corinthians 13:4-7.")))
     ;; themes.
     ;; (doom-theme?)
 
+
 (use-package! awqat
   :commands (awqat-display-prayer-time-mode
              awqat-times-for-day))
 
+(when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
+
 (use-package git-gutter
   :hook (prog-mode . git-gutter-mode)
   :config
-  (setq git-gutter:update-interval 0.5))
+  (setq git-gutter:update-interval 3))
 
 (use-package git-gutter-fringe
   :config
