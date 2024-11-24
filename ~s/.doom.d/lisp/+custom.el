@@ -4,6 +4,7 @@
   (require 'org-roam-protocol)
   (require 'org-download)
   (custom-set-faces!
+    '(+fold-hideshow-folded-face :box nil)
     '(font-lock-keyword-face  :weight bold :slant normal)
     '(font-lock-constant-face :weight bold :slant normal))
   (custom-set-faces!
