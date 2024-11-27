@@ -122,7 +122,7 @@
 (add-hook 'org-roam-find-file-hook      #'git-auto-commit-mode)
 (add-hook 'after-make-frame-functions   (lambda (frame)
                                           (with-selected-frame frame
-                                            (if (doom-theme?)
+                                            (if (doom-theme-p?)
                                                 (set-fringe-style '(8 . 8))
                                               (set-fringe-style '(3 . 1)))
                                             (salih/keyboard-config))))
@@ -203,7 +203,7 @@ things. Corinthians 13:4-7.")))
       t))
     ;; usually I disable it only w/ doom
     ;; themes.
-    ;; (doom-theme?)
+    ;; (doom-theme-p?)
 
 
 (use-package! awqat

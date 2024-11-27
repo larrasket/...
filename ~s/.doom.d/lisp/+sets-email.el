@@ -75,7 +75,7 @@
                                            :function mu4e-fast-folding-info)))
 
   ;; [2024-05-02 Thu 07:00] I find the look with doom theme quite annoying.
-  (when (doom-theme?)
+  (when (doom-theme-p?)
     (custom-set-faces!
       '(mu4e-highlight-face :inherit mu4e-header-face :background nil)))
   (mu4e-alert-enable-mode-line-display))

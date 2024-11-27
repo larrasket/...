@@ -13,7 +13,10 @@
 (defmacro s/require (&rest packages)
   `(progn ,@(mapcar (lambda (pkg) `(if ,pkg (require ,pkg))) packages)))
 
-(defun doom-theme? () (string-prefix-p "doom-" (symbol-name doom-theme)))
+(defun doom-theme-p? ()
+  (or
+   (string-prefix-p "kaolin-" (symbol-name doom-theme))
+   (string-prefix-p "doom-" (symbol-name doom-theme))))
 
 (defun salih/get-random-theme (inc)
   (let* ((current-day (+ inc (string-to-number (format-time-string "%d"))))
