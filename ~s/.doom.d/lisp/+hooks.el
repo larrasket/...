@@ -161,6 +161,8 @@ things. Corinthians 13:4-7.")))
              #'doom-highlight-non-default-indentation-h)
 
 
+(remove-hook! '+popup-buffer-mode-hook #'+popup-set-modeline-on-enable-h)
+(remove-hook! '+popup-buffer-mode-hook #'+popup-unset-modeline-on-enable-h)
 
 
 

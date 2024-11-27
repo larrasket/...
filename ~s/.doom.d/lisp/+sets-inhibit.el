@@ -158,7 +158,6 @@
       cocaine-show-column-info                          nil
       cocaine-show-misc-info                            t
       cocaine-show-processes-info                       t
-      +popup-buffer-mode-hook                           nil
 
       ;; translation
       gt-langs                                          `("en" "ar")
