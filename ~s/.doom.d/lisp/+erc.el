@@ -8,7 +8,7 @@
       :sasl-strict t
       :sasl-username "lr0"
       :sasl-password salih/nickserv-password
-      :channels ("##arabic" "#emacs")))
+      :channels ("##arabic" "##philosophy")))
 
   (circe-set-display-handler "JOIN" (lambda (&rest ignored) nil))
   (circe-set-display-handler "PART" (lambda (&rest ignored) nil))
