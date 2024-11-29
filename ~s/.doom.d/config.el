@@ -23,15 +23,6 @@
       ;; [2024-09-01 Sun 00:43] `doom-rouge' is an amazing dark theme
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark' too.
       ;; [2024-09-04 Wed 02:03] `ef-maris-dark' too.
-      ;; doom-opera
-      ;; doom-rouge
-      ;; doom-molokai
-      ;; doom-badger
-      ;; doom-monokai-octagon
-      ;; doom-monokai-pro
-      ;; doom-monokai-ristretto
-      ;; doom-monokai-spectrum
-      ;; kaolin-temple
       doom-theme                                        (car (salih/get-random-theme 0))
       doom-modeline-icon                                t
       doom-modeline-height                              32
