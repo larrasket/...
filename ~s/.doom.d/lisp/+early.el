@@ -19,10 +19,12 @@
    (string-prefix-p "doom-" (symbol-name doom-theme))))
 
 (defun salih/get-random-theme (inc)
-  (let* ((current-day (+ inc (string-to-number (format-time-string "%d"))))
+  "Get a different theme every week based on the week number of the year."
+  (let* ((current-week (+ inc (string-to-number (format-time-string "%U"))))
          (list-length (length salih/prefered-themes))
-         (selected (nth (mod current-day list-length) salih/prefered-themes)))
+         (selected (nth (mod current-week list-length) salih/prefered-themes)))
     selected))
+
 
 (defun salih/get-random-nour-theme (inc)
   (let* ((salih/prefered-themes '((ef-frost . nour)
