@@ -49,7 +49,6 @@
 (package! vertico)                      ; not sure why I unpin this
 
 
-(package! company-box)                  ; makes it look better
 
 
 ;; school
