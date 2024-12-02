@@ -98,7 +98,6 @@ automatically previewed."
                                 (ef-cherie                . dark)
                                 (ef-bio                   . dark)
                                 (doom-rouge               . dark)
-                                (doom-feather-dark        . dark)
                                 (ef-summer                . nour)
                                 (ef-melissa-dark          . dark)
                                 (ef-duo-dark              . dark)

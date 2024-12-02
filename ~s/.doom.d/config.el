@@ -7,12 +7,12 @@
 
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
+      user-first-name                                   "Salih"
       user-stmp-server                                  "mail.gmx.com"
       user-stmp-port                                    587
       user-short-username                               "lr0"
       user-config-repo-path                             "~/configs/~s"
       salih/blog-content-path                           "~/blog/content"
-      user-first-name                                   "Salih"
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
       ;; appearanc
@@ -23,7 +23,7 @@
       ;; [2024-09-01 Sun 00:43] `doom-rouge' is an amazing dark theme
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark' too.
       ;; [2024-09-04 Wed 02:03] `ef-maris-dark' too.
-      doom-theme                                        (car (salih/get-random-theme 0))
+      doom-theme                                        (car (salih/get-random-theme 1))
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -78,4 +78,3 @@
  '+erc                                  ; erc
  '+deep                                 ; other
  (unless (featurep 'tadwin) '+hooks))   ; hooks
-
