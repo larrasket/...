@@ -2,7 +2,7 @@
 (doom! :input
        :completion
        vertico
-       ;; company
+       company
        (corfu +icons)
 
        :ui
