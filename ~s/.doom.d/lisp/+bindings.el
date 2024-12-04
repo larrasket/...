@@ -46,7 +46,17 @@
 (map!
  :map clojure-mode-map
  :niv
- "C-9" #'lispy-wrap-round)
+ "C-9"        #'lispy-wrap-round
+ "M-RET"      #'eglot-code-actions
+ "M-<return>" #'eglot-code-actions)
+
+(map!
+ :map lispy-mode-map
+ :niv
+ "C-9"        #'lispy-wrap-round
+ "M-RET"      #'eglot-code-actions
+ "M-<return>" #'eglot-code-actions)
+
 
 
 (general-define-key
