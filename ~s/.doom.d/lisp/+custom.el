@@ -198,9 +198,11 @@ Respects `doom-modeline-enable-word-count'."
         corfu-preselect            'directory))
 
 (after! corfu-popupinfo
-  (setq corfu-popupinfo-delay      '(0.2 . 0.2)
-        corfu-min-width            30
-        corfu-max-width            80))
+  (setq
+   corfu-auto-delay           0.3
+   ;; corfu-popupinfo-delay      '(0.2 . 0.2)
+   corfu-min-width            30
+   corfu-max-width            80))
 
 (after! company
   (remove-hook! 'doom-first-input-hook #'global-company-mode))

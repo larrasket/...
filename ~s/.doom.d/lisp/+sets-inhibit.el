@@ -150,8 +150,8 @@
       breadcrumb-project-crumb-separator                "/"
       breadcrumb-imenu-max-length                       1.0
       breadcrumb-imenu-crumb-separator                  " > "
-      helm-ag-show-status-function
-      #'doom-modeline-set-helm-modeline
+      breadcrumb-idle-time                              5
+      helm-ag-show-status-function             #'doom-modeline-set-helm-modeline
       mode-line-format                                  nil
 
       cocaine-show-buffer-position                      nil
