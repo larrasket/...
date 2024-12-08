@@ -28,11 +28,7 @@
         fill-column 80
         display-line-numbers-width 3)
   (setq-local truncate-lines t)
-  (display-line-numbers-mode -1)
-  (corfu-mode -1)
-  (company-mode 1))
-
-(add-hook! 'mu4e-compose-mode-hook (corfu-mode -1) (company-mode 1))
+  (display-line-numbers-mode -1))
 
 (add-hook! 'nov-mode-hook
   (defface tmp-buffer-local-face
@@ -112,7 +108,6 @@
 
 
 (add-hook 'csv-mode-hook                #'csv-align-mode)
-(add-hook 'company-mode-hook            #'company-box-mode)
 (add-hook 'after-init-hook              #'global-flycheck-mode)
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
 (add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
