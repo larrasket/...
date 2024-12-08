@@ -78,3 +78,16 @@
  '+erc                                  ; erc
  '+deep                                 ; other
  (unless (featurep 'tadwin) '+hooks))   ; hooks
+(setq jit-lock-stealth-time 1.25)
+(setq jit-lock-stealth-nice 0.5)
+(setq jit-lock-chunk-size 4096)
+
+(setq jit-lock-defer-time 0)
+(with-eval-after-load 'evil
+  (add-hook 'evil-insert-state-entry-hook
+    (lambda ()
+      (setq jit-lock-defer-time 0.25)) nil t)
+  (add-hook 'evil-insert-state-exit-hook
+    (lambda ()
+      (setq jit-lock-defer-time 0)) nil t))
+
