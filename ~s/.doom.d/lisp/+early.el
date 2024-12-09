@@ -100,7 +100,7 @@ automatically previewed."
                                 (doom-rouge               . dark)
                                 (ef-summer                . nour)
                                 (ef-melissa-dark          . dark)
-                                (ef-duo-dark              . dark)
+                                ;; (ef-duo-dark              . dark)
                                 (ef-spring                . nour)
                                 (kaolin-valley-dark       . dark)
                                 (ef-dark                  . dark)
