@@ -1227,11 +1227,16 @@ without history in the file name."
   (call-interactively #'org-roam-dailies-capture-today))
 
 (defun salih/read-al-akhbar ()
-  (when (and (time-equal-p (awqat--today) date) (/= (string-to-number
-                                                     (format-time-string
-                                                      "%u")) 7))
-    (format "Read 00:30am [[https://al-akhbar.com/Editions/%s][Today's Akhbar]]"
-            (format-time-string "%Y/%m/%d"))))
+  (let ((edition-number 5375)
+        (start-date (encode-time 0 0 0 9 12 2024)))
+    (when (and (time-equal-p (awqat--today) date)
+               (/= (string-to-number (format-time-string "%u")) 7))
+      (let* ((days-since-start (floor (time-to-number-of-days
+                                       (time-subtract (current-time) start-date))))
+             (current-edition (+ edition-number days-since-start)))
+        (format "Read 00:30am [[https://al-akhbar.com/newspaper/%s][Today's Akhbar]]"
+                current-edition)))))
+
 
 (defun salih/toggle-stats-on (&rest _)
   (setq org-log-into-drawer "STATS"))
