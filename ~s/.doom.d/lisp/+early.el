@@ -102,7 +102,7 @@ automatically previewed."
                                 (ef-melissa-dark          . dark)
                                 ;; (ef-duo-dark              . dark)
                                 (ef-spring                . nour)
-                                (kaolin-valley-dark       . dark)
+                                ;; (kaolin-valley-dark       . dark)
                                 (ef-dark                  . dark)
                                 (ef-trio-dark             . dark)
                                 (doom-rouge               . dark)
