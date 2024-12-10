@@ -67,6 +67,44 @@ block selection."
                          (format "%dC" (- end beg))))
                   (doom-modeline-spc)))
         'face 'doom-modeline-emphasis))))
+ (doom-modeline-def-segment salih/irc
+  "A lightweight notification icon for unread IRC buffers."
+  (when (and doom-modeline-irc
+             (doom-modeline--segment-visible 'irc))
+    (let* ((buffers (doom-modeline--get-buffers))
+           (number (length buffers)))
+      (when (> number 0)
+        (let ((notification-icon
+               (propertize (doom-modeline-icon 'mdicon
+                                               "nf-md-message_processing"
+                                               "🗊"
+                                               "#"
+                                               :face 'doom-modeline-notification)
+                           'help-echo (format "IRC Notifications: %d unread buffer(s)"
+                                              number)
+                           'mouse-face 'doom-modeline-highlight
+                           'local-map (let ((map (make-sparse-keymap)))
+                                        (cond
+                                         ((doom-modeline--circe-p)
+                                          (define-key map [mode-line mouse-1]
+                                            #'tracking-previous-buffer)
+                                          (define-key map [mode-line mouse-3]
+                                            #'tracking-next-buffer))
+                                         ((doom-modeline--erc-p)
+                                          (define-key map [mode-line mouse-1]
+                                            #'erc-switch-to-buffer)
+                                          (define-key map [mode-line mouse-3]
+                                            #'erc-track-switch-buffer))
+                                         ((doom-modeline--rcirc-p)
+                                          (define-key map [mode-line mouse-1]
+                                            #'rcirc-switch-to-server-buffer)
+                                          (define-key map [mode-line mouse-3]
+                                            #'rcirc-next-active-buffer)))
+                                        map)))
+              (unread-count (propertize (number-to-string number)
+                                        'face 'doom-modeline-notification))
+              (sep (doom-modeline-spc)))
+          (concat sep notification-icon sep unread-count sep))))))
 
  (doom-modeline-def-segment salih/word-count
    "The buffer word count.
@@ -88,7 +126,7 @@ Respects `doom-modeline-enable-word-count'."
    '(salih/selection-info matches
      buffer-position compilation
      objed-state misc-info persp-name
-     battery grip irc
+     battery grip salih/irc
      mu4e gnus
      github debug repl lsp minor-modes
      input-method indent-info
@@ -225,6 +263,10 @@ Respects `doom-modeline-enable-word-count'."
     ;; '(font-lock-variable-name-face :weight normal :foreground "#b3e5fc")
     ;; '(font-lock-variable-name-face :weight normal :foreground "#61cdff")
     '(font-lock-variable-name-face :weight normal :foreground "#b0e0e6")))
+
+
+
+
 
 
 (put 'salih/modeline-major-mode 'risky-local-variable t)
