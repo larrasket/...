@@ -9,16 +9,20 @@
       :sasl-username "lr0"
       :sasl-password salih/nickserv-password
       :channels ("##arabic" "##philosophy")))
-
-  (circe-set-display-handler "JOIN" (lambda (&rest ignored) nil))
-  (circe-set-display-handler "PART" (lambda (&rest ignored) nil))
-  (circe-set-display-handler "MODE" (lambda (&rest ignored) nil))
-  (circe-set-display-handler "QUIT" (lambda (&rest ignored) nil))
+;; -                                                          "324"  ; modes
+;; -                                                          "329"  ; channel creation date
+;; -                                                          "332"  ; topic notice
+;; -                                                          "333"  ; who set the topic
+;; -                                                          "353") ; Names notice
+  ;; (circe-set-display-handler "JOIN" (lambda (&rest ignored) nil))
+  ;; (circe-set-display-handler "PART" (lambda (&rest ignored) nil))
+  ;; (circe-set-display-handler "MODE" (lambda (&rest ignored) nil))
+  ;; (circe-set-display-handler "QUIT" (lambda (&rest ignored) nil))
   (circe-set-display-handler "324"  (lambda (&rest ignored) nil))
   (circe-set-display-handler "329"  (lambda (&rest ignored) nil))
-  (circe-set-display-handler "332"  (lambda (&rest ignored) nil))
+  ;; (circe-set-display-handler "332"  (lambda (&rest ignored) nil))
   (circe-set-display-handler "333"  (lambda (&rest ignored) nil))
-  (circe-set-display-handler "353"  (lambda (&rest ignored) nil))
+  ;; (circe-set-display-handler "353"  (lambda (&rest ignored) nil))
   (require 'lui-autopaste)
   (add-hook 'circe-channel-mode-hook 'enable-lui-autopaste)
 
