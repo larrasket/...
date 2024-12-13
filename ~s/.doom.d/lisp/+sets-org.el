@@ -4,10 +4,9 @@
   (setq org-id-method                                           'org
         org-log-into-drawer                                     "STATS"
         org-log-done                                            nil
-        org-roam-ui-open-on-start                               nil
         org-agenda-skip-scheduled-if-done                       nil
         org-use-tag-inheritance                                 t
-        org-agenda-block-separator                              9472
+        ;; org-agenda-block-separator                              9472
         org-element-use-cache                                   t
         org-noter-auto-save-last-location                       t
         org-startup-folded                                      'show2levels
@@ -25,10 +24,7 @@
         org-agenda-dim-blocked-tasks                            'invisible
         org-tags-column                                         70
         org-agenda-sticky                                       t
-        org-plantuml-jar-path
-        (expand-file-name "~/configs/~s/assets/plantuml-1.2024.3.jar")
-        org-crypt-key
-        user-mail-address
+        org-crypt-key                                           user-mail-address
         org-todo-keywords
         '((sequence
            "TODO(t)" "DAILY(e)" "PROJ(p)"
@@ -46,7 +42,6 @@
           ("PROJ"       . +org-todo-project)
           ("NO"         . +org-todo-cancel)
           ("KILL"       . +org-todo-cancel))
-
         org-hide-leading-stars            't
         org-tags-column                   -80
         org-archive-location              "%s_archive.org::"
@@ -391,6 +386,4 @@
 
 
 
-(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
 (provide '+sets-org)

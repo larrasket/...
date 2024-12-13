@@ -79,13 +79,6 @@
  '+deep                                 ; other
  (unless (featurep 'tadwin) '+hooks))   ; hooks
 
-
-
-
-
-
-
-
 ;; Experimental. I just copied it from the internet.
 (setq jit-lock-stealth-time 1.25
       jit-lock-chunk-size 4096
