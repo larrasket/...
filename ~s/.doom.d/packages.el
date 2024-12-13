@@ -93,3 +93,5 @@
 
 (package! git-gutter)
 (package! git-gutter-fringe)
+
+(package! jinx)

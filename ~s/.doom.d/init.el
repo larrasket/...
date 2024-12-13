@@ -37,7 +37,7 @@
 
        :checkers
        (syntax +childframe)
-       (spell  +flyspell)
+       ;; (spell  +flyspell)
 
        :tools
        biblio

@@ -216,6 +216,12 @@
 (map!
  :map org-mode-map
  :after org
+ :nm
+ "z z"      #'jinx-correct)
+
+(map!
+ :map org-mode-map
+ :after org
  :v
  "C-c C-t" #'gt-do-translate)
 
@@ -554,3 +560,8 @@
   (kbd "q") 'org-fc-review-quit)
 
 (provide '+bindings)
+
+(map!
+ :map jinx-overlay-map
+ :nvim
+ "RET" #'jinx-correct)
