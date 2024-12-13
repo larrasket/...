@@ -22,7 +22,7 @@
   (circe-set-display-handler "329"  (lambda (&rest ignored) nil))
   ;; (circe-set-display-handler "332"  (lambda (&rest ignored) nil))
   (circe-set-display-handler "333"  (lambda (&rest ignored) nil))
-  ;; (circe-set-display-handler "353"  (lambda (&rest ignored) nil))
+  (circe-set-display-handler "353"  (lambda (&rest ignored) nil))
   (require 'lui-autopaste)
   (add-hook 'circe-channel-mode-hook 'enable-lui-autopaste)
 

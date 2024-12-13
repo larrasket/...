@@ -159,6 +159,8 @@
       cocaine-show-misc-info                            t
       cocaine-show-processes-info                       t
 
+      gcmh-high-cons-threshold                          (* 10 gcmh-high-cons-threshold)
+
       ;; translation
       gt-langs                                          `("en" "ar")
       gt-default-translator

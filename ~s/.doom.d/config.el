@@ -1,7 +1,7 @@
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
-(require 'go-translate)                 ; define trnaslation engine in config.el
+(require 'go-translate)                 ; define translation engine in config.el
 (require 'doom-modeline)                ; I use it for segment definition only
 (require 'cocaine-line)                 ; my modeline.
 
@@ -15,7 +15,7 @@
       salih/blog-content-path                           "~/blog/content"
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
-      ;; appearanc
+      ;; appearance
       ;; font `:size' value of 29 is prefect for filming
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")'
       ;; or just remove `:size'.
@@ -42,7 +42,7 @@
       +org-capture-todo-file                            "~/roam/main/life.org"
 
       ;; this option is useful when you are up after 00:00. set 0 to the value
-      ;; yoe sleep at. if you sleep at 02:00 it should be 2, if you sleep at
+      ;; you sleep at. if you sleep at 02:00 it should be 2, if you sleep at
       ;; 02:30 it should be 3 and so on. Org agenda for the day will not overlap
       ;; until your day is done.
       ;; [2024-08-07 Wed 19:43] currently I sleep at 07:00.
@@ -78,16 +78,23 @@
  '+erc                                  ; erc
  '+deep                                 ; other
  (unless (featurep 'tadwin) '+hooks))   ; hooks
-(setq jit-lock-stealth-time 1.25)
-(setq jit-lock-stealth-nice 0.5)
-(setq jit-lock-chunk-size 4096)
 
-(setq jit-lock-defer-time 0)
+
+
+
+
+
+
+
+;; Experimental. I just copied it from the internet.
+(setq jit-lock-stealth-time 1.25
+      jit-lock-chunk-size 4096
+      jit-lock-defer-time 0)
+
 (with-eval-after-load 'evil
   (add-hook 'evil-insert-state-entry-hook
-    (lambda ()
-      (setq jit-lock-defer-time 0.25)) nil t)
+            (lambda ()
+              (setq jit-lock-defer-time 0.25)) nil t)
   (add-hook 'evil-insert-state-exit-hook
     (lambda ()
       (setq jit-lock-defer-time 0)) nil t))
-
