@@ -20,9 +20,10 @@
 
       ;; fonts
       doom-font
-      (concat
-       "Pragmasevka:pixelsize=16"
-       ":antialias=true:hinting=true:autohint=false:hintstyle=3")
+      (font-spec :family "Pragmasevka" :size 18)
+      ;; (concat
+      ;;  "Pragmasevka:pixelsize=17"
+      ;;  ":antialias=true:hinting=true:autohint=false:hintstyle=3")
 
       doom-symbol-font
       (concat
