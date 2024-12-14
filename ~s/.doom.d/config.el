@@ -72,7 +72,7 @@
  '+sets-org                             ; org mode settings
  '+sets-inhibit                         ; other settings
  '+helper                               ; functions
- '+advice                               ; advices
+ '+advice                               ; advice
  '+bindings                             ; personal key bindings
  '+custom                               ; specials
  '+erc                                  ; erc
