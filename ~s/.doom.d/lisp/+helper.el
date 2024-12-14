@@ -1405,4 +1405,15 @@ check."
   (when-let ((id (org-entry-get nil "ID")))
     (org-entry-put nil "CUSTOM_ID" id)))
 
+(defun salih/org-align-tags-in-directory (dir)
+  "Re-align tags in all Org files under the given directory DIR."
+  (interactive "DDirectory: ")
+  (let ((org-files (directory-files-recursively dir "\\.org$")))
+    (dolist (file org-files)
+      (with-current-buffer (find-file-noselect file)
+        (org-show-all)
+        (org-align-tags t)
+        (save-buffer)
+        (kill-buffer)))))
+
 (provide '+helper)

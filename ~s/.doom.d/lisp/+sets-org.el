@@ -25,7 +25,7 @@
         org-clock-string-limit                                  7
         org-agenda-dim-blocked-tasks                            'invisible
         org-tags-column                                         70
-        org-agenda-sticky                                       t
+        ;; org-agenda-sticky                                       t
         org-crypt-key                                           user-mail-address
         org-todo-keywords
         '((sequence
