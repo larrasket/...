@@ -24,7 +24,6 @@
         ;; org-mode making the string customizable.
         org-clock-string-limit                                  7
         org-agenda-dim-blocked-tasks                            'invisible
-        org-tags-column                                         70
         ;; org-agenda-sticky                                       t
         org-crypt-key                                           user-mail-address
         org-todo-keywords
@@ -45,7 +44,7 @@
           ("NO"         . +org-todo-cancel)
           ("KILL"       . +org-todo-cancel))
         org-hide-leading-stars            't
-        org-tags-column                   -80
+        org-tags-column                   70
         org-archive-location              "%s_archive.org::"
         org-agenda-start-on-weekday       nil
         org-agenda-start-day              "0d"
