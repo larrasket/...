@@ -990,8 +990,9 @@ Version 2015-07-30"
 
 (defun salih/mu4e-go-to-url ()
   (interactive)
-  (setq-local browse-url-browser-function 'salih/open-url-in-chrome)
-  (call-interactively #'mu4e-view-go-to-url))
+  (let ((browse-url-browser-function 'salih/open-url-in-chrome))
+    (call-interactively #'mu4e-view-go-to-url)))
+
 
 (defun salih/org-ql-view--format-element (orig-fun &rest args)
   "This function will intercept the original function and

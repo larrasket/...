@@ -123,6 +123,9 @@
                                             (salih/keyboard-config))))
 
 
+(add-hook! 'eww-mode-hook (buffer-face-set '(:family "PragmataPro")))
+
+
 (add-hook 'org-capture-prepare-finalize-hook 'salih/org-roam-capture-create-id)
 
 (if (featurep 'nov-xwidget)

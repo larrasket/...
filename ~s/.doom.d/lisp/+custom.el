@@ -248,6 +248,9 @@ Respects `doom-modeline-enable-word-count'."
 (after! org
   (custom-set-faces! '(org-done :strike-through nil :weight bold)))
 
+(after! eww
+  (set-popup-rule! "^\\*eww\\*" :ignore t))
+
 (custom-set-faces!
    '(font-lock-keyword-face :weight bold :slant normal))
 

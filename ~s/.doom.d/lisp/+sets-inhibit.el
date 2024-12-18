@@ -117,6 +117,9 @@
       salih/prefix-global                               "C-x "
       salih/prefix-mode                                 "C-c "
       shr-inhibit-images                                nil
+      shr-use-fonts                                     nil
+      shr-width                                         70
+
 
       ;; epa? what does that mean. I've no idea about this.
       salih/vulpea-show-full                            nil
@@ -159,6 +162,8 @@
       cocaine-show-column-info                          nil
       cocaine-show-misc-info                            t
       cocaine-show-processes-info                       t
+
+      browse-url-browser-function                       'eww-browse-url
 
       gcmh-high-cons-threshold                          (* 10 gcmh-high-cons-threshold)
 
