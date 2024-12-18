@@ -1226,16 +1226,26 @@ without history in the file name."
   (setq salih/org-roam-dailies-capture-p t)
   (call-interactively #'org-roam-dailies-capture-today))
 
+(defun salih/fetch-first-post-url ()
+  "Fetch the first post's URL from the API."
+  (let
+      ((url-request-method "GET")
+       (api-url
+        "https://api.al-akhbar.com/posts/todays-newsletter?&platform=headless"))
+    (with-temp-buffer
+      (url-insert-file-contents api-url) ;; Fetch the API response
+      (let* ((json-object-type 'alist)   ;; Parse JSON as an alist
+             (parsed-data (json-read-from-string (buffer-string)))
+             (widgets (alist-get 'widgets parsed-data)) ;; Get 'widgets'
+             (first-widget (aref widgets 0))
+             (posts (alist-get 'posts first-widget))
+             (first-post (aref posts 0)))
+        (alist-get 'url first-post)))))
+
 (defun salih/read-al-akhbar ()
-  (let ((edition-number 5375)
-        (start-date (encode-time 0 0 0 9 12 2024)))
-    (when (and (time-equal-p (awqat--today) date)
-               (/= (string-to-number (format-time-string "%u")) 7))
-      (let* ((days-since-start (floor (time-to-number-of-days
-                                       (time-subtract (current-time) start-date))))
-             (current-edition (+ edition-number days-since-start)))
-        (format "Read 00:30am [[https://al-akhbar.com/newspaper/%s][Today's Akhbar]]"
-                current-edition)))))
+  ;; Currently, this does not really work.
+  (format "Read 00:30am [[%s][Today's Akhbar]]"
+          (salih/fetch-first-post-url)))
 
 
 (defun salih/toggle-stats-on (&rest _)
