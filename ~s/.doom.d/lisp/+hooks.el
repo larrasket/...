@@ -120,7 +120,12 @@
                                             (if (doom-theme-p?)
                                                 (set-fringe-style '(8 . 8))
                                               (set-fringe-style '(3 . 1)))
-                                            (salih/keyboard-config))))
+                                            (salih/keyboard-config)
+                                            (set-fontset-font "fontset-default"
+                                                              'arabic
+                                                              (font-spec
+                                                               :family
+                                                               "Tahoma")))))
 
 
 (add-hook! 'eww-mode-hook (buffer-face-set '(:family "PragmataPro")))

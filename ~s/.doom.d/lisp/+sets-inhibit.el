@@ -27,7 +27,7 @@
 
       doom-symbol-font
       (concat
-       "Amiri UI"
+       "Tahoma"
        ":pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3")
       doom-variable-pitch-font
       (font-spec :family "Arimo")
