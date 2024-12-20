@@ -248,6 +248,21 @@ Respects `doom-modeline-enable-word-count'."
 (after! org
   (custom-set-faces! '(org-done :strike-through nil :weight bold)))
 
+(after! org
+  (org-link-set-parameters
+   "eww"
+   :follow (lambda (link) (eww link))
+   :store (lambda ()
+            (when (eq major-mode 'eww-mode)
+              (let ((url (eww-current-url))
+                    (title (or (plist-get eww-data :title) "No title")))
+                (unless url
+                  (error "No URL found in the current eww buffer"))
+                (org-store-link-props
+                 :type "eww"
+                 :link url
+                 :description title))))))
+
 (after! eww
   (set-popup-rule! "^\\*eww\\*" :ignore t))
 

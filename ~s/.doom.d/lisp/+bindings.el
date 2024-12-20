@@ -36,8 +36,8 @@
 
 (map!
  :map eww-mode-map
- :n
- "C" #'eww-browse-with-external-browser)
+ "C" #'eww-browse-with-external-browser
+ "C-c C-c" #' salih/eww-org-store-and-capture)
 
 (evil-define-key 'normal clojure-mode-map (kbd "K") #'cider-doc)
 
@@ -559,9 +559,15 @@
   (kbd "s") 'org-fc-review-suspend-card
   (kbd "q") 'org-fc-review-quit)
 
-(provide '+bindings)
+(map!
+ :map flyspell-mouse-map
+ "RET"    'jinx-correct
+ [return] 'jinx-correct
+ [mouse-1] #'flyspell-correct-at-point)
 
 (map!
- :map jinx-overlay-map
- :nvim
- "RET" #'jinx-correct)
+ :map mu4e-view-active-urls-keymap
+ "RET"    'mu4e--view-browse-url-from-binding
+ [return] 'mu4e--view-browse-url-from-binding)
+
+(provide '+bindings)

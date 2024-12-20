@@ -1148,6 +1148,25 @@ it with org)."
   (call-interactively 'org-store-link)
   (org-capture nil "f"))
 
+(defun salih/eww-org-store-and-capture ()
+  "Store a link to the current webpage in `eww-mode` and capture it with org."
+  (interactive)
+  (if (eq major-mode 'eww-mode)
+      (let ((url (eww-current-url))
+            (title (plist-get eww-data :title)))
+        (unless url
+          (error "No URL found for this eww buffer"))
+        ;; Manually set the Org link properties
+        (org-store-link-props
+         :type "eww"
+         :link url
+         :description title)
+        ;; Store the link and invoke the capture template
+        (call-interactively 'org-store-link)
+        (org-capture nil "f"))
+    (error "Not in `eww-mode`")))
+
+
 (defun salih/org-roam-capture-create-id ()
   "Create id for captured note and add it to org-roam-capture-template."
   (when (and (not org-note-abort)
@@ -1426,5 +1445,22 @@ check."
         (org-align-tags t)
         (save-buffer)
         (kill-buffer)))))
+
+(defun salih/eww-org-store-and-capture ()
+  "Store a link to the current webpage in `eww-mode` and capture it with org."
+  (interactive)
+  (let ((url (eww-current-url)
+            (title (plist-get eww-data :title)))
+        (unless url
+          (error "No URL found in the current eww buffer"))
+        ;; Manually set link properties for Org
+        (org-store-link-props
+         :type "eww"
+         :link url
+         :description (or title url))
+        ;; Call org-store-link and capture
+        (call-interactively 'org-store-link)
+        (org-capture nil "f"))))
+
 
 (provide '+helper)
