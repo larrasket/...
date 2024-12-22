@@ -29,8 +29,9 @@
       display-line-numbers-type                         'relative
 
       ;; prayer time
-      calendar-latitude                                 30.0
-      calendar-longitude                                31.2
+      ;; not my real coordinates, just to save you time.
+      calendar-latitude                                 29.392691
+      calendar-longitude                                30.828360
       salih/awqat-show-mode-line                        t
 
       ;; org
@@ -47,7 +48,7 @@
       ;; until your day is done.
       ;; [2024-08-07 Wed 19:43] currently I sleep at 07:00.
       ;; [2024-08-08 Wed 23:41] Not anymore.
-      ;; org-extend-today-until                            7
+      ;; org-extend-today-until                            6
 
       ;; other
       auto-save-no-message                              t
