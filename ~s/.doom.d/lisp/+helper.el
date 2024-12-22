@@ -1262,10 +1262,19 @@ without history in the file name."
              (first-post (aref posts 0)))
         (alist-get 'url first-post)))))
 
+(defun salih/today ()
+  "Return today's date in the format (M D Y)."
+  (let ((time-lst (decode-time)))
+    (list (decoded-time-month time-lst)
+          (decoded-time-day time-lst)
+          (decoded-time-year time-lst))))
+
 (defun salih/read-al-akhbar ()
   ;; Currently, this does not really work.
-  (format "Read 00:30am [[%s][Today's Akhbar]]"
-          (salih/fetch-first-post-url)))
+  (when (time-equal-p (salih/today))
+    (format "Read 00:30am [[%s][Today's Akhbar]]"
+                       (salih/fetch-first-post-url))))
+
 
 
 (defun salih/toggle-stats-on (&rest _)
