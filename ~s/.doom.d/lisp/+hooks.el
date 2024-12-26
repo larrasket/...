@@ -42,10 +42,16 @@
 
 (add-hook!
  'prog-mode-hook      (setq prettify-symbols-alist '(("lambda" . 923))))
+
 (add-hook! 'python-mode-hook    (flycheck-mode -1))
+
 (add-hook!
- 'pdf-view-mode-hook  (setq-local evil-normal-state-cursor (list nil)))
+ 'pdf-view-mode-hook  (setq-local evil-normal-state-cursor (list nil)
+                                  browse-url-browser-function
+                                  'salih/open-url-in-chrome))
+
 (add-hook! 'mu4e-headers-mode-hook (visual-line-mode -1))
+
 (add-hook!
  'org-roam-capture-new-node-hook (setq roam-titles
                                        (salih/org-roam-get-node-titles

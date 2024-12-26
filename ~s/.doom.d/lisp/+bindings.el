@@ -36,6 +36,7 @@
 
 (map!
  :map eww-mode-map
+ :nvim
  "C" #'eww-browse-with-external-browser
  "C-c C-c" #' salih/eww-org-store-and-capture)
 
