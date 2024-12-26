@@ -26,7 +26,7 @@ set highlight-color "#5E81AC"
 set highlight-active-color "#88C0D0"
 set notification-fg "#000000"
 set notification-bg "#5E81AC"
-set font "Iosevka Term"
+#set font "Iosevka Term"
 set statusbar-fg "#000000"
 #map <C-a> feedkeys ":exec evince %<Return>"
 map i recolor
