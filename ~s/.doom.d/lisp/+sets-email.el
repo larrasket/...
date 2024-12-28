@@ -74,6 +74,18 @@
                                            :shortname ""
                                            :function mu4e-fast-folding-info)))
 
+  ;; ignore archive and rss in unread query.
+  (let ((bookmark (seq-find (lambda (b) (string= (plist-get b :name)
+                                               "Unread messages"))
+                          mu4e-bookmarks)))
+   (when bookmark
+     (plist-put bookmark :query (concat
+                                 "flag:unread AND NOT flag:trashed"
+                                 " AND NOT maildir:"
+                                 "\"" mu4e-rss-folder "\""
+                                 " AND NOT maildir:"
+                                 "\"" mu4e-refile-folder "\""))))
+
   ;; [2024-05-02 Thu 07:00] I find the look with doom theme quite annoying.
   (when (doom-theme-p?)
     (custom-set-faces!
