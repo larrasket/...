@@ -89,9 +89,9 @@ automatically previewed."
 
 
 (defvar salih/prefered-themes '((doom-peacock             . dark)
-                                (doom-rouge               . dark)
-                                (doom-henna               . dark)
-                                (kaolin-galaxy            . dark)
+                                ;; (doom-rouge               . dark)
+                                ;; (doom-henna               . dark)
+                                (kaolin-dark              . dark)
                                 (ef-maris-dark            . dark)
                                 (ef-deuteranopia-light    . nour)
                                 (ef-elea-dark             . dark)
@@ -99,7 +99,7 @@ automatically previewed."
                                 (ef-bio                   . dark)
                                 (ef-elea-dark             . dark)
                                 (ef-elea-dark             . dark)
-                                (doom-rouge               . dark)
+                                ;; (doom-rouge               . dark)
                                 (ef-summer                . nour)
                                 (ef-melissa-dark          . dark)
                                 ;; (ef-duo-dark              . dark)
@@ -107,18 +107,19 @@ automatically previewed."
                                 ;; (kaolin-valley-dark       . dark)
                                 (ef-dark                  . dark)
                                 (ef-trio-dark             . dark)
-                                (doom-rouge               . dark)
-                                (kaolin-dark              . dark)
-                                (ef-day                   . nour)
+                                ;; (doom-rouge               . dark)
+                                (kaolin-galaxy            . dark)
+                                ;; (ef-day                   . nour)
                                 (ef-duo-light             . nour)
                                 (ef-elea-dark             . dark)
                                 (ef-deuteranopia-dark     . dark)
                                 (ef-trio-light            . nour)
                                 (doom-badger              . dark)
+                                (kaolin-dark              . dark)
                                 (ef-symbiosis             . dark)
                                 (ef-autumn                . dark)
                                 (ef-frost                 . nour)
-                                (doom-rouge               . dark)
+                                ;; (doom-rouge               . dark)
                                 (ef-light                 . nour)
                                 (ef-winter                . dark)
                                 (kaolin-temple            . dark)
@@ -126,8 +127,9 @@ automatically previewed."
                                 (ef-cyprus                . nour)
                                 (kaolin-ocean             . dark)
                                 (ef-maris-light           . nour)
-                                (doom-rouge               . dark)
+                                ;; (doom-rouge               . dark)
                                 (ef-trio-light            . nour)
+                                (kaolin-dark              . dark)
                                 (ef-elea-dark             . dark)
                                 (kaolin-bubblegum         . dark)
                                 (ef-night                 . dark)))
@@ -147,7 +149,7 @@ automatically previewed."
                    ef-elea-dark
                    ef-cherie
                    ef-bio
-                   doom-rouge
+                   ;; doom-rouge
                    doom-feather-dark
                    ef-summer
                    ef-melissa-dark
@@ -156,7 +158,7 @@ automatically previewed."
                    kaolin-valley-dark
                    ef-dark
                    ef-trio-dark
-                   doom-rouge
+                   ;; doom-rouge
                    kaolin-dark
                    ef-day
                    ef-duo-light
@@ -166,14 +168,14 @@ automatically previewed."
                    ef-symbiosis
                    ef-autumn
                    ef-frost
-                   doom-rouge
+                   ;; doom-rouge
                    ef-light
                    ef-winter
                    kaolin-temple
                    ef-cyprus
                    kaolin-ocean
                    ef-maris-light
-                   doom-rouge
+                   ;; doom-rouge
                    ef-trio-light
                    kaolin-bubblegum
                    ef-night
