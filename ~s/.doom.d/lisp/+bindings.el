@@ -567,6 +567,13 @@
  [mouse-1] #'flyspell-correct-at-point)
 
 (map!
+ :map jinx-overlay-map
+ :nvim
+ "RET"    'jinx-correct
+ [return] 'jinx-correct)
+
+
+(map!
  :map mu4e-view-active-urls-keymap
  "RET"    'mu4e--view-browse-url-from-binding
  [return] 'mu4e--view-browse-url-from-binding)
