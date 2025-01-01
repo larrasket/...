@@ -39,21 +39,7 @@
   (custom-set-faces!
    `(jinx-misspelled
      :underline (:style wave :color ,(face-foreground 'error))))
-
-  (let ((is-nour (eq (cdr (assoc doom-theme salih/prefered-themes)) 'nour)))
-   (custom-set-faces!
-    `(org-todo :weight ,(if ,is-nour 'normal 'bold))
-    `(org-tag :weight ,(if ,is-nour 'normal 'bold))
-    `(org-done :weight ,(if ,is-nour 'normal 'bold))
-    '(org-agenda-done :strike-through nil)
-    `(org-document-title :height 2.0 :weight ,(if ,is-nour 'normal 'bold))
-    `(org-level-1 :weight ,(if ,is-nour 'normal 'bold) :height 1.25)
-    `(org-level-2 :weight ,(if ,is-nour 'normal 'bold))
-    `(org-level-3 :weight ,(if ,is-nour 'normal 'bold))
-    `(org-level-4 :weight ,(if ,is-nour 'normal 'bold))
-    `(org-level-5 :weight ,(if ,is-nour 'normal 'bold))
-    `(org-level-6 :weight ,(if ,is-nour 'normal 'bold))
-    `(org-level-7 :weight ,(if ,is-nour 'bold 'bold)))))
+ )
 
 
 (after! doom-modeline
