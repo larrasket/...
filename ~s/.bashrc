@@ -149,6 +149,7 @@ alias pub='cd ~/blog && tadwin && cd public && flyctl deploy'
 alias docker='sudo docker'
 alias anydesk='docker run --rm --name="anydesk" --device="/dev/dri:/dev/dri" --env="DISPLAY=$DISPLAY" --env="XAUTHORITY=/home/udocker/.XAuthority" --env="PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native" --mount="type=bind,source=$(pwd)/tmp/udocker,target=/home/udocker" --mount="type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix" --mount="type=bind,source=$XAUTHORITY,target=/home/udocker/.XAuthority" --mount="type=bind,source=${XDG_RUNTIME_DIR}/pulse/native,target=${XDG_RUNTIME_DIR}/pulse/native" --net="host" alireaza/anydesk'
 
+alias flush='sudo nft flush ruleset'
 compress-video() {
 	input="$1"
 	output="${input%.*}_compressed.mp4"
