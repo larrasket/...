@@ -185,7 +185,6 @@ things. Corinthians 13:4-7.")))
 (salih/keyboard-config)
 
 (global-visual-line-mode 1)
-(salih/consult-preview-at-point)
 
 (if (or (eq doom-theme 'modus-vivendi-tritanopia)
         (eq doom-theme 'modus-vivendi-deuteranopia)

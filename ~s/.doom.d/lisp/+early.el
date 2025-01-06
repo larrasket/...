@@ -41,14 +41,6 @@
      '
      "Mode line construct to display the major mode.")
 
-(define-minor-mode salih/consult-preview-at-point-mode
-  "Preview minor mode for an *Embark Collect* buffer.
-When moving around in the *Embark Collect* buffer, the candidate at point is
-automatically previewed."
-  :init-value nil :group 'consult
-  (if salih/consult-preview-at-point-mode
-      (add-hook 'post-command-hook #'salih/consult-preview-at-point nil 'local)
-    (remove-hook 'post-command-hook #'salih/consult-preview-at-point 'local)))
 
 
 (defvar salih/open-rss-lock-file (f-join doom-cache-dir "rss-locker")

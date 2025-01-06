@@ -216,10 +216,6 @@ Respects `doom-modeline-enable-word-count'."
          ;; `(git-gutter-fr:deleted ((,class :foreground ,red-fringe-bg)))
          `(git-gutter-fr:modified ((,c :foreground ,bg-changed-fringe)))))))
 
-;; other handy stuff
-(with-eval-after-load 'embark
-  (add-hook 'embark-collect-mode-hook  #'salih/consult-preview-at-point-mode))
-
 (set-popup-rules!
   '(("^\\*cider-doc" :slot -1 :size 0.3 :select t)))
 

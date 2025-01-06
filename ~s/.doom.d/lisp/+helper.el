@@ -274,21 +274,6 @@ Zathura."
         (salih/epa-encrypt-file recipients)))
     (revert-buffer)))
 
-(defun salih/consult-preview-at-point ()
-  "Preview candidate at point in an *Embark Collect* buffer."
-  (interactive)
-  (let ((display-buffer-base-action '(display-buffer-pop-up-window))
-        (cbuf (current-buffer))
-        (node))
-    ;; Avoid pushing the button created by Embark.  For some reason, some
-    ;; candidates lead to a org-roam-node-find prompt and create a new frame.
-    (if (setq node (get-text-property (point) 'node))
-        ;; `org-roam-node-visit' does not return the buffer visited
-        (progn
-          (unless (featurep 'org-roam) (require 'org-roam))
-          (org-roam-node-visit node :other-window)
-          (switch-to-buffer-other-window cbuf))
-      (push-button))))
 
 (defun salih/xwidget-open-html ()
   "Open the current buffer's file path in an xwidget window."
