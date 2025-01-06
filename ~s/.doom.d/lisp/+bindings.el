@@ -4,11 +4,7 @@
 ;; or `map!`.
 
 ;; unbinding
-(define-key org-mode-map (kbd "C-c C-f") nil)
-(define-key org-mode-map (kbd "C-c C-j") nil)
 (global-unset-key        (kbd "C-f"))
-(define-key org-mode-map (salih/mode "]") nil)
-(define-key org-mode-map (salih/mode "[") nil)
 (general-auto-unbind-keys)
 
 
@@ -37,12 +33,10 @@
 (map!
  :map eww-mode-map
  :nvim
- "C" #'eww-browse-with-external-browser
- "C-c C-c" #' salih/eww-org-store-and-capture)
+ "C" #'eww-browse-with-external-browser)
 
 (evil-define-key 'normal clojure-mode-map (kbd "K") #'cider-doc)
 
-(evil-define-key 'normal org-mode-map (kbd "C-n C-z") #'org-add-note)
 
 (map!
  :map clojure-mode-map
@@ -88,8 +82,6 @@
 (general-define-key
  :keymaps 'pdf-view-mode-map
  :prefix  salih/prefix-mode
- "C-c"    #'org-noter-insert-precise-note
- "H-i"    #'org-noter-insert-note
  "C-f"    #'salih/zathura-open
  "C-d"    #'pdf-view-themed-minor-mode)
 
@@ -103,8 +95,6 @@
 (general-define-key
  :keymaps 'pdf-view-mode-map
  :prefix  salih/prefix-mode
- "C-c"    #'org-noter-insert-precise-note
- "H-i"    #'org-noter-insert-note
  "C-f"    #'salih/zathura-open
  "C-d"    #'pdf-view-themed-minor-mode)
 
@@ -115,8 +105,7 @@
   (evil-define-key 'motion pdf-view-mode-map (kbd "<left>") #'ignore))
 
 (add-hook! 'pdf-view-mode-hook
-  (evil-local-set-key 'normal
-                      (salih/mode "C-c") #'org-noter-insert-precise-note)
+  (evil-local-set-key 'normal)
   (evil-local-set-key 'normal (kbd "J") #'pdf-view-next-page-command)
   (evil-local-set-key 'normal (kbd "<right>") nil)
   (evil-local-set-key 'normal (kbd "<left>") nil)
@@ -175,83 +164,9 @@
    "C-b"  #'salih/compile-and-run-c))
 
 
-;; Org-mode
-(map!
- :map org-mode-map
- :after org
- :prefix salih/prefix-mode
- "["       #'previous-buffer
- "]"       #'next-buffer
- "8"       #'org-toggle-heading
- "C-f"     #'org-footnote-action
- "c i"     #'org-clock-in
- "c o"     #'org-clock-out
- "H-m"     #'org-media-note-hydra/body
- "H-i H-i" #'org-id-get-create
- "H-i C-l" #'org-web-tools-insert-link-for-url
- "H-i C-c" #'salih/org-id-get-create-with-custom-id
- "H-i C-k" #'citar-insert-citation
- "H-i C-t" #'org-inlinetask-insert-task
- "C-b"     #'citar-insert-citation
- "H-i C-b" #'orb-insert-link
- "C-n C-n" #'org-noter
- "C-n C-k" #'org-noter-kill-session
- "C-n C-z" #'salih/org-noter-open-in-zathura
- "C-e"     nil
- "C-e C-p" #'org-pandoc-export-to-latex-pdf
- "C-r"     nil
- "C-r H-i" #'org-roam-node-insert
- "C-r C-t" #'org-roam-tag-add
- "C-r C-a" #'org-fc-type-normal-init
- "C-r C-b" #'consult-org-roam-backlinks
- "C-r C-d" #'salih/org-roam-extract-subtree
- "C-;"     #'salih/rename-or-iedit
- "C-r C-f" #'consult-org-roam-forward-links)
-
-(map!
- :map org-mode-map
- :after org
- :n
- "C-c C-d" #'org-deadline)
-
-(map!
- :map org-mode-map
- :after org
- :nm
- "z z"      #'jinx-correct)
-
-(map!
- :map org-mode-map
- :after org
- :v
- "C-c C-t" #'gt-do-translate)
 
 
-(map!
- :map org-mode-map
- :after org
- :i
- "H-i H-i" #'org-id-get-create
- "H-i C-b" #'orb-insert-link
- "H-i C-l" #'org-web-tools-insert-link-for-url
- "H-i C-c" #'salih/org-id-get-create-with-custom-id
- "H-i C-k" #'citar-insert-citation
- "H-i C-t" #'org-inlinetask-insert-task
- "H-i C-r" #'salih/org-roam-node-insert
- "H-i C-f" #'org-roam-node-insert
- "C-c C-d" #'org-download-clipboard
- "C-r C-t" #'org-roam-tag-add
- "C-r C-a" #'org-roam-alias-add
- "C-n C-s" #'org-toggle-narrow-to-subtree)
 
-
-(map!
- :map org-agenda-mode-map
- "C-=" #'text-scale-increase
- "C--" #'text-scale-decrease
- "C-+" #'doom/reset-font-size)
-
-;; Common lisp
 
 (eval-after-load 'sly
   `(define-key sly-mode-map (salih/mode "C-e") 'sly-eval-region))
@@ -290,13 +205,7 @@
    "C-n"          nil
    "C-t"          #'salih/vterm
    ;; "C-j"          #'centaur-tabs-ace-jump
-   "C-c"          #'salih/org-capture-general
-   "C-l"          #'salih/org-capture-log
-   "C-n"          #'salih/org-roam-capture-fleet
    "C-a"          nil
-   "C-a C-a"      #'salih/org-agenda-no-full-f
-   "C-a C-l"      #'salih/org-agenda-no-full-l
-   "C-a C-f"      #'salih/org-agenda-full-f
    "C-a C-v"      #'salih/open-agenda
    "C-f"          #'salih/read-feeds
    "C-u C-f"      #'salih/read-feeds-anyway
@@ -332,11 +241,7 @@
  :prefix "C-f"
  :states 'normal
  :keymaps 'override
- "C-f"  #'org-roam-node-find
- "C-c"  #'salih/org-roam-capture-fleet
  "C-p"  #'projectile-switch-project
- "C-j"  #'salih/org-roam-dailies-capture-today
- "C-b"  #'org-roam-buffer-toggle
  "C-r"  #'recentf-open-files)
 
 ;; search global
@@ -348,8 +253,7 @@
  "C-b"          #'+default/search-buffer
  "C-p"          #'+default/search-project
  "C-o"          #'occur
- "<escape>"     #'rgrep
- "C-r"          #'salih/consult-org-roam-search-org-only)
+ "<escape>"     #'rgrep)
 
 
 
@@ -448,8 +352,6 @@
 
 
 
-(evil-define-key 'normal calendar-mode-map (kbd "RET")
-  'salih/org-calendar-goto-agenda)
 
 (add-hook 'nov-mode-hook
           (lambda ()
@@ -490,8 +392,7 @@
 (map!
  :map mu4e-view-mode-map
  :n
- ";" #'salih/mu4e-go-to-url
- "C-c C-c" #'salih/mu4e-org-store-and-capture)
+ ";" #'salih/mu4e-go-to-url)
 
 (map!
  :map cider-repl-mode-map
@@ -509,21 +410,7 @@
  :n
  ";" #'embark-act)
 
-;; (map!
-;;  :map org-mode-map
-;;  :n
-;;  ";" #'embark-act)
 
-(after! org-noter
-  (defun salih/org-noter-sync-current-note-and-switch-window ()
-    (interactive)
-    (let ((prev-window (selected-window)))
-      (org-noter-sync-current-note)
-      (select-window prev-window)))
-  (define-key org-noter-notes-mode-map (salih/mode "C-j")
-              #'salih/org-noter-sync-current-note-and-switch-window)
-  (define-key org-noter-doc-mode-map
-              (salih/mode "C-c") #'org-noter-insert-precise-note))
 
 (define-key ctl-x-map (kbd "C-z") nil)
 (define-key global-map (kbd "C-x C-z") nil)
@@ -546,19 +433,7 @@
  :nve "[" #'sp-wrap-square
  :nve "{" #'sp-wrap-curly)
 
-(evil-define-minor-mode-key '(normal insert emacs) 'org-fc-review-flip-mode
-  (kbd "r") 'org-fc-review-flip
-  (kbd "n") 'org-fc-review-flip
-  (kbd "s") 'org-fc-review-suspend-card
-  (kbd "q") 'org-fc-review-quit)
 
-(evil-define-minor-mode-key '(normal insert emacs) 'org-fc-review-rate-mode
-  (kbd "a") 'org-fc-review-rate-again
-  (kbd "h") 'org-fc-review-rate-hard
-  (kbd "g") 'org-fc-review-rate-good
-  (kbd "e") 'org-fc-review-rate-easy
-  (kbd "s") 'org-fc-review-suspend-card
-  (kbd "q") 'org-fc-review-quit)
 
 (map!
  :map flyspell-mouse-map
