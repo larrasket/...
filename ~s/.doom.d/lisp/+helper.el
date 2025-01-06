@@ -420,39 +420,11 @@ tasks."
                   (seq-difference original-tags tags))
           (apply #'vulpea-buffer-tags-set tags))))))
 
-(defun vulpea-buffer-p ()
-  "Return non-nil if the currently visited buffer is a note."
-  (and buffer-file-name
-       (string-prefix-p
-        (expand-file-name (file-name-as-directory org-roam-directory))
-        (file-name-directory buffer-file-name))))
 
-(defun vulpea-project-files ()
-  "Return a list of note files containing 'project' tag." ;
-  (if salih/vulpea-show-full
-      (vulpea-project-files-full)
-    (seq-uniq
-     (seq-map
-      #'car
-      (org-roam-db-query
-       [:select [nodes:file]
-        :from tags
-        :left-join nodes
-        :on (= tags:node-id nodes:id)
-        :where (like tag (quote "%\"project\"%"))])))))
 
-(defun vulpea-project-files-full ()
-  "Return a list of note files containing 'project' tag." ;
-  (seq-uniq
-   (seq-map
-    #'car
-    (org-roam-db-query
-     [:select [nodes:file]
-      :from tags
-      :left-join nodes
-      :on (= tags:node-id nodes:id)
-      :where (or (like tag (quote "%\"project\"%"))
-                 (like tag (quote "%\"project_archived\"%")))]))))
+
+
+
 
 (defun vulpea-agenda-files-update (&rest _)
   "Update the value of `org-agenda-files'."
@@ -503,14 +475,9 @@ tasks."
     (keyboard-translate ?\C-i ?\H-i))
   (define-key key-translation-map (kbd "C-g") (kbd "<escape>")))
 
-(defun salih/org-roam-node-insert ()
-  (interactive)
-  (setq salih/temp-roam-insert t)
-  (consult-buffer (list org-roam-buffer-source)))
 
-(defun salih/org-roam-node-open ()
-  (interactive)
-  (consult-buffer (list org-roam-buffer-source)))
+
+
 
 (defun salih/open-current-url-in-chrome ()
   "Open the current URL (from kill-ring) in Chrome"
@@ -726,19 +693,10 @@ form."
     (sly-compile-defun)
     (message "Compiled: %s" form-with-print)))
 
-(defun salih/org-roam-get-node-titles (node-list)
-  "Applies `org-roam-node-title' function to the cdr of each element in
-NODE-LIST."
-  (mapcar (lambda (node) (org-roam-node-title (cdr node)))
-          node-list))
 
-(defun salih/org-roam-get-node-files (node-list)
-  "Applies `org-roam-node-file' function to the cdr of each element in
-NODE-LIST."
-  (mapcar (lambda (node) (org-roam-node-file (cdr node)))
-          node-list))
 
-(defun salih/get-org-roam-titles () roam-titles)
+
+
 
 
 (defun salih/org-noter-pdf--pdf-view-get-precise-info (mode window)
@@ -963,52 +921,15 @@ ARGS is `element' in `org-ql-view--format-element'"
                      "#\\+[tT][iI][tT][lL][eE]: *" "[\n\t ]+")
       (deft-base-filename file))))
 
-(cl-defmethod org-roam-node-type ((node org-roam-node))
-  "Return the TYPE of NODE."
-  (condition-case nil
-      (file-name-nondirectory
-       (directory-file-name
-        (file-name-directory
-         (file-relative-name (org-roam-node-file node) org-roam-directory))))
-    (error "")))
 
-(cl-defmethod org-roam-node-backlinkscount-number ((node org-roam-node))
-  "Access slot \"backlinks\" of org-roam-node struct CL-X. This is identical
-toorg-roam-node-backlinkscount' with the difference that it returns a number
-instead of a fromatted string. This is to be used in
-`org-roam-node-sort-by-backlinks'"
-  (let* ((count (caar (org-roam-db-query [:select (funcall count source)
-                                          :from links :where (= dest $s1)
-                                          :and (= type "id")]
-                                         (org-roam-node-id node)))))
-    count))
 
-(defun org-roam-node-sort-by-backlinks (completion-a completion-b)
-  "Sorting function for org-roam that sorts the list of nodes by the number of
-backlinks. This is the sorting function in `org-roam-node-find-by-backlinks'"
-  (let ((node-a (cdr completion-a))
-        (node-b (cdr completion-b)))
-    (>= (org-roam-node-backlinkscount-number node-a)
-        (org-roam-node-backlinkscount-number node-b))))
 
-(defun org-roam-node-find-by-backlinks ()
-  "Essentially works like
-org-roam-node-find' (although it uses a combination offind-file' and
-org-roam-node-read' to accomplish that and notorg-roam-node-find' as only
-org-roam-node-read' can take a sorting function as an argument) but the list of
-nodes is sorted by the number of backlinks instead of most recent nodes. Sorting
-is done with org-roam-node-sort-by-backlinks'"
-  (interactive)
-  (find-file (org-roam-node-file
-              (org-roam-node-read nil nil #'org-roam-node-sort-by-backlinks))))
 
-(defun salih/consult-org-roam-search-org-only ()
-  (interactive)
-  (let ((consult-ripgrep-args
-         (concat
-          consult-ripgrep-args
-          " -g *.org")))
-    (consult-org-roam-search)))
+
+
+
+
+
 
 (defun salih/mu4e-compose-include-message (msg &optional)
   "Like mu4e-compose-attach-message, but include MSG as an inline attachment
@@ -1036,35 +957,7 @@ message as an inline attachment."
     (insert "<#/multipart>\n")
     (message-goto-to)))
 
-(defun salih/org-add-update-rating ()
-  "Add or update a rating for the entry"
-  (interactive)
-  (let* ((node (org-roam-node-from-title-or-alias "2024 ratings"))
-         (nodebuf (find-file-noselect (org-roam-node-file node))))
-    (with-current-buffer nodebuf
-      (let* ((today (format-time-string "%Y-%m-%d"))
-             (node-point (org-roam-node-point node))
-             (existing-rating (org-entry-get node-point today)))
-        (if existing-rating
-            (message "Rating already exists for today.")
-          (progn
-            (let* ((rating (completing-read "Choose a rating: "
-                                            '("amazing" "good"
-                                              "meh" "bad" "awful")))
-                   (nice-message (cond
-                                  ((string= rating "amazing") "Great!")
-                                  ((string= rating "good") "Keep going!")
-                                  ((string= rating "meh")
-                                   "Better days are comming.")
-                                  ((string= rating "bad")
-                                   "Don't forget the sunshie on a rainy day.")
-                                  ((string= rating "awful")
-                                   "This too shall pass."))))
-              (org-entry-put node-point today
-                             (format "(%s . \"%s\")"
-                                     (current-time)
-                                     rating))
-              (message nice-message))))))))
+
 
 (defun salih/pdf-occure ()
   (interactive)
@@ -1104,20 +997,9 @@ it with org)."
     (error "Not in `eww-mode`")))
 
 
-(defun salih/org-roam-capture-create-id ()
-  "Create id for captured note and add it to org-roam-capture-template."
-  (when (and (not org-note-abort)
-             (org-roam-capture-p))
-    (if salih/org-roam-dailies-capture-p
-        (setq salih/org-roam-dailies-capture-p nil)
-      (org-roam-capture--put :id (org-id-get-create)))))
 
-(defun salih/capture-- (fn key &optional fleet?)
-  (with-current-buffer
-      (find-file-noselect (if fleet?
-                              salih/org-roam-fleet-file
-                            +org-capture-todo-file))
-    (funcall fn nil key)))
+
+
 
 (defun salih/org-capture-general ()
   (interactive)
@@ -1127,61 +1009,11 @@ it with org)."
   (interactive)
   (salih/capture-- 'org-capture "n"))
 
-(defun salih/org-roam-capture-fleet ()
-  (interactive)
-  (salih/capture-- 'org-roam-capture "f"))
 
-(defun salih/org-roam-extract-subtree ()
-  "Same as `org-roam-extract-subtree', but with main/ as top-level directory and
-without history in the file name."
-  "Convert current subtree at point to a node, and extract it into a new file."
-  (interactive)
-  (save-excursion
-    (org-back-to-heading-or-point-min t)
-    (when (bobp) (user-error "Already a top-level node"))
-    (org-id-get-create)
-    (save-buffer)
-    (org-roam-db-update-file)
-    (let* ((template-info nil)
-           (node (org-roam-node-at-point))
-           (template (org-roam-format-template
-                      (string-trim (org-capture-fill-template "${slug}.org"))
-                      (lambda (key default-val)
-                        (let ((fn (intern key))
-                              (node-fn (intern (concat "org-roam-node-" key)))
-                              (ksym (intern (concat ":" key))))
-                          (cond
-                           ((fboundp fn)
-                            (funcall fn node))
-                           ((fboundp node-fn)
-                            (funcall node-fn node))
-                           (t (let ((r (read-from-minibuffer
-                                        (format "%s: " key) default-val)))
-                                (plist-put template-info ksym r)
-                                r)))))))
-           (file-path
-            (expand-file-name
-             (read-file-name "Extract node to: "
-                             (file-name-as-directory
-                              (f-join
-                               org-roam-directory "main"))
-                             template nil template)
-             (f-join org-roam-directory "main"))))
-      (when (file-exists-p file-path)
-        (user-error "%s exists. Aborting" file-path))
-      (org-cut-subtree)
-      (save-buffer)
-      (with-current-buffer (find-file-noselect file-path)
-        (org-paste-subtree)
-        (while (> (org-current-level) 1) (org-promote-subtree))
-        (save-buffer)
-        (org-roam-promote-entire-buffer)
-        (save-buffer)))))
 
-(defun salih/org-roam-dailies-capture-today ()
-  (interactive)
-  (setq salih/org-roam-dailies-capture-p t)
-  (call-interactively #'org-roam-dailies-capture-today))
+
+
+
 
 (defun salih/fetch-first-post-url ()
   "Fetch the first post's URL from the API."
@@ -1250,20 +1082,9 @@ without history in the file name."
   (org-set-tags ":drill")
   (org-entry-put (point) "CUSTOM_ID" (org-id-get)))
 
-(defun salih/get-org-roam-nodes-with-tag (tag)
-  "Get all Org Roam nodes that have the specified TAG."
-  (org-roam-db-query
-   [:select :distinct [nodes:file nodes:title]
-    :from tags
-    :left :join nodes
-    :on (= tags:node-id nodes:id)
-    :where (like tags:tag $s1)]
-   tag))
 
-(defun salih/get-unique-file-paths-for-tag (tag)
-  "Get unique file paths for Org Roam nodes with the specified TAG."
-  (let ((nodes (salih/get-org-roam-nodes-with-tag "drill")))
-    (delete-dups (mapcar 'car nodes))))
+
+
 
 (defun salih/org-noter-open-in-zathura ()
   "Get the value of a PROPERTY from the current Org heading."
