@@ -753,8 +753,6 @@ NODE-LIST."
   (mapcar (lambda (node) (org-roam-node-file (cdr node)))
           node-list))
 
-(setq roam-titles (salih/org-roam-get-node-titles
-                   (org-roam-node-read--completions)))
 (defun salih/get-org-roam-titles () roam-titles)
 
 (setq org-roam-buffer-source
