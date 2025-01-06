@@ -182,11 +182,8 @@ things. Corinthians 13:4-7.")))
 ;; (cocaine-line-mode)                     ;
 (yas-global-mode 1)
 ;; (vertico-buffer-mode)
-(global-wakatime-mode)
 (salih/keyboard-config)
 
-
-(consult-org-roam-mode 1)
 (global-visual-line-mode 1)
 (salih/consult-preview-at-point)
 
@@ -213,7 +210,6 @@ things. Corinthians 13:4-7.")))
     ;; usually I disable it only w/ doom
     ;; themes.
     ;; (doom-theme-p?)
-
 
 (use-package! awqat
   :commands (awqat-display-prayer-time-mode

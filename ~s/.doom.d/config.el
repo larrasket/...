@@ -1,5 +1,4 @@
 (require 'awqat)                        ; for prayer support in the agenda
-(require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define translation engine in config.el
 (require 'doom-modeline)                ; I use it for segment definition only
@@ -11,9 +10,6 @@
       user-stmp-server                                  "mail.gmx.com"
       user-stmp-port                                    587
       user-short-username                               "lr0"
-      user-config-repo-path                             "~/configs/~s"
-      salih/blog-content-path                           "~/blog/content"
-      org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
       ;; appearance
       ;; font `:size' value of 29 is prefect for filming
@@ -33,14 +29,6 @@
       calendar-latitude                                 29.392691
       calendar-longitude                                30.828360
       salih/awqat-show-mode-line                        t
-
-      ;; org
-      org-directory                                     org-roam-directory
-      org-id-locations-file                             "~/roam/.orgids"
-      +org-capture-changelog-file                       "~/blog/content/nice.org"
-      +org-capture-journal-file                         "~/blog/content/stack.org"
-      salih/org-roam-fleet-file                         "~/roam/main/lr.org"
-      +org-capture-todo-file                            "~/roam/main/life.org"
 
       ;; this option is useful when you are up after 00:00. set 0 to the value
       ;; you sleep at. if you sleep at 02:00 it should be 2, if you sleep at
@@ -69,14 +57,11 @@
 
 (s/require
  '+sets-email                           ; mu4e
- '+sets-school                          ; school settings (TeX & BibTeX)
- '+sets-org                             ; org mode settings
  '+sets-inhibit                         ; other settings
  '+helper                               ; functions
  '+advice                               ; advice
  '+bindings                             ; personal key bindings
  '+custom                               ; specials
- '+erc                                  ; erc
  '+deep                                 ; other
  (unless (featurep 'tadwin) '+hooks))   ; hooks
 

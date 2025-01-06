@@ -29,8 +29,6 @@
       (concat
        "Tahoma"
        ":pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3")
-      doom-variable-pitch-font
-      (font-spec :family "Arimo")
 
       ;; modeline
       doom-modeline-enable-word-count                   t
@@ -50,7 +48,6 @@
 
       ;; consult
       consult-preview-key                               nil
-      consult-org-roam-buffer-narrow-key                ?r
 
       ;; tabs
       centaur-tabs-enable-key-bindings                  t
@@ -65,30 +62,6 @@
       salih/temp-roam-insert                            nil
       large-file-warning-threshold                      nil
 
-      ;; school
-      salih/source-directory                            "~/roam/source"
-
-      salih/books
-      (mapcar 'file-truename
-              (directory-files-recursively salih/source-directory "" nil t))
-
-      bibtex-completion-bibliography                    "~/configs/~s/ref.bib"
-      bibtex-completion-notes-path                      "~/roam/references"
-      org-cite-csl-styles-dir                           "~/configs/~s/assets/csl"
-      bibtex-completion-library-path
-      (l salih/source-directory)
-      org-cite-global-bibliography
-      (l bibtex-completion-bibliography)
-      citar-bibliography
-      bibtex-completion-bibliography
-      org-cite-csl--fallback-style-file
-      (f-join org-cite-csl-styles-dir "chicago-ibid.csl")
-      org-fc-flashcard-tag                              "drill"
-      org-fc-directories                                (l "~/roam/main"
-                                                           "~/roam/other"
-                                                           "~/roam/references")
-
-
 
       save-place-ignore-files-regexp
       (concat
@@ -97,14 +70,7 @@
       inferior-lisp-program                             "sbcl"
       neo-mode-line-type                                'default
 
-      ;; org-noter
-      org-noter-always-create-frame                     nil
-      org-noter-kill-frame-at-session-end               nil
-      org-noter-swap-window                             nil
-      nov-text-width                                    140
-
       ;; TODO update julia conf with eglot
-      ;; julia
 
       ;; git-auto-commit-mode
       gac-debounce-interval                             200

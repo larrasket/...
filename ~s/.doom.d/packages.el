@@ -20,25 +20,11 @@
 ;; (package! ob-julia-vterm)               ; for usage, see maxima or sage-shell
 
 (package! go-translate)                 ; google API for translations
-(package! consult-org-roam)             ; useful org-roam functions
 
-
-(package! nov)                          ; browse epubs from emacs
 (package! srht)                         ; sr.ht support. Good for paste.sr.ht
-(package! vulpea)                       ; roam advanced functions
 (package! format-all)                   ; destroy my code
 (package! lsp-treemacs)                 ; make emacs loks like and EDE (ide)
 (package! modus-themes)                 ; my favorite themes from my greek dude
-(package! wakatime-mode)                ; voluntary tracking
-(package! org-web-tools)                ; viewing urls in org
-
-(package! ox-tufte
-  :recipe (:host github
-           :repo "luggages/ox-tufte"))  ; for my website.
-
-(package! ox-html-stable-ids
-  :recipe (:host github
-           :repo "luggages/ox-html-stable-ids.el"))
 
 (package! awqat
   :recipe (:host github
@@ -48,31 +34,13 @@
 (unpin! vertico)
 (package! vertico)                      ; not sure why I unpin this
 
-
-
-
-;; school
-(package! org-ref)
-(package! org-roam-bibtex)
-(unpin! bibtex-completion helm-bibtex ivy-bibtex)
-(package! citar)
-(package! citar-org-roam)
-(unpin! ess) (package! ess)
-
 (package! emacs-neotree)                ; better side panal
 
-(package! org-download)                 ; for screenshots
 
-(package! org-ql)
-
-
-(unpin! org-roam)
-(package! org-roam-ui)
 (package! evil-snipe :disable t)        ; don't remember why I disabled it
 (package! ef-themes)                    ; sick themes
 (package! breadcrumb)                   ; sick line
 
-(package! org-fc)                       ; the true anki for Org
 (package! kaolin-themes)                ; sick sick themes
 (package! mixed-pitch)                  ; I like to use variable pitch for org
 
@@ -84,12 +52,9 @@
 
 (package! mu4e-alert)
 
-(package! org-noter :pin "9d42ebc626981b6736b8078fb216b30cc5e34d21")
-
 (package! dired-preview)
 
 (unpin! parsebib)
-
 
 (package! git-gutter)
 (package! git-gutter-fringe)

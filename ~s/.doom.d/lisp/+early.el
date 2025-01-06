@@ -4,8 +4,6 @@
 (setq-default frame-title-format                        '("%b")
               shr-inhibit-images                        t
               bidi-paragraph-direction                  'left-to-right
-              salih/me-location                         "~/me"
-              org-download-image-dir                    "~/roam/media"
               indent-tabs-mode                          nil
               pdf-view-display-size                     'fit-width
               display-line-numbers-width                8)
@@ -52,41 +50,12 @@ automatically previewed."
       (add-hook 'post-command-hook #'salih/consult-preview-at-point nil 'local)
     (remove-hook 'post-command-hook #'salih/consult-preview-at-point 'local)))
 
-(defvar salih/consult--source-books
-  `(:name     "File"
-    :narrow   ?f
-    :category file
-    :face     consult-file
-    :history  file-name-history
-    :state    ,#'consult--file-state
-    :new      ,#'consult--file-action
-    :items
-    ,(lambda ()
-       (let ((ht (consult--buffer-file-hash))
-             items)
-         (dolist (file (bound-and-true-p salih/books) (nreverse items))
-           (unless (eq (aref file 0) ?/)
-             (let (file-name-handler-alist)
-               (setq file (expand-file-name file))))
-           (unless (gethash file ht)
-             (push (consult--fast-abbreviate-file-name file) items)))))))
 
 (defvar salih/open-rss-lock-file (f-join doom-cache-dir "rss-locker")
   "File used to store the last execution time of `salih/open-rss`.")
 
-;; lisp
-(defvar salih/sly--compile-eval-begin-print-counter 0
-  "a counter to distinguish compile/eval cycles")
-(defun salih/sly--compile-eval-begin-print (&rest _)
-  "print the counter value into REPL to distinguish compile/eval cycles."
-  (sly-eval-async
-   `(cl:format t "" ,(cl-incf salih/sly--compile-eval-begin-print-counter))))
-
-(defvar org-roam-list-most-linked-count 5)
 
 (defvar salih/org-roam-dailies-capture-p nil)
-
-
 
 (defvar salih/prefered-themes '((doom-peacock             . dark)
                                 ;; (doom-rouge               . dark)

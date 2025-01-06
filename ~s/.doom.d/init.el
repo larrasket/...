@@ -40,7 +40,6 @@
        ;; (spell  +flyspell)
 
        :tools
-       biblio
        tree-sitter
        (lookup +dictionary +offline)
        (lsp +peak +eglot)
@@ -49,6 +48,7 @@
 
        :os
        (tty)
+       macos
 
        :lang
        (csharp +lsp +dotnet +tree-sitter)
@@ -58,7 +58,6 @@
        (cc +lsp +tree-sitter)
        (go +lsp +tree-sitter)
        (javascript +lsp)
-       (org +roam2)
        (rest +jq)
        emacs-lisp
        yaml
