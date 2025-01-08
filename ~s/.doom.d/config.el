@@ -81,14 +81,37 @@
  (unless (featurep 'tadwin) '+hooks))   ; hooks
 
 ;; Experimental. I just copied it from the internet.
-(setq jit-lock-stealth-time 1.25
-      jit-lock-chunk-size 4096
-      jit-lock-defer-time 0)
+;; (setq jit-lock-stealth-time 1.25
+;;       jit-lock-chunk-size 4096
+;;       jit-lock-defer-time 0)
 
-(with-eval-after-load 'evil
-  (add-hook 'evil-insert-state-entry-hook
-            (lambda ()
-              (setq jit-lock-defer-time 0.25)) nil t)
-  (add-hook 'evil-insert-state-exit-hook
-    (lambda ()
-      (setq jit-lock-defer-time 0)) nil t))
+;; (with-eval-after-load 'evil
+;;   (add-hook 'evil-insert-state-entry-hook
+;;             (lambda ()
+;;               (setq jit-lock-defer-time 0.25)) nil t)
+;;   (add-hook 'evil-insert-state-exit-hook
+;;     (lambda ()
+;;       (setq jit-lock-defer-time 0)) nil t))
+
+(setq mac-option-key-is-meta nil
+      mac-command-key-is-meta t
+      mac-command-modifier 'meta
+      mac-option-modifier 'none)
+
+
+ 
+
+;;; Transparent titlebar
+;; https://github.com/d12frosted/homebrew-emacs-plus/blob/master/Formula/emacs-plus.rb#L98
+;; https://github.com/d12frosted/homebrew-emacs-plus/issues/55
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Properties-in-Mode.html#Properties-in-Mode
+
+;;; Transparent titlebar
+;; https://github.com/d12frosted/homebrew-emacs-plus/blob/master/Formula/emacs-plus.rb#L98
+;; https://github.com/d12frosted/homebrew-emacs-plus/issues/55
+;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Properties-in-Mode.html#Properties-in-Mode
+
+(when t
+  (setq frame-title-format nil)
+  (add-to-list 'default-frame-alist '(ns-appearance . 'dark))
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))

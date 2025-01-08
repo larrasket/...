@@ -3,38 +3,10 @@
   (require 'org-inlinetask)
   (require 'org-roam-protocol)
   (require 'org-download)
-  (custom-set-faces!
-    '(+fold-hideshow-folded-face :box nil)
-    '(font-lock-keyword-face  :weight bold :slant normal)
-    '(font-lock-constant-face :weight bold :slant normal))
-
-  (if (eq (cdr (assoc doom-theme salih/prefered-themes)) 'nour)
-      (custom-set-faces!
-        '(org-todo :weight normal)
-        '(org-tag :weight normal)
-        '(org-done :weight normal)
-        '(org-agenda-done :strike-through nil)
-        '(org-document-title :height 2.0 :weight normal)
-        '(org-level-1 :weight normal :height 1.25)
-        '(org-level-2 :weight normal)
-        '(org-level-3 :weight normal)
-        '(org-level-4 :weight normal)
-        '(org-level-5 :weight normal)
-        '(org-level-6 :weight normal)
-        '(org-level-7 :weight bold))
-    (custom-set-faces!
-     '(org-todo :weight bold)
-     '(org-tag :weight bold)
-     '(org-done :weight bold)
-     '(org-agenda-done :strike-through nil)
-     '(org-document-title :height 2.0)
-     '(org-level-1 :weight bold :height 1.25)
-     '(org-level-2 :weight bold)
-     '(org-level-3 :weight bold)
-     '(org-level-4 :weight bold)
-     '(org-level-5 :weight bold)
-     '(org-level-6 :weight bold)
-     '(org-level-7 :weight bold)))
+  ;; (custom-set-faces!
+  ;;   '(+fold-hideshow-folded-face :box nil)
+  ;;   '(font-lock-keyword-face  :weight bold :slant normal)
+  ;;   '(font-lock-constant-face :weight bold :slant normal))
 
   (custom-set-faces!
    `(jinx-misspelled
@@ -278,8 +250,10 @@ Respects `doom-modeline-enable-word-count'."
     '(line-number              :slant normal)
     '(line-number-current-line :slant normal))
 
+
+(set-face-attribute 'fill-column-indicator nil :height 0.5)
+
 (when (eq doom-theme 'doom-monokai-machine)
-  (set-face-attribute 'fill-column-indicator nil :height 1.1)
   (custom-set-faces!
     ;; '(font-lock-variable-name-face :weight normal :foreground "#a3d8ff")
     ;; '(font-lock-variable-name-face :weight normal :foreground "#9be2ef")

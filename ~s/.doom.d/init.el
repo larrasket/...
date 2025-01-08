@@ -21,7 +21,7 @@
        file-templates
        fold                             ; activate za in evil mode
        lispy                            ; better lisp edit
-       parinfer                         ; (better lisp edit)
+       ;;parinfer                         ; (better lisp edit)
        snippets
        word-wrap
 
