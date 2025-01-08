@@ -29,7 +29,6 @@
 (package! format-all)                   ; destroy my code
 (package! lsp-treemacs)                 ; make emacs loks like and EDE (ide)
 (package! modus-themes)                 ; my favorite themes from my greek dude
-(package! wakatime-mode)                ; voluntary tracking
 (package! org-web-tools)                ; viewing urls in org
 
 (package! ox-tufte

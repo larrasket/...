@@ -182,7 +182,6 @@ things. Corinthians 13:4-7.")))
 ;; (cocaine-line-mode)                     ;
 (yas-global-mode 1)
 ;; (vertico-buffer-mode)
-(global-wakatime-mode)
 (salih/keyboard-config)
 
 
