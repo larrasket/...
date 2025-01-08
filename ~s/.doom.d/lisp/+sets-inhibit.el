@@ -20,17 +20,11 @@
 
       ;; fonts
       doom-font
-      (font-spec :family "Pragmasevka" :size 18)
+      (font-spec :family "PragmataPro" :size 16)
       ;; (concat
       ;;  "Pragmasevka:pixelsize=17"
       ;;  ":antialias=true:hinting=true:autohint=false:hintstyle=3")
 
-      doom-symbol-font
-      (concat
-       "Tahoma"
-       ":pixelsize=16:antialias=true:hinting=true:autohint=false:hintstyle=3")
-      doom-variable-pitch-font
-      (font-spec :family "Arimo")
 
       ;; modeline
       doom-modeline-enable-word-count                   t
