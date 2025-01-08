@@ -115,3 +115,5 @@
   (setq frame-title-format nil)
   (add-to-list 'default-frame-alist '(ns-appearance . 'dark))
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
+
+(setq epg-pinentry-mode 'loopback)

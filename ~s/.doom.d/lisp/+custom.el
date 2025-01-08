@@ -9,6 +9,10 @@
   ;;   '(font-lock-constant-face :weight bold :slant normal))
 
   (custom-set-faces!
+     '(org-agenda-done :strike-through nil)
+     '(org-document-title :height 2.0))
+
+  (custom-set-faces!
    `(jinx-misspelled
      :underline (:style wave :color ,(face-foreground 'error))))
  )
