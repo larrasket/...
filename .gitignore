@@ -57,3 +57,7 @@ flycheck_config.el
 /~s/.config/Jackett/*.txt
 /~s/.config/Jackett/DataProtection/*.xml
 /~s/.config/emacs
+/~s/.config/enchant/
+/~s/.config/github-copilot/
+/~s/.config/htop/
+/~s/.config/zed/
