@@ -150,11 +150,6 @@ alias docker='sudo docker'
 alias anydesk='docker run --rm --name="anydesk" --device="/dev/dri:/dev/dri" --env="DISPLAY=$DISPLAY" --env="XAUTHORITY=/home/udocker/.XAuthority" --env="PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native" --mount="type=bind,source=$(pwd)/tmp/udocker,target=/home/udocker" --mount="type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix" --mount="type=bind,source=$XAUTHORITY,target=/home/udocker/.XAuthority" --mount="type=bind,source=${XDG_RUNTIME_DIR}/pulse/native,target=${XDG_RUNTIME_DIR}/pulse/native" --net="host" alireaza/anydesk'
 
 alias flush='sudo nft flush ruleset'
-compress-video() {
-	input="$1"
-	output="${input%.*}_compressed.mp4"
-	ffmpeg -i "$input" -vcodec libx264 -crf 28 -preset fast -acodec aac -b:a 128k "$output"
-}
 
 # alias po='castero'
 # not deleting this line for nostalgia. :). I wrote it in my
@@ -172,14 +167,11 @@ compress-video() {
 # I wrote this before using Emacs. I was using zathura with fzf
 # alias intl="WD=\$(pwd);cd ~/source;zathura \"\$(fzf)\";cd \$WD"
 
-complete -cf sudo
+#complete -cf sudo
 # Bash won't get SIGWINCH if another process is in the foreground.
 # Enable checkwinsize so that bash will check the terminal size when
 # it regains control.  #65623
 # http://cnswww.cns.cwru.edu/~chet/bash/FAQ (E11)
-shopt -s checkwinsize
-shopt -s expand_aliases
-shopt -s histappend
 PROMPT_COMMAND="_show_last_exit_status; _build_prompt;"
 if command -v tmux &>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
 	exec tmux
@@ -190,6 +182,3 @@ if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integr
 # END_KITTY_SHELL_INTEGRATION
 export TERM=xterm-256color
 
-shopt -s autocd
-
-source /home/l/.config/broot/launcher/bash/br
