@@ -32,5 +32,13 @@ export GPG_TTY
 
 source $(brew --prefix nvm)/nvm.sh
 
-eval "$(ssh-agent -s)"
-
+# Check if ssh-agent is already running
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    # Check for existing ssh-agent process
+    if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+        ssh-agent -s > "$HOME/.ssh/agent.env"
+    fi
+    if [ -f "$HOME/.ssh/agent.env" ]; then
+        source "$HOME/.ssh/agent.env" > /dev/null
+    fi
+fi
