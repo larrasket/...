@@ -617,14 +617,6 @@ tasks."
   (org-agenda-set-restriction-lock)
   (org-agenda nil "t"))
 
-(defun salih/polyphasic-sleep (start n)
-  (if (or org-agenda-show-future-repeats (time-equal-p (awqat--today) date))
-      (cond
-       ((= n 1) (salih/polyphasic-sleep--1 start))
-       ((= n 2) (salih/polyphasic-sleep--2 start))
-       ((= n 3) (salih/polyphasic-sleep--3 start))
-       ((= n 4) (salih/polyphasic-sleep--4 start)))))
-
 (defun salih/polyphasic-sleep--1 (s)
   (format "Sleep (1h.30) %d:30 " (mod (+ s 5) 24)))
 

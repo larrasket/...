@@ -1,4 +1,3 @@
-(require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
 (require 'go-translate)                 ; define translation engine in config.el
@@ -32,7 +31,6 @@
       ;; not my real coordinates, just to save you time.
       calendar-latitude                                 29.392691
       calendar-longitude                                30.828360
-      salih/awqat-show-mode-line                        t
 
       ;; org
       org-directory                                     org-roam-directory

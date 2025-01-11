@@ -214,12 +214,6 @@ things. Corinthians 13:4-7.")))
     ;; (doom-theme-p?)
 
 
-(use-package! awqat
-  :commands (awqat-display-prayer-time-mode
-             awqat-times-for-day))
-
-(when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
-
 (use-package git-gutter
   :hook (prog-mode . git-gutter-mode)
   :config

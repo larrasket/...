@@ -37,10 +37,6 @@
       doom-modeline-modal-icon                          nil
       doom-modeline-lsp-icon                            nil
 
-      ;; awqat
-      awqat-mode-line-format
-      " ${prayer} (${hours}h${minutes}m) "
-      awqat-update-interval                             (* 60 5)
 
       ;; consult
       consult-preview-key                               nil

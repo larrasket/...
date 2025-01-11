@@ -19,8 +19,8 @@
        :editor
        (evil +everywhere)
        file-templates
-       fold                             ; activate za in evil mode
-       lispy                            ; better lisp edit
+       fold              ; activate za in evil mode
+       lispy             ; better lisp edit
        ;;parinfer                         ; (better lisp edit)
        snippets
        word-wrap
@@ -73,7 +73,12 @@
        irc
 
        :config
-       (default +smartparens +bindings))
+       (default +smartparens +bindings)
+
+       :private
+       awqat
+
+       )
 
 (add-to-list 'load-path (expand-file-name "lisp" doom-user-dir))
 (add-to-list 'load-path (expand-file-name "pkg"  doom-user-dir))
