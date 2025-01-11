@@ -535,7 +535,7 @@ tasks."
 
 (defun salih/open-url-in-chrome (url &optional args)
   "Open the current URL in Chrome"
-  (start-process "chromium" nil "chromium" url))
+  (browse-url-default-browser url))
 
 (defun salih/unescape-string (str)
   "Remove escape characters from a string."
