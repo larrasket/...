@@ -48,7 +48,7 @@
       ;; until your day is done.
       ;; [2024-08-07 Wed 19:43] currently I sleep at 07:00.
       ;; [2024-08-08 Wed 23:41] Not anymore.
-      org-extend-today-until                            4
+      ;; org-extend-today-until                            4
 
       ;; other
       auto-save-no-message                              t
@@ -106,14 +106,11 @@
 ;; https://github.com/d12frosted/homebrew-emacs-plus/issues/55
 ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Properties-in-Mode.html#Properties-in-Mode
 
-;;; Transparent titlebar
-;; https://github.com/d12frosted/homebrew-emacs-plus/blob/master/Formula/emacs-plus.rb#L98
-;; https://github.com/d12frosted/homebrew-emacs-plus/issues/55
-;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Properties-in-Mode.html#Properties-in-Mode
-
 (when t
   (setq frame-title-format nil)
   (add-to-list 'default-frame-alist '(ns-appearance . 'dark))
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
 
 (setq epg-pinentry-mode 'loopback)
+(modify-all-frames-parameters '((inhibit-double-buffering . t)))
+(setq org-download-screenshot-method "/usr/local/bin/pngpaste %s")

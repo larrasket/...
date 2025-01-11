@@ -255,7 +255,7 @@ Respects `doom-modeline-enable-word-count'."
     '(line-number-current-line :slant normal))
 
 
-(set-face-attribute 'fill-column-indicator nil :height 0.5)
+(custom-set-faces! '(fill-column-indicator :height 0.1))
 
 (when (eq doom-theme 'doom-monokai-machine)
   (custom-set-faces!
