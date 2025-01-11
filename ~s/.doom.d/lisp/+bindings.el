@@ -28,6 +28,7 @@
 
 ;; abusing evil mode
 (map! :i "M-v" #'yank)
+(map! :i "C-v" #'yank)
 ;; (define-key evil-normal-state-map        (kbd "]") #'centaur-tabs-forward)
 ;; (define-key evil-normal-state-map        (kbd "[") #'centaur-tabs-backward)
 ;; (define-key evil-visual-state-map        (kbd "]") #'centaur-tabs-forward)
