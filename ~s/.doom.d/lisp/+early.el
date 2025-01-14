@@ -21,8 +21,13 @@
 (defun salih/get-random-theme (inc)
   "Get a different theme every week based on the week number of the year."
   (let* ((current-week (+ inc (string-to-number (format-time-string "%U"))))
+         (salih/prefered-themes (seq-filter (lambda (theme)
+                                              (not (eq (cdr theme)
+                                                       'nour)))
+                                            salih/prefered-themes))
          (list-length (length salih/prefered-themes))
-         (selected (nth (mod current-week list-length) salih/prefered-themes)))
+         (selected (nth (mod current-week list-length)
+                        salih/prefered-themes)))
     selected))
 
 
