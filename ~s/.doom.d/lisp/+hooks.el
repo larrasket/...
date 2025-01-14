@@ -41,7 +41,8 @@
 
 
 (add-hook!
- 'prog-mode-hook      (setq prettify-symbols-alist '(("lambda" . 923))))
+ 'prog-mode-hook      (setq prettify-symbols-alist '(("lambda" . 923)))
+                      (jinx-mode -1))
 
 (add-hook! 'python-mode-hook    (flycheck-mode -1))
 
