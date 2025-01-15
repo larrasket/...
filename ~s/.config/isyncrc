@@ -3,7 +3,7 @@ Host imap.gmx.com
 User lr0@gmx.com
 AuthMechs LOGIN
 #CertificateFile /etc/ssl/certs/ca-certificates.crt
-PassCmd ~/configs/~s/assets/getmupassword.sh
+PassCmd ~/configs/~s/getmupassword.sh
 
 MaildirStore lr0@gmx.com-local
 Path ~/mail/lr0@gmx.com/
