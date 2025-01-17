@@ -114,3 +114,10 @@
 (setq epg-pinentry-mode 'loopback)
 (modify-all-frames-parameters '((inhibit-double-buffering . t)))
 (setq org-download-screenshot-method "/usr/local/bin/pngpaste %s")
+
+(use-package org-wild-notifier
+  :config
+  (setq alert-default-style 'osx-notifier)
+  (setq org-wild-notifier-alert-time '(60 30 15 5 4 3 2 1))
+  (setq org-wild-notifier-notification-title "Agenda")
+  (org-wild-notifier-mode 1))

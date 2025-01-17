@@ -94,3 +94,5 @@
 (package! git-gutter-fringe)
 
 (package! jinx)
+
+(package! org-wild-notifier)
