@@ -329,10 +329,10 @@
 
 
 ;; files and roam
-(general-define-key
+(map!
  :prefix "C-f"
- :states 'normal
- :keymaps 'override
+ :map 'override
+ :nm
  "C-f"  #'org-roam-node-find
  "C-c"  #'salih/org-roam-capture-fleet
  "C-p"  #'projectile-switch-project
