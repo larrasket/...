@@ -332,7 +332,7 @@
            :if-new
            (file+head
             "%<%Y-%m-%d>.org.gpg"
-            ,(concat "#+title: %^{daily-title}\n#+DATE: <%<%Y-%m-%d>>"
+            ,(concat "#+title: %<%Y-%m-%d>\n#+DATE: <%<%Y-%m-%d>>"
                      "\n#+FILETAGS: journal\n- tags :: [[roam:Journaling]] \n"))
            :unnarrowed t))
         ;; org-roam-database-connector             'sqlite
