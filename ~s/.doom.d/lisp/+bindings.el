@@ -340,6 +340,18 @@
  "C-b"  #'org-roam-buffer-toggle
  "C-r"  #'recentf-open-files)
 
+;; same like before, but works out of modes
+(general-define-key
+ :prefix "C-f"
+ :states 'normal
+ :keymaps 'override
+ "C-f"  #'org-roam-node-find
+ "C-c"  #'salih/org-roam-capture-fleet
+ "C-p"  #'projectile-switch-project
+ "C-j"  #'salih/org-roam-dailies-capture-today
+ "C-b"  #'org-roam-buffer-toggle
+ "C-r"  #'recentf-open-files)
+
 ;; search global
 (map!
  :prefix "C-s"
