@@ -8,13 +8,15 @@
 ;; tidy is required to use with xwidget:
 ;; pacman -S tidy
 (after! mu4e
+  (define-key mu4e-view-mode-map (kbd "M-<down>") nil)
+
   (setq message-send-mail-function              'smtpmail-send-it
         starttls-use-gnutls                     t
         mu4e-compose-reply-ignore-address       `("no-?reply"
                                                   ,user-mail-address)
         mu4e-headers-visible-lines              10
         mu4e-update-interval                    500
-        mu4e-compose-signature                  (format "Regards,\n%s"
+        mu4e-compose-signature                  (format "Regards\n%s"
                                                         user-first-name)
         smtpmail-default-smtp-server            user-stmp-server
         smtpmail-smtp-server                    smtpmail-default-smtp-server
