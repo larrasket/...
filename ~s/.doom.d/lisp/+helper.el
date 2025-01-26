@@ -3,6 +3,7 @@
 ;; basic definiton for `+bindings`
 (defun salih/global (key-sequence)
   (kbd (concat salih/prefix-global key-sequence)))
+
 (defun salih/mode (key-sequence)
   (kbd (concat salih/prefix-mode   key-sequence)))
 
@@ -1477,8 +1478,8 @@ check."
   (let ((browse-url-browser-function 'salih/open-url-in-chrome))
     (browse-url (eww-current-url))))
 
-
-
-
+(defun salih/ensure-eww-in-search (fn &rest args)
+             (let ((browse-url-browser-function #'browse-url-default-browser))
+               (apply fn args)))
 
 (provide '+helper)
