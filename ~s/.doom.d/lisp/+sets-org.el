@@ -381,6 +381,7 @@
                  "link"
                  "@read"
                  "@write"
+                 "@watch"
                  "@current"
                  "drill"))
     (add-to-list 'org-tags-exclude-from-inheritance tag)))
