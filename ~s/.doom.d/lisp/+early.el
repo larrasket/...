@@ -18,6 +18,10 @@
    (string-prefix-p "kaolin-" (symbol-name doom-theme))
    (string-prefix-p "doom-" (symbol-name doom-theme))))
 
+(defun kaolin-theme-p? ()
+  (or
+   (string-prefix-p "kaolin-" (symbol-name doom-theme))))
+
 (defun salih/get-random-theme (inc)
   "Get a different theme every week based on the week number of the year."
   (let* ((current-week (+ inc (string-to-number (format-time-string "%U"))))
