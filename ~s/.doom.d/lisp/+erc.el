@@ -60,3 +60,4 @@
        :password pass))))
 
 (provide '+erc)
+(setq doom-modeline-irc-stylize #'ignore)
