@@ -61,3 +61,7 @@ flycheck_config.el
 /~s/.config/github-copilot/
 /~s/.config/htop/
 /~s/.config/zed/
+/~s/.config/qBittorrent/qBittorrent.ini
+/~s/.config/qBittorrent/qBittorrent-data.ini
+/~s/.config/jgit/
+/~s/.config/gcloud/
