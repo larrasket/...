@@ -70,7 +70,7 @@
 
       bibtex-completion-bibliography                    "~/configs/~s/ref.bib"
       bibtex-completion-notes-path                      "~/roam/references"
-      org-cite-csl-styles-dir                           "~/configs/~s/assets/csl"
+      org-cite-csl-styles-dir                           "~/configs/~s/.pandoc/csl"
       bibtex-completion-library-path
       (l salih/source-directory)
       org-cite-global-bibliography
