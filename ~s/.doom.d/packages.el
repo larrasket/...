@@ -96,3 +96,5 @@
 (package! jinx)
 
 (package! org-wild-notifier)
+
+(package! org-bullets)
