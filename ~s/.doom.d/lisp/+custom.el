@@ -8,9 +8,11 @@
   ;;   '(font-lock-keyword-face  :weight bold :slant normal)
   ;;   '(font-lock-constant-face :weight bold :slant normal))
 
+
   (custom-set-faces!
-     '(org-agenda-done :strike-through nil)
-     '(org-document-title :height 2.0))
+    '(org-agenda-done :strike-through nil)
+    '(org-document-title :height 2.0)
+    '(org-list-dt :inherit default))
 
   (if (eq (cdr (assoc doom-theme salih/prefered-themes)) 'nour)
       (custom-set-faces!
@@ -28,8 +30,8 @@
         '(org-level-7 :weight bold)))
 
   (custom-set-faces!
-   `(jinx-misspelled
-     :underline (:style wave :color ,(face-foreground 'error)))))
+    `(jinx-misspelled
+      :underline (:style wave :color ,(face-foreground 'error)))))
 
 
 (after! doom-modeline
