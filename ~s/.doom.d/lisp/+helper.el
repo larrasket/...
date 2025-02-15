@@ -1482,4 +1482,12 @@ check."
              (let ((browse-url-browser-function #'browse-url-default-browser))
                (apply fn args)))
 
+(defun salih/org-roam-buffer ()
+  "Display the Org Roam buffer for the node at point."
+  (interactive)
+  (let ((node (org-roam-node-at-point)))
+    (when node
+      (org-roam-buffer-display-dedicated node))))
+
+
 (provide '+helper)
