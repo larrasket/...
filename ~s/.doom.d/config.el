@@ -23,6 +23,7 @@
       ;; [2024-09-01 Sun 00:43] `doom-rouge' is an amazing dark theme
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark' too.
       ;; [2024-09-04 Wed 02:03] `ef-maris-dark' too.
+      ;; [2025-02-19 Wed 01:12] `doom-bluloco-dark` is lovely.
       doom-theme                                        (salih/get-random-theme-full 1)
       doom-modeline-icon                                t
       doom-modeline-height                              32
