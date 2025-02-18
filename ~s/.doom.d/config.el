@@ -81,17 +81,17 @@
  (unless (featurep 'tadwin) '+hooks))   ; hooks
 
 ;; Experimental. I just copied it from the internet.
-;; (setq jit-lock-stealth-time 1.25
-;;       jit-lock-chunk-size 4096
-;;       jit-lock-defer-time 0)
+(setq jit-lock-stealth-time 1.25
+      jit-lock-chunk-size 4096
+      jit-lock-defer-time 0)
 
-;; (with-eval-after-load 'evil
-;;   (add-hook 'evil-insert-state-entry-hook
-;;             (lambda ()
-;;               (setq jit-lock-defer-time 0.25)) nil t)
-;;   (add-hook 'evil-insert-state-exit-hook
-;;     (lambda ()
-;;       (setq jit-lock-defer-time 0)) nil t))
+(with-eval-after-load 'evil
+  (add-hook 'evil-insert-state-entry-hook
+            (lambda ()
+              (setq jit-lock-defer-time 0.25)) nil t)
+  (add-hook 'evil-insert-state-exit-hook
+    (lambda ()
+      (setq jit-lock-defer-time 0)) nil t))
 
 (setq mac-option-key-is-meta nil
       mac-command-key-is-meta t
@@ -112,7 +112,8 @@
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
 
 (setq epg-pinentry-mode 'loopback)
-(modify-all-frames-parameters '((inhibit-double-buffering . t)))
+
+;; (modify-all-frames-parameters '((inhibit-double-buffering . t)))
 (setq org-download-screenshot-method "/usr/local/bin/pngpaste %s")
 
 (use-package org-wild-notifier

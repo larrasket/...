@@ -134,7 +134,7 @@ alias convertmp4tomp3='function _convertmp4tomp3() { ffmpeg -i "$1" "${1%.*}.mp3
 alias cp="cp -i"
 alias i='sudo pacman -S '
 alias r='sudo pacman -Rs'
-alias lsd='du -h --max-depth=1 | sort -hr'
+alias lsd='du -h -d=1 | sort -hr'
 alias ll='ls -l'
 alias sz='du -sh'
 alias cat='bat'
