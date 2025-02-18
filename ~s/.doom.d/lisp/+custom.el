@@ -270,9 +270,11 @@ Respects `doom-modeline-enable-word-count'."
     '(line-number              :slant normal)
     '(line-number-current-line :slant normal))
 
+
 (if (kaolin-theme-p?)
     (custom-set-faces! '(fill-column-indicator :height 0.28))
   (custom-set-faces! '(fill-column-indicator :height 0.1)))
+
 
 (when (eq doom-theme 'doom-monokai-machine)
   (custom-set-faces!

@@ -34,6 +34,20 @@
                         salih/prefered-themes)))
     selected))
 
+(defun salih/get-random-theme-full (inc)
+  "Get a different theme every week based on the week number of the year.
+Excludes themes in the predefined skip list."
+  (let* ((skip-list '())
+         (current-week (+ inc (string-to-number (format-time-string "%U"))))
+         (available-themes (seq-filter (lambda (theme)
+                                         (not (member theme skip-list)))
+                                       (custom-available-themes)))
+         (list-length (length available-themes))
+         (selected (when (> list-length 0)
+                     (nth (mod current-week list-length) available-themes))))
+    selected))
+
+
 
 (defun salih/get-random-nour-theme (inc)
   (let* ((salih/prefered-themes '((ef-frost . nour)
