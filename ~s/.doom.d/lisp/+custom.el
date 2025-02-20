@@ -270,6 +270,8 @@ Respects `doom-modeline-enable-word-count'."
     '(line-number              :slant normal)
     '(line-number-current-line :slant normal))
 
+(when (doom-theme-p?)
+  (custom-set-faces! '(fill-column-indicator :height 1.0)))
 
 (if (kaolin-theme-p?)
     (custom-set-faces! '(fill-column-indicator :height 0.28))
