@@ -338,7 +338,7 @@
  "C-c"  #'salih/org-roam-capture-fleet
  "C-p"  #'projectile-switch-project
  "C-j"  #'salih/org-roam-dailies-capture-today
- "C-b"  #'org-roam-buffer-toggle
+ "C-b"  #'salih/org-roam-buffer
  "C-r"  #'recentf-open-files)
 
 ;; same like before, but works out of modes
@@ -350,7 +350,7 @@
  "C-c"  #'salih/org-roam-capture-fleet
  "C-p"  #'projectile-switch-project
  "C-j"  #'salih/org-roam-dailies-capture-today
- "C-b"  #'org-roam-buffer-toggle
+ "C-b"  #'salih/org-roam-buffer
  "C-r"  #'recentf-open-files)
 
 ;; search global
