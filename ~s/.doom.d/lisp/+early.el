@@ -37,7 +37,9 @@
 (defun salih/get-random-theme-full (inc)
   "Get a different theme every week based on the week number of the year.
 Excludes themes in the predefined skip list."
-  (let* ((skip-list '())
+  (let* ((skip-list '(doom-bluloco-dark doom-bluloco-light doom-challenger-deep
+                      doom-city-lights
+                      doom-dark+))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
          (available-themes (seq-filter (lambda (theme)
                                          (not (member theme skip-list)))
