@@ -12,10 +12,11 @@ export PATH=$PATH:$HOME/.emacs.d/bin
 export PATH=$PATH:$HOME/.doom.d/bin
 export PATH=$PATH:$HOME/.bin/
 export PATH=$PATH:$HOME/.local/bin/
-
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.dotnet/tools
 export PATH=$PATH:$HOME/.local/bin
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+
 export FrameworkPathOverride=/lib/mono/
 
 export GOPATH=$HOME/go
@@ -42,3 +43,4 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
         source "$HOME/.ssh/agent.env" > /dev/null
     fi
 fi
+

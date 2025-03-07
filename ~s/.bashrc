@@ -114,26 +114,35 @@ leinn() {
 }
 
 # Conv
+alias grep='grep --colour=auto'
 alias sudo='sudo ' # Fix sudo in alias
 alias serve='npx serve'
-alias wife='nmtui'
-alias gotmp='git clone https://github.com/tarqeem/template . && ./init.sh '
-alias goent="go run -mod=mod entgo.io/ent/cmd/ent"
+# [2025-03-06 Thu 13:33] wrote this around 5 years ago and I'm not going to
+# delete it
+alias wife='nmtui' 
 alias hd='nmcli con up'
 alias s='setsid statusless'
-alias htop='gotop'
-alias netwatch='sudo nethogs'
-alias grep='grep --colour=auto'
+
+# [2025-03-06 Thu 13:34] wrote this also around 5 years ago. I was learning dwm
+# and I thought that `make clean install` is a common thing in all C programs, I
+# might have also made it because I heavily used to  modify dwm
 alias smk='sudo make clean install'
-alias f="lfrun"
+
+# [2025-03-06 Thu 13:37] media, old 
 alias d='yt-dlp -f "mp4" -o "%(title)s.%(ext)s" '
-alias c='clear'
 alias w4='function _convertwebm(){ ffmpeg  -fflags +genpts -i "$1" -r 24 -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" "${1%.webm}.mp4" && rm "$1"; };_convertwebm'
 alias mp3='yt-dlp -o '\''%(title)s.%(ext)s'\'' --extract-audio --audio-format mp3 --add-metadata'
 alias convertmp4tomp3='function _convertmp4tomp3() { ffmpeg -i "$1" "${1%.*}.mp3"; }; _convertmp4tomp3'
-alias cp="cp -i"
+
+# [2025-03-06 Thu 13:37] install and remove in pacman, old as well
 alias i='sudo pacman -S '
 alias r='sudo pacman -Rs'
+
+alias f="lfrun"
+alias htop='gotop'
+alias netwatch='sudo nethogs'
+alias c='clear'
+alias cp="cp -i"
 alias lsd='du -h -d 1 | sort -hr'
 alias ll='ls -l'
 alias sz='du -sh'
@@ -150,6 +159,7 @@ alias docker='sudo docker'
 alias anydesk='docker run --rm --name="anydesk" --device="/dev/dri:/dev/dri" --env="DISPLAY=$DISPLAY" --env="XAUTHORITY=/home/udocker/.XAuthority" --env="PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native" --mount="type=bind,source=$(pwd)/tmp/udocker,target=/home/udocker" --mount="type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix" --mount="type=bind,source=$XAUTHORITY,target=/home/udocker/.XAuthority" --mount="type=bind,source=${XDG_RUNTIME_DIR}/pulse/native,target=${XDG_RUNTIME_DIR}/pulse/native" --net="host" alireaza/anydesk'
 
 alias flush='sudo nft flush ruleset'
+alias get_local_ip='ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '\''{print $2}'\'''
 
 # alias po='castero'
 # not deleting this line for nostalgia. :). I wrote it in my
