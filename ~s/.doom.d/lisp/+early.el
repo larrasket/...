@@ -39,7 +39,11 @@
 Excludes themes in the predefined skip list."
   (let* ((skip-list '(doom-bluloco-dark doom-bluloco-light doom-challenger-deep
                       doom-city-lights
-                      doom-dark+))
+                      doom-dark+
+                      doom-ephemeral
+                      doom-fairy-floss
+                      doom-feather-dark
+                      doom-flatwhite))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
          (available-themes (seq-filter (lambda (theme)
                                          (not (member theme skip-list)))
