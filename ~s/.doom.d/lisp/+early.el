@@ -43,6 +43,10 @@ Excludes themes in the predefined skip list."
                       doom-ephemeral
                       doom-fairy-floss
                       doom-feather-dark
+                      doom-gruvbox-light
+                      doom-henna
+                      doom-homage-black
+                      doom-homage-white
                       doom-flatwhite))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
          (available-themes (seq-filter (lambda (theme)
