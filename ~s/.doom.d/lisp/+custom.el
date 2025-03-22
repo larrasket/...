@@ -230,6 +230,7 @@ Respects `doom-modeline-enable-word-count'."
 
   (setq kind-icon-blend-background t
         kind-icon-default-face     'corfu-default
+        global-corfu-minibuffer     nil
         corfu-preselect            'directory))
 
 (after! corfu-popupinfo
