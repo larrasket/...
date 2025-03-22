@@ -6,7 +6,7 @@
        (corfu +icons)
 
        :ui
-       ;; (vc-gutter +pretty)                        ; git annotions
+       (vc-gutter +pretty)                        ; git annotions
        doom
        doom-dashboard
        hl-todo
