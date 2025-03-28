@@ -32,6 +32,7 @@
       ;; [2025-03-08 Sat 16:58] `doom-ephemeral' is acceptable.
       ;; [2025-03-10 Mon 06:42] `doom-gruvbox-light' is nice, light.
       ;; [2025-03-17 Mon 01:33] `doom-gruvbox' is nice, dark.
+      ;; [2025-03-27 Thu 01:22] `doom-ir-black' is nice too, dark.
       doom-theme                                        (salih/get-random-theme-full 1)
       doom-modeline-icon                                t
       doom-modeline-height                              32
