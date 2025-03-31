@@ -6,8 +6,6 @@
 (require 'cocaine-line)                 ; my modeline.
 (require 'ls-lisp)
 
-(setq ls-lisp-dirs-first t
-      ls-lisp-use-insert-directory-program nil)
 
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
@@ -108,12 +106,14 @@
 
 
 (when (s-equals? system-type "darwin")
-  (setq mac-option-key-is-meta         nil
-        mac-command-key-is-meta        t
-        mac-command-modifier           'meta
-        mac-option-modifier            'none
-        frame-title-format             nil
-        org-download-screenshot-method "/usr/local/bin/pngpaste %s"
+  (setq mac-option-key-is-meta               nil
+        mac-command-key-is-meta              t
+        mac-command-modifier                 'meta
+        mac-option-modifier                  'none
+        frame-title-format                   nil
+        org-download-screenshot-method       "/usr/local/bin/pngpaste %s"
+        ls-lisp-dirs-first                   t
+        ls-lisp-use-insert-directory-program nil
         epg-pinentry-mode              'loopback)
 ;;; Transparent titlebar
 ;; https://github.com/d12frosted/homebrew-emacs-plus/blob/master/Formula/emacs-plus.rb#L98
