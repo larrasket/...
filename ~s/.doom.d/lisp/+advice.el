@@ -55,4 +55,10 @@
 
 (advice-add  #'doom-highlight-non-default-indentation-h :override #'ignore)
 
+;; Disables creating org-id in the case of `org-download-clipboard'
+(advice-add 'org-download-clipboard :around
+            (lambda (orig-fun &rest args)
+              (cl-letf (((symbol-function 'org-id-get-create) #'ignore))
+                (apply orig-fun args))))
+
 (provide '+advice)
