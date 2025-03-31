@@ -217,7 +217,12 @@ things. Corinthians 13:4-7.")))
 
 (when salih/awqat-show-mode-line (awqat-display-prayer-time-mode))
 
-
+(use-package org-wild-notifier
+  :config
+  (setq alert-default-style                  'osx-notifier
+        org-wild-notifier-alert-time         '(60 30 15 5 4 3 2 1)
+        org-wild-notifier-notification-title "Agenda")
+  (org-wild-notifier-mode 1))
 
 (use-package! jinx
   :defer t
