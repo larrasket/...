@@ -47,7 +47,10 @@ Excludes themes in the predefined skip list."
                       doom-henna
                       doom-homage-black
                       doom-homage-white
-                      doom-flatwhite))
+                      doom-flatwhite
+                      doom-lantern
+                      doom-laserwave
+                      doom-manegarm))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
          (available-themes (seq-filter (lambda (theme)
                                          (not (member theme skip-list)))
