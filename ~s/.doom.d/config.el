@@ -4,7 +4,6 @@
 (require 'go-translate)                 ; define translation engine in config.el
 (require 'doom-modeline)                ; I use it for segment definition only
 (require 'cocaine-line)                 ; my modeline.
-(require 'ls-lisp)
 
 
 (setq user-full-name                                    "Salih Muhammed"
@@ -106,6 +105,7 @@
 
 
 (when (s-equals? system-type "darwin")
+  (require 'ls-lisp)
   (setq mac-option-key-is-meta               nil
         mac-command-key-is-meta              t
         mac-command-modifier                 'meta
