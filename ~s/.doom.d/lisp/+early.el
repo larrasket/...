@@ -50,6 +50,7 @@ Excludes themes in the predefined skip list."
                       doom-flatwhite
                       doom-lantern
                       doom-laserwave
+                      doom-meltbus
                       doom-manegarm))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
          (available-themes (seq-filter (lambda (theme)
