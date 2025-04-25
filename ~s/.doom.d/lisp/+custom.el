@@ -279,6 +279,8 @@ Respects `doom-modeline-enable-word-count'."
 
 
 
+(after! org-modern
+  (setq org-modern-tag nil))
 
 
 (put 'salih/modeline-major-mode 'risky-local-variable t)
