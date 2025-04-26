@@ -106,7 +106,7 @@
 
 
 
-(when (s-equals? system-type "darwin")
+(when (eq system-type 'darwin)
   (require 'ls-lisp)
   (setq mac-option-key-is-meta               nil
         mac-command-key-is-meta              t
