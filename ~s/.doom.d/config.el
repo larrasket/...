@@ -116,7 +116,7 @@
         org-download-screenshot-method       "/usr/local/bin/pngpaste %s"
         ls-lisp-dirs-first                   t
         ls-lisp-use-insert-directory-program nil
-        epg-pinentry-mode              'loopback)
+        epg-pinentry-mode                    'loopback)
 ;;; Transparent titlebar
 ;; https://github.com/d12frosted/homebrew-emacs-plus/blob/master/Formula/emacs-plus.rb#L98
 ;; https://github.com/d12frosted/homebrew-emacs-plus/issues/55
