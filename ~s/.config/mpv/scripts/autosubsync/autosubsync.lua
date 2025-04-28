@@ -20,7 +20,7 @@ local config = {
     -- If set to empty, the path will be guessed.
     ffmpeg_path = "",
     ffsubsync_path = "/home/l/.local/bin/ffsubsync",
-    alass_path = "/usr/bin/alass",
+    alass_path = "/usr/local/bin/alass-cli",
 
     -- Choose what tool to use. Allowed options: ffsubsync, alass, ask.
     -- If set to ask, the add-on will ask to choose the tool every time.
