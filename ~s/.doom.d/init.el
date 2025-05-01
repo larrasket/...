@@ -58,7 +58,7 @@
        (cc +lsp +tree-sitter)
        (go +lsp +tree-sitter)
        (javascript +lsp)
-       (org +roam2 +pretty)
+       (org +roam2)
        (rest +jq)
        emacs-lisp
        yaml
