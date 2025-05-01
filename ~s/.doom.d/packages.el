@@ -41,7 +41,8 @@
 
 (package! awqat
   :recipe (:host github
-           :repo "luggages/awqat"))     ; obeying the almighty.
+           :repo "larrasket/awqat"
+           :branch "feature/notificaton"))     ; obeying the almighty.
 
 
 (unpin! vertico)
