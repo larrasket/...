@@ -42,7 +42,7 @@
 (package! awqat
   :recipe (:host github
            :repo "larrasket/awqat"
-           :branch "feature/notificaton"))     ; obeying the almighty.
+           :branch "feature/notification"))     ; obeying the almighty.
 
 
 (unpin! vertico)

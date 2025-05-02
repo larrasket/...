@@ -124,3 +124,5 @@
 ;; (modify-all-frames-parameters '((inhibit-double-buffering . t)))
   (add-to-list 'default-frame-alist    '(ns-appearance . 'dark))
   (add-to-list 'default-frame-alist    '(ns-transparent-titlebar . t)))
+
+(awqat-notification-mode 1)
