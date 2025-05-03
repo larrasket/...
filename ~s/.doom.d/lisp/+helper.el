@@ -67,6 +67,7 @@
         (deactivate-input-method))
     (progn
       (setq bidi-paragraph-direction 'right-to-left)
+      (jinx-mode -1)
       (set-input-method "arabic")))
   (message "Direction: %s, Input method: %s"
            bidi-paragraph-direction
