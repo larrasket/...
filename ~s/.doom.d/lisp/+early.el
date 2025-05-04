@@ -67,6 +67,8 @@ Excludes themes in the predefined skip list."
                       doom-oksolar-dark
                       doom-oksolar-light
                       doom-nord-light
+                      doom-old-hope
+                      doom-opera-light
                       doom-molokai))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
          (available-themes (seq-filter (lambda (theme)
