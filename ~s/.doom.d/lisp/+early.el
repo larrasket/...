@@ -52,6 +52,21 @@ Excludes themes in the predefined skip list."
                       doom-laserwave
                       doom-meltbus
                       doom-manegarm
+                      doom-monokai-octagon
+                      doom-monokai-pro
+                      doom-monokai-spectrum
+                      doom-monokai-ristretto
+                      doom-moonlight
+                      doom-nord-aurora
+                      doom-nord-light
+                      doom-nord
+                      doom-nova
+                      doom-oceanic-next
+                      doom-one
+                      doom-one-light
+                      doom-oksolar-dark
+                      doom-oksolar-light
+                      doom-nord-light
                       doom-molokai))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
          (available-themes (seq-filter (lambda (theme)
