@@ -32,7 +32,7 @@
       ;; [2025-03-31 Mon 05:38] `doom-material-dark' is nice, dark.
       ;; [2025-04-15 Tue 11:17] `doom-miramare' is beautiful, dark.
       ;; [2025-04-22 Tue 11:48] `doom-molokai' is nice, dark.
-      ;; [2025-04-25 Fri 18:01] `doom-molokai' is not nice.
+      ;; [2025-05-12 Mon 01:34] `doom-outrun-electric' is great.
       doom-theme                                        (salih/get-random-theme-full 1)
       doom-modeline-icon                                t
       doom-modeline-height                              32
