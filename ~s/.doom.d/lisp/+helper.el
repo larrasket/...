@@ -226,6 +226,12 @@ I was learning competitive programming :)"
   (let ((default-directory (concat salih/source-directory "/")))
     (call-interactively 'find-file)))
 
+(defun salih/open-film ()
+  "Search for a file in ~/me and open it."
+  (interactive)
+  (let ((default-directory "~/me/cinema/"))
+    (call-interactively 'find-file)))
+
 (defun salih/open-book-zathura ()
   "Search for a file in ~/me and open it. If the file is a PDF, open it in
 Zathura."
