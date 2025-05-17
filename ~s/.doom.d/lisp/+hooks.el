@@ -175,7 +175,7 @@ things. Corinthians 13:4-7.")))
 
 ;; init
 ;; (centaur-tabs-mode)
-(breadcrumb-mode)
+;; (breadcrumb-mode)
 ;; (cocaine-line-mode)                     ;
 (yas-global-mode 1)
 ;; (vertico-buffer-mode)

@@ -20,10 +20,7 @@
 
       ;; fonts
       doom-font
-      (font-spec :family "PragmataPro" :size 16)
-      ;; (concat
-      ;;  "Pragmasevka:pixelsize=17"
-      ;;  ":antialias=true:hinting=true:autohint=false:hintstyle=3")
+      (font-spec :family "Aporetic Sans Mono" :size 18)
 
 
       ;; modeline
