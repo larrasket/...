@@ -148,10 +148,10 @@
  (insert "\n"
          (+doom-dashboard--center
           +doom-dashboard--width
-           "Love is not boastful or self-seeking. It does not insist on its own
-way; it is not irritable or resentful; it does not rejoice in wrongdoing, but
-rejoices in the truth. It bears all things, hopes all things, endures all
-things. Corinthians 13:4-7.")))
+          (concat
+           "The fear of the Lord is the beginning"
+           " of wisdom; all those who practice it have\na good understanding."
+           " His praise endures forever."))))
 
 
 
