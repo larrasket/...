@@ -20,7 +20,7 @@
 
       ;; fonts
       doom-font
-      (font-spec :family "PragmataPro" :size 16)
+      (font-spec :family "Iosevka" :size 16)
       ;; (concat
       ;;  "Pragmasevka:pixelsize=17"
       ;;  ":antialias=true:hinting=true:autohint=false:hintstyle=3")
