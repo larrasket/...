@@ -504,7 +504,8 @@
 (map!
  :map mu4e-view-mode-map
  :n
- ";" #'salih/mu4e-go-to-url
+ ";"       #'salih/mu4e-go-to-url
+ "C-c C-b" #'salih/mu4e-view-and-copy-html
  "C-c C-c" #'salih/mu4e-org-store-and-capture)
 
 (map!

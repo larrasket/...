@@ -1505,5 +1505,11 @@ check."
     (when node
       (org-roam-buffer-display-dedicated node))))
 
+(defun salih/mu4e-view-and-copy-html ()
+  "View message as HTML in temp browser and copy to clipboard."
+  (interactive)
+  (let* ((msg (mu4e-message-at-point))
+         (html-temp-file (make-temp-file "mu4e-html-" nil ".html")))
+    (mu4e-action-view-in-browser msg)))
 
 (provide '+helper)
