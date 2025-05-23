@@ -44,10 +44,16 @@ Excludes themes in the predefined skip list."
                       doom-fairy-floss
                       doom-feather-dark
                       doom-gruvbox-light
+                      doom-plain
                       doom-henna
+                      doom-plain
                       doom-homage-black
                       doom-homage-white
                       doom-flatwhite
+                      doom-palenight
+                      doom-peacock
+                      doom-pine
+                      doom-plain-dark
                       doom-lantern
                       doom-laserwave
                       doom-meltbus
