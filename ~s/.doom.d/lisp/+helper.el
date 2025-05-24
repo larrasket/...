@@ -920,8 +920,8 @@ Version 2015-07-30"
   (interactive)
   (let ((current-prefix-arg '(16)))
     (if (eq major-mode 'org-mode)
-        (insert "- "))
-    (call-interactively 'org-time-stamp-inactive)
+        (call-interactively 'org-add-note)
+      (call-interactively 'org-time-stamp-inactive))
     (insert " ")))
 
 (defun salih/open-kitty-in-current-directory ()
