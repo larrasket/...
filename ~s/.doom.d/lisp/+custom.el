@@ -283,6 +283,11 @@ Respects `doom-modeline-enable-word-count'."
   (setq org-modern-tag nil
         org-modern-todo nil))
 
+(after! magit
+  (setq git-commit-style-convention-checks
+      (cl-set-difference git-commit-style-convention-checks
+                         '(overlong-summary-line non-empty-second-line))))
+
 
 (put 'salih/modeline-major-mode 'risky-local-variable t)
 
