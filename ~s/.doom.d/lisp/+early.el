@@ -38,9 +38,14 @@
   "Get a different theme every week based on the week number of the year.
 Excludes themes in the predefined skip list."
   (let* ((skip-list '(doom-bluloco-dark doom-bluloco-light doom-challenger-deep
+                      doom-solarized-dark-high-contrast
+                      doom-solarized-dark
                       doom-city-lights
+                      doom-sourcerer
+                      doom-shades-of-purple
                       doom-dark+
                       doom-ephemeral
+                      doom-snazzy
                       doom-fairy-floss
                       doom-feather-dark
                       doom-gruvbox-light
