@@ -163,6 +163,8 @@
 
       gcmh-high-cons-threshold                          (* 10 gcmh-high-cons-threshold)
 
+      jinx-languages                                    "en_US ar_EG"
+
       ;; translation
       gt-langs                                          `("en" "ar")
       gt-default-translator
