@@ -34,7 +34,7 @@
       ;; [2025-04-22 Tue 11:48] `doom-molokai' is nice, dark.
       ;; [2025-05-12 Mon 01:34] `doom-outrun-electric' is great.
       ;; [2025-05-28 Wed 16:55] `doom-solarized-light' is nice, light
-      doom-theme                                        (salih/get-random-theme-full 1)
+      doom-theme                                        (salih/get-random-theme-full 2)
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative

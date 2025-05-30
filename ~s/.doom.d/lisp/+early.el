@@ -40,6 +40,9 @@ Excludes themes in the predefined skip list."
   (let* ((skip-list '(doom-bluloco-dark doom-bluloco-light doom-challenger-deep
                       doom-solarized-dark-high-contrast
                       doom-solarized-dark
+                      doom-spacegrey
+                      doom-tokyo-night
+                      doom-tomorrow-day
                       doom-city-lights
                       doom-sourcerer
                       doom-shades-of-purple
