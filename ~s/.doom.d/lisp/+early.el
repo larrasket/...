@@ -37,8 +37,11 @@
 (defun salih/get-random-theme-full (inc)
   "Get a different theme every week based on the week number of the year.
 Excludes themes in the predefined skip list."
+  ;; [2025-06-04 Wed 12:19] at this point I feel it would have been easier to
+  ;; just pick the themes I would have used.
   (let* ((skip-list '(doom-bluloco-dark doom-bluloco-light doom-challenger-deep
                       doom-solarized-dark-high-contrast
+                      modus-operandi-deuteranopia
                       doom-solarized-dark
                       doom-spacegrey
                       doom-tokyo-night
@@ -46,6 +49,7 @@ Excludes themes in the predefined skip list."
                       doom-city-lights
                       doom-sourcerer
                       doom-shades-of-purple
+                      doom-vibrant
                       doom-dark+
                       doom-ephemeral
                       doom-snazzy
@@ -82,6 +86,11 @@ Excludes themes in the predefined skip list."
                       doom-oksolar-light
                       doom-nord-light
                       doom-old-hope
+                      doom-wilmersdorf
+                      doom-winter-is-coming-dark-blue
+                      doom-winter-is-coming-light
+                      doom-xcode
+                      doom-tomorrow-night
                       doom-opera-light
                       doom-molokai))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
