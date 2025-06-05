@@ -1512,4 +1512,10 @@ check."
          (html-temp-file (make-temp-file "mu4e-html-" nil ".html")))
     (mu4e-action-view-in-browser msg)))
 
+(defun salih/html2org-clipboard ()
+  "Convert clipboard contents from HTML to Org and then paste (yank)."
+  (interactive)
+  (kill-new (shell-command-to-string "osascript -e 'the clipboard as \"HTML\"' | perl -ne 'print chr foreach unpack(\"C*\",pack(\"H*\",substr($_,11,-3)))' | pandoc -f html -t json | pandoc -f json -t org | sed 's/ / /g'"))
+  (yank))
+
 (provide '+helper)
