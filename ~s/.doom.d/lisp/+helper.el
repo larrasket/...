@@ -1530,4 +1530,20 @@ check."
           (concat consult-ripgrep-args " -g *.org")))
     (consult-ripgrep org-roam-directory pattern)))
 
+(defun salih/open-journal-file-for-today ()
+  "List journal files in /Users/l/roam/journal that match today's MM-DD and let me open one."
+  (interactive)
+  (let* ((journal-dir "~/roam/journal/")
+         (today (decode-time (current-time)))
+         (month (format "%02d" (nth 4 today)))
+         (day (format "%02d" (nth 3 today)))
+         ;; Pattern to match filenames like 2023-06-08.org.gpg for today's MM-DD
+         (match-pattern (format "-%s-%s\\.org\\.gpg$" month day))
+         (files (directory-files journal-dir nil match-pattern)))
+    (if files
+        (let ((file-to-open (completing-read "Open journal file: " files nil t)))
+          (find-file (expand-file-name file-to-open journal-dir)))
+      (message "No journal files found for today (%s-%s)" month day))))
+
+
 (provide '+helper)
