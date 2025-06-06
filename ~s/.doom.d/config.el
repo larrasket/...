@@ -127,8 +127,5 @@
   (add-to-list 'default-frame-alist    '(ns-transparent-titlebar . t)))
 
 
-
-
-
 ;; TODO this was merged to Awqat, we need to move to them
 (awqat-notification-mode 1)
