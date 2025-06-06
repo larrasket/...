@@ -1518,4 +1518,16 @@ check."
   (kill-new (shell-command-to-string "osascript -e 'the clipboard as \"HTML\"' | perl -ne 'print chr foreach unpack(\"C*\",pack(\"H*\",substr($_,11,-3)))' | pandoc -f html -t json | pandoc -f json -t org | sed 's/ / /g'"))
   (yank))
 
+(defun salih/org-search-entries-with-today-date ()
+  "Search all Org files for timestamps matching today's day and month."
+  (interactive)
+  (let* ((today (decode-time (current-time)))
+         (day (format "%02d" (nth 3 today)))
+         (month (format "%02d" (nth 4 today)))
+         ;; Match both active <YYYY-MM-DD ...> and inactive [YYYY-MM-DD ...]
+         (pattern (format "\\([<[]\\)[0-9]\\{4\\}-%s-%s[^]>]*[]>]?" month day))
+         (consult-ripgrep-args
+          (concat consult-ripgrep-args " -g *.org")))
+    (consult-ripgrep org-roam-directory pattern)))
+
 (provide '+helper)
