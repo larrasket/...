@@ -92,7 +92,8 @@ Excludes themes in the predefined skip list."
                       doom-xcode
                       doom-tomorrow-night
                       doom-opera-light
-                      doom-molokai))
+                      doom-molokai
+                      modus-operandi))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
          (available-themes (seq-filter (lambda (theme)
                                          (not (member theme skip-list)))
