@@ -67,7 +67,7 @@
       safe-local-variable-values
       '((org-download-image-dir
          . "../i")
-        (salih/rebuild . t)))
+        (salih/rebuild . t))
       ;; currently org causes some annoying warnings because of org-element
       ;; breaking API updates.
       ;; [2024-04-26 Fri 02:01] I wrote "currently" above a long time ago
