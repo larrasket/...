@@ -75,7 +75,8 @@
       ;; if it is still the case
       ;; [2024-11-20 Wed 11:45] Let's try without it!
       ;; [2024-11-22 Fri 12:07] Works fine so far.
-      ;; warning-minimum-level                             :error)
+      ;; [2025-06-08 Sun 12:20] It's back!
+      warning-minimum-level                             :error)
 
 
 (s/require
