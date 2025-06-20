@@ -65,3 +65,4 @@ flycheck_config.el
 /~s/.config/qBittorrent/qBittorrent-data.ini
 /~s/.config/jgit/
 /~s/.config/gcloud/
+flycheck_*
