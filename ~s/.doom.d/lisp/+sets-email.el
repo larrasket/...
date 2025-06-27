@@ -16,7 +16,7 @@
                                                   ,user-mail-address)
         mu4e-headers-visible-lines              10
         mu4e-update-interval                    500
-        mu4e-compose-signature                  (format "Regards\n%s"
+        mu4e-compose-signature                  (format "Whatever\n%s"
                                                         user-first-name)
         smtpmail-default-smtp-server            user-stmp-server
         smtpmail-smtp-server                    smtpmail-default-smtp-server

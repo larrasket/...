@@ -93,6 +93,7 @@ Excludes themes in the predefined skip list."
                       doom-tomorrow-night
                       doom-opera-light
                       doom-molokai
+                      modus-vivendi-deuteranopia
                       modus-operandi))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
          (available-themes (seq-filter (lambda (theme)
