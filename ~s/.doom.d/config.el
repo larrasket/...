@@ -77,6 +77,8 @@
       ;; [2024-11-20 Wed 11:45] Let's try without it!
       ;; [2024-11-22 Fri 12:07] Works fine so far.
       ;; [2025-06-08 Sun 12:20] It's back!
+      ;; [2025-06-27 Fri 20:41] https://github.com/org-noter/org-noter/issues/111
+      ;; [2025-06-27 Fri 20:42] https://list.orgmode.org/87qzzfd7bf.fsf@localhost/T/#t
       warning-minimum-level                             :error)
 
 
