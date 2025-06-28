@@ -6,6 +6,7 @@
         org-log-done                                            nil
         org-agenda-skip-scheduled-if-done                       nil
         org-use-tag-inheritance                                 t
+        org-log-reschedule                                      'note
         org-agenda-block-separator                              #x2501
         org-element-use-cache                                   t
         org-noter-auto-save-last-location                       t
