@@ -10,7 +10,7 @@
        doom
        doom-dashboard
        hl-todo
-       (ligatures +pragmata-pro)
+       (ligatures +iosevka +extra)
        (popup +defaults)
        modeline
        workspaces
