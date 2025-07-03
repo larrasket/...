@@ -2,28 +2,6 @@
     "global": { "show_in_menu_bar": false },
     "profiles": [
         {
-            "complex_modifications": {
-                "rules": [
-                    {
-                        "description": "Change fn+c to cmd+c (copy)",
-                        "manipulators": [
-                            {
-                                "from": {
-                                    "key_code": "c",
-                                    "modifiers": { "mandatory": ["fn"] }
-                                },
-                                "to": [
-                                    {
-                                        "key_code": "c",
-                                        "modifiers": ["left_control"]
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    }
-                ]
-            },
             "devices": [
                 {
                     "identifiers": {
