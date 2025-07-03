@@ -1,6 +1,7 @@
 (require 'f)
 (defalias 'l 'list)
 
+(add-to-list 'load-path "/opt/homebrew/Cellar/mu/1.12.11/share/emacs/site-lisp/mu/mu4e")
 (setq-default frame-title-format                        '("%b")
               shr-inhibit-images                        t
               bidi-paragraph-direction                  'left-to-right

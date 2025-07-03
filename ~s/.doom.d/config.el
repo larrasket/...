@@ -4,7 +4,6 @@
 (require 'go-translate)                 ; define translation engine in config.el
 (require 'doom-modeline)                ; I use it for segment definition only
 (require 'cocaine-line)                 ; my modeline.
-
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
       user-first-name                                   "Salih"
@@ -112,6 +111,7 @@
 
 
 (when (eq system-type 'darwin)
+
   (require 'ls-lisp)
   (setq mac-option-key-is-meta               nil
         mac-command-key-is-meta              t
@@ -133,3 +133,6 @@
 
 ;; TODO this was merged to Awqat, we need to move to them
 (awqat-notification-mode 1)
+(setq mac-function-modifier 'control)
+
+(menu-bar-mode -1)
