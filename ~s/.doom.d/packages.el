@@ -100,10 +100,10 @@
 
 (package! org-bullets)
 
+
+
 ;; TODO remove when it is in melpa
 (package! doric-themes
   :recipe
   (:host github
    :repo "protesilaos/doric-themes"))
-
-(package! exec-path-from-shell)
