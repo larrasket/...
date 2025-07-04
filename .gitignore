@@ -67,3 +67,6 @@ flycheck_config.el
 /~s/.config/gcloud/
 flycheck_*
 /~s/.config/uv/
+DS_STORE
+/.DS_Store
+/~s/.DS_Store
