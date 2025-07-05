@@ -52,8 +52,8 @@
 
        :lang
        (csharp +lsp +dotnet +tree-sitter)
-       (clojure +lsp +tree-sitter)
        (latex +flod +latexmk +lsp)
+       (clojure +lsp +tree-sitter)
        (julia +lsp +tree-sitter)
        (cc +lsp +tree-sitter)
        (go +lsp +tree-sitter)
