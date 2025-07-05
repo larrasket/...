@@ -111,7 +111,7 @@ _build_prompt() {
 
 # Conv
 alias grep='grep --colour=auto'
-alias sudo='sudo ' # Fix sudo in alias
+alias sudo='sudo ' # fix sudo in alias
 alias serve='npx serve'
 # [2025-03-06 Thu 13:33] wrote this around 5 years ago and I'm not going to
 # delete it
@@ -152,7 +152,7 @@ alias djvu2pdf='docker run --rm -u $(id -u):$(id -g) -v $(pwd):/opt/work ilyabys
 alias tadwin='EMACS=/home/l/.emacs.db/ && /home/l/blog/tadwin.el'
 alias pub='cd ~/blog && tadwin && cd public && flyctl deploy'
 alias docker='sudo docker'
-alias anydesk='docker run --rm --name="anydesk" --device="/dev/dri:/dev/dri" --env="DISPLAY=$DISPLAY" --env="XAUTHORITY=/home/udocker/.XAuthority" --env="PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native" --mount="type=bind,source=$(pwd)/tmp/udocker,target=/home/udocker" --mount="type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix" --mount="type=bind,source=$XAUTHORITY,target=/home/udocker/.XAuthority" --mount="type=bind,source=${XDG_RUNTIME_DIR}/pulse/native,target=${XDG_RUNTIME_DIR}/pulse/native" --net="host" alireaza/anydesk'
+alias anydesk_linux='docker run --rm --name="anydesk" --device="/dev/dri:/dev/dri" --env="DISPLAY=$DISPLAY" --env="XAUTHORITY=/home/udocker/.XAuthority" --env="PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native" --mount="type=bind,source=$(pwd)/tmp/udocker,target=/home/udocker" --mount="type=bind,source=/tmp/.X11-unix,target=/tmp/.X11-unix" --mount="type=bind,source=$XAUTHORITY,target=/home/udocker/.XAuthority" --mount="type=bind,source=${XDG_RUNTIME_DIR}/pulse/native,target=${XDG_RUNTIME_DIR}/pulse/native" --net="host" alireaza/anydesk'
 
 alias flush='sudo nft flush ruleset'
 alias get_local_ip='ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '\''{print $2}'\'''
