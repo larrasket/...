@@ -36,6 +36,9 @@
       ;; [2025-05-28 Wed 16:55] `doom-solarized-light' is nice, light
       doom-theme                                        (salih/get-random-theme-full 1)
       ;; [2025-06-25 Wed 15:30] `modus-vivendi-tinted' is cozy, dark
+      ;; [2025-07-05 Sat 18:28] `modus-vivendi-tinted' is okay, dark
+      ;; [2025-07-05 Sat 18:43] Just found out that my feeling towards the same
+      ;; theme changed over couple of days.
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
