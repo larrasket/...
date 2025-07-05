@@ -109,10 +109,6 @@ _build_prompt() {
 	return 0
 }
 
-leinn() {
-	lein new simple-layout "$1" -- 1.11.0
-}
-
 # Conv
 alias grep='grep --colour=auto'
 alias sudo='sudo ' # Fix sudo in alias
