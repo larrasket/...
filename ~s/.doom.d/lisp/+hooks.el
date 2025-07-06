@@ -158,7 +158,6 @@
 ;; Activate the advice
 (ad-activate 'org-agenda-get-some-entry-text)
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
-(add-to-list 'org-babel-load-languages '(julia-vterm . t))
 
 (remove-hook 'vterm-mode-hook                   #'hide-mode-line-mode)
 (remove-hook 'doom-first-input-hook             #'evil-snipe-mode)

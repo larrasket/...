@@ -1,7 +1,7 @@
 (require 'awqat)                        ; for prayer support in the agenda
-(require 'vulpea)                       ; org-roam project tasks in org-agenda
+;; (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
-(require 'go-translate)                 ; define translation engine in config.el
+;; (require 'go-translate)                 ; define translation engine in config.el
 (require 'doom-modeline)                ; I use it for segment definition only
 (require 'cocaine-line)                 ; my modeline.
 
@@ -34,8 +34,8 @@
       ;; [2025-04-22 Tue 11:48] `doom-molokai' is nice, dark.
       ;; [2025-05-12 Mon 01:34] `doom-outrun-electric' is great.
       ;; [2025-05-28 Wed 16:55] `doom-solarized-light' is nice, light
-      doom-theme                                        (salih/get-random-theme-full 1)
       ;; [2025-06-25 Wed 15:30] `modus-vivendi-tinted' is cozy, dark
+      doom-theme                                        (salih/get-random-theme-full 3)
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -83,8 +83,8 @@
 
 
 (s/require
- '+sets-email                           ; mu4e
- '+sets-school                          ; school settings (TeX & BibTeX)
+ ;; '+sets-email                           ; mu4e
+ ;; '+sets-school                          ; school settings (TeX & BibTeX)
  '+sets-org                             ; org mode settings
  '+sets-inhibit                         ; other settings
  '+helper                               ; functions

@@ -5,11 +5,7 @@
 
 ;; unbinding
 
-(define-key org-mode-map (kbd "C-c C-f") nil)
-(define-key org-mode-map (kbd "C-c C-j") nil)
 (global-unset-key        (kbd "C-f"))
-(define-key org-mode-map (salih/mode "]") nil)
-(define-key org-mode-map (salih/mode "[") nil)
 (general-auto-unbind-keys)
 
 

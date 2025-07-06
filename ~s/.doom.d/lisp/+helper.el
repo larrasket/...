@@ -770,56 +770,7 @@ NODE-LIST."
   (mapcar (lambda (node) (org-roam-node-file (cdr node)))
           node-list))
 
-(setq roam-titles (salih/org-roam-get-node-titles
-                   (org-roam-node-read--completions)))
 (defun salih/get-org-roam-titles () roam-titles)
-
-(setq org-roam-buffer-source
-      `(:name     "Org-roam"
-        :hidden   nil
-        :narrow   ,consult-org-roam-buffer-narrow-key
-        :annotate ,(lambda (cand)
-                     (let* ((name (org-roam-node-from-title-or-alias cand)))
-                       (if name (file-name-nondirectory
-                                 (org-roam-node-file name)) "")))
-
-        :action ,(lambda (name)
-                   (if salih/temp-roam-insert
-                       (progn
-                         (setq salih/temp-roam-insert nil)
-                         (let* ((node (org-roam-node-from-title-or-alias name))
-                                (description (org-roam-node-title node))
-                                (id (org-roam-node-id node)))
-                           (insert (org-link-make-string
-                                    (concat "id:" id)
-                                    description))
-                           (run-hook-with-args 'org-roam-post-node-insert-hook
-                                               id
-                                               description)))
-                     (org-roam-node-visit
-                      (org-roam-node-from-title-or-alias name))))
-
-        :new ,(lambda (name)
-                (let* ((n (org-roam-node-create :title name)))
-                  (org-roam-capture- :node n)
-                  (when salih/temp-roam-insert
-                    (progn
-                      (setq salih/temp-roam-insert nil)
-                      (let* ((node (org-roam-node-from-title-or-alias name))
-                             (description (org-roam-node-title node))
-                             (id (org-roam-node-id node)))
-                        (insert (org-link-make-string
-                                 (concat "id:" id)
-                                 description))
-                        (run-hook-with-args 'org-roam-post-node-insert-hook
-                                            id
-                                            description)))))
-
-
-                (setq roam-titles (salih/org-roam-get-node-titles
-                                   (org-roam-node-read--completions))))
-
-        :items    ,#'salih/get-org-roam-titles))
 
 (defun salih/org-noter-pdf--pdf-view-get-precise-info (mode window)
   (when (eq mode 'pdf-view-mode)
@@ -1043,44 +994,6 @@ ARGS is `element' in `org-ql-view--format-element'"
                      "#\\+[tT][iI][tT][lL][eE]: *" "[\n\t ]+")
       (deft-base-filename file))))
 
-(cl-defmethod org-roam-node-type ((node org-roam-node))
-  "Return the TYPE of NODE."
-  (condition-case nil
-      (file-name-nondirectory
-       (directory-file-name
-        (file-name-directory
-         (file-relative-name (org-roam-node-file node) org-roam-directory))))
-    (error "")))
-
-(cl-defmethod org-roam-node-backlinkscount-number ((node org-roam-node))
-  "Access slot \"backlinks\" of org-roam-node struct CL-X. This is identical
-toorg-roam-node-backlinkscount' with the difference that it returns a number
-instead of a fromatted string. This is to be used in
-`org-roam-node-sort-by-backlinks'"
-  (let* ((count (caar (org-roam-db-query [:select (funcall count source)
-                                          :from links :where (= dest $s1)
-                                          :and (= type "id")]
-                                         (org-roam-node-id node)))))
-    count))
-
-(defun org-roam-node-sort-by-backlinks (completion-a completion-b)
-  "Sorting function for org-roam that sorts the list of nodes by the number of
-backlinks. This is the sorting function in `org-roam-node-find-by-backlinks'"
-  (let ((node-a (cdr completion-a))
-        (node-b (cdr completion-b)))
-    (>= (org-roam-node-backlinkscount-number node-a)
-        (org-roam-node-backlinkscount-number node-b))))
-
-(defun org-roam-node-find-by-backlinks ()
-  "Essentially works like
-org-roam-node-find' (although it uses a combination offind-file' and
-org-roam-node-read' to accomplish that and notorg-roam-node-find' as only
-org-roam-node-read' can take a sorting function as an argument) but the list of
-nodes is sorted by the number of backlinks instead of most recent nodes. Sorting
-is done with org-roam-node-sort-by-backlinks'"
-  (interactive)
-  (find-file (org-roam-node-file
-              (org-roam-node-read nil nil #'org-roam-node-sort-by-backlinks))))
 
 (defun salih/consult-org-roam-search-org-only ()
   (interactive)
