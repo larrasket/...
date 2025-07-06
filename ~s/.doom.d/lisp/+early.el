@@ -25,7 +25,7 @@ apps are not started from a shell."
               org-download-image-dir                    "~/roam/media"
               indent-tabs-mode                          nil
               pdf-view-display-size                     'fit-width
-              display-line-numbers-width                8)
+              display-line-numbers-width                4)
 
 (defmacro s/require (&rest packages)
   `(progn ,@(mapcar (lambda (pkg) `(if ,pkg (require ,pkg))) packages)))
