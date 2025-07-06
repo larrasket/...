@@ -4,9 +4,9 @@
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
+export PATH="/opt/homebrew/bin:$PATH"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-
 export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude *.srt'
 export PATH=$PATH:$HOME/.emacs.d/bin
 export PATH=$PATH:/Library/TeX/texbin/
@@ -16,6 +16,7 @@ export PATH=$PATH:$HOME/.local/bin/
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.dotnet/tools
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/Library/Python/3.9/bin
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 
 
