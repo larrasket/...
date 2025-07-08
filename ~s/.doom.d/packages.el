@@ -105,3 +105,7 @@
 (package! doric-themes)
 
 (package! spacious-padding)
+(package! flyover
+  :recipe
+  (:host github
+   :repo "konrad1977/flyover"))      ; sick modeline

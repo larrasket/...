@@ -64,6 +64,7 @@ block selection."
                          (format "%dC" (- end beg))))
                   (doom-modeline-spc)))
         'face 'doom-modeline-emphasis))))
+
  (doom-modeline-def-segment salih/irc
   "A lightweight notification icon for unread IRC buffers."
   (when (and doom-modeline-irc
