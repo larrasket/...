@@ -96,15 +96,15 @@
 
 (add-hook 'eglot-managed-mode-hook 'indent-bars-mode)
 
-(add-hook! '(clojure-mode-hook)
-  (flycheck-mode -1)
-  (flymake-mode 1)
-  (add-hook! 'eglot-managed-mode-hook :local
-    (setq completion-at-point-functions
-          (list #'cider-complete-at-point
-              #'eglot-completion-at-point
-              #'lispy-clojure-complete-at-point
-              #'yasnippet-capf))))
+;; (add-hook! '(clojure-mode-hook)
+;;   (flycheck-mode -1)
+;;   (flymake-mode 1)
+;;   (add-hook! 'eglot-managed-mode-hook :local
+;;     (setq completion-at-point-functions
+;;           (list #'cider-complete-at-point
+;;               #'eglot-completion-at-point
+;;               #'lispy-clojure-complete-at-point
+;;               #'yasnippet-capf))))
 
 
 
