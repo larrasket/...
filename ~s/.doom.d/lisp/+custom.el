@@ -205,10 +205,6 @@ Respects `doom-modeline-enable-word-count'."
 (set-popup-rules!
   '(("^\\*cider-doc" :slot -1 :size 0.3 :select t)))
 
-(after! clojure-mode
-  (set-lookup-handlers! 'cider-mode nil)
-  (set-lookup-handlers! 'clj-refactor-mode nil))
-
 (after! mixed-pitch
   (dolist (face '(org-special-keyword org-drawer org-date))
     (add-to-list 'mixed-pitch-fixed-pitch-faces face)))

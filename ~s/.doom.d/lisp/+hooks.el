@@ -117,7 +117,6 @@
 (add-hook 'csv-mode-hook                #'csv-align-mode)
 (add-hook 'after-init-hook              #'global-flycheck-mode)
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
-(add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
 
 (add-hook 'eshell-alias-load-hook       #'salih/eshell-load-bash-aliases)
 ;; (add-hook 'dired-after-readin-hook      #'salih/dired-git-info-auto-enable)
