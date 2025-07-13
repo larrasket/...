@@ -1619,7 +1619,7 @@ check."
               (when (and transcription (not (string-empty-p transcription)))
                 (insert (format "- %s" (string-trim transcription))))))
           (message "Vocal note saved to %s" filepath))
-      (message "Error: Recording file was not created at %s" filepath)))
+      (message "Error: Recording file was not created at %s" filepath))))
 
 
 (provide '+helper)
