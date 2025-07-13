@@ -11,6 +11,7 @@
       user-stmp-port                                    587
       user-short-username                               "lr0"
       user-config-repo-path                             "~/configs/~s"
+      user-org-vocal-store                              "~/roam/media/vocal"
       salih/blog-content-path                           "~/blog/content"
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
@@ -63,7 +64,7 @@
       ;; until your day is done.
       ;; [2024-08-07 Wed 19:43] currently I sleep at 07:00.
       ;; [2024-08-08 Wed 23:41] Not anymore.
-      ;; org-extend-today-until                            4
+      org-extend-today-until                            4
 
       ;; other
       auto-save-no-message                              t
