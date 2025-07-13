@@ -1548,7 +1548,7 @@ check."
 (defun salih/org-vocal-note ()
   "Record a vocal note and insert a link into the current org buffer."
   (interactive)
-  (let* ((media-dir (expand-file-name user-org-vocal-store))
+  (let* ((media-dir (expand-file-name salih/org-vocal-store))
          (timestamp (format-time-string "%Y%m%d-%H%M%S"))
          (filename (format "vocal-note-%s.wav" timestamp))
          (filepath (expand-file-name filename media-dir))
@@ -1579,7 +1579,7 @@ check."
 (defun salih/org-vocal-note-with-transcription ()
   "Record a vocal note with optional transcription (requires whisper)."
   (interactive)
-  (let* ((media-dir (expand-file-name user-org-vocal-store))
+  (let* ((media-dir (expand-file-name salih/org-vocal-store))
          (timestamp (format-time-string "%Y%m%d-%H%M%S"))
          (filename (format "vocal-note-%s.m4a" timestamp))
          (filepath (expand-file-name filename media-dir))
