@@ -25,7 +25,7 @@ apps are not started from a shell."
               org-download-image-dir                    "~/roam/media"
               indent-tabs-mode                          nil
               pdf-view-display-size                     'fit-width
-              display-line-numbers-width                8)
+              display-line-numbers-width                4)
 
 (defmacro s/require (&rest packages)
   `(progn ,@(mapcar (lambda (pkg) `(if ,pkg (require ,pkg))) packages)))
@@ -111,7 +111,8 @@ Excludes themes in the predefined skip list."
                       doom-opera-light
                       doom-molokai
                       modus-vivendi-deuteranopia
-                      modus-operandi))
+                      modus-operandi
+                      modus-vivendi-tinted))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
          (available-themes (seq-filter (lambda (theme)
                                          (not (member theme skip-list)))

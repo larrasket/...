@@ -96,15 +96,15 @@
 
 (add-hook 'eglot-managed-mode-hook 'indent-bars-mode)
 
-(add-hook! '(clojure-mode-hook)
-  (flycheck-mode -1)
-  (flymake-mode 1)
-  (add-hook! 'eglot-managed-mode-hook :local
-    (setq completion-at-point-functions
-          (list #'cider-complete-at-point
-              #'eglot-completion-at-point
-              #'lispy-clojure-complete-at-point
-              #'yasnippet-capf))))
+;; (add-hook! '(clojure-mode-hook)
+;;   (flycheck-mode -1)
+;;   (flymake-mode 1)
+;;   (add-hook! 'eglot-managed-mode-hook :local
+;;     (setq completion-at-point-functions
+;;           (list #'cider-complete-at-point
+;;               #'eglot-completion-at-point
+;;               #'lispy-clojure-complete-at-point
+;;               #'yasnippet-capf))))
 
 
 
@@ -117,7 +117,6 @@
 (add-hook 'csv-mode-hook                #'csv-align-mode)
 (add-hook 'after-init-hook              #'global-flycheck-mode)
 (add-hook 'sage-shell-after-prompt-hook #'sage-shell-view-mode)
-(add-hook 'lisp-mode-hook               #'rainbow-delimiters-mode)
 
 (add-hook 'eshell-alias-load-hook       #'salih/eshell-load-bash-aliases)
 ;; (add-hook 'dired-after-readin-hook      #'salih/dired-git-info-auto-enable)

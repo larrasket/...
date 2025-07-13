@@ -4,7 +4,6 @@
 (require 'go-translate)                 ; define translation engine in config.el
 (require 'doom-modeline)                ; I use it for segment definition only
 (require 'cocaine-line)                 ; my modeline.
-
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
       user-first-name                                   "Salih"
@@ -34,11 +33,12 @@
       ;; [2025-04-22 Tue 11:48] `doom-molokai' is nice, dark.
       ;; [2025-05-12 Mon 01:34] `doom-outrun-electric' is great.
       ;; [2025-05-28 Wed 16:55] `doom-solarized-light' is nice, light
-      doom-theme                                        (salih/get-random-theme-full 1)
       ;; [2025-06-25 Wed 15:30] `modus-vivendi-tinted' is cozy, dark
       ;; [2025-07-05 Sat 18:28] `modus-vivendi-tinted' is okay, dark
       ;; [2025-07-05 Sat 18:43] Just found out that my feeling towards the same
       ;; theme changed over couple of days.
+      ;; [2025-07-06 Sun 02:39] in fact, now I don't even like it.
+      doom-theme                                        (salih/get-random-theme-full 1)
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -140,3 +140,9 @@
 (setq mac-function-modifier 'control)
 
 (menu-bar-mode -1)
+(spacious-padding-mode)
+
+(after! flycheck
+  (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
+
+(add-hook! 'flycheck-mode-hook #'flyover-mode)

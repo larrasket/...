@@ -102,8 +102,10 @@
 
 
 
-;; TODO remove when it is in melpa
-(package! doric-themes
+(package! doric-themes)
+
+(package! spacious-padding)
+(package! flyover
   :recipe
   (:host github
-   :repo "protesilaos/doric-themes"))
+   :repo "konrad1977/flyover"))      ; sick modeline

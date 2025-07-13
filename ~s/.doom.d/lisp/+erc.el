@@ -59,5 +59,5 @@
        :nick user-short-username
        :password pass))))
 
-(provide '+erc)
 (setq doom-modeline-irc-stylize #'ignore)
+(provide '+erc)
