@@ -108,4 +108,9 @@
 (package! flyover
   :recipe
   (:host github
-   :repo "konrad1977/flyover"))      ; sick modeline
+   :repo "luggages/flyover"))      ; sick modeline
+
+(package! mito-laser-emacs
+  :recipe
+  (:host github
+   :repo "luggages/mito-laser-emacs"))
