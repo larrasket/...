@@ -36,7 +36,7 @@
        vterm
 
        :checkers
-       (syntax +childframe)
+       syntax
        ;; (spell  +flyspell)
 
        :tools

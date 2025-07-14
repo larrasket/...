@@ -143,7 +143,8 @@
 (menu-bar-mode -1)
 (spacious-padding-mode)
 
-(after! flycheck
-  (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
 
 (add-hook! 'flycheck-mode-hook #'flyover-mode)
+(setq flyover-show-at-eol t)
+(setq flyover-hide-when-cursor-is-on-same-line nil)
+(setq flyover-virtual-line-icon "──►") ;;; default its nil
