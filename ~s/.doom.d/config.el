@@ -38,7 +38,7 @@
       ;; [2025-07-05 Sat 18:43] Just found out that my feeling towards the same
       ;; theme changed over couple of days.
       ;; [2025-07-06 Sun 02:39] in fact, now I don't even like it.
-      doom-theme                                        (salih/get-random-theme-full 1)
+      doom-theme                                        (salih/get-random-theme-full 12)
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -148,3 +148,5 @@
 (setq flyover-show-at-eol t)
 (setq flyover-hide-when-cursor-is-on-same-line nil)
 (setq flyover-virtual-line-icon "──►") ;;; default its nil
+
+(remove-hook 'flycheck-mode-hook '+syntax-init-popups-h)
