@@ -150,3 +150,17 @@
 (setq flyover-virtual-line-icon "──►") ;;; default its nil
 
 (remove-hook 'flycheck-mode-hook '+syntax-init-popups-h)
+
+
+(defun salih/org-noter--try-add-highlight-before-note (&rest args)
+  "Try to add a highlight annotation if there's a selection, but don't fail if
+it doesn't work.  ARGS are ignored but accepted to work with advice system."
+  (when (pdf-view-active-region-p)
+    (condition-case err
+        (progn
+          (call-interactively #'pdf-annot-add-highlight-markup-annotation)
+          (save-buffer))
+      (error
+       (message "Failed to add highlight annotation: %s" (error-message-string err))))))
+
+(advice-add 'org-noter-insert-precise-note :before #'salih/org-noter--try-add-highlight-before-note)
