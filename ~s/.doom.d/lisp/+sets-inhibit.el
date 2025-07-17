@@ -19,8 +19,11 @@
                                                            :action doom/help))
 
       ;; fonts
+      ;; `:size' value of 29 is prefect for filming
+      ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")'
+      ;; or just remove `:size'.
       doom-font
-      (font-spec :family "Iosevka" :size 16)
+      (font-spec :family "Pragmasevka" :size 18)
       ;; (concat
       ;;  "Pragmasevka:pixelsize=17"
       ;;  ":antialias=true:hinting=true:autohint=false:hintstyle=3")

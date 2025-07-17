@@ -15,9 +15,6 @@
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
       ;; appearance
-      ;; font `:size' value of 29 is prefect for filming
-      ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")'
-      ;; or just remove `:size'.
       ;; [2024-08-06 Tue 06:33] `ef-deuteranopia-light' is amazing light theme.
       ;; [2024-09-01 Sun 00:43] `doom-rouge' is an amazing dark theme
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark' too.
@@ -38,7 +35,7 @@
       ;; [2025-07-05 Sat 18:43] Just found out that my feeling towards the same
       ;; theme changed over couple of days.
       ;; [2025-07-06 Sun 02:39] in fact, now I don't even like it.
-      doom-theme                                        (salih/get-random-theme-full 12)
+      doom-theme                                        (salih/get-random-theme-full 1)
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -141,7 +138,7 @@
 (setq mac-function-modifier 'control)
 
 (menu-bar-mode -1)
-(spacious-padding-mode)
+;; (spacious-padding-mode)
 
 
 (add-hook! 'flycheck-mode-hook #'flyover-mode)

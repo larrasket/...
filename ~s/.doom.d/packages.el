@@ -104,7 +104,7 @@
 
 (package! doric-themes)
 
-(package! spacious-padding)
+(package! spacious-padding :disable t)
 (package! flyover
   :recipe
   (:host github
