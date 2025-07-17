@@ -52,7 +52,7 @@
       +org-capture-changelog-file                       "~/blog/content/nice.org"
       +org-capture-journal-file                         "~/blog/content/stack.org"
       salih/org-roam-fleet-file                         "~/roam/main/lr.org"
-      salih/org-vocal-store                              "~/roam/media/vocal"
+      salih/org-vocal-store                             "~/roam/media/vocal"
       +org-capture-todo-file                            "~/roam/main/life.org"
 
       ;; this option is useful when you are up after 00:00. set 0 to the value
