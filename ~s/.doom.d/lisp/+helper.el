@@ -1458,5 +1458,81 @@ check."
           (find-file (expand-file-name file-to-open journal-dir)))
       (message "No journal files found for today (%s-%s)" month day))))
 
+(defun salih/org-vocal-note ()
+  "Record a vocal note and insert a link into the current org buffer."
+  (interactive)
+  (let* ((media-dir (expand-file-name salih/org-vocal-store))
+         (timestamp (format-time-string "%Y%m%d-%H%M%S"))
+         (filename (format "vocal-note-%s.wav" timestamp))
+         (filepath (expand-file-name filename media-dir))
+         (recording-process nil))
+    (unless (file-directory-p media-dir)
+      (make-directory media-dir t))
+    (message "Recording... Press any key to stop.")
+    (setq recording-process
+          (start-process "vocal-recording" nil "rec"
+                        "-r" "44100"
+                        "-c" "1"
+                        "-b" "16"
+                        filepath))
+    (read-char)
+    (when (and recording-process (process-live-p recording-process))
+      (signal-process recording-process 'SIGINT)
+      (while (process-live-p recording-process)
+        (sleep-for 0.1))
+      (sleep-for 0.5)) ; Additional time for file to be written
+    (message "Recording stopped.")
+    ;; Verify file exists before inserting link
+    (if (file-exists-p filepath)
+        (progn
+          (insert (format "[[file:%s][%s]] " filepath timestamp))
+          (message "Vocal note saved to %s" filepath))
+      (message "Error: Recording file was not created at %s" filepath))))
+
+(defun salih/org-vocal-note-with-transcription ()
+  "Record a vocal note with optional transcription (requires whisper)."
+  (interactive)
+  (let* ((media-dir (expand-file-name salih/org-vocal-store))
+         (timestamp (format-time-string "%Y%m%d-%H%M%S"))
+         (filename (format "vocal-note-%s.m4a" timestamp))
+         (filepath (expand-file-name filename media-dir))
+         (recording-process nil)
+         (transcribe-p (y-or-n-p "Transcribe audio? (requires whisper) ")))
+    (unless (file-directory-p media-dir)
+      (make-directory media-dir t))
+    (message "Recording... Press any key to stop.")
+    (setq recording-process
+          (start-process "vocal-recording" nil "ffmpeg"
+                        "-f" "avfoundation"
+                        "-i" ":0"
+                        "-acodec" "aac"
+                        "-ar" "44100"
+                        "-ac" "1"
+                        "-y"
+                        filepath))
+    (read-char)
+    (when (and recording-process (process-live-p recording-process))
+      (signal-process recording-process 'SIGINT)
+      (while (process-live-p recording-process)
+        (sleep-for 0.1))
+      (sleep-for 1)) ; More time for ffmpeg to finalize the file
+    (message "Recording stopped.")
+    ;; Verify file exists before proceeding
+    (if (file-exists-p filepath)
+        (progn
+          (insert (format "[[file:%s][🎤 %s]] " filepath timestamp))
+          (when transcribe-p
+            (message "Transcribing audio...")
+            (let ((transcription
+                   (shell-command-to-string
+                    (format
+                     "whisper --model small --output-format txt --output-dir /tmp %s && cat /tmp/%s.txt"
+                     (shell-quote-argument filepath)
+                     (file-name-sans-extension filename)))))
+              (when (and transcription (not (string-empty-p transcription)))
+                (insert (format "- %s" (string-trim transcription))))))
+          (message "Vocal note saved to %s" filepath))
+      (message "Error: Recording file was not created at %s" filepath))))
+
 
 (provide '+helper)

@@ -38,7 +38,7 @@
       ;; [2025-07-05 Sat 18:43] Just found out that my feeling towards the same
       ;; theme changed over couple of days.
       ;; [2025-07-06 Sun 02:39] in fact, now I don't even like it.
-      doom-theme                                        (salih/get-random-theme-full 1)
+      doom-theme                                        (salih/get-random-theme-full 12)
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -55,6 +55,7 @@
       +org-capture-changelog-file                       "~/blog/content/nice.org"
       +org-capture-journal-file                         "~/blog/content/stack.org"
       salih/org-roam-fleet-file                         "~/roam/main/lr.org"
+      salih/org-vocal-store                              "~/roam/media/vocal"
       +org-capture-todo-file                            "~/roam/main/life.org"
 
       ;; this option is useful when you are up after 00:00. set 0 to the value
@@ -63,7 +64,7 @@
       ;; until your day is done.
       ;; [2024-08-07 Wed 19:43] currently I sleep at 07:00.
       ;; [2024-08-08 Wed 23:41] Not anymore.
-      ;; org-extend-today-until                            4
+      org-extend-today-until                            4
 
       ;; other
       auto-save-no-message                              t
@@ -142,7 +143,10 @@
 (menu-bar-mode -1)
 (spacious-padding-mode)
 
-(after! flycheck
-  (setq flycheck-display-errors-function #'flycheck-display-error-messages-unless-error-list))
 
 (add-hook! 'flycheck-mode-hook #'flyover-mode)
+(setq flyover-show-at-eol t)
+(setq flyover-hide-when-cursor-is-on-same-line nil)
+(setq flyover-virtual-line-icon "──►") ;;; default its nil
+
+(remove-hook 'flycheck-mode-hook '+syntax-init-popups-h)
