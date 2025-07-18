@@ -61,7 +61,7 @@
       ;; until your day is done.
       ;; [2024-08-07 Wed 19:43] currently I sleep at 07:00.
       ;; [2024-08-08 Wed 23:41] Not anymore.
-      org-extend-today-until                            4
+      org-extend-today-until                            3
 
       ;; other
       auto-save-no-message                              t
