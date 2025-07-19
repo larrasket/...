@@ -113,8 +113,9 @@
 
 
 (when (eq system-type 'darwin)
-
+  (menu-bar-mode -1)
   (require 'ls-lisp)
+  (setq mac-function-modifier 'control)
   (setq mac-option-key-is-meta               nil
         mac-command-key-is-meta              t
         mac-command-modifier                 'meta
@@ -135,9 +136,6 @@
 
 ;; TODO this was merged to Awqat, we need to move to them
 (awqat-notification-mode 1)
-(setq mac-function-modifier 'control)
-
-(menu-bar-mode -1)
 ;; (spacious-padding-mode)
 
 
