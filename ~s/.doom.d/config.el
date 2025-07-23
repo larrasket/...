@@ -35,6 +35,7 @@
       ;; [2025-07-05 Sat 18:43] Just found out that my feeling towards the same
       ;; theme changed over couple of days.
       ;; [2025-07-06 Sun 02:39] in fact, now I don't even like it.
+      ;; [2025-07-23 Wed 23:54] `ef-bio' is good, dark.
       doom-theme                                        (salih/get-random-theme-full 1)
       doom-modeline-icon                                t
       doom-modeline-height                              32
