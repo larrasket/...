@@ -1,3 +1,4 @@
+;;; config.el -*- lexical-binding: t; -*-
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
