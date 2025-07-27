@@ -82,8 +82,6 @@
   (:host github
    :repo "luggages/cocaine-line"))      ; sick modeline
 
-(package! mu4e-alert)
-
 (package! org-noter :pin "9d42ebc626981b6736b8078fb216b30cc5e34d21")
 
 (package! dired-preview)
