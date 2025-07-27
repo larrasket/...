@@ -141,7 +141,6 @@
 (setq mac-function-modifier 'control)
 
 (menu-bar-mode -1)
-(spacious-padding-mode)
 
 
 (add-hook! 'flycheck-mode-hook #'flyover-mode)
