@@ -41,6 +41,7 @@
 
        :tools
        biblio
+       terraform
        tree-sitter
        (lookup +dictionary +offline)
        (lsp +peak +eglot)

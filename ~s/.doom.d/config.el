@@ -1,3 +1,4 @@
+;;; config.el -*- lexical-binding: t; -*-
 (require 'awqat)                        ; for prayer support in the agenda
 (require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
@@ -15,9 +16,6 @@
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
       ;; appearance
-      ;; font `:size' value of 29 is prefect for filming
-      ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")'
-      ;; or just remove `:size'.
       ;; [2024-08-06 Tue 06:33] `ef-deuteranopia-light' is amazing light theme.
       ;; [2024-09-01 Sun 00:43] `doom-rouge' is an amazing dark theme
       ;; [2024-09-02 Mon 03:01] and `ef-elea-dark' too.
@@ -38,7 +36,8 @@
       ;; [2025-07-05 Sat 18:43] Just found out that my feeling towards the same
       ;; theme changed over couple of days.
       ;; [2025-07-06 Sun 02:39] in fact, now I don't even like it.
-      doom-theme                                        (salih/get-random-theme-full 12)
+      ;; [2025-07-23 Wed 23:54] `ef-bio' is good, dark.
+      doom-theme                                        (salih/get-random-theme-full 1)
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -55,7 +54,7 @@
       +org-capture-changelog-file                       "~/blog/content/nice.org"
       +org-capture-journal-file                         "~/blog/content/stack.org"
       salih/org-roam-fleet-file                         "~/roam/main/lr.org"
-      salih/org-vocal-store                              "~/roam/media/vocal"
+      salih/org-vocal-store                             "~/roam/media/vocal"
       +org-capture-todo-file                            "~/roam/main/life.org"
 
       ;; this option is useful when you are up after 00:00. set 0 to the value
@@ -64,7 +63,7 @@
       ;; until your day is done.
       ;; [2024-08-07 Wed 19:43] currently I sleep at 07:00.
       ;; [2024-08-08 Wed 23:41] Not anymore.
-      org-extend-today-until                            4
+      org-extend-today-until                            3
 
       ;; other
       auto-save-no-message                              t
@@ -116,8 +115,9 @@
 
 
 (when (eq system-type 'darwin)
-
+  (menu-bar-mode -1)
   (require 'ls-lisp)
+  (setq mac-function-modifier 'control)
   (setq mac-option-key-is-meta               nil
         mac-command-key-is-meta              t
         mac-command-modifier                 'meta
@@ -138,6 +138,7 @@
 
 ;; TODO this was merged to Awqat, we need to move to them
 (awqat-notification-mode 1)
+
 (setq mac-function-modifier 'control)
 
 (menu-bar-mode -1)
@@ -149,3 +150,17 @@
 (setq flyover-virtual-line-icon "──►") ;;; default its nil
 
 (remove-hook 'flycheck-mode-hook '+syntax-init-popups-h)
+
+
+(defun salih/org-noter--try-add-highlight-before-note (&rest args)
+  "Try to add a highlight annotation if there's a selection, but don't fail if
+it doesn't work.  ARGS are ignored but accepted to work with advice system."
+  (when (pdf-view-active-region-p)
+    (condition-case err
+        (progn
+          (call-interactively #'pdf-annot-add-highlight-markup-annotation)
+          (save-buffer))
+      (error
+       (message "Failed to add highlight annotation: %s" (error-message-string err))))))
+
+(advice-add 'org-noter-insert-precise-note :before #'salih/org-noter--try-add-highlight-before-note)

@@ -239,7 +239,7 @@ Zathura."
   (let ((default-directory (concat salih/source-directory "/")))
     (let ((file (read-file-name "Select file: " default-directory)))
       (if (string-equal (file-name-extension file) "pdf")
-          (start-process "zathura" nil "zathura"
+          (start-process "open" nil "open"
                          (expand-file-name file default-directory))
         (find-file file)))))
 
@@ -822,10 +822,7 @@ is already running."
 (defun salih/zathura-open ()
   (interactive)
   (let ((process-connection-type nil))
-    (start-process "" nil "zathura" "-P"
-                   (number-to-string
-                    (pdf-view-current-page
-                     (get-buffer-window (current-buffer)))) buffer-file-name)))
+    (start-process "" nil "open"  buffer-file-name)))
 
 (defun salih/dired-sort ()
   "Sort dired dir listing in different ways.
