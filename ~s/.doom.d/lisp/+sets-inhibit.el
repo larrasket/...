@@ -23,7 +23,7 @@
       ;; with high dpi use `(set-frame-font "PragmataPro Mono Liga")'
       ;; or just remove `:size'.
       doom-font
-      (font-spec :family "Pragmasevka" :size 18)
+      (font-spec :family "Pragmasevka" :size 16)
       ;; (concat
       ;;  "Pragmasevka:pixelsize=17"
       ;;  ":antialias=true:hinting=true:autohint=false:hintstyle=3")
