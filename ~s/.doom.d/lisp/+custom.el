@@ -229,8 +229,9 @@ Respects `doom-modeline-enable-word-count'."
 (after! company
   (remove-hook! 'doom-first-input-hook #'global-company-mode))
 
+
 (after! org
-  (setf (cdr (assoc 'note org-log-note-headings)) "%t:")
+  (setf (cdr (assoc 'note org-log-note-headings)) "%t")
   (custom-set-faces! '(org-done :strike-through nil :weight bold)))
 
 (after! org

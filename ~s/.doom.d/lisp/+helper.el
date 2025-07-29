@@ -914,12 +914,13 @@ Version 2015-07-30"
     (dired-git-info-auto-enable)))
 
 (defun salih/insert-current-date ()
-  (interactive)
-  (let ((current-prefix-arg '(16)))
-    (if (eq major-mode 'org-mode)
-        (call-interactively 'org-add-note)
-      (call-interactively 'org-time-stamp-inactive))
-    (insert " ")))
+ (interactive)
+ (if (eq major-mode 'org-mode)
+     (progn
+       (insert "- " (format-time-string "[%Y-%m-%d %a %H:%M]") " "))
+   (let ((current-prefix-arg '(16)))
+     (call-interactively 'org-time-stamp-inactive)
+     (insert " "))))
 
 (defun salih/open-kitty-in-current-directory ()
   "Open the Kitty terminal in the current working directory."
