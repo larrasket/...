@@ -1,6 +1,15 @@
 (require 'f)
 (defalias 'l 'list)
 
+(setq salih/prefix-global                               "C-x "
+      salih/prefix-mode                                 "C-c ")
+
+(defun salih/global (key-sequence)
+  (kbd (concat salih/prefix-global key-sequence)))
+
+(defun salih/mode (key-sequence)
+  (kbd (concat salih/prefix-mode   key-sequence)))
+
 (defun set-exec-path-from-shell-PATH ()
   "Set up Emacs' `exec-path' and PATH environment variable to match
 that used by the user's shell.
@@ -141,14 +150,6 @@ Excludes themes in the predefined skip list."
      '
      "Mode line construct to display the major mode.")
 
-(define-minor-mode salih/consult-preview-at-point-mode
-  "Preview minor mode for an *Embark Collect* buffer.
-When moving around in the *Embark Collect* buffer, the candidate at point is
-automatically previewed."
-  :init-value nil :group 'consult
-  (if salih/consult-preview-at-point-mode
-      (add-hook 'post-command-hook #'salih/consult-preview-at-point nil 'local)
-    (remove-hook 'post-command-hook #'salih/consult-preview-at-point 'local)))
 
 (defvar salih/consult--source-books
   `(:name     "File"
@@ -349,5 +350,12 @@ automatically previewed."
                 (concat line (make-string (max 0 (- longest-line (length line))) 32)))
                "\n"))
      'face 'doom-dashboard-banner)))
+
+(defun salih/keyboard-config ()
+  (when (display-graphic-p)
+    (keyboard-translate ?\C-m ?\H-m)
+    (keyboard-translate ?\C-i ?\H-i))
+  (define-key key-translation-map (kbd "C-g") (kbd "<escape>")))
+
 
 (provide '+early)

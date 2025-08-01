@@ -1,5 +1,8 @@
 ;;; ../configs/.doom.d/lisp/+bindings.el -*- lexical-binding: t; -*-
 
+
+
+
 ;; TODO refactor `evil-define-key`-like code to use either `general-define-key`
 ;; or `map!`.
 
@@ -30,10 +33,6 @@
 ;; abusing evil mode
 (map! :i "M-v" #'yank)
 (map! :i "C-v" #'yank)
-;; (define-key evil-normal-state-map        (kbd "]") #'centaur-tabs-forward)
-;; (define-key evil-normal-state-map        (kbd "[") #'centaur-tabs-backward)
-;; (define-key evil-visual-state-map        (kbd "]") #'centaur-tabs-forward)
-;; (define-key evil-visual-state-map        (kbd "[") #'centaur-tabs-backward)
 
 
 (map!
@@ -144,38 +143,17 @@
  :prefix salih/prefix-mode
  "C-c" #'salih/compile-and-run-cpp)
 
-(general-define-key
- :keymaps 'csharp-mode-map
- :prefix salih/prefix-mode
- "C-c" #'salih/compile-and-run-csharp)
-
-(general-define-key
- :keymaps 'go-mode-map
- :prefix salih/prefix-mode
- "C-c"  #'salih/compile-and-run-go-project
- "<f2>" #'salih/compile-and-run-go-project)
-
 ;; Dired
 (general-define-key
  :keymaps 'dired-mode-map
  :prefix salih/prefix-mode
  "F"   #'magit-pull
  "C-c" #'salih/open-in-external-app
- "C-e" #'salih/epa-dired-do-encrypt
  "C-s" #'salih/dired-sort
  "C-d" #'epa-dired-do-decrypt)
 
 (evil-define-key 'nomral dired-mode-map (kbd "F") 'magit-pull)
 (evil-define-key 'motion dired-mode-map (kbd "F") 'magit-pull)
-
-(after! cc-mode
-  (setq c-mode-map (make-sparse-keymap))
-  (map!
-   :map c-mode-map
-   :prefix salih/prefix-mode
-   "C-c"  #'salih/make-c
-   "C-b"  #'salih/compile-and-run-c))
-
 
 ;; Org-mode
 (map!
@@ -206,7 +184,6 @@
  "C-r C-t" #'org-roam-tag-add
  "C-r C-a" #'org-fc-type-normal-init
  "C-r C-b" #'consult-org-roam-backlinks
- "C-r C-d" #'salih/org-roam-extract-subtree
  "C-;"     #'salih/rename-or-iedit
  "C-r C-f" #'consult-org-roam-forward-links)
 
@@ -253,32 +230,7 @@
  "C--" #'text-scale-decrease
  "C-+" #'doom/reset-font-size)
 
-;; Common lisp
 
-(eval-after-load 'sly
-  `(define-key sly-mode-map (salih/mode "C-e") 'sly-eval-region))
-
-(eval-after-load 'sly
-  `(define-key sly-mode-map (salih/mode "C-f") 'sly-eval-buffer))
-
-(eval-after-load 'sly
-  `(define-key sly-mode-map
-    (salih/mode "C-j") 'salih/sly-compile-defun-with-print))
-
-(add-hook 'xwidget-webkit-mode-hook
-          (lambda ()
-            (evil-collection-define-key
-              'normal 'xwidget-webkit-mode-map
-              "y" 'xwidget-webkit-copy-selection-as-kill)
-            (evil-collection-define-key
-              'normal
-              'xwidget-webkit-mode-map "C" 'salih/open-current-url-in-chrome)
-            (evil-collection-define-key
-              'normal
-              'xwidget-webkit-mode-map "c" 'xwidget-webkit-current-url)
-            (evil-collection-define-key
-              'normal 'xwidget-webkit-mode-map
-              "SPC" 'xwidget-webkit-scroll-up)))
 
 
 
@@ -291,7 +243,6 @@
    "C-u"          nil
    "C-n"          nil
    "C-t"          #'salih/vterm
-   ;; "C-j"          #'centaur-tabs-ace-jump
    "C-c"          #'salih/org-capture-general
    "C-l"          #'salih/org-capture-log
    "C-n"          #'salih/org-roam-capture-fleet
@@ -421,8 +372,6 @@
 (global-set-key (kbd "M-<down>")  #'enlarge-window)
 (global-set-key (kbd "M-<up>")    #'shrink-window)
 
-;; maximize buffer
-(global-set-key (kbd "<f3>") 'salih/toggle-maximize-buffer)
 
 ;; commenting lines
 (global-set-key (kbd "M-;") 'salih/comment-or-uncomment-region-or-line)
@@ -438,27 +387,10 @@
 ;;                   (lsp-treemacs-symbols)))
 
 ;; [2024-10-24 Thu 22:29] I miss this time.
+;; [2025-08-01 Fri 21:18] refactoring my config rn. A lot of time passed. :)-:(
 
 
 
-(general-define-key
- :keymaps 'elfeed-search-mode-map
- :states 'normal
- "C-c C-u"  #'elfeed-update
- "J"    #'elfeed-goodies/split-show-next
- "m"    #'salih/elfeed-toggle-star
- "C"    #'salih/elfeed-search-open-in-chrome
- "K"    #'elfeed-goodies/split-show-prev)
-
-
-(general-define-key
- :keymaps 'elfeed-show-mode-map
- :states 'normal
- "J" #'elfeed-goodies/split-show-next
- "c" #'salih/elfeed-copy-url
- "O" #'salih/elfeed-open-url
- "C" #'salih/elfeed-open-url-in-chrome
- "K" #'elfeed-goodies/split-show-prev)
 
 
 
@@ -529,16 +461,6 @@
 ;;  :n
 ;;  ";" #'embark-act)
 
-(after! org-noter
-  (defun salih/org-noter-sync-current-note-and-switch-window ()
-    (interactive)
-    (let ((prev-window (selected-window)))
-      (org-noter-sync-current-note)
-      (select-window prev-window)))
-  (define-key org-noter-notes-mode-map (salih/mode "C-j")
-              #'salih/org-noter-sync-current-note-and-switch-window)
-  (define-key org-noter-doc-mode-map
-              (salih/mode "C-c") #'org-noter-insert-precise-note))
 
 (define-key ctl-x-map (kbd "C-z") nil)
 (define-key global-map (kbd "C-x C-z") nil)

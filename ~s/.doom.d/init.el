@@ -78,3 +78,4 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" doom-user-dir))
 (add-to-list 'load-path (expand-file-name "pkg"  doom-user-dir))
+(add-to-list 'load-path (expand-file-name "+l"  doom-user-dir))

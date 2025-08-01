@@ -1,10 +1,8 @@
 ;;; config.el -*- lexical-binding: t; -*-
-(require 'awqat)                        ; for prayer support in the agenda
-(require 'vulpea)                       ; org-roam project tasks in org-agenda
 (require '+early)                       ; personal utilities
-(require 'go-translate)                 ; define translation engine in config.el
 (require 'doom-modeline)                ; I use it for segment definition only
 (require 'cocaine-line)                 ; my modeline.
+
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"
       user-first-name                                   "Salih"
@@ -15,6 +13,9 @@
       salih/blog-content-path                           "~/blog/content"
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
+      doom-font                                         (font-spec :family
+                                                                   "PragmataPro Mono" :size 15)
+
       ;; appearance
       ;; [2024-08-06 Tue 06:33] `ef-deuteranopia-light' is amazing light theme.
       ;; [2024-09-01 Sun 00:43] `doom-rouge' is an amazing dark theme
@@ -45,9 +46,6 @@
 
       ;; prayer time
       ;; not my real coordinates, just to save you time.
-      calendar-latitude                                 29.392691
-      calendar-longitude                                30.828360
-      salih/awqat-show-mode-line                        t
 
       ;; org
       org-directory                                     org-roam-directory
@@ -86,33 +84,12 @@
       warning-minimum-level                             :error)
 
 
+;; Load the new organized configuration
+(require '+l-init)
+
 (s/require
- '+sets-email                           ; mu4e
- '+sets-school                          ; school settings (TeX & BibTeX)
- '+sets-org                             ; org mode settings
- '+sets-inhibit                         ; other settings
- '+helper                               ; functions
- '+advice                               ; advice
- '+bindings                             ; personal key bindings
- '+custom                               ; specials
- '+erc                                  ; erc
- '+deep                                 ; other
- (unless (featurep 'tadwin) '+hooks))   ; hooks
-
-;; Experimental. I just copied it from the internet.
-(setq jit-lock-stealth-time 1.25
-      jit-lock-chunk-size 4096
-      jit-lock-defer-time 0)
-
-(with-eval-after-load 'evil
-  (add-hook 'evil-insert-state-entry-hook
-            (lambda ()
-              (setq jit-lock-defer-time 0.25)) nil t)
-  (add-hook 'evil-insert-state-exit-hook
-    (lambda ()
-      (setq jit-lock-defer-time 0)) nil t))
-
-
+ '+bindings
+ '+early)
 
 
 (when (eq system-type 'darwin)
@@ -137,28 +114,13 @@
   (add-to-list 'default-frame-alist    '(ns-transparent-titlebar . t)))
 
 
-;; TODO this was merged to Awqat, we need to move to them
+
+
+
+
+(breadcrumb-mode)
+(yas-global-mode 1)
+(salih/keyboard-config)
+(consult-org-roam-mode 1)
+(global-visual-line-mode 1)
 (awqat-notification-mode 1)
-;; (spacious-padding-mode)
-
-
-(add-hook! 'flycheck-mode-hook #'flyover-mode)
-(setq flyover-show-at-eol t)
-(setq flyover-hide-when-cursor-is-on-same-line nil)
-(setq flyover-virtual-line-icon "──►") ;;; default its nil
-
-(remove-hook 'flycheck-mode-hook '+syntax-init-popups-h)
-
-
-(defun salih/org-noter--try-add-highlight-before-note (&rest args)
-  "Try to add a highlight annotation if there's a selection, but don't fail if
-it doesn't work.  ARGS are ignored but accepted to work with advice system."
-  (when (pdf-view-active-region-p)
-    (condition-case err
-        (progn
-          (call-interactively #'pdf-annot-add-highlight-markup-annotation)
-          (save-buffer))
-      (error
-       (message "Failed to add highlight annotation: %s" (error-message-string err))))))
-
-(advice-add 'org-noter-insert-precise-note :before #'salih/org-noter--try-add-highlight-before-note)

@@ -103,10 +103,6 @@
 (package! doric-themes)
 
 (package! spacious-padding :disable t)
-(package! flyover
-  :recipe
-  (:host github
-   :repo "luggages/flyover"))      ; sick modeline
 
 (package! mito-laser-emacs
   :recipe
