@@ -143,7 +143,7 @@
 ;; PDF view mode hooks
 (add-hook! 'pdf-view-mode-hook
   (setq-local evil-normal-state-cursor (list nil)
-               browse-url-browser-function 'salih/open-url-in-chrome))
+               browse-url-browser-function 'salih/open-url-in-chrome-cross-platform))
 
 
 

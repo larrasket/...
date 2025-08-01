@@ -85,6 +85,8 @@ is already running."
           (eshell-send-input))
       (eshell))))
 
+(after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
+
 
 (defun salih/open-rss (readanywayg)
   "Open RSS using mu4e, only callable once per hour within the same day."
@@ -104,9 +106,17 @@ is already running."
         (message
          "This command can only be called once within the same hour of a day.")))))
 
+(defun salih/load-last-open-rss-time ()
+  "Load the last execution time from the cache file."
+  (when (f-exists? salih/open-rss-lock-file)
+    (with-temp-buffer
+      (insert-file-contents salih/open-rss-lock-file)
+      (read (current-buffer)))))
+
+
 (defun salih/read-feeds-anyway () (interactive) (salih/open-rss t))
 
-(defun salih/read-feeds () (interactive) (salih/open-rss nil))
+(defun salih/read-feeds () (interactive) (salih/open-rss t))
 
 
 ;; File utilities
@@ -245,9 +255,21 @@ Version 2019-11-04 2021-02-16"
   (apply orig-fun args))
 
 ;; Open URL utilities
-(defun salih/open-url-in-chrome (url &optional new-window)
-  "Open URL in Chrome browser."
-  (start-process "chrome" nil "google-chrome" url))
+(defun salih/open-url-in-chrome-cross-platform (url &optional new-window)
+  "Open URL in Chrome browser, works on macOS, Linux, and Windows."
+  (cond
+   ;; macOS
+   ((eq system-type 'darwin)
+    (start-process "chrome" nil "open" "-a" "Google Chrome" url))
+   ;; Linux
+   ((eq system-type 'gnu/linux)
+    (start-process "chrome" nil "google-chrome" url))
+   ;; Windows
+   ((eq system-type 'windows-nt)
+    (start-process "chrome" nil "chrome" url))
+   ;; Fallback
+   (t
+    (browse-url url))))
 
 ;; Start note function
 (defun salih/start-note () (setq salih/adding-note? t))

@@ -3,7 +3,7 @@
 ;; Email directory helper function
 (defun email-dir (folder)
   "Construct email directory path."
-  (concat "/" user-mail-address folder))
+  (concat "/" user-mail-address "/" folder))
 
 ;; Mu4e configuration
 (use-package mu4e
@@ -33,7 +33,19 @@
         mu4e-trash-folder (email-dir "Trash")
         mu4e-rss-folder (email-dir "rss")
         mu4e-read-folder (email-dir "read"))
-  
+
+
+  (defun salih/feeds-- ()
+    (if (featurep 'mu4e)
+        (progn
+          (setq mu4e-search-threads nil)
+          (mu4e-search "maildir:\"/lr0@gmx.com/rss\" flag:unread")
+          (mu4e-search-change-sorting :from 'descending))
+      (progn
+        (setq mu4e-search-threads t)
+        (mu4e))))
+
+
   ;; Set alert query
   (setq mu4e-alert-interesting-mail-query
         (concat
@@ -93,7 +105,7 @@
 
   (defun salih/mu4e-go-to-url ()
     (interactive)
-    (let ((browse-url-browser-function 'salih/open-url-in-chrome))
+    (let ((browse-url-browser-function 'salih/open-url-in-chrome-cross-platform))
       (call-interactively #'mu4e-view-go-to-url)))
 
 

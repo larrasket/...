@@ -13,9 +13,10 @@
       salih/blog-content-path                           "~/blog/content"
       org-roam-directory                                (file-truename "~/roam")
       srht-username                                     user-short-username
-      doom-font                                         (font-spec :family
-                                                                   "PragmataPro Mono" :size 15)
-
+      doom-font                                         (font-spec
+                                                         :family
+                                                         "PragmataPro Mono"
+                                                         :size 15)
       ;; appearance
       ;; [2024-08-06 Tue 06:33] `ef-deuteranopia-light' is amazing light theme.
       ;; [2024-09-01 Sun 00:43] `doom-rouge' is an amazing dark theme
@@ -114,6 +115,16 @@
   (add-to-list 'default-frame-alist    '(ns-transparent-titlebar . t)))
 
 
+
+
+(after! embark
+  (add-to-list 'embark-keymap-alist '(org-timestamp embark-org-timestamp-map))
+  (defvar-keymap embark-org-timestamp-map
+    :doc "Keymap for actions on an org timestamp."
+    :parent embark-general-map
+    "t" #'salih/org-add-week-to-timestamp)
+  (define-key embark-url-map (kbd "c") 'salih/open-url-in-chrome-cross-platform)
+  (define-key embark-org-link-map (kbd "RET") 'org-web-tools-read-url-as-org))
 
 
 
