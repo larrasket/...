@@ -11,6 +11,10 @@
         global-corfu-minibuffer     nil
         corfu-preselect            'directory))
 
+(use-package consult
+  :config
+  (setq consult-preview-excluded-buffers t))
+
 ;; Corfu popupinfo configuration
 (use-package corfu-popupinfo
   :custom
