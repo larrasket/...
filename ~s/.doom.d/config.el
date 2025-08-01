@@ -135,3 +135,4 @@
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)
 (awqat-notification-mode 1)
+(awqat-display-prayer-time-mode)
