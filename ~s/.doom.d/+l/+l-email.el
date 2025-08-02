@@ -26,7 +26,13 @@
                          (:from . 22)
                          (:subject)))
   :config
-  ;; Set folder paths after mu4e is loaded
+  (defun salih/get-mail-password ()
+    (interactive)
+    (let* ((auth-info (auth-source-search :host "mail.gmx.com"
+                                          :require '(:user :secret)))
+           (password (funcall (plist-get (car auth-info) :secret))))
+      password))
+
   (setq mu4e-drafts-folder (email-dir "Drafts")
         mu4e-refile-folder (email-dir "Archive")
         mu4e-sent-folder (email-dir "Sent")
