@@ -137,3 +137,7 @@
 (global-visual-line-mode 1)
 (awqat-notification-mode 1)
 (awqat-display-prayer-time-mode)
+
+(setq epa-file-cache-passphrase-for-symmetric-encryption t
+      epa-file-select-keys                              'silent
+      epa-file-encrypt-to                               user-mail-address)

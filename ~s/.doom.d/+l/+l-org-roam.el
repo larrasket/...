@@ -5,7 +5,19 @@
   :after consult
   :config
 
-  (setq roam-titles (mapcar #'org-roam-node-title (org-roam-node-list)))
+  (setq org-roam-dailies-capture-templates
+        `(("d" "default" entry "* %<%H:%M> \n %?"
+           :if-new
+           (file+head
+            "%<%Y-%m-%d>.org.gpg"
+            ,(concat "#+title: %<%Y-%m-%d>\n#+DATE: <%<%Y-%m-%d>>"
+                     "\n#+FILETAGS: journal\n- tags :: [[roam:Journaling]] \n"))
+           :unnarrowed t))
+        ;; org-roam-database-connector             'sqlite
+        org-roam-dailies-directory              "journal/")
+
+  (setq roam-titles (mapcar #'org-roam-node-title (org-roam-node-list))
+        org-roam-dailies-directory "~/roam/journal")
   (defun salih/get-org-roam-titles () roam-titles)
 
   (setq consult-org-roam-buffer-narrow-key ?r)
