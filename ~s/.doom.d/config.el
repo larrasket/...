@@ -11,7 +11,6 @@
       user-config-repo-path                             "~/configs/~s"
       salih/blog-content-path                           "~/blog/content"
       org-roam-directory                                (file-truename "~/roam")
-      srht-username                                     user-short-username
       doom-font                                         (font-spec
                                                          :family
                                                          "PragmataPro Mono"
