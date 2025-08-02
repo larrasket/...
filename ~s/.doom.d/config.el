@@ -1,7 +1,5 @@
 ;;; config.el -*- lexical-binding: t; -*-
 (require '+early)                       ; personal utilities
-(require 'doom-modeline)                ; I use it for segment definition only
-(require 'cocaine-line)                 ; my modeline.
 
 (setq salih/temp-roam-insert nil)
 (setq user-full-name                                    "Salih Muhammed"
@@ -86,7 +84,6 @@
       warning-minimum-level                             :error)
 
 
-;; Load the new organized configuration
 (require '+l-init)
 
 (s/require
@@ -139,5 +136,5 @@
 (awqat-display-prayer-time-mode)
 
 (setq epa-file-cache-passphrase-for-symmetric-encryption t
-      epa-file-select-keys                              'silent
+      epa-file-select-keys                               'silent
       epa-file-encrypt-to                               user-mail-address)
