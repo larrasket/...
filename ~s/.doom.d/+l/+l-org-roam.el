@@ -5,8 +5,7 @@
   :after consult
   :config
 
-  (setq roam-titles (salih/org-roam-get-node-titles
-                     (org-roam-node-read--completions)))
+  (setq roam-titles (mapcar #'org-roam-node-title (org-roam-node-list)))
   (defun salih/get-org-roam-titles () roam-titles)
 
   (setq consult-org-roam-buffer-narrow-key ?r)
@@ -56,7 +55,6 @@
                                      (org-roam-node-read--completions))))
 
           :items    ,#'salih/get-org-roam-titles))
-  (require 'vulpea)
   (defun salih/org-roam-node-insert ()
     (interactive)
     (setq salih/temp-roam-insert t)
@@ -106,5 +104,131 @@
 ;; Org-ql advice
 (advice-add 'org-ql-view--format-element
             :around #'salih/org-ql-view--format-element)
+
+
+
+
+(use-package vulpea
+  :after  org-roam
+  :config
+  ;; Vulpea utilities
+  ;;
+  ;;
+
+  ;; Org utilities
+  (defun salih/org-roam-get-node-titles (completions)
+    "Extract titles from org-roam node completions."
+    (mapcar (lambda (completion)
+              (if (stringp completion)
+                  completion
+                (car completion)))
+            completions))
+
+
+
+  (defun salih/vulpea-project-update-tag ()
+    "Update project tag for current buffer."
+    (when (and (featurep 'vulpea)
+               (not (eq major-mode 'org-agenda-mode)))
+      (vulpea-project-update-tag)))
+
+  (defun vulpea-project-files ()
+    "Return a list of note files containing 'project' tag." ;
+    (if salih/vulpea-show-full
+        (vulpea-project-files-full)
+      (seq-uniq
+       (seq-map
+        #'car
+        (org-roam-db-query
+         [:select [nodes:file]
+          :from tags
+          :left-join nodes
+          :on (= tags:node-id nodes:id)
+          :where (like tag (quote "%\"project\"%"))])))))
+
+  (defun vulpea-project-files-full ()
+    "Return a list of note files containing 'project' tag." ;
+    (seq-uniq
+     (seq-map
+      #'car
+      (org-roam-db-query
+       [:select [nodes:file]
+        :from tags
+        :left-join nodes
+        :on (= tags:node-id nodes:id)
+        :where (or (like tag (quote "%\"project\"%"))
+                   (like tag (quote "%\"project_archived\"%")))]))))
+
+  (defun vulpea-agenda-files-update (&rest _)
+    "Update the value of `org-agenda-files'."
+    (setq org-agenda-files (vulpea-project-files)))
+
+
+
+  (defun vulpea-project-p ()
+    "Return non-nil if current buffer has any todo entry.
+
+TODO entries marked as done are ignored, meaning the this
+function returns nil if current buffer contains only completed
+tasks."
+    (seq-find                           ; (3)
+     (lambda (type)
+       (or (eq type 'todo)))
+     (org-element-map                         ; (2)
+         (org-element-parse-buffer 'headline) ; (1)
+         'headline
+       (lambda (h)
+         (org-element-property :todo-type h)))))
+
+  (defun vulpea-project-done-p ()
+    "Return non-nil if current buffer has any todo entry.
+
+TODO entries marked as done are ignored, meaning the this
+function returns nil if current buffer contains only completed
+tasks."
+    (seq-find                           ; (3)
+     (lambda (type)
+       (or (eq type 'done)))
+     (org-element-map                         ; (2)
+         (org-element-parse-buffer 'headline) ; (1)
+         'headline
+       (lambda (h)
+         (org-element-property :todo-type h)))))
+
+  (defun vulpea-project-update-tag ()
+    "Update PROJECT tag in the current buffer."
+    (when (and (not (active-minibuffer-window))
+               (vulpea-buffer-p))
+      (save-excursion
+        (goto-char (point-min))
+        (let* ((tags (vulpea-buffer-tags-get))
+               (original-tags tags))
+
+
+          (cond ((vulpea-project-p)
+                 (and (or (setq tags (cons "project" tags)) t)
+                      (setq tags (remove "project_archived" tags))))
+
+                ((vulpea-project-done-p)
+                 (and (or (setq tags (cons "project_archived" tags)) t)
+                      (setq tags (remove "project" tags))))
+                (t (and (or (setq tags (remove "project" tags)) t)
+                        (or (setq tags (remove "project_archived" tags)) t))))
+
+          ;; cleanup duplicates
+          (setq tags (seq-uniq tags))
+
+          ;; update tags if changed
+          (when (or (seq-difference tags original-tags)
+                    (seq-difference original-tags tags))
+            (apply #'vulpea-buffer-tags-set tags))))))
+
+
+  (defun vulpea-buffer-p ()
+    "Return non-nil if the currently visited buffer is a note."
+    (and buffer-file-name
+         (string-prefix-p
+          (expand-file-name (file-name-as-directory org-roam-directory))
+          (file-name-directory buffer-file-name)))))
 
 (provide '+l-org-roam)

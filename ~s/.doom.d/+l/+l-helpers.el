@@ -158,21 +158,6 @@ Version 2019-11-04 2021-02-16"
                             (start-process
                              "" nil "xdg-open" $fpath))) $file-list))))))
 
-;; Org utilities
-(defun salih/org-roam-get-node-titles (completions)
-  "Extract titles from org-roam node completions."
-  (mapcar (lambda (completion)
-            (if (stringp completion)
-                completion
-              (car completion)))
-          completions))
-
-;; Vulpea utilities
-(defun salih/vulpea-project-update-tag ()
-  "Update project tag for current buffer."
-  (when (and (featurep 'vulpea)
-             (not (eq major-mode 'org-agenda-mode)))
-    (vulpea-project-update-tag)))
 
 ;; Theme utilities
 (defun salih/get-random-theme-full (n)

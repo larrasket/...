@@ -1,111 +1,167 @@
 ;;; +l-org-core.el -*- lexical-binding: t; -*-
 
 ;; Org-mode core configuration
-(use-package org
-  :custom
-  (org-id-method 'org)
-  (org-log-into-drawer "STATS")
-  (org-log-done nil)
-  (org-agenda-skip-scheduled-if-done nil)
-  (org-use-tag-inheritance t)
-  (org-log-reschedule 'note)
-  (org-agenda-block-separator #x2501)
-  (org-element-use-cache t)
-  (org-noter-auto-save-last-location t)
-  (org-startup-folded 'show2levels)
-  (org-image-actual-width 600)
-  (org-link-file-path-type 'relative)
-  (org-ellipsis nil)
-  (org-agenda-show-future-repeats nil)
-  (org-clock-mode-line-total 'current)
-  (org-agenda-current-time-string
-   "◀── now ─────────────────────────────────────────────────")
-  (org-clock-string-limit 7)
-  (org-agenda-dim-blocked-tasks 'invisible)
-  (org-crypt-key user-mail-address)
-  (org-todo-keywords
-   '((sequence
-      "TODO(t)" "DAILY(e)" "PROJ(p)"
-      "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)"
-      "IDEA(i)" "|" "DONE(d)" "KILL(k)")
-     (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
-     (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
-  (org-todo-keyword-faces
-   '(("[-]"        . +org-todo-active)
-     ("STRT"       . +org-todo-active)
-     ("DAILY"      . +org-todo-project)
-     ("[?]"        . +org-todo-onhold)
-     ("WAIT"       . +org-todo-onhold)
-     ("HOLD"       . +org-todo-onhold)
-     ("PROJ"       . +org-todo-project)
-     ("NO"         . +org-todo-cancel)
-     ("KILL"       . +org-todo-cancel)))
-  (org-hide-leading-stars t)
-  (org-tags-column 70)
-  (org-archive-location "%s_archive.org::")
-  (org-agenda-start-on-weekday nil)
-  (org-agenda-start-day "0d")
-  (org-agenda-start-with-log-mode t)
-  :config
-  (custom-set-faces!
-   '(org-agenda-done :strike-through nil)
-   '(org-document-title :height 2.0)
-   '(org-list-dt :inherit default)
-   `(jinx-misspelled
-     :underline (:style wave :color ,(face-foreground 'error)))))
+;; using the after to set that afer doom's. There should be a better way for that.
+(after! org
+  (use-package org
+    :custom
+    (org-id-method 'org)
+    (org-log-into-drawer "STATS")
+    (org-log-done nil)
+    (org-agenda-skip-scheduled-if-done nil)
+    (org-use-tag-inheritance t)
+    (org-log-reschedule 'note)
+    (org-agenda-block-separator #x2501)
+    (org-element-use-cache t)
+    (org-noter-auto-save-last-location t)
+    (org-startup-folded 'show2levels)
+    (org-image-actual-width 600)
+    (org-link-file-path-type 'relative)
+    (org-ellipsis nil)
+    (org-agenda-show-future-repeats nil)
+    (org-clock-mode-line-total 'current)
+    (org-agenda-current-time-string
+     "◀── now ─────────────────────────────────────────────────")
+    (org-clock-string-limit 7)
+    (org-agenda-dim-blocked-tasks 'invisible)
+    (org-crypt-key user-mail-address)
+    (org-todo-keywords
+     '((sequence
+        "TODO(t)" "DAILY(e)" "PROJ(p)"
+        "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)"
+        "IDEA(i)" "|" "DONE(d)" "KILL(k)")
+       (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
+       (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")))
+    (org-todo-keyword-faces
+     '(("[-]"        . +org-todo-active)
+       ("STRT"       . +org-todo-active)
+       ("DAILY"      . +org-todo-project)
+       ("[?]"        . +org-todo-onhold)
+       ("WAIT"       . +org-todo-onhold)
+       ("HOLD"       . +org-todo-onhold)
+       ("PROJ"       . +org-todo-project)
+       ("NO"         . +org-todo-cancel)
+       ("KILL"       . +org-todo-cancel)))
+    (org-hide-leading-stars t)
+    (org-tags-column 70)
+    (org-archive-location "%s_archive.org::")
+    (org-agenda-start-on-weekday nil)
+    (org-agenda-start-day "0d")
+    (org-agenda-start-with-log-mode t)
+    :config
 
-;; Org archive functions
-(defun salih/org-archive-done-tasks ()
-  (interactive)
-  (org-map-entries 'org-archive-subtree "/DONE" 'file))
-
-(defun salih/org-capture-general ()
-  (interactive)
-  (salih/capture-- 'org-capture "f"))
-
-(defun salih/org-capture-log ()
-  (interactive)
-  (salih/capture-- 'org-capture "n"))
-
-(defun salih/org-roam-capture-fleet ()
-  (interactive)
-  (salih/capture-- 'org-roam-capture "f"))
-
-(defun salih/org-agenda-no-full-f ()
-  (interactive)
-  (setq salih/vulpea-show-full nil)
-  (org-agenda nil "f"))
-
-(defun salih/org-agenda-no-full-l ()
-  (interactive)
-  (setq salih/vulpea-show-full nil)
-  (org-agenda nil "l"))
-
-(defun salih/open-agenda ()
-  (interactive)
-  (org-agenda-remove-restriction-lock)
-  (org-agenda nil "v"))
+    (setq org-tag-alist   '((:startgroup)
+                            ("@personal" . nil)
+                            (:grouptags)
+                            ("@read" . ?r)
+                            ("@idea" . ?i)
+                            ("@write" . ?W)
+                            ("@check" . ?c)
+                            ("@watch" . ?w)
+                            ("@else" . ?e) ;; if there's a note that have an else
+                            ;; and general tag, then general
+                            ;; prevails
+                            (:endgroup)
+                            (:startgroup)
+                            ("@nothing" . ?N)
+                            (:grouptags)
+                            ("@people" . ?p)
+                            (:endgroup)
+                            ("noexport" . ?n)
+                            ("anthology" . ?a)
+                            ("selected" . ?s)
+                            ("@later" . ?l)
+                            ("@current" . ?C)
+                            ("@long" . ?L)
+                            ("drill" . ?d)
+                            ("@daily" . ?D)
+                            ("@general" . ?g)))
 
 
 
 
+    (dolist (tag '("noexport"
+                   "project"
+                   "permanent"
+                   "link"
+                   "@read"
+                   "@write"
+                   "@watch"
+                   "@current"
+                   "drill"))
+      (add-to-list 'org-tags-exclude-from-inheritance tag))
 
-(defun salih/org-id-get-create-with-custom-id ()
-  (interactive)
-  (when (org-before-first-heading-p)
-    (user-error "Not inside a heading"))
-  (let* ((org-id (org-id-get))
-         (custom-id-property "CUSTOM_ID"))
 
-    (unless org-id
-      (setq org-id (org-id-new))
-      (org-entry-put nil "ID" org-id)
-      (org-entry-put nil custom-id-property org-id))
-    org-id))
 
-(defun salih/org-archive-killed-tasks ()
-  (interactive)
-  (org-map-entries 'org-archive-subtree "/KILL" 'file))
+
+
+    ;; Org archive functions
+    (defun salih/org-archive-done-tasks ()
+      (interactive)
+      (org-map-entries 'org-archive-subtree "/DONE" 'file))
+
+    (defun salih/org-capture-general ()
+      (interactive)
+      (salih/capture-- 'org-capture "f"))
+
+    (defun salih/org-capture-log ()
+      (interactive)
+      (salih/capture-- 'org-capture "n"))
+
+    (defun salih/org-roam-capture-fleet ()
+      (interactive)
+      (salih/capture-- 'org-roam-capture "f"))
+
+    (defun salih/org-agenda-no-full-f ()
+      (interactive)
+      (setq salih/vulpea-show-full nil)
+      (org-agenda nil "f"))
+
+    (defun salih/org-agenda-no-full-l ()
+      (interactive)
+      (setq salih/vulpea-show-full nil)
+      (org-agenda nil "l"))
+
+    (defun salih/open-agenda ()
+      (interactive)
+      (org-agenda-remove-restriction-lock)
+      (org-agenda nil "v"))
+
+    (defun salih/capture-- (fn key &optional fleet?)
+      (with-current-buffer
+          (find-file-noselect (if fleet?
+                                  salih/org-roam-fleet-file
+                                +org-capture-todo-file))
+        (funcall fn nil key)))
+
+
+    (defun salih/org-id-get-create-with-custom-id ()
+      (interactive)
+      (when (org-before-first-heading-p)
+        (user-error "Not inside a heading"))
+      (let* ((org-id (org-id-get))
+             (custom-id-property "CUSTOM_ID"))
+
+        (unless org-id
+          (setq org-id (org-id-new))
+          (org-entry-put nil "ID" org-id)
+          (org-entry-put nil custom-id-property org-id))
+        org-id))
+
+    (defun salih/org-archive-killed-tasks ()
+      (interactive)
+      (org-map-entries 'org-archive-subtree "/KILL" 'file))
+
+
+    (custom-set-faces!
+      '(org-agenda-done :strike-through nil)
+      '(org-document-title :height 2.0)
+      '(org-list-dt :inherit default)
+      `(jinx-misspelled
+        :underline (:style wave :color ,(face-foreground 'error))))))
+
+
+
 
 ;; Org link configuration
 (use-package org
@@ -168,9 +224,6 @@
 (add-hook! '(org-mode-hook
              markdown-mode-hook)
            #'auto-fill-mode)
-
-
-
 
 
 
