@@ -14,7 +14,7 @@
     (cond
      ;; macOS
      ((eq system-type 'darwin)
-      (start-process "chrome" nil "open" "-a" "Google Chrome" url))
+      (start-process "chrome" nil "open" url))
      ;; Linux
      ((eq system-type 'gnu/linux)
       (start-process "chrome" nil "google-chrome" url))
