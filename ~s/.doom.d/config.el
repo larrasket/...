@@ -38,7 +38,7 @@
       ;; theme changed over couple of days.
       ;; [2025-07-06 Sun 02:39] in fact, now I don't even like it.
       ;; [2025-07-23 Wed 23:54] `ef-bio' is good, dark.
-      ;; [2025-07-29 Tue 21:54] `ef-cherie' is likeable, dark.
+      ;; [2025-07-29 Tue 21:54] `ef-cherie' is likeable, dark. And it's red too.
       doom-theme                                        (salih/get-random-theme-full 1)
       doom-modeline-icon                                t
       doom-modeline-height                              32
