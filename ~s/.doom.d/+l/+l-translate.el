@@ -1,6 +1,6 @@
 ;;; ../configs/~s/.doom.d/+l/+l-trasnlate.el -*- lexical-binding: t; -*-
 
-(use-package go-translate
+(use-package gt
   :config
   (setq gt-langs                                          `("en" "ar")
       gt-default-translator

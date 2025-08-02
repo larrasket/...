@@ -1,8 +1,10 @@
 ;;; +l-prog-lsp.el -*- lexical-binding: t; -*-
 
-;; LSP advice
-(advice-add 'lsp-resolve-final-command
-            :around   #'lsp-booster--advice-final-command)
+
+(use-package eglot-booster
+	:after eglot
+	:config	(eglot-booster-mode))
+
 
 ;; Programming utilities
 (defun salih/rename-or-iedit ()
@@ -21,4 +23,6 @@ lookup."
       (call-interactively #'xref-find-definitions)
     (call-interactively #'+lookup/file)))
 
-(provide '+l-prog-lsp) 
+
+
+(provide '+l-prog-lsp)

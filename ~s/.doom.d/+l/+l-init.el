@@ -37,5 +37,6 @@
 
 
 (require '+l-translate)
+(require '+l-browse)
 (require '+l-prayer)
 (provide '+l-init)

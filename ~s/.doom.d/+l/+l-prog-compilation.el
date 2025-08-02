@@ -38,4 +38,7 @@ I was learning competitive programming :)"
   (other-window t)
   (end-of-add-hook 'c-mode))
 
-(provide '+l-prog-compilation) 
+
+
+
+(provide '+l-prog-compilation)

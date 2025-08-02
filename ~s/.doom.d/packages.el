@@ -19,7 +19,7 @@
 ;; [2024-10-15 Tue 06:18] Not writing in Julia anymore.
 ;; (package! ob-julia-vterm)               ; for usage, see maxima or sage-shell
 
-(package! go-translate)                 ; google API for translations
+(package! gt)                 ; google API for translations
 (package! consult-org-roam)             ; useful org-roam functions
 
 
@@ -108,3 +108,6 @@
   :recipe
   (:host github
    :repo "luggages/mito-laser-emacs"))
+
+(package! eglot-booster
+          :recipe (:host github :repo "jdtsmith/eglot-booster"))
