@@ -135,6 +135,47 @@
         (funcall fn nil key)))
 
 
+
+    ;; Org-id utilities
+    (defun salih/set-custom-id-to-id (orig-fun &rest args)
+      "Set custom ID for org elements."
+      (apply orig-fun args))
+
+    (defun salih/toggle-logbook-on ()
+      "Enable logbook for org mode."
+      (setq org-log-into-drawer t))
+
+    (defun salih/toggle-logbook-off ()
+      "Disable logbook for org mode."
+      (setq org-log-into-drawer nil))
+
+    (defun salih/toggle-stats-on ()
+      "Enable stats for org mode."
+      (setq org-log-into-drawer "STATS"))
+
+    (defun salih/toggle-log-int-drawer-off ()
+      "Disable log into drawer for org mode."
+      (setq org-log-into-drawer nil))
+
+
+    ;; Start note function
+    (defun salih/start-note () (setq salih/adding-note? t))
+
+    ;; Org-ql utilities
+    (defun salih/org-ql-view--format-element (orig-fun &rest args)
+      "Custom formatter for org-ql view elements."
+      (apply orig-fun args))
+
+    ;; Org media utilities
+    (defun salih/org-media-note-insert-link (orig-fun &rest args)
+      "Custom wrapper for org media note insert link."
+      (let ((org-log-into-drawer nil))
+        (apply orig-fun args)))
+
+    (defun salih/set-custom-id-to-id (orig-fun &rest args)
+      "Set custom ID for org elements."
+      (apply orig-fun args))
+
     (defun salih/org-id-get-create-with-custom-id ()
       (interactive)
       (when (org-before-first-heading-p)

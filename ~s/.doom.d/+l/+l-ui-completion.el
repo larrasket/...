@@ -41,7 +41,5 @@
   '(("^\\*cider-doc" :slot -1 :size 0.3 :select t)))
 
 ;; Lookup and documentation advice
-(advice-add '+lookup/documentation             :around #'salih/ensure-eww-in-search)
-(advice-add 'salih/mu4e-action-view-in-browser :around #'salih/ensure-eww-in-search)
 
 (provide '+l-ui-completion)

@@ -56,21 +56,8 @@
 ;; Dashboard configuration
 (setq +doom-dashboard-menu-sections
       '(("Recently opened files"
-         :action recentf-open-files)
-        ("Open project"
-         :action projectile-switch-project)
-        ("Jump to bookmark"
-         :action bookmark-jump)
-        ("Open documentation"
-         :action doom/help)))
+         :action recentf-open-files)))
 (setq +doom-dashboard-ascii-banner-fn 'salih/banner)
-
-
-
-;; Remove dashboard menu items
-(assoc-delete-all "Open project" +doom-dashboard-menu-sections)
-(assoc-delete-all "Open documentation" +doom-dashboard-menu-sections)
-(assoc-delete-all "Jump to bookmark" +doom-dashboard-menu-sections)
 
 ;; Face customizations
 (custom-set-faces!
@@ -112,9 +99,6 @@
              yaml-mode-hook)
            #'indent-bars-mode)
 
-;; Eglot managed mode hooks
-(add-hook 'eglot-managed-mode-hook 'indent-bars-mode)
-
 ;; Disable bright mode for various modes
 (add-hook! '(maxima-inferior-mode-hook
              neotree-mode-hook
@@ -130,22 +114,11 @@
              mu4e-view-mode-hook
              mu4e-main-mode-hook) #'salih/disable-bright)
 
-;; Nov-mode hooks
-(add-hook! 'nov-mode-hook
-  (defface tmp-buffer-local-face
-    '((t :family "Roboto Condensed" :height 1.0)) "")
-  (buffer-face-set 'tmp-buffer-local-face)
-  (setq-local right-fringe-width 0)
-  (setq-local left-margin-width  4)
-  (setq-local left-fringe-width  0)
-  (text-scale-set 1))
 
 ;; PDF view mode hooks
 (add-hook! 'pdf-view-mode-hook
   (setq-local evil-normal-state-cursor (list nil)
                browse-url-browser-function 'salih/open-url-in-chrome-cross-platform))
-
-
 
 
 

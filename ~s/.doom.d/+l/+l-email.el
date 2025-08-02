@@ -103,6 +103,37 @@
       (consult-org-roam-search)))
 
 
+  (defun salih/open-rss (readanywayg)
+    "Open RSS using mu4e, only callable once per hour within the same day."
+    ;; [2024-10-30 Wed 22:41] Currently, Just run it
+    (if readanywayg (salih/feeds--)
+      (let* ((now (current-time))
+             (last-open-time (salih/load-last-open-rss-time)))
+        (if (or (not last-open-time)
+                (salih/within-hour-window-p last-open-time now))
+            (progn
+              ;; Save only the first time within the hour window, not on
+              ;; subsequent calls
+              (when (salih/different-day-p last-open-time now)
+                (salih/save-last-open-rss-time now))
+              ;; Execute the main command
+              (salih/feeds--))
+          (message
+           "This command can only be called once within the same hour of a day.")))))
+
+  (defun salih/load-last-open-rss-time ()
+    "Load the last execution time from the cache file."
+    (when (f-exists? salih/open-rss-lock-file)
+      (with-temp-buffer
+        (insert-file-contents salih/open-rss-lock-file)
+        (read (current-buffer)))))
+
+
+  (defun salih/read-feeds-anyway () (interactive) (salih/open-rss t))
+
+  (defun salih/read-feeds () (interactive) (salih/open-rss t))
+
+
   (defun salih/mu4e-go-to-url ()
     (interactive)
     (let ((browse-url-browser-function 'salih/open-url-in-chrome-cross-platform))

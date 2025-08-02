@@ -88,36 +88,6 @@ is already running."
 (after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
 
 
-(defun salih/open-rss (readanywayg)
-  "Open RSS using mu4e, only callable once per hour within the same day."
-  ;; [2024-10-30 Wed 22:41] Currently, Just run it
-  (if readanywayg (salih/feeds--)
-    (let* ((now (current-time))
-           (last-open-time (salih/load-last-open-rss-time)))
-      (if (or (not last-open-time)
-              (salih/within-hour-window-p last-open-time now))
-          (progn
-            ;; Save only the first time within the hour window, not on
-            ;; subsequent calls
-            (when (salih/different-day-p last-open-time now)
-              (salih/save-last-open-rss-time now))
-            ;; Execute the main command
-            (salih/feeds--))
-        (message
-         "This command can only be called once within the same hour of a day.")))))
-
-(defun salih/load-last-open-rss-time ()
-  "Load the last execution time from the cache file."
-  (when (f-exists? salih/open-rss-lock-file)
-    (with-temp-buffer
-      (insert-file-contents salih/open-rss-lock-file)
-      (read (current-buffer)))))
-
-
-(defun salih/read-feeds-anyway () (interactive) (salih/open-rss t))
-
-(defun salih/read-feeds () (interactive) (salih/open-rss t))
-
 
 ;; File utilities
 (defun salih/open-in-external-app (&optional @fname)
@@ -159,104 +129,11 @@ Version 2019-11-04 2021-02-16"
                              "" nil "xdg-open" $fpath))) $file-list))))))
 
 
-;; Theme utilities
-(defun salih/get-random-theme-full (n)
-  "Get a random theme from the preferred themes list."
-  (nth (random n) salih/prefered-themes))
-
 ;; Disable bright function
 (defun salih/disable-bright ()
   "Disable bright mode for current buffer."
   (when (bound-and-true-p bright-mode)
     (bright-mode -1)))
 
-;; Toggle functions
-(defun salih/toggle-logbook-on ()
-  "Enable logbook for org mode."
-  (setq org-log-into-drawer t))
-
-(defun salih/toggle-logbook-off ()
-  "Disable logbook for org mode."
-  (setq org-log-into-drawer nil))
-
-(defun salih/toggle-stats-on ()
-  "Enable stats for org mode."
-  (setq org-log-into-drawer "STATS"))
-
-(defun salih/toggle-log-int-drawer-off ()
-  "Disable log into drawer for org mode."
-  (setq org-log-into-drawer nil))
-
-;; Org media utilities
-(defun salih/org-media-note-insert-link (orig-fun &rest args)
-  "Custom wrapper for org media note insert link."
-  (let ((org-log-into-drawer nil))
-    (apply orig-fun args)))
-
-;; EWW utilities
-(defun salih/ensure-eww-in-search (orig-fun &rest args)
-  "Ensure EWW is used for search results."
-  (let ((browse-url-browser-function 'eww-browse-url))
-    (apply orig-fun args)))
-
-;; Org-ql utilities
-(defun salih/org-ql-view--format-element (orig-fun &rest args)
-  "Custom formatter for org-ql view elements."
-  (apply orig-fun args))
-
-;; SLY utilities
-(defun salih/sly--compile-eval-begin-print (orig-fun &rest args)
-  "Custom wrapper for SLY compile and eval functions."
-  (apply orig-fun args))
-
-;; LSP utilities
-(defun lsp-booster--advice-final-command (orig-fun &rest args)
-  "Custom wrapper for LSP final command."
-  (apply orig-fun args))
-
-;; IRC utilities
-(defun salih/tracking-next-buffer--always-switch (orig-fun &rest args)
-  "Custom wrapper for IRC tracking next buffer."
-  (apply orig-fun args))
-
-;; Deft utilities
-(defun cm/deft-parse-title (orig-fun &rest args)
-  "Custom parser for Deft titles."
-  (apply orig-fun args))
-
-;; Org-id utilities
-(defun salih/set-custom-id-to-id (orig-fun &rest args)
-  "Set custom ID for org elements."
-  (apply orig-fun args))
-
-;; Go macro utilities
-(defun salih/gomacro--sanitize-string (orig-fun &rest args)
-  "Custom sanitizer for Go macros."
-  (apply orig-fun args))
-
-;; Org-noter utilities
-(defun salih/org-noter-pdf--pdf-view-get-precise-info (orig-fun &rest args)
-  "Custom wrapper for org-noter PDF view."
-  (apply orig-fun args))
-
-;; Open URL utilities
-(defun salih/open-url-in-chrome-cross-platform (url &optional new-window)
-  "Open URL in Chrome browser, works on macOS, Linux, and Windows."
-  (cond
-   ;; macOS
-   ((eq system-type 'darwin)
-    (start-process "chrome" nil "open" "-a" "Google Chrome" url))
-   ;; Linux
-   ((eq system-type 'gnu/linux)
-    (start-process "chrome" nil "google-chrome" url))
-   ;; Windows
-   ((eq system-type 'windows-nt)
-    (start-process "chrome" nil "chrome" url))
-   ;; Fallback
-   (t
-    (browse-url url))))
-
-;; Start note function
-(defun salih/start-note () (setq salih/adding-note? t))
 
 (provide '+l-helpers)

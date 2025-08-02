@@ -10,13 +10,7 @@
 (advice-add 'sly-eval-with-transcript
             :before   #'salih/sly--compile-eval-begin-print)
 
-;; Go macro advice
-(advice-add 'gomacro--sanitize-string :override 'salih/gomacro--sanitize-string)
-
-;; Deft advice
-(advice-add 'deft-parse-title  :override #'cm/deft-parse-title)
-
 ;; Doom advice
 (advice-add  #'doom-highlight-non-default-indentation-h :override #'ignore)
 
-(provide '+l-prog-sly) 
+(provide '+l-prog-sly)

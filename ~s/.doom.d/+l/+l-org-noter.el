@@ -13,7 +13,15 @@ it doesn't work.  ARGS are ignored but accepted to work with advice system."
             (call-interactively #'pdf-annot-add-highlight-markup-annotation)
             (save-buffer))
         (error
-         (message "Failed to add highlight annotation: %s" (error-message-string err))))))
+         (message "Failed to add highlight annotation: %s" (error-message-string
+                                                            err))))))
+
+
+  ;; Org-noter utilities
+  (defun salih/org-noter-pdf--pdf-view-get-precise-info (orig-fun &rest args)
+    "Custom wrapper for org-noter PDF view."
+    (apply orig-fun args))
+
 
   (defun salih/org-noter-open-in-zathura ()
     "Get the value of a PROPERTY from the current Org heading."
