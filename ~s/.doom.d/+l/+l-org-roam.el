@@ -109,9 +109,8 @@
 
 ;; Org-roam capture hooks
 (add-hook! 'org-roam-capture-new-node-hook
-  (setq roam-titles
-        (salih/org-roam-get-node-titles
-         (org-roam-node-read--completions))))
+  (setq roam-titles (mapcar #'org-roam-node-title (org-roam-node-list))
+        org-roam-dailies-directory "~/roam/journal"))
 
 ;; Org-ql advice
 (advice-add 'org-ql-view--format-element
