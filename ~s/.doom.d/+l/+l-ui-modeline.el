@@ -15,12 +15,21 @@
   (scroll-margin 4)
   :config
   ;; Custom modeline segments
+  (defun salih/doom-modeline-update-pdf-pages-only-percent ()
+  "Update PDF pages."
+  (setq doom-modeline--pdf-pages
+        (format "[%s％󠀥] "
+                (truncate
+                 (* 100
+                    (/ (float (or (eval `(pdf-view-current-page)) 0))
+                       (pdf-cache-number-of-pages)))))))
+
   (doom-modeline-def-segment salih/selection-info
     "Information about the current selection.
 Such as how many characters and lines are selected, or the NxM dimensions of a
 block selection."
     (when (and (or mark-active (and (bound-and-true-p evil-local-mode)
-                                   (eq evil-state 'visual)))
+                                    (eq evil-state 'visual)))
                (doom-modeline--active))
       (cl-destructuring-bind (beg . end)
           (if (and (bound-and-true-p evil-local-mode) (eq evil-state 'visual))
@@ -65,19 +74,19 @@ block selection."
                                           (cond
                                            ((doom-modeline--circe-p)
                                             (define-key map [mode-line mouse-1]
-                                              #'tracking-previous-buffer)
+                                                        #'tracking-previous-buffer)
                                             (define-key map [mode-line mouse-3]
-                                              #'tracking-next-buffer))
+                                                        #'tracking-next-buffer))
                                            ((doom-modeline--erc-p)
                                             (define-key map [mode-line mouse-1]
-                                              #'erc-switch-to-buffer)
+                                                        #'erc-switch-to-buffer)
                                             (define-key map [mode-line mouse-3]
-                                              #'erc-track-switch-buffer))
+                                                        #'erc-track-switch-buffer))
                                            ((doom-modeline--rcirc-p)
                                             (define-key map [mode-line mouse-1]
-                                              #'rcirc-switch-to-server-buffer)
+                                                        #'rcirc-switch-to-server-buffer)
                                             (define-key map [mode-line mouse-3]
-                                              #'rcirc-next-active-buffer)))
+                                                        #'rcirc-next-active-buffer)))
                                           map))))
             notification-icon))))))
 
@@ -92,4 +101,4 @@ block selection."
 ;; Mode-line format
 (setq mode-line-format nil)
 
-(provide '+l-ui-modeline) 
+(provide '+l-ui-modeline)
