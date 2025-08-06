@@ -102,7 +102,6 @@
 ;; Disable bright mode for various modes
 (add-hook! '(maxima-inferior-mode-hook
              neotree-mode-hook
-             sly-mrepl-mode-hook
              circe-mode-hook
              circe-server-mode-hook
              circe-chat-mode-hook
