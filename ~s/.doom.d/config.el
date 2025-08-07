@@ -12,8 +12,8 @@
       org-roam-directory                                (file-truename "~/roam")
       doom-font                                         (font-spec
                                                          :family
-                                                         "PragmataPro Mono"
-                                                         :size 15)
+                                                         "PragmataProLiga Nerd Font"
+                                                         :size 16)
       ;; appearance
       ;; [2024-08-06 Tue 06:33] `ef-deuteranopia-light' is amazing light theme.
       ;; [2024-09-01 Sun 00:43] `doom-rouge' is an amazing dark theme
