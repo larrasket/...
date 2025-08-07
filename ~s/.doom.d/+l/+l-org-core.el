@@ -140,11 +140,10 @@
         (funcall fn nil key)))
 
 
-
-    ;; Org-id utilities
-    (defun salih/set-custom-id-to-id (orig-fun &rest args)
-      "Set custom ID for org elements."
-      (apply orig-fun args))
+    (defun salih/set-custom-id-to-id (&rest _)
+      "Set the CUSTOM_ID property to match the ID property in the current entry."
+      (when-let ((id (org-entry-get nil "ID")))
+        (org-entry-put nil "CUSTOM_ID" id)))
 
     (defun salih/toggle-logbook-on (&rest _)
       "Enable logbook for org mode."
@@ -188,14 +187,9 @@ ARGS is `element' in `org-ql-view--format-element'"
 
 
     ;; Org media utilities
-    (defun salih/org-media-note-insert-link (orig-fun &rest args)
-      "Custom wrapper for org media note insert link."
-      (let ((org-log-into-drawer nil))
-        (apply orig-fun args)))
-
-    (defun salih/set-custom-id-to-id (orig-fun &rest args)
-      "Set custom ID for org elements."
-      (apply orig-fun args))
+    (defun salih/org-media-note-insert-link (orgin)
+      (let ((org-link-file-path-type 'absolute))
+        (funcall orgin)))
 
     (defun salih/org-id-get-create-with-custom-id ()
       (interactive)

@@ -7,9 +7,10 @@
   (circe-reduce-lurker-spam t)
   :config
   ;; Password function
-  (defun salih/tracking-next-buffer--always-switch (orig-fun &rest args)
-    "Custom wrapper for IRC tracking next buffer."
-    (apply orig-fun args))
+  (defun salih/tracking-next-buffer--always-switch (&rest _args)
+    "Advice to always switch to the next unread buffer, bypassing the `circe-mode`
+check."
+    (tracking-next-buffer))
 
   (defun salih/nickserv-password (server)
     (salih/fetch-password :user user-short-username :host "irc.libera.chat"))
