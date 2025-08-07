@@ -33,10 +33,6 @@
 (use-package org
   :config
   (setq
-   salih/source-directory                            "~/roam/source"
-   salih/books
-   (mapcar 'file-truename
-           (directory-files-recursively salih/source-directory "" nil t))
    bibtex-completion-library-path (l salih/source-directory)
    org-cite-global-bibliography (l bibtex-completion-bibliography)
    jinx-languages                                    "en_US ar_EG")
