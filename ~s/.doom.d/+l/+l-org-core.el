@@ -49,6 +49,11 @@
     (org-agenda-start-day "0d")
     (org-agenda-start-with-log-mode t)
     :config
+    (setq
+     salih/source-directory                            "~/roam/source"
+     salih/books
+     (mapcar 'file-truename
+             (directory-files-recursively salih/source-directory "" nil t)))
 
     (setq org-tag-alist   '((:startgroup)
                             ("@personal" . nil)

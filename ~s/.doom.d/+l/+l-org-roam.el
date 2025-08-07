@@ -63,8 +63,7 @@
                                               description)))))
 
 
-                  (setq roam-titles (salih/org-roam-get-node-titles
-                                     (org-roam-node-read--completions))))
+                  (setq roam-titles (mapcar #'org-roam-node-title (org-roam-node-list))))
 
           :items    ,#'salih/get-org-roam-titles))
   (defun salih/org-roam-node-insert ()
