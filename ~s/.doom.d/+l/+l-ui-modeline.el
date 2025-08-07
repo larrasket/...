@@ -15,6 +15,13 @@
   (scroll-margin 4)
   :config
   ;; Custom modeline segments
+  (defun salih/doom-modeline-update-pdf-pages-no-percent ()
+  "Update PDF pages."
+  (setq doom-modeline--pdf-pages
+        (format "  %d/%d "
+                (or (eval `(pdf-view-current-page)) 0)
+                (pdf-cache-number-of-pages))))
+
   (defun salih/doom-modeline-update-pdf-pages-only-percent ()
   "Update PDF pages."
   (setq doom-modeline--pdf-pages
