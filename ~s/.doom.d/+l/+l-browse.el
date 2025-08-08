@@ -3,10 +3,9 @@
 
 (use-package eww
   :config
-  (defun salih/ensure-eww-in-search (orig-fun &rest args)
-    "Ensure EWW is used for search results."
-    (let ((browse-url-browser-function 'eww-browse-url))
-      (apply orig-fun args)))
+  (defun salih/ensure-eww-in-search (fn &rest args)
+    (let ((browse-url-browser-function #'browse-url-default-browser))
+      (apply fn args)))
 
 
   (defun salih/open-url-in-chrome-cross-platform (url &optional new-window)

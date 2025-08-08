@@ -3,6 +3,18 @@
 ;; Citar configuration
 (require 'citar-org-roam)
 
+
+(use-package citar-org-roam
+  :after citar org-roam
+  :no-require
+  :config (citar-org-roam-mode))
+
+(use-package! org-roam-bibtex
+  :after org-roam
+  :config
+  (require 'org-ref))
+
+
 (use-package citar-org-roam
   :after citar org-roam
   :no-require
