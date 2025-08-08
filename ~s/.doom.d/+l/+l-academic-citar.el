@@ -23,6 +23,7 @@
   (setq bibtex-completion-notes-template-multiple-files
         (concat "* ${author-or-editor}, ${title}, "
                 "${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n")
+        citar-bibliography bibtex-completion-bibliography
 
 
 
