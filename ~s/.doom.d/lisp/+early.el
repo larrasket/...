@@ -121,7 +121,8 @@ Excludes themes in the predefined skip list."
                       doom-molokai
                       modus-vivendi-deuteranopia
                       modus-operandi
-                      modus-vivendi-tinted))
+                      modus-vivendi-tinted
+                      ef-day))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
          (available-themes (seq-filter (lambda (theme)
                                          (not (member theme skip-list)))

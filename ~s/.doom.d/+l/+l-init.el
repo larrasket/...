@@ -24,7 +24,6 @@
 
 ;; Load Programming modules (can be disabled individually)
 (require '+l-prog-lsp)
-;; (require '+l-prog-sly)
 (require '+l-prog-compilation)
 (require '+l-prog-format)
 

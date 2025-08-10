@@ -220,6 +220,7 @@ ARGS is `element' in `org-ql-view--format-element'"
 
 
 (require 'ts)
+(require 'org-download)
 (setq org-agenda-custom-commands
         `(("f" "Agenda Tasks"
            ((org-ql-block '(and

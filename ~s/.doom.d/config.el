@@ -1,6 +1,5 @@
 ;;; config.el -*- lexical-binding: t; -*-
-(require '+early)                       ; personal utilities
-
+(require '+early)
 (setq salih/temp-roam-insert nil)
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "lr0@gmx.com"

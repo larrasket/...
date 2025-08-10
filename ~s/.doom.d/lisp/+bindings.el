@@ -205,7 +205,6 @@
  :v
  "C-c C-t" #'gt-do-translate)
 
-
 (map!
  :map org-mode-map
  :after org
