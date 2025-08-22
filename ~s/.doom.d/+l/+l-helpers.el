@@ -135,5 +135,24 @@ Version 2019-11-04 2021-02-16"
   (when (bound-and-true-p bright-mode)
     (bright-mode -1)))
 
+;; [2025-05-03 Sat 05:35] fun fact, I took this function from an Israeli around
+;; 4 years ago, and never stopped to read it but now. I'm adding Arabic support.
+(defun salih/bidi-direction-toggle ()
+  "Toggle bidirectional paragraph direction and Arabic input method."
+  (interactive)
+  (setq bidi-display-reordering t)
+  (if (equal bidi-paragraph-direction 'right-to-left)
+      (progn
+        (setq bidi-paragraph-direction 'left-to-right)
+        (deactivate-input-method))
+    (progn
+      (setq bidi-paragraph-direction 'right-to-left)
+      (jinx-mode -1)
+      (set-input-method "arabic")))
+  (message "Direction: %s, Input method: %s"
+           bidi-paragraph-direction
+           (if current-input-method current-input-method "none")))
+
+
 
 (provide '+l-helpers)
