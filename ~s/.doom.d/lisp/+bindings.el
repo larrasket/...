@@ -327,6 +327,11 @@
  "C-n C-c C-o" #'salih/open-book-zathura)
 
 
+(general-define-key
+ :keymaps 'override
+ "M-n" #'make-frame)
+
+
 
 ;; magit and vc
 ;; TODO refactor if possible
