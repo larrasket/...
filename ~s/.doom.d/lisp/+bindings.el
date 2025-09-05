@@ -243,9 +243,9 @@
    "C-n"          nil
    "C-t"          #'salih/vterm
    "C-c"          #'salih/org-capture-general
-   "C-l"          #'salih/org-capture-log
    "C-n"          #'salih/org-roam-capture-fleet
    "C-a"          nil
+   "C-j"          #'salih/org-capture-journal
    "C-a C-a"      #'salih/org-agenda-no-full-f
    "C-a C-l"      #'salih/org-agenda-no-full-l
    "C-a C-f"      #'salih/org-agenda-full-f
