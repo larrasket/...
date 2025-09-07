@@ -12,15 +12,15 @@
 (require '+l-ui-completion)
 
 ;; Load Org modules (can be disabled individually)
-(require '+l-org-core)
-(require '+l-org-capture)
-(require '+l-org-roam)
-(require '+l-org-fc)
-(require '+l-org-noter)
+;; (require '+l-org-core)
+;; (require '+l-org-capture)
+;; (require '+l-org-roam)
+;; (require '+l-org-fc)
+;; (require '+l-org-noter)
 
 ;; Load Academic modules (can be disabled individually)
-(require '+l-academic-bibtex)
-(require '+l-academic-citar)
+;; (require '+l-academic-bibtex)
+;; (require '+l-academic-citar)
 
 ;; Load Programming modules (can be disabled individually)
 (require '+l-prog-lsp)
@@ -28,14 +28,14 @@
 (require '+l-prog-format)
 
 ;; Load Communication modules (can be disabled individually)
-(require '+l-email)
-(require '+l-irc)
+;; (require '+l-email)
+;; (require '+l-irc)
 
 ;; Load remaining modules
 (require '+l-common)
 
 
-(require '+l-translate)
-(require '+l-browse)
+;; (require '+l-translate)
+;; (require '+l-browse)
 (require '+l-prayer)
 (provide '+l-init)
