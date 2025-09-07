@@ -8,11 +8,13 @@
 
 ;; unbinding
 
-(define-key org-mode-map (kbd "C-c C-f") nil)
-(define-key org-mode-map (kbd "C-c C-j") nil)
+(when (boundp 'org-mode-map)
+  (define-key org-mode-map (kbd "C-c C-f") nil)
+  (define-key org-mode-map (kbd "C-c C-j") nil)
+  (when (fboundp 'salih/mode)
+    (define-key org-mode-map (salih/mode "]") nil)
+    (define-key org-mode-map (salih/mode "[") nil)))
 (global-unset-key        (kbd "C-f"))
-(define-key org-mode-map (salih/mode "]") nil)
-(define-key org-mode-map (salih/mode "[") nil)
 (general-auto-unbind-keys)
 
 
@@ -22,8 +24,10 @@
 
 
 
-(define-key evil-normal-state-map       (kbd "g w") #'evil-avy-goto-char-2)
-(define-key evil-insert-state-map       (salih/global "C-s") #'save-buffer)
+(when (boundp 'evil-normal-state-map)
+  (define-key evil-normal-state-map (kbd "g w") #'evil-avy-goto-char-2))
+(when (and (boundp 'evil-insert-state-map) (fboundp 'salih/global))
+  (define-key evil-insert-state-map (salih/global "C-s") #'save-buffer))
 
 (map!
  :mode wordnut-mode
@@ -43,7 +47,8 @@
 
 (evil-define-key 'normal clojure-mode-map (kbd "K") #'cider-doc)
 
-(evil-define-key 'normal org-mode-map (kbd "C-n C-z") #'org-add-note)
+(when (boundp 'org-mode-map)
+  (evil-define-key 'normal org-mode-map (kbd "C-n C-z") #'org-add-note))
 
 (map!
  :map clojure-mode-map
@@ -116,8 +121,9 @@
   (evil-define-key 'motion pdf-view-mode-map (kbd "<left>") #'ignore))
 
 (add-hook! 'pdf-view-mode-hook
-  (evil-local-set-key 'normal
-                      (salih/mode "C-c") #'org-noter-insert-precise-note)
+  (when (fboundp 'salih/mode)
+    (evil-local-set-key 'normal
+                        (salih/mode "C-c") #'org-noter-insert-precise-note))
   (evil-local-set-key 'normal (kbd "J") #'pdf-view-next-page-command)
   (evil-local-set-key 'normal (kbd "<right>") nil)
   (evil-local-set-key 'normal (kbd "<left>") nil)
@@ -517,6 +523,6 @@
 (map!
  :map mu4e-view-active-urls-keymap
  "RET"    'mu4e--view-browse-url-from-binding
- [return] 'mu4e--view-browse-url-from-binding)
+ [return] 'mu4e--view-browse-url-from-binding))
 
 (provide '+bindings)
