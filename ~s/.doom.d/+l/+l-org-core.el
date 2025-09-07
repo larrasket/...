@@ -109,6 +109,10 @@
       (interactive)
       (salih/capture-- 'org-capture "f"))
 
+    (defun salih/org-capture-journal ()
+      (interactive)
+      (salih/capture-- 'org-capture "j"))
+
     (defun salih/org-capture-log ()
       (interactive)
       (salih/capture-- 'org-capture "n"))
