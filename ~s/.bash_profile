@@ -60,7 +60,7 @@ mise() {
   local command
   command="${1:-}"
   if [ "$#" = 0 ]; then
-    command /opt/homebrew/bin/mise
+    command /usr/local/bin/mise
     return
   fi
   shift
@@ -69,12 +69,12 @@ mise() {
   deactivate|shell|sh)
     # if argv doesn't contains -h,--help
     if [[ ! " $@ " =~ " --help " ]] && [[ ! " $@ " =~ " -h " ]]; then
-      eval "$(command /opt/homebrew/bin/mise "$command" "$@")"
+      eval "$(command /usr/local/bin/mise "$command" "$@")"
       return $?
     fi
     ;;
   esac
-  command /opt/homebrew/bin/mise "$command" "$@"
+  command /usr/local/bin/mise "$command" "$@"
 }
 
 _mise_hook() {
@@ -123,7 +123,7 @@ if [ -z "${_mise_cmd_not_found:-}" ]; then
     fi
 
     command_not_found_handle() {
-        if [[ "$1" != "mise" && "$1" != "mise-"* ]] && /opt/homebrew/bin/mise hook-not-found -s bash -- "$1"; then
+        if [[ "$1" != "mise" && "$1" != "mise-"* ]] && /usr/local/bin/mise hook-not-found -s bash -- "$1"; then
           _mise_hook
           "$@"
         elif [ -n "$(declare -f _command_not_found_handle)" ]; then
