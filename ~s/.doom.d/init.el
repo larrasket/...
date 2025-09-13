@@ -37,7 +37,7 @@
        vterm
 
        :checkers
-       (syntax +childframe)
+       (syntax +childframe +icons)
        ;; (spell  +flyspell)
 
        :tools
@@ -45,7 +45,7 @@
        terraform
        tree-sitter
        (lookup +dictionary +offline)
-       (lsp +peak +eglot)
+       (lsp +peak)
        magit
        pdf
 

@@ -86,8 +86,8 @@
   (evil-local-set-key 'normal (kbd "K") #'pdf-view-previous-page-command))
 
 (general-define-key
- :keymaps 'eglot-mode-map
- "M-RET" #'eglot-code-actions)
+ :keymaps 'lsp-mode-map
+ "M-RET" #'lsp-execute-code-action)
 
 
 ;; ;; TODO Refactor this. I think this should be rewritten as an only one function
@@ -157,7 +157,8 @@
  "n z"          #'salih/open-book
  "TAB d"        #'+workspace:delete
  "/"            #'swiper
- "f p"          #'projectile-switch-project)
+ "f p"          #'projectile-switch-project
+ "l e"          #'salih/list-errors)
 
 
 ;; ;; files and roam

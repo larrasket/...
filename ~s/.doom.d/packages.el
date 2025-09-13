@@ -107,10 +107,9 @@
   (:host github
    :repo "luggages/mito-laser-emacs"))
 
-(package! eglot-booster
-          :recipe (:host github :repo "jdtsmith/eglot-booster"))
-
 
 (unpin! eglot)
 (unpin! lsp-pyright)
 (unpin! tree-sitter-langs)
+(package! flycheck-projectile)
+(package! consult-lsp)
