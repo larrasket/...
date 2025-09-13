@@ -112,3 +112,16 @@
 (setq epa-file-cache-passphrase-for-symmetric-encryption t
       epa-file-select-keys                               'silent
       epa-file-encrypt-to                                user-mail-address)
+
+(setq doom-modeline-icon nil)
+(setq doom-modeline-height 30)
+
+(display-battery-mode)
+
+(setq doom-modeline-height 30)
+(custom-set-faces
+  '(mode-line ((t (:family "Iosevka"))))
+  '(mode-line-active ((t (:family "Iosevka"))))
+
+  '(mode-line-inactive ((t (:family "Iosevka")))))
+(setq doom-modeline-bar-width 1)

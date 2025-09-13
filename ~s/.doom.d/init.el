@@ -21,9 +21,10 @@
        file-templates
        fold                             ; activate za in evil mode
        lispy                            ; better lisp edit
-       ;;parinfer                         ; (better lisp edit)
+       parinfer                         ; (better lisp edit)
        snippets
        word-wrap
+       format (+onsave)
 
        :emacs
        (dired +icons)
@@ -52,7 +53,6 @@
        (tty)
 
        :lang
-       (csharp +lsp +dotnet +tree-sitter)
        (latex +flod +latexmk +lsp)
        (clojure +lsp +tree-sitter)
        (julia +lsp +tree-sitter)
@@ -61,6 +61,11 @@
        (javascript +lsp)
        (org +roam2)
        (rest +jq)
+       (javascript +lsp)
+       (graphql +lsp +tree-sitter)
+       json
+       web
+       yaml
        emacs-lisp
        yaml
        json

@@ -19,13 +19,12 @@
 ;; [2024-10-15 Tue 06:18] Not writing in Julia anymore.
 ;; (package! ob-julia-vterm)               ; for usage, see maxima or sage-shell
 
-(package! gt)                 ; google API for translations
+(package! gt)                           ; google API for translations
 (package! consult-org-roam)             ; useful org-roam functions
 
 
 (package! nov)                          ; browse epubs from emacs
 (package! vulpea)                       ; roam advanced functions
-(package! format-all)                   ; destroy my code
 (package! lsp-treemacs)                 ; make emacs loks like and EDE (ide)
 (package! modus-themes)                 ; my favorite themes from my greek dude
 (package! org-web-tools)                ; viewing urls in org
@@ -110,3 +109,8 @@
 
 (package! eglot-booster
           :recipe (:host github :repo "jdtsmith/eglot-booster"))
+
+
+(unpin! eglot)
+(unpin! lsp-pyright)
+(unpin! tree-sitter-langs)

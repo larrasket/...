@@ -1,4 +1,8 @@
 ;;; ../configs/.doom.d/lisp/+bindings.el -*- lexical-binding: t; -*-
+(define-key evil-motion-state-map "-" 'er/expand-region)
+(define-key evil-motion-state-map (kbd "H-i") 'evil-jump-backward)
+(define-key evil-motion-state-map (kbd "C-o") 'evil-jump-forward)
+
 
 
 (map!
@@ -67,11 +71,11 @@
  :n
  "RET" #'salih/pdf-occure)
 
- (with-eval-after-load 'pdf-view
-  (evil-define-key 'normal pdf-view-mode-map (kbd "<right>") #'ignore)
-  (evil-define-key 'motion pdf-view-mode-map (kbd "<right>") #'ignore)
-  (evil-define-key 'nroaml pdf-view-mode-map (kbd "<left>") #'ignore)
-  (evil-define-key 'motion pdf-view-mode-map (kbd "<left>") #'ignore))
+(with-eval-after-load 'pdf-view
+ (evil-define-key 'normal pdf-view-mode-map (kbd "<right>") #'ignore)
+ (evil-define-key 'motion pdf-view-mode-map (kbd "<right>") #'ignore)
+ (evil-define-key 'nroaml pdf-view-mode-map (kbd "<left>") #'ignore)
+ (evil-define-key 'motion pdf-view-mode-map (kbd "<left>") #'ignore))
 
 (add-hook! 'pdf-view-mode-hook
   (evil-local-set-key 'normal (kbd "J") #'pdf-view-next-page-command)
@@ -104,9 +108,9 @@
 
 
 (map!
-:leader
-"[" #'previous-buffer
-"]" #'next-buffer)
+ :leader
+ "[" #'previous-buffer
+ "]" #'next-buffer)
 
 
 (map!
@@ -140,19 +144,20 @@
 
 ;; ;; convenient
 (map!
-   :leader
-   "t t"          #'salih/vterm
-   "n f"          #'salih/org-roam-capture-fleet
-   "C-j"          #'salih/org-capture-journal
-   "o a"          #'salih/org-agenda-no-full-f
-   "o l"          #'salih/org-agenda-no-full-l
-   "o f"          #'salih/org-agenda-full-f
-   "o v"          #'salih/open-agenda
-   "f f"          #'salih/read-feeds
-   "o c"          #'calendar
-   "n z"          #'salih/open-book
-   "TAB d"        #'+workspace:delete
-   "/"            #'swiper)
+ :leader
+ "t t"          #'salih/vterm
+ "n f"          #'salih/org-roam-capture-fleet
+ "C-j"          #'salih/org-capture-journal
+ "o a"          #'salih/org-agenda-no-full-f
+ "o l"          #'salih/org-agenda-no-full-l
+ "o f"          #'salih/org-agenda-full-f
+ "o v"          #'salih/open-agenda
+ "f f"          #'salih/read-feeds
+ "o c"          #'calendar
+ "n z"          #'salih/open-book
+ "TAB d"        #'+workspace:delete
+ "/"            #'swiper
+ "f p"          #'projectile-switch-project)
 
 
 ;; ;; files and roam
