@@ -29,6 +29,7 @@
       salih/org-roam-fleet-file                         "~/roam/main/lr.org"
       salih/org-vocal-store                             "~/roam/media/vocal"
       +org-capture-todo-file                            "~/roam/main/life.org"
+      salih/vulpea-show-full                            nil
 
       ;; this option is useful when you are up after 00:00. set 0 to the value
       ;; you sleep at. if you sleep at 02:00 it should be 2, if you sleep at
