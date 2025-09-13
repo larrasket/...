@@ -160,6 +160,9 @@
  "f p"          #'projectile-switch-project
  "l e"          #'salih/list-errors)
 
+(map!
+ :map doom-leader-map
+ "RET" #'consult-buffer)
 
 ;; ;; files and roam
 ;; (map!
