@@ -6,7 +6,6 @@
   (use-package org
     :custom
     (org-id-method 'org)
-    (org-log-into-drawer "STATS")
     (org-log-done nil)
     (org-agenda-skip-scheduled-if-done nil)
     (org-use-tag-inheritance t)
@@ -153,17 +152,26 @@
       "Enable logbook for org mode."
       (setq org-log-into-drawer t))
 
-    (defun salih/toggle-logbook-off (&rest _)
-      "Disable logbook for org mode."
-      (setq org-log-into-drawer nil))
+    (defun salih/toggle-log-int-drawer-off (&rest _)
+      "Disable log into drawer for org mode."
+      (if salih/adding-note?
+          (setq salih/adding-note? nil
+                org-log-into-drawer nil)
+        (setq org-log-into-drawer "STATS")))
 
     (defun salih/toggle-stats-on (&rest _)
       "Enable stats for org mode."
-      (setq org-log-into-drawer "STATS"))
+      (setq org-log-into-drawer t))
 
-    (defun salih/toggle-log-int-drawer-off (&rest _)
-      "Disable log into drawer for org mode."
+    (defun salih/toggle-stats-off (&rest _)
+      "Enable stats for org mode."
+      (message "off here")
       (setq org-log-into-drawer nil))
+
+
+
+
+
 
 
     ;; Start note function
@@ -451,18 +459,24 @@ ARGS is `element' in `org-ql-view--format-element'"
 
 ;; Org-mode advice
 (advice-add 'org-agenda          :before 'vulpea-agenda-files-update)
-(advice-add 'org-clock-in        :before 'salih/toggle-logbook-on)
-(advice-add 'org-clock-in        :after  'salih/toggle-stats-on)
 (advice-add 'org-todo-list       :before 'vulpea-agenda-files-update)
 (advice-add 'org-agenda-quit     :before 'org-save-all-org-buffers)
-(advice-add 'org-log-beginning   :before 'salih/toggle-log-int-drawer-off)
-(advice-add 'org-log-beginning   :after  'salih/toggle-stats-on)
+
+(advice-add 'org-clock-in        :before 'salih/toggle-logbook-on)
+(advice-add 'org-clock-in        :after  'salih/toggle-stats-on)
+
+(advice-add 'org-todo            :before 'salih/toggle-log-int-drawer-off)
+(advice-add 'org-todo            :after  'salih/toggle-stats-on)
+
 (advice-add 'org-add-note        :before 'salih/start-note)
-(advice-add 'org-add-note        :before 'salih/toggle-log-int-drawer-off)
+(advice-add 'org-add-note        :before 'salih/toggle-stats-off)
 (advice-add 'org-add-note        :after  'salih/toggle-stats-on)
+
 (advice-add 'org-agenda-add-note :before 'salih/start-note)
-(advice-add 'org-agenda-add-note :before 'salih/toggle-log-int-drawer-off)
+(advice-add 'org-agenda-add-note :before 'salih/toggle-stats-off)
 (advice-add 'org-agenda-add-note :after  'salih/toggle-stats-on)
+
+
 (advice-add 'org-media-note-insert-link
             :around #'salih/org-media-note-insert-link)
 (advice-add 'org-id-get-create :after    #'salih/set-custom-id-to-id)
@@ -476,18 +490,11 @@ ARGS is `element' in `org-ql-view--format-element'"
 ;; Org-mode hooks
 (add-hook! 'org-mode-hook
   (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
-  (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local)
-  (setq org-hide-leading-stars t
-        fill-column 80
-        display-line-numbers-width 3)
-  (setq-local truncate-lines t)
-  (display-line-numbers-mode -1))
+  (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local))
 
-;; Auto-fill mode hooks for org
-(add-hook! '(org-mode-hook
-             markdown-mode-hook)
-           #'auto-fill-mode)
-
+(defun salih/insert-now-timestamp()
+  (interactive)
+  (org-insert-time-stamp (current-time) t))
 
 
 (provide '+l-org-core)

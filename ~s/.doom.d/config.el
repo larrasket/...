@@ -13,38 +13,13 @@
       doom-font                                         (font-spec
                                                          :family
                                                          "PragmataPro"
-                                                         :size 19)
-      ;; appearance
-      ;; [2024-08-06 Tue 06:33] `ef-deuteranopia-light' is amazing light theme.
-      ;; [2024-09-01 Sun 00:43] `doom-rouge' is an amazing dark theme
-      ;; [2024-09-02 Mon 03:01] and `ef-elea-dark' too.
-      ;; [2024-09-04 Wed 02:03] `ef-maris-dark' too.
-      ;; [2025-02-19 Wed 01:12] `doom-bluloco-dark' is lovely.
-      ;; [2025-02-23 Sun 12:19] `doom-earl-grey' is nice as a light theme.
-      ;; [2025-03-08 Sat 16:58] `doom-ephemeral' is acceptable.
-      ;; [2025-03-10 Mon 06:42] `doom-gruvbox-light' is nice, light.
-      ;; [2025-03-17 Mon 01:33] `doom-gruvbox' is nice, dark.
-      ;; [2025-03-27 Thu 01:22] `doom-ir-black' is nice too, dark.
-      ;; [2025-03-31 Mon 05:38] `doom-material-dark' is nice, dark.
-      ;; [2025-04-15 Tue 11:17] `doom-miramare' is beautiful, dark.
-      ;; [2025-04-22 Tue 11:48] `doom-molokai' is nice, dark.
-      ;; [2025-05-12 Mon 01:34] `doom-outrun-electric' is great.
-      ;; [2025-05-28 Wed 16:55] `doom-solarized-light' is nice, light
-      ;; [2025-06-25 Wed 15:30] `modus-vivendi-tinted' is cozy, dark
-      ;; [2025-07-05 Sat 18:28] `modus-vivendi-tinted' is okay, dark
-      ;; [2025-07-05 Sat 18:43] Just found out that my feeling towards the same
-      ;; theme changed over couple of days.
-      ;; [2025-07-06 Sun 02:39] in fact, now I don't even like it.
-      ;; [2025-07-23 Wed 23:54] `ef-bio' is good, dark.
-      ;; [2025-07-29 Tue 21:54] `ef-cherie' is likeable, dark. And it's red too.
-      ;; [2025-08-31 Sun 23:42] `ef-dream' is nice, dark.
-      doom-theme                                        (salih/get-random-theme-full 1)
+                                                         :size 16)
+
+      doom-theme                                        'ef-owl
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
 
-      ;; prayer time
-      ;; not my real coordinates, just to save you time.
 
       ;; org
       org-directory                                     org-roam-directory
@@ -88,7 +63,6 @@
 (s/require
  '+bindings
  '+early)
-
 
 (when (eq system-type 'darwin)
   (menu-bar-mode -1)

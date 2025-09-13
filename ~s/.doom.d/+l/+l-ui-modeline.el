@@ -1,20 +1,7 @@
 ;;; +l-ui-modeline.el -*- lexical-binding: t; -*-
 
-;; Modeline configuration
 (use-package doom-modeline
-  :custom
-  (doom-modeline-enable-word-count t)
-  (doom-modeline-buffer-state-icon nil)
-  (doom-modeline-icon t)
-  (doom-modeline-mode-alist nil)
-  (doom-modeline-modal-icon nil)
-  (doom-modeline-lsp-icon nil)
-  (doom-modeline-irc-stylize #'ignore)
-  (all-the-icons-completion-mode nil)
-  (global-hl-line-modes nil)
-  (scroll-margin 4)
   :config
-  ;; Custom modeline segments
   (defun salih/doom-modeline-update-pdf-pages-no-percent ()
   "Update PDF pages."
   (setq doom-modeline--pdf-pages
@@ -97,15 +84,6 @@ block selection."
                                           map))))
             notification-icon))))))
 
-;; Cocaine configuration
-(use-package cocaine-line
-  :custom
-  (cocaine-show-buffer-position nil)
-  (cocaine-show-column-info nil)
-  (cocaine-show-misc-info t)
-  (cocaine-show-processes-info t))
 
-;; Mode-line format
-(setq mode-line-format nil)
 
 (provide '+l-ui-modeline)

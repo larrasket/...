@@ -16,7 +16,7 @@
     (mu4e-compose-reply-ignore-address `("no-?reply" ,user-mail-address))
     (mu4e-headers-visible-lines 10)
     (mu4e-update-interval 500)
-    (mu4e-compose-signature (format "Whatever\n%s" user-first-name))
+    (mu4e-compose-signature (format "Regards\n%s" user-first-name))
     (smtpmail-default-smtp-server user-stmp-server)
     (smtpmail-smtp-server smtpmail-default-smtp-server)
     (smtpmail-smtp-service user-stmp-port)
@@ -214,10 +214,7 @@ it with org)."
                                     " AND NOT maildir:"
                                     "\"" mu4e-refile-folder "\""))))
 
-    ;; Theme customization
-    (when (doom-theme-p?)
-      (custom-set-faces!
-        '(mu4e-highlight-face :inherit mu4e-header-face :background nil))))
+    )
   (add-hook! 'mu4e-headers-mode-hook
   (visual-line-mode -1)))
 

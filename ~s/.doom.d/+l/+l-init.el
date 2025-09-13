@@ -1,18 +1,12 @@
 ;;; +l/init.el -*- lexical-binding: t; -*-
 
-;; Add the +l directory to load path
-(add-to-list 'load-path (file-name-directory load-file-name))
-
-;; Load core modules (always loaded)
 (require '+l-helpers)
-
-;; Load UI modules
 (require '+l-ui-basic)
 (require '+l-ui-modeline)
 (require '+l-ui-completion)
+(require '+l-org-core)
 
 ;; Load Org modules (can be disabled individually)
-(require '+l-org-core)
 (require '+l-org-capture)
 (require '+l-org-roam)
 (require '+l-org-fc)
@@ -30,11 +24,6 @@
 ;; Load Communication modules (can be disabled individually)
 (require '+l-email)
 (require '+l-irc)
-
-;; Load remaining modules
-(require '+l-common)
-
-
 (require '+l-translate)
 (require '+l-browse)
 (require '+l-prayer)

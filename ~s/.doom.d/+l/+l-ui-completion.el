@@ -22,24 +22,6 @@
   (corfu-min-width 30)
   (corfu-max-width 80))
 
-;; Company configuration
-;; (use-package company
-;;   :custom
-;;   (company-idle-delay 0.3)
-;;   :config
-;;   )
-
 (remove-hook! 'doom-first-input-hook #'global-company-mode)
-;; Mixed pitch configuration
-(use-package mixed-pitch
-  :config
-  (dolist (face '(org-special-keyword org-drawer org-date))
-    (add-to-list 'mixed-pitch-fixed-pitch-faces face)))
-
-;; Popup rules
-(set-popup-rules!
-  '(("^\\*cider-doc" :slot -1 :size 0.3 :select t)))
-
-;; Lookup and documentation advice
 
 (provide '+l-ui-completion)

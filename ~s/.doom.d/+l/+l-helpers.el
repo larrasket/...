@@ -1,9 +1,7 @@
 ;;; +l/helpers.el -*- lexical-binding: t; -*-
 
 ;; Timestamp utilities
-(defun salih/insert-now-timestamp()
-  (interactive)
-  (org-insert-time-stamp (current-time) t))
+
 
 (defun salih/dired-sort ()
   "Sort dired dir listing in different ways.
@@ -35,10 +33,6 @@ Zathura."
                          (expand-file-name file default-directory))
         (find-file file)))))
 
-(defun salih/open-kitty-in-current-directory ()
-  "Open the Kitty terminal in the current working directory."
-  (interactive)
-  (call-process "kitty" nil 0 nil "--directory" default-directory))
 
 
 (defun salih/org-calendar-goto-agenda ()
@@ -51,8 +45,6 @@ Zathura."
   (interactive)
   (let ((default-directory (concat salih/source-directory "/")))
     (call-interactively 'find-file)))
-
-
 
 
 (defun salih/zathura-open ()
@@ -129,11 +121,6 @@ Version 2019-11-04 2021-02-16"
                              "" nil "xdg-open" $fpath))) $file-list))))))
 
 
-;; Disable bright function
-(defun salih/disable-bright ()
-  "Disable bright mode for current buffer."
-  (when (bound-and-true-p bright-mode)
-    (bright-mode -1)))
 
 ;; [2025-05-03 Sat 05:35] fun fact, I took this function from an Israeli around
 ;; 4 years ago, and never stopped to read it but now. I'm adding Arabic support.
@@ -152,7 +139,6 @@ Version 2019-11-04 2021-02-16"
   (message "Direction: %s, Input method: %s"
            bidi-paragraph-direction
            (if current-input-method current-input-method "none")))
-
 
 
 (provide '+l-helpers)
