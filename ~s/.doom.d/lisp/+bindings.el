@@ -265,11 +265,6 @@
  :n
  ";" #'embark-act)
 
-;; (map!
-;;  :map org-mode-map
-;;  :n
-;;  ";" #'embark-act)
-
 
 (evil-define-minor-mode-key '(normal insert emacs) 'org-fc-review-flip-mode
   (kbd "r") 'org-fc-review-flip
