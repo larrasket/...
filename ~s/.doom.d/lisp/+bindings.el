@@ -3,6 +3,15 @@
 (define-key evil-motion-state-map (kbd "H-i") 'evil-jump-backward)
 (define-key evil-motion-state-map (kbd "C-o") 'evil-jump-forward)
 
+(setq  doom-leader-alt-key  "M-m")
+
+
+(map!
+ :map org-mode-map
+ :leader
+ :i
+ "m f" #'org-footnote-action)
+
 
 
 (map!
@@ -137,7 +146,6 @@
  "r l f"   #'consult-org-roam-forward-links
  "C-;"     #'salih/rename-or-iedit)
 
-(setq  doom-leader-alt-key  "M-m")
 
 
 
