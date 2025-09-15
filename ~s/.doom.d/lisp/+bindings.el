@@ -24,8 +24,6 @@
 
 
 
-(evil-local-set-key 'insert (kbd "C-SPC") nil)
-
 ;; TODO refactor `evil-define-key`-like code to use either `general-define-key`
 ;; or `map!`.
 
