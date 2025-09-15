@@ -181,3 +181,6 @@
 (setq lsp-signature-render-documentation nil)
 (setq lsp-headerline-breadcrumb-enable t)
 (add-hook 'org-roam-find-file-hook      #'git-auto-commit-mode)
+
+(setq       gac-debounce-interval                             200
+            gac-silent-message-p                              t)
