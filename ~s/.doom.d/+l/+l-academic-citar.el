@@ -21,10 +21,10 @@
   :config (citar-org-roam-mode)
   :custom
   (setq bibtex-completion-notes-template-multiple-files
-        citar-bibliography "~/configs/~s/ref.bib"
         (concat "* ${author-or-editor}, ${title}, "
                 "${journal}, (${year}) :${=type=}: \n\nSee [[cite:&${=key=}]]\n")
 
+        citar-bibliography "~/configs/~s/ref.bib"
 
 
         orb-preformat-keywords
