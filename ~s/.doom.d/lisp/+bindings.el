@@ -145,6 +145,7 @@
 ;; ;; convenient
 (map!
  :leader
+ "0"            #'+workspace/close-window-or-workspace
  "t t"          #'salih/vterm
  "o a"          #'salih/org-agenda-no-full-f
  "o l"          #'salih/org-agenda-no-full-l
