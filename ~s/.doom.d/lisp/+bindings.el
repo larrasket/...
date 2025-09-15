@@ -130,12 +130,12 @@
  "b b"     #'org-noter
  "b k"     #'org-noter-kill-session
  "b o"     #'salih/org-noter-open-in-zathura
- "r i" #'org-roam-node-insert
- "C-r C-t" #'org-roam-tag-add
- "C-r C-a" #'org-fc-type-normal-init
- "C-r C-b" #'consult-org-roam-backlinks
- "C-;"     #'salih/rename-or-iedit
- "C-r C-f" #'consult-org-roam-forward-links)
+ "r i"     #'org-roam-node-insert
+ "r t"     #'org-roam-tag-add
+ "r f"     #'org-fc-type-normal-init
+ "r l f"   #'consult-org-roam-backlinks
+ "r l f"   #'consult-org-roam-forward-links
+ "C-;"     #'salih/rename-or-iedit)
 
 (setq  doom-leader-alt-key  "M-m")
 
@@ -146,8 +146,6 @@
 (map!
  :leader
  "t t"          #'salih/vterm
- "n f"          #'salih/org-roam-capture-fleet
- "C-j"          #'salih/org-capture-journal
  "o a"          #'salih/org-agenda-no-full-f
  "o l"          #'salih/org-agenda-no-full-l
  "o f"          #'salih/org-agenda-full-f
@@ -165,16 +163,13 @@
  "RET" #'consult-buffer)
 
 ;; ;; files and roam
-;; (map!
-;;  :prefix "C-f"
-;;  :map 'override
-;;  :nm
-;;  "C-f"  #'org-roam-node-find
-;;  "C-c"  #'salih/org-roam-capture-fleet
-;;  "C-p"  #'projectile-switch-project
-;;  "C-j"  #'salih/org-roam-dailies-capture-today
-;;  "C-b"  #'salih/org-roam-buffer
-;;  "C-r"  #'recentf-open-files)
+(map!
+ :map 'override
+ :leader
+ "r f"  #'org-roam-node-find
+ "r c"  #'salih/org-roam-capture-fleet
+ "r j"  #'salih/org-roam-dailies-capture-today
+ "r b"  #'salih/org-roam-buffer)
 
 
 ;; ;; notes
