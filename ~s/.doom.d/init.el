@@ -58,7 +58,7 @@
        (julia +lsp +tree-sitter)
        (cc +lsp +tree-sitter)
        (go +lsp +tree-sitter)
-       (javascript +lsp)
+       (javascript +lsp +tree-sitter)
        (org +roam2)
        (rest +jq)
        (javascript +lsp)
