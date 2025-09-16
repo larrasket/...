@@ -6,11 +6,6 @@
 (setq  doom-leader-alt-key  "M-m")
 
 
-(map!
- :map org-mode-map
- :leader
- :i
- "m f" #'org-footnote-action)
 
 
 
@@ -142,9 +137,15 @@
  "r f"     #'org-fc-type-normal-init
  "r l f"   #'consult-org-roam-backlinks
  "r l f"   #'consult-org-roam-forward-links
+ "m z"     #'org-add-note
  "C-;"     #'salih/rename-or-iedit)
 
 
+(map!
+ :map org-mode-map
+ :leader
+ :i
+ "m f" #'org-footnote-action)
 
 
 
