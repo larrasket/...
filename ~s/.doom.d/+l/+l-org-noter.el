@@ -60,11 +60,7 @@ it doesn't work.  ARGS are ignored but accepted to work with advice system."
     (interactive)
     (let ((prev-window (selected-window)))
       (org-noter-sync-current-note)
-      (select-window prev-window)))
-  (define-key org-noter-notes-mode-map "C-c C-j"
-              #'salih/org-noter-sync-current-note-and-switch-window)
-  (define-key org-noter-doc-mode-map
-              "C-c C-c" #'org-noter-insert-precise-note))
+      (select-window prev-window))))
 
 ;; Org-noter advice
 (advice-add 'org-noter-pdf--pdf-view-get-precise-info

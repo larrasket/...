@@ -30,6 +30,8 @@
       salih/org-vocal-store                             "~/roam/media/vocal"
       +org-capture-todo-file                            "~/roam/main/life.org"
       salih/vulpea-show-full                            nil
+      salih/adding-note?                                nil
+      salih/org-agenda-full-f                           nil
 
       ;; this option is useful when you are up after 00:00. set 0 to the value
       ;; you sleep at. if you sleep at 02:00 it should be 2, if you sleep at
@@ -179,3 +181,7 @@
 (setq lsp-signature-auto-activate t) ;; you could manually request them via `lsp-signature-activate`
 (setq lsp-signature-render-documentation nil)
 (setq lsp-headerline-breadcrumb-enable t)
+(add-hook 'org-roam-find-file-hook      #'git-auto-commit-mode)
+
+(setq       gac-debounce-interval                             200
+            gac-silent-message-p                              t)

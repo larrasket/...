@@ -148,25 +148,6 @@
       (when-let ((id (org-entry-get nil "ID")))
         (org-entry-put nil "CUSTOM_ID" id)))
 
-    (defun salih/toggle-logbook-on (&rest _)
-      "Enable logbook for org mode."
-      (setq org-log-into-drawer t))
-
-    (defun salih/toggle-log-int-drawer-off (&rest _)
-      "Disable log into drawer for org mode."
-      (if salih/adding-note?
-          (setq salih/adding-note? nil
-                org-log-into-drawer nil)
-        (setq org-log-into-drawer "STATS")))
-
-    (defun salih/toggle-stats-on (&rest _)
-      "Enable stats for org mode."
-      (setq org-log-into-drawer t))
-
-    (defun salih/toggle-stats-off (&rest _)
-      "Enable stats for org mode."
-      (message "off here")
-      (setq org-log-into-drawer nil))
 
 
 
@@ -175,7 +156,6 @@
 
 
     ;; Start note function
-    (defun salih/start-note (&rest _) (setq salih/adding-note? t))
 
     ;; Org-ql utilities
     (defun salih/org-ql-view--format-element (orig-fun &rest args)
@@ -462,19 +442,41 @@ ARGS is `element' in `org-ql-view--format-element'"
 (advice-add 'org-todo-list       :before 'vulpea-agenda-files-update)
 (advice-add 'org-agenda-quit     :before 'org-save-all-org-buffers)
 
-(advice-add 'org-clock-in        :before 'salih/toggle-logbook-on)
-(advice-add 'org-clock-in        :after  'salih/toggle-stats-on)
 
-(advice-add 'org-todo            :before 'salih/toggle-log-int-drawer-off)
-(advice-add 'org-todo            :after  'salih/toggle-stats-on)
+(defun salih/logbook-on (&rest _)
+  "Enable logbook for org mode."
+  (setq org-log-into-drawer t))
+
+
+(defun salih/logbook-off (&rest _)
+  "Enable logbook for org mode."
+  (setq org-log-into-drawer nil))
+
+(defun salih/stats-on (&rest _)
+  "Disable log into drawer for org mode."
+  (if salih/adding-note?
+      (setq salih/adding-note? nil
+            org-log-into-drawer nil)
+    (setq org-log-into-drawer "STATS"))
+  (message (format "after: %s" org-log-into-drawer)))
+
+
+(defun salih/start-note (&rest _) (setq salih/adding-note? t))
+
+
+(advice-add 'org-clock-in        :before 'salih/logbook-on)
+(advice-add 'org-clock-in        :after  'salih/logbook-off)
+
+(advice-add 'org-store-log-note :before 'salih/stats-on)
+(advice-add 'org-store-log-note :after  'salih/logbook-off)
 
 (advice-add 'org-add-note        :before 'salih/start-note)
-(advice-add 'org-add-note        :before 'salih/toggle-stats-off)
-(advice-add 'org-add-note        :after  'salih/toggle-stats-on)
+(advice-add 'org-add-note        :before 'salih/stats-on)
+(advice-add 'org-add-note        :after  'salih/logbook-on)
 
-(advice-add 'org-agenda-add-note :before 'salih/start-note)
-(advice-add 'org-agenda-add-note :before 'salih/toggle-stats-off)
-(advice-add 'org-agenda-add-note :after  'salih/toggle-stats-on)
+;; (advice-add 'org-agenda-add-note :before 'salih/start-note)
+;; (advice-add 'org-agenda-add-note :before 'salih/toggle-stats-off)
+;; (advice-add 'org-agenda-add-note :after  'salih/toggle-stats-on)
 
 
 (advice-add 'org-media-note-insert-link

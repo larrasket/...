@@ -12,9 +12,6 @@
 (require '+l-org-fc)
 (require '+l-org-noter)
 
-;; Load Academic modules (can be disabled individually)
-(require '+l-academic-bibtex)
-(require '+l-academic-citar)
 
 ;; Load Programming modules (can be disabled individually)
 (require '+l-prog-lsp)
@@ -27,4 +24,11 @@
 (require '+l-translate)
 (require '+l-browse)
 (require '+l-prayer)
+
+
+;; Load Academic modules (can be disabled individually)
+(require '+l-academic-bibtex)
+(require '+l-academic-citar)
+
+
 (provide '+l-init)
