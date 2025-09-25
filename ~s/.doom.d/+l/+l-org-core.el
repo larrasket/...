@@ -130,6 +130,11 @@
       (setq salih/vulpea-show-full nil)
       (org-agenda nil "l"))
 
+    (defun salih/org-agenda-full-f ()
+      (interactive)
+      (setq salih/vulpea-show-full t)
+      (org-agenda nil "l"))
+
     (defun salih/open-agenda ()
       (interactive)
       (org-agenda-remove-restriction-lock)

@@ -3,7 +3,7 @@
 (define-key evil-motion-state-map (kbd "H-i") 'evil-jump-backward)
 (define-key evil-motion-state-map (kbd "C-o") 'evil-jump-forward)
 
-(setq  doom-leader-alt-key  "M-m")
+(setq doom-leader-alt-key  "M-m")
 
 
 
@@ -30,6 +30,11 @@
 (map!
  :i
  "C-x C-s" #'save-buffer)
+
+(map!
+ :nvim
+ "M-n" #'make-frame
+ "M-s" #'save-buffer)
 
 (after! flyspell
   (define-key flyspell-mode-map (kbd "C-;") nil))
@@ -259,8 +264,10 @@
  :map mu4e-view-mode-map
  :n
  ";"       #'salih/mu4e-go-to-url
- "C-c C-b" #'salih/mu4e-view-and-copy-html
+ "B"       #'salih/mu4e-view-and-copy-html
  "C-c C-c" #'salih/mu4e-org-store-and-capture)
+
+
 
 
 (map!

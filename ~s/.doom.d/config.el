@@ -39,7 +39,8 @@
       ;; until your day is done.
       ;; [2024-08-07 Wed 19:43] currently I sleep at 07:00.
       ;; [2024-08-08 Wed 23:41] Not anymore.
-      org-extend-today-until                            3
+      ;; [2025-09-20 Sat 00:02] Quite outdated information huh :)
+      org-extend-today-until                            4
 
       ;; other
       auto-save-no-message                              t
@@ -47,7 +48,7 @@
       safe-local-variable-values
       '((org-download-image-dir
          . "../i")
-        (salih/rebuild . t))
+        (salih/rebuild . t)))
       ;; currently org causes some annoying warnings because of org-element
       ;; breaking API updates.
       ;; [2024-04-26 Fri 02:01] I wrote "currently" above a long time ago
@@ -58,7 +59,8 @@
       ;; [2025-06-08 Sun 12:20] It's back!
       ;; [2025-06-27 Fri 20:41] https://github.com/org-noter/org-noter/issues/111
       ;; [2025-06-27 Fri 20:42] https://list.orgmode.org/87qzzfd7bf.fsf@localhost/T/#t
-      warning-minimum-level                             :error)
+      ;; [2025-09-20 Sat 00:02] I cleaned my org config. Let's give that a try again.
+      ;; warning-minimum-level                             :error)
 
 
 (require '+l-init)
@@ -119,13 +121,11 @@
 (setq doom-modeline-height 30)
 (setq doom-modeline-unicode-fallback t)
 
-(display-battery-mode)
 
 (setq doom-modeline-height 30)
 (custom-set-faces
   '(mode-line ((t (:family "Iosevka"))))
   '(mode-line-active ((t (:family "Iosevka"))))
-
   '(mode-line-inactive ((t (:family "Iosevka")))))
 (setq doom-modeline-bar-width 1)
 
@@ -136,7 +136,6 @@
     '(("^\\*Project errors\\*" :size 0.25)))
 
 
-
 (defun lsp-booster--advice-json-parse (old-fn &rest args)
   "Try to parse bytecode instead of json."
   (or
@@ -145,6 +144,7 @@
        (when (byte-code-function-p bytecode)
          (funcall bytecode))))
    (apply old-fn args)))
+
 (advice-add (if (progn (require 'json)
                        (fboundp 'json-parse-buffer))
                 'json-parse-buffer
@@ -185,3 +185,5 @@
 
 (setq       gac-debounce-interval                             200
             gac-silent-message-p                              t)
+
+(display-battery-mode)
