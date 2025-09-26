@@ -113,3 +113,7 @@
 (unpin! tree-sitter-langs)
 (package! flycheck-projectile)
 (package! consult-lsp)
+
+(package! claude-code-ide
+  :recipe (:host github
+           :repo "manzaltu/claude-code-ide.el"))

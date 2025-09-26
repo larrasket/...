@@ -15,7 +15,7 @@
                                                          "PragmataPro"
                                                          :size 16)
 
-      doom-theme                                        'ef-owl
+      doom-theme                                        'doom-bluloco-light
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -187,3 +187,7 @@
             gac-silent-message-p                              t)
 
 (display-battery-mode)
+;; nice themes
+;; [ ] doom-bluloco-light -- (no documentation available)
+;; [X] doom-fairy-floss -- (no documentation available)
+;; [ ] kaolin-breeze -- (no documentation available)
