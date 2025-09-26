@@ -70,3 +70,4 @@ flycheck_*
 DS_STORE
 /.DS_Store
 /~s/.DS_Store
+/~s/.config/raycast/extensions/node_modules
