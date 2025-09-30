@@ -191,3 +191,8 @@
 ;; [ ] doom-bluloco-light -- (no documentation available)
 ;; [X] doom-fairy-floss -- (no documentation available)
 ;; [ ] kaolin-breeze -- (no documentation available)
+
+
+(setq doom-modeline-major-mode-icon t
+      doom-modeline-icon t
+      doom-modeline-buffer-state-icon nil)

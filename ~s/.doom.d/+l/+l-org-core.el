@@ -207,9 +207,9 @@ ARGS is `element' in `org-ql-view--format-element'"
 
 
     (custom-set-faces!
-      '(org-agenda-done :strike-through nil)
-      '(org-document-title :height 2.0)
-      '(org-list-dt :inherit default)
+      ;; '(org-agenda-done :strike-through nil)
+      ;; '(org-document-title :height 2.0)
+      ;; '(org-list-dt :inherit default)
       `(jinx-misspelled
         :underline (:style wave :color ,(face-foreground 'error))))))
 

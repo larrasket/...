@@ -6,7 +6,7 @@
        (corfu +icons)
 
        :ui
-       (vc-gutter +pretty)                        ; git annotions
+       (vc-gutter +pretty)              ; git annotions
        doom
        doom-dashboard
        hl-todo
@@ -17,14 +17,14 @@
        indent-guides
 
        :editor
-       (evil +everywhere)
+       (evil +everywhere +respect-visual)
        file-templates
        fold                             ; activate za in evil mode
        lispy                            ; better lisp edit
        parinfer                         ; (better lisp edit)
        snippets
        word-wrap
-       format (+onsave)
+       (format +onsave)
 
        :emacs
        (dired +icons)
