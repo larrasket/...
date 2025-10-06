@@ -55,7 +55,7 @@
        :lang
        (latex +flod +latexmk +lsp)
        (clojure +lsp +tree-sitter)
-       (julia +lsp +tree-sitter)
+       ;(julia +lsp +tree-sitter)
        (cc +lsp +tree-sitter)
        (go +lsp +tree-sitter)
        (javascript +lsp +tree-sitter)
