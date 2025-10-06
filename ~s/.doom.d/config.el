@@ -10,10 +10,7 @@
       user-config-repo-path                             "~/configs/~s"
       salih/blog-content-path                           "~/blog/content"
       org-roam-directory                                (file-truename "~/roam")
-      doom-font                                         (font-spec
-                                                         :family
-                                                         "PragmataPro"
-                                                         :size 16)
+      doom-font                                         (font-spec :family "PragmataPro" :size 16)
 
       doom-theme                                        'doom-bluloco-light
       doom-modeline-icon                                t
