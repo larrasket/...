@@ -34,7 +34,7 @@
 (map!
  :nvim
  "M-n" #'make-frame
- "M-s" #'save-buffer)
+ "M-s" #'jinx-correct)
 
 (after! flyspell
   (define-key flyspell-mode-map (kbd "C-;") nil))
