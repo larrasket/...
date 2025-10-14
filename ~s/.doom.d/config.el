@@ -195,3 +195,4 @@
       doom-modeline-buffer-state-icon nil)
 
 (global-jinx-mode)
+(set-face-attribute 'shr-text nil :family "Arial" :height 180)

@@ -79,10 +79,10 @@
  "RET" #'salih/pdf-occure)
 
 (with-eval-after-load 'pdf-view
- (evil-define-key 'normal pdf-view-mode-map (kbd "<right>") #'ignore)
- (evil-define-key 'motion pdf-view-mode-map (kbd "<right>") #'ignore)
- (evil-define-key 'nroaml pdf-view-mode-map (kbd "<left>") #'ignore)
- (evil-define-key 'motion pdf-view-mode-map (kbd "<left>") #'ignore))
+  (evil-define-key 'normal pdf-view-mode-map (kbd "<right>") #'ignore)
+  (evil-define-key 'motion pdf-view-mode-map (kbd "<right>") #'ignore)
+  (evil-define-key 'nroaml pdf-view-mode-map (kbd "<left>") #'ignore)
+  (evil-define-key 'motion pdf-view-mode-map (kbd "<left>") #'ignore))
 
 (add-hook! 'pdf-view-mode-hook
   (evil-local-set-key 'normal (kbd "J") #'pdf-view-next-page-command)
@@ -290,17 +290,17 @@
   (kbd "s") 'org-fc-review-suspend-card
   (kbd "q") 'org-fc-review-quit)
 
-(map!
- :map flyspell-mouse-map
- "RET"    'jinx-correct
- [return] 'jinx-correct
- [mouse-1] #'flyspell-correct-at-point)
+;; (map!
+;;  :map flyspell-mouse-map
+;;  "RET"    'jinx-correct
+;;  [return] 'jinx-correct
+;;  [mouse-1] #'flyspell-correct-at-point)
 
-(map!
- :map jinx-overlay-map
- :nvim
- "RET"    'jinx-correct
- [return] 'jinx-correct)
+;; (map!
+;;  :map jinx-overlay-map
+;;  :nvim
+;;  "RET"    'jinx-correct
+;;  [return] 'jinx-correct)
 
 
 (map!
