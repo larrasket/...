@@ -196,3 +196,9 @@
 
 (global-jinx-mode)
 (set-face-attribute 'shr-text nil :family "Arial" :height 180)
+
+(after! vertico-multiform ;; if using vertico
+  (add-to-list 'vertico-multiform-categories
+               '(jinx (vertico-grid-annotate . 25)))
+
+  (vertico-multiform-mode 1))
