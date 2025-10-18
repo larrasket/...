@@ -218,203 +218,203 @@ ARGS is `element' in `org-ql-view--format-element'"
 (require 'ts)
 (require 'org-download)
 (setq org-agenda-custom-commands
-        `(("f" "Agenda Tasks"
-           ((org-ql-block '(and
-                            (priority "A")
-                            (todo "TODO"))
-                          ((org-ql-block-header "High-priority tasks")))
+      `(("f" "Agenda Tasks"
+         ((org-ql-block '(and
+                          (priority "A")
+                          (todo "TODO"))
+                        ((org-ql-block-header "High-priority tasks")))
 
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (scheduled  :to ,(ts-adjust 'day -1 (ts-now))))
-                          ((org-ql-block-header "Late tasks")))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (scheduled  :to ,(ts-adjust 'day -1 (ts-now))))
+                        ((org-ql-block-header "Late tasks")))
 
 
-            (org-ql-block '(and
-                            (scheduled)
-                            (not (done))
-                            (ts-active :on today))
-                          ((org-ql-block-header "Today's tasks only")))
-
-
-
-            (agenda ""
-                    ((org-agenda-span 4)))
-
-
-            ;; FIXME this should support sorting functionality.
-            ;; Waiting for the next org-ql update.
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@general")
-                            (not (tags "@later"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Get something done")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@daily"))
-                          ((org-ql-block-header "Daily Task")))
+          (org-ql-block '(and
+                          (scheduled)
+                          (not (done))
+                          (ts-active :on today))
+                        ((org-ql-block-header "Today's tasks only")))
 
 
 
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (not (tags "@daily"))
-                            (or (scheduled :from today :to +10)
-                                (deadline)))
-                          ((org-ql-block-header "Soon")))))
+          (agenda ""
+                  ((org-agenda-span 4)))
 
 
-          ("v" "General Tasks"
-           ((org-ql-block '(and
-                            (priority "A")
-                            (todo "TODO")
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "High-priority tasks")))
+          ;; FIXME this should support sorting functionality.
+          ;; Waiting for the next org-ql update.
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@general")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Get something done")))
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (not (scheduled))
-                            (not (deadline))
-                            (not (tags "@later"))
-                            (tags "@current"))
-                          ((org-ql-block-header "Current:")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@long"))
-                          ((org-ql-block-header "Long term goals:")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@read")
-                            (not (tags "@later"))
-                            (not (tags "project"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Read something:")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@read")
-                            (tags "project")
-                            (scheduled :from today :to +100))
-                          ((org-ql-block-header
-                            "Scheduled readings")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@read")
-                            (tags "project")
-                            (not (tags "@later"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Read a book:")))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@daily"))
+                        ((org-ql-block-header "Daily Task")))
 
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@write")
-                            (not (tags "@later"))
-                            (not (tags "project"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Write something:")))
 
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@check")
-                            (not (tags "@later"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Check this out")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@watch")
-                            (not (tags "@later"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Your ungoogled watch later:")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@idea")
-                            (not (tags "@later"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header
-                            "Looking for an idea?")))))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (not (tags "@daily"))
+                          (or (scheduled :from today :to +10)
+                              (deadline)))
+                        ((org-ql-block-header "Soon")))))
 
 
-          ("l" "General Later Tasks"
-           ((org-ql-block '(and
-                            (or (todo) (done))
-                            (not (tags))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Tag title:")))
+        ("v" "General Tasks"
+         ((org-ql-block '(and
+                          (priority "A")
+                          (todo "TODO")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "High-priority tasks")))
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@read")
-                            (tags "@later")
-                            (not (tags "project"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Read something:")))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (not (scheduled))
+                          (not (deadline))
+                          (not (tags "@later"))
+                          (tags "@current"))
+                        ((org-ql-block-header "Current:")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@long"))
+                        ((org-ql-block-header "Long term goals:")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (not (tags "@later"))
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read something:")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (tags "project")
+                          (scheduled :from today :to +100))
+                        ((org-ql-block-header
+                          "Scheduled readings")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (tags "project")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read a book:")))
 
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@read")
-                            (tags "project")
-                            (tags "@later")
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Read a book:")))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@write")
+                          (not (tags "@later"))
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Write something:")))
 
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@write")
-                            (tags "@later")
-                            (not (tags "project"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Write something:")))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@check")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Check this out")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@watch")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Your ungoogled watch later:")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@idea")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header
+                          "Looking for an idea?")))))
 
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@check")
-                            (tags "@later")
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Check this out")))
+        ("l" "General Later Tasks"
+         ((org-ql-block '(and
+                          (or (todo) (done))
+                          (not (tags))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Tag title:")))
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@watch")
-                            (tags "@later")
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Your ungoogled watch later:")))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (tags "@later")
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read something:")))
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@idea")
-                            (tags "@later")
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header
-                            "Looking for an
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (tags "project")
+                          (tags "@later")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read a book:")))
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@write")
+                          (tags "@later")
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Write something:")))
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@check")
+                          (tags "@later")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Check this out")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@watch")
+                          (tags "@later")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Your ungoogled watch later:")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@idea")
+                          (tags "@later")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header
+                          "Looking for an
                                                        idea?")))))))
 
 
@@ -498,6 +498,9 @@ ARGS is `element' in `org-ql-view--format-element'"
 (add-hook! 'org-mode-hook
   (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
   (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local))
+
+(add-hook! 'org-mode-hook (display-line-numbers-mode -1))
+
 
 (defun salih/insert-now-timestamp()
   (interactive)
