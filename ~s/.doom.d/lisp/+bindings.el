@@ -152,6 +152,11 @@
  :i
  "m f" #'org-footnote-action)
 
+(map!
+ :map org-noter-notes-mode-map
+ :leader
+ "b j" #'org-noter-sync-current-note)
+
 
 
 ;; ;; convenient
