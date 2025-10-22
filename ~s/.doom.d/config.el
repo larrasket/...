@@ -12,7 +12,7 @@
       org-roam-directory                                (file-truename "~/roam")
       doom-font                                         (font-spec :family "PragmataPro" :size 16)
 
-      doom-theme                                        'doom-bluloco-light
+      doom-theme                                        'ef-elea-dark
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -202,3 +202,8 @@
                '(jinx (vertico-grid-annotate . 25)))
 
   (vertico-multiform-mode 1))
+
+
+(setq org-modern-tag nil
+      org-modern-timestamp nil
+      org-modern-todo nil)
