@@ -9,6 +9,10 @@
 ;; [2024-10-15 Tue 06:19] I'm not bein a mathematician anymore (for now )
 ;; (package! sage-shell-mode)              ; I like to be a mathematician
 ;; (package! maxima)                       ; a maxima repl.. not sure about it
+;; [2025-09-29 Mon 15:17] Missing these days.
+;; [2024-10-15 Tue 06:18] Not writing in Julia anymore.
+;; (package! ob-julia-vterm)               ; for usage, see maxima or sage-shell
+;; [2025-09-29 Mon 15:18] missing this as well ;\
 
 
 ;; [2024-10-15 Tue 06:17]  commented both currently as I'm not using tabs
@@ -16,8 +20,6 @@
 ;; (package! centaur-tabs)                 ; nice tabs
 
 
-;; [2024-10-15 Tue 06:18] Not writing in Julia anymore.
-;; (package! ob-julia-vterm)               ; for usage, see maxima or sage-shell
 
 (package! gt)                           ; google API for translations
 (package! consult-org-roam)             ; useful org-roam functions
@@ -26,7 +28,7 @@
 (package! nov)                          ; browse epubs from emacs
 (package! vulpea)                       ; roam advanced functions
 (package! lsp-treemacs)                 ; make emacs loks like and EDE (ide)
-(package! modus-themes)                 ; my favorite themes from my greek dude
+;; (package! modus-themes)                 ; my favorite themes from my greek dude
 (package! org-web-tools)                ; viewing urls in org
 
 (package! ox-tufte
@@ -43,10 +45,7 @@
            :branch "feature/notification"))     ; obeying the almighty.
 
 
-(unpin! vertico)
-(package! vertico)                      ; not sure why I unpin this
-
-
+(package! vertico) 
 
 
 ;; school
@@ -56,8 +55,6 @@
 (package! citar)
 (package! citar-org-roam)
 (unpin! ess) (package! ess)
-
-(package! emacs-neotree)                ; better side panal
 
 (package! org-download)                 ; for screenshots
 
@@ -74,11 +71,6 @@
 (package! kaolin-themes)                ; sick sick themes
 (package! mixed-pitch)                  ; I like to use variable pitch for org
 
-
-(package! cocaine-line
-  :recipe
-  (:host github
-   :repo "luggages/cocaine-line"))      ; sick modeline
 
 (package! org-noter :pin "9d42ebc626981b6736b8078fb216b30cc5e34d21")
 
