@@ -1,9 +1,9 @@
 [credential]
 	helper = store
 [user]
-	email = smuhammed@minly.com
+	email = lr0@gmx.com
 	name = Salih Muhammed
-	signingkey = 25D3B9ED3922000E
+	signingkey = 4E3AA3ACC5C33DC5
 [core]
 	quotepath = false
 [init]
