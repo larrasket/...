@@ -212,11 +212,11 @@ it with org)."
                                     " AND NOT maildir:"
                                     "\"" mu4e-rss-folder "\""
                                     " AND NOT maildir:"
-                                    "\"" mu4e-refile-folder "\""))))
+                                    "\"" mu4e-refile-folder "\"")))))
 
-    )
+
   (add-hook! 'mu4e-headers-mode-hook
-  (visual-line-mode -1)))
+    (visual-line-mode -1)))
 
 
 ;; Mu4e headers mode hooks

@@ -10,12 +10,9 @@
       user-config-repo-path                             "~/configs/~s"
       salih/blog-content-path                           "~/blog/content"
       org-roam-directory                                (file-truename "~/roam")
-      doom-font                                         (font-spec
-                                                         :family
-                                                         "PragmataPro"
-                                                         :size 16)
+      doom-font                                         (font-spec :family "PragmataPro" :size 16)
 
-      doom-theme                                        'doom-bluloco-light
+      doom-theme                                        'ef-elea-dark
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -49,18 +46,18 @@
       '((org-download-image-dir
          . "../i")
         (salih/rebuild . t)))
-      ;; currently org causes some annoying warnings because of org-element
-      ;; breaking API updates.
-      ;; [2024-04-26 Fri 02:01] I wrote "currently" above a long time ago
-      ;; (perhaps can be detected from the git history, too lazy tho). Not sure
-      ;; if it is still the case
-      ;; [2024-11-20 Wed 11:45] Let's try without it!
-      ;; [2024-11-22 Fri 12:07] Works fine so far.
-      ;; [2025-06-08 Sun 12:20] It's back!
-      ;; [2025-06-27 Fri 20:41] https://github.com/org-noter/org-noter/issues/111
-      ;; [2025-06-27 Fri 20:42] https://list.orgmode.org/87qzzfd7bf.fsf@localhost/T/#t
-      ;; [2025-09-20 Sat 00:02] I cleaned my org config. Let's give that a try again.
-      ;; warning-minimum-level                             :error)
+;; currently org causes some annoying warnings because of org-element
+;; breaking API updates.
+;; [2024-04-26 Fri 02:01] I wrote "currently" above a long time ago
+;; (perhaps can be detected from the git history, too lazy tho). Not sure
+;; if it is still the case
+;; [2024-11-20 Wed 11:45] Let's try without it!
+;; [2024-11-22 Fri 12:07] Works fine so far.
+;; [2025-06-08 Sun 12:20] It's back!
+;; [2025-06-27 Fri 20:41] https://github.com/org-noter/org-noter/issues/111
+;; [2025-06-27 Fri 20:42] https://list.orgmode.org/87qzzfd7bf.fsf@localhost/T/#t
+;; [2025-09-20 Sat 00:02] I cleaned my org config. Let's give that a try again.
+;; warning-minimum-level                             :error)
 
 
 (require '+l-init)
@@ -83,10 +80,10 @@
         ls-lisp-use-insert-directory-program nil
         epg-pinentry-mode                    'loopback)
 ;;; Transparent titlebar
-;; https://github.com/d12frosted/homebrew-emacs-plus/blob/master/Formula/emacs-plus.rb#L98
-;; https://github.com/d12frosted/homebrew-emacs-plus/issues/55
-;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Properties-in-Mode.html#Properties-in-Mode
-;; (modify-all-frames-parameters '((inhibit-double-buffering . t)))
+  ;; https://github.com/d12frosted/homebrew-emacs-plus/blob/master/Formula/emacs-plus.rb#L98
+  ;; https://github.com/d12frosted/homebrew-emacs-plus/issues/55
+  ;; https://www.gnu.org/software/emacs/manual/html_node/elisp/Properties-in-Mode.html#Properties-in-Mode
+  ;; (modify-all-frames-parameters '((inhibit-double-buffering . t)))
   (add-to-list 'default-frame-alist    '(ns-appearance . 'dark))
   (add-to-list 'default-frame-alist    '(ns-transparent-titlebar . t)))
 
@@ -124,16 +121,16 @@
 
 (setq doom-modeline-height 30)
 (custom-set-faces
-  '(mode-line ((t (:family "Iosevka"))))
-  '(mode-line-active ((t (:family "Iosevka"))))
-  '(mode-line-inactive ((t (:family "Iosevka")))))
+ '(mode-line ((t (:family "Iosevka"))))
+ '(mode-line-active ((t (:family "Iosevka"))))
+ '(mode-line-inactive ((t (:family "Iosevka")))))
 (setq doom-modeline-bar-width 1)
 
 
 
 
 (set-popup-rules!
-    '(("^\\*Project errors\\*" :size 0.25)))
+  '(("^\\*Project errors\\*" :size 0.25)))
 
 
 (defun lsp-booster--advice-json-parse (old-fn &rest args)
@@ -191,3 +188,22 @@
 ;; [ ] doom-bluloco-light -- (no documentation available)
 ;; [X] doom-fairy-floss -- (no documentation available)
 ;; [ ] kaolin-breeze -- (no documentation available)
+
+
+(setq doom-modeline-major-mode-icon t
+      doom-modeline-icon t
+      doom-modeline-buffer-state-icon nil)
+
+(global-jinx-mode)
+(set-face-attribute 'shr-text nil :family "Arial" :height 180)
+
+(after! vertico-multiform ;; if using vertico
+  (add-to-list 'vertico-multiform-categories
+               '(jinx (vertico-grid-annotate . 25)))
+
+  (vertico-multiform-mode 1))
+
+
+(setq org-modern-tag nil
+      org-modern-timestamp nil
+      org-modern-todo nil)

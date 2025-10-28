@@ -16,8 +16,6 @@
 
 
 (use-package citar-org-roam
-  :after citar org-roam
-  :no-require
   :config (citar-org-roam-mode)
   :custom
   (setq bibtex-completion-notes-template-multiple-files
