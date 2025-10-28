@@ -46,6 +46,7 @@
       '((org-download-image-dir
          . "../i")
         (salih/rebuild . t)))
+
 ;; currently org causes some annoying warnings because of org-element
 ;; breaking API updates.
 ;; [2024-04-26 Fri 02:01] I wrote "currently" above a long time ago
@@ -207,3 +208,11 @@
 (setq org-modern-tag nil
       org-modern-timestamp nil
       org-modern-todo nil)
+
+(add-hook 'doom-docs-org-mode-hook (lambda () (breadcrumb-local-mode -1)))
+
+
+(defun salih/pdf-occure ()
+  (interactive)
+  (save-window-excursion
+    (pdf-occur-goto-occurrence)))
