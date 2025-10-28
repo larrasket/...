@@ -1,12 +1,19 @@
 [credential]
 	helper = store
 [user]
-	email = lr0@gmx.com
+	email = smuhammed@minly.com
 	name = Salih Muhammed
-	signingkey = 4E3AA3ACC5C33DC5
+	signingkey = 25D3B9ED3922000E
 [core]
 	quotepath = false
 [init]
 	defaultBranch = master
 [commit]
 	gpgsign = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[pull]
+	rebase = false
