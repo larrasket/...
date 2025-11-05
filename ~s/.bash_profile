@@ -4,6 +4,7 @@
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
 
+export PATH="/usr/local/MacGPG2/bin:$PATH"
 export PATH="/opt/homebrew/bin:$PATH"
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin

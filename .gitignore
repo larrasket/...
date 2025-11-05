@@ -71,3 +71,4 @@ DS_STORE
 /.DS_Store
 /~s/.DS_Store
 /~s/.config/raycast/extensions/node_modules
+/~s/.config/raycast/
