@@ -10,9 +10,12 @@
       user-config-repo-path                             "~/configs/~s"
       salih/blog-content-path                           "~/blog/content"
       org-roam-directory                                (file-truename "~/roam")
-      doom-font                                         (font-spec :family "PragmataPro" :size 16)
+      doom-font                                         (font-spec :family "Pragmasevka" :size 16)
 
-      doom-theme                                        'ef-elea-dark
+      ;; kaolin-dark
+      ;; doom-badger
+      ;; kaolin-temple
+      doom-theme                                        'doom-badger
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative

@@ -77,7 +77,11 @@ is already running."
           (eshell-send-input))
       (eshell))))
 
-(after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
+(after! eshell
+  (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
+
+(after! vterm
+  (remove-hook 'vterm-mode-hook 'hide-mode-line-mode))
 
 
 

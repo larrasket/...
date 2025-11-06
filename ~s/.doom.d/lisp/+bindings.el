@@ -125,6 +125,12 @@
  "e e" #'eshell)
 
 ;; ;; Org-mode
+
+
+(map!
+ :leader
+ "b k" #'kill-current-buffer)
+
 (map!
  :map org-mode-map
  :after org
