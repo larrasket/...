@@ -61,7 +61,6 @@
        (javascript +lsp +tree-sitter)
        (org +roam2 +pretty)
        (rest +jq)
-       (javascript +lsp)
        (graphql +lsp +tree-sitter)
        json
        web

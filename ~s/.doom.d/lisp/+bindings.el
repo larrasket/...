@@ -174,7 +174,9 @@
  "o l"          #'salih/org-agenda-no-full-l
  "o f"          #'salih/org-agenda-full-f
  "o v"          #'salih/open-agenda
- "f f"          #'salih/read-feeds
+ "o m"          nil
+ "o m f"        #'salih/read-feeds
+ "o m m"        #'salih/open-inbox
  "o c"          #'calendar
  "n z"          #'salih/open-book
  "TAB d"        #'+workspace:delete

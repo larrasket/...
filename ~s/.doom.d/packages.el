@@ -88,17 +88,9 @@
 
 (package! org-bullets)
 
-
-
 (package! doric-themes)
 
 (package! spacious-padding :disable t)
-
-(package! mito-laser-emacs
-  :recipe
-  (:host github
-   :repo "luggages/mito-laser-emacs"))
-
 
 (unpin! eglot)
 (unpin! lsp-pyright)
@@ -106,6 +98,4 @@
 (package! flycheck-projectile)
 (package! consult-lsp)
 
-(package! claude-code-ide
-  :recipe (:host github
-           :repo "manzaltu/claude-code-ide.el"))
+(package! mu4e-alert :disable t)
