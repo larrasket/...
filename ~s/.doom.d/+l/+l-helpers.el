@@ -83,7 +83,21 @@ is already running."
 (after! vterm
   (remove-hook 'vterm-mode-hook 'hide-mode-line-mode))
 
+(after! embark
+  (add-to-list 'embark-keymap-alist '(org-timestamp embark-org-timestamp-map))
+  (defvar-keymap embark-org-timestamp-map
+    :doc "Keymap for actions on an org timestamp."
+    :parent embark-general-map
+    "t" #'salih/org-add-week-to-timestamp)
+  (define-key embark-url-map (kbd "c") 'salih/open-url-in-chrome-cross-platform)
+  (define-key embark-org-link-map (kbd "RET") 'org-web-tools-read-url-as-org))
 
+
+(after! vertico-multiform ;; if using vertico
+  (add-to-list 'vertico-multiform-categories
+               '(jinx (vertico-grid-annotate . 25)))
+
+  (vertico-multiform-mode 1))
 
 ;; File utilities
 (defun salih/open-in-external-app (&optional @fname)

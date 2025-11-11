@@ -50,6 +50,25 @@
          . "../i")
         (salih/rebuild . t)))
 
+(setq epa-file-cache-passphrase-for-symmetric-encryption t
+      epa-file-select-keys                               'silent
+      epa-file-encrypt-to                                user-mail-address)
+
+(setq doom-modeline-icon nil)
+(setq doom-modeline-height 30)
+(setq doom-modeline-unicode-fallback t)
+(setq doom-modeline-height 30)
+(setq doom-modeline-bar-width 1)
+(setq doom-modeline-major-mode-icon t
+      doom-modeline-icon t
+      doom-modeline-buffer-state-icon nil)
+
+
+(setq gac-debounce-interval                             200
+      gac-silent-message-p                              t)
+
+
+
 ;; currently org causes some annoying warnings because of org-element
 ;; breaking API updates.
 ;; [2024-04-26 Fri 02:01] I wrote "currently" above a long time ago
@@ -94,14 +113,6 @@
 
 
 
-(after! embark
-  (add-to-list 'embark-keymap-alist '(org-timestamp embark-org-timestamp-map))
-  (defvar-keymap embark-org-timestamp-map
-    :doc "Keymap for actions on an org timestamp."
-    :parent embark-general-map
-    "t" #'salih/org-add-week-to-timestamp)
-  (define-key embark-url-map (kbd "c") 'salih/open-url-in-chrome-cross-platform)
-  (define-key embark-org-link-map (kbd "RET") 'org-web-tools-read-url-as-org))
 
 
 
@@ -114,98 +125,26 @@
 (awqat-notification-mode 1)
 (awqat-display-prayer-time-mode)
 
-(setq epa-file-cache-passphrase-for-symmetric-encryption t
-      epa-file-select-keys                               'silent
-      epa-file-encrypt-to                                user-mail-address)
-
-(setq doom-modeline-icon nil)
-(setq doom-modeline-height 30)
-(setq doom-modeline-unicode-fallback t)
 
 
-(setq doom-modeline-height 30)
+
 (custom-set-faces
- '(mode-line ((t (:family "Iosevka"))))
- '(mode-line-active ((t (:family "Iosevka"))))
- '(mode-line-inactive ((t (:family "Iosevka")))))
-(setq doom-modeline-bar-width 1)
-
-
-
-
-(set-popup-rules!
-  '(("^\\*Project errors\\*" :size 0.25)))
-
-
-(defun lsp-booster--advice-json-parse (old-fn &rest args)
-  "Try to parse bytecode instead of json."
-  (or
-   (when (equal (following-char) ?#)
-     (let ((bytecode (read (current-buffer))))
-       (when (byte-code-function-p bytecode)
-         (funcall bytecode))))
-   (apply old-fn args)))
-
-(advice-add (if (progn (require 'json)
-                       (fboundp 'json-parse-buffer))
-                'json-parse-buffer
-              'json-read)
-            :around
-            #'lsp-booster--advice-json-parse)
-
-(defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
-  "Prepend emacs-lsp-booster command to lsp CMD."
-  (let ((orig-result (funcall old-fn cmd test?)))
-    (if (and (not test?)                             ;; for check lsp-server-present?
-             (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
-             lsp-use-plists
-             (not (functionp 'json-rpc-connection))  ;; native json-rpc
-             (executable-find "emacs-lsp-booster"))
-        (progn
-          (when-let ((command-from-exec-path (executable-find (car orig-result))))  ;; resolve command from exec-path (in case not found in $PATH)
-            (setcar orig-result command-from-exec-path))
-          (message "Using emacs-lsp-booster for %s!" orig-result)
-          (cons "emacs-lsp-booster" orig-result))
-      orig-result)))
-(advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
-
-
-(setq lsp-enable-symbol-highlighting nil)
-(setq lsp-ui-doc-show-with-cursor nil)
-(setq lsp-ui-doc-show-with-mouse nil)
-(setq lsp-ui-sideline-enable nil)
-(setq lsp-ui-sideline-show-code-actions t)
-(setq lsp-ui-sideline-enable nil)
-(setq lsp-modeline-code-actions-enable t)
-(setq lsp-ui-sideline-enable nil)
-(setq lsp-eldoc-enable-hover t)
-(setq lsp-signature-auto-activate t) ;; you could manually request them via `lsp-signature-activate`
-(setq lsp-signature-render-documentation nil)
-(setq lsp-headerline-breadcrumb-enable t)
-(add-hook 'org-roam-find-file-hook      #'git-auto-commit-mode)
-
-(setq       gac-debounce-interval                             200
-            gac-silent-message-p                              t)
-
-(display-battery-mode)
-;; nice themes
-;; [ ] doom-bluloco-light -- (no documentation available)
-;; [X] doom-fairy-floss -- (no documentation available)
-;; [ ] kaolin-breeze -- (no documentation available)
-
-
-(setq doom-modeline-major-mode-icon t
-      doom-modeline-icon t
-      doom-modeline-buffer-state-icon nil)
-
-(global-jinx-mode)
+ '(mode-line ((t (:family "Pragmasevka"))))
+ '(mode-line-active ((t (:family "Pragmasevka"))))
+ '(mode-line-inactive ((t (:family "Pragmasevka")))))
 (set-face-attribute 'shr-text nil :family "Arial" :height 180)
 
-(after! vertico-multiform ;; if using vertico
-  (add-to-list 'vertico-multiform-categories
-               '(jinx (vertico-grid-annotate . 25)))
 
-  (vertico-multiform-mode 1))
+
+(set-popup-rules! '(("^\\*Project errors\\*" :size 0.25)))
+
+(add-hook 'org-roam-find-file-hook      #'git-auto-commit-mode)
+
+
+(display-battery-mode)
+
+
+(global-jinx-mode)
 
 
 (setq org-modern-tag nil
