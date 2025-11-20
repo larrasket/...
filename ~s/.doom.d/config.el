@@ -168,3 +168,17 @@
     (switch-to-buffer (get-buffer-create bufname))
     (emacs-lisp-mode)
     (message "Opened temporary buffer: %s" bufname)))
+
+
+(set-file-template! "\\.org$"
+  :trigger
+  (lambda ()
+    (let* ((filename (file-name-base (buffer-file-name)))
+           ;; Convert filename into a readable title
+           (title (string-join (split-string filename "[-_ ]+") " ")))
+      (insert
+       (format "#+title: %s\n#+DATE: <%s>\n\n"
+               (capitalize title)
+               (format-time-string "%Y-%m-%d %a %H:%M")))))
+  :mode 'org-mode
+  :project nil)
