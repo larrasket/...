@@ -94,9 +94,7 @@
               citar-indicator-links-icons)))
 
 (use-package! org-roam-bibtex
-  :after org-roam
   :config
   (require 'org-ref))
-
 
 (provide '+l-academic-citar)
