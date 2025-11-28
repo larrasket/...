@@ -99,3 +99,5 @@
 (package! consult-lsp)
 
 (package! mu4e-alert :disable t)
+
+(package! org-present)

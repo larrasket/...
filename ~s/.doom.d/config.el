@@ -182,3 +182,19 @@
                (format-time-string "%Y-%m-%d %a %H:%M")))))
   :mode 'org-mode
   :project nil)
+(eval-after-load "org-present"
+  '(progn
+     (add-hook 'org-present-mode-hook
+               (lambda ()
+                 (hl-line-mode -1)
+                 (mixed-pitch-mode 1)
+                 (org-display-inline-images)
+                 (setq visual-fill-column-width 150
+                       doom-modeline-height 49)
+                 (visual-fill-column-mode)))
+     (add-hook 'org-present-mode-quit-hook
+               (lambda ()
+                 (mixed-pitch-mode -1)
+                 (hl-line-mode 1)
+                 (setq doom-modeline-height 32)
+                 (visual-fill-column-mode -1)))))
