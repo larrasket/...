@@ -182,6 +182,12 @@
                (format-time-string "%Y-%m-%d %a %H:%M")))))
   :mode 'org-mode
   :project nil)
+
+(setq doom-modeline-check-icon nil)
+
+(setq doom-modeline-check-icon nil)
+
+
 (eval-after-load "org-present"
   '(progn
      (add-hook 'org-present-mode-hook
