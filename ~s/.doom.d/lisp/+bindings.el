@@ -31,10 +31,20 @@
  :i
  "C-x C-s" #'save-buffer)
 
+(defun salih/jinx-correct-or-save ()
+  "Run `jinx-correct`. If no misspellings are found, save the buffer."
+  (interactive)
+  (condition-case msg
+      (jinx-correct)
+    (error (when (string-match-p
+                  "No misspelled word in visible text"
+                  (error-message-string msg))
+             (save-buffer)))))
+
 (map!
  :nvim
  "M-n" #'make-frame
- "M-s" #'jinx-correct)
+ "M-s" #'salih/jinx-correct-or-save)
 
 (after! flyspell
   (define-key flyspell-mode-map (kbd "C-;") nil))
