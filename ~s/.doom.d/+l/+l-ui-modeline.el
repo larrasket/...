@@ -3,20 +3,20 @@
 (use-package doom-modeline
   :config
   (defun salih/doom-modeline-update-pdf-pages-no-percent ()
-  "Update PDF pages."
-  (setq doom-modeline--pdf-pages
-        (format "  %d/%d "
-                (or (eval `(pdf-view-current-page)) 0)
-                (pdf-cache-number-of-pages))))
+    "Update PDF pages."
+    (setq doom-modeline--pdf-pages
+         (format "  %d/%d "
+                 (or (eval `(pdf-view-current-page)) 0)
+                 (pdf-cache-number-of-pages))))
 
   (defun salih/doom-modeline-update-pdf-pages-only-percent ()
-  "Update PDF pages."
-  (setq doom-modeline--pdf-pages
-        (format "[%s％󠀥] "
-                (truncate
-                 (* 100
-                    (/ (float (or (eval `(pdf-view-current-page)) 0))
-                       (pdf-cache-number-of-pages)))))))
+    "Update PDF pages."
+    (setq doom-modeline--pdf-pages
+         (format "[%s％󠀥] "
+                 (truncate
+                  (* 100
+                     (/ (float (or (eval `(pdf-view-current-page)) 0))
+                        (pdf-cache-number-of-pages)))))))
 
   (doom-modeline-def-segment salih/selection-info
     "Information about the current selection.
@@ -47,7 +47,7 @@ block selection."
                           (format "%dC" (- end beg))))
                    (doom-modeline-spc)))
          'face 'doom-modeline-emphasis))))
-  
+
   (doom-modeline-def-segment salih/irc
     "A lightweight notification icon for unread IRC buffers."
     (when (and doom-modeline-irc
