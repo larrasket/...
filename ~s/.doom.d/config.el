@@ -204,3 +204,19 @@
                  (hl-line-mode 1)
                  (setq doom-modeline-height 32)
                  (visual-fill-column-mode -1)))))
+
+(defun salih/paste-markdown-as-org ()
+  "Convert markdown from clipboard to org-mode format using pandoc and paste it."
+  (interactive)
+  (let ((md-content (current-kill 0)))
+    (with-temp-buffer
+      (insert md-content)
+      (let ((exit-code (call-process-region (point-min) (point-max)
+                                            "pandoc" t t nil
+                                            "-f" "markdown"
+                                            "-t" "org")))
+        (if (= exit-code 0)
+            (let ((org-content (buffer-string)))
+              (with-current-buffer (window-buffer)
+                (insert org-content)))
+          (error "Pandoc conversion failed with exit code %d" exit-code))))))
