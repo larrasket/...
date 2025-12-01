@@ -90,14 +90,11 @@
 
 (package! doric-themes)
 
-(package! spacious-padding :disable t)
-
 (unpin! eglot)
 (unpin! lsp-pyright)
 (unpin! tree-sitter-langs)
 (package! flycheck-projectile)
 (package! consult-lsp)
 
-(package! mu4e-alert :disable t)
-
 (package! org-present)
+(package! spacious-padding)
