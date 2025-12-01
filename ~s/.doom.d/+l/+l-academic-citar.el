@@ -14,9 +14,7 @@
 
 
 (use-package citar-org-roam
-  :config (citar-org-roam-mode)
-  :custom)
-
+  :config (citar-org-roam-mode))
 
 
 
