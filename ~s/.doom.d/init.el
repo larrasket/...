@@ -56,10 +56,10 @@
        (latex +flod +latexmk +lsp)
        (clojure +lsp +tree-sitter)
                                         ;(julia +lsp +tree-sitter)
+       (javascript +lsp +tree-sitter)
        (cc +lsp +tree-sitter)
        (go +lsp +tree-sitter)
-       (javascript +lsp +tree-sitter)
-       (org +roam2 +pretty)
+       (org +roam2 +pandoc)
        (rest +jq)
        (graphql +lsp +tree-sitter)
        json
