@@ -19,7 +19,7 @@
 (require '+l-prog-format)
 
 ;; Load Communication modules (can be disabled individually)
-(require '+l-email)
+;; (require '+l-email)
 (require '+l-irc)
 (require '+l-translate)
 (require '+l-browse)

@@ -71,9 +71,6 @@
        ess
        sh
 
-       :email
-       mu4e
-
        :app
        irc
 
