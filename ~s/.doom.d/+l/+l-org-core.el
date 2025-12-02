@@ -417,11 +417,25 @@ ARGS is `element' in `org-ql-view--format-element'"
                           "Looking for an
                                                        idea?")))))))
 
-
-
 ;; Org link configuration
 (use-package org
   :config
+  (defun salih/paste-markdown-as-org ()
+    "Convert markdown from clipboard to org-mode format using pandoc and paste it."
+    (interactive)
+    (let ((md-content (current-kill 0)))
+      (with-temp-buffer
+        (insert md-content)
+        (let ((exit-code (call-process-region (point-min) (point-max)
+                                              "pandoc" t t nil
+                                              "-f" "markdown"
+                                              "-t" "org")))
+          (if (= exit-code 0)
+              (let ((org-content (buffer-string)))
+                (with-current-buffer (window-buffer)
+                  (insert org-content)))
+            (error "Pandoc conversion failed with exit code %d" exit-code))))))
+  
   (org-link-set-parameters
    "eww"
    :follow (lambda (link) (eww link))
@@ -505,6 +519,56 @@ ARGS is `element' in `org-ql-view--format-element'"
 (defun salih/insert-now-timestamp()
   (interactive)
   (org-insert-time-stamp (current-time) t))
+
+(set-file-template! "\\.org$"
+  :trigger
+  (lambda ()
+    (let* ((filename (file-name-base (buffer-file-name)))
+           ;; Convert filename into a readable title
+           (title (string-join (split-string filename "[-_ ]+") " ")))
+      (insert
+       (format "#+title: %s\n#+DATE: <%s>\n\n"
+               (capitalize title)
+               (format-time-string "%Y-%m-%d %a %H:%M")))))
+  :mode 'org-mode
+  :project nil)
+
+
+(after! org-modern
+  (setq org-modern-tag nil
+        org-modern-timestamp nil
+        org-modern-fold-stars nil
+        org-modern-keyword t
+        org-modern-todo nil))
+
+
+;; (custom-set-faces
+;;      '(org-level-1 ((t (:inherit outline-1 :height 1.5 :weight normal))))
+;;      '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
+;;      '(org-level-3 ((t (:inherit outline-3 :height 1.125))))
+;;      '(org-level-4 ((t (:inherit outline-4 :height 1.0625)))))
+(after! org-present
+  (add-hook! 'org-present-mode-hook
+    (set-fringe-style 0)
+    (hl-line-mode -1)
+    (mixed-pitch-mode 1)
+    (org-display-inline-images)
+    (add-hook! 'prog-mode-hook (hide-mode-line-mode 1))
+    (doom-big-font-mode)
+    (setq visual-fill-column-width 110 doom-modeline-height 50)
+    (visual-fill-column-mode))
+  
+  (add-hook! 'org-present-mode-quit-hook
+    (set-fringe-style '(2 . 0))
+    (hl-line-mode 1)
+    (doom-big-font-mode -1)
+    (mixed-pitch-mode -1)
+    (org-remove-inline-images)
+    (remove-hook! 'prog-mode-hook (hide-mode-line-mode 1))
+    (doom-big-font-mode -1)
+    (setq doom-modeline-height 32)
+    (visual-fill-column-mode -1)))
+
 
 
 (provide '+l-org-core)

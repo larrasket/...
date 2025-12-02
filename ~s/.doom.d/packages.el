@@ -24,11 +24,9 @@
 (package! gt)                           ; google API for translations
 (package! consult-org-roam)             ; useful org-roam functions
 
-
 (package! nov)                          ; browse epubs from emacs
 (package! vulpea)                       ; roam advanced functions
 (package! lsp-treemacs)                 ; make emacs loks like and EDE (ide)
-;; (package! modus-themes)                 ; my favorite themes from my greek dude
 (package! org-web-tools)                ; viewing urls in org
 
 (package! ox-tufte
@@ -44,9 +42,7 @@
            :repo "larrasket/awqat"
            :branch "feature/notification"))     ; obeying the almighty.
 
-
 (package! vertico) 
-
 
 ;; school
 (package! org-ref)
@@ -57,17 +53,18 @@
 (unpin! ess) (package! ess)
 
 (package! org-download)                 ; for screenshots
-
 (package! org-ql)
-
 
 (unpin! org-roam)
 (package! org-roam-ui)
+
 (package! evil-snipe :disable t)        ; don't remember why I disabled it
+
 (package! ef-themes)                    ; sick themes
 (package! breadcrumb)                   ; sick line
 
 (package! org-fc)                       ; the true anki for Org
+
 (package! kaolin-themes)                ; sick sick themes
 (package! mixed-pitch)                  ; I like to use variable pitch for org
 
@@ -84,9 +81,6 @@
 
 (package! jinx)
 
-(package! org-wild-notifier)
-
-(package! org-bullets)
 
 (package! doric-themes)
 

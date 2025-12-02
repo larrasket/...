@@ -111,6 +111,8 @@
   (setq roam-titles (mapcar #'org-roam-node-title (org-roam-node-list))
         org-roam-dailies-directory "~/roam/journal"))
 
+(add-hook! 'org-roam-find-file-hook #'git-auto-commit-mode)
+
 ;; Org-ql advice
 (advice-add 'org-ql-view--format-element
             :around #'salih/org-ql-view--format-element)

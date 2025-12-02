@@ -11,16 +11,13 @@
       salih/blog-content-path                           "~/blog/content"
       org-roam-directory                                (file-truename "~/roam")
       doom-font                                         (font-spec :family "Pragmasevka" :size 16)
-
       ;; kaolin-dark
       ;; doom-badger
       ;; kaolin-temple
-      doom-theme                                        'doom-badger
+      doom-theme                                        'kaolin-dark
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
-
-
       ;; org
       org-directory                                     org-roam-directory
       org-id-locations-file                             "~/roam/.orgids"
@@ -32,7 +29,6 @@
       salih/vulpea-show-full                            nil
       salih/adding-note?                                nil
       salih/org-agenda-full-f                           nil
-
       ;; this option is useful when you are up after 00:00. set 0 to the value
       ;; you sleep at. if you sleep at 02:00 it should be 2, if you sleep at
       ;; 02:30 it should be 3 and so on. Org agenda for the day will not overlap
@@ -118,105 +114,39 @@
 
 
 (breadcrumb-mode)
+(global-jinx-mode)
 (yas-global-mode 1)
+(display-battery-mode)
 (salih/keyboard-config)
 (consult-org-roam-mode 1)
 (global-visual-line-mode 1)
 (awqat-notification-mode 1)
 (awqat-display-prayer-time-mode)
-
-
-
+(global-display-line-numbers-mode)
 
 (custom-set-faces
  '(mode-line ((t (:family "Pragmasevka"))))
  '(mode-line-active ((t (:family "Pragmasevka"))))
  '(mode-line-inactive ((t (:family "Pragmasevka")))))
+
+(set-popup-rules! '(("^\\*Project errors\\*" :size 0.25)))
 (set-face-attribute 'shr-text nil :family "Arial" :height 180)
 
 
+;; (setq modus-themes-common-palette-overrides
+;;       '((fg-line-number-inactive bg-alt)
+;;         (fg-line-number-active bg-alt)
+;;         (bg-line-number-inactive unspecified)
+;;         (bg-line-number-active unspecified)))
 
-(set-popup-rules! '(("^\\*Project errors\\*" :size 0.25)))
+;; (custom-set-faces
+;;  '(line-number ((t (:slant normal))))
+;;  '(line-number-current-line ((t (:slant normal)))))
 
-(add-hook 'org-roam-find-file-hook      #'git-auto-commit-mode)
+;; (setq modus-themes-italic-constructs t)
+;; (setq modus-themes-bold-constructs nil)
 
+(set-fringe-style '(2 . 0))
 
-(display-battery-mode)
+(require 'spacious-padding)
 
-
-(global-jinx-mode)
-
-
-(setq org-modern-tag nil
-      org-modern-timestamp nil
-      org-modern-todo nil)
-
-(add-hook 'doom-docs-org-mode-hook (lambda () (breadcrumb-local-mode -1)))
-
-
-(defun salih/pdf-occure ()
-  (interactive)
-  (save-window-excursion
-    (pdf-occur-goto-occurrence)))
-
-
-(defun salih/tmp-buffer ()
-  "Open a new temporary buffer with a random name to play in."
-  (interactive)
-  (let ((bufname (generate-new-buffer-name
-                  (format "*scratch-%x*" (random most-positive-fixnum)))))
-    (switch-to-buffer (get-buffer-create bufname))
-    (emacs-lisp-mode)
-    (message "Opened temporary buffer: %s" bufname)))
-
-
-(set-file-template! "\\.org$"
-  :trigger
-  (lambda ()
-    (let* ((filename (file-name-base (buffer-file-name)))
-           ;; Convert filename into a readable title
-           (title (string-join (split-string filename "[-_ ]+") " ")))
-      (insert
-       (format "#+title: %s\n#+DATE: <%s>\n\n"
-               (capitalize title)
-               (format-time-string "%Y-%m-%d %a %H:%M")))))
-  :mode 'org-mode
-  :project nil)
-
-(setq doom-modeline-check-icon nil)
-
-(setq doom-modeline-check-icon nil)
-
-
-(eval-after-load "org-present"
-  '(progn
-     (add-hook 'org-present-mode-hook
-               (lambda ()
-                 (hl-line-mode -1)
-                 (mixed-pitch-mode 1)
-                 (org-display-inline-images)
-                 (setq visual-fill-column-width 150
-                       doom-modeline-height 49)
-                 (visual-fill-column-mode)))
-     (add-hook 'org-present-mode-quit-hook
-               (lambda ()
-                 (mixed-pitch-mode -1)
-                 (hl-line-mode 1)
-                 (setq doom-modeline-height 32)
-                 (visual-fill-column-mode -1)))))
-
-(defun salih/paste-markdown-as-org ()
-  "Convert markdown from clipboard to org-mode format using pandoc and paste it."
-  (interactive)
-  (let ((md-content (current-kill 0)))
-    (with-temp-buffer
-      (insert md-content)
-      (let ((exit-code (call-process-region (point-min) (point-max)
-                                            "pandoc" t t nil
-                                            "-f" "markdown"
-                                            "-t" "org")))
-        (if (= exit-code 0)
-            (let ((org-content (buffer-string)))
-              (with-current-buffer (window-buffer)
-                (insert org-content)))
-          (error "Pandoc conversion failed with exit code %d" exit-code))))))

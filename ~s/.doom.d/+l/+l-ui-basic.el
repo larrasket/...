@@ -8,7 +8,9 @@
   (breadcrumb-project-crumb-separator "/")
   (breadcrumb-imenu-max-length 1.0)
   (breadcrumb-imenu-crumb-separator " > ")
-  (breadcrumb-idle-time 20))
+  (breadcrumb-idle-time 20)
+  :config
+  (add-hook! 'doom-docs-org-mode-hook (breadcrumb-local-mode -1)))
 
 
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
@@ -22,7 +24,7 @@
 
 (add-hook! 'pdf-view-mode-hook
   (setq-local evil-normal-state-cursor (list nil)
-               browse-url-browser-function 'salih/open-url-in-chrome-cross-platform))
+              browse-url-browser-function 'salih/open-url-in-chrome-cross-platform))
 
 
 

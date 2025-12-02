@@ -2,21 +2,22 @@
 
 (use-package doom-modeline
   :config
+  (setq doom-modeline-check-icon nil)
   (defun salih/doom-modeline-update-pdf-pages-no-percent ()
     "Update PDF pages."
     (setq doom-modeline--pdf-pages
-         (format "  %d/%d "
-                 (or (eval `(pdf-view-current-page)) 0)
-                 (pdf-cache-number-of-pages))))
+          (format "  %d/%d "
+                  (or (eval `(pdf-view-current-page)) 0)
+                  (pdf-cache-number-of-pages))))
 
   (defun salih/doom-modeline-update-pdf-pages-only-percent ()
     "Update PDF pages."
     (setq doom-modeline--pdf-pages
-         (format "[%s％󠀥] "
-                 (truncate
+          (format "[%s％󠀥] "
+                  (truncate)
                   (* 100
                      (/ (float (or (eval `(pdf-view-current-page)) 0))
-                        (pdf-cache-number-of-pages)))))))
+                        (pdf-cache-number-of-pages))))))
 
   (doom-modeline-def-segment salih/selection-info
     "Information about the current selection.
@@ -56,32 +57,33 @@ block selection."
              (number (length buffers)))
         (when (> number 0)
           (let ((notification-icon
-                 (propertize (doom-modeline-icon 'mdicon
-                                                 "nf-md-message_processing"
-                                                 "🗊"
-                                                 "#"
-                                                 :face 'doom-modeline-notification)
-                             'help-echo (format "IRC Notifications: %d unread buffer(s)"
-                                                number)
-                             'mouse-face 'doom-modeline-highlight
-                             'local-map (let ((map (make-sparse-keymap)))
-                                          (cond
-                                           ((doom-modeline--circe-p)
-                                            (define-key map [mode-line mouse-1]
-                                                        #'tracking-previous-buffer)
-                                            (define-key map [mode-line mouse-3]
-                                                        #'tracking-next-buffer))
-                                           ((doom-modeline--erc-p)
-                                            (define-key map [mode-line mouse-1]
-                                                        #'erc-switch-to-buffer)
-                                            (define-key map [mode-line mouse-3]
-                                                        #'erc-track-switch-buffer))
-                                           ((doom-modeline--rcirc-p)
-                                            (define-key map [mode-line mouse-1]
-                                                        #'rcirc-switch-to-server-buffer)
-                                            (define-key map [mode-line mouse-3]
-                                                        #'rcirc-next-active-buffer)))
-                                          map))))
+                 (propertize
+                  (doom-modeline-icon 'mdicon
+                                      "nf-md-message_processing"
+                                      "🗊"
+                                      "#"
+                                      :face 'doom-modeline-notification)
+                  'help-echo (format "IRC Notifications: %d unread buffer(s)"
+                                     number)
+                  'mouse-face 'doom-modeline-highlight
+                  'local-map (let ((map (make-sparse-keymap)))
+                               (cond
+                                ((doom-modeline--circe-p)
+                                 (define-key map [mode-line mouse-1]
+                                             #'tracking-previous-buffer)
+                                 (define-key map [mode-line mouse-3]
+                                             #'tracking-next-buffer))
+                                ((doom-modeline--erc-p)
+                                 (define-key map [mode-line mouse-1]
+                                             #'erc-switch-to-buffer)
+                                 (define-key map [mode-line mouse-3]
+                                             #'erc-track-switch-buffer))
+                                ((doom-modeline--rcirc-p)
+                                 (define-key map [mode-line mouse-1]
+                                             #'rcirc-switch-to-server-buffer)
+                                 (define-key map [mode-line mouse-3]
+                                             #'rcirc-next-active-buffer)))
+                               map))))
             notification-icon))))))
 
 

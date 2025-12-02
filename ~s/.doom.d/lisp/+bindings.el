@@ -331,4 +331,8 @@
  "RET"    'mu4e--view-browse-url-from-binding
  [return] 'mu4e--view-browse-url-from-binding)
 
+(after! org-present
+  (define-key org-present-mode-keymap (kbd "SPC") nil))
+
+
 (provide '+bindings)

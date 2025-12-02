@@ -4,6 +4,11 @@
 (use-package org-noter
   :config
 
+  (defun salih/pdf-occure ()
+    (interactive)
+    (save-window-excursion
+     (pdf-occur-goto-occurrence)))
+
   (defun salih/org-noter--try-add-highlight-before-note (&rest args)
     "Try to add a highlight annotation if there's a selection, but don't fail if
 it doesn't work.  ARGS are ignored but accepted to work with advice system."
@@ -21,12 +26,12 @@ it doesn't work.  ARGS are ignored but accepted to work with advice system."
   (defun salih/org-noter-pdf--pdf-view-get-precise-info (mode window)
     (when (eq mode 'pdf-view-mode)
       (let (v-position h-position)
-       (if (pdf-view-active-region-p)
-           (let ((edges (car (pdf-view-active-region))))
+        (if (pdf-view-active-region-p)
+            (let ((edges (car (pdf-view-active-region))))
              (setq v-position (min (nth 1 edges) (nth 3 edges))
                    h-position (min (nth 0 edges) (nth 2 edges))))
 
-         (let ((event nil))
+          (let ((event nil))
            (while (not (and (eq 'mouse-1 (car event))
                             (eq window (posn-window (event-start event)))))
              (setq event
@@ -38,7 +43,7 @@ it doesn't work.  ARGS are ignored but accepted to work with advice system."
                                    (+ (window-hscroll) (car col-row)))))
              (setq v-position (car click-position)
                    h-position (cdr click-position)))))
-       v-position)))
+        v-position)))
 
 
   (defun salih/org-noter-open-in-zathura ()

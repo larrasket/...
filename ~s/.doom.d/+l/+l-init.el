@@ -30,5 +30,6 @@
 (require '+l-academic-bibtex)
 (require '+l-academic-citar)
 
+(require '+l-common)
 
 (provide '+l-init)
