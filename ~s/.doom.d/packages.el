@@ -92,3 +92,5 @@
 
 (package! org-present)
 (package! spacious-padding)
+
+(package! org-modern)

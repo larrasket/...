@@ -508,12 +508,12 @@ ARGS is `element' in `org-ql-view--format-element'"
               (cl-letf (((symbol-function 'org-id-get-create) #'ignore))
                 (apply orig-fun args))))
 
-;; Org-mode hooks
 (add-hook! 'org-mode-hook
   (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
   (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local))
 
 (add-hook! 'org-mode-hook (display-line-numbers-mode -1))
+(add-hook! 'org-agenda-mode-hook (display-line-numbers-mode -1))
 
 
 (defun salih/insert-now-timestamp()
@@ -534,12 +534,49 @@ ARGS is `element' in `org-ql-view--format-element'"
   :project nil)
 
 
+;; Fix org-modern jit-lock errors properly
 (after! org-modern
+  ;; Disable the problematic star function
   (setq org-modern-tag nil
         org-modern-timestamp nil
-        org-modern-fold-stars nil
         org-modern-keyword t
-        org-modern-todo nil))
+        org-modern-todo nil
+        org-modern-block-name t
+        org-modern-priority nil
+        org-modern-checkbox nil
+        org-modern-list '((42 . "•") (43 . "‒") (45 . "-"))
+        org-modern-hide-stars nil)
+
+  ;; Fix the syntax error with horizontal rule
+  (setq org-modern-horizontal-rule '("─" 2)
+        org-modern-block-fringe t
+        org-modern-table-vertical 1
+        org-modern-table-horizontal 0.2
+        org-modern-label-border 0.5)
+  
+  ;; Override the problematic star function
+  (defun salih/org-modern--safe-star ()
+    "Safe replacement for org-modern--star that avoids args-out-of-range errors."
+    (when (and (bound-and-true-p org-modern-mode)
+               (not (bobp))
+               (save-excursion
+                 (forward-line 0)
+                 (looking-at-p org-heading-regexp)))
+      nil))
+
+  ;; Override the jit-lock function with a safe version
+  (defun salih/org-modern-safe-jit-lock (start end)
+    (ignore-errors
+      (when (and (bound-and-true-p org-modern-mode)
+                 (>= end (point-min))
+                 (<= start (point-max)))
+        (save-excursion
+          (goto-char start)
+          (when (< (point) end)
+            (org-modern--update-blocks start end))))))
+
+  (advice-add 'org-modern--star :override #'salih/org-modern--safe-star)
+  (advice-add 'org-modern--jit-lock :override #'salih/org-modern-safe-jit-lock))
 
 
 (custom-set-faces
@@ -571,6 +608,7 @@ ARGS is `element' in `org-ql-view--format-element'"
     (visual-fill-column-mode -1)))
 
 
+(add-hook! 'org-mode-hook (org-modern-mode 1))
 
 (provide '+l-org-core)
 
