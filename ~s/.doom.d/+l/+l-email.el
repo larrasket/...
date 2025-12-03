@@ -79,38 +79,7 @@
             (mu4e~headers-jump-to-maildir "/lr0@gmx.com/Inbox")
             (mu4e-search-change-sorting :date 'descending))
         (mu4e)))
-
-
-    (defun salih/insert-current-date ()
-      (interactive)
-      (if (eq major-mode 'org-mode)
-          (progn
-            (insert "- " (format-time-string "[%Y-%m-%d %a %H:%M]") " "))
-        (let ((current-prefix-arg '(16)))
-          (call-interactively 'org-time-stamp-inactive)
-          (insert " "))))
-
-
-    (defun salih/org-roam-dailies-capture-today ()
-      (interactive)
-      (setq salih/org-roam-dailies-capture-p t)
-      (call-interactively #'org-roam-dailies-capture-today))
-
-    (defun salih/org-roam-buffer ()
-      "Display the Org Roam buffer for the node at point."
-      (interactive)
-      (let ((node (org-roam-node-at-point)))
-        (when node
-          (org-roam-buffer-display-dedicated node))))
-
-    (defun salih/consult-org-roam-search-org-only ()
-      (interactive)
-      (let ((consult-ripgrep-args
-             (concat
-              consult-ripgrep-args
-              " -g *.org")))
-        (consult-org-roam-search)))
-
+    
 
     (defun salih/open-rss (readanywayg)
       "Open RSS using mu4e, only callable once per hour within the same day."

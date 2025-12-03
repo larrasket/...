@@ -11,4 +11,14 @@
     (emacs-lisp-mode)
     (message "Opened temporary buffer: %s" bufname)))
 
+(defun salih/insert-current-date ()
+  (interactive)
+  (if (eq major-mode 'org-mode)
+      (progn
+        (insert "- " (format-time-string "[%Y-%m-%d %a %H:%M]") " "))
+    (let ((current-prefix-arg '(16)))
+      (call-interactively 'org-time-stamp-inactive)
+      (insert " "))))
+
+
 (provide '+l-common)
