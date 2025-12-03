@@ -55,7 +55,6 @@
 (package! org-download)                 ; for screenshots
 (package! org-ql)
 
-(unpin! org-roam)
 (package! org-roam-ui)
 
 (package! evil-snipe :disable t)        ; don't remember why I disabled it

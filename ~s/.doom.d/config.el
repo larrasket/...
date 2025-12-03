@@ -122,7 +122,7 @@
 (global-visual-line-mode 1)
 (awqat-notification-mode 1)
 (awqat-display-prayer-time-mode)
-(global-display-line-numbers-mode)
+;; (global-display-line-numbers-mode)
 
 (custom-set-faces
  '(mode-line ((t (:family "Pragmasevka"))))
@@ -149,4 +149,3 @@
 (set-fringe-style '(2 . 0))
 
 (require 'spacious-padding)
-

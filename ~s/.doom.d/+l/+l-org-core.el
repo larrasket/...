@@ -207,9 +207,6 @@ ARGS is `element' in `org-ql-view--format-element'"
 
 
     (custom-set-faces!
-      ;; '(org-agenda-done :strike-through nil)
-      ;; '(org-document-title :height 2.0)
-      ;; '(org-list-dt :inherit default)
       `(jinx-misspelled
         :underline (:style wave :color ,(face-foreground 'error))))))
 
@@ -512,8 +509,8 @@ ARGS is `element' in `org-ql-view--format-element'"
   (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
   (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local))
 
-(add-hook! 'org-mode-hook (display-line-numbers-mode -1))
-(add-hook! 'org-agenda-mode-hook (display-line-numbers-mode -1))
+;; (add-hook! 'org-mode-hook (display-line-numbers-mode -1))
+;; (add-hook! 'org-agenda-mode-hook (display-line-numbers-mode -1))
 
 
 (defun salih/insert-now-timestamp()
