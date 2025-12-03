@@ -534,15 +534,17 @@ ARGS is `element' in `org-ql-view--format-element'"
 ;; Fix org-modern jit-lock errors properly
 (after! org-modern
   ;; Disable the problematic star function
-  (setq org-modern-tag nil
-        org-modern-timestamp nil
+  (setq org-modern-star 'replace)
+  (setq org-modern-replace-stars "◉○✸✿✤✜◆▶")
+
+  (setq org-modern-tag t
+        org-modern-timestamp t 
         org-modern-keyword t
-        org-modern-todo nil
+        org-modern-todo t
         org-modern-block-name t
-        org-modern-priority nil
-        org-modern-checkbox nil
+        org-modern-priority t
         org-modern-list '((42 . "•") (43 . "‒") (45 . "-"))
-        org-modern-hide-stars nil)
+        org-modern-hide-stars t)
 
   ;; Fix the syntax error with horizontal rule
   (setq org-modern-horizontal-rule '("─" 2)
@@ -605,7 +607,28 @@ ARGS is `element' in `org-ql-view--format-element'"
     (visual-fill-column-mode -1)))
 
 
-(add-hook! 'org-mode-hook (org-modern-mode 1))
+(add-hook! 'org-mode-hook (display-line-numbers-mode -1))
+
+
+
+
+
+
+
+
+
+
+
+
+
+(require 'org-modern)
+
+(global-org-modern-mode)
+
+
+
+
 
 (provide '+l-org-core)
+
 
