@@ -2,10 +2,10 @@
 (require '+early)
 (setq salih/temp-roam-insert nil)
 (setq user-full-name                                    "Salih Muhammed"
-      user-mail-address                                 "lr0@gmx.com"
+      user-mail-address                                 "l@larr.net"
       user-first-name                                   "Salih"
-      user-stmp-server                                  "mail.gmx.com"
-      user-stmp-port                                    587
+      ;; user-stmp-server                                  "mail.gmx.com"
+      ;; user-stmp-port                                    587
       user-short-username                               "lr0"
       user-config-repo-path                             "~/configs/~s"
       salih/blog-content-path                           "~/blog/content"
@@ -149,3 +149,4 @@
 (set-fringe-style '(2 . 0))
 
 (require 'spacious-padding)
+
