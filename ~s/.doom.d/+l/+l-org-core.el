@@ -537,8 +537,8 @@ ARGS is `element' in `org-ql-view--format-element'"
   (setq org-modern-star 'replace)
   (setq org-modern-replace-stars "◉○✸✿✤✜◆▶")
 
-  (setq org-modern-tag t
-        org-modern-timestamp t 
+  (setq org-modern-tag nil
+        org-modern-timestamp nil
         org-modern-keyword t
         org-modern-todo t
         org-modern-block-name t
