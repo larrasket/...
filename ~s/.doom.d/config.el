@@ -4,6 +4,7 @@
 (setq user-full-name                                    "Salih Muhammed"
       user-mail-address                                 "l@larr.net"
       user-first-name                                   "Salih"
+      ;; Commenting these temporarily until I get back to mu4e with iCloud.
       ;; user-stmp-server                                  "mail.gmx.com"
       ;; user-stmp-port                                    587
       user-short-username                               "lr0"
