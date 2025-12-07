@@ -151,3 +151,112 @@
 
 (require 'spacious-padding)
 
+
+
+
+
+
+(defun calculate-artist-favor-scores (org-file)
+  "Calculate favor scores for artists in ORG-FILE using two approaches.
+Returns a list of plists with artist info and scores."
+  (require 'org)
+  (require 'org-roam)
+  
+  ;; Inline function for simple approach
+  (cl-flet ((simple-score (loved total)
+              "Simple approach: (L/T) * log(L+1)"
+              (if (and (> total 0) (> loved 0))
+                  (* (/ (float loved) total)
+                     (log (1+ loved)))
+                0.0))
+            
+            ;; Inline function for information theory approach
+            (entropy-score (loved total)
+              "Information theory approach with entropy"
+              (if (or (<= total 0) (< loved 0))
+                  0.0
+                (let* ((ratio (/ (float loved) total))
+                       (confidence (- 1 (/ 1 (sqrt total))))
+                       ;; Calculate entropy H(L,T)
+                       (p1 ratio)
+                       (p2 (- 1 ratio))
+                       (entropy (if (and (> p1 0) (> p2 0))
+                                    (- (+ (* p1 (log p1))
+                                          (* p2 (log p2))))
+                                  0.0))
+                       ;; Normalize entropy bonus
+                       (entropy-bonus (if (> total 1)
+                                          (/ entropy (log (1+ total)))
+                                        0.0)))
+                  (* ratio
+                     confidence
+                     (1+ entropy-bonus))))))
+    
+    (with-temp-buffer
+      (insert-file-contents org-file)
+      (org-mode)
+      (goto-char (point-min))
+      
+      (let ((results '()))
+        ;; Find all artist headings (level 2 under "People")
+        (while (re-search-forward "^\\*\\* " nil t)
+          (let* ((heading (org-get-heading t t t t))
+                 (id (org-entry-get (point) "ID"))
+                 (nworks (org-entry-get (point) "NWORKS")))
+            
+            (when (and id nworks)
+              (let* ((total (string-to-number nworks))
+                     (node (org-roam-node-from-id id))
+                     (backlinks (when node (org-roam-backlinks-get node)))
+                     (loved (length backlinks))
+                     (simple (simple-score loved total))
+                     (entropy (entropy-score loved total)))
+                
+                (push (list :name heading
+                            :id id
+                            :loved loved
+                            :total total
+                            :simple-score simple
+                            :entropy-score entropy)
+                      results)))))
+        
+        ;; Return sorted by entropy score (descending)
+        (sort results (lambda (a b)
+                        (> (plist-get a :entropy-score)
+                           (plist-get b :entropy-score))))))))
+
+(defun display-artist-favor-scores (org-file)
+  "Calculate and display artist favor scores in a formatted buffer."
+  (interactive "fOrg file: ")
+  (let ((results (calculate-artist-favor-scores org-file)))
+    (with-current-buffer (get-buffer-create "*Artist Favor Scores*")
+      (erase-buffer)
+      (insert (format "%-30s %6s %6s %12s %12s\n"
+                      "Artist" "Loved" "Total" "Simple" "Entropy"))
+      (insert (make-string 80 ?-) "\n")
+      
+      (dolist (artist results)
+        (insert (format "%-30s %6d %6d %12.4f %12.4f\n"
+                        (plist-get artist :name)
+                        (plist-get artist :loved)
+                        (plist-get artist :total)
+                        (plist-get artist :simple-score)
+                        (plist-get artist :entropy-score))))
+      
+      (goto-char (point-min))
+      (display-buffer (current-buffer)))))
+
+;; Example usage:
+;; (display-artist-favor-scores "/path/to/your/artists.org")
+
+
+(defun my/disable-indent-bars-in-org-fontification ()
+  "Disable indent-bars-mode in org fontification buffers."
+  (when (and (bound-and-true-p indent-bars-mode)
+             (string-prefix-p " *org-src-fontification:" (buffer-name)))
+    (indent-bars-mode -1)))
+
+(dolist (hook '(prog-mode-hook
+                text-mode-hook
+                conf-mode-hook))
+  (add-hook hook #'my/disable-indent-bars-in-org-fontification))
