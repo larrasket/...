@@ -152,10 +152,6 @@
 (require 'spacious-padding)
 
 
-
-
-
-
 (defun calculate-artist-favor-scores (org-file)
   "Calculate favor scores for artists in ORG-FILE using two approaches.
 Returns a list of plists with artist info and scores."
@@ -245,18 +241,3 @@ Returns a list of plists with artist info and scores."
       
       (goto-char (point-min))
       (display-buffer (current-buffer)))))
-
-;; Example usage:
-;; (display-artist-favor-scores "/path/to/your/artists.org")
-
-
-(defun my/disable-indent-bars-in-org-fontification ()
-  "Disable indent-bars-mode in org fontification buffers."
-  (when (and (bound-and-true-p indent-bars-mode)
-             (string-prefix-p " *org-src-fontification:" (buffer-name)))
-    (indent-bars-mode -1)))
-
-(dolist (hook '(prog-mode-hook
-                text-mode-hook
-                conf-mode-hook))
-  (add-hook hook #'my/disable-indent-bars-in-org-fontification))
