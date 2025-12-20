@@ -2,20 +2,21 @@
 (require '+early)
 (setq salih/temp-roam-insert nil)
 (setq user-full-name                                    "Salih Muhammed"
-      user-mail-address                                 "l@larr.net"
+      user-mail-address                                 "root@lr0.org"
       user-first-name                                   "Salih"
-      ;; Commenting these temporarily until I get back to mu4e with iCloud.
+      ;; TODO Commenting these temporarily until I get back to mu4e with iCloud.
       ;; user-stmp-server                                  "mail.gmx.com"
       ;; user-stmp-port                                    587
       user-short-username                               "lr0"
       user-config-repo-path                             "~/configs/~s"
       salih/blog-content-path                           "~/blog/content"
+      salih/hugo-directory                              "~/roam/hugo/"
       org-roam-directory                                (file-truename "~/roam")
       doom-font                                         (font-spec :family "Pragmasevka" :size 16)
       ;; kaolin-dark
       ;; doom-badger
       ;; kaolin-temple
-      doom-theme                                        'kaolin-dark
+      doom-theme                                        'doom-homage-white
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -241,3 +242,88 @@ Returns a list of plists with artist info and scores."
       
       (goto-char (point-min))
       (display-buffer (current-buffer)))))
+
+
+(defun salih/add-diary-entry-to-hugo ()
+  "Create a new Hugo diary entry for today and insert a diary template."
+  (interactive)
+  (let* ((diary-dir
+          (expand-file-name "content/diary/"
+                            (file-name-as-directory salih/hugo-directory)))
+         (date-iso (format-time-string "%Y-%m-%d"))
+         (date-title (format-time-string "%B %-d, %Y"))
+         (date-id (format-time-string "%m%d%Y"))
+         (file-path (expand-file-name
+                     (concat date-iso ".org")
+                     diary-dir)))
+    ;; Ensure directory exists
+    (unless (file-directory-p diary-dir)
+      (make-directory diary-dir t))
+
+    ;; Create & open file
+    (find-file file-path)
+    (when (= (buffer-size) 0)
+      (insert
+       (format
+        "#+title: \"Diary Entry - %s\"\n\n\n"
+        date-title)))    
+    (org-id-get-create)
+    ;; Insert template only if file is empty
+    
+    (goto-char (point-max))))
+
+
+
+(defun salih/add-microblog-to-hugo ()
+  "Create a new Hugo microblog file for today and insert a template."
+  (interactive)
+  (let* ((microblog-dir
+          (expand-file-name "content/microblog/"
+                            (file-name-as-directory salih/hugo-directory)))
+         (date-iso (format-time-string "%Y-%m-%d"))
+         (date-day (format-time-string "%a"))
+         (time-str (format-time-string "%H:%M"))
+         (id (org-id-new))
+         ;; Find next available number for today
+         (counter 1)
+         file-path)
+    
+    (unless (file-directory-p microblog-dir)
+      (make-directory microblog-dir t))
+    
+    ;; Find next available number
+    (while (file-exists-p
+            (expand-file-name
+             (format "%s-%d.org" date-iso counter)
+             microblog-dir))
+      (setq counter (1+ counter)))
+    
+    (setq file-path (expand-file-name
+                     (format "%s-%d.org" date-iso counter)
+                     microblog-dir))
+    
+    (find-file file-path)
+    
+    (when (= (buffer-size) 0)
+      (insert
+       (format
+        ":PROPERTIES:\n:ID:       %s\n:END:\n#+date: <%s %s %s>\n#+title: Microblog Post %d\n\n"
+        id
+        date-iso
+        date-day
+        time-str
+        counter)))
+    (goto-char (point-max))))
+
+
+
+(setq
+ ;; Edit settings
+ org-hide-emphasis-markers t
+ org-pretty-entities t
+ org-agenda-tags-column 90
+ org-ellipsis "…")
+
+(setq dired-preview-max-size (* 1024 1024 30))
+
+
