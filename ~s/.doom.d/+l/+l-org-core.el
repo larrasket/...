@@ -543,8 +543,8 @@ ARGS is `element' in `org-ql-view--format-element'"
         org-modern-todo t
         org-modern-block-name t
         org-modern-priority t
-        org-modern-list '((42 . "•") (43 . "‒") (45 . "-"))
-        org-modern-hide-stars t)
+        org-modern-list '((42 . "•") (43 . "‒") (45 . "-")))
+  ;; org-modern-hide-stars t)
 
   ;; Fix the syntax error with horizontal rule
   (setq org-modern-horizontal-rule '("─" 2)
