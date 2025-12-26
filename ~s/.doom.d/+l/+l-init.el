@@ -31,5 +31,5 @@
 (require '+l-academic-citar)
 
 (require '+l-common)
-
+(require '+l-pic-log)
 (provide '+l-init)

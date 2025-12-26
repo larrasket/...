@@ -118,6 +118,6 @@ description: \"%s\"
              (file-name-nondirectory md-path)
              img-name)))
 
-(provide 'pic-log)
+(provide '+l-pic-log)
 ;;; pic-log.el ends here
 
