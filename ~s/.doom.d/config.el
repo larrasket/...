@@ -1,4 +1,6 @@
 ;;; config.el -*- lexical-binding: t; -*-
+(put 'org-download-image-dir 'safe-local-variable
+     (lambda (val) (stringp val)))
 (require '+early)
 (setq salih/temp-roam-insert nil)
 (setq user-full-name                                    "Salih Muhammed"
@@ -250,11 +252,10 @@ Returns a list of plists with artist info and scores."
   (let* ((diary-dir
           (expand-file-name "content/diary/"
                             (file-name-as-directory salih/hugo-directory)))
-         (date-iso (format-time-string "%Y-%m-%d"))
+         (date-iso (format-time-string "<%Y-%m-%d %a>"))
          (date-title (format-time-string "%B %-d, %Y"))
-         (date-id (format-time-string "%m%d%Y"))
          (file-path (expand-file-name
-                     (concat date-iso ".org")
+                     (concat (format-time-string "%Y-%m-%d") ".org")
                      diary-dir)))
     ;; Ensure directory exists
     (unless (file-directory-p diary-dir)
@@ -265,8 +266,10 @@ Returns a list of plists with artist info and scores."
     (when (= (buffer-size) 0)
       (insert
        (format
-        "#+title: \"Diary Entry - %s\"\n\n\n"
-        date-title)))    
+        "#+title: \"Diary Entry - %s\"\n#+DATE: %s
+"
+        date-title
+        date-iso)))    
     (org-id-get-create)
     ;; Insert template only if file is empty
     
@@ -307,7 +310,7 @@ Returns a list of plists with artist info and scores."
     (when (= (buffer-size) 0)
       (insert
        (format
-        ":PROPERTIES:\n:ID:       %s\n:END:\n#+date: <%s %s %s>\n#+title: Microblog Post %d\n\n"
+        ":PROPERTIES:\n:ID:       %s\n:END:\n#+title: Microblog Post %d\n#+date: <%s %s %s>\n\n"
         id
         date-iso
         date-day
@@ -321,9 +324,10 @@ Returns a list of plists with artist info and scores."
  ;; Edit settings
  org-hide-emphasis-markers t
  org-pretty-entities t
- org-agenda-tags-column 90
+ org-agenda-tags-column 'auto
  org-ellipsis "…")
 
 (setq dired-preview-max-size (* 1024 1024 30))
 
 
+(global-org-modern-mode -1)
