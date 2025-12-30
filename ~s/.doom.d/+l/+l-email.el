@@ -16,7 +16,7 @@
     (mu4e-compose-reply-ignore-address `("no-?reply" ,user-mail-address))
     (mu4e-headers-visible-lines 10)
     (mu4e-update-interval 500)
-    (mu4e-compose-signature (format "Whatever\n%s" user-first-name))
+    (mu4e-compose-signature (format "Regards\n%s" user-first-name))
     (smtpmail-default-smtp-server user-stmp-server)
     (smtpmail-smtp-server smtpmail-default-smtp-server)
     (smtpmail-smtp-service user-stmp-port)
@@ -79,38 +79,7 @@
             (mu4e~headers-jump-to-maildir "/lr0@gmx.com/Inbox")
             (mu4e-search-change-sorting :date 'descending))
         (mu4e)))
-
-
-    (defun salih/insert-current-date ()
-      (interactive)
-      (if (eq major-mode 'org-mode)
-          (progn
-            (insert "- " (format-time-string "[%Y-%m-%d %a %H:%M]") " "))
-        (let ((current-prefix-arg '(16)))
-          (call-interactively 'org-time-stamp-inactive)
-          (insert " "))))
-
-
-    (defun salih/org-roam-dailies-capture-today ()
-      (interactive)
-      (setq salih/org-roam-dailies-capture-p t)
-      (call-interactively #'org-roam-dailies-capture-today))
-
-    (defun salih/org-roam-buffer ()
-      "Display the Org Roam buffer for the node at point."
-      (interactive)
-      (let ((node (org-roam-node-at-point)))
-        (when node
-          (org-roam-buffer-display-dedicated node))))
-
-    (defun salih/consult-org-roam-search-org-only ()
-      (interactive)
-      (let ((consult-ripgrep-args
-             (concat
-              consult-ripgrep-args
-              " -g *.org")))
-        (consult-org-roam-search)))
-
+    
 
     (defun salih/open-rss (readanywayg)
       "Open RSS using mu4e, only callable once per hour within the same day."
@@ -212,14 +181,11 @@ it with org)."
                                     " AND NOT maildir:"
                                     "\"" mu4e-rss-folder "\""
                                     " AND NOT maildir:"
-                                    "\"" mu4e-refile-folder "\""))))
+                                    "\"" mu4e-refile-folder "\"")))))
 
-    ;; Theme customization
-    (when (doom-theme-p?)
-      (custom-set-faces!
-        '(mu4e-highlight-face :inherit mu4e-header-face :background nil))))
+
   (add-hook! 'mu4e-headers-mode-hook
-  (visual-line-mode -1)))
+    (visual-line-mode -1)))
 
 
 ;; Mu4e headers mode hooks

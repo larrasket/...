@@ -70,3 +70,8 @@ flycheck_*
 DS_STORE
 /.DS_Store
 /~s/.DS_Store
+/~s/.config/raycast/extensions/node_modules
+/~s/.config/raycast/
+/~s/.config/nvim/
+/~s/.config/git/
+.DS_Store

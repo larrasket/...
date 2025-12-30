@@ -6,7 +6,6 @@
   (use-package org
     :custom
     (org-id-method 'org)
-    (org-log-into-drawer "STATS")
     (org-log-done nil)
     (org-agenda-skip-scheduled-if-done nil)
     (org-use-tag-inheritance t)
@@ -131,6 +130,11 @@
       (setq salih/vulpea-show-full nil)
       (org-agenda nil "l"))
 
+    (defun salih/org-agenda-full-f ()
+      (interactive)
+      (setq salih/vulpea-show-full t)
+      (org-agenda nil "l"))
+
     (defun salih/open-agenda ()
       (interactive)
       (org-agenda-remove-restriction-lock)
@@ -149,25 +153,14 @@
       (when-let ((id (org-entry-get nil "ID")))
         (org-entry-put nil "CUSTOM_ID" id)))
 
-    (defun salih/toggle-logbook-on (&rest _)
-      "Enable logbook for org mode."
-      (setq org-log-into-drawer t))
 
-    (defun salih/toggle-logbook-off (&rest _)
-      "Disable logbook for org mode."
-      (setq org-log-into-drawer nil))
 
-    (defun salih/toggle-stats-on (&rest _)
-      "Enable stats for org mode."
-      (setq org-log-into-drawer "STATS"))
 
-    (defun salih/toggle-log-int-drawer-off (&rest _)
-      "Disable log into drawer for org mode."
-      (setq org-log-into-drawer nil))
+
+
 
 
     ;; Start note function
-    (defun salih/start-note (&rest _) (setq salih/adding-note? t))
 
     ;; Org-ql utilities
     (defun salih/org-ql-view--format-element (orig-fun &rest args)
@@ -214,9 +207,6 @@ ARGS is `element' in `org-ql-view--format-element'"
 
 
     (custom-set-faces!
-      '(org-agenda-done :strike-through nil)
-      '(org-document-title :height 2.0)
-      '(org-list-dt :inherit default)
       `(jinx-misspelled
         :underline (:style wave :color ,(face-foreground 'error))))))
 
@@ -225,210 +215,224 @@ ARGS is `element' in `org-ql-view--format-element'"
 (require 'ts)
 (require 'org-download)
 (setq org-agenda-custom-commands
-        `(("f" "Agenda Tasks"
-           ((org-ql-block '(and
-                            (priority "A")
-                            (todo "TODO"))
-                          ((org-ql-block-header "High-priority tasks")))
+      `(("f" "Agenda Tasks"
+         ((org-ql-block '(and
+                          (priority "A")
+                          (todo "TODO"))
+                        ((org-ql-block-header "High-priority tasks")))
 
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (scheduled  :to ,(ts-adjust 'day -1 (ts-now))))
-                          ((org-ql-block-header "Late tasks")))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (scheduled  :to ,(ts-adjust 'day -1 (ts-now))))
+                        ((org-ql-block-header "Late tasks")))
 
 
-            (org-ql-block '(and
-                            (scheduled)
-                            (not (done))
-                            (ts-active :on today))
-                          ((org-ql-block-header "Today's tasks only")))
-
-
-
-            (agenda ""
-                    ((org-agenda-span 4)))
-
-
-            ;; FIXME this should support sorting functionality.
-            ;; Waiting for the next org-ql update.
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@general")
-                            (not (tags "@later"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Get something done")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@daily"))
-                          ((org-ql-block-header "Daily Task")))
+          (org-ql-block '(and
+                          (scheduled)
+                          (not (done))
+                          (ts-active :on today))
+                        ((org-ql-block-header "Today's tasks only")))
 
 
 
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (not (tags "@daily"))
-                            (or (scheduled :from today :to +10)
-                                (deadline)))
-                          ((org-ql-block-header "Soon")))))
+          (agenda ""
+                  ((org-agenda-span 4)))
 
 
-          ("v" "General Tasks"
-           ((org-ql-block '(and
-                            (priority "A")
-                            (todo "TODO")
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "High-priority tasks")))
+          ;; FIXME this should support sorting functionality.
+          ;; Waiting for the next org-ql update.
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@general")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Get something done")))
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (not (scheduled))
-                            (not (deadline))
-                            (not (tags "@later"))
-                            (tags "@current"))
-                          ((org-ql-block-header "Current:")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@long"))
-                          ((org-ql-block-header "Long term goals:")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@read")
-                            (not (tags "@later"))
-                            (not (tags "project"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Read something:")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@read")
-                            (tags "project")
-                            (scheduled :from today :to +100))
-                          ((org-ql-block-header
-                            "Scheduled readings")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@read")
-                            (tags "project")
-                            (not (tags "@later"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Read a book:")))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@daily"))
+                        ((org-ql-block-header "Daily Task")))
 
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@write")
-                            (not (tags "@later"))
-                            (not (tags "project"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Write something:")))
 
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@check")
-                            (not (tags "@later"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Check this out")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@watch")
-                            (not (tags "@later"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Your ungoogled watch later:")))
-
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@idea")
-                            (not (tags "@later"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header
-                            "Looking for an idea?")))))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (not (tags "@daily"))
+                          (or (scheduled :from today :to +10)
+                              (deadline)))
+                        ((org-ql-block-header "Soon")))))
 
 
-          ("l" "General Later Tasks"
-           ((org-ql-block '(and
-                            (or (todo) (done))
-                            (not (tags))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Tag title:")))
+        ("v" "General Tasks"
+         ((org-ql-block '(and
+                          (priority "A")
+                          (todo "TODO")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "High-priority tasks")))
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@read")
-                            (tags "@later")
-                            (not (tags "project"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Read something:")))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (not (scheduled))
+                          (not (deadline))
+                          (not (tags "@later"))
+                          (tags "@current"))
+                        ((org-ql-block-header "Current:")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@long"))
+                        ((org-ql-block-header "Long term goals:")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (not (tags "@later"))
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read something:")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (tags "project")
+                          (scheduled :from today :to +100))
+                        ((org-ql-block-header
+                          "Scheduled readings")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (tags "project")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read a book:")))
 
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@read")
-                            (tags "project")
-                            (tags "@later")
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Read a book:")))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@write")
+                          (not (tags "@later"))
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Write something:")))
 
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@write")
-                            (tags "@later")
-                            (not (tags "project"))
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Write something:")))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@check")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Check this out")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@watch")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Your ungoogled watch later:")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@idea")
+                          (not (tags "@later"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header
+                          "Looking for an idea?")))))
 
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@check")
-                            (tags "@later")
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Check this out")))
+        ("l" "General Later Tasks"
+         ((org-ql-block '(and
+                          (or (todo) (done))
+                          (not (tags))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Tag title:")))
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@watch")
-                            (tags "@later")
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header "Your ungoogled watch later:")))
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (tags "@later")
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read something:")))
 
-            (org-ql-block '(and
-                            (todo "TODO")
-                            (tags "@idea")
-                            (tags "@later")
-                            (not (deadline))
-                            (not (scheduled)))
-                          ((org-ql-block-header
-                            "Looking for an
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@read")
+                          (tags "project")
+                          (tags "@later")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Read a book:")))
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@write")
+                          (tags "@later")
+                          (not (tags "project"))
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Write something:")))
+
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@check")
+                          (tags "@later")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Check this out")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@watch")
+                          (tags "@later")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header "Your ungoogled watch later:")))
+
+          (org-ql-block '(and
+                          (todo "TODO")
+                          (tags "@idea")
+                          (tags "@later")
+                          (not (deadline))
+                          (not (scheduled)))
+                        ((org-ql-block-header
+                          "Looking for an
                                                        idea?")))))))
-
-
 
 ;; Org link configuration
 (use-package org
   :config
+  (defun salih/paste-markdown-as-org ()
+    "Convert markdown from clipboard to org-mode format using pandoc and paste it."
+    (interactive)
+    (let ((md-content (current-kill 0)))
+      (with-temp-buffer
+        (insert md-content)
+        (let ((exit-code (call-process-region (point-min) (point-max)
+                                              "pandoc" t t nil
+                                              "-f" "markdown"
+                                              "-t" "org")))
+          (if (= exit-code 0)
+              (let ((org-content (buffer-string)))
+                (with-current-buffer (window-buffer)
+                  (insert org-content)))
+            (error "Pandoc conversion failed with exit code %d" exit-code))))))
+  
   (org-link-set-parameters
    "eww"
    :follow (lambda (link) (eww link))
@@ -451,18 +455,46 @@ ARGS is `element' in `org-ql-view--format-element'"
 
 ;; Org-mode advice
 (advice-add 'org-agenda          :before 'vulpea-agenda-files-update)
-(advice-add 'org-clock-in        :before 'salih/toggle-logbook-on)
-(advice-add 'org-clock-in        :after  'salih/toggle-stats-on)
 (advice-add 'org-todo-list       :before 'vulpea-agenda-files-update)
 (advice-add 'org-agenda-quit     :before 'org-save-all-org-buffers)
-(advice-add 'org-log-beginning   :before 'salih/toggle-log-int-drawer-off)
-(advice-add 'org-log-beginning   :after  'salih/toggle-stats-on)
+
+
+(defun salih/logbook-on (&rest _)
+  "Enable logbook for org mode."
+  (setq org-log-into-drawer t))
+
+
+(defun salih/logbook-off (&rest _)
+  "Enable logbook for org mode."
+  (setq org-log-into-drawer nil))
+
+(defun salih/stats-on (&rest _)
+  "Disable log into drawer for org mode."
+  (if salih/adding-note?
+      (setq salih/adding-note? nil
+            org-log-into-drawer nil)
+    (setq org-log-into-drawer "STATS"))
+  (message (format "after: %s" org-log-into-drawer)))
+
+
+(defun salih/start-note (&rest _) (setq salih/adding-note? t))
+
+
+(advice-add 'org-clock-in        :before 'salih/logbook-on)
+(advice-add 'org-clock-in        :after  'salih/logbook-off)
+
+(advice-add 'org-store-log-note :before 'salih/stats-on)
+(advice-add 'org-store-log-note :after  'salih/logbook-off)
+
 (advice-add 'org-add-note        :before 'salih/start-note)
-(advice-add 'org-add-note        :before 'salih/toggle-log-int-drawer-off)
-(advice-add 'org-add-note        :after  'salih/toggle-stats-on)
-(advice-add 'org-agenda-add-note :before 'salih/start-note)
-(advice-add 'org-agenda-add-note :before 'salih/toggle-log-int-drawer-off)
-(advice-add 'org-agenda-add-note :after  'salih/toggle-stats-on)
+(advice-add 'org-add-note        :before 'salih/stats-on)
+(advice-add 'org-add-note        :after  'salih/logbook-on)
+
+;; (advice-add 'org-agenda-add-note :before 'salih/start-note)
+;; (advice-add 'org-agenda-add-note :before 'salih/toggle-stats-off)
+;; (advice-add 'org-agenda-add-note :after  'salih/toggle-stats-on)
+
+
 (advice-add 'org-media-note-insert-link
             :around #'salih/org-media-note-insert-link)
 (advice-add 'org-id-get-create :after    #'salih/set-custom-id-to-id)
@@ -473,21 +505,130 @@ ARGS is `element' in `org-ql-view--format-element'"
               (cl-letf (((symbol-function 'org-id-get-create) #'ignore))
                 (apply orig-fun args))))
 
-;; Org-mode hooks
 (add-hook! 'org-mode-hook
   (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
-  (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local)
-  (setq org-hide-leading-stars t
-        fill-column 80
-        display-line-numbers-width 3)
-  (setq-local truncate-lines t)
-  (display-line-numbers-mode -1))
+  (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local))
 
-;; Auto-fill mode hooks for org
-(add-hook! '(org-mode-hook
-             markdown-mode-hook)
-           #'auto-fill-mode)
+;; (add-hook! 'org-mode-hook (display-line-numbers-mode -1))
+;; (add-hook! 'org-agenda-mode-hook (display-line-numbers-mode -1))
+
+
+(defun salih/insert-now-timestamp()
+  (interactive)
+  (org-insert-time-stamp (current-time) t))
+
+(set-file-template! "\\.org$"
+  :trigger
+  (lambda ()
+    (let* ((filename (file-name-base (buffer-file-name)))
+           ;; Convert filename into a readable title
+           (title (string-join (split-string filename "[-_ ]+") " ")))
+      (insert
+       (format "#+title: %s\n#+DATE: <%s>\n\n"
+               (capitalize title)
+               (format-time-string "%Y-%m-%d %a %H:%M")))))
+  :mode 'org-mode
+  :project nil)
+
+
+;; Fix org-modern jit-lock errors properly
+(after! org-modern
+  ;; Disable the problematic star function
+  (setq org-modern-star 'replace)
+  (setq org-modern-replace-stars "◉○✸✿✤✜◆▶")
+
+  (setq org-modern-tag nil
+        org-modern-timestamp nil
+        org-modern-keyword t
+        org-modern-todo t
+        org-modern-block-name t
+        org-modern-priority t
+        org-modern-list '((42 . "•") (43 . "‒") (45 . "-")))
+  ;; org-modern-hide-stars t)
+
+  ;; Fix the syntax error with horizontal rule
+  (setq org-modern-horizontal-rule '("─" 2)
+        org-modern-block-fringe t
+        org-modern-table-vertical 1
+        org-modern-table-horizontal 0.2
+        org-modern-label-border 0.5)
+  
+  ;; Override the problematic star function
+  (defun salih/org-modern--safe-star ()
+    "Safe replacement for org-modern--star that avoids args-out-of-range errors."
+    (when (and (bound-and-true-p org-modern-mode)
+               (not (bobp))
+               (save-excursion
+                 (forward-line 0)
+                 (looking-at-p org-heading-regexp)))
+      nil))
+
+  ;; Override the jit-lock function with a safe version
+  (defun salih/org-modern-safe-jit-lock (start end)
+    (ignore-errors
+      (when (and (bound-and-true-p org-modern-mode)
+                 (>= end (point-min))
+                 (<= start (point-max)))
+        (save-excursion
+          (goto-char start)
+          (when (< (point) end)
+            (org-modern--update-blocks start end))))))
+
+  (advice-add 'org-modern--star :override #'salih/org-modern--safe-star)
+  (advice-add 'org-modern--jit-lock :override #'salih/org-modern-safe-jit-lock))
+
+
+(custom-set-faces
+ '(org-document-title ((t (:inherit outline-1 :height 1.5 :weight normal)))))
+;; '(org-level-2 ((t (:inherit outline-2 :height 1.25))))
+;; '(org-level-3 ((t (:inherit outline-3 :height 1.125))))
+;; '(org-level-4 ((t (:inherit outline-4 :height 1.0625)))))
+
+(after! org-present
+  (add-hook! 'org-present-mode-hook
+    (set-fringe-style 0)
+    (hl-line-mode -1)
+    (mixed-pitch-mode 1)
+    (org-display-inline-images)
+    (add-hook! 'prog-mode-hook (hide-mode-line-mode 1))
+    (doom-big-font-mode)
+    (setq visual-fill-column-width 110 doom-modeline-height 50)
+    (visual-fill-column-mode))
+  
+  (add-hook! 'org-present-mode-quit-hook
+    (set-fringe-style '(2 . 0))
+    (hl-line-mode 1)
+    (doom-big-font-mode -1)
+    (mixed-pitch-mode -1)
+    (org-remove-inline-images)
+    (remove-hook! 'prog-mode-hook (hide-mode-line-mode 1))
+    (doom-big-font-mode -1)
+    (setq doom-modeline-height 32)
+    (visual-fill-column-mode -1)))
+
+
+(add-hook! 'org-mode-hook (display-line-numbers-mode -1))
+
+
+
+
+
+
+
+
+
+
+
+
+
+(require 'org-modern)
+
+(global-org-modern-mode)
+
+
 
 
 
 (provide '+l-org-core)
+
+

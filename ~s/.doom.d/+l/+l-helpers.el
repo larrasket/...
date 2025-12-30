@@ -1,9 +1,7 @@
 ;;; +l/helpers.el -*- lexical-binding: t; -*-
 
 ;; Timestamp utilities
-(defun salih/insert-now-timestamp()
-  (interactive)
-  (org-insert-time-stamp (current-time) t))
+
 
 (defun salih/dired-sort ()
   "Sort dired dir listing in different ways.
@@ -35,10 +33,6 @@ Zathura."
                          (expand-file-name file default-directory))
         (find-file file)))))
 
-(defun salih/open-kitty-in-current-directory ()
-  "Open the Kitty terminal in the current working directory."
-  (interactive)
-  (call-process "kitty" nil 0 nil "--directory" default-directory))
 
 
 (defun salih/org-calendar-goto-agenda ()
@@ -51,8 +45,6 @@ Zathura."
   (interactive)
   (let ((default-directory (concat salih/source-directory "/")))
     (call-interactively 'find-file)))
-
-
 
 
 (defun salih/zathura-open ()
@@ -85,9 +77,27 @@ is already running."
           (eshell-send-input))
       (eshell))))
 
-(after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
+(after! eshell
+  (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
+
+(after! vterm
+  (remove-hook 'vterm-mode-hook 'hide-mode-line-mode))
+
+(after! embark
+  (add-to-list 'embark-keymap-alist '(org-timestamp embark-org-timestamp-map))
+  (defvar-keymap embark-org-timestamp-map
+    :doc "Keymap for actions on an org timestamp."
+    :parent embark-general-map
+    "t" #'salih/org-add-week-to-timestamp)
+  (define-key embark-url-map (kbd "c") 'salih/open-url-in-chrome-cross-platform)
+  (define-key embark-org-link-map (kbd "RET") 'org-web-tools-read-url-as-org))
 
 
+(after! vertico-multiform ;; if using vertico
+  (add-to-list 'vertico-multiform-categories
+               '(jinx (vertico-grid-annotate . 25)))
+
+  (vertico-multiform-mode 1))
 
 ;; File utilities
 (defun salih/open-in-external-app (&optional @fname)
@@ -129,11 +139,6 @@ Version 2019-11-04 2021-02-16"
                              "" nil "xdg-open" $fpath))) $file-list))))))
 
 
-;; Disable bright function
-(defun salih/disable-bright ()
-  "Disable bright mode for current buffer."
-  (when (bound-and-true-p bright-mode)
-    (bright-mode -1)))
 
 ;; [2025-05-03 Sat 05:35] fun fact, I took this function from an Israeli around
 ;; 4 years ago, and never stopped to read it but now. I'm adding Arabic support.
@@ -152,7 +157,6 @@ Version 2019-11-04 2021-02-16"
   (message "Direction: %s, Input method: %s"
            bidi-paragraph-direction
            (if current-input-method current-input-method "none")))
-
 
 
 (provide '+l-helpers)

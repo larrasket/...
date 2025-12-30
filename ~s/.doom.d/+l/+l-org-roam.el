@@ -111,11 +111,33 @@
   (setq roam-titles (mapcar #'org-roam-node-title (org-roam-node-list))
         org-roam-dailies-directory "~/roam/journal"))
 
+(add-hook! 'org-roam-find-file-hook #'git-auto-commit-mode)
+
 ;; Org-ql advice
 (advice-add 'org-ql-view--format-element
             :around #'salih/org-ql-view--format-element)
 
 
+
+(defun salih/org-roam-dailies-capture-today ()
+  (interactive)
+  (setq salih/org-roam-dailies-capture-p t)
+  (call-interactively #'org-roam-dailies-capture-today))
+
+(defun salih/org-roam-buffer ()
+  "Display the Org Roam buffer for the node at point."
+  (interactive)
+  (let ((node (org-roam-node-at-point)))
+    (when node
+      (org-roam-buffer-display-dedicated node))))
+
+(defun salih/consult-org-roam-search-org-only ()
+  (interactive)
+  (let ((consult-ripgrep-args
+         (concat
+          consult-ripgrep-args
+          " -g *.org")))
+    (consult-org-roam-search)))
 
 
 (use-package vulpea

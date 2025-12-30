@@ -1,21 +1,24 @@
 ;;; +l/common.el -*- lexical-binding: t; -*-
 
 ;; Theme-specific customizations
-(use-package modus-themes
-  :config
-  (if (eq (cdr (assoc doom-theme salih/prefered-themes)) 'nour)
-      (custom-set-faces!
-       '(org-todo :weight normal)
-       '(org-tag :weight normal)
-       '(org-done :weight normal)
-       '(org-agenda-done :strike-through nil)
-       '(org-document-title :height 2.0 :weight normal)
-       '(org-level-1 :weight normal :height 1.25)
-       '(org-level-2 :weight normal)
-       '(org-level-3 :weight normal)
-       '(org-level-4 :weight normal)
-       '(org-level-5 :weight normal)
-       '(org-level-6 :weight normal)
-       '(org-level-7 :weight bold))))
 
-(provide '+l-common) 
+(defun salih/tmp-buffer ()
+  "Open a new temporary buffer with a random name to play in."
+  (interactive)
+  (let ((bufname (generate-new-buffer-name
+                  (format "*scratch-%x*" (random most-positive-fixnum)))))
+    (switch-to-buffer (get-buffer-create bufname))
+    (emacs-lisp-mode)
+    (message "Opened temporary buffer: %s" bufname)))
+
+(defun salih/insert-current-date ()
+  (interactive)
+  (if (eq major-mode 'org-mode)
+      (progn
+        (insert "- " (format-time-string "[%Y-%m-%d %a %H:%M]") " "))
+    (let ((current-prefix-arg '(16)))
+      (call-interactively 'org-time-stamp-inactive)
+      (insert " "))))
+
+
+(provide '+l-common)

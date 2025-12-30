@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: actuall quote
+# uuid: bq
+# key: <bq
+# condition: t
+# --
+
+#+begin_actualquote
+$0
+#+end_actualquote
