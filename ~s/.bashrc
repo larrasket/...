@@ -118,6 +118,8 @@ alias serve='npx serve'
 alias wife='nmtui'
 alias hd='nmcli con up'
 alias s='setsid statusless'
+alias rabbitmq='CONF_ENV_FILE="/opt/homebrew/etc/rabbitmq/rabbitmq-env.conf" /opt/homebrew/opt/rabbitmq/sbin/rabbitmq-server'
+
 
 # [2025-03-06 Thu 13:34] wrote this also around 5 years ago. I was learning dwm
 # and I thought that `make clean install` is a common thing in all C programs, I
