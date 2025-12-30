@@ -1,26 +1,14 @@
-[safe]
-	directory = /mnt/disk/me/temp/infinality-remix/fontconfig-infinality-remix/src/fontconfig
-	directory = /mnt/disk/
-	directory = disk/
-	directory = disk/me/
-	directory = disk/leet/
-	directory = disk/me/gits/
-	directory = *
 [credential]
 	helper = store
 [user]
-	email = lr0@gmx.com
+	email = root@lr0.org
 	name = Salih Muhammed
-[http]
-	postBuffer = 157286400
+	signingkey = 4E3AA3ACC5C33DC5
 [core]
 	quotepath = false
 [init]
 	defaultBranch = master
+[commit]
+	gpgsign = true
 [pull]
 	rebase = false
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true

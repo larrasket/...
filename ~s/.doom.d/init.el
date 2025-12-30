@@ -6,7 +6,7 @@
        (corfu +icons)
 
        :ui
-       (vc-gutter +pretty)                        ; git annotions
+       (vc-gutter +pretty)              ; git annotions
        doom
        doom-dashboard
        hl-todo
@@ -17,13 +17,14 @@
        indent-guides
 
        :editor
-       (evil +everywhere)
+       (evil +everywhere +respect-visual)
        file-templates
        fold                             ; activate za in evil mode
        lispy                            ; better lisp edit
-       ;;parinfer                         ; (better lisp edit)
+       parinfer                         ; (better lisp edit)
        snippets
        word-wrap
+       (format +onsave)
 
        :emacs
        (dired +icons)
@@ -36,7 +37,7 @@
        vterm
 
        :checkers
-       (syntax +childframe)
+       (syntax +childframe +icons)
        ;; (spell  +flyspell)
 
        :tools
@@ -44,7 +45,7 @@
        terraform
        tree-sitter
        (lookup +dictionary +offline)
-       (lsp +peak +eglot)
+       (lsp +peak)
        magit
        pdf
 
@@ -52,23 +53,23 @@
        (tty)
 
        :lang
-       (csharp +lsp +dotnet +tree-sitter)
        (latex +flod +latexmk +lsp)
        (clojure +lsp +tree-sitter)
-       (julia +lsp +tree-sitter)
+                                        ;(julia +lsp +tree-sitter)
+       (javascript +lsp +tree-sitter)
        (cc +lsp +tree-sitter)
        (go +lsp +tree-sitter)
-       (javascript +lsp)
-       (org +roam2)
+       (org +roam2 +pandoc)
        (rest +jq)
+       (graphql +lsp +tree-sitter)
+       json
+       web
+       yaml
        emacs-lisp
        yaml
        json
        ess
        sh
-
-       :email
-       mu4e
 
        :app
        irc
@@ -78,3 +79,4 @@
 
 (add-to-list 'load-path (expand-file-name "lisp" doom-user-dir))
 (add-to-list 'load-path (expand-file-name "pkg"  doom-user-dir))
+(add-to-list 'load-path (expand-file-name "+l"  doom-user-dir))

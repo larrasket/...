@@ -19,25 +19,14 @@ apps are not started from a shell."
 (set-exec-path-from-shell-PATH)
 
 (setq-default frame-title-format                        '("%b")
-              shr-inhibit-images                        t
               bidi-paragraph-direction                  'left-to-right
               salih/me-location                         "~/me"
-              org-download-image-dir                    "~/roam/media"
-              indent-tabs-mode                          nil
-              pdf-view-display-size                     'fit-width
-              display-line-numbers-width                4)
+              org-download-image-dir                    "~/roam/media")
+;; display-line-numbers-width                4
 
 (defmacro s/require (&rest packages)
   `(progn ,@(mapcar (lambda (pkg) `(if ,pkg (require ,pkg))) packages)))
 
-(defun doom-theme-p? ()
-  (or
-   (string-prefix-p "kaolin-" (symbol-name doom-theme))
-   (string-prefix-p "doom-" (symbol-name doom-theme))))
-
-(defun kaolin-theme-p? ()
-  (or
-   (string-prefix-p "kaolin-" (symbol-name doom-theme))))
 
 (defun salih/get-random-theme (inc)
   "Get a different theme every week based on the week number of the year."
@@ -112,7 +101,8 @@ Excludes themes in the predefined skip list."
                       doom-molokai
                       modus-vivendi-deuteranopia
                       modus-operandi
-                      modus-vivendi-tinted))
+                      modus-vivendi-tinted
+                      ef-day))
          (current-week (+ inc (string-to-number (format-time-string "%U"))))
          (available-themes (seq-filter (lambda (theme)
                                          (not (member theme skip-list)))
@@ -122,33 +112,6 @@ Excludes themes in the predefined skip list."
                      (nth (mod current-week list-length) available-themes))))
     selected))
 
-
-
-(defun salih/get-random-nour-theme (inc)
-  (let* ((salih/prefered-themes '((ef-frost . nour)
-                                  (ef-light . nour))))
-    (salih/get-random-theme inc)))
-
-(defvar-local salih/modeline-buffer-name
-     '(:eval
-       (when (mode-line-window-selected-p)
-         (propertize (salih/modeline--buffer-name)
-                     'face 'salih/modeline-background)))
-   "Mode line construct to display the buffer name.")
-
-
-(defvar-local salih/modeline-major-mode
-     '
-     "Mode line construct to display the major mode.")
-
-(define-minor-mode salih/consult-preview-at-point-mode
-  "Preview minor mode for an *Embark Collect* buffer.
-When moving around in the *Embark Collect* buffer, the candidate at point is
-automatically previewed."
-  :init-value nil :group 'consult
-  (if salih/consult-preview-at-point-mode
-      (add-hook 'post-command-hook #'salih/consult-preview-at-point nil 'local)
-    (remove-hook 'post-command-hook #'salih/consult-preview-at-point 'local)))
 
 (defvar salih/consult--source-books
   `(:name     "File"
@@ -169,22 +132,9 @@ automatically previewed."
            (unless (gethash file ht)
              (push (consult--fast-abbreviate-file-name file) items)))))))
 
-(defvar salih/open-rss-lock-file (f-join doom-cache-dir "rss-locker")
-  "File used to store the last execution time of `salih/open-rss`.")
 
-;; lisp
-(defvar salih/sly--compile-eval-begin-print-counter 0
-  "a counter to distinguish compile/eval cycles")
-(defun salih/sly--compile-eval-begin-print (&rest _)
-  "print the counter value into REPL to distinguish compile/eval cycles."
-  (sly-eval-async
-   `(cl:format t "" ,(cl-incf salih/sly--compile-eval-begin-print-counter))))
-
-(defvar org-roam-list-most-linked-count 5)
 
 (defvar salih/org-roam-dailies-capture-p nil)
-
-
 
 (defvar salih/prefered-themes '((doom-peacock             . dark)
                                 ;; (doom-rouge               . dark)
@@ -296,23 +246,6 @@ automatically previewed."
   (interactive)
   (load-theme (salih/really-random-theme)))
 
-(defface salih/modeline-background
-   '((t :background "#3355bb" :foreground "white" :inherit bold))
-   "Face with a red background for use on the mode line.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -349,5 +282,12 @@ automatically previewed."
                 (concat line (make-string (max 0 (- longest-line (length line))) 32)))
                "\n"))
      'face 'doom-dashboard-banner)))
+
+(defun salih/keyboard-config ()
+  (when (display-graphic-p)
+    (keyboard-translate ?\C-m ?\H-m)
+    (keyboard-translate ?\C-i ?\H-i))
+  (define-key key-translation-map (kbd "C-g") (kbd "<escape>")))
+
 
 (provide '+early)
