@@ -75,3 +75,4 @@ DS_STORE
 /~s/.config/nvim/
 /~s/.config/git/
 .DS_Store
+/~s/.config/mole/
