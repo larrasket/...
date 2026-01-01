@@ -1,6 +1,6 @@
 #+OPTIONS: toc:nil
 
-[2025-12-31 Wed 03:22] Hi! In 2025, I started using MacOS. I no longer use DWM, Vim, or many other software that's well-configured here. I'm keeping this here, however, for two reasons: 1. I still use Emacs, sometimes it's useful to share some Elisp code from here. 2. A lot of nostaliga here! I even didn't delete the screenshots, although the exist in version control history, I'm really grateful to everything I learnt in my journey with FOSS, Linux, BSD, and everything.
+[2025-12-31 Wed 03:22] Hi! In 2025, I started using MacOS. I no longer use DWM, Vim, or many other software that's well-configured here. I'm keeping this here, however, for two reasons: 1. I still use Emacs, sometimes it's useful to share some Elisp code from here. 2. A lot of nostaliga here! I even didn't delete the screenshots, although they do exist in version control history, I'm really grateful to everything I learnt in my journey with FOSS, Linux, BSD, and everything.
 
 ------
 
