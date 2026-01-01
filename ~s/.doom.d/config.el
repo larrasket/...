@@ -18,7 +18,7 @@
       ;; kaolin-dark
       ;; doom-badger
       ;; kaolin-temple
-      doom-theme                                        'doom-homage-white
+      doom-theme                                        'ef-elea-dark
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -40,7 +40,8 @@
       ;; [2024-08-07 Wed 19:43] currently I sleep at 07:00.
       ;; [2024-08-08 Wed 23:41] Not anymore.
       ;; [2025-09-20 Sat 00:02] Quite outdated information huh :)
-      org-extend-today-until                            4
+      ;; [2026-01-01 Thu 03:01] Quite outdating outdated
+      org-extend-today-until                            2
 
       ;; other
       auto-save-no-message                              t
@@ -137,18 +138,18 @@
 (set-face-attribute 'shr-text nil :family "Arial" :height 180)
 
 
-;; (setq modus-themes-common-palette-overrides
-;;       '((fg-line-number-inactive bg-alt)
-;;         (fg-line-number-active bg-alt)
-;;         (bg-line-number-inactive unspecified)
-;;         (bg-line-number-active unspecified)))
+(setq modus-themes-common-palette-overrides
+      '((fg-line-number-inactive bg-alt)
+        (fg-line-number-active bg-alt)
+        (bg-line-number-inactive unspecified)
+        (bg-line-number-active unspecified)))
 
-;; (custom-set-faces
-;;  '(line-number ((t (:slant normal))))
-;;  '(line-number-current-line ((t (:slant normal)))))
+(custom-set-faces
+ '(line-number ((t (:slant normal))))
+ '(line-number-current-line ((t (:slant normal)))))
 
-;; (setq modus-themes-italic-constructs t)
-;; (setq modus-themes-bold-constructs nil)
+(setq modus-themes-italic-constructs t)
+(setq modus-themes-bold-constructs nil)
 
 (set-fringe-style '(2 . 0))
 
@@ -331,3 +332,6 @@ Returns a list of plists with artist info and scores."
 
 
 (global-org-modern-mode -1)
+
+(set-fringe-style '(1 . 1))
+
