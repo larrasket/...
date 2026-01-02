@@ -33,7 +33,9 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 GPG_TTY=$(tty)
 export GPG_TTY
 
-source $(brew --prefix nvm)/nvm.sh
+# Lazy load nvm for faster startup (hardcoded path instead of slow brew --prefix)
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh" --no-use
 
 # Check if ssh-agent is already running
 if [ -z "$SSH_AUTH_SOCK" ]; then
