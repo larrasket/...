@@ -25,8 +25,10 @@ export FrameworkPathOverride=/lib/mono/
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
+export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
+export LC_COLLATE=en_US.UTF-8
 export GTK_USE_PORTAL=gedit
 export _JAVA_AWT_WM_NONREPARENTING=1
 
