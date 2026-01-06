@@ -84,3 +84,8 @@ export PATH=$PATH:$ANDROID_HOME/tools/bin
 function kdo() {
     ps ax | grep -i docker | egrep -iv 'grep|com.docker.vmnetd' | awk '{print $1}' | xargs kill
 }
+
+# >>> coursier install directory >>>
+export PATH="$PATH:/Users/l/Library/Application Support/Coursier/bin"
+# <<< coursier install directory <<<
+export PATH="$HOME/Library/Application Support/Coursier/bin:$PATH"

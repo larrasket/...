@@ -62,6 +62,7 @@
        (org +roam2 +pandoc)
        (rest +jq)
        (graphql +lsp +tree-sitter)
+       (scala +lsp +tree-sitter)
        json
        web
        yaml
