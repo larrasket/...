@@ -5,5 +5,5 @@ autocmd BufWritePost * !brave
 :set relativenumber
 :set number
 
-source /Users/l/git/idea-doom-emacs/init.vim
-source /Users/l/git/idea-doom-emacs/subword-mode.vim
+source /Users/l/git/init.vim
+source /Users/l/git/subword-mode.vim
