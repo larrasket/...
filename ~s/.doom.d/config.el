@@ -149,7 +149,7 @@
  '(line-number-current-line ((t (:slant normal)))))
 
 (setq modus-themes-italic-constructs t)
-(setq modus-themes-bold-constructs nil)
+(setq modus-themes-bold-constructs t)
 
 (set-fringe-style '(2 . 0))
 
