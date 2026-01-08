@@ -4,7 +4,7 @@
 (require '+early)
 (setq salih/temp-roam-insert nil)
 (setq user-full-name                                    "Salih Muhammed"
-      user-mail-address                                 "root@lr0.org"
+      user-mail-address                                 "salih.moahabdelhafez@halan.com"
       user-first-name                                   "Salih"
       ;; TODO Commenting these temporarily until I get back to mu4e with iCloud.
       ;; user-stmp-server                                  "mail.gmx.com"

@@ -1,3 +1,6 @@
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 #
 # ~/.bash_profile
 #
@@ -50,8 +53,6 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
     fi
 fi
 
-# TODO remove this later
-
 # shellcheck shell=bash
 export -a chpwd_functions
 function __zsh_like_cd() {
@@ -81,6 +82,9 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 
+export JAVA_HOME=$(/usr/libexec/java_home -v17)
+export PATH="$JAVA_HOME/bin:$PATH"
+
 function kdo() {
     ps ax | grep -i docker | egrep -iv 'grep|com.docker.vmnetd' | awk '{print $1}' | xargs kill
 }
@@ -88,4 +92,3 @@ function kdo() {
 # >>> coursier install directory >>>
 export PATH="$PATH:/Users/l/Library/Application Support/Coursier/bin"
 # <<< coursier install directory <<<
-export PATH="$HOME/Library/Application Support/Coursier/bin:$PATH"
