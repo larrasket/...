@@ -4,3 +4,6 @@ autocmd BufWritePost * !brave
 :map :w <Action>(ReformatCode)
 :set relativenumber
 :set number
+
+source /Users/l/git/idea-doom-emacs/init.vim
+source /Users/l/git/idea-doom-emacs/subword-mode.vim
