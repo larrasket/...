@@ -93,3 +93,5 @@
 (package! spacious-padding)
 
 (package! org-modern)
+
+(package! dap-mode)

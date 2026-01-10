@@ -1,4 +1,5 @@
 ;;; init.el -*- lexical-binding: t; -*-
+(setq evil-respect-visual-line-mode t)
 (doom! :input
        :completion
        vertico
@@ -45,9 +46,10 @@
        terraform
        tree-sitter
        (lookup +dictionary +offline)
-       (lsp +peak)
+       (lsp +peak +booster)
        magit
        pdf
+       (debugger +lsp)
 
        :os
        (tty)
