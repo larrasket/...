@@ -335,3 +335,7 @@ Returns a list of plists with artist info and scores."
 
 (set-fringe-style '(1 . 1))
 
+
+
+
+(setq evil-respect-visual-line-mode t)

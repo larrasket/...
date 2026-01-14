@@ -1,4 +1,5 @@
 ;;; init.el -*- lexical-binding: t; -*-
+(setq evil-respect-visual-line-mode t)
 (doom! :input
        :completion
        vertico
