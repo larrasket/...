@@ -248,32 +248,40 @@ Returns a list of plists with artist info and scores."
 
 
 (defun salih/add-diary-entry-to-hugo ()
-  "Create a new Hugo diary entry for today and insert a diary template."
+  "Create a new Hugo diary entry for today and insert a diary template.
+If the diary already exists, add a new time-stamped heading at the bottom."
   (interactive)
   (let* ((diary-dir
           (expand-file-name "content/diary/"
                             (file-name-as-directory salih/hugo-directory)))
          (date-iso (format-time-string "<%Y-%m-%d %a>"))
          (date-title (format-time-string "%B %-d, %Y"))
+         (current-time (format-time-string "%H:%M"))
          (file-path (expand-file-name
                      (concat (format-time-string "%Y-%m-%d") ".org")
                      diary-dir)))
     ;; Ensure directory exists
     (unless (file-directory-p diary-dir)
       (make-directory diary-dir t))
-
     ;; Create & open file
     (find-file file-path)
-    (when (= (buffer-size) 0)
-      (insert
-       (format
-        "#+title: \"Diary Entry - %s\"\n#+DATE: %s
-"
-        date-title
-        date-iso)))    
-    (org-id-get-create)
-    ;; Insert template only if file is empty
-    
+    (if (= (buffer-size) 0)
+        ;; New file - insert full template
+        (progn
+          (insert
+           (format
+            "#+title: \"Diary Entry - %s\"\n#+DATE: %s\n\n"
+            date-title
+            date-iso))
+          (org-id-get-create)
+          (goto-char (point-max))
+          (insert (format "* %s\n" current-time)))
+      ;; Existing file - add new heading with time
+      (goto-char (point-max))
+      (unless (bolp)
+        (insert "\n"))
+      (insert (format "* %s\n" current-time)))
+    ;; Move cursor to end
     (goto-char (point-max))))
 
 
@@ -331,11 +339,8 @@ Returns a list of plists with artist info and scores."
 (setq dired-preview-max-size (* 1024 1024 30))
 
 
+(setq evil-respect-visual-line-mode t)
 (global-org-modern-mode -1)
 
 (set-fringe-style '(1 . 1))
-
-
-
-
 (setq evil-respect-visual-line-mode t)
