@@ -95,3 +95,5 @@
 (package! org-modern)
 
 (package! dap-mode)
+
+(package! nov)
