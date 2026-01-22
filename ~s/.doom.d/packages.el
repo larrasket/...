@@ -97,3 +97,5 @@
 (package! dap-mode)
 
 (package! nov)
+
+(package! eglot-booster)

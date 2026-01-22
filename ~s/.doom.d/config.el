@@ -344,3 +344,75 @@ If the diary already exists, add a new time-stamped heading at the bottom."
 
 (set-fringe-style '(1 . 1))
 (setq evil-respect-visual-line-mode t)
+
+;; Apheleia configuration for Scala with scalafmt
+
+(defconst scalafmt-default-config
+  "version = \"3.2.1\"
+style = default
+runner.dialect = scala213
+docstrings.wrap = \"no\"
+maxColumn = 140
+rewrite.rules = [
+  AvoidInfix
+  RedundantBraces
+  RedundantParens
+  AsciiSortImports
+  PreferCurlyFors
+]
+indent.main = 2
+indent.defnSite = 2
+indent.callSite = 2
+indent.extendSite = 2
+align.preset = more
+rewrite.trailingCommas.style = keep
+newlines.source = keep
+"
+  "Default scalafmt configuration for Scala 2.13 projects.")
+
+(defun scalafmt-find-project-root ()
+  "Find the project root directory for scalafmt."
+  (or (locate-dominating-file default-directory ".scalafmt.conf")
+      (locate-dominating-file default-directory "build.sbt")
+      (locate-dominating-file default-directory ".git")
+      (locate-dominating-file default-directory "project/build.properties")
+      default-directory))
+
+(defun scalafmt-ensure-config ()
+  (let* ((project-root (scalafmt-find-project-root))
+         (config-file (expand-file-name ".scalafmt.conf" project-root)))
+    (unless (file-exists-p config-file)
+      (with-temp-file config-file
+        (insert scalafmt-default-config))
+      (message "Created default .scalafmt.conf in %s" project-root))
+    config-file))
+
+;; Configure apheleia for Scala
+(with-eval-after-load 'apheleia
+  ;; Add scalafmt formatter - using a lambda to ensure config is created/found each time
+  (setf (alist-get 'scalafmt apheleia-formatters)
+        '("scalafmt" "--stdin" "--config" (eval (scalafmt-ensure-config))))
+  
+  ;; Register scalafmt for scala modes
+  (setf (alist-get 'scala-mode apheleia-mode-alist) 'scalafmt)
+  (setf (alist-get 'scala-ts-mode apheleia-mode-alist) 'scalafmt))
+
+;; Enable apheleia-mode for Scala files
+(add-hook 'scala-mode-hook #'apheleia-mode)
+(add-hook 'scala-ts-mode-hook #'apheleia-mode)
+
+
+;; Add this to your config BEFORE starting Eglot
+(setq eglot-events-buffer-size 2000000)  ; Must be non-zero!
+(setq eglot-events-buffer-config '(:size 2000000 :format full))
+
+
+(add-to-list 'eglot-stay-out-of 'eldoc)
+
+
+(defun my/eglot-scala-setup ()
+  (setq-local eglot-ignored-server-capabilities
+              '(:semanticTokensProvider  ; disable semantic tokens
+                :documentOnTypeFormattingProvider)))  ; disable format-on-type
+
+(add-hook 'scala-ts-mode-hook #'my/eglot-scala-setup)

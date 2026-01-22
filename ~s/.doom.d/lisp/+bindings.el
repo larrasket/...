@@ -106,6 +106,10 @@
  :keymaps 'lsp-mode-map
  "M-RET" #'lsp-execute-code-action)
 
+(general-define-key
+ :keymaps 'scala-ts-mode-map
+ "M-RET" #'eglot-code-actions)
+
 
 ;; ;; TODO Refactor this. I think this should be rewritten as an only one function
 ;; ;; that is "Run file", which check the mode and map it to the matching running
@@ -336,3 +340,5 @@
 
 
 (provide '+bindings)
+
+(setq read-process-output-max (* 4 1024 1024)) ;; VERY IMPORTANT
