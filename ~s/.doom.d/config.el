@@ -14,10 +14,19 @@
       salih/blog-content-path                           "~/blog/content"
       salih/hugo-directory                              "~/roam/hugo/"
       org-roam-directory                                (file-truename "~/roam")
-      doom-font                                         (font-spec :family "Pragmasevka" :size 16)
+      doom-font                                         (font-spec
+                                                         :family
+                                                         "Pragmasevka"
+                                                         :size 16)
       ;; kaolin-dark
       ;; doom-badger
       ;; kaolin-temple
+      ;; [2026-01-25 Sun 00:45] If you go through the git blame, you will find
+      ;; so many comments about choosing the right theme and me experiementing
+      ;; with many themes. Analysising this now feels like reading a four
+      ;; identity analysis of James Marcia. Anyway. I think I might have finally
+      ;; passed all the stages, and finally became what I am. And I think I
+      ;; found "the theme", it seems to be `ef-elea-dark'
       doom-theme                                        'ef-elea-dark
       doom-modeline-icon                                t
       doom-modeline-height                              32
@@ -41,7 +50,7 @@
       ;; [2024-08-08 Wed 23:41] Not anymore.
       ;; [2025-09-20 Sat 00:02] Quite outdated information huh :)
       ;; [2026-01-01 Thu 03:01] Quite outdating outdated
-      org-extend-today-until                            2
+      ;; org-extend-today-until                            2
 
       ;; other
       auto-save-no-message                              t
@@ -135,7 +144,7 @@
  '(mode-line-inactive ((t (:family "Pragmasevka")))))
 
 (set-popup-rules! '(("^\\*Project errors\\*" :size 0.25)))
-(set-face-attribute 'shr-text nil :family "Arial" :height 180)
+(set-face-attribute 'shr-text nil :family "Optima" :height 180)
 
 
 (setq modus-themes-common-palette-overrides
@@ -343,3 +352,8 @@ If the diary already exists, add a new time-stamped heading at the bottom."
 (global-org-modern-mode -1)
 
 (set-fringe-style '(1 . 1))
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+
+(setq doom-variable-pitch-font (font-spec :family "Roboto" :size 12))
+

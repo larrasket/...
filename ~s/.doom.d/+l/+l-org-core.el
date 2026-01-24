@@ -591,8 +591,9 @@ ARGS is `element' in `org-ql-view--format-element'"
     (mixed-pitch-mode 1)
     (org-display-inline-images)
     (add-hook! 'prog-mode-hook (hide-mode-line-mode 1))
-    (doom-big-font-mode)
-    (setq visual-fill-column-width 110 doom-modeline-height 50)
+    ;; (doom-big-font-mode)
+    (setq visual-fill-column-width 140)
+    ;; doom-modeline-height 50)
     (visual-fill-column-mode))
   
   (add-hook! 'org-present-mode-quit-hook
