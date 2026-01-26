@@ -87,5 +87,12 @@ block selection."
             notification-icon))))))
 
 
+(setq doom-modeline-icon t
+      doom-modeline-height 30
+      doom-modeline-height 30
+      doom-modeline-bar-width 1
+      doom-modeline-major-mode-icon t
+      doom-modeline-buffer-state-icon nil
+      doom-modeline-unicode-fallback t)
 
 (provide '+l-ui-modeline)

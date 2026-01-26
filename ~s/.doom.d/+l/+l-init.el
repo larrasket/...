@@ -30,6 +30,12 @@
 (require '+l-academic-bibtex)
 (require '+l-academic-citar)
 
+
+
+;; apple specific
+(require '+l-apple)
+
 (require '+l-common)
 (require '+l-pic-log)
 (provide '+l-init)
+
