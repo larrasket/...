@@ -178,6 +178,9 @@
  "b j" #'org-noter-sync-current-note)
 
 
+(map!
+ :leader
+ "s r" #'salih/consult-org-roam-search)
 
 ;; ;; convenient
 (map!
