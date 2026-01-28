@@ -416,3 +416,9 @@ newlines.source = keep
                 :documentOnTypeFormattingProvider)))  ; disable format-on-type
 
 (add-hook 'scala-ts-mode-hook #'my/eglot-scala-setup)
+(defun metals-import-build ()
+  "Import build by running sbt bloopInstall and reconnecting"
+  (interactive)
+  (let ((default-directory (project-root (project-current))))
+    (async-shell-command "sbt bloopInstall")
+    (message "Running sbt bloopInstall... Reconnect Eglot when done.")))

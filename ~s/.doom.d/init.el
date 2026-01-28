@@ -83,3 +83,11 @@
 (add-to-list 'load-path (expand-file-name "lisp" doom-user-dir))
 (add-to-list 'load-path (expand-file-name "pkg"  doom-user-dir))
 (add-to-list 'load-path (expand-file-name "+l"  doom-user-dir))
+
+(defun metals-import-build ()
+  "Import build in Metals via Eglot"
+  (interactive)
+  (eglot-execute-command
+   (eglot--server-capable :executeCommandProvider)
+   "metals.build-import"
+   nil))
