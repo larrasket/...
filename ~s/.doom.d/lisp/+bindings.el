@@ -179,6 +179,23 @@
 
 
 (map!
+ :map org-noter-doc-mode-map
+ :nvim
+ "C-c C-c" #'org-noter-insert-precise-note)
+
+(map!
+ :map doc-view-mode-map
+ :nvim
+ "C-c C-c" #'org-noter-insert-precise-note)
+
+
+
+
+(map!
+ :leader
+ "s r" #'salih/consult-org-roam-search-org-only)
+
+(map!
  :leader
  "s r" #'salih/consult-org-roam-search)
 
