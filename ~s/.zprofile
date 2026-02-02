@@ -1,4 +1,3 @@
-
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 #
@@ -89,6 +88,116 @@ function kdo() {
     ps ax | grep -i docker | egrep -iv 'grep|com.docker.vmnetd' | awk '{print $1}' | xargs kill
 }
 
-# >>> coursier install directory >>>
-export PATH="$PATH:/Users/l/Library/Application Support/Coursier/bin"
-# <<< coursier install directory <<<
+alias fwdargocd="kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && kubectl port-forward svc/argocd-server -n argocd 8080:80"
+
+alias argocdpassword="kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d"
+
+alias stgcluster="kubectl config use-context halangw-stg-new"
+alias devcluster="kubectl config use-context arn:aws:eks:us-east-1:624792314775:cluster/halan-gateway-dev"
+
+alias vpn2="sudo openfortivpn 102.221.142.122:10443 --username=ahmed.shaheen@halan.com --pinentry=pinentry-mac --trusted-cert 1c684e7f00f892fb95c6f5429dc43a0668950b1bd59a02c9fabf9c6cdd7ffa6c"
+
+alias vpn="sudo openfortivpn 102.221.142.122:10443 --username=ahmed.shaheen@halan.com --trusted-cert 1c684e7f00f892fb95c6f5429dc43a0668950b1bd59a02c9fabf9c6cdd7ffa6c"
+
+klogs() {
+    svc=$(kubectl get svc -A | fzf)
+    ns=$(echo $svc | awk '{print $1}')
+    name=$(echo $svc | awk '{print $2}')
+    kubectl logs -f svc/$name -n$ns --since=55m
+}
+
+ksecret() {
+    local ns=${1:-default}
+    local secret=$(kubectl get secret -n $ns | fzf | awk '{print $1}')
+    local key=$(kubectl get secret $secret -n $ns -o jsonpath='{.data}' | jq -r 'keys[]' | fzf)
+    kubectl get secret $secret -n $ns -o jsonpath="{.data.$key}" | base64 --decode
+    echo
+}
+
+kpf() {
+    local ns=${1:-default}
+
+    local svc=$(kubectl get svc -n $ns | fzf | awk '{print $1}')
+    if [ -z "$svc" ]; then
+        echo "No service selected."
+        return 1
+    fi
+
+    echo -n "Local port: "
+    read lport
+    echo -n "Remote port: "
+    read rport
+
+    echo "Forwarding $svc:$rport to localhost:$lport (namespace: $ns)"
+    kubectl port-forward svc/$svc $lport:$rport -n $ns
+}
+
+kexec() {
+    local ns=${1:-default}
+
+    # Pick a pod interactively
+    local pod=$(kubectl get pods -n $ns | fzf | awk '{print $1}')
+    if [ -z "$pod" ]; then
+        echo "No pod selected."
+        return 1
+    fi
+
+    # Pick a container if multiple exist
+    local containers=$(kubectl get pod $pod -n $ns -o jsonpath='{.spec.containers[*].name}')
+    local container
+    if [[ $(echo $containers | wc -w) -gt 1 ]]; then
+        container=$(echo $containers | tr ' ' '\n' | fzf)
+    else
+        container=$containers
+    fi
+
+    # Choose mode: shell or redis-cli
+    echo "Choose mode:"
+    select mode in "Shell" "Redis-CLI"; do
+        case $mode in
+        "Shell")
+            echo "Exec into pod: $pod (container: $container, namespace: $ns)"
+            kubectl exec -it $pod -n $ns -c $container -- /bin/sh || kubectl exec -it $pod -n $ns -c $container -- /bin/bash
+            break
+            ;;
+        "Redis-CLI")
+            echo "Exec into pod: $pod (container: $container, namespace: $ns) with redis-cli"
+            kubectl exec -it $pod -n $ns -c $container -- redis-cli
+            break
+            ;;
+        *)
+            echo "Invalid option."
+            ;;
+        esac
+    done
+}
+
+kdesc() {
+    local ns=${1:-default}
+
+    # Pick a pod interactively
+    local pod=$(kubectl get pods -n $ns | fzf | awk '{print $1}')
+    if [ -z "$pod" ]; then
+        echo "No pod selected."
+        return 1
+    fi
+
+    echo "Describing pod: $pod (namespace: $ns)"
+    kubectl describe pod $pod -n $ns | less
+}
+
+kedit() {
+    local ns=$1
+    if [ -z "$ns" ]; then
+        echo "Usage: kedit <namespace>"
+        return 1
+    fi
+
+    local deployment=$(kubectl get deployments -n "$ns" --no-headers -o custom-columns=":metadata.name" | fzf)
+    if [ -n "$deployment" ]; then
+        echo "Editing deployment: $deployment (namespace: $ns)"
+        KUBE_EDITOR="code -w" kubectl edit deployment "$deployment" -n "$ns"
+    else
+        echo "No deployment selected."
+    fi
+}
