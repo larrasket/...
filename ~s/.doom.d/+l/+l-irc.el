@@ -68,8 +68,6 @@ check."
                    user host port)))
       (error "No auth entry found for %s@%s:%s" user host port))))
 
-
-
 ;; Modeline configuration
 (setq doom-modeline-irc-stylize #'ignore)
 
