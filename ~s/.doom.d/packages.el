@@ -98,4 +98,4 @@
 
 (package! nov)
 
-(package! eglot-booster)
+;(package! eglot-booster)

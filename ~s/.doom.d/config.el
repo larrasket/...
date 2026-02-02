@@ -4,7 +4,8 @@
 (require '+early)
 (setq salih/temp-roam-insert nil)
 (setq user-full-name                                    "Salih Muhammed"
-      user-mail-address                                 "salih.moahabdelhafez@halan.com"
+      user-mail-address
+      "salih.moahabdelhafez@halan.com"
       user-first-name                                   "Salih"
       ;; TODO Commenting these temporarily until I get back to mu4e with iCloud.
       ;; user-stmp-server                                  "mail.gmx.com"
@@ -14,10 +15,8 @@
       salih/blog-content-path                           "~/blog/content"
       salih/hugo-directory                              "~/roam/hugo/"
       org-roam-directory                                (file-truename "~/roam")
-      doom-font                                         (font-spec
-                                                         :family
-                                                         "Pragmasevka"
-                                                         :size 16)
+      doom-font
+      (font-spec :family "Pragmasevka" :size 16)
       ;; kaolin-dark
       ;; doom-badger
       ;; kaolin-temple
@@ -190,19 +189,17 @@ newlines.source = keep
 
 
 ;; Add this to your config BEFORE starting Eglot
-(setq eglot-events-buffer-size 2000000)  ; Must be non-zero!
-(setq eglot-events-buffer-config '(:size 2000000 :format full))
+;; (setq eglot-events-buffer-size 2000000)  ; Must be non-zero!
+;; (setq eglot-events-buffer-config '(:size 2000000 :format full))
 
+;; (add-to-list 'eglot-stay-out-of 'eldoc)
 
-(add-to-list 'eglot-stay-out-of 'eldoc)
+;; (defun my/eglot-scala-setup ()
+;;   (setq-local eglot-ignored-server-capabilities
+;;               '(:semanticTokensProvider  ; disable semantic tokens
+;;                 :documentOnTypeFormattingProvider)))  ; disable format-on-type
 
-
-(defun my/eglot-scala-setup ()
-  (setq-local eglot-ignored-server-capabilities
-              '(:semanticTokensProvider  ; disable semantic tokens
-                :documentOnTypeFormattingProvider)))  ; disable format-on-type
-
-(add-hook 'scala-ts-mode-hook #'my/eglot-scala-setup)
+;; (add-hook 'scala-ts-mode-hook #'my/eglot-scala-setup)
 (defun metals-import-build ()
   "Import build by running sbt bloopInstall and reconnecting"
   (interactive)
@@ -214,3 +211,43 @@ newlines.source = keep
 
 
 (setq doom-variable-pitch-font (font-spec :family "Roboto" :size 12))
+
+;; TODO remove this when flycheck-golangci-lint is patched
+(after! flycheck-golangci-lint
+  (defun flycheck-golangci-lint--executable ()
+    "Pick an executable to use"
+    (or flycheck-golangci-lint-executable "golangci-lint"))
+
+
+  (defun flycheck-golangci-lint--parse-version ()
+    "Parse golangci-lint version from --version output.
+Returns a list of (major minor patch) as integers, or nil if parsing fails."
+    (unless flycheck-golangci-lint--version
+      (let* ((output (ignore-errors
+                       (with-temp-buffer
+                         (call-process (flycheck-golangci-lint--executable) nil
+                                       t nil "--version")
+                         (buffer-string))))
+             (version-regex
+              "version \\([0-9]+\\)\\.\\([0-9]+\\)\\.\\([0-9]+\\)"))
+        (when (and output (string-match version-regex output))
+          (setq flycheck-golangci-lint--version
+                (list (string-to-number (match-string 1 output))
+                      (string-to-number (match-string 2 output))
+                      (string-to-number (match-string 3 output)))))))
+    flycheck-golangci-lint--version)
+
+  (defun flycheck-golangci-lint--output-format-flags ()
+    "Return appropriate output format flags based on golangci-lint version.
+v1.x uses --out-format=checkstyle
+v2.x uses --output.checkstyle.path=stdout (without --output.text.path=stderr
+which causes mixed output that breaks the checkstyle parser)."
+    ;; v2.x: Use new format (without text output flag to avoid mixed output)
+    (let ((version (flycheck-golangci-lint--parse-version)))
+      (if (and version (>= (car version) 2))
+          '("--output.checkstyle.path=stdout")
+        "--path-mode=abs"
+        ;; v1.x or fallback: Use legacy format
+        '("--out-format=checkstyle")))))
+
+

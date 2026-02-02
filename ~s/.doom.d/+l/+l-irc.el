@@ -22,17 +22,17 @@ check."
 
 
   (defun salih/nickserv-password (server)
-    (salih/fetch-password :user user-short-username :host "irc.libera.chat"))
+    (salih/fetch-password :user "larrasket" :host "irc.libera.chat"))
   
   ;; Server configuration
   (set-irc-server! "irc.libera.chat"
     '(:tls t
       :port 6697
-      :nick "lr0"
+      :nick "larrasket"
       :sasl-strict t
-      :sasl-username "lr0"
+      :sasl-username "larrasket"
       :sasl-password salih/nickserv-password
-      :channels ("##arabic" "##philosophy")))
+      :channels ("#go-nuts")))
   
   ;; Display handlers
   (circe-set-display-handler "324"  (lambda (&rest ignored) nil))
@@ -56,18 +56,18 @@ check."
   (defun salih/quit-erc (s)
     "quit cute quote"
     "I seek refuge in God, from Satan the rejected"))
-  
-  ;; Password lookup function
-  (defun salih/lookup-password (host user port)
-    (let ((auth (auth-source-search :host host :user user :port port)))
-      (if auth
-          (let ((secretf (plist-get (car auth) :secret)))
-            (if secretf
-                (funcall secretf)
-              (error "Auth entry for %s@%s:%s has no secret!"
-                     user host port)))
-        (error "No auth entry found for %s@%s:%s" user host port))))
-  
+
+;; Password lookup function
+(defun salih/lookup-password (host user port)
+  (let ((auth (auth-source-search :host host :user user :port port)))
+    (if auth
+        (let ((secretf (plist-get (car auth) :secret)))
+          (if secretf
+              (funcall secretf)
+            (error "Auth entry for %s@%s:%s has no secret!"
+                   user host port)))
+      (error "No auth entry found for %s@%s:%s" user host port))))
+
 
 
 ;; Modeline configuration

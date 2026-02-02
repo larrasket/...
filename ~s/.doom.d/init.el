@@ -46,7 +46,7 @@
        terraform
        tree-sitter
        (lookup +dictionary +offline)
-       (lsp +peak +booster +eglot)
+       (lsp +peak +booster)
        magit
        pdf
        (debugger +lsp)
