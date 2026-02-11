@@ -251,3 +251,86 @@ which causes mixed output that breaks the checkstyle parser)."
         '("--out-format=checkstyle")))))
 
 
+
+
+
+
+(defun yaml-env-to-dotenv ()
+  "Convert Helm-style YAML env entries into a .env file."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+
+    (unless (re-search-forward "^env:" nil t)
+      (user-error "No env: section found"))
+
+    (let ((env-vars '()))
+      ;; Iterate over each env item
+      (while (re-search-forward "^[[:space:]]*- name: \\(.+\\)$" nil t)
+        (let* ((name (match-string 1))
+               (start (point))
+               (end (or (save-excursion
+                          (when (re-search-forward "^[[:space:]]*- name:" nil t)
+                            (match-beginning 0)))
+                        (point-max)))
+               value)
+
+          (save-excursion
+            (goto-char start)
+            (cond
+             ;; value: "foo"
+             ((re-search-forward "^[[:space:]]+value: \\(\"?\\)\\(.+?\\)\\1$" end t)
+              (setq value (match-string 2)))
+
+             ;; valueFrom.secretKeyRef
+             ((re-search-forward "^[[:space:]]+valueFrom:" end t)
+              (let (secret key)
+                (when (re-search-forward "^[[:space:]]+name: \\(.+\\)$" end t)
+                  (setq secret (match-string 1)))
+                (when (re-search-forward "^[[:space:]]+key: \\(.+\\)$" end t)
+                  (setq key (match-string 1)))
+                (when (and secret key)
+                  (setq value (format "<secret:%s/%s>" secret key)))))))
+
+          (when value
+            (push (format "%s=%s" name value) env-vars))))
+
+      ;; Save file
+      (let ((file (read-file-name "Save .env file as: " nil nil nil ".env")))
+        (with-temp-file file
+          (insert (string-join (nreverse env-vars) "\n"))
+          (insert "\n"))
+        (message "Wrote %d env vars to %s"
+                 (length env-vars) file)))))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
