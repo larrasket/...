@@ -334,3 +334,4 @@ which causes mixed output that breaks the checkstyle parser)."
 
 
 
+(add-hook! 'org-mode-hook (visual-fill-column-mode 1))
