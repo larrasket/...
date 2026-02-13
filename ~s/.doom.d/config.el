@@ -135,5 +135,7 @@
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
 
-(setq doom-variable-pitch-font (font-spec :family "Roboto" :size 12))
+(setq doom-variable-pitch-font (font-spec :family "MS Gothic" :size 12))
 
+
+(add-hook! 'org-mode-hook (visual-line-fill-column-mode))

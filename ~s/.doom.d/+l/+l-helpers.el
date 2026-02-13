@@ -258,7 +258,7 @@ If the diary already exists, add a new time-stamped heading at the bottom."
           (expand-file-name "content/diary/"
                             (file-name-as-directory salih/hugo-directory)))
          (date-iso (format-time-string "<%Y-%m-%d %a>"))
-         (date-title (format-time-string "%B %-d, %Y"))
+         (date-title (format-time-string "%Y/%m/%d"))
          (current-time (format-time-string "%H:%M"))
          (file-path (expand-file-name
                      (concat (format-time-string "%Y-%m-%d") ".org")
@@ -273,7 +273,7 @@ If the diary already exists, add a new time-stamped heading at the bottom."
         (progn
           (insert
            (format
-            "#+title: \"Diary Entry - %s\"\n#+DATE: %s\n\n"
+            "#+title: %s\n#+DATE: %s\n\n"
             date-title
             date-iso))
           (org-id-get-create)
