@@ -210,7 +210,7 @@ newlines.source = keep
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
 
-(setq doom-variable-pitch-font (font-spec :family "Roboto" :size 12))
+(setq doom-variable-pitch-font (font-spec :family "MS Gothic" :size 12))
 
 ;; TODO remove this when flycheck-golangci-lint is patched
 (after! flycheck-golangci-lint
@@ -347,3 +347,5 @@ which causes mixed output that breaks the checkstyle parser)."
     (with-current-buffer buffer
       (when (eq major-mode 'org-mode)
         (kill-buffer buffer)))))
+
+(add-hook! 'org-mode-hook (visual-line-fill-column-mode))
