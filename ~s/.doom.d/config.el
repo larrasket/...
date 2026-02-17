@@ -335,3 +335,15 @@ which causes mixed output that breaks the checkstyle parser)."
 
 
 (add-hook! 'org-mode-hook (visual-fill-column-mode 1))
+
+
+
+
+
+(defun salih/kill-all-org-buffers ()
+  "Kill all buffers whose major mode is `org-mode`."
+  (interactive)
+  (dolist (buffer (buffer-list))
+    (with-current-buffer buffer
+      (when (eq major-mode 'org-mode)
+        (kill-buffer buffer)))))
