@@ -139,3 +139,8 @@
 
 
 (add-hook! 'org-mode-hook (visual-line-fill-column-mode))
+
+(defun salih/open-agenda-late ()
+  (interactive)
+  (setq org-extend-today-until 9)
+  (salih/org-agenda-no-full-f))
