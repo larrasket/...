@@ -177,6 +177,11 @@
  :leader
  "b j" #'org-noter-sync-current-note)
 
+(map!
+ :map nov-mode-map
+ :leader
+ "b s" #'nov-consult-search)
+
 
 (map!
  :map org-noter-doc-mode-map

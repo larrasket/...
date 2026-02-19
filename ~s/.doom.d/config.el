@@ -58,7 +58,27 @@
       safe-local-variable-values
       '((org-download-image-dir
          . "../i")
-        (salih/rebuild . t)))
+        (salih/rebuild . t))
+
+
+      ;; currently org causes some annoying warnings because of org-element
+      ;; breaking API updates.
+      ;; [2024-04-26 Fri 02:01] I wrote "currently" above a long time ago
+      ;; (perhaps can be detected from the git history, too lazy tho). Not sure
+      ;; if it is still the case
+      ;; [2024-11-20 Wed 11:45] Let's try without it!
+      ;; [2024-11-22 Fri 12:07] Works fine so far.
+      ;; [2025-06-08 Sun 12:20] It's back!
+      ;; [2025-06-27 Fri 20:41] https://github.com/org-noter/org-noter/issues/111
+      ;; [2025-06-27 Fri 20:42] https://list.orgmode.org/87qzzfd7bf.fsf@localhost/T/#t
+      ;; [2025-09-20 Sat 00:02] I cleaned my org config. Let's give that a try again.
+      ;; [2026-02-19 Thu 20:03] apparently this will just keep happening as long as I use nov.el
+      warning-minimum-level                             :error)
+
+
+
+
+
 
 (setq epa-file-cache-passphrase-for-symmetric-encryption t
       epa-file-select-keys                               'silent
@@ -66,19 +86,6 @@
       gac-debounce-interval                             200
       gac-silent-message-p                              t)
 
-
-;; currently org causes some annoying warnings because of org-element
-;; breaking API updates.
-;; [2024-04-26 Fri 02:01] I wrote "currently" above a long time ago
-;; (perhaps can be detected from the git history, too lazy tho). Not sure
-;; if it is still the case
-;; [2024-11-20 Wed 11:45] Let's try without it!
-;; [2024-11-22 Fri 12:07] Works fine so far.
-;; [2025-06-08 Sun 12:20] It's back!
-;; [2025-06-27 Fri 20:41] https://github.com/org-noter/org-noter/issues/111
-;; [2025-06-27 Fri 20:42] https://list.orgmode.org/87qzzfd7bf.fsf@localhost/T/#t
-;; [2025-09-20 Sat 00:02] I cleaned my org config. Let's give that a try again.
-;; warning-minimum-level                             :error)
 
 
 (require '+l-init)
