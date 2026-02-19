@@ -118,7 +118,6 @@
 (setq modus-themes-bold-constructs nil)
 (setq dired-preview-max-size (* 1024 1024 30))
 
-
 (set-fringe-style '(2 . 0))
 
 
@@ -132,11 +131,223 @@
 (global-org-modern-mode -1)
 
 (set-fringe-style '(1 . 1))
+(setq evil-respect-visual-line-mode t)
+;; Apheleia configuration for Scala with scalafmt
+
+(defconst scalafmt-default-config
+  "version = \"3.2.1\"
+style = default
+runner.dialect = scala213
+docstrings.wrap = \"no\"
+maxColumn = 140
+rewrite.rules = [
+  AvoidInfix
+  RedundantBraces
+  RedundantParens
+  AsciiSortImports
+  PreferCurlyFors
+]
+indent.main = 2
+indent.defnSite = 2
+indent.callSite = 2
+indent.extendSite = 2
+align.preset = more
+rewrite.trailingCommas.style = keep
+newlines.source = keep
+"
+  "Default scalafmt configuration for Scala 2.13 projects.")
+
+(defun scalafmt-find-project-root ()
+  "Find the project root directory for scalafmt."
+  (or (locate-dominating-file default-directory ".scalafmt.conf")
+      (locate-dominating-file default-directory "build.sbt")
+      (locate-dominating-file default-directory ".git")
+      (locate-dominating-file default-directory "project/build.properties")
+      default-directory))
+
+(defun scalafmt-ensure-config ()
+  (let* ((project-root (scalafmt-find-project-root))
+         (config-file (expand-file-name ".scalafmt.conf" project-root)))
+    (unless (file-exists-p config-file)
+      (with-temp-file config-file
+        (insert scalafmt-default-config))
+      (message "Created default .scalafmt.conf in %s" project-root))
+    config-file))
+
+;; Configure apheleia for Scala
+(with-eval-after-load 'apheleia
+  ;; Add scalafmt formatter - using a lambda to ensure config is created/found each time
+  (setf (alist-get 'scalafmt apheleia-formatters)
+        '("scalafmt" "--stdin" "--config" (eval (scalafmt-ensure-config))))
+  
+  ;; Register scalafmt for scala modes
+  (setf (alist-get 'scala-mode apheleia-mode-alist) 'scalafmt)
+  (setf (alist-get 'scala-ts-mode apheleia-mode-alist) 'scalafmt))
+
+;; Enable apheleia-mode for Scala files
+(add-hook 'scala-mode-hook #'apheleia-mode)
+(add-hook 'scala-ts-mode-hook #'apheleia-mode)
+
+
+;; Add this to your config BEFORE starting Eglot
+;; (setq eglot-events-buffer-size 2000000)  ; Must be non-zero!
+;; (setq eglot-events-buffer-config '(:size 2000000 :format full))
+
+;; (add-to-list 'eglot-stay-out-of 'eldoc)
+
+;; (defun my/eglot-scala-setup ()
+;;   (setq-local eglot-ignored-server-capabilities
+;;               '(:semanticTokensProvider  ; disable semantic tokens
+;;                 :documentOnTypeFormattingProvider)))  ; disable format-on-type
+
+;; (add-hook 'scala-ts-mode-hook #'my/eglot-scala-setup)
+(defun metals-import-build ()
+  "Import build by running sbt bloopInstall and reconnecting"
+  (interactive)
+  (let ((default-directory (project-root (project-current))))
+    (async-shell-command "sbt bloopInstall")
+    (message "Running sbt bloopInstall... Reconnect Eglot when done.")))
+
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
 
 (setq doom-variable-pitch-font (font-spec :family "MS Gothic" :size 12))
 
+;; TODO remove this when flycheck-golangci-lint is patched
+(after! flycheck-golangci-lint
+  (defun flycheck-golangci-lint--executable ()
+    "Pick an executable to use"
+    (or flycheck-golangci-lint-executable "golangci-lint"))
+
+
+  (defun flycheck-golangci-lint--parse-version ()
+    "Parse golangci-lint version from --version output.
+Returns a list of (major minor patch) as integers, or nil if parsing fails."
+    (unless flycheck-golangci-lint--version
+      (let* ((output (ignore-errors
+                       (with-temp-buffer
+                         (call-process (flycheck-golangci-lint--executable) nil
+                                       t nil "--version")
+                         (buffer-string))))
+             (version-regex
+              "version \\([0-9]+\\)\\.\\([0-9]+\\)\\.\\([0-9]+\\)"))
+        (when (and output (string-match version-regex output))
+          (setq flycheck-golangci-lint--version
+                (list (string-to-number (match-string 1 output))
+                      (string-to-number (match-string 2 output))
+                      (string-to-number (match-string 3 output)))))))
+    flycheck-golangci-lint--version)
+
+  (defun flycheck-golangci-lint--output-format-flags ()
+    "Return appropriate output format flags based on golangci-lint version.
+v1.x uses --out-format=checkstyle
+v2.x uses --output.checkstyle.path=stdout (without --output.text.path=stderr
+which causes mixed output that breaks the checkstyle parser)."
+    ;; v2.x: Use new format (without text output flag to avoid mixed output)
+    (let ((version (flycheck-golangci-lint--parse-version)))
+      (if (and version (>= (car version) 2))
+          '("--output.checkstyle.path=stdout")
+        "--path-mode=abs"
+        ;; v1.x or fallback: Use legacy format
+        '("--out-format=checkstyle")))))
+
+
+
+
+
+
+(defun yaml-env-to-dotenv ()
+  "Convert Helm-style YAML env entries into a .env file."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+
+    (unless (re-search-forward "^env:" nil t)
+      (user-error "No env: section found"))
+
+    (let ((env-vars '()))
+      ;; Iterate over each env item
+      (while (re-search-forward "^[[:space:]]*- name: \\(.+\\)$" nil t)
+        (let* ((name (match-string 1))
+               (start (point))
+               (end (or (save-excursion
+                          (when (re-search-forward "^[[:space:]]*- name:" nil t)
+                            (match-beginning 0)))
+                        (point-max)))
+               value)
+
+          (save-excursion
+            (goto-char start)
+            (cond
+             ;; value: "foo"
+             ((re-search-forward "^[[:space:]]+value: \\(\"?\\)\\(.+?\\)\\1$" end t)
+              (setq value (match-string 2)))
+
+             ;; valueFrom.secretKeyRef
+             ((re-search-forward "^[[:space:]]+valueFrom:" end t)
+              (let (secret key)
+                (when (re-search-forward "^[[:space:]]+name: \\(.+\\)$" end t)
+                  (setq secret (match-string 1)))
+                (when (re-search-forward "^[[:space:]]+key: \\(.+\\)$" end t)
+                  (setq key (match-string 1)))
+                (when (and secret key)
+                  (setq value (format "<secret:%s/%s>" secret key)))))))
+
+          (when value
+            (push (format "%s=%s" name value) env-vars))))
+
+      ;; Save file
+      (let ((file (read-file-name "Save .env file as: " nil nil nil ".env")))
+        (with-temp-file file
+          (insert (string-join (nreverse env-vars) "\n"))
+          (insert "\n"))
+        (message "Wrote %d env vars to %s"
+                 (length env-vars) file)))))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(add-hook! 'org-mode-hook (visual-fill-column-mode 1))
+
+
+
+
+
+(defun salih/kill-all-org-buffers ()
+  "Kill all buffers whose major mode is `org-mode`."
+  (interactive)
+  (dolist (buffer (buffer-list))
+    (with-current-buffer buffer
+      (when (eq major-mode 'org-mode)
+        (kill-buffer buffer)))))
 
 (add-hook! 'org-mode-hook (visual-line-fill-column-mode))
 
