@@ -340,7 +340,6 @@ which causes mixed output that breaks the checkstyle parser)."
 
 
 
-
 (defun salih/kill-all-org-buffers ()
   "Kill all buffers whose major mode is `org-mode`."
   (interactive)
@@ -355,3 +354,12 @@ which causes mixed output that breaks the checkstyle parser)."
   (interactive)
   (setq org-extend-today-until 9)
   (salih/org-agenda-no-full-f))
+
+(add-hook! 'org-noter-doc-mode-hook (breadcrumb-local-mode -1))
+(add-hook! 'nov-mode-hook (breadcrumb-local-mode -1))
+
+
+;; (add-hook! org-noter-doc-mode-hook (breadcrumb-local-mode -1))
+
+
+(require 'nov-consult)
