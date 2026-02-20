@@ -357,9 +357,11 @@ which causes mixed output that breaks the checkstyle parser)."
 
 (add-hook! 'org-mode-hook (visual-line-fill-column-mode))
 
-(defun salih/open-agenda-late ()
+(defun salih/toggle-agenda-late ()
   (interactive)
-  (setq org-extend-today-until 9)
+  (if (eq org-extend-today-until 9)
+      (setq org-extend-today-until 0)
+    (setq org-extend-today-until 9))
   (salih/org-agenda-no-full-f))
 
 (add-hook! 'org-noter-doc-mode-hook (breadcrumb-local-mode -1))
