@@ -122,9 +122,10 @@
 ;;  "C-c" #'salih/compile-and-run-cpp)
 
 ;; ;; Dired
-(map!
- :map 'dired-mode-map
- :leader
+(general-define-key
+ :states '(normal visual)
+ :keymaps 'dired-mode-map
+ :prefix "SPC"
  "o o" #'salih/open-in-external-app)
 
 
@@ -293,6 +294,17 @@
 (general-define-key
  :keymaps 'nov-mode-map
  "l" nil)
+
+
+
+(general-define-key
+ :states '(normal visual)
+ :keymaps 'org-mode-map
+ :prefix "SPC"
+ "o o"     #'salih/org-open-file-link-in-macos)
+
+
+
 
 (general-define-key
  :keymaps 'nov-button-map

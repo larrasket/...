@@ -371,4 +371,20 @@ which causes mixed output that breaks the checkstyle parser)."
 ;; (add-hook! org-noter-doc-mode-hook (breadcrumb-local-mode -1))
 
 
+
+
+(defun salih/org-open-file-link-in-macos ()
+  "Open the Org file link at point using macOS `open`."
+  (interactive)
+  (let* ((context (org-element-context)))
+    (if (and (eq (org-element-type context) 'link)
+             (string= (org-element-property :type context) "file"))
+        (let* ((raw-path (org-element-property :path context))
+               (full-path (expand-file-name raw-path)))
+          (start-process "macos-open" nil "open" full-path)
+          (message "Opened: %s" full-path))
+      (message "Not on a file link."))))
+
 (require 'nov-consult)
+
+
