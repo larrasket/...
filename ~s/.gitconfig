@@ -12,3 +12,5 @@
 	gpgsign = true
 [pull]
 	rebase = false
+[github]
+	user = larrasket
