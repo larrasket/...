@@ -388,3 +388,22 @@ which causes mixed output that breaks the checkstyle parser)."
 (require 'nov-consult)
 
 
+(setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
+(defun salih/fix-ef-dark-modeline ()
+  (when (eq (car custom-enabled-themes) 'ef-dark)
+    (set-face-attribute 'mode-line nil
+                        :background "#0000"
+                        :foreground nil
+                        :box nil
+                        :inherit nil)
+    (set-face-attribute 'mode-line-inactive nil
+                        :background "#0000"
+                        :box nil
+                        :inherit nil)
+    (set-face-attribute 'doom-modeline-bar nil
+                        :background "#000000")
+    (set-face-attribute 'doom-modeline-bar-inactive nil
+                        :background "#1a1a1a")))  ; subtle dark grey, distinguishable but not loud
+
+
+(add-hook 'enable-theme-functions #'salih/fix-ef-dark-modeline)
