@@ -89,3 +89,6 @@ function kdo() {
 export PATH="$PATH:/Users/l/Library/Application Support/Coursier/bin"
 # <<< coursier install directory <<<
 export PATH="$HOME/Library/Application Support/Coursier/bin:$PATH"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+source "$HOME/.rvm/scripts/rvm"
