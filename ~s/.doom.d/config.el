@@ -27,7 +27,7 @@
       ;; identity analysis of James Marcia. Anyway. I think I might have finally
       ;; passed all the stages, and finally became what I am. And I think I
       ;; found "the theme", it seems to be `ef-elea-dark'
-      doom-theme                                        'ef-elea-dark
+      doom-theme                                        'ef-dark
       doom-modeline-icon                                t
       doom-modeline-height                              32
       display-line-numbers-type                         'relative
@@ -389,7 +389,7 @@ which causes mixed output that breaks the checkstyle parser)."
 
 
 (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
-(defun salih/fix-ef-dark-modeline ()
+(defun salih/fix-ef-dark-modeline (&rest _)
   (when (eq (car custom-enabled-themes) 'ef-dark)
     (set-face-attribute 'mode-line nil
                         :background "#0000"
@@ -403,7 +403,22 @@ which causes mixed output that breaks the checkstyle parser)."
     (set-face-attribute 'doom-modeline-bar nil
                         :background "#000000")
     (set-face-attribute 'doom-modeline-bar-inactive nil
-                        :background "#1a1a1a")))  ; subtle dark grey, distinguishable but not loud
+                        :background "#1a1a1a")))
 
 
 (add-hook 'enable-theme-functions #'salih/fix-ef-dark-modeline)
+
+
+(setq ef-themes-variable-pitch-ui t)
+
+
+(setq ef-themes-variable-pitch-ui t)     ; variable pitch for UI (mode line, tabs, etc.)
+(setq ef-themes-mixed-fonts t)           ; mix variable + fixed pitch (great with org)
+
+(setq ef-themes-headings
+      '((1 . (variable-pitch extrabold 1.4))
+        (2 . (variable-pitch bold 1.25))
+        (3 . (variable-pitch semibold 1.15))
+        (t . (variable-pitch 1.1))))   ; fallback for all other levels
+
+(salih/fix-ef-dark-modeline)
