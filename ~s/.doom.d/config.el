@@ -218,7 +218,7 @@ newlines.source = keep
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
 
-(setq doom-variable-pitch-font (font-spec :family "MS Gothic" :size 12))
+(setq doom-variable-pitch-font (font-spec :family "Iosevka Term" :size 16))
 
 ;; TODO remove this when flycheck-golangci-lint is patched
 (after! flycheck-golangci-lint
@@ -412,13 +412,13 @@ which causes mixed output that breaks the checkstyle parser)."
 (setq ef-themes-variable-pitch-ui t)
 
 
-(setq ef-themes-variable-pitch-ui t)     ; variable pitch for UI (mode line, tabs, etc.)
+(setq ef-themes-variable-pitch-ui nil)     ; variable pitch for UI (mode line, tabs, etc.)
 (setq ef-themes-mixed-fonts t)           ; mix variable + fixed pitch (great with org)
 
 (setq ef-themes-headings
       '((1 . (variable-pitch extrabold 1.4))
         (2 . (variable-pitch bold 1.25))
         (3 . (variable-pitch semibold 1.15))
-        (t . (variable-pitch 1.1))))   ; fallback for all other levels
+        (t . (variable-pitch 1.1))))
 
 (salih/fix-ef-dark-modeline)
