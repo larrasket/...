@@ -5,22 +5,20 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Call emacs everywhere (MacBook keyboard)",
+                        "description": "Open Google Chrome",
                         "manipulators": [
                             {
                                 "type": "basic",
                                 "from": {
                                     "key_code": "g",
                                     "modifiers": {
-                                        "mandatory": [
-                                            "left_command",
-                                            "left_control"
-                                        ]
+                                        "mandatory": ["command", "control"],
+                                        "optional": ["caps_lock"]
                                     }
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "/opt/homebrew/bin/emacsclient -c -n --eval \"(emacs-everywhere)\""
+                                        "shell_command": "emacsclient --eval '(emacs-everywhere)'"
                                     }
                                 ]
                             }

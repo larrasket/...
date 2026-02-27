@@ -76,6 +76,7 @@
 
        :app
        irc
+       everywhere
 
        :config
        (default +smartparens +bindings))

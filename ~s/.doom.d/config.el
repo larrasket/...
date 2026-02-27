@@ -389,6 +389,7 @@ which causes mixed output that breaks the checkstyle parser)."
 
 
 (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
+
 (defun salih/fix-ef-dark-modeline (&rest _)
   (when (eq (car custom-enabled-themes) 'ef-dark)
     (set-face-attribute 'mode-line nil
@@ -422,3 +423,13 @@ which causes mixed output that breaks the checkstyle parser)."
         (t . (variable-pitch 1.1))))
 
 (salih/fix-ef-dark-modeline)
+
+;; (setq-default cursor-type 'box)
+
+(set-face-attribute 'cursor nil :background "#00ff00") 
+(dolist (frame (frame-list))
+  (set-frame-parameter frame 'cursor-color "#00ff00"))
+
+(set-cursor-color "#00ff00") 
+
+
