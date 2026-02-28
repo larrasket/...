@@ -417,10 +417,10 @@ which causes mixed output that breaks the checkstyle parser)."
 (setq ef-themes-mixed-fonts t)           ; mix variable + fixed pitch (great with org)
 
 (setq ef-themes-headings
-      '((1 . (variable-pitch extrabold 1.4))
-        (2 . (variable-pitch bold 1.25))
-        (3 . (variable-pitch semibold 1.15))
-        (t . (variable-pitch 1.1))))
+      '((1 . (variable-pitch extrabold 1.2))
+        (2 . (variable-pitch bold 1.05))
+        (3 . (variable-pitch semibold 1))
+        (t . (variable-pitch 1))))
 
 (salih/fix-ef-dark-modeline)
 
@@ -431,5 +431,24 @@ which causes mixed output that breaks the checkstyle parser)."
   (set-frame-parameter frame 'cursor-color "#00ff00"))
 
 (set-cursor-color "#00ff00") 
+
+
+(after! gcmh
+  (setq gc-cons-threshold (* 100 1024 1024)) ;; 100MB
+  (setq gc-cons-percentage 0.6)
+
+
+  (setq undo-limit 80000000
+        undo-strong-limit 120000000
+        undo-outer-limit 360000000)
+  (setq fast-but-imprecise-scrolling t)
+  (setq auto-window-vscroll nil)
+  (setq process-adaptive-read-buffering nil)
+
+  (after! gcmh
+    (setq gcmh-high-cons-threshold (* 256 1024 1024)))
+  (setq read-process-output-max (* 4 1024 1024))
+  (setq process-adaptive-read-buffering nil)
+  (setq treesit-font-lock-level 3)) ;; lower = faster
 
 
