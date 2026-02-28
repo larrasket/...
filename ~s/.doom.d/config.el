@@ -313,36 +313,8 @@ which causes mixed output that breaks the checkstyle parser)."
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-(add-hook! 'org-mode-hook (visual-fill-column-mode 1))
+(add-hook! 'org-mode-hook (visual-fill-column-mode 1)
+  (setq-local fill-column 90))
 
 
 
@@ -369,8 +341,6 @@ which causes mixed output that breaks the checkstyle parser)."
 
 
 ;; (add-hook! org-noter-doc-mode-hook (breadcrumb-local-mode -1))
-
-
 
 
 (defun salih/org-open-file-link-in-macos ()
@@ -418,9 +388,9 @@ which causes mixed output that breaks the checkstyle parser)."
 
 (setq ef-themes-headings
       '((1 . (variable-pitch extrabold 1.2))
-        (2 . (variable-pitch bold 1.05))
+        (2 . (variable-pitch bold 1))
         (3 . (variable-pitch semibold 1))
-        (t . (variable-pitch 1))))
+        (t . (variable-pitch 0.9))))
 
 (salih/fix-ef-dark-modeline)
 
@@ -450,5 +420,8 @@ which causes mixed output that breaks the checkstyle parser)."
   (setq read-process-output-max (* 4 1024 1024))
   (setq process-adaptive-read-buffering nil)
   (setq treesit-font-lock-level 3)) ;; lower = faster
+
+
+
 
 
