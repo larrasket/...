@@ -425,3 +425,24 @@ which causes mixed output that breaks the checkstyle parser)."
 
 
 
+(defun salih/mail-current-file ()
+  "Open macOS Mail app with a new message and attach the current buffer's file."
+  (interactive)
+  (if buffer-file-name
+      (progn
+        ;; Save the file if modified
+        (when (buffer-modified-p)
+          (save-buffer))
+        ;; Build the AppleScript command
+        (let ((script (format
+                       "tell application \"Mail\"
+                           set newMessage to make new outgoing message with properties {subject:\"\", content:\"\", visible:true}
+                           tell newMessage
+                               make new attachment with properties {file name:\"%s\"} at after the last paragraph
+                           end tell
+                           activate
+                        end tell"
+                       buffer-file-name)))
+          ;; Execute the AppleScript
+          (shell-command (concat "osascript -e " (shell-quote-argument script)))))
+    (message "Buffer is not visiting a file!")))
