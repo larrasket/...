@@ -363,12 +363,12 @@ which causes mixed output that breaks the checkstyle parser)."
 (defun salih/fix-ef-dark-modeline (&rest _)
   (when (eq (car custom-enabled-themes) 'ef-dark)
     (set-face-attribute 'mode-line nil
-                        :background "#0000"
+                        :background "#000000"
                         :foreground nil
                         :box nil
                         :inherit nil)
     (set-face-attribute 'mode-line-inactive nil
-                        :background "#0000"
+                        :background "#000000"
                         :box nil
                         :inherit nil)
     (set-face-attribute 'doom-modeline-bar nil
