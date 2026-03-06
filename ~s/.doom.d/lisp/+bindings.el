@@ -183,6 +183,9 @@
  :leader
  "b s" #'nov-consult-search)
 
+(map!
+ :map org-mode-map
+ "C-c 8" #'org-ctrl-c-star)
 
 (map!
  :map org-noter-doc-mode-map

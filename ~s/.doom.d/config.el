@@ -183,7 +183,8 @@ newlines.source = keep
 
 ;; Configure apheleia for Scala
 (with-eval-after-load 'apheleia
-  ;; Add scalafmt formatter - using a lambda to ensure config is created/found each time
+  ;; Add scalafmt formatter - using a lambda to ensure config is created/found
+  ;; each time
   (setf (alist-get 'scalafmt apheleia-formatters)
         '("scalafmt" "--stdin" "--config" (eval (scalafmt-ensure-config))))
   
@@ -287,7 +288,8 @@ which causes mixed output that breaks the checkstyle parser)."
             (goto-char start)
             (cond
              ;; value: "foo"
-             ((re-search-forward "^[[:space:]]+value: \\(\"?\\)\\(.+?\\)\\1$" end t)
+             ((re-search-forward
+               "^[[:space:]]+value: \\(\"?\\)\\(.+?\\)\\1$" end t)
               (setq value (match-string 2)))
 
              ;; valueFrom.secretKeyRef
@@ -367,14 +369,10 @@ which causes mixed output that breaks the checkstyle parser)."
                         :foreground nil
                         :box nil
                         :inherit nil)
-    (set-face-attribute 'mode-line-inactive nil
-                        :background "#000000"
-                        :box nil
+    (set-face-attribute 'mode-line-inactive nil :background "#000000" :box nil
                         :inherit nil)
-    (set-face-attribute 'doom-modeline-bar nil
-                        :background "#000000")
-    (set-face-attribute 'doom-modeline-bar-inactive nil
-                        :background "#1a1a1a")))
+    (set-face-attribute 'doom-modeline-bar nil :background "#000000")
+    (set-face-attribute 'doom-modeline-bar-inactive nil :background "#1a1a1a")))
 
 
 (add-hook 'enable-theme-functions #'salih/fix-ef-dark-modeline)
@@ -383,8 +381,8 @@ which causes mixed output that breaks the checkstyle parser)."
 (setq ef-themes-variable-pitch-ui t)
 
 
-(setq ef-themes-variable-pitch-ui nil)     ; variable pitch for UI (mode line, tabs, etc.)
-(setq ef-themes-mixed-fonts t)           ; mix variable + fixed pitch (great with org)
+(setq ef-themes-variable-pitch-ui nil)     
+(setq ef-themes-mixed-fonts t)          
 
 (setq ef-themes-headings
       '((1 . (variable-pitch extrabold 1.2))
@@ -393,8 +391,6 @@ which causes mixed output that breaks the checkstyle parser)."
         (t . (variable-pitch 0.9))))
 
 (salih/fix-ef-dark-modeline)
-
-;; (setq-default cursor-type 'box)
 
 (set-face-attribute 'cursor nil :background "#00ff00") 
 (dolist (frame (frame-list))
@@ -419,7 +415,7 @@ which causes mixed output that breaks the checkstyle parser)."
     (setq gcmh-high-cons-threshold (* 256 1024 1024)))
   (setq read-process-output-max (* 4 1024 1024))
   (setq process-adaptive-read-buffering nil)
-  (setq treesit-font-lock-level 3)) ;; lower = faster
+  (setq treesit-font-lock-level 3)) 
 
 
 
@@ -429,20 +425,17 @@ which causes mixed output that breaks the checkstyle parser)."
   "Open macOS Mail app with a new message and attach the current buffer's file."
   (interactive)
   (if buffer-file-name
-      (progn
-        ;; Save the file if modified
-        (when (buffer-modified-p)
-          (save-buffer))
-        ;; Build the AppleScript command
-        (let ((script (format
-                       "tell application \"Mail\"
+      (progn (when (buffer-modified-p) (save-buffer))
+             (let ((script (format
+                            "tell application \"Mail\"
                            set newMessage to make new outgoing message with properties {subject:\"\", content:\"\", visible:true}
                            tell newMessage
                                make new attachment with properties {file name:\"%s\"} at after the last paragraph
                            end tell
                            activate
                         end tell"
-                       buffer-file-name)))
-          ;; Execute the AppleScript
-          (shell-command (concat "osascript -e " (shell-quote-argument script)))))
+                            buffer-file-name)))
+               ;; Execute the AppleScript
+               (shell-command (concat "osascript -e "
+                                      (shell-quote-argument script)))))
     (message "Buffer is not visiting a file!")))
