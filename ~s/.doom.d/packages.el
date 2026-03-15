@@ -1,106 +1,80 @@
-(package! wiki-summary)                 ; get a wiki line summary.
-(package! iedit)                        ; JetBrains' rename function.
-(package! git-auto-commit-mode)         ; auto commit
+;; -*- no-byte-compile: t; -*-
+;;; packages.el — Package declarations
 
-;; [2024-10-15 Tue 06:19] I'm back to using the native emacs way
-;; (package! column-enforce-mode)          ; instead of `display-fill-column`
+;; UI & Themes
+(package! ef-themes)
+(package! kaolin-themes)
+(package! breadcrumb)
+(package! spacious-padding)
+(package! mixed-pitch)
 
+;; Editing
+(package! iedit)
+(package! jinx)
+(package! evil-snipe :disable t)
 
-;; [2024-10-15 Tue 06:19] I'm not bein a mathematician anymore (for now )
-;; (package! sage-shell-mode)              ; I like to be a mathematician
-;; (package! maxima)                       ; a maxima repl.. not sure about it
-;; [2025-09-29 Mon 15:17] Missing these days.
-;; [2024-10-15 Tue 06:18] Not writing in Julia anymore.
-;; (package! ob-julia-vterm)               ; for usage, see maxima or sage-shell
-;; [2025-09-29 Mon 15:18] missing this as well ;\
+;; Completion
+(package! consult-lsp)
+(package! consult-org-roam)
 
-
-;; [2024-10-15 Tue 06:17]  commented both currently as I'm not using tabs
-;; (package! pretty-hydra)                 ; needed for the next line
-;; (package! centaur-tabs)                 ; nice tabs
-
-
-
-(package! gt)                           ; google API for translations
-(package! consult-org-roam)             ; useful org-roam functions
-
-(package! nov)                          ; browse epubs from emacs
-(package! vulpea)                       ; roam advanced functions
-(package! lsp-treemacs)                 ; make emacs loks like and EDE (ide)
-(package! org-web-tools)                ; viewing urls in org
-
-(package! ox-tufte
-  :recipe (:host github
-           :repo "luggages/ox-tufte"))  ; for my website.
-
-(package! ox-html-stable-ids
-  :recipe (:host github
-           :repo "luggages/ox-html-stable-ids.el"))
-
-(package! awqat
-  :recipe (:host github
-           :repo "larrasket/awqat"
-           :branch "feature/notification"))     ; obeying the almighty.
-
-(package! vertico) 
-
-;; school
+;; Org
+(package! org-modern)
+(package! org-ql)
+(package! org-download)
+(package! org-fc)
+(package! org-noter :pin "9d42ebc626981b6726b8078fb216b30cc5e34d21")
+(package! org-present)
+(package! org-web-tools)
 (package! org-ref)
 (package! org-roam-bibtex)
-(unpin! bibtex-completion helm-bibtex ivy-bibtex)
+(package! org-roam-ui)
+(package! vulpea)
+(package! visual-fill-column)
+
+;; Academic
 (package! citar)
 (package! citar-org-roam)
-(unpin! ess) (package! ess)
-
-(package! org-download)                 ; for screenshots
-(package! org-ql)
-
-(package! org-roam-ui)
-
-(package! evil-snipe :disable t)        ; don't remember why I disabled it
-
-(package! ef-themes)                    ; sick themes
-(package! breadcrumb)                   ; sick line
-
-(package! org-fc)                       ; the true anki for Org
-
-(package! kaolin-themes)                ; sick sick themes
-(package! mixed-pitch)                  ; I like to use variable pitch for org
-
-
-(package! org-noter :pin "9d42ebc626981b6736b8078fb216b30cc5e34d21")
-
-(package! dired-preview)
-
+(unpin! bibtex-completion helm-bibtex ivy-bibtex)
 (unpin! parsebib)
+(unpin! ess)
+(package! ess)
 
+;; Epub
+(package! nov)
 
+;; Git
+(package! git-auto-commit-mode)
 (package! git-gutter)
 (package! git-gutter-fringe)
 
-(package! jinx)
-
-
-(package! doric-themes)
-
-(unpin! eglot)
-(unpin! lsp-pyright)
-(unpin! tree-sitter-langs)
+;; LSP & Prog
+(package! lsp-treemacs)
 (package! flycheck-projectile)
-(package! consult-lsp)
-
-(package! org-present)
-(package! spacious-padding)
-
-(package! org-modern)
-
+(package! flycheck-golangci-lint)
 (package! dap-mode)
-
-(package! nov)
-
-                                        ;(package! eglot-booster)
-
 (package! protobuf-mode
   :recipe (:host github :repo "protocolbuffers/protobuf"
            :files ("editors/protobuf-mode.el")))
+(unpin! eglot)
+(unpin! lsp-pyright)
+(unpin! tree-sitter-langs)
+
+;; Tools
+(package! gt)
+(package! wiki-summary)
+(package! dired-preview)
+
+;; Email
+(package! mu4e-alert)
+
+;; Hugo / Blog
+(package! ox-tufte
+  :recipe (:host github :repo "luggages/ox-tufte"))
+(package! ox-html-stable-ids
+  :recipe (:host github :repo "luggages/ox-html-stable-ids.el"))
+
+;; Prayer times
+(package! awqat
+  :recipe (:host github :repo "larrasket/awqat"
+           :branch "feature/notification"))
 

@@ -1,90 +1,79 @@
 ;;; init.el -*- lexical-binding: t; -*-
-(setq evil-respect-visual-line-mode t)
-(doom! :input
-       :completion
+
+(doom! :completion
        vertico
-       ;; company
        (corfu +icons)
 
        :ui
-       (vc-gutter +pretty)              ; git annotions
        doom
        doom-dashboard
        hl-todo
        (ligatures +pragmata-pro)
-       (popup +defaults)
        modeline
+       (popup +defaults)
+       (vc-gutter +pretty)
        workspaces
        indent-guides
 
        :editor
-       (evil +everywhere +respect-visual)
+       (evil +everywhere)
        file-templates
-       fold                             ; activate za in evil mode
-       lispy                            ; better lisp edit
-       parinfer                         ; (better lisp edit)
+       fold
        snippets
        word-wrap
        (format +onsave)
 
-       :email
-       (mu4e +mbsync)
-
        :emacs
        (dired +icons)
-       electric                         ; better tabs (as in tabs vs spaces)
+       electric
        undo
-       vc                               ; magit
+       vc
 
        :term
        eshell
        vterm
 
        :checkers
-       (syntax +childframe +icons)
-       ;; (spell  +flyspell)
+       (syntax +childframe)
 
        :tools
        biblio
-       terraform
        tree-sitter
        (lookup +dictionary +offline)
-       (lsp +peak +booster)
+       (lsp +peek)
        magit
        pdf
-       (debugger +lsp)
 
        :os
-       (tty)
+       tty
 
        :lang
-       (latex +flod +latexmk +lsp)
-       (clojure +lsp +tree-sitter)
-       (julia +lsp +tree-sitter)
-       (javascript +lsp +tree-sitter)
        (cc +lsp +tree-sitter)
+       (clojure +lsp +tree-sitter)
+       emacs-lisp
+       ess
        (go +lsp +tree-sitter)
-       (org +roam2 +pandoc)
-       (rest +jq)
        (graphql +lsp +tree-sitter)
-       (scala +lsp +tree-sitter)
+       (javascript +lsp +tree-sitter)
        json
+       (julia +lsp +tree-sitter)
+       (latex +latexmk +lsp)
+       (org +roam +pandoc)
+       (rest +jq)
+       (scala +lsp +tree-sitter)
+       sh
        web
        yaml
-       emacs-lisp
-       yaml
-       json
-       ess
-       sh
+
+       :email
+       (mu4e +mbsync)
 
        :app
        irc
        everywhere
 
-
        :config
-       (default +smartparens +bindings))
+       (default +bindings +smartparens))
 
-(add-to-list 'load-path (expand-file-name "lisp" doom-user-dir))
-(add-to-list 'load-path (expand-file-name "pkg"  doom-user-dir))
-(add-to-list 'load-path (expand-file-name "+l"  doom-user-dir))
+(add-to-list 'load-path (expand-file-name "modules" doom-user-dir))
+(add-to-list 'load-path (expand-file-name "pkg" doom-user-dir))
