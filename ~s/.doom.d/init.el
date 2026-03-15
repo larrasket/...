@@ -27,6 +27,9 @@
        word-wrap
        (format +onsave)
 
+       :email
+       (mu4e +mbsync)
+
        :emacs
        (dired +icons)
        electric                         ; better tabs (as in tabs vs spaces)
@@ -77,6 +80,7 @@
        :app
        irc
        everywhere
+
 
        :config
        (default +smartparens +bindings))

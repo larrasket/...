@@ -7,8 +7,8 @@
       user-mail-address                                 "root@lr0.org"
       user-first-name                                   "Salih"
       ;; TODO Commenting these temporarily until I get back to mu4e with iCloud.
-      ;; user-stmp-server                                  "mail.gmx.com"
-      ;; user-stmp-port                                    587
+      user-stmp-server                                  "smtp.mail.me.com"
+      user-stmp-port                                    587
       user-short-username                               "lr0"
       user-config-repo-path                             "~/configs/~s"
       salih/blog-content-path                           "~/blog/content"
@@ -439,3 +439,6 @@ which causes mixed output that breaks the checkstyle parser)."
                (shell-command (concat "osascript -e "
                                       (shell-quote-argument script)))))
     (message "Buffer is not visiting a file!")))
+
+(add-to-list 'load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e")
+(require 'mu4e)

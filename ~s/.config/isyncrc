@@ -1,23 +1,25 @@
-IMAPAccount lr0@gmx.com
-Host imap.gmx.com
-User lr0@gmx.com
+IMAPAccount icloud
+Host imap.mail.me.com
+User root@lr0.org
+PassCmd ~/configs/~s/getmupassword.sh
+TLSType IMAPS
+Port 993
 AuthMechs LOGIN
 #CertificateFile /etc/ssl/certs/ca-certificates.crt
-PassCmd ~/configs/~s/getmupassword.sh
 
-MaildirStore lr0@gmx.com-local
-Path ~/mail/lr0@gmx.com/
-Inbox ~/mail/lr0@gmx.com/Inbox
+MaildirStore icloud-local
+Path ~/mailbox/icloud/ 
+Inbox ~/mailbox/icloud*Inbox
 SubFolders Verbatim
 
-IMAPStore lr0@gmx.com-remote
-Account lr0@gmx.com
+IMAPStore icloud-remote
+Account icloud
 
-Channel lr0@gmx.com
-Far :lr0@gmx.com-remote:
-Near :lr0@gmx.com-local:
-Patterns "INBOX" "archive" "Trash" "Drafts" "Sent" "rss" "read"
-CopyArrivalDate yes
-Create Both
+Channel icloud
+Far :icloud-remote:
+Near :icloud-local:
+Patterns *
+Create Near
+Sync All
 Expunge Both
 SyncState *
