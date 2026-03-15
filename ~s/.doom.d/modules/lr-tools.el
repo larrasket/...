@@ -17,12 +17,7 @@
     ('gnu/linux (start-process "chrome" nil "google-chrome" url))
     (_          (browse-url url))))
 
-(after! eww
-  (defun salih/ensure-eww-in-search (fn &rest args)
-    (let ((browse-url-browser-function #'browse-url-default-browser))
-      (apply fn args))))
-
-(advice-add '+lookup/documentation :around #'salih/ensure-eww-in-search)
+(advice-remove '+lookup/documentation #'salih/ensure-eww-in-search)
 
 ;;; --- Prayer times (lazy) ---
 (after! awqat
