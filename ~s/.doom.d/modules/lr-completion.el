@@ -17,6 +17,30 @@
 (after! consult
   (setq consult-preview-excluded-buffers t))
 
+;;; --- Consult-org-roam: "r" in consult-buffer shows all roam nodes ---
+;; Defined at startup; :items guard means it silently returns nothing
+;; until org-roam is loaded (on first org file open).
+(defvar salih/consult-org-roam-node-source
+  `(:name     "Roam"
+    :narrow   ?r
+    :hidden   nil
+    :category org-roam-node
+    :items    ,(lambda ()
+                 (when (featurep 'org-roam)
+                   (mapcar #'org-roam-node-title (org-roam-node-list))))
+    :annotate ,(lambda (title)
+                 (when-let* ((node (and (featurep 'org-roam)
+                                        (org-roam-node-from-title-or-alias title))))
+                   (file-relative-name (org-roam-node-file node)
+                                       org-roam-directory)))
+    :action   ,(lambda (title)
+                 (when-let* ((node (and (featurep 'org-roam)
+                                        (org-roam-node-from-title-or-alias title))))
+                   (org-roam-node-visit node)))))
+
+(after! consult
+  (add-to-list 'consult-buffer-sources 'salih/consult-org-roam-node-source 'append))
+
 ;;; --- Vertico multiform ---
 (after! vertico-multiform
   (add-to-list 'vertico-multiform-categories

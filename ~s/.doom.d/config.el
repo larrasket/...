@@ -31,7 +31,6 @@
 ;;; --- State variables ---
 (defvar salih/vulpea-show-full nil)
 (defvar salih/adding-note?    nil)
-(defvar salih/temp-roam-insert nil)
 (defvar salih/org-roam-dailies-capture-p nil)
 
 ;;; --- Font ---
@@ -93,14 +92,23 @@
 (set-popup-rules! '(("^\\*Project errors\\*" :size 0.25)))
 
 ;;; --- Fix: global-git-commit-mode void-variable 'function' bug ---
-;; Doom adds this to doom-first-file-hook but it errors on first file open.
-;; Remove from the hook and wire up git-commit manually when the package loads.
 (remove-hook 'doom-first-file-hook #'global-git-commit-mode)
 (with-eval-after-load 'git-commit
   (add-hook 'find-file-hook #'git-commit-setup-check-buffer)
   (add-hook 'after-change-major-mode-hook #'git-commit-setup-font-lock-in-buffer))
 
-;;; --- Load core modules (needed at or shortly after startup) ---
+;;; --- Suppress org-roam's startup full DB sync ---
+;; Doom's after! org-roam block calls (org-roam-db-autosync-mode 1) which
+;; triggers org-roam-db-sync on every startup. We intercept the FIRST call
+;; only (the startup one), then remove the advice so saves update normally.
+(defadvice! salih/org-roam-skip-startup-sync-a (&rest _)
+  :before-while #'org-roam-db-sync
+  (when salih/--skip-org-roam-startup-sync
+    (setq salih/--skip-org-roam-startup-sync nil)
+    nil))  ; nil = skip this call
+(defvar salih/--skip-org-roam-startup-sync t)
+
+;;; --- Load core modules ---
 (require 'lr-macos)
 (require 'lr-ui)
 (require 'lr-completion)
@@ -108,7 +116,7 @@
 (require 'lr-prog)
 (require 'lr-tools)
 
-;;; --- Defer heavy modules (load only when their parent package loads) ---
+;;; --- Defer heavy modules ---
 (with-eval-after-load 'org
   (require 'lr-org-core)
   (require 'lr-org-roam)
@@ -120,5 +128,13 @@
 
 (with-eval-after-load 'circe
   (require 'lr-irc))
+
+;;; --- Pre-load org-roam in background (idle) so "r" in consult-buffer works ---
+;; Runs 3s after startup idle; by then the user hasn't typed yet so no jank.
+(run-with-idle-timer
+ 3 nil
+ (lambda ()
+   (require 'org)
+   (require 'org-roam)))
 
 (add-to-list 'load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e")

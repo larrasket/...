@@ -44,57 +44,10 @@
            :target (file+head "references/${citekey}.org"
                               "#+title: ${title}\n"))))
 
-  ;; Consult-org-roam buffer source (lazy)
-  (setq consult-org-roam-buffer-narrow-key ?r)
-
-  ;; Build titles cache lazily
-  (defvar salih/--roam-titles-cache nil)
-
-  (defun salih/get-org-roam-titles ()
-    (or salih/--roam-titles-cache
-        (setq salih/--roam-titles-cache
-              (mapcar #'org-roam-node-title (org-roam-node-list)))))
-
-  (setq org-roam-buffer-source
-        `(:name "Org-roam"
-          :hidden nil
-          :narrow ,consult-org-roam-buffer-narrow-key
-          :annotate ,(lambda (cand)
-                       (if-let ((name (org-roam-node-from-title-or-alias cand)))
-                           (file-name-nondirectory (org-roam-node-file name))
-                         ""))
-          :action ,(lambda (name)
-                     (if salih/temp-roam-insert
-                         (progn
-                           (setq salih/temp-roam-insert nil)
-                           (let* ((node (org-roam-node-from-title-or-alias name))
-                                  (desc (org-roam-node-title node))
-                                  (id (org-roam-node-id node)))
-                             (insert (org-link-make-string (concat "id:" id) desc))
-                             (run-hook-with-args 'org-roam-post-node-insert-hook id desc)))
-                       (org-roam-node-visit
-                        (org-roam-node-from-title-or-alias name))))
-          :new ,(lambda (name)
-                  (org-roam-capture- :node (org-roam-node-create :title name))
-                  (when salih/temp-roam-insert
-                    (setq salih/temp-roam-insert nil)
-                    (let* ((node (org-roam-node-from-title-or-alias name))
-                           (desc (org-roam-node-title node))
-                           (id (org-roam-node-id node)))
-                      (insert (org-link-make-string (concat "id:" id) desc))
-                      (run-hook-with-args 'org-roam-post-node-insert-hook id desc)))
-                  (setq salih/--roam-titles-cache nil))
-          :items ,#'salih/get-org-roam-titles)))
+) ;; end after! org-roam
 
 ;;; --- Org-roam hooks ---
-(add-hook! 'org-roam-capture-new-node-hook
-  (setq salih/--roam-titles-cache nil))
-
 (add-hook! 'org-roam-find-file-hook #'git-auto-commit-mode)
-
-;;; --- Consult-org-roam (lazy) ---
-(after! consult-org-roam
-  (consult-org-roam-mode 1))
 
 ;;; --- Git auto-commit ---
 (after! git-auto-commit-mode
@@ -102,11 +55,6 @@
         gac-silent-message-p  t))
 
 ;;; --- Interactive functions ---
-(defun salih/org-roam-node-insert ()
-  (interactive)
-  (setq salih/temp-roam-insert t)
-  (consult-buffer (list org-roam-buffer-source)))
-
 (defun salih/org-roam-dailies-capture-today ()
   (interactive)
   (setq salih/org-roam-dailies-capture-p t)
