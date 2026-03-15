@@ -1,5 +1,14 @@
 ;;; lr-prog.el --- LSP, treesitter, formatters, compilation -*- lexical-binding: t; -*-
 
+;;; HACK --- go-mod-ts-mode-maybe shim ---
+;; Emacs 30's built-in go-ts-mode lacks this function that Doom registers as an autoload.
+;; Define it here early so the autoload is never triggered.
+(defun go-mod-ts-mode-maybe ()
+  "Use go-mod-ts-mode if tree-sitter gomod grammar is available."
+  (if (treesit-language-available-p 'gomod)
+      (go-mod-ts-mode)
+    (when (fboundp 'go-mod-mode) (go-mod-mode))))
+
 ;;; --- LSP ---
 (after! lsp-mode
   (setq lsp-enable-symbol-highlighting nil
@@ -159,5 +168,23 @@ newlines.source = keep
                      (file-name-nondirectory (buffer-file-name))
                      base base base)
              t)))
+
+;;; --- Magit: restart LSP on branch checkout ---
+(defun salih/lsp-restart-workspaces-after-checkout ()
+  "Restart all active LSP workspaces after a git branch switch.
+Ensures language servers pick up files that may have changed on the new branch."
+  (when (featurep 'lsp-mode)
+    (let (seen-workspaces)
+      (dolist (buf (buffer-list))
+        (with-current-buffer buf
+          (when (and (bound-and-true-p lsp-mode)
+                     (bound-and-true-p lsp--buffer-workspaces))
+            (dolist (ws lsp--buffer-workspaces)
+              (unless (memq ws seen-workspaces)
+                (push ws seen-workspaces)
+                (lsp-workspace-restart ws)))))))))
+
+(after! magit
+  (add-hook 'magit-post-checkout-hook #'salih/lsp-restart-workspaces-after-checkout))
 
 (provide 'lr-prog)
