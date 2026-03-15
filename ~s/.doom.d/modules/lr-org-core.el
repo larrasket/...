@@ -15,6 +15,7 @@
         org-log-reschedule 'note
         org-agenda-block-separator #x2501
         org-element-use-cache t
+        org-element-cache-persistent t          ; persist parse cache to disk
         org-noter-auto-save-last-location t
         org-startup-folded 'show2levels
         org-image-actual-width 600
@@ -26,6 +27,8 @@
         "◀── now ─────────────────────────────────────────────────"
         org-clock-string-limit 7
         org-agenda-dim-blocked-tasks 'invisible
+        org-agenda-inhibit-startup t            ; don't apply startup folding in agenda files
+        org-agenda-sticky t                     ; keep agenda buffers alive (press g to refresh)
         org-crypt-key user-mail-address
         org-hide-leading-stars t
         org-tags-column 70

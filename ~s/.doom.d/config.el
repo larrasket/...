@@ -137,4 +137,19 @@
    (require 'org)
    (require 'org-roam)))
 
+;;; --- Pre-warm agenda file buffers in background ---
+;; At 8s idle (after org/org-roam are loaded by the 3s timer), populate
+;; org-agenda-files from vulpea and pre-parse the buffers.  This way the
+;; first `org-agenda` call only needs to render, not do file I/O.
+(run-with-idle-timer
+ 8 nil
+ (lambda ()
+   (when (and (featurep 'org-roam)
+              (fboundp 'vulpea-agenda-files-update))
+     (vulpea-agenda-files-update)
+     (when org-agenda-files
+       (org-agenda-prepare-buffers org-agenda-files)))))
+
 (add-to-list 'load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e")
+
+(mu4e-alert-enable-mode-line-display)

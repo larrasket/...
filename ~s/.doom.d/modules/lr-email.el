@@ -19,11 +19,33 @@
         mu4e-sent-folder   "/icloud/Sent Messages"
         mu4e-trash-folder  "/icloud/Junk")
 
-  ;; SMTP
-  (setq sendmail-program (executable-find "msmtp")
-        message-sendmail-envelope-from 'header
-        send-mail-function 'message-send-mail-with-sendmail
-        message-send-mail-function 'message-send-mail-with-sendmail)
+  ;; SMTP via smtpmail (Emacs built-in) — avoids the msmtp subprocess deadlock.
+  ;; The deadlock: Emacs blocks on msmtp → msmtp calls getmupassword.sh →
+  ;; getmupassword.sh calls emacsclient → Emacs is blocked → hang.
+  ;; smtpmail reads auth-source directly (no subprocess, no roundtrip).
+  (setq send-mail-function    'smtpmail-send-it
+        message-send-mail-function 'smtpmail-send-it
+        smtpmail-smtp-server  "smtp.mail.me.com"
+        smtpmail-smtp-service 465
+        smtpmail-stream-type  'ssl
+        smtpmail-smtp-user    "root@lr0.org")
+
+  ;; If authinfo.gpg only has imap.mail.me.com, copy those creds into the
+  ;; auth-source memory cache under the SMTP host before each send.
+  (defun salih/prefetch-smtp-password-h ()
+    (require 'auth-source)
+    (unless (car (auth-source-search :host "smtp.mail.me.com" :require '(:secret)))
+      (when-let* ((entry (car (auth-source-search :host "imap.mail.me.com"
+                                                   :require '(:user :secret))))
+                  (user (plist-get entry :user))
+                  (pass (funcall (plist-get entry :secret))))
+        (auth-source-remember `(:host "smtp.mail.me.com" :port "465" :user ,user)
+                               (list (list :host "smtp.mail.me.com"
+                                           :port "465"
+                                           :user user
+                                           :secret (lambda () pass)))))))
+
+  (add-hook 'message-send-hook #'salih/prefetch-smtp-password-h)
 
   ;; Bookmarks
   (dolist (bm '((:name "Personal"  :query "maildir:/icloud/Personal"  :key ?p)
