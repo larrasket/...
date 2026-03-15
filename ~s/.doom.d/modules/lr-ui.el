@@ -14,12 +14,12 @@
 
 ;;; --- Faces ---
 (custom-set-faces!
- '(line-number :slant normal)
- '(line-number-current-line :slant normal)
- '(mode-line :family "Pragmasevka")
- '(mode-line-active :family "Pragmasevka")
- '(mode-line-inactive :family "Pragmasevka")
- '(org-document-title :inherit outline-1 :height 1.5 :weight normal))
+  '(line-number :slant normal)
+  '(line-number-current-line :slant normal)
+  '(mode-line :family "Pragmasevka")
+  '(mode-line-active :family "Pragmasevka")
+  '(mode-line-inactive :family "Pragmasevka")
+  '(org-document-title :inherit outline-1 :height 1.5 :weight normal))
 
 ;;; --- Cursor ---
 (setq evil-default-cursor '("#00ff00" box))
@@ -32,6 +32,13 @@
       doom-modeline-buffer-state-icon nil
       doom-modeline-unicode-fallback t
       doom-modeline-check-icon nil)
+
+
+(setq doom-modeline-vcs-icon t)
+(setq doom-modeline-vcs-max-length 15)
+(setq doom-modeline-vcs-display-function #'doom-modeline-vcs-name)
+
+
 
 (after! doom-modeline
   ;; PDF page display
