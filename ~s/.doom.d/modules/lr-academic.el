@@ -1,6 +1,3 @@
-;;; lr-academic.el --- Citar, bibtex, org-ref -*- lexical-binding: t; -*-
-
-;;; --- Bibtex-completion ---
 (after! bibtex-completion
   (setq bibtex-completion-bibliography "~/configs/~s/ref.bib"
         bibtex-completion-notes-path "~/roam/references"

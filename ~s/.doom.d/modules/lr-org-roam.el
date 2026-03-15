@@ -2,6 +2,15 @@
 
 ;;; --- Org-roam (deferred) ---
 (after! org-roam
+  ;; Exclude .gpg files — decrypting them on every DB sync is slow
+  ;; and causes passphrase prompts. Encrypted dailies are still writable,
+  ;; they just won't appear in the roam graph.
+  (setq org-roam-file-exclude-regexp "\\.gpg$")
+
+  ;; Incremental DB updates: only process files that actually changed.
+  ;; Prevents full resync on every org-roam operation.
+  (setq org-roam-db-update-on-save t)
+
   ;; Dailies
   (setq org-roam-dailies-capture-templates
         `(("d" "default" entry "* %<%H:%M> \n %?"
