@@ -1,9 +1,9 @@
 [credential]
 	helper = store
 [user]
-	email = root@lr0.org
+	email = salih.moahabdelhafez@halan.com
 	name = Salih Muhammed
-	signingkey = 4E3AA3ACC5C33DC5
+	signingkey = BC030A16DB25780C
 [core]
 	quotepath = false
 [init]
