@@ -1,14 +1,5 @@
 ;;; lr-ui.el --- UI, theme, modeline, dashboard -*- lexical-binding: t; -*-
 
-;;; --- Theme ---
-(setq ef-themes-mixed-fonts t
-      ef-themes-variable-pitch-ui nil
-      ef-themes-headings
-      '((1 . (variable-pitch extrabold 1.2))
-        (2 . (variable-pitch bold 1))
-        (3 . (variable-pitch semibold 1))
-        (t . (variable-pitch 0.9))))
-
 ;;; --- Fringe ---
 (set-fringe-style '(1 . 1))
 
@@ -26,17 +17,37 @@
 
 ;;; --- Modeline ---
 (setq doom-modeline-icon t
-      doom-modeline-height 30
+      doom-modeline-height 28
+      doom-modeline-hud t
       doom-modeline-bar-width 1
       doom-modeline-major-mode-icon t
-      doom-modeline-buffer-state-icon nil
+      doom-modeline-major-mode-color-icon t
+      doom-modeline-buffer-state-icon t
+      doom-modeline-buffer-modification-icon t
+      doom-modeline-lsp-icon t
+      doom-modeline-time-icon t
+      doom-modeline-time-live-icon t
+      doom-modeline-time-analogue-clock t
+      doom-modeline-modal t
+      doom-modeline-modal-icon t
+      doom-modeline-modal-modern-icon t
+      doom-modeline-buffer-name t
+      doom-modeline-highlight-modified-buffer-name t
+      doom-modeline-selection-info t
+      doom-modeline-vcs-icon t
+      doom-modeline-vcs-max-length 15
+      doom-modeline-vcs-display-function #'doom-modeline-vcs-name
+      doom-modeline-lsp t
+      doom-modeline-irc t
+      doom-modeline-battery t
+      doom-modeline-time t
+      doom-modeline-persp-name t
+      doom-modeline-persp-icon t
+      doom-modeline-workspace-name t
+      doom-modeline-project-name t
+      doom-modeline-check 'auto
       doom-modeline-unicode-fallback t
-      doom-modeline-check-icon nil)
-
-
-(setq doom-modeline-vcs-icon t)
-(setq doom-modeline-vcs-max-length 15)
-(setq doom-modeline-vcs-display-function #'doom-modeline-vcs-name)
+      doom-modeline-env-version t)
 
 
 

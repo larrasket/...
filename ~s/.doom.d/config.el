@@ -38,6 +38,12 @@
       doom-variable-pitch-font (font-spec :family "Iosevka Term" :size 16))
 
 ;;; --- Theme ---
+;;; doom-badger
+;;; doom-opera
+;;; doom-bluloco-dark
+;;; doom-tomorrow-night
+;;; doom-wilmersdorf
+;;; ef-owl
 (setq doom-theme 'ef-elea-dark)
 
 ;;; --- Basic settings ---
@@ -153,3 +159,28 @@
 (add-to-list 'load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e")
 
 (mu4e-alert-enable-mode-line-display)
+
+
+(defvar my/theme-cycle nil
+  "Shuffled list of themes to cycle through without repetition.")
+
+(defun my/shuffle-list (list)
+  "Return a shuffled copy of LIST."
+  (let ((vec (vconcat list)))
+    (dotimes (i (length vec))
+      (let* ((j (+ i (random (- (length vec) i))))
+             (tmp (aref vec i)))
+        (aset vec i (aref vec j))
+        (aset vec j tmp)))
+    (append vec nil)))
+
+(defun my/load-random-theme ()
+  "Load a random theme without repeating until all themes are used."
+  (interactive)
+  (unless my/theme-cycle
+    (setq my/theme-cycle (my/shuffle-list (custom-available-themes))))
+  
+  (let ((theme (pop my/theme-cycle)))
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme theme t)
+    (message "Loaded theme: %s" theme)))
