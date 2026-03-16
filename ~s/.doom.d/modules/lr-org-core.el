@@ -366,7 +366,7 @@
 
 ;;; --- Org-modern (deferred to org-mode) ---
 (after! org-modern
-  (setq org-modern-star 'replace
+  (setq org-modern-star 'fold
         org-modern-replace-stars "◉○✸✿✤✜◆▶"
         org-modern-tag nil
         org-modern-timestamp nil

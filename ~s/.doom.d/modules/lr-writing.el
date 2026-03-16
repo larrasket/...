@@ -28,26 +28,39 @@
         '(:en-US ["MORFOLOGIK_RULE_EN_US"
                   "WHITESPACE_RULE"
                   "COMMA_PARENTHESIS_WHITESPACE"])
-        lsp-ltex-sentence-start-with-uppercase t))
+        lsp-ltex-sentence-start-with-uppercase t)
+
+  ;; Remove org-mode from the registered ltex-ls client's major-modes.
+  ;; lsp-ltex registers for org-mode by default, but lsp-completion-at-point
+  ;; conflicts with org-roam's capfs when both are active.  Since we don't
+  ;; auto-start lsp in org buffers, this is just a safety net.
+  (when-let ((client (gethash 'ltex-ls lsp-clients)))
+    (setf (lsp--client-major-modes client)
+          (seq-remove (lambda (m) (eq m 'org-mode))
+                      (lsp--client-major-modes client)))))
 
 ;;; --- Enable in writing modes ---
+;; ltex-ls via lsp-mode conflicts with org-roam completion in org-mode buffers.
+;; Auto-enable only in message-mode (emails) and markdown where there's no
+;; competing completion system.  In org-mode, use `salih/ltex-toggle' manually.
 (defun salih/ltex-enable ()
-  "Enable ltex-ls grammar checking in the current buffer.
-ltex-ls only provides diagnostics — strip its completion capf so
-Corfu doesn't try textDocument/completion (which ltex-ls doesn't support)."
+  "Enable ltex-ls grammar diagnostics in the current buffer."
   (when (executable-find "ltex-ls")
-    (lsp-deferred)
-    ;; Remove LSP completion — ltex-ls is diagnostics-only
-    (add-hook 'lsp-after-open-hook #'salih/ltex-remove-completion-capf 0 t)))
+    (lsp-deferred)))
 
-(defun salih/ltex-remove-completion-capf ()
-  "Strip lsp-completion-at-point from capf in grammar-checking buffers."
-  (setq-local completion-at-point-functions
-              (remq #'lsp-completion-at-point completion-at-point-functions)))
+(defun salih/ltex-toggle ()
+  "Toggle ltex-ls grammar checking in the current buffer."
+  (interactive)
+  (if (and (featurep 'lsp-mode) (bound-and-true-p lsp-mode))
+      (progn (lsp-disconnect) (message "ltex-ls disabled"))
+    (salih/ltex-enable)
+    (message "ltex-ls enabled")))
 
-(add-hook 'org-mode-hook      #'salih/ltex-enable)
+;; Auto-enable for emails and markdown — no competing completion systems
 (add-hook 'message-mode-hook  #'salih/ltex-enable)
 (add-hook 'markdown-mode-hook #'salih/ltex-enable)
+;; NOT org-mode: conflicts with org-roam completion.
+;; Use SPC m G to toggle manually in specific org buffers.
 
 ;;; --- Add word to personal dictionary ---
 (defun salih/ltex-add-word ()
@@ -57,6 +70,10 @@ Corfu doesn't try textDocument/completion (which ltex-ls doesn't support)."
       (call-interactively #'lsp-ltex-plus-check-word)
     ;; Fallback: use lsp execute code action
     (lsp-execute-code-action-by-kind "quickfix")))
+
+;;; --- Keybindings ---
+(map! :leader
+      "t G" #'salih/ltex-toggle)  ; SPC t G — toggle grammar in any buffer
 
 (map! :after lsp-ltex
       :localleader

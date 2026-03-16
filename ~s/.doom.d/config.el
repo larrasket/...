@@ -103,16 +103,26 @@
   (add-hook 'find-file-hook #'git-commit-setup-check-buffer)
   (add-hook 'after-change-major-mode-hook #'git-commit-setup-font-lock-in-buffer))
 
-;;; --- Suppress org-roam's startup full DB sync ---
-;; Doom's after! org-roam block calls (org-roam-db-autosync-mode 1) which
-;; triggers org-roam-db-sync on every startup. We intercept the FIRST call
-;; only (the startup one), then remove the advice so saves update normally.
-(defadvice! salih/org-roam-skip-startup-sync-a (&rest _)
+;;; --- Suppress org-roam's blocking full DB sync ---
+;; org-roam-db-sync opens EVERY roam file via find-file-noselect, which
+;; triggers vc-refresh-state → git subprocess per file → Emacs freezes.
+;;
+;; Sources of unwanted syncs we block:
+;;   • org-roam-db-autosync-enable on startup
+;;   • citar-org-roam-setup during font-lock (triggered by citar-org-activate)
+;;   • +org-roam-try-init-db-a (Doom's lazy-init advice) on first db-query
+;;
+;; We allow sync only when:
+;;   • Called interactively (M-x org-roam-db-sync)
+;;   • Our idle timer sets salih/--org-roam-allow-sync to t
+;;
+;; Per-file incremental updates (org-roam-db-update-file via after-save-hook)
+;; are NOT affected — they never go through org-roam-db-sync.
+(defvar salih/--org-roam-allow-sync nil)
+(defadvice! salih/org-roam-block-eager-sync-a (&rest _)
   :before-while #'org-roam-db-sync
-  (when salih/--skip-org-roam-startup-sync
-    (setq salih/--skip-org-roam-startup-sync nil)
-    nil))  ; nil = skip this call
-(defvar salih/--skip-org-roam-startup-sync t)
+  (or salih/--org-roam-allow-sync
+      (called-interactively-p 'any)))
 
 ;;; --- Load core modules ---
 (require 'lr-macos)
@@ -136,13 +146,22 @@
 (with-eval-after-load 'circe
   (require 'lr-irc))
 
-;;; --- Pre-load org-roam in background (idle) so "r" in consult-buffer works ---
-;; Runs 3s after startup idle; by then the user hasn't typed yet so no jank.
+;;; --- Pre-load org-roam in background (idle) and sync DB ---
+;; At 3s idle: load org + org-roam so "r" in consult-buffer works.
+;; At 5s idle: run the full DB sync (safe — Emacs is idle, no blocking UX).
+;;   Uses the allow-flag to bypass the eager-sync block above.
 (run-with-idle-timer
  3 nil
  (lambda ()
    (require 'org)
    (require 'org-roam)))
+
+(run-with-idle-timer
+ 5 nil
+ (lambda ()
+   (when (featurep 'org-roam)
+     (let ((salih/--org-roam-allow-sync t))
+       (org-roam-db-sync)))))
 
 ;;; --- Pre-warm agenda file buffers in background ---
 ;; At 8s idle (after org/org-roam are loaded by the 3s timer), populate

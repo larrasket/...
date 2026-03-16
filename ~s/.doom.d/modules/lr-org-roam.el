@@ -1,5 +1,23 @@
 ;;; lr-org-roam.el --- Org-roam, vulpea, dailies -*- lexical-binding: t; -*-
 
+;;; --- Org-roam per-buffer setup via org-mode-hook ---
+;; org-roam normally wires these up only via org-roam-find-file-hook, which
+;; fires for files under org-roam-directory after org-roam-db-autosync-mode
+;; is active.  Any timing gap (file opened before autosync enables) or path
+;; outside org-roam-directory breaks completion and link replacement.
+;; Adding them directly to org-mode-hook makes them bullet-proof.
+;;
+;; NOTE: org-roam-db-autosync--setup-update-on-save-h is intentionally NOT
+;; added here — DB updates for roam files are handled by the normal
+;; org-roam-find-file-hook path, and adding it globally would run
+;; org-roam-db-update-file for every org file (including non-roam ones).
+(with-eval-after-load 'org-roam
+  ;; Completion: adds org-roam-complete-link-at-point + org-roam-complete-everywhere
+  (add-hook 'org-mode-hook #'org-roam--register-completion-functions-h)
+  ;; Link replacement: adds org-roam-link-replace-all to before-save-hook
+  ;; so [[roam:Title]] → [[id:...]] on every save
+  (add-hook 'org-mode-hook #'org-roam--replace-roam-links-on-save-h))
+
 ;;; --- Org-roam (deferred) ---
 (after! org-roam
   ;; Exclude .gpg files — decrypting them on every DB sync is slow
