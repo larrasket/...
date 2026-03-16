@@ -15,6 +15,7 @@
 
 ;; Completion
 (package! consult-lsp)
+(package! consult-flycheck)
 (package! consult-org-roam)
 
 ;; Org
@@ -73,7 +74,8 @@
 (package! ox-html-stable-ids
   :recipe (:host github :repo "luggages/ox-html-stable-ids.el"))
 
-;; Prayer times
+;; Writing / Grammar
+(package! lsp-ltex)
 (package! awqat
   :recipe (:host github :repo "larrasket/awqat"
            :branch "feature/notification"))

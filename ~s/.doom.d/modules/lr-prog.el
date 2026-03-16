@@ -14,9 +14,13 @@
   (setq lsp-enable-symbol-highlighting nil
         lsp-ui-doc-show-with-cursor nil
         lsp-ui-doc-show-with-mouse nil
+        ;; No inline sideline clutter
         lsp-ui-sideline-enable nil
-        lsp-ui-sideline-show-code-actions t
+        lsp-ui-sideline-show-diagnostics nil
+        lsp-ui-sideline-show-code-actions nil
+        lsp-ui-sideline-show-hover nil
         lsp-modeline-code-actions-enable t
+        lsp-modeline-diagnostics-enable t
         lsp-eldoc-enable-hover t
         lsp-signature-auto-activate t
         lsp-signature-render-documentation nil
@@ -64,11 +68,47 @@
     (call-interactively #'iedit-mode)))
 
 (defun salih/list-errors ()
-  "LSP diagnostics if available, otherwise flycheck."
+  "Show all errors in a filterable consult buffer (LSP or flycheck)."
   (interactive)
-  (if (and (featurep 'lsp) (bound-and-true-p lsp-mode))
+  (if (and (featurep 'lsp-mode) (bound-and-true-p lsp-mode))
       (call-interactively #'consult-lsp-diagnostics)
+    (call-interactively #'consult-flycheck)))
+
+(defun salih/list-errors-project ()
+  "Show all project-wide diagnostics via consult (LSP) or flycheck-projectile."
+  (interactive)
+  (if (and (featurep 'lsp-mode) (bound-and-true-p lsp-mode))
+      ;; consult-lsp-diagnostics with universal arg = project-wide
+      (let ((current-prefix-arg '(4)))
+        (call-interactively #'consult-lsp-diagnostics))
     (call-interactively #'flycheck-projectile-list-errors)))
+
+(defun salih/next-error ()
+  "Jump to next flycheck error with peek preview."
+  (interactive)
+  (flycheck-next-error)
+  (recenter))
+
+(defun salih/prev-error ()
+  "Jump to previous flycheck error with peek preview."
+  (interactive)
+  (flycheck-previous-error)
+  (recenter))
+
+(defun salih/show-error-at-point ()
+  "Show full error message at point in a posframe or minibuffer."
+  (interactive)
+  (if (and (featurep 'lsp-ui-doc) (bound-and-true-p lsp-mode))
+      (lsp-ui-doc-show)
+    (flycheck-display-error-at-point)))
+
+;;; --- Auto-show error list when compilation/check finishes with errors ---
+(after! flycheck
+  ;; Quicker feedback
+  (setq flycheck-display-errors-delay 0.15
+        flycheck-idle-change-delay 0.5)
+
+  (setq flycheck-error-list-mode-line nil))
 
 ;;; --- Flycheck-golangci-lint patch ---
 (after! flycheck-golangci-lint

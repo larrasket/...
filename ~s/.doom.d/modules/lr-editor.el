@@ -198,10 +198,21 @@
       "l" #'magit-log-buffer-file
       "d" #'magit-file-delete)
 
-;;; --- Leader: Code ---
+;;; --- Leader: Code / Errors ---
 (map! :leader
       "c r" #'salih/rename-or-iedit
-      "l e" #'salih/list-errors)
+      "c a" #'lsp-execute-code-action
+      "c d" #'salih/show-error-at-point
+      ;; Error list & navigation
+      "l e" #'salih/list-errors
+      "l E" #'salih/list-errors-project
+      "l a" #'lsp-execute-code-action)
+
+;; Quick error jumping: ] e / [ e (normal mode, no leader)
+(map! :n "] e" #'salih/next-error
+      :n "[ e" #'salih/prev-error
+      :n "] d" #'flycheck-next-error
+      :n "[ d" #'flycheck-previous-error)
 
 ;;; --- Leader: Translate (visual) ---
 (map! :leader :v "w t" #'gt-translate)

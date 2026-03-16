@@ -148,6 +148,15 @@
 ;;; --- Visual line mode (text/org only, not global) ---
 (add-hook 'text-mode-hook #'visual-line-mode)
 
+;; Doom's evil-respect-visual-line-mode only remaps arrow keys; also remap j/k.
+(after! evil
+  (evil-define-minor-mode-key 'motion 'visual-line-mode
+    "j" #'evil-next-visual-line
+    "k" #'evil-previous-visual-line
+    "0" #'evil-beginning-of-visual-line
+    "$" #'evil-end-of-visual-line
+    "^" #'evil-first-non-blank-of-visual-line))
+
 ;;; --- Dired preview ---
 (after! dired-preview
   (setq dired-preview-delay 0.1

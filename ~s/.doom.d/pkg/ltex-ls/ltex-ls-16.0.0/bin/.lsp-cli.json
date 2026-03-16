@@ -1,0 +1,14 @@
+{
+  "programName": "ltex-cli",
+  "helpMessage": {
+    "description": "LTeX CLI - Command-line interface for LTeX LS",
+    "visibleArguments": [
+      "--client-configuration",
+      "--verbose"
+    ]
+  },
+  "defaultValues": {
+    "--hide-commands": true,
+    "--server-command-line": "./ltex-ls"
+  }
+}
