@@ -18,7 +18,6 @@
 ;;; --- Modeline ---
 (setq doom-modeline-icon t
       doom-modeline-height 28
-      doom-modeline-hud t
       doom-modeline-bar-width 1
       doom-modeline-major-mode-icon t
       doom-modeline-major-mode-color-icon t
@@ -155,3 +154,16 @@
         dired-preview-max-size (* 1024 1024 30)))
 
 (provide 'lr-ui)
+
+
+
+
+(defun salih/fix-ef-dark-modeline (&rest _)
+  (when (eq (car custom-enabled-themes) 'ef-dark)
+    (set-face-attribute 'doom-modeline-bar nil
+                        :background "#3f5f5d")
+    (set-face-attribute 'doom-modeline-bar-inactive nil
+                        :background "#3e403f")))
+
+
+(add-hook 'enable-theme-functions #'salih/fix-ef-dark-modeline)
