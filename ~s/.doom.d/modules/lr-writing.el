@@ -22,6 +22,7 @@
 ;;; --- lsp-ltex settings ---
 (after! lsp-ltex
   (setq lsp-ltex-language "en-US"
+        lsp-ltex-completion-enabled nil         ; ltex-ls doesn't do completion
         ;; Spell-checking is handled by jinx; only check grammar/style.
         lsp-ltex-disabled-rules
         '(:en-US ["MORFOLOGIK_RULE_EN_US"
@@ -32,12 +33,20 @@
 ;;; --- Enable in writing modes ---
 (defun salih/ltex-enable ()
   "Enable ltex-ls grammar checking in the current buffer.
-Does nothing if the server binary is not present."
+ltex-ls only provides diagnostics — strip its completion capf so
+Corfu doesn't try textDocument/completion (which ltex-ls doesn't support)."
   (when (executable-find "ltex-ls")
-    (lsp-deferred)))
+    (lsp-deferred)
+    ;; Remove LSP completion — ltex-ls is diagnostics-only
+    (add-hook 'lsp-after-open-hook #'salih/ltex-remove-completion-capf 0 t)))
 
-(add-hook 'org-mode-hook     #'salih/ltex-enable)
-(add-hook 'message-mode-hook #'salih/ltex-enable)
+(defun salih/ltex-remove-completion-capf ()
+  "Strip lsp-completion-at-point from capf in grammar-checking buffers."
+  (setq-local completion-at-point-functions
+              (remq #'lsp-completion-at-point completion-at-point-functions)))
+
+(add-hook 'org-mode-hook      #'salih/ltex-enable)
+(add-hook 'message-mode-hook  #'salih/ltex-enable)
 (add-hook 'markdown-mode-hook #'salih/ltex-enable)
 
 ;;; --- Add word to personal dictionary ---
