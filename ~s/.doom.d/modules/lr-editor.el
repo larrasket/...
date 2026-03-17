@@ -246,6 +246,7 @@
       "r c" #'salih/org-roam-capture-fleet
       "r j" #'salih/org-roam-dailies-capture-today
       "r b" #'salih/org-roam-buffer
+      "s r" #'salih/consult-org-roam-search
       "r s" #'salih/consult-org-roam-search)
 
 ;;; --- Org-mode leader ---
