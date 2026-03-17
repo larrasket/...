@@ -371,7 +371,7 @@
         org-modern-tag nil
         org-modern-timestamp nil
         org-modern-keyword t
-        org-modern-todo t
+        org-modern-todo nil
         org-modern-block-name t
         org-modern-priority t
         org-modern-list '((42 . "•") (43 . "‒") (45 . "-"))
