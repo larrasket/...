@@ -11,13 +11,24 @@
 ;; without hitting GitHub's API (github-tags package).
 
 ;;; --- Tell lsp-ltex where the server lives (before it loads) ---
-;; This must be set before lsp-ltex.el is loaded so that
-;; lsp-ltex-server-store-path has the correct value when defcustoms evaluate.
+;; These must be set before lsp-ltex.el is loaded so that defcustoms pick
+;; up the right values at evaluation time.
 (setq lsp-ltex-server-store-path
       (expand-file-name "ltex-ls"
                         (file-name-concat (or (getenv "XDG_DATA_HOME")
                                               "~/.local/share")
                                           "doom/profiles/user@default/lsp")))
+
+;; Remove org-mode from ltex active modes BEFORE lsp-ltex registers its client.
+;; lsp-register-client evaluates lsp-ltex-active-modes at load time.
+;; org-mode is kept so `salih/ltex-toggle' (SPC t G) can start ltex-ls manually.
+;; Auto-start is prevented by NOT adding salih/ltex-enable to org-mode-hook.
+(setq lsp-ltex-active-modes
+      '(text-mode bibtex-mode context-mode
+        latex-mode LaTeX-mode
+        org-mode                              ; manual toggle only via SPC t G
+        markdown-mode gfm-mode
+        rst-mode message-mode mu4e-compose-mode))
 
 ;;; --- lsp-ltex settings ---
 (after! lsp-ltex
@@ -28,16 +39,7 @@
         '(:en-US ["MORFOLOGIK_RULE_EN_US"
                   "WHITESPACE_RULE"
                   "COMMA_PARENTHESIS_WHITESPACE"])
-        lsp-ltex-sentence-start-with-uppercase t)
-
-  ;; Remove org-mode from the registered ltex-ls client's major-modes.
-  ;; lsp-ltex registers for org-mode by default, but lsp-completion-at-point
-  ;; conflicts with org-roam's capfs when both are active.  Since we don't
-  ;; auto-start lsp in org buffers, this is just a safety net.
-  (when-let ((client (gethash 'ltex-ls lsp-clients)))
-    (setf (lsp--client-major-modes client)
-          (seq-remove (lambda (m) (eq m 'org-mode))
-                      (lsp--client-major-modes client)))))
+        lsp-ltex-sentence-start-with-uppercase t))
 
 ;;; --- Enable in writing modes ---
 ;; ltex-ls via lsp-mode conflicts with org-roam completion in org-mode buffers.
