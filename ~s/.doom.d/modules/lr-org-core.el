@@ -353,6 +353,7 @@
 
 ;;; --- File templates ---
 (after! org
+  (require 'org-download)
   (set-file-template! "\\.org$"
     :trigger
     (lambda ()
