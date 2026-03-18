@@ -373,7 +373,7 @@
         org-modern-keyword t
         org-modern-todo t
         org-modern-block-name t
-        org-modern-priority t
+        org-modern-priority nil
         org-modern-list '((42 . "•") (43 . "‒") (45 . "-"))
         org-modern-horizontal-rule '("─" 2)
         org-modern-block-fringe t
