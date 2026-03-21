@@ -224,7 +224,10 @@ Ensures language servers pick up files that may have changed on the new branch."
                 (push ws seen-workspaces)
                 (lsp-workspace-restart ws)))))))))
 
+
+
 (after! magit
-  (add-hook 'magit-post-checkout-hook #'salih/lsp-restart-workspaces-after-checkout))
+  (add-hook 'magit-post-checkout-hook #'salih/lsp-restart-workspaces-after-checkout)
+  (add-hook 'magit-post-checkout-hook #'projectile-invalidate-cache))
 
 (provide 'lr-prog)

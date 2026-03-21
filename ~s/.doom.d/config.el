@@ -207,3 +207,55 @@
 
 
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+
+(defun join-paragraph-lines ()
+  "Join wrapped lines within each paragraph into a single line.
+Paragraphs are separated by one or more blank lines.
+Skips org headings (lines starting with *) and property drawers (lines starting with :)."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (not (eobp))
+      ;; Skip blank lines between paragraphs
+      (while (and (not (eobp)) (looking-at "^[[:space:]]*$"))
+        (forward-line 1))
+      ;; Join lines within the current paragraph
+      (while (and (not (eobp)) (not (looking-at "^[[:space:]]*$")))
+        (if (looking-at "^\\*\\|^:")
+            ;; It's a heading or property line — skip it entirely
+            (forward-line 1)
+          ;; It's a regular paragraph line — join with next if next is also regular
+          (end-of-line)
+          (when (not (eobp))
+            (let ((next-line-empty-or-special
+                   (save-excursion
+                     (forward-line 1)
+                     (or (looking-at "^[[:space:]]*$")
+                         (looking-at "^\\*")
+                         (looking-at "^:")))))
+              (unless next-line-empty-or-special
+                (delete-char 1)
+                (just-one-space))))
+          (forward-line 1))))))
+
+(defun remove-org-properties ()
+  "Remove all :PROPERTIES: drawers from an org buffer."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "^[[:space:]]*:PROPERTIES:\n" nil t)
+      (let ((start (match-beginning 0)))
+        (when (re-search-forward "^[[:space:]]*:END:\n?" nil t)
+          (delete-region start (point)))))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

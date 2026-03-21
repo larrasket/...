@@ -1,36 +1,32 @@
 ;;; lr-ui.el --- UI, theme, modeline, dashboard -*- lexical-binding: t; -*-
 
-;;; --- Doom-badger: ef-themes boldness priming ---
-;; When switching from ef-elea-dark → doom-badger interactively, ef-themes
-;; leaves heavier face-weight attributes on headings, keyword faces, and other
-;; constructs.  doom-badger applies its colors on top but never resets those
-;; weights, so they persist — producing the "bolder" look.
-;;
-;; Replicate this at startup: load ef-elea-dark then reload doom-badger with
-;; inhibit-redisplay so there is zero visible flash.
-(defvar salih/--doom-badger-ef-primed nil)
-
-(defun salih/doom-badger-apply-ef-boldness ()
-  "Prime doom-badger with ef-elea-dark's bold face weights (no visual flash)."
-  (when (and (eq doom-theme 'doom-badger)
-             (not salih/--doom-badger-ef-primed))
-    (setq salih/--doom-badger-ef-primed t)
-    (let ((inhibit-redisplay t))
-      (condition-case err
-          (progn
-            (load-theme 'ef-elea-dark t)
-            (load-theme 'doom-badger t))
-        (error (message "doom-badger boldness priming failed: %s" err))))))
-
-;; Run at first idle moment — after Emacs has fully painted the initial frame,
-;; so inhibit-redisplay guarantees the switch is invisible.
-(run-with-idle-timer 0.5 nil #'salih/doom-badger-apply-ef-boldness)
-
 ;;; --- Fringe ---
 (set-fringe-style '(1 . 1))
 
 ;;; --- Faces ---
+;; doom-badger sets only :foreground on keyword/builtin/org-level faces.
+;; ef-themes sets :inherit bold on those same faces — that's the "bolder" look.
+;; We apply :weight bold explicitly here so the effect is deterministic and
+;; doesn't depend on any theme load ordering.
 (custom-set-faces!
+  ;; Programming: keywords and builtins (ef-themes bolds these; doom-themes doesn't)
+  '(font-lock-keyword-face  :weight bold)
+  '(font-lock-builtin-face  :weight bold)
+  ;; Org headings (ef-themes inherits bold; doom-badger only sets foreground)
+  '(org-level-1 :weight bold)
+  '(org-level-2 :weight bold)
+  '(org-level-3 :weight bold)
+  '(org-level-4 :weight bold)
+  '(org-level-5 :weight bold)
+  '(org-level-6 :weight bold)
+  '(org-level-7 :weight bold)
+  '(org-level-8 :weight bold)
+  ;; Completion/search match highlighting
+  '(orderless-match-face-0 :weight bold)
+  '(orderless-match-face-1 :weight bold)
+  '(orderless-match-face-2 :weight bold)
+  '(orderless-match-face-3 :weight bold)
+  ;; Other standard faces
   '(line-number :slant normal)
   '(line-number-current-line :slant normal)
   '(mode-line :family "Pragmasevka")
