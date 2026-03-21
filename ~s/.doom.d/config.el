@@ -137,8 +137,10 @@
 (with-eval-after-load 'org
   (require 'lr-org-core)
   (require 'lr-org-roam)
+  (require 'lr-roam-lint)
   (require 'lr-org-noter)
-  (require 'lr-academic))
+  (require 'lr-academic)
+  (require 'lr-roam-lint))
 
 (with-eval-after-load 'mu4e
   (require 'lr-email))
@@ -220,9 +222,9 @@
 
 
 (defun join-paragraph-lines ()
-  "Join wrapped lines within each paragraph into a single line.
-Paragraphs are separated by one or more blank lines.
-Skips org headings (lines starting with *) and property drawers (lines starting with :)."
+  "Join wrapped lines within each paragraph into a single line.  Paragraphs are
+separated by one or more blank lines.  Skips org headings (lines starting with
+*) and property drawers (lines starting with :)."
   (interactive)
   (save-excursion
     (goto-char (point-min))
