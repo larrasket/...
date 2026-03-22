@@ -131,7 +131,7 @@
 (require 'lr-editor)
 (require 'lr-prog)
 (require 'lr-tools)
-(require 'lr-writing)
+;; (require 'lr-writing)
 
 ;;; --- Defer heavy modules ---
 (with-eval-after-load 'org
