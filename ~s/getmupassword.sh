@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
-
-output="$(emacsclient -e "(let ((inhibit-message t)) (salih/get-mail-password))")"
-
-output_without_quotes="${output//\"/}"
-
-echo "$output_without_quotes"
+# Extract SMTP password from authinfo.gpg for msmtp.
+# gpg-agent caches the passphrase so this is non-interactive.
+gpg -d --quiet ~/.authinfo.gpg 2>/dev/null | \
+  awk '/machine smtp\.mail\.me\.com/ { for(i=1;i<=NF;i++) if($i=="password") print $(i+1) }'

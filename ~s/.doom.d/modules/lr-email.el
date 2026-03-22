@@ -19,33 +19,33 @@
         mu4e-sent-folder   "/icloud/Sent Messages"
         mu4e-trash-folder  "/icloud/Junk")
 
-  ;; SMTP via smtpmail (Emacs built-in) — avoids the msmtp subprocess deadlock.
-  ;; The deadlock: Emacs blocks on msmtp → msmtp calls getmupassword.sh →
-  ;; getmupassword.sh calls emacsclient → Emacs is blocked → hang.
-  ;; smtpmail reads auth-source directly (no subprocess, no roundtrip).
-  (setq send-mail-function    'smtpmail-send-it
-        message-send-mail-function 'smtpmail-send-it
-        smtpmail-smtp-server  "smtp.mail.me.com"
-        smtpmail-smtp-service 465
-        smtpmail-stream-type  'ssl
-        smtpmail-smtp-user    "root@lr0.org")
+  ;; Send mail via msmtp asynchronously — never blocks the main thread.
+  ;; message-send-mail-with-sendmail uses call-process-region (synchronous).
+  ;; We replace it with start-process + process-send-region (non-blocking).
+  (defun salih/send-mail-with-msmtp ()
+    "Send mail via msmtp without blocking Emacs."
+    (let* ((to (message-field-value "To"))
+           (buf (generate-new-buffer " *msmtp*"))
+           (proc (start-process "msmtp" buf
+                                (executable-find "msmtp")
+                                "--read-envelope-from" "-t")))
+      (set-process-sentinel
+       proc
+       (lambda (p event)
+         (cond
+          ((string-match-p "finished" event)
+           (message "✓ Mail to %s delivered." to)
+           (kill-buffer (process-buffer p)))
+          (t
+           (message "✗ Mail to %s failed — see buffer %s"
+                    to (buffer-name (process-buffer p)))
+           (display-buffer (process-buffer p))))))
+      (process-send-region proc (point-min) (point-max))
+      (process-send-eof proc)
+      (message "Sending to %s..." to)))
 
-  ;; If authinfo.gpg only has imap.mail.me.com, copy those creds into the
-  ;; auth-source memory cache under the SMTP host before each send.
-  (defun salih/prefetch-smtp-password-h ()
-    (require 'auth-source)
-    (unless (car (auth-source-search :host "smtp.mail.me.com" :require '(:secret)))
-      (when-let* ((entry (car (auth-source-search :host "imap.mail.me.com"
-                                                   :require '(:user :secret))))
-                  (user (plist-get entry :user))
-                  (pass (funcall (plist-get entry :secret))))
-        (auth-source-remember `(:host "smtp.mail.me.com" :port "465" :user ,user)
-                               (list (list :host "smtp.mail.me.com"
-                                           :port "465"
-                                           :user user
-                                           :secret (lambda () pass)))))))
-
-  (add-hook 'message-send-hook #'salih/prefetch-smtp-password-h)
+  (setq send-mail-function       #'salih/send-mail-with-msmtp
+        message-send-mail-function #'salih/send-mail-with-msmtp)
 
   ;; Bookmarks
   (dolist (bm '((:name "Personal"  :query "maildir:/icloud/Personal"  :key ?p)
