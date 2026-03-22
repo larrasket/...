@@ -312,15 +312,24 @@ in the org-roam database."
 (defun salih/roam-broken-links--visit-other ()
   (interactive) (salih/roam-broken-links--visit t))
 
+(defun salih/roam-broken-links--visit-and-leave ()
+  "Jump to the broken link, focus that buffer (leave the list)."
+  (interactive)
+  (when-let* ((entry (tabulated-list-get-id))
+              (file  (nth 0 entry))
+              (pos   (nth 1 entry)))
+    (find-file-other-window file)
+    (goto-char pos)
+    (recenter)))
+
 (defun salih/roam-broken-links--refresh ()
   (interactive) (salih/roam-find-broken-links salih/broken-links-scope))
 
 (defvar salih/roam-broken-links-mode-map
   (let ((map (make-sparse-keymap)))
     (set-keymap-parent map tabulated-list-mode-map)
-    ;; Emacs-style bindings (work without evil too)
     (define-key map (kbd "RET") #'salih/roam-broken-links--visit-other)
-    (define-key map (kbd "o")   #'salih/roam-broken-links--visit-other)
+    (define-key map (kbd "o")   #'salih/roam-broken-links--visit-and-leave)
     (define-key map (kbd "C-o") #'salih/roam-broken-links--visit-other)
     (define-key map (kbd "g")   #'salih/roam-broken-links--refresh)
     (define-key map (kbd "q")   #'quit-window)
@@ -330,7 +339,7 @@ in the org-roam database."
 (with-eval-after-load 'evil
   (evil-define-key 'normal salih/roam-broken-links-mode-map
     (kbd "RET") #'salih/roam-broken-links--visit-other
-    (kbd "o")   #'salih/roam-broken-links--visit-other
+    (kbd "o")   #'salih/roam-broken-links--visit-and-leave
     (kbd "C-o") #'salih/roam-broken-links--visit-other
     (kbd "j")   #'next-line
     (kbd "k")   #'previous-line
@@ -339,7 +348,7 @@ in the org-roam database."
     (kbd "S")   #'tabulated-list-sort))
 
 (define-derived-mode salih/roam-broken-links-mode tabulated-list-mode "BrokenLinks"
-  "Browse broken org-roam ID links. RET=preview  j/k=nav  S=sort  gr=refresh  q=quit"
+  "Browse broken org-roam ID links. RET=preview(stay)  o=jump(focus)  j/k=nav  S=sort  gr=refresh  q=quit"
   (setq tabulated-list-format
         [("File"       55 t)
          ("Pos"         8 (lambda (a b)
