@@ -287,6 +287,125 @@ in the org-roam database."
                               "#+title: ${title}\n")))))
 
 ;;; ---------------------------------------------------------------------------
+;;; Broken link finder — pure DB, no file scanning
+;;; ---------------------------------------------------------------------------
+
+(defvar-local salih/broken-links-scope 'buffer
+  "Scope used for the current broken-links scan.")
+
+(defun salih/roam-broken-links--visit (&optional other-window)
+  "Visit the broken link on the current row."
+  (interactive)
+  (when-let* ((entry (tabulated-list-get-id))
+              (file  (nth 0 entry))
+              (pos   (nth 1 entry)))
+    (if other-window
+        (let ((win (selected-window)))
+          (find-file-other-window file)
+          (goto-char pos)
+          (recenter)
+          (select-window win))
+      (find-file file)
+      (goto-char pos)
+      (recenter))))
+
+(defun salih/roam-broken-links--visit-other ()
+  (interactive) (salih/roam-broken-links--visit t))
+
+(defun salih/roam-broken-links--refresh ()
+  (interactive) (salih/roam-find-broken-links salih/broken-links-scope))
+
+(defvar salih/roam-broken-links-mode-map
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map tabulated-list-mode-map)
+    ;; Emacs-style bindings (work without evil too)
+    (define-key map (kbd "RET") #'salih/roam-broken-links--visit-other)
+    (define-key map (kbd "o")   #'salih/roam-broken-links--visit-other)
+    (define-key map (kbd "C-o") #'salih/roam-broken-links--visit-other)
+    (define-key map (kbd "g")   #'salih/roam-broken-links--refresh)
+    (define-key map (kbd "q")   #'quit-window)
+    map))
+
+;; Evil normal-state bindings for the broken-links browser
+(with-eval-after-load 'evil
+  (evil-define-key 'normal salih/roam-broken-links-mode-map
+    (kbd "RET") #'salih/roam-broken-links--visit-other
+    (kbd "o")   #'salih/roam-broken-links--visit-other
+    (kbd "C-o") #'salih/roam-broken-links--visit-other
+    (kbd "j")   #'next-line
+    (kbd "k")   #'previous-line
+    (kbd "gr")  #'salih/roam-broken-links--refresh
+    (kbd "q")   #'quit-window
+    (kbd "S")   #'tabulated-list-sort))
+
+(define-derived-mode salih/roam-broken-links-mode tabulated-list-mode "BrokenLinks"
+  "Browse broken org-roam ID links. RET=preview  j/k=nav  S=sort  gr=refresh  q=quit"
+  (setq tabulated-list-format
+        [("File"       55 t)
+         ("Pos"         8 (lambda (a b)
+                            (< (string-to-number (aref (cadr a) 1))
+                               (string-to-number (aref (cadr b) 1)))))
+         ("Broken ID"  30 t)])
+  (setq tabulated-list-padding 1
+        tabulated-list-sort-key (cons "File" nil))
+  (tabulated-list-init-header)
+  (when (fboundp 'evil-normal-state) (evil-normal-state)))
+
+(defun salih/roam-find-broken-links (&optional scope)
+  "Find all [[id:X]] links whose target node no longer exists.
+Queries the org-roam DB directly — instant, no file scanning.
+SCOPE: 'buffer (default) or 'directory (all files)."
+  (interactive
+   (list (intern (completing-read "Scope: " '("buffer" "directory")
+                                  nil t nil nil "directory"))))
+  (let* ((scope (or scope 'buffer))
+         (file-filter (when (eq scope 'buffer)
+                        (buffer-file-name)))
+         (id-type "id")
+         ;; NOT IN subquery: find links whose dest has no node
+         ;; (LEFT JOIN + IS NULL is broken in EmacSQL's query compiler)
+         (broken (if file-filter
+                     (org-roam-db-query
+                      [:select [n:file l:pos l:dest]
+                       :from links l
+                       :join nodes n :on (= l:source n:id)
+                       :where (and (= l:type $s1)
+                                   (= n:file $s2)
+                                   (not (in l:dest [:select [id] :from nodes])))]
+                      id-type file-filter)
+                   (org-roam-db-query
+                    [:select [n:file l:pos l:dest]
+                     :from links l
+                     :join nodes n :on (= l:source n:id)
+                     :where (and (= l:type $s1)
+                                 (not (in l:dest [:select [id] :from nodes])))]
+                    id-type)))
+         (buf (get-buffer-create "*roam-broken-links*")))
+    (if (null broken)
+        (message "No broken ID links found (scope: %s)." scope)
+      (with-current-buffer buf
+        (salih/roam-broken-links-mode)
+        (setq salih/broken-links-scope scope)
+        (let ((inhibit-read-only t))
+          (setq tabulated-list-entries
+                (mapcar (lambda (row)
+                          (let* ((file (nth 0 row))
+                                 (pos  (nth 1 row))
+                                 (dest (nth 2 row))
+                                 (short-file (file-relative-name file org-roam-directory))
+                                 (clean-id (replace-regexp-in-string "\"" "" dest)))
+                            (list (list file pos clean-id)
+                                  (vector short-file
+                                          (number-to-string pos)
+                                          clean-id))))
+                        broken))
+          (tabulated-list-print t)
+          (goto-char (point-min))))
+      (pop-to-buffer buf)
+      (message "%d broken link(s). RET/o=preview  n/p=navigate  g=refresh  q=quit"
+               (length broken)))))
+
+;;; ---------------------------------------------------------------------------
 ;;; Keybindings (under SPC n r prefix, alongside org-roam defaults)
 ;;; ---------------------------------------------------------------------------
 
@@ -298,6 +417,7 @@ in the org-roam database."
         :desc "Find stubs"           "S" #'salih/roam-find-stubs
         :desc "Find orphans"         "O" #'salih/roam-find-orphans
         :desc "Dead-end hubs"        "D" #'salih/roam-dead-ends
-        :desc "Suggest links"        "K" #'salih/roam-suggest-links)))
+        :desc "Suggest links"        "K" #'salih/roam-suggest-links
+        :desc "Broken ID links"      "B" #'salih/roam-find-broken-links)))
 
 (provide 'lr-roam-lint)
