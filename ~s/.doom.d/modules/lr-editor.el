@@ -262,6 +262,7 @@
       "b k"   #'org-noter-kill-session
       "b o"   #'salih/org-noter-open-in-zathura
       "r i"   #'org-roam-node-insert
+      "r I"   #'org-id-get-create 
       "r t"   #'org-roam-tag-add
       "r l f" #'consult-org-roam-forward-links
       "m z"   #'org-add-note
