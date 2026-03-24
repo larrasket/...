@@ -23,12 +23,7 @@
 ;; lsp-register-client evaluates lsp-ltex-active-modes at load time.
 ;; org-mode is kept so `salih/ltex-toggle' (SPC t G) can start ltex-ls manually.
 ;; Auto-start is prevented by NOT adding salih/ltex-enable to org-mode-hook.
-(setq lsp-ltex-active-modes
-      '(text-mode bibtex-mode context-mode
-        latex-mode LaTeX-mode
-        org-mode                              ; manual toggle only via SPC t G
-        markdown-mode gfm-mode
-        rst-mode message-mode mu4e-compose-mode))
+(setq lsp-ltex-active-modes nil)
 
 ;;; --- lsp-ltex settings ---
 (after! lsp-ltex

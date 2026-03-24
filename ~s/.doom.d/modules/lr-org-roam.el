@@ -12,6 +12,8 @@
 ;; Fix: pre-compute the truenames of symlinked subdirs of org-roam-directory,
 ;; then extend org-roam-file-p to return t when a file is under any of them.
 
+
+
 (defvar salih/--roam-symlink-truenames nil
   "Truenames of symlinked subdirectories of `org-roam-directory'.
 Pre-computed on org-roam load; used to extend `org-roam-file-p' so files
@@ -107,9 +109,7 @@ accessed via iCloud symlinks are recognised as org-roam files.")
           ("r" "bibliography reference" plain
            (file "~/configs/~s/orb")
            :target (file+head "references/${citekey}.org"
-                              "#+title: ${title}\n"))))
-
-) ;; end after! org-roam
+                              "#+title: ${title}\n"))))) ;; end after! org-roam
 
 ;;; --- Org-roam hooks ---
 (add-hook! 'org-roam-find-file-hook #'git-auto-commit-mode)
