@@ -88,6 +88,9 @@ function kdo() {
     ps ax | grep -i docker | egrep -iv 'grep|com.docker.vmnetd' | awk '{print $1}' | xargs kill
 }
 
+alias argodev='kubectl port-forward svc/argocd-server -n argocd 8080:80'
+alias argopass='kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d'
+
 alias fwdargocd="kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && kubectl port-forward svc/argocd-server -n argocd 8080:80"
 
 alias argocdpassword="kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d"
