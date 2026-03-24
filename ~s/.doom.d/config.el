@@ -7,7 +7,7 @@
 (defvar user-first-name       "Salih")
 (defvar user-stmp-server      "smtp.mail.me.com")
 (defvar user-stmp-port        587)
-(defvar user-short-username   "lr0")
+(defvar user-short-username   "larrasket")
 (defvar user-config-repo-path "~/configs/~s")
 
 ;;; --- Paths ---
