@@ -18,8 +18,8 @@
   ;; Server
   (set-irc-server! "irc.libera.chat"
     '(:tls t :port 6697
-      :nick "lr0"
-      :sasl-strict t :sasl-username "lr0"
+      :nick "larrasket"
+      :sasl-strict t :sasl-username "larrasket"
       :sasl-password salih/nickserv-password
       :channels ("##arabic" "##philosophy")))
 
