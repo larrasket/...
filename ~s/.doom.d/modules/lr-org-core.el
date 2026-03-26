@@ -412,4 +412,105 @@
 ;;; --- Nov epub mode ---
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
+
+
+
+
+
+
+(after! vulpea
+  (defun salih/vulpea-project-update-tag ()
+    "Update project tag for current buffer."
+    (when (and (featurep 'vulpea)
+               (not (eq major-mode 'org-agenda-mode)))
+      (vulpea-project-update-tag)))
+
+  (defun vulpea-project-files ()
+    "Return note files containing 'project' tag."
+    (if salih/vulpea-show-full
+        (vulpea-project-files-full)
+      (seq-uniq
+       (seq-map #'car
+                (org-roam-db-query
+                 [:select [nodes:file]
+                  :from tags
+                  :left-join nodes :on (= tags:node-id nodes:id)
+                  :where (like tag (quote "%\"project\"%"))])))))
+
+  (defun vulpea-project-files-full ()
+    (seq-uniq
+     (seq-map #'car
+              (org-roam-db-query
+               [:select [nodes:file]
+                :from tags
+                :left-join nodes :on (= tags:node-id nodes:id)
+                :where (or (like tag (quote "%\"project\"%"))
+                           (like tag (quote "%\"project_archived\"%")))]))))
+
+  (defun vulpea-agenda-files-update (&rest _)
+    "Update `org-agenda-files'."
+    (setq org-agenda-files (vulpea-project-files)))
+
+  (defun vulpea-project-p ()
+    "Non-nil if buffer has incomplete TODO entries."
+    (seq-find (lambda (type) (eq type 'todo))
+              (org-element-map (org-element-parse-buffer 'headline) 'headline
+                (lambda (h) (org-element-property :todo-type h)))))
+
+  (defun vulpea-project-done-p ()
+    "Non-nil if buffer has completed TODO entries."
+    (seq-find (lambda (type) (eq type 'done))
+              (org-element-map (org-element-parse-buffer 'headline) 'headline
+                (lambda (h) (org-element-property :todo-type h)))))
+
+  (defun vulpea-project-update-tag ()
+    "Update PROJECT tag in current buffer."
+    (when (and (not (active-minibuffer-window)) (vulpea-buffer-p))
+      (save-excursion
+        (goto-char (point-min))
+        (let* ((tags (vulpea-buffer-tags-get))
+               (original-tags tags))
+          (cond
+           ((vulpea-project-p)
+            (setq tags (cons "project" (remove "project_archived" tags))))
+           ((vulpea-project-done-p)
+            (setq tags (cons "project_archived" (remove "project" tags))))
+           (t (setq tags (remove "project" (remove "project_archived" tags)))))
+          (setq tags (seq-uniq tags))
+          (when (or (seq-difference tags original-tags)
+                    (seq-difference original-tags tags))
+            (apply #'vulpea-buffer-tags-set tags))))))
+
+  (defun vulpea-buffer-p ()
+    "Non-nil if current buffer is in org-roam directory."
+    (and buffer-file-name
+         (string-prefix-p
+          (expand-file-name (file-name-as-directory org-roam-directory))
+          (file-name-directory buffer-file-name)))))
+
+
+(require 'vulpea)
+(add-hook! 'org-mode-hook
+  (add-hook 'before-save-hook  #'vulpea-project-update-tag nil 'local)
+  (add-hook 'find-file-hook    #'vulpea-project-update-tag nil 'local))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (provide 'lr-org-core)
+
+
+
+
