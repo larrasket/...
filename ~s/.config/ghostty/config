@@ -1,0 +1,114 @@
+# Ghostty — Tahoe Black (macOS 26 dark + bleeding-edge features)
+
+# ── Font ──────────────────────────────────────────────────────────────────────
+font-family = PragmataPro
+font-size = 15
+font-thicken = true
+
+# ── Tahoe Black color palette ─────────────────────────────────────────────────
+# Apple system color tokens from macOS/iOS dark mode
+background = #000000
+foreground = #f0f0f2
+
+cursor-color = #0a84ff
+cursor-style = bar
+cursor-style-blink = true
+
+selection-background = #1d3d73
+selection-foreground = #f0f0f2
+
+# Normal (0–7) — Apple system palette
+palette = 0=#1c1c1e
+palette = 1=#ff453a
+palette = 2=#32d74b
+palette = 3=#ffd60a
+palette = 4=#0a84ff
+palette = 5=#bf5af2
+palette = 6=#5ac8f5
+palette = 7=#ebebf5
+
+# Bright (8–15)
+palette = 8=#3a3a3c
+palette = 9=#ff6961
+palette = 10=#4cd964
+palette = 11=#ffe329
+palette = 12=#409cff
+palette = 13=#da8fff
+palette = 14=#70d7ff
+palette = 15=#ffffff
+
+# ── Liquid Glass (native macOS 26 effect) ────────────────────────────────────
+background-opacity = 0.99
+background-blur = macos-glass-regular
+
+# ── Window ────────────────────────────────────────────────────────────────────
+window-theme = dark
+window-padding-x = 12
+window-padding-y = 10
+window-padding-balance = true
+window-save-state = default
+# macos-titlebar-style = transparent
+macos-window-shadow = true
+macos-option-as-alt = left
+confirm-close-surface = false
+
+# ── Shell integration ─────────────────────────────────────────────────────────
+shell-integration = detect
+shell-integration-features = cursor,sudo,title,ssh-env,ssh-terminfo,path
+
+# ── Productivity / UX ─────────────────────────────────────────────────────────
+mouse-hide-while-typing = true
+copy-on-select = true
+scrollback-limit = 10000000
+link-url = true
+link-previews = true
+resize-overlay = after-first
+desktop-notifications = true
+notify-on-command-finish = always
+notify-on-command-finish-action = no-bell,notify
+notify-on-command-finish-after = 10s
+bell-features = no-system,no-audio,attention,title,no-border
+
+# ── Clipboard ─────────────────────────────────────────────────────────────────
+clipboard-paste-protection = true
+clipboard-paste-bracketed-safe = true
+clipboard-trim-trailing-spaces = true
+clipboard-read = ask
+
+# ── Splits ────────────────────────────────────────────────────────────────────
+split-inherit-working-directory = true
+tab-inherit-working-directory = true
+unfocused-split-opacity = 0.82
+
+# ── Quick terminal (Quake / visor drop-down) ──────────────────────────────────
+quick-terminal-position = top
+quick-terminal-autohide = true
+quick-terminal-animation-duration = 0.15
+
+# ── Keybindings ───────────────────────────────────────────────────────────────
+keybind = cmd+enter=new_window
+
+
+# Colors (from kitty theme.conf)
+background = #171717
+foreground = #f5f3e9
+cursor-color = #00ff00
+selection-background = #b5d5ff
+selection-foreground = #333333
+
+palette = 0=#4d4d4d
+palette = 1=#ff2b2b
+palette = 2=#98fb98
+palette = 3=#f0e68c
+palette = 4=#cd853f
+palette = 5=#c9a0dc
+palette = 6=#87ceeb
+palette = 7=#f5deb3
+palette = 8=#545454
+palette = 9=#ff5555
+palette = 10=#55ff55
+palette = 11=#ffff55
+palette = 12=#87ceff
+palette = 13=#87ceff
+palette = 14=#ffd700
+palette = 15=#ffffff
