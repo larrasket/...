@@ -80,3 +80,5 @@
   :recipe (:host github :repo "larrasket/awqat"
            :branch "feature/notification"))
 
+
+(package! solaire-mode :disable t)
