@@ -17,25 +17,6 @@ cursor-style-blink = true
 selection-background = #1d3d73
 selection-foreground = #f0f0f2
 
-# Normal (0–7) — Apple system palette
-palette = 0=#1c1c1e
-palette = 1=#ff453a
-palette = 2=#32d74b
-palette = 3=#ffd60a
-palette = 4=#0a84ff
-palette = 5=#bf5af2
-palette = 6=#5ac8f5
-palette = 7=#ebebf5
-
-# Bright (8–15)
-palette = 8=#3a3a3c
-palette = 9=#ff6961
-palette = 10=#4cd964
-palette = 11=#ffe329
-palette = 12=#409cff
-palette = 13=#da8fff
-palette = 14=#70d7ff
-palette = 15=#ffffff
 
 # ── Liquid Glass (native macOS 26 effect) ────────────────────────────────────
 # background-opacity = 0.99
@@ -114,4 +95,9 @@ palette = 14=#ffd700
 palette = 15=#ffffff
 
 
-
+split-divider-color = #2c2c2e
+keybind = cmd+enter=new_split:right
+keybind = cmd+shift+d=new_split:right
+keybind = cmd+shift+a=new_split:left
+keybind = cmd+shift+s=new_split:down
+keybind = cmd+shift+w=new_split:up
