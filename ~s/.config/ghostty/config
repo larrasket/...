@@ -38,8 +38,8 @@ palette = 14=#70d7ff
 palette = 15=#ffffff
 
 # ── Liquid Glass (native macOS 26 effect) ────────────────────────────────────
-background-opacity = 0.99
-background-blur = macos-glass-regular
+# background-opacity = 0.99
+# background-blur = macos-glass-regular
 
 # ── Window ────────────────────────────────────────────────────────────────────
 window-theme = dark
@@ -89,12 +89,12 @@ quick-terminal-animation-duration = 0.15
 keybind = cmd+enter=new_window
 
 
-# Colors (from kitty theme.conf)
-background = #171717
-foreground = #f5f3e9
-cursor-color = #00ff00
-selection-background = #b5d5ff
-selection-foreground = #333333
+# # Colors (from kitty theme.conf)
+# background = #171717
+# foreground = #f5f3e9
+# cursor-color = #00ff00
+# selection-background = #b5d5ff
+# selection-foreground = #333333
 
 palette = 0=#4d4d4d
 palette = 1=#ff2b2b
