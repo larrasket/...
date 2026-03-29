@@ -112,7 +112,7 @@ accessed via iCloud symlinks are recognised as org-roam files.")
                               "#+title: ${title}\n"))))) ;; end after! org-roam
 
 ;;; --- Org-roam hooks ---
-(add-hook! 'org-roam-find-file-hook #'git-auto-commit-mode)
+;; (add-hook! 'org-roam-find-file-hook #'git-auto-commit-mode)
 
 ;;; --- Git auto-commit ---
 (after! git-auto-commit-mode

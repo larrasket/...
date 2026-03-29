@@ -9,10 +9,26 @@
 ;; We apply :weight bold explicitly here so the effect is deterministic and
 ;; doesn't depend on any theme load ordering.
 (custom-set-faces!
-  ;; Programming: keywords and builtins (ef-themes bolds these; doom-themes doesn't)
-  '(font-lock-keyword-face  :weight bold)
-  '(font-lock-builtin-face  :weight bold)
-  ;; Org headings (ef-themes inherits bold; doom-badger only sets foreground)
+  ;; --- Black background variant of doom-badger ---
+  ;; Original bg=#171717, bg-alt=#2f2f2f. Shift everything ~#17 darker
+  ;; to match a pure-black macOS desktop.
+  '(default                    :background "#000000")
+  '(fringe                     :background "#000000")
+  '(line-number                :background "#000000" :slant normal)
+  '(line-number-current-line   :background "#000000" :slant normal)
+  '(hl-line                    :background "#0d0d0d")
+  '(mode-line                  :background "#181818" :family "Pragmasevka")
+  '(mode-line-active           :background "#181818" :family "Pragmasevka")
+  '(mode-line-inactive         :background "#0a0a0a" :family "Pragmasevka")
+  '(header-line                :background "#000000")
+  '(vertical-border            :background "#000000" :foreground "#1a1a1a")
+  '(window-divider             :foreground "#1a1a1a")
+  '(window-divider-first-pixel :foreground "#1a1a1a")
+  '(window-divider-last-pixel  :foreground "#1a1a1a")
+  ;; Programming: keywords and builtins bold (ef-themes style)
+  '(font-lock-keyword-face     :weight bold)
+  '(font-lock-builtin-face     :weight bold)
+  ;; Org headings bold
   '(org-level-1 :weight bold)
   '(org-level-2 :weight bold)
   '(org-level-3 :weight bold)
@@ -21,17 +37,12 @@
   '(org-level-6 :weight bold)
   '(org-level-7 :weight bold)
   '(org-level-8 :weight bold)
-  ;; Completion/search match highlighting
+  ;; Completion/search match highlighting bold
   '(orderless-match-face-0 :weight bold)
   '(orderless-match-face-1 :weight bold)
   '(orderless-match-face-2 :weight bold)
   '(orderless-match-face-3 :weight bold)
-  ;; Other standard faces
-  '(line-number :slant normal)
-  '(line-number-current-line :slant normal)
-  '(mode-line :family "Pragmasevka")
-  '(mode-line-active :family "Pragmasevka")
-  '(mode-line-inactive :family "Pragmasevka")
+  ;; Org document title
   '(org-document-title :inherit outline-1 :height 1.5 :weight normal))
 
 ;;; --- Cursor ---
