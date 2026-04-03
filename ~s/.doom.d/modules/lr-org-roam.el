@@ -27,8 +27,7 @@ accessed via iCloud symlinks are recognised as org-roam files.")
             (delq nil
                   (mapcar (lambda (entry)
                             (let ((path (expand-file-name entry roam-dir)))
-                              (when (and (file-directory-p path)
-                                         (file-symlink-p path))
+                              (when (file-directory-p path)
                                 (file-truename path))))
                           (directory-files roam-dir nil "^[^.]")))))))
 

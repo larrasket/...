@@ -343,8 +343,6 @@
   (visual-fill-column-mode 1)
   (setq-local fill-column 90))
 
-(add-hook! 'org-mode-hook
-  (add-hook 'before-save-hook #'vulpea-project-update-tag nil 'local))
 
 ;;; --- Agenda advice (deferred until agenda opens) ---
 (advice-add 'org-agenda      :before 'vulpea-agenda-files-update)
@@ -483,10 +481,7 @@
 
   (defun vulpea-buffer-p ()
     "Non-nil if current buffer is in org-roam directory."
-    (and buffer-file-name
-         (string-prefix-p
-          (expand-file-name (file-name-as-directory org-roam-directory))
-          (file-name-directory buffer-file-name)))))
+    (org-roam-buffer-p)))
 
 
 (require 'vulpea)
