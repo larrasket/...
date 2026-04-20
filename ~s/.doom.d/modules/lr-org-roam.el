@@ -207,11 +207,28 @@ accessed via iCloud symlinks are recognised as org-roam files.")
             (apply #'vulpea-buffer-tags-set tags))))))
 
   (defun vulpea-buffer-p ()
-    "Non-nil if current buffer is in org-roam directory."
+    "Non-nil if current buffer is in org-roam directory.
+Delegates to `org-roam-file-p' which handles iCloud symlinks via advice."
     (and buffer-file-name
-         (string-prefix-p
-          (expand-file-name (file-name-as-directory org-roam-directory))
-          (file-name-directory buffer-file-name)))))
+         (org-roam-file-p)))
+
+  (defun salih/vulpea-update-all-tags ()
+    "Update project tags for every org-roam file.
+Opens each file, runs `vulpea-project-update-tag', saves if
+modified, and kills buffers it opened."
+    (interactive)
+    (let ((files (org-roam-list-files))
+          (updated 0))
+      (dolist (file files)
+        (let ((existing-buf (find-buffer-visiting file)))
+          (with-current-buffer (or existing-buf (find-file-noselect file))
+            (vulpea-project-update-tag)
+            (when (buffer-modified-p)
+              (save-buffer)
+              (cl-incf updated))
+            (unless existing-buf
+              (kill-buffer)))))
+      (message "Updated tags in %d / %d files." updated (length files)))))
 
 ;;; --- Org-roam-bibtex ---
 (after! org-roam-bibtex

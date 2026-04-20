@@ -1,6 +1,5 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
-;;; --- User Info ---
 (setq user-full-name    "Salih Muhammed"
       user-mail-address "salih.moahabdelhafez@halan.com")
 
@@ -10,12 +9,10 @@
 (defvar user-short-username   "larrasket")
 (defvar user-config-repo-path "~/configs/~s")
 
-;;; --- Paths ---
 (defvar salih/blog-content-path "~/blog/content")
 (defvar salih/hugo-directory    "~/roam/hugo/")
 (defvar salih/source-directory  "~/roam/source")
 
-;;; --- Org directories (set early, used by deferred modules) ---
 (setq org-roam-directory (file-truename "~/roam")
       org-directory      (file-truename "~/roam")
       org-id-locations-file "~/roam/.orgids")
