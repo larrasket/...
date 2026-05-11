@@ -18,9 +18,8 @@ selection-background = #1d3d73
 selection-foreground = #f0f0f2
 
 
-# ── Liquid Glass (native macOS 26 effect) ────────────────────────────────────
-# background-opacity = 0.99
-# background-blur = macos-glass-regular
+background-opacity = 0.01
+background-blur = macos-glass-regular
 
 # ── Window ────────────────────────────────────────────────────────────────────
 window-theme = dark

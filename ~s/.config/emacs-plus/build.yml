@@ -1,0 +1,7 @@
+# emacs-plus build configuration
+# Docs: https://github.com/d12frosted/homebrew-emacs-plus/blob/master/community/README.md
+
+patches:
+  # Adds alpha-background rendering + ns-background-blur (CGS API blur)
+  # Maintained by @aaratha. Emacs 31 only.
+  - frame-transparency
