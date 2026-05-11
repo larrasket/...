@@ -1,0 +1,189 @@
+# Default starship layout, but every emoji symbol replaced with a short text tag.
+# No `format = ...` here -> starship uses its built-in default format.
+
+[aws]
+symbol = "aws "
+[buf]
+symbol = "buf "
+[bun]
+symbol = "bun "
+[c]
+symbol = "C "
+[cpp]
+symbol = "C++ "
+[cobol]
+symbol = "cobol "
+[conda]
+symbol = "conda "
+[crystal]
+symbol = "cr "
+[cmake]
+symbol = "cmake "
+[daml]
+symbol = "daml "
+[dart]
+symbol = "dart "
+[deno]
+symbol = "deno "
+[directory]
+read_only = " ro"
+[docker_context]
+symbol = "docker "
+[dotnet]
+symbol = ".NET "
+[elixir]
+symbol = "elixir "
+[elm]
+symbol = "elm "
+[erlang]
+symbol = "erl "
+[fennel]
+symbol = "fnl "
+[fossil_branch]
+symbol = "fossil "
+[gcloud]
+symbol = "gcp "
+[git_branch]
+symbol = ""
+[git_commit]
+tag_symbol = " tag "
+[gleam]
+symbol = "gleam "
+[golang]
+symbol = "go "
+[gradle]
+symbol = "gradle "
+[guix_shell]
+symbol = "guix "
+[hg_branch]
+symbol = "hg "
+[haskell]
+symbol = "hs "
+[haxe]
+symbol = "haxe "
+[hostname]
+ssh_symbol = "ssh "
+[java]
+symbol = "java "
+[julia]
+symbol = "jl "
+[kotlin]
+symbol = "kt "
+[kubernetes]
+symbol = "k8s "
+[lua]
+symbol = "lua "
+[memory_usage]
+symbol = "mem "
+[meson]
+symbol = "meson "
+[mojo]
+symbol = "mojo "
+[nim]
+symbol = "nim "
+[nix_shell]
+symbol = "nix "
+[nodejs]
+symbol = "node "
+[ocaml]
+symbol = "ml "
+[odin]
+symbol = "odin "
+[opa]
+symbol = "opa "
+[openstack]
+symbol = "os "
+[package]
+symbol = "pkg "
+[perl]
+symbol = "pl "
+[php]
+symbol = "php "
+[pijul_channel]
+symbol = "pijul "
+[pixi]
+symbol = "pixi "
+[pulumi]
+symbol = "pulumi "
+[purescript]
+symbol = "purs "
+[python]
+symbol = "py "
+[quarto]
+symbol = "quarto "
+[raku]
+symbol = "raku "
+[ruby]
+disabled = true
+[rust]
+symbol = "rs "
+[scala]
+symbol = "scala "
+[spack]
+symbol = "spack "
+[solidity]
+symbol = "sol "
+[swift]
+symbol = "swift "
+[terraform]
+symbol = "tf "
+[typst]
+symbol = "typst "
+[vagrant]
+symbol = "vag "
+[vlang]
+symbol = "vlang "
+[zig]
+symbol = "zig "
+
+[os.symbols]
+AIX = "aix "
+Alpaquita = "alq "
+AlmaLinux = "alma "
+Alpine = "alp "
+Amazon = "amz "
+Android = "andr "
+Arch = "arch "
+Artix = "artix "
+CachyOS = "cachy "
+CentOS = "cent "
+Debian = "deb "
+DragonFly = "dfbsd "
+Emscripten = "emsc "
+EndeavourOS = "ndev "
+Fedora = "fed "
+FreeBSD = "fbsd "
+Garuda = "garu "
+Gentoo = "gent "
+HardenedBSD = "hbsd "
+Illumos = "illum "
+Kali = "kali "
+Linux = "lnx "
+Mabox = "mbox "
+Macos = "mac "
+Manjaro = "mjo "
+Mariner = "mrn "
+MidnightBSD = "mid "
+Mint = "mint "
+NetBSD = "nbsd "
+NixOS = "nix "
+Nobara = "nbra "
+OpenBSD = "obsd "
+OpenCloudOS = "ocos "
+openEuler = "oeul "
+openSUSE = "osuse "
+OracleLinux = "orac "
+Pop = "pop "
+Raspbian = "rasp "
+Redhat = "rhl "
+RedHatEnterprise = "rhel "
+RockyLinux = "rky "
+Redox = "redox "
+Solus = "sol "
+SUSE = "suse "
+Ubuntu = "ubnt "
+Ultramarine = "ultm "
+Unknown = "unk "
+Uos = "uos "
+Void = "void "
+Windows = "win "

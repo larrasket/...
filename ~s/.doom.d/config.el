@@ -41,7 +41,7 @@
 ;;; doom-tomorrow-night
 ;;; doom-wilmersdorf
 ;;; ef-owl
-(setq doom-theme 'doom-badger)
+(setq doom-theme 'doom-wilmersdorf)
 
 ;;; --- Basic settings ---
 (setq display-line-numbers-type 'relative
@@ -167,7 +167,7 @@
 ;; org-agenda-files from vulpea and pre-parse the buffers.  This way the
 ;; first `org-agenda` call only needs to render, not do file I/O.
 (run-with-idle-timer
- 8 nil
+ 90 nil
  (lambda ()
    (when (and (featurep 'org-roam)
               (fboundp 'vulpea-agenda-files-update))

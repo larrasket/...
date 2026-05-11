@@ -1,144 +1,324 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# ~/.zshrc — interactive zsh config
 
-# Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=200000
+SAVEHIST=200000
+setopt EXTENDED_HISTORY          
+setopt INC_APPEND_HISTORY        
+setopt SHARE_HISTORY             
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE         
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY               
+setopt HIST_FIND_NO_DUPS
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+setopt AUTO_CD                   
+setopt AUTO_PUSHD                
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+setopt CORRECT                  
+setopt INTERACTIVE_COMMENTS    
+setopt EXTENDED_GLOB          
+setopt GLOB_DOTS             
+setopt NO_BEEP
+setopt PROMPT_SUBST
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+export CLICOLOR=1
+export LSCOLORS='ExGxFxDxCxegedabagacad'
+export LS_COLORS='di=1;36:ln=35:so=32:pi=33:ex=1;32:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43'
+export GREP_COLORS='ms=01;33:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=36'
+export LESS='-R -i -M -F -X -j.5'
+export LESSOPEN='|/opt/homebrew/bin/bat --color=always --paging=never --style=plain %s 2>/dev/null'
+export PAGER='less'
+export MANPAGER="sh -c 'col -bx | bat -l man -p --paging=always'"
+export MANROFFOPT='-c'
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
+export LESS_TERMCAP_mb=$'\e[1;31m'
+export LESS_TERMCAP_md=$'\e[1;36m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;32m'
 
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
+fpath=(/opt/homebrew/share/zsh-completions $fpath)
+fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
 
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+autoload -Uz compinit
+compinit -i
 
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
+zstyle ':completion:*' menu select                          
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'   
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"     
+zstyle ':completion:*' group-name ''                        
+zstyle ':completion:*:descriptions' format '%F{cyan}%B%d%b%f'
+zstyle ':completion:*:warnings' format '%F{red}no matches%f'
+zstyle ':completion:*' use-cache true
+zstyle ':completion:*' cache-path "$HOME/.cache/zsh"
+zstyle ':completion:*:processes' command 'ps -au$USER'
+zstyle ':completion:*:default' list-prompt '%S%M matches%s'
 
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
+bindkey -e                                  
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
+autoload -U up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search       
+bindkey '^[[B' down-line-or-beginning-search    
 
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
+bindkey '^[[H'  beginning-of-line
+bindkey '^[[F'  end-of-line
+bindkey '^[[3~' delete-char
 
-# Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'                       
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20                           
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
+export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix --hidden --follow --exclude .git --exclude node_modules --exclude *.srt'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --strip-cwd-prefix --hidden --follow --exclude .git --exclude node_modules'
+export FZF_DEFAULT_OPTS='
+  --height=40% --layout=reverse --border --info=inline
+  --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8
+  --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc
+  --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8
+  --bind=ctrl-d:half-page-down,ctrl-u:half-page-up'
+export FZF_CTRL_T_OPTS="--preview 'bat -n --color=always --line-range :500 {}'"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always --icons=never {} | head -200'"
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+[[ -r /opt/homebrew/opt/fzf/shell/completion.zsh   ]] && source /opt/homebrew/opt/fzf/shell/completion.zsh
+[[ -r /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh --cmd cd)"
+command -v direnv >/dev/null && eval "$(direnv hook zsh)"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+if command -v eza >/dev/null; then
+    alias ls='eza --group-directories-first --color=auto'
+    alias ll='eza -lh --group-directories-first --git --color=auto'
+    alias la='eza -lah --group-directories-first --git --color=auto'
+    alias lt='eza --tree --level=2 --color=auto'
+    alias lT='eza --tree --color=auto'
+else
+    alias ls='ls -G'
+    alias ll='ls -lhG'
+    alias la='ls -lahG'
+fi
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='nvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch $(uname -m)"
-
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+command -v bat >/dev/null && alias cat='bat --paging=never --style=plain'
 
 alias grep='grep --colour=auto'
-alias sudo='sudo ' # fix sudo in alias
+alias egrep='egrep --colour=auto'
+alias fgrep='fgrep --colour=auto'
+alias diff='diff --color=auto'
+alias df='df -h'
+alias du='du -h'
+alias path='echo -e ${PATH//:/\\n}'
+alias reload='source ~/.zshrc'
+alias mkdir='mkdir -pv'
+alias ports='lsof -i -P -n | grep LISTEN'
+alias myip='curl -s ifconfig.me; echo'
+
+alias sudo='sudo '
 alias serve='npx serve'
-alias rabbitmq='CONF_ENV_FILE="/opt/homebrew/etc/rabbitmq/rabbitmq-env.conf" /opt/homebrew/opt/rabbitmq/sbin/rabbitmq-server'
 
 alias d='yt-dlp -f "mp4" -o "%(title)s.%(ext)s" '
-alias w4='function _convertwebm(){ ffmpeg  -fflags +genpts -i "$1" -r 24 -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" "${1%.webm}.mp4" && rm "$1"; };_convertwebm'
+alias w4='function _convertwebm(){ ffmpeg -fflags +genpts -i "$1" -r 24 -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" "${1%.webm}.mp4" && rm "$1"; };_convertwebm'
 alias mp3='yt-dlp -o '\''%(title)s.%(ext)s'\'' --extract-audio --audio-format mp3 --add-metadata'
 alias convertmp4tomp3='function _convertmp4tomp3() { ffmpeg -i "$1" "${1%.*}.mp3"; }; _convertmp4tomp3'
+alias dss='yt-dlp -S "res:480"'
+alias djvu2pdf='docker run --rm -u $(id -u):$(id -g) -v $(pwd):/opt/work ilyabystrov/djvu2pdf'
 
+alias i='sudo pacman -S '
+alias r='sudo pacman -Rs'
+
+alias f="lfrun"
 alias htop='gotop'
-
+alias netwatch='sudo nethogs'
+alias c='clear'
 alias cp="cp -i"
-
-alias lsd='du -h -d 1 | sort -hr'
-alias ll='ls -l'
+alias dirsize='du -h -d 1 | sort -hr'
 alias sz='du -sh'
 alias share="caddy file-server --listen :2030 --browse"
-
+alias frozen="pkill -SIGUSR2 emacs"
 alias 'cd..'='cd ..'
 
-alias dss='yt-dlp -S "res:480"'
 
-alias get_local_ip='ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '\''{print $2}'\'''
+mkcd() { mkdir -p "$1" && cd "$1"; }
 
-
-SHELL_PROCESS=`ps -p $$ | sed -n 2p`
-if [[ "${SHELL_PROCESS}" == *"zsh"* ]]; then
-  RELEVANT_BASH_SOURCE="${(%):-%N}"
-else
-  RELEVANT_BASH_SOURCE="${BASH_SOURCE[0]}"
-fi
-SCRIPT_PATH="$( cd -- "$(dirname -- "${RELEVANT_BASH_SOURCE}")" >/dev/null 2>&1 ; pwd -P  )"
-setToken() {
-    $SCRIPT_PATH/mfa.sh $1 $2
-    source ~/.token_file
-    echo "Your creds have been set in your env."
+extract() {
+    [[ -f "$1" ]] || { echo "extract: '$1' is not a file"; return 1; }
+    case "$1" in
+        *.tar.bz2|*.tbz2) tar xjf "$1" ;;
+        *.tar.gz|*.tgz)   tar xzf "$1" ;;
+        *.tar.xz|*.txz)   tar xJf "$1" ;;
+        *.tar)            tar xf  "$1" ;;
+        *.bz2)            bunzip2 "$1" ;;
+        *.gz)             gunzip  "$1" ;;
+        *.zip)            unzip   "$1" ;;
+        *.7z)             7z x    "$1" ;;
+        *.rar)            unrar x "$1" ;;
+        *.Z)              uncompress "$1" ;;
+        *) echo "extract: don't know how to extract '$1'"; return 1 ;;
+    esac
 }
-alias mfa=setToken
+
+rgf() {
+    local file
+    file=$(rg --color=always --line-number --no-heading --smart-case "$@" |
+        fzf --ansi --delimiter : \
+            --preview 'bat --color=always --highlight-line {2} {1}' \
+            --preview-window 'up,60%,border-bottom,+{2}+3/3' |
+        awk -F: '{print $1 ":" $2}')
+    [[ -n "$file" ]] && ${EDITOR:-vi} "${file%:*}" "+${file##*:}"
+}
+
+kdo() {
+    ps ax | grep -i docker | egrep -iv 'grep|com.docker.vmnetd' | awk '{print $1}' | xargs kill
+}
+
+if test -n "$KITTY_INSTALLATION_DIR" -a -e "$KITTY_INSTALLATION_DIR/shell-integration/zsh/kitty.zsh"; then
+    source "$KITTY_INSTALLATION_DIR/shell-integration/zsh/kitty.zsh"
+fi
+
+
+
+#halan
+
+function kdo() {
+    ps ax | grep -i docker | egrep -iv 'grep|com.docker.vmnetd' | awk '{print $1}' | xargs kill
+}
+
+alias argodev='kubectl port-forward svc/argocd-server -n argocd 8080:80'
+alias argopass='kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d'
+
+alias fwdargocd="kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d && kubectl port-forward svc/argocd-server -n argocd 8080:80"
+
+alias argocdpassword="kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d"
+
+alias stgcluster="kubectl config use-context halangw-stg-new"
+alias devcluster="kubectl config use-context arn:aws:eks:us-east-1:624792314775:cluster/halan-gateway-dev"
+
+alias vpn2="sudo openfortivpn 102.221.142.122:10443 --username=ahmed.shaheen@halan.com --pinentry=pinentry-mac --trusted-cert 1c684e7f00f892fb95c6f5429dc43a0668950b1bd59a02c9fabf9c6cdd7ffa6c"
+
+alias vpn="sudo openfortivpn 102.221.142.122:10443 --username=ahmed.shaheen@halan.com --trusted-cert 1c684e7f00f892fb95c6f5429dc43a0668950b1bd59a02c9fabf9c6cdd7ffa6c"
+
+klogs() {
+    svc=$(kubectl get svc -A | fzf)
+    ns=$(echo $svc | awk '{print $1}')
+    name=$(echo $svc | awk '{print $2}')
+    kubectl logs -f svc/$name -n$ns --since=55m
+}
+
+ksecret() {
+    local ns=${1:-default}
+    local secret=$(kubectl get secret -n $ns | fzf | awk '{print $1}')
+    local key=$(kubectl get secret $secret -n $ns -o jsonpath='{.data}' | jq -r 'keys[]' | fzf)
+    kubectl get secret $secret -n $ns -o jsonpath="{.data.$key}" | base64 --decode
+    echo
+}
+
+kpf() {
+    local ns=${1:-default}
+
+    local svc=$(kubectl get svc -n $ns | fzf | awk '{print $1}')
+    if [ -z "$svc" ]; then
+        echo "No service selected."
+        return 1
+    fi
+
+    echo -n "Local port: "
+    read lport
+    echo -n "Remote port: "
+    read rport
+
+    echo "Forwarding $svc:$rport to localhost:$lport (namespace: $ns)"
+    kubectl port-forward svc/$svc $lport:$rport -n $ns
+}
+
+kexec() {
+    local ns=${1:-default}
+
+    # Pick a pod interactively
+    local pod=$(kubectl get pods -n $ns | fzf | awk '{print $1}')
+    if [ -z "$pod" ]; then
+        echo "No pod selected."
+        return 1
+    fi
+
+    # Pick a container if multiple exist
+    local containers=$(kubectl get pod $pod -n $ns -o jsonpath='{.spec.containers[*].name}')
+    local container
+    if [[ $(echo $containers | wc -w) -gt 1 ]]; then
+        container=$(echo $containers | tr ' ' '\n' | fzf)
+    else
+        container=$containers
+    fi
+
+    # Choose mode: shell or redis-cli
+    echo "Choose mode:"
+    select mode in "Shell" "Redis-CLI"; do
+        case $mode in
+        "Shell")
+            echo "Exec into pod: $pod (container: $container, namespace: $ns)"
+            kubectl exec -it $pod -n $ns -c $container -- /bin/sh || kubectl exec -it $pod -n $ns -c $container -- /bin/bash
+            break
+            ;;
+        "Redis-CLI")
+            echo "Exec into pod: $pod (container: $container, namespace: $ns) with redis-cli"
+            kubectl exec -it $pod -n $ns -c $container -- redis-cli
+            break
+            ;;
+        *)
+            echo "Invalid option."
+            ;;
+        esac
+    done
+}
+
+kdesc() {
+    local ns=${1:-default}
+
+    # Pick a pod interactively
+    local pod=$(kubectl get pods -n $ns | fzf | awk '{print $1}')
+    if [ -z "$pod" ]; then
+        echo "No pod selected."
+        return 1
+    fi
+
+    echo "Describing pod: $pod (namespace: $ns)"
+    kubectl describe pod $pod -n $ns | less
+}
+
+kedit() {
+    local ns=$1
+    if [ -z "$ns" ]; then
+        echo "Usage: kedit <namespace>"
+        return 1
+    fi
+
+    local deployment=$(kubectl get deployments -n "$ns" --no-headers -o custom-columns=":metadata.name" | fzf)
+    if [ -n "$deployment" ]; then
+        echo "Editing deployment: $deployment (namespace: $ns)"
+        KUBE_EDITOR="code -w" kubectl edit deployment "$deployment" -n "$ns"
+    else
+        echo "No deployment selected."
+    fi
+}
+
+#end halan
+
+
+
+
+
+
+export TERM=xterm-256color
+
+command -v starship >/dev/null && eval "$(starship init zsh)"
+
+
+
