@@ -258,3 +258,5 @@ separated by one or more blank lines.  Skips org headings (lines starting with
         (when (re-search-forward "^[[:space:]]*:END:\n?" nil t)
           (delete-region start (point)))))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq magit-git-executable "/opt/homebrew/bin/git")
