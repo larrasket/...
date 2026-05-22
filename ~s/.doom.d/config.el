@@ -41,7 +41,9 @@
 ;;; doom-tomorrow-night
 ;;; doom-wilmersdorf
 ;;; ef-owl
-(setq doom-theme 'doom-wilmersdorf)
+;;; doom-tokyo-night
+;;; doom-one
+(setq doom-theme 'doom-tokyo-night)
 
 ;;; --- Basic settings ---
 (setq display-line-numbers-type 'relative
@@ -55,24 +57,21 @@
 (setq-default bidi-paragraph-direction 'left-to-right
               frame-title-format       '("%b"))
 
-;;; --- Encryption ---
 (setq epa-file-cache-passphrase-for-symmetric-encryption t
       epa-file-select-keys    'silent
       epa-file-encrypt-to     user-mail-address)
 
-;;; --- GC / Performance ---
 (after! gcmh
   (setq gcmh-high-cons-threshold (* 256 1024 1024)
         gc-cons-threshold        (* 100 1024 1024)
         gc-cons-percentage       0.6))
 
-(setq read-process-output-max (* 4 1024 1024)
-      undo-limit           80000000
-      undo-strong-limit    120000000
-      undo-outer-limit     360000000
-      treesit-font-lock-level 3)
+(setq read-process-output-max   (* 4 1024 1024)
+      undo-limit                80000000
+      undo-strong-limit         120000000
+      undo-outer-limit          360000000
+      treesit-font-lock-level   3)
 
-;;; --- Safe local variables ---
 (setq safe-local-variable-values
       '((org-download-image-dir . "../i")
         (org-download-image-dir . "../../media")
@@ -82,7 +81,6 @@
 
 (put 'org-download-image-dir 'safe-local-variable #'stringp)
 
-;;; --- Keyboard translation (must be early) ---
 (defun salih/keyboard-config ()
   (when (display-graphic-p)
     (keyboard-translate ?\C-m ?\H-m)

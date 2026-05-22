@@ -38,6 +38,9 @@
     "macOS background blur radius (px). 0 = no blur, 30+ = strong glass.")
 
 
+  (setq salih/alpha-background 0.504)
+  (setq salih/ns-background-blur 39)
+
 
   (add-to-list 'default-frame-alist `(alpha-background . ,salih/alpha-background))
   (add-to-list 'default-frame-alist `(ns-background-blur . ,salih/ns-background-blur))

@@ -81,4 +81,3 @@
            :branch "feature/notification"))
 
 
-(package! solaire-mode :disable t)
