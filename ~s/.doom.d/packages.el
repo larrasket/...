@@ -43,6 +43,9 @@
 ;; Epub
 (package! nov)
 
+;; RSS
+(package! elfeed)
+
 ;; Git
 (package! git-auto-commit-mode)
 (package! git-gutter)

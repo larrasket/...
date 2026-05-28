@@ -1,5 +1,15 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
+;; Declare `so-long-target-modes' special EARLY.  Doom's lang/org module
+;; lexically `let'-binds it inside `+org-get-agenda-file-buffer' (compiled
+;; before so-long loads).  On Emacs 32, if that advice runs before
+;; so-long.el's own `defvar', the later defvar hard-errors with "Defining
+;; as dynamic an already lexical var so-long-target-modes" — which then
+;; cascades into flycheck's org-lint checker.  Marking it special here,
+;; before any agenda/first-file activity, makes so-long.el's defvar a
+;; harmless re-declaration instead of a conflict.
+(defvar so-long-target-modes nil)
+
 (setq user-full-name    "Salih Muhammed"
       user-mail-address "root@lr0.org")
 
@@ -126,6 +136,7 @@
 (require 'lr-editor)
 (require 'lr-prog)
 (require 'lr-tools)
+(require 'lr-elfeed)
 ;; (require 'lr-writing)
 
 ;;; --- Defer heavy modules ---

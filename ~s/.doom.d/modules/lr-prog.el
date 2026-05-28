@@ -230,4 +230,53 @@ Ensures language servers pick up files that may have changed on the new branch."
   (add-hook 'magit-post-checkout-hook #'salih/lsp-restart-workspaces-after-checkout)
   (add-hook 'magit-post-checkout-hook #'projectile-invalidate-cache))
 
+;;; --- Fix flycheck's `org-lint' checker on Emacs 32 / new org-mode ---
+;; Newer `org-lint` returns reports whose line slot is a propertized
+;; string (e.g. #("442" ... org-lint-marker ...)) instead of a plain int.
+;; Flycheck's built-in `org-lint' checker passes that string straight to
+;; `flycheck-error-new-at', which calls `number-or-marker-p' on it and
+;; errors out: "Wrong type argument: number-or-marker-p, #(\"442\" ...)".
+;; Coerce the value to an int in the checker's :start function.
+;; TODO Disable this when it gets resovled in FlyCheck
+(after! flycheck
+  (when (flycheck-valid-checker-p 'org-lint)
+    ;; Use `put' directly instead of `(setf (flycheck-checker-get ...))':
+    ;; the latter relies on flycheck's gv-setter being registered at
+    ;; macro-expansion time, which isn't guaranteed when this file is
+    ;; byte-compiled before flycheck loads — causing
+    ;; "(void-function (setf flycheck-checker-get))".
+    (put 'org-lint 'flycheck-start
+          (lambda (checker callback)
+            (condition-case err
+                (let ((errors
+                       (delq nil
+                             (mapcar
+                              (lambda (e)
+                                (pcase e
+                                  (`(,_n [,line ,_trust ,desc ,_checker])
+                                   (flycheck-error-new-at
+                                    (if (stringp line)
+                                        (string-to-number line)
+                                      line)
+                                    nil 'info desc
+                                    :checker checker))
+                                  (_
+                                   (flycheck-error-new-at
+                                    1 nil 'warning
+                                    (format "Unexpected org-lint format: %S" e)
+                                    :checker checker))))
+                              (org-lint)))))
+                  (funcall callback 'finished errors))
+              (error (funcall callback 'errored
+                              (error-message-string err)))))))
+
+  ;; --- Stop org-lint from running as a LIVE flycheck checker ---------------
+  ;; `org-lint' is a whole-buffer linter not designed for continuous use.
+  ;; In current org, its `org-lint-invalid-id-link' check calls
+  ;; `org-id-update-id-locations', which rebuilds the org-id DB by scanning
+  ;; every agenda + archive file with recursive `file-truename' — murderous
+  ;; over a 160+ file iCloud roam tree, on EVERY flycheck idle tick.  Remove
+  ;; it from the auto-run checker list; `M-x org-lint' still works on demand.
+  (setq flycheck-checkers (delq 'org-lint flycheck-checkers)))
+
 (provide 'lr-prog)
