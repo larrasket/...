@@ -17,17 +17,23 @@
 
 (defvar doom-load-theme-hook nil)
 
-(defun lr-macos-test--module-path ()
-  (expand-file-name "../modules/lr-macos.el" (file-name-directory load-file-name)))
+(defconst lr-macos-test--file
+  (or load-file-name buffer-file-name))
 
-(let ((system-type 'darwin)
-      (default-frame-alist nil))
+(defun lr-macos-test--module-path ()
+  (expand-file-name "../modules/lr-macos.el" (file-name-directory lr-macos-test--file)))
+
+(defun lr-macos-test--load-module ()
   (cl-letf (((symbol-function 'menu-bar-mode) (lambda (&optional _arg) nil))
             ((symbol-function 'display-graphic-p) (lambda (&optional _display) nil))
             ((symbol-function 'daemonp) (lambda () nil))
             ((symbol-function 'facep) (lambda (_face) t))
             ((symbol-function 'face-spec-set) (lambda (&rest _) nil)))
-    (load (lr-macos-test--module-path) nil t)))
+    (let ((system-type 'darwin)
+          (default-frame-alist nil))
+      (load (lr-macos-test--module-path) nil t))))
+
+(lr-macos-test--load-module)
 
 (defmacro lr-macos-test--capture-effects (&rest body)
   "Run BODY while recording frame parameters and face attributes."
@@ -76,6 +82,16 @@
   (should (equal (lr-macos-test--face-attributes 'font-lock-comment-face salih/glass-face-palette)
                  '(:foreground "#b4c1e8" :slant italic))))
 
+(ert-deftest salih-glass-preset-refreshes-on-module-reload ()
+  (let ((salih/alpha-background 0.55)
+        (salih/ns-background-blur 44)
+        (salih/glass-face-palette '((default :background "#273454"))))
+    (lr-macos-test--load-module)
+    (should (= salih/alpha-background 0.4))
+    (should (= salih/ns-background-blur 50))
+    (should (equal (lr-macos-test--face-attributes 'default salih/glass-face-palette)
+                   '(:background "#50638f" :foreground "#d7e2ff")))))
+
 (ert-deftest salih-apply-glass-applies-frame-parameters-and-faces ()
   (pcase-let ((`(,frame-parameters ,face-attributes)
                (lr-macos-test--capture-effects
@@ -111,7 +127,7 @@
                    '((alpha-background . 1.0)
                      (ns-background-blur . 0)
                      (ns-alpha-elements ns-alpha-all))))
-    (should (member (list 'default nil '(:background "#000000"))
+    (should (member (list 'default nil '(:background "#000000" :foreground "#a9b1d6"))
                     face-attributes))))
 
 ;;; lr-macos-glass-test.el ends here
