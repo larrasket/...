@@ -32,26 +32,68 @@
   ;; private APIs so it has to be in default-frame-alist (frame-creation
   ;; time) for the NSWindow's backing material to be configured before
   ;; display.
-  (defvar salih/alpha-background 0.384
+  (defvar salih/alpha-background 0.55
     "Frame background alpha (0.0-1.0). Lower = more glass.")
-  (defvar salih/ns-background-blur 40
+  (defvar salih/ns-background-blur 44
     "macOS background blur radius (px). 0 = no blur, 30+ = strong glass.")
 
+  (defvar salih/glass-face-palette
+    '((default                    :background "#273454")
+      (fringe                     :background "#273454")
+      (line-number                :background "#273454")
+      (line-number-current-line   :background "#273454")
+      (hl-line                    :background "#314061")
+      (mode-line                  :background "#243050")
+      (mode-line-active           :background "#243050")
+      (mode-line-inactive         :background "#1d2742")
+      (header-line                :background "#273454")
+      (vertical-border            :background "#273454" :foreground "#51617f")
+      (window-divider             :foreground "#51617f")
+      (window-divider-first-pixel :foreground "#51617f")
+      (window-divider-last-pixel  :foreground "#51617f"))
+    "Face palette used while `salih/toggle-glass' is enabled.")
 
-  (setq salih/alpha-background 0.524)
-  (setq salih/ns-background-blur 39)
-
+  (defvar salih/opaque-face-palette
+    '((default                    :background "#000000")
+      (fringe                     :background "#000000")
+      (line-number                :background "#000000")
+      (line-number-current-line   :background "#000000")
+      (hl-line                    :background "#0d0d0d")
+      (mode-line                  :background "#181818")
+      (mode-line-active           :background "#181818")
+      (mode-line-inactive         :background "#0a0a0a")
+      (header-line                :background "#000000")
+      (vertical-border            :background "#000000" :foreground "#1a1a1a")
+      (window-divider             :foreground "#1a1a1a")
+      (window-divider-first-pixel :foreground "#1a1a1a")
+      (window-divider-last-pixel  :foreground "#1a1a1a"))
+    "Face palette restored when glass is disabled.")
 
   (add-to-list 'default-frame-alist `(alpha-background . ,salih/alpha-background))
   (add-to-list 'default-frame-alist `(ns-background-blur . ,salih/ns-background-blur))
   (add-to-list 'default-frame-alist '(ns-alpha-elements ns-alpha-all))
 
+  (defun salih/--apply-face-palette (palette)
+    "Apply face attributes from PALETTE to existing faces."
+    (dolist (spec palette)
+      (when (facep (car spec))
+        (apply #'set-face-attribute (car spec) nil (cdr spec)))))
+
+  (defun salih/--apply-glass-palette ()
+    "Apply the brighter blue-gray palette used by glass mode."
+    (salih/--apply-face-palette salih/glass-face-palette))
+
+  (defun salih/--apply-opaque-palette ()
+    "Restore the solid dark palette used when glass mode is off."
+    (salih/--apply-face-palette salih/opaque-face-palette))
+
   (defun salih/--apply-glass (&optional frame)
-    "Re-apply transparency + blur to FRAME (defaults to selected)."
+    "Re-apply transparency, blur, and glass palette to FRAME."
     (with-selected-frame (or frame (selected-frame))
       (set-frame-parameter nil 'alpha-background  salih/alpha-background)
       (set-frame-parameter nil 'ns-background-blur salih/ns-background-blur)
-      (set-frame-parameter nil 'ns-alpha-elements '(ns-alpha-all))))
+      (set-frame-parameter nil 'ns-alpha-elements '(ns-alpha-all))
+      (salih/--apply-glass-palette)))
 
   ;; Break the gnus inheritance cycle that doom-themes-base introduces.
   ;; doom-themes-base sets `gnus-group-news-low-empty :inherit gnus-group-news-low'
@@ -90,7 +132,11 @@
            (new-blur  (if off salih/ns-background-blur 0)))
       (modify-all-frames-parameters
        `((alpha-background . ,new-alpha)
-         (ns-background-blur . ,new-blur)))
+         (ns-background-blur . ,new-blur)
+         (ns-alpha-elements ns-alpha-all)))
+      (if off
+          (salih/--apply-glass-palette)
+        (salih/--apply-opaque-palette))
       (message "glass: alpha=%s blur=%s" new-alpha new-blur)))
 
   (defun salih/set-glass (alpha blur)
@@ -100,7 +146,9 @@
           salih/ns-background-blur blur)
     (modify-all-frames-parameters
      `((alpha-background . ,alpha)
-       (ns-background-blur . ,blur)))
+       (ns-background-blur . ,blur)
+       (ns-alpha-elements ns-alpha-all)))
+    (salih/--apply-glass-palette)
     (message "glass: alpha=%s blur=%s" alpha blur)))
 
 
