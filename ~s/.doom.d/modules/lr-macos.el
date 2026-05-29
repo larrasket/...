@@ -40,8 +40,8 @@
   ;; Darkness tuning:
   ;; - Raise alpha for darker/more opaque glass; lower it for more desktop bleed.
   ;; - Darken the "#303b5d" family below if the material itself is too bright.
-  (setq salih/alpha-background 0.62
-        salih/ns-background-blur 48)
+  (setq salih/alpha-background 0.78
+        salih/ns-background-blur 1)
 
   (defconst salih/--glass-face-palette
     '((default                         :background "#303b5d" :foreground "#c4ceec")

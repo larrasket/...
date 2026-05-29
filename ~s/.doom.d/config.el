@@ -269,3 +269,18 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq magit-git-executable "/opt/homebrew/bin/git")
+
+
+(defun salih/elfeed-show-visit-feed ()
+  "Open the source feed's own URL (not the entry's) in the browser."
+  (interactive)
+  (let* ((entry elfeed-show-entry)
+         (url   (elfeed-entry-link entry)))
+    (unless url (user-error "No feed URL for this entry")
+            (browse-url url))))
+
+(map! :after elfeed
+      :map elfeed-show-mode-map
+      :n "C" #'salih/elfeed-show-visit-feed)
+
+(setq elfeed-goodies/entry-pane-size 0.5)

@@ -44,6 +44,7 @@
 (package! nov)
 
 ;; RSS
+(unpin! elfeed)
 (package! elfeed)
 
 ;; Git

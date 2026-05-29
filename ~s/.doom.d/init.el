@@ -71,6 +71,7 @@
 
        :app
        irc
+       rss
        everywhere
 
        :config

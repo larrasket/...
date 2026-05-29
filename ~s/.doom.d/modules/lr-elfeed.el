@@ -1,60 +1,82 @@
-;;; lr-elfeed.el --- Elfeed RSS reader: feeds, tags, migration -*- lexical-binding: t; -*-
+;;; lr-elfeed.el --- Elfeed RSS reader: feeds and tags -*- lexical-binding: t; -*-
 
-;;; --- Migration from Vienna: mark anything published before today as read.
-;; The cutoff (start-of-today at first run) is persisted so subsequent
-;; sessions, slow fetches, and backdated entries all stay marked.
+;;; --- Org capture: store the article URL (not an elfeed: link) and capture
 
-(defvar salih/elfeed-cutoff-file
-  (expand-file-name "elfeed-migration-cutoff" doom-cache-dir)
-  "File storing the float-time cutoff. Entries dated before this are
-auto-marked as read on insert.")
+(defun salih/elfeed--current-entry ()
+  "Return the Elfeed entry at point, in either search or show buffers."
+  (cond
+   ((derived-mode-p 'elfeed-show-mode) elfeed-show-entry)
+   ((derived-mode-p 'elfeed-search-mode)
+    (let ((sel (elfeed-search-selected t)))
+      (if (consp sel) (car sel) sel)))))
 
-(defvar salih/elfeed-mark-old-cutoff nil
-  "Cached epoch-seconds cutoff loaded from `salih/elfeed-cutoff-file'.")
-
-(defun salih/elfeed--start-of-today ()
-  (let ((d (decode-time)))
-    (float-time (encode-time 0 0 0 (nth 3 d) (nth 4 d) (nth 5 d)))))
-
-(defun salih/elfeed--load-cutoff ()
-  "Read cutoff from disk, seeding to start-of-today on first run."
-  (setq salih/elfeed-mark-old-cutoff
-        (if (file-exists-p salih/elfeed-cutoff-file)
-            (with-temp-buffer
-              (insert-file-contents salih/elfeed-cutoff-file)
-              (string-to-number (string-trim (buffer-string))))
-          (let ((v (salih/elfeed--start-of-today)))
-            (make-directory (file-name-directory salih/elfeed-cutoff-file) t)
-            (with-temp-file salih/elfeed-cutoff-file
-              (insert (number-to-string v)))
-            v))))
-
-(defun salih/elfeed-new-entry-mark-old (entry)
-  "If ENTRY is dated before the migration cutoff, drop its unread tag."
-  (when (and salih/elfeed-mark-old-cutoff
-             (< (elfeed-entry-date entry) salih/elfeed-mark-old-cutoff))
-    (setf (elfeed-entry-tags entry)
-          (cl-remove 'unread (elfeed-entry-tags entry)))))
-
-(defun salih/elfeed-mark-before-cutoff-read ()
-  "Bulk pass: mark every DB entry dated before the cutoff as read.
-Run this once after the first `elfeed-update' to clear the backlog."
+(defun salih/elfeed-org-store-and-capture ()
+  "Store an Org link to the current entry's article URL and capture.
+Unlike the built-in `elfeed' Org link (which stores an `elfeed:' link),
+this stores the real http(s) URL with the entry title as the description,
+then opens `org-capture' with template \"f\".  This is the Elfeed twin of
+`salih/mu4e-org-store-and-capture'."
   (interactive)
-  (require 'elfeed)
-  (unless salih/elfeed-mark-old-cutoff (salih/elfeed--load-cutoff))
-  (let ((cutoff salih/elfeed-mark-old-cutoff)
-        (n 0))
-    (with-elfeed-db-visit (entry _feed)
-      (when (and (< (elfeed-entry-date entry) cutoff)
-                 (memq 'unread (elfeed-entry-tags entry)))
-        (setf (elfeed-entry-tags entry)
-              (cl-remove 'unread (elfeed-entry-tags entry)))
-        (cl-incf n)))
-    (elfeed-db-save)
-    (when (derived-mode-p 'elfeed-search-mode)
-      (elfeed-search-update--force))
-    (message "elfeed: marked %d entries (dated before %s) as read"
-             n (format-time-string "%Y-%m-%d %H:%M" cutoff))))
+  (require 'org)
+  (let ((entry (salih/elfeed--current-entry)))
+    (unless entry (user-error "No Elfeed entry at point"))
+    (let* ((url   (elfeed-entry-link entry))
+           (title (or (elfeed-entry-title entry) url)))
+      (unless url (user-error "Entry has no URL"))
+      (org-store-link-props :type "http" :link url :description title)
+      (push (list url title) org-stored-links)
+      (org-capture nil "f"))))
+
+(defun salih/elfeed-show-visit-feed ()
+  "Open the source feed's own URL (not the entry's) in the browser.
+Bound to \"C\" in `elfeed-show-mode'; complements \"b\"
+\(`elfeed-show-visit') which opens the current article."
+  (interactive)
+  (let* ((entry elfeed-show-entry)
+         (feed  (and entry (elfeed-entry-feed entry)))
+         (url   (and feed (elfeed-feed-url feed))))
+    (unless url (user-error "No feed URL for this entry"))
+    (browse-url url)))
+
+;;; --- Search ordering: cluster entries by author, newest author first
+
+(defun salih/elfeed-entry-author (entry)
+  "Best-effort author key for ENTRY: its author metadata, else feed title.
+Used to cluster entries from the same author/feed together."
+  (let* ((meta (car (elfeed-meta entry :authors)))
+         (name (and meta (plist-get meta :name))))
+    (or name
+        (elfeed-meta--title (elfeed-entry-feed entry))
+        "")))
+
+(defun salih/elfeed-cluster-by-author (&rest _)
+  "Re-order `elfeed-search-entries' so each author's posts are contiguous.
+Author groups are ordered by their most-recent post (freshest author
+first); within an author the newest entry comes first.  Used as :after
+advice on `elfeed-search--update-list' because a pairwise
+`elfeed-search-sort-function' cannot know each author's latest date."
+  (when elfeed-search-entries
+    (let ((latest (make-hash-table :test 'equal)))
+      (dolist (e elfeed-search-entries)
+        (let ((a (salih/elfeed-entry-author e))
+              (d (elfeed-entry-date e)))
+          (when (> d (gethash a latest 0))
+            (puthash a d latest))))
+      (setq elfeed-search-entries
+            (sort elfeed-search-entries
+                  (lambda (x y)
+                    (let ((ax (salih/elfeed-entry-author x))
+                          (ay (salih/elfeed-entry-author y)))
+                      (if (string= ax ay)
+                          ;; same author: newest entry first
+                          (> (elfeed-entry-date x) (elfeed-entry-date y))
+                        ;; different authors: freshest author's group first
+                        (let ((lx (gethash ax latest))
+                              (ly (gethash ay latest)))
+                          (if (= lx ly)
+                              (string-collate-lessp ax ay nil t)
+                            (> lx ly)))))))))))
+
 
 ;;; --- Elfeed proper
 
@@ -64,8 +86,21 @@ Run this once after the first `elfeed-update' to clear the backlog."
         elfeed-search-title-max-width 100
         elfeed-search-title-min-width 30)
 
-  (salih/elfeed--load-cutoff)
-  (add-hook 'elfeed-new-entry-hook #'salih/elfeed-new-entry-mark-old)
+  ;; Cluster the search list by author (freshest author first) via an :after
+  ;; pass.  We leave `elfeed-search-sort-function' at the default date sort and
+  ;; let the advice reorder the already-built list (a pairwise sort predicate
+  ;; can't cluster by per-author recency).  `advice-add' is idempotent, so
+  ;; re-evaluating this block won't stack duplicates.
+  (setq elfeed-search-sort-function nil)
+  (advice-add 'elfeed-search--update-list :after #'salih/elfeed-cluster-by-author)
+  ;; If a search buffer is already open (e.g. after `doom/reload'), drop any
+  ;; stale buffer-local sort and re-sort now so the new ordering shows
+  ;; immediately instead of only on the next refresh.
+  (when-let* ((buf (get-buffer "*elfeed-search*")))
+    (with-current-buffer buf
+      (kill-local-variable 'elfeed-search-sort-function)
+      (when (derived-mode-p 'elfeed-search-mode)
+        (elfeed-search-update :force))))
 
   (setq elfeed-feeds
         '(;; ---------- Programming — personal blogs ----------
@@ -277,4 +312,16 @@ Run this once after the first `elfeed-update' to clear the backlog."
 (map! :leader
       :desc "Elfeed" "o e" #'elfeed)
 
+(map! :after elfeed
+      :map (elfeed-search-mode-map elfeed-show-mode-map)
+      :n "C-c C-c" #'salih/elfeed-org-store-and-capture)
+
+(map! :after elfeed
+      :map elfeed-show-mode-map
+      :n "C" #'salih/elfeed-show-visit-feed
+      :n "C-n" #'elfeed-goodies/split-show-next
+      :n "C-p" #'elfeed-goodies/split-show-prev)
+
 (provide 'lr-elfeed)
+
+
