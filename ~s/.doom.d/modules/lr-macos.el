@@ -32,51 +32,54 @@
   ;; private APIs so it has to be in default-frame-alist (frame-creation
   ;; time) for the NSWindow's backing material to be configured before
   ;; display.
-  (defvar salih/alpha-background 0.56
+  (defvar salih/alpha-background 0.62
     "Frame background alpha (0.0-1.0). Lower = more glass.")
   (defvar salih/ns-background-blur 48
     "macOS background blur radius (px). 0 = no blur, 30+ = strong glass.")
 
-  (setq salih/alpha-background 0.56
+  ;; Darkness tuning:
+  ;; - Raise alpha for darker/more opaque glass; lower it for more desktop bleed.
+  ;; - Darken the "#303b5d" family below if the material itself is too bright.
+  (setq salih/alpha-background 0.62
         salih/ns-background-blur 48)
 
   (defconst salih/--glass-face-palette
-    '((default                         :background "#38466b" :foreground "#cbd6f4")
-      (fringe                          :background "#38466b")
-      (line-number                     :background "#38466b" :foreground "#8796c0" :slant normal)
-      (line-number-current-line        :background "#38466b" :foreground "#dfe8ff" :slant normal)
-      (hl-line                         :background "#435379")
-      (mode-line                       :background "#303b5d" :foreground "#cbd6f4" :family "Pragmasevka")
-      (mode-line-active                :background "#303b5d" :foreground "#cbd6f4" :family "Pragmasevka")
-      (mode-line-inactive              :background "#242d49" :foreground "#8796c0" :family "Pragmasevka")
-      (header-line                     :background "#38466b" :foreground "#cbd6f4")
-      (vertical-border                 :background "#38466b" :foreground "#65749c")
-      (window-divider                  :foreground "#65749c")
-      (window-divider-first-pixel      :foreground "#65749c")
-      (window-divider-last-pixel       :foreground "#65749c")
-      (cursor                          :background "#a7fff4")
-      (region                          :background "#53648f")
-      (minibuffer-prompt               :foreground "#8faeff" :weight bold)
-      (font-lock-comment-face          :foreground "#9faed6" :slant italic)
-      (font-lock-comment-delimiter-face :foreground "#9faed6" :slant italic)
-      (font-lock-doc-face              :foreground "#9faed6" :slant italic)
+    '((default                         :background "#303b5d" :foreground "#c4ceec")
+      (fringe                          :background "#303b5d")
+      (line-number                     :background "#303b5d" :foreground "#7a89b3" :slant normal)
+      (line-number-current-line        :background "#303b5d" :foreground "#d8e1ff" :slant normal)
+      (hl-line                         :background "#394667")
+      (mode-line                       :background "#283150" :foreground "#c4ceec" :family "Pragmasevka")
+      (mode-line-active                :background "#283150" :foreground "#c4ceec" :family "Pragmasevka")
+      (mode-line-inactive              :background "#202842" :foreground "#7a89b3" :family "Pragmasevka")
+      (header-line                     :background "#303b5d" :foreground "#c4ceec")
+      (vertical-border                 :background "#303b5d" :foreground "#596891")
+      (window-divider                  :foreground "#596891")
+      (window-divider-first-pixel      :foreground "#596891")
+      (window-divider-last-pixel       :foreground "#596891")
+      (cursor                          :background "#9ffff3")
+      (region                          :background "#4b5b82")
+      (minibuffer-prompt               :foreground "#86a7f7" :weight bold)
+      (font-lock-comment-face          :foreground "#93a2ca" :slant italic)
+      (font-lock-comment-delimiter-face :foreground "#93a2ca" :slant italic)
+      (font-lock-doc-face              :foreground "#93a2ca" :slant italic)
       (font-lock-doc-markup-face       :foreground "#bda9f4" :slant italic)
-      (font-lock-keyword-face          :foreground "#8faeff" :weight bold)
+      (font-lock-keyword-face          :foreground "#86a7f7" :weight bold)
       (font-lock-builtin-face          :foreground "#8bdfe8" :weight bold)
-      (font-lock-string-face           :foreground "#a8d9b4")
-      (font-lock-function-name-face    :foreground "#c4d0f2")
+      (font-lock-string-face           :foreground "#a3d2af")
+      (font-lock-function-name-face    :foreground "#bdc8ea")
       (font-lock-variable-name-face    :foreground "#e7c98f" :slant italic)
       (font-lock-type-face             :foreground "#bda9f4" :slant italic)
       (font-lock-constant-face         :foreground "#f4a868")
       (font-lock-warning-face          :foreground "#f48395" :weight bold)
       (isearch                         :background "#e8c574" :foreground "#111a2b" :weight bold)
-      (lazy-highlight                  :background "#5d6f9a" :foreground "#ecf1ff")
+      (lazy-highlight                  :background "#52638c" :foreground "#e6ecff")
       (show-paren-match                :background "#8bdfe8" :foreground "#10192a" :weight bold)
-      (doom-dashboard-banner           :foreground "#a3b1ec")
-      (doom-dashboard-menu-title       :foreground "#8faeff" :weight bold)
-      (doom-dashboard-menu-desc        :foreground "#cbd6f4")
-      (corfu-default                   :background "#303b5d" :foreground "#cbd6f4")
-      (vertico-current                 :background "#435379" :foreground "#ecf1ff"))
+      (doom-dashboard-banner           :foreground "#9aa9e4")
+      (doom-dashboard-menu-title       :foreground "#86a7f7" :weight bold)
+      (doom-dashboard-menu-desc        :foreground "#c4ceec")
+      (corfu-default                   :background "#283150" :foreground "#c4ceec")
+      (vertico-current                 :background "#394667" :foreground "#e6ecff"))
     "Default Ghostty-like face palette used while glass is enabled.")
 
   (defvar salih/glass-face-palette salih/--glass-face-palette
