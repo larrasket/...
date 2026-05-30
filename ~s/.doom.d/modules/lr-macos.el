@@ -37,124 +37,21 @@
   (defvar salih/ns-background-blur 48
     "macOS background blur radius (px). 0 = no blur, 30+ = strong glass.")
 
-  ;; Darkness tuning:
-  ;; - alpha-background changes opacity, not material darkness.
-  ;; - Darken the "#242c47" family below to make the glass itself darker.
+  ;; Glass mode intentionally does not set face colors. The active theme should
+  ;; own backgrounds/foregrounds so this stays seamless with any theme.
   (setq salih/alpha-background 0.78
         salih/ns-background-blur 1)
-
-  (defconst salih/--glass-face-palette
-    '((default                         :background "#242c47" :foreground "#c0cae8")
-      (fringe                          :background "#242c47")
-      (line-number                     :background "#242c47" :foreground "#6f7da8" :slant normal)
-      (line-number-current-line        :background "#242c47" :foreground "#cfd9f9" :slant normal)
-      (hl-line                         :background "#2d3656")
-      (mode-line                       :background "#1f263e" :foreground "#c0cae8" :family "Pragmasevka")
-      (mode-line-active                :background "#1f263e" :foreground "#c0cae8" :family "Pragmasevka")
-      (mode-line-inactive              :background "#181e31" :foreground "#6f7da8" :family "Pragmasevka")
-      (header-line                     :background "#242c47" :foreground "#c0cae8")
-      (vertical-border                 :background "#242c47" :foreground "#4d5b82")
-      (window-divider                  :foreground "#4d5b82")
-      (window-divider-first-pixel      :foreground "#4d5b82")
-      (window-divider-last-pixel       :foreground "#4d5b82")
-      (cursor                          :background "#9ffff3")
-      (region                          :background "#3d4b70")
-      (minibuffer-prompt               :foreground "#7fa0ef" :weight bold)
-      (font-lock-comment-face          :foreground "#8796bd" :slant italic)
-      (font-lock-comment-delimiter-face :foreground "#8796bd" :slant italic)
-      (font-lock-doc-face              :foreground "#8796bd" :slant italic)
-      (font-lock-doc-markup-face       :foreground "#bda9f4" :slant italic)
-      (font-lock-keyword-face          :foreground "#7fa0ef" :weight bold)
-      (font-lock-builtin-face          :foreground "#8bdfe8" :weight bold)
-      (font-lock-string-face           :foreground "#a3d2af")
-      (font-lock-function-name-face    :foreground "#bdc8ea")
-      (font-lock-variable-name-face    :foreground "#e7c98f" :slant italic)
-      (font-lock-type-face             :foreground "#bda9f4" :slant italic)
-      (font-lock-constant-face         :foreground "#f4a868")
-      (font-lock-warning-face          :foreground "#f48395" :weight bold)
-      (isearch                         :background "#e8c574" :foreground "#111a2b" :weight bold)
-      (lazy-highlight                  :background "#48577d" :foreground "#e6ecff")
-      (show-paren-match                :background "#8bdfe8" :foreground "#10192a" :weight bold)
-      (doom-dashboard-banner           :foreground "#909fda")
-      (doom-dashboard-menu-title       :foreground "#7fa0ef" :weight bold)
-      (doom-dashboard-menu-desc        :foreground "#c0cae8")
-      (corfu-default                   :background "#1f263e" :foreground "#c0cae8")
-      (vertico-current                 :background "#2d3656" :foreground "#e6ecff"))
-    "Default Ghostty-like face palette used while glass is enabled.")
-
-  (defvar salih/glass-face-palette salih/--glass-face-palette
-    "Face palette used while `salih/toggle-glass' is enabled.")
-
-  (defconst salih/--opaque-face-palette
-    '((default                         :background "#000000" :foreground "#a9b1d6")
-      (fringe                          :background "#000000")
-      (line-number                     :background "#000000" :foreground "#565f89" :slant normal)
-      (line-number-current-line        :background "#000000" :foreground "#a9b1d6" :slant normal)
-      (hl-line                         :background "#0d0d0d")
-      (mode-line                       :background "#181818" :foreground "#a9b1d6" :family "Pragmasevka")
-      (mode-line-active                :background "#181818" :foreground "#a9b1d6" :family "Pragmasevka")
-      (mode-line-inactive              :background "#0a0a0a" :foreground "#565f89" :family "Pragmasevka")
-      (header-line                     :background "#000000" :foreground "#a9b1d6")
-      (vertical-border                 :background "#000000" :foreground "#1a1a1a")
-      (window-divider                  :foreground "#1a1a1a")
-      (window-divider-first-pixel      :foreground "#1a1a1a")
-      (window-divider-last-pixel       :foreground "#1a1a1a")
-      (cursor                          :background "#00ff00")
-      (region                          :background "#283457")
-      (minibuffer-prompt               :foreground "#7aa2f7" :weight bold)
-      (font-lock-comment-face          :foreground "#565f89" :slant italic)
-      (font-lock-comment-delimiter-face :foreground "#565f89" :slant italic)
-      (font-lock-doc-face              :foreground "#565f89" :slant italic)
-      (font-lock-doc-markup-face       :foreground "#a9b1d6" :slant italic)
-      (font-lock-keyword-face          :foreground "#7aa2f7" :weight bold)
-      (font-lock-builtin-face          :foreground "#7dcfff" :weight bold)
-      (font-lock-string-face           :foreground "#9ece6a")
-      (font-lock-function-name-face    :foreground "#7aa2f7")
-      (font-lock-variable-name-face    :foreground "#c0caf5" :slant italic)
-      (font-lock-type-face             :foreground "#bb9af7" :slant italic)
-      (font-lock-constant-face         :foreground "#ff9e64")
-      (font-lock-warning-face          :foreground "#f7768e" :weight bold)
-      (isearch                         :background "#e0af68" :foreground "#000000" :weight bold)
-      (lazy-highlight                  :background "#2f3b54" :foreground "#c0caf5")
-      (show-paren-match                :background "#2e3c64" :foreground "#c0caf5" :weight bold)
-      (doom-dashboard-banner           :foreground "#565f89")
-      (doom-dashboard-menu-title       :foreground "#7aa2f7" :weight bold)
-      (doom-dashboard-menu-desc        :foreground "#a9b1d6")
-      (corfu-default                   :background "#1a1b26" :foreground "#c0caf5")
-      (vertico-current                 :background "#1f2335" :foreground "#c0caf5"))
-    "Default face palette restored when glass is disabled.")
-
-  (defvar salih/opaque-face-palette salih/--opaque-face-palette
-    "Face palette restored when glass is disabled.")
-
-  (setq salih/glass-face-palette salih/--glass-face-palette
-        salih/opaque-face-palette salih/--opaque-face-palette)
 
   (add-to-list 'default-frame-alist `(alpha-background . ,salih/alpha-background))
   (add-to-list 'default-frame-alist `(ns-background-blur . ,salih/ns-background-blur))
   (add-to-list 'default-frame-alist '(ns-alpha-elements ns-alpha-all))
 
-  (defun salih/--apply-face-palette (palette)
-    "Apply face attributes from PALETTE to existing faces."
-    (dolist (spec palette)
-      (when (facep (car spec))
-        (apply #'set-face-attribute (car spec) nil (cdr spec)))))
-
-  (defun salih/--apply-glass-palette ()
-    "Apply the brighter blue-gray palette used by glass mode."
-    (salih/--apply-face-palette salih/glass-face-palette))
-
-  (defun salih/--apply-opaque-palette ()
-    "Restore the solid dark palette used when glass mode is off."
-    (salih/--apply-face-palette salih/opaque-face-palette))
-
   (defun salih/--apply-glass (&optional frame)
-    "Re-apply transparency, blur, and glass palette to FRAME."
+    "Re-apply transparency and blur to FRAME."
     (with-selected-frame (or frame (selected-frame))
       (set-frame-parameter nil 'alpha-background  salih/alpha-background)
       (set-frame-parameter nil 'ns-background-blur salih/ns-background-blur)
-      (set-frame-parameter nil 'ns-alpha-elements '(ns-alpha-all))
-      (salih/--apply-glass-palette)))
+      (set-frame-parameter nil 'ns-alpha-elements '(ns-alpha-all))))
 
   ;; Break the gnus inheritance cycle that doom-themes-base introduces.
   ;; doom-themes-base sets `gnus-group-news-low-empty :inherit gnus-group-news-low'
@@ -195,9 +92,6 @@
        `((alpha-background . ,new-alpha)
          (ns-background-blur . ,new-blur)
          (ns-alpha-elements ns-alpha-all)))
-      (if off
-          (salih/--apply-glass-palette)
-        (salih/--apply-opaque-palette))
       (message "glass: alpha=%s blur=%s" new-alpha new-blur)))
 
   (defun salih/set-glass (alpha blur)
@@ -209,7 +103,6 @@
      `((alpha-background . ,alpha)
        (ns-background-blur . ,blur)
        (ns-alpha-elements ns-alpha-all)))
-    (salih/--apply-glass-palette)
     (message "glass: alpha=%s blur=%s" alpha blur)))
 
 

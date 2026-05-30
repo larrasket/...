@@ -3,6 +3,9 @@
 (require 'ert)
 (require 'cl-lib)
 
+(when (boundp 'native-comp-jit-compilation)
+  (setq native-comp-jit-compilation nil))
+
 (defmacro add-hook! (&rest _)
   nil)
 
@@ -55,44 +58,22 @@
        (list lr-macos-test--frame-parameters
              lr-macos-test--face-attributes))))
 
-(defun lr-macos-test--face-attributes (face palette)
-  (cdr (assq face palette)))
-
-(ert-deftest salih-glass-palettes-include-core-faces ()
-  (dolist (face '(default fringe line-number line-number-current-line hl-line
-                  mode-line mode-line-active mode-line-inactive header-line
-                  vertical-border window-divider window-divider-first-pixel
-                  window-divider-last-pixel cursor region minibuffer-prompt
-                  font-lock-comment-face font-lock-doc-face font-lock-keyword-face
-                  font-lock-string-face font-lock-function-name-face
-                  font-lock-variable-name-face font-lock-type-face isearch
-                  lazy-highlight show-paren-match doom-dashboard-banner
-                  doom-dashboard-menu-title doom-dashboard-menu-desc
-                  corfu-default vertico-current))
-    (should (assq face salih/glass-face-palette))
-    (should (assq face salih/opaque-face-palette))))
-
-(ert-deftest salih-glass-defaults-are-ghostty-material-values ()
+(ert-deftest salih-glass-defaults-are-material-values-only ()
   (should (= salih/alpha-background 0.78))
   (should (= salih/ns-background-blur 1))
-  (should (equal (lr-macos-test--face-attributes 'default salih/glass-face-palette)
-                 '(:background "#242c47" :foreground "#c0cae8")))
-  (should (equal (lr-macos-test--face-attributes 'mode-line salih/glass-face-palette)
-                 '(:background "#1f263e" :foreground "#c0cae8" :family "Pragmasevka")))
-  (should (equal (lr-macos-test--face-attributes 'font-lock-comment-face salih/glass-face-palette)
-                 '(:foreground "#8796bd" :slant italic))))
+  (should-not (boundp 'salih/glass-face-palette))
+  (should-not (boundp 'salih/opaque-face-palette))
+  (should-not (fboundp 'salih/--apply-glass-palette))
+  (should-not (fboundp 'salih/--apply-opaque-palette)))
 
-(ert-deftest salih-glass-preset-refreshes-on-module-reload ()
+(ert-deftest salih-glass-preset-refreshes-material-values-on-module-reload ()
   (let ((salih/alpha-background 0.55)
-        (salih/ns-background-blur 44)
-        (salih/glass-face-palette '((default :background "#273454"))))
+        (salih/ns-background-blur 44))
     (lr-macos-test--load-module)
     (should (= salih/alpha-background 0.78))
-    (should (= salih/ns-background-blur 1))
-    (should (equal (lr-macos-test--face-attributes 'default salih/glass-face-palette)
-                   '(:background "#242c47" :foreground "#c0cae8")))))
+    (should (= salih/ns-background-blur 1))))
 
-(ert-deftest salih-apply-glass-applies-frame-parameters-and-faces ()
+(ert-deftest salih-apply-glass-applies-frame-parameters-only ()
   (pcase-let ((`(,frame-parameters ,face-attributes)
                (lr-macos-test--capture-effects
                  (let ((salih/alpha-background 0.78)
@@ -101,11 +82,9 @@
     (should (member '(alpha-background . 0.78) frame-parameters))
     (should (member '(ns-background-blur . 1) frame-parameters))
     (should (member '(ns-alpha-elements ns-alpha-all) frame-parameters))
-    (should (assoc 'default face-attributes))
-    (should (assoc 'mode-line face-attributes))
-    (should (assoc 'font-lock-keyword-face face-attributes))))
+    (should-not face-attributes)))
 
-(ert-deftest salih-set-glass-updates-values-and-applies-glass-palette ()
+(ert-deftest salih-set-glass-updates-material-values-only ()
   (pcase-let ((`(,frame-parameters ,face-attributes)
                (lr-macos-test--capture-effects
                  (salih/set-glass 0.56 45))))
@@ -115,9 +94,9 @@
                    '((alpha-background . 0.56)
                      (ns-background-blur . 45)
                      (ns-alpha-elements ns-alpha-all))))
-    (should (assoc 'default face-attributes))))
+    (should-not face-attributes)))
 
-(ert-deftest salih-toggle-glass-off-restores-opaque-palette ()
+(ert-deftest salih-toggle-glass-off-keeps-theme-faces ()
   (pcase-let ((`(,frame-parameters ,face-attributes)
                (lr-macos-test--capture-effects
                  (cl-letf (((symbol-function 'frame-parameter)
@@ -127,7 +106,6 @@
                    '((alpha-background . 1.0)
                      (ns-background-blur . 0)
                      (ns-alpha-elements ns-alpha-all))))
-    (should (member (list 'default nil '(:background "#000000" :foreground "#a9b1d6"))
-                    face-attributes))))
+    (should-not face-attributes)))
 
 ;;; lr-macos-glass-test.el ends here
