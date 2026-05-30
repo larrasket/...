@@ -3,6 +3,40 @@
 ;;; --- Fringe ---
 (set-fringe-style '(1 . 1))
 
+;;; --- Faces ---
+(custom-set-faces!
+  ;; Theme-neutral emphasis. Colors stay owned by the active theme.
+  '(font-lock-keyword-face     :weight bold)
+  '(font-lock-builtin-face     :weight bold)
+  '(font-lock-comment-face           :slant italic)
+  '(font-lock-comment-delimiter-face :slant italic)
+  '(font-lock-doc-face               :slant italic)
+  '(font-lock-doc-markup-face        :slant italic)
+  '(font-lock-type-face              :slant italic)
+  '(font-lock-variable-name-face     :slant italic)
+  '(org-meta-line                    :slant italic)
+  '(org-document-info                :slant italic)
+  '(org-document-info-keyword        :slant italic)
+  '(org-special-keyword              :slant italic)
+  '(org-block-begin-line             :slant italic)
+  '(org-block-end-line               :slant italic)
+  '(treemacs-root-face               :weight bold :height 1.2)
+  '(doom-themes-treemacs-root-face   :weight ultra-bold :height 1.2)
+  '(rjsx-attr                        :slant italic :weight medium)
+  '(org-level-1 :weight bold)
+  '(org-level-2 :weight bold)
+  '(org-level-3 :weight bold)
+  '(org-level-4 :weight bold)
+  '(org-level-5 :weight bold)
+  '(org-level-6 :weight bold)
+  '(org-level-7 :weight bold)
+  '(org-level-8 :weight bold)
+  '(orderless-match-face-0 :weight bold)
+  '(orderless-match-face-1 :weight bold)
+  '(orderless-match-face-2 :weight bold)
+  '(orderless-match-face-3 :weight bold)
+  '(org-document-title :inherit outline-1 :height 1.5 :weight normal))
+
 ;;; --- Cursor ---
 (setq evil-default-cursor 'box)
 
