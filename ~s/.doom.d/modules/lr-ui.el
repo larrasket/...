@@ -3,73 +3,8 @@
 ;;; --- Fringe ---
 (set-fringe-style '(1 . 1))
 
-;;; --- Faces ---
-;; doom-badger sets only :foreground on keyword/builtin/org-level faces.
-;; ef-themes sets :inherit bold on those same faces — that's the "bolder" look.
-;; We apply :weight bold explicitly here so the effect is deterministic and
-;; doesn't depend on any theme load ordering.
-(custom-set-faces!
-  ;; --- Black background variant of doom-badger ---
-  ;; Original bg=#171717, bg-alt=#2f2f2f. Shift everything ~#17 darker
-  ;; to match a pure-black macOS desktop.
-  '(default                    :background "#000000")
-  '(fringe                     :background "#000000")
-  '(line-number                :background "#000000" :slant normal)
-  '(line-number-current-line   :background "#000000" :slant normal)
-  '(hl-line                    :background "#0d0d0d")
-  '(mode-line                  :background "#181818" :family "Pragmasevka")
-  '(mode-line-active           :background "#181818" :family "Pragmasevka")
-  '(mode-line-inactive         :background "#0a0a0a" :family "Pragmasevka")
-  '(header-line                :background "#000000")
-  '(vertical-border            :background "#000000" :foreground "#1a1a1a")
-  '(window-divider             :foreground "#1a1a1a")
-  '(window-divider-first-pixel :foreground "#1a1a1a")
-  '(window-divider-last-pixel  :foreground "#1a1a1a")
-  ;; Programming: keywords and builtins bold (ef-themes style).
-  ;; Keyword color shifted off tokyo-night's magenta toward blue to dial back purple.
-  '(font-lock-keyword-face     :weight bold :foreground "#7aa2f7")
-  '(font-lock-builtin-face     :weight bold)
-  ;; Italics (modus-operandi style): comments, docs, types, variables, and org meta.
-  '(font-lock-comment-face           :slant italic)
-  '(font-lock-comment-delimiter-face :slant italic)
-  '(font-lock-doc-face               :slant italic)
-  '(font-lock-doc-markup-face        :slant italic)
-  '(font-lock-type-face              :slant italic)
-  '(font-lock-variable-name-face     :slant italic)
-  '(org-meta-line                    :slant italic)
-  '(org-document-info                :slant italic)
-  '(org-document-info-keyword        :slant italic)
-  '(org-special-keyword              :slant italic)
-  '(org-block-begin-line             :slant italic)
-  '(org-block-end-line               :slant italic)
-  ;; Reduce remaining purple from tokyo-night defaults.
-  '(markdown-markup-face             :foreground "#a9b1d6")
-  '(markdown-blockquote-face         :foreground "#a9b1d6")
-  '(markdown-table-face              :foreground "#a9b1d6")
-  '(treemacs-root-face               :foreground "#7aa2f7" :weight bold :height 1.2)
-  '(doom-themes-treemacs-root-face   :foreground "#7aa2f7" :weight ultra-bold :height 1.2)
-  '(web-mode-html-attr-name-face     :foreground "#ff9e64")
-  '(rjsx-attr                        :foreground "#ff9e64" :slant italic :weight medium)
-  '(rjsx-text                        :foreground "#a9b1d6")
-  ;; Org headings bold
-  '(org-level-1 :weight bold)
-  '(org-level-2 :weight bold)
-  '(org-level-3 :weight bold)
-  '(org-level-4 :weight bold)
-  '(org-level-5 :weight bold)
-  '(org-level-6 :weight bold)
-  '(org-level-7 :weight bold)
-  '(org-level-8 :weight bold)
-  ;; Completion/search match highlighting bold
-  '(orderless-match-face-0 :weight bold)
-  '(orderless-match-face-1 :weight bold)
-  '(orderless-match-face-2 :weight bold)
-  '(orderless-match-face-3 :weight bold)
-  ;; Org document title
-  '(org-document-title :inherit outline-1 :height 1.5 :weight normal))
-
 ;;; --- Cursor ---
-(setq evil-default-cursor '("#00ff00" box))
+(setq evil-default-cursor 'box)
 
 ;;; --- Modeline ---
 (setq doom-modeline-icon t
@@ -219,16 +154,3 @@
         dired-preview-max-size (* 1024 1024 30)))
 
 (provide 'lr-ui)
-
-
-
-
-(defun salih/fix-ef-dark-modeline (&rest _)
-  (when (eq (car custom-enabled-themes) 'ef-dark)
-    (set-face-attribute 'doom-modeline-bar nil
-                        :background "#3f5f5d")
-    (set-face-attribute 'doom-modeline-bar-inactive nil
-                        :background "#3e403f")))
-
-
-(add-hook 'enable-theme-functions #'salih/fix-ef-dark-modeline)
