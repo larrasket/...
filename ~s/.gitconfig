@@ -16,3 +16,5 @@
 	user = larrasket
 [http]
 	postBuffer = 524288000
+[rerere]
+	enabled = true
