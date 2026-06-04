@@ -1,0 +1,327 @@
+;;; lr-elfeed.el --- Elfeed RSS reader: feeds and tags -*- lexical-binding: t; -*-
+
+;;; --- Org capture: store the article URL (not an elfeed: link) and capture
+
+(defun salih/elfeed--current-entry ()
+  "Return the Elfeed entry at point, in either search or show buffers."
+  (cond
+   ((derived-mode-p 'elfeed-show-mode) elfeed-show-entry)
+   ((derived-mode-p 'elfeed-search-mode)
+    (let ((sel (elfeed-search-selected t)))
+      (if (consp sel) (car sel) sel)))))
+
+(defun salih/elfeed-org-store-and-capture ()
+  "Store an Org link to the current entry's article URL and capture.
+Unlike the built-in `elfeed' Org link (which stores an `elfeed:' link),
+this stores the real http(s) URL with the entry title as the description,
+then opens `org-capture' with template \"f\".  This is the Elfeed twin of
+`salih/mu4e-org-store-and-capture'."
+  (interactive)
+  (require 'org)
+  (let ((entry (salih/elfeed--current-entry)))
+    (unless entry (user-error "No Elfeed entry at point"))
+    (let* ((url   (elfeed-entry-link entry))
+           (title (or (elfeed-entry-title entry) url)))
+      (unless url (user-error "Entry has no URL"))
+      (org-store-link-props :type "http" :link url :description title)
+      (push (list url title) org-stored-links)
+      (org-capture nil "f"))))
+
+(defun salih/elfeed-show-visit-feed ()
+  "Open the source feed's own URL (not the entry's) in the browser.
+Bound to \"C\" in `elfeed-show-mode'; complements \"b\"
+\(`elfeed-show-visit') which opens the current article."
+  (interactive)
+  (let* ((entry elfeed-show-entry)
+         (feed  (and entry (elfeed-entry-feed entry)))
+         (url   (and feed (elfeed-feed-url feed))))
+    (unless url (user-error "No feed URL for this entry"))
+    (browse-url url)))
+
+;;; --- Search ordering: cluster entries by author, newest author first
+
+(defun salih/elfeed-entry-author (entry)
+  "Best-effort author key for ENTRY: its author metadata, else feed title.
+Used to cluster entries from the same author/feed together."
+  (let* ((meta (car (elfeed-meta entry :authors)))
+         (name (and meta (plist-get meta :name))))
+    (or name
+        (elfeed-meta--title (elfeed-entry-feed entry))
+        "")))
+
+(defun salih/elfeed-cluster-by-author (&rest _)
+  "Re-order `elfeed-search-entries' so each author's posts are contiguous.
+Author groups are ordered by their most-recent post (freshest author
+first); within an author the newest entry comes first.  Used as :after
+advice on `elfeed-search--update-list' because a pairwise
+`elfeed-search-sort-function' cannot know each author's latest date."
+  (when elfeed-search-entries
+    (let ((latest (make-hash-table :test 'equal)))
+      (dolist (e elfeed-search-entries)
+        (let ((a (salih/elfeed-entry-author e))
+              (d (elfeed-entry-date e)))
+          (when (> d (gethash a latest 0))
+            (puthash a d latest))))
+      (setq elfeed-search-entries
+            (sort elfeed-search-entries
+                  (lambda (x y)
+                    (let ((ax (salih/elfeed-entry-author x))
+                          (ay (salih/elfeed-entry-author y)))
+                      (if (string= ax ay)
+                          ;; same author: newest entry first
+                          (> (elfeed-entry-date x) (elfeed-entry-date y))
+                        ;; different authors: freshest author's group first
+                        (let ((lx (gethash ax latest))
+                              (ly (gethash ay latest)))
+                          (if (= lx ly)
+                              (string-collate-lessp ax ay nil t)
+                            (> lx ly)))))))))))
+
+
+;;; --- Elfeed proper
+
+(after! elfeed
+  (setq elfeed-db-directory (expand-file-name "elfeed/" doom-cache-dir)
+        elfeed-search-filter "@2-weeks-ago +unread"
+        elfeed-search-title-max-width 100
+        elfeed-search-title-min-width 30)
+
+  ;; Cluster the search list by author (freshest author first) via an :after
+  ;; pass.  We leave `elfeed-search-sort-function' at the default date sort and
+  ;; let the advice reorder the already-built list (a pairwise sort predicate
+  ;; can't cluster by per-author recency).  `advice-add' is idempotent, so
+  ;; re-evaluating this block won't stack duplicates.
+  (setq elfeed-search-sort-function nil)
+  (advice-add 'elfeed-search--update-list :after #'salih/elfeed-cluster-by-author)
+  ;; If a search buffer is already open (e.g. after `doom/reload'), drop any
+  ;; stale buffer-local sort and re-sort now so the new ordering shows
+  ;; immediately instead of only on the next refresh.
+  (when-let* ((buf (get-buffer "*elfeed-search*")))
+    (with-current-buffer buf
+      (kill-local-variable 'elfeed-search-sort-function)
+      (when (derived-mode-p 'elfeed-search-mode)
+        (elfeed-search-update :force))))
+
+  (setq elfeed-feeds
+        '(;; ---------- Programming — personal blogs ----------
+          ("https://blog.giovanh.com/feeds/atom.xml"            blog programming)
+          ("https://cedwards.xyz/index.xml"                      blog programming)
+          ("http://norvig.com/rss-feed.xml"                      blog programming)
+          ("https://lukesmith.xyz/index.xml"                     blog)
+          ("https://drewdevault.com/blog/index.xml"              blog programming)
+          ("https://williamdavies.blog/feed/"                    blog)
+          ("https://www.n16f.net/blog/index.xml"                 blog programming)
+          ("https://rss.gabiseabra.dev/feed"                     blog programming)
+          ("https://lewiscampbell.tech/blog/feed.xml"            blog programming)
+          ("https://abhinavg.net/posts/index.xml"                blog programming)
+          ("https://ploum.net/atom_en.xml"                       blog programming)
+          ("https://maurycyz.com/index.xml"                      blog programming)
+          ("https://rahim.li/index.xml"                          blog programming)
+          ("https://gallant.dev/feeds/"                          blog)
+          ("https://danluu.com/atom.xml"                         blog programming)
+          ("https://martinalderson.com/feed.xml"                 blog programming ai)
+          ("https://stephenramsay.net/rss.xml"                   blog programming)
+          ("https://brooker.co.za/blog/atom.xml"                 blog programming)
+          ("https://kevincox.ca/feed.atom"                       blog programming)
+          ("http://boxbase.org/feed.rss"                         blog programming)
+          ("https://nsrip.com/feed.xml"                          blog programming)
+          ("https://alexanderdanilov.dev/rss.xml"                blog programming)
+          ("https://blog.alexbeals.com/feeds/rss"                blog programming)
+          ("https://utcc.utoronto.ca/~cks/space/blog/?atom"      blog programming)
+          ("https://www.gleech.org/feed.xml"                     blog)
+          ("https://kevinboone.me/feed.xml"                      blog programming)
+          ("https://meyerweb.com/feed/"                          blog web)
+          ("https://maia.crimew.gay/feed.xml"                    blog programming)
+          ("https://third-bit.com/atom.xml"                      blog programming)
+          ("https://www.pixelbeat.org/feed/rss2.xml"             blog programming)
+          ("https://joshblais.com/index.xml"                     blog)
+          ("https://aliquote.org/index.xml"                      blog programming)
+          ("https://www.cyberdemon.org/feed.xml"                 blog programming)
+          ("https://bobbyhiltz.com/rss.xml"                      blog)
+          ("https://blog.avas.space/feed/"                       blog)
+          ("https://notes.jeddacp.com/feed/"                     blog photography)
+          ("https://www.fromjason.xyz/p/freelance/feed/feed.xml" blog)
+          ("https://liamrosen.com/feed/"                         blog)
+          ("https://trueblue.bearblog.dev/feed/?type=rss"        blog)
+          ("https://takenvaullt.bearblog.dev/feed/?type=rss"     blog)
+          ("https://atelfo.github.io/feed.xml"                   blog science)
+          ("https://lr0.org/index.xml"                           blog programming)
+          ("https://www.computerenhance.com/feed"                blog programming)
+          ("https://appliedgo.net/index.xml"                     blog programming golang)
+          ("https://words.filippo.io/rss/"                       blog programming security)
+          ("https://nullpt.rs/feed.rss"                          blog programming security)
+          ("https://www.emadelsaid.com/+/feed.rss"               blog programming arabic)
+
+          ;; ---------- Programming — engineering & industry ----------
+          ("https://engineering.fb.com/feed/"                    engineering programming)
+          ("https://netflixtechblog.com/feed"                    engineering programming)
+          ("https://dropbox.tech/feed"                           engineering programming)
+          ("https://tailscale.com/blog/index.xml"                engineering programming)
+          ("https://careersatdoordash.com/engineering-blog/feed/" engineering programming)
+          ("https://engineering.atspotify.com/feed"              engineering programming)
+          ("https://stackoverflow.blog/feed"                     programming)
+          ("https://cprss.s3.amazonaws.com/golangweekly.com.xml" programming golang newsletter)
+
+          ;; ---------- Emacs ----------
+          ("https://kelar.org/~bandali/rss20.xml"                blog emacs)
+          ("https://thanosapollo.org/posts/index.xml"            blog emacs)
+          ("https://themkat.net/feed.xml"                        blog emacs)
+          ("https://alhassy.com/rss.xml"                         blog emacs)
+          ("https://joyofsource.com/feed.xml"                    blog emacs)
+          ("https://endlessparentheses.com/atom.xml"             blog emacs)
+          ("https://emacsconf.org/index.atom"                    emacs)
+
+          ;; ---------- AI ----------
+          ("https://erichartford.com/rss.xml"                    blog ai)
+          ("https://simonwillison.net/tags/claude-code.atom"     blog ai programming)
+
+          ;; ---------- Philosophy & Politics ----------
+          ("https://chomsky.info/feed/"                          philosophy politics)
+          ("https://www.radicalphilosophy.com/feed"              philosophy politics)
+          ("https://nintil.com/rss.xml"                          philosophy science)
+          ("http://www.unemployednegativity.com/feeds/posts/default" philosophy politics)
+          ("https://monthlyreview.org/feed/"                     politics)
+          ("https://stallman.org/rss/rss.xml"                    politics)
+          ("https://cybershow.uk/rss/feed.xml"                   politics tech)
+
+          ;; ---------- News, culture, misc ----------
+          ("https://www.vox.com/rss/index.xml"                   news)
+          ("https://daily.jstor.org/feed/"                       culture)
+          ("http://feeds.feedburner.com/InformationIsBeautiful"  design data)
+          ("https://www.admdnewsletter.com/rss/"                 marketing newsletter)
+          ("https://www.leonardcohenforum.com/app.php/feed/topics" culture)
+
+          ;; ---------- Arabic blogs ----------
+          ("http://monakareem.blogspot.com/feeds/posts/default?alt=rss" blog arabic)
+          ("https://rahmawritings.com/feed/"                     blog arabic)
+          ("https://thematamixta.blogspot.com/feeds/posts/default" blog arabic)
+          ("https://hawramani.com/feed/"                         blog arabic religion)
+          ("https://melhamy.blogspot.com/feeds/posts/default"    blog arabic religion)
+          ("https://etidal.org/feed/"                            arabic religion politics)
+          ("https://mana.net/feed/"                              arabic culture)
+          ("https://blog.tareef.sy/index.xml"                    blog arabic)
+
+          ;; ---------- Aggregators — Hacker News ----------
+          ("https://hnrss.org/frontpage"                         aggregator hn)
+          ("https://hnrss.org/replies?id=lr0"                    aggregator hn personal)
+          ("https://hnrss.org/polls"                             aggregator hn)
+          ("https://hnrss.org/newest?q=emacs"                    aggregator hn emacs)
+          ("https://hnrss.org/newest?q=chomsky"                  aggregator hn philosophy)
+          ("https://hnrss.org/newest?q=israel"                   aggregator hn politics)
+          ("https://hnrss.org/newest?q=egypt"                    aggregator hn arabic)
+          ("https://hnrss.org/newest?q=arabic"                   aggregator hn arabic)
+          ("https://hnrss.org/newest?q=arab"                     aggregator hn arabic)
+          ("https://hnrss.org/newest?q=islam"                    aggregator hn religion)
+          ("https://hnrss.org/newest?q=muslim"                   aggregator hn religion)
+
+          ;; ---------- Aggregators — Lobsters ----------
+          ("https://lobste.rs/rss"                               aggregator lobsters programming)
+          ("https://lobste.rs/t/job.rss"                         aggregator lobsters jobs)
+
+          ;; ---------- Aggregators — Reddit ----------
+          ("https://www.reddit.com/r/emacs/.rss"                 aggregator reddit emacs)
+          ("https://www.reddit.com/r/chomsky/search.rss?sort=new&restrict_sr=on&q=flair%3AArticle%2B"
+           aggregator reddit philosophy politics)
+          ("https://www.reddit.com/r/programmingcirclejerk/.rss" aggregator reddit humor)
+
+          ;; ---------- Aggregators — StackExchange & misc ----------
+          ("https://stackexchange.com/feeds/tagsets/451382/skepticism?sort=active"   aggregator stackexchange)
+          ("https://stackexchange.com/feeds/tagsets/451144/lifehack?sort=active"     aggregator stackexchange)
+          ("https://stackexchange.com/feeds/tagsets/450777/politics?sort=active"     aggregator stackexchange politics)
+          ("https://stackexchange.com/feeds/tagsets/450949/interpersonal?sort=active" aggregator stackexchange)
+          ("https://boards.4chan.org/sci/index.rss"              aggregator 4chan science)
+
+          ;; ---------- Vienna RSS support (kept for transition reference) ----------
+          ("https://github.com/ViennaRSS/vienna-rss/discussions.atom" meta)
+
+          ;; ---------- YouTube — programming / CS ----------
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCX2U8kCH2EzKSeaTIJBtkkQ" youtube programming) ; ryan_cs
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube programming) ; mentaloutlaw
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA" youtube programming) ; computerphile
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVpb6nv1igxnoY0SRVhaoEA" youtube programming) ; engieering
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA" youtube programming) ; FireShip
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" youtube emacs)       ; systemcraft
+
+          ;; ---------- YouTube — philosophy ----------
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCGVHC4L6gjS13AMe-JMOjHg" youtube philosophy)         ; kanb
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCmHu591mWNj_zSaSuYVwsaQ" youtube philosophy)         ; manufacturing_intellect
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkS_HP3m9NXOgswVAKbMeJQ" youtube philosophy)         ; thenandnow
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCdHT7KB1gDAXZYpPW71fn0Q" youtube philosophy)         ; distributist
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9ff15w4ufviWfv9UfIuByA" youtube philosophy history) ; wes_cecil
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC1VzCyqpmCaRh8_BnijbOvg" youtube philosophy)         ; Carneades
+
+          ;; ---------- YouTube — history ----------
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCX7katl3DVmch4D7LSvqbVQ" youtube history) ; montemayor
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCEqNbbsx0i7fhwRt0saYIcQ" youtube history) ; america
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7pr_dQxm2Ns2KlzRSx5FZA" youtube history) ; sandrhoman
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrI5U0R293u9uveijefKyAA" youtube history) ; ryan_history
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCqBiWcuTF8IaLH7wBqnihsQ" youtube history) ; toldinstone
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCheAUBrk8xw6QhJIxEPsvhg" youtube history) ; thelifeguide
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCMhLD2vecQSBqKd5uVPrwaQ" youtube history) ; historiancraft
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCp9ZtilfKJds0iWytR_pnOQ" youtube history) ; epimetheum
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCO6nDCimkF79NZRRb8YiDcA" youtube history) ; Storied
+
+          ;; ---------- YouTube — math ----------
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A" youtube math) ; numberphile
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtYLUTtgS3k1Fg4y5tAhLbw" youtube math) ; statquest
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UChVUSXFzV8QCOKNWGfE56YQ" youtube math) ; BriTheMathGuy
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw" youtube math) ; 3Blue1Brown
+
+          ;; ---------- YouTube — science ----------
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCHnyfMqiRRG1u-2MsSQLbXA" youtube science) ; veritasium
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCsXVk37bltHxD1rDPwtNM8Q" youtube science) ; Kurzgesagt
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC1yNl2E66ZzKApQdRuTQ4tw" youtube science) ; Hossenfelder
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCxoz4YfS4M3H3C57FD4jW4Q" youtube science) ; sciencetime
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCG9ShGbASoiwHwFcLcAh9EA" youtube science) ; sea
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCm3i_fqq8dqsV-dTAriv2KA" youtube science) ; disScience
+
+          ;; ---------- YouTube — Arabic / religion ----------
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtx9oIT_eWp6jIkoULS-ZdQ" youtube arabic)          ; shabaka
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC-pn1lcD--68WjOgCGBXlCQ" youtube arabic)          ; tasneem
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC_5ENzPnzYCGRxiOIdtaRug" youtube arabic art)      ; ramah aesthetic
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCqBrZisk79ExL7MN96bEJxA" youtube arabic)          ; ayman
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCP-PfkMcOKriSxFMH7pTxfA" youtube arabic)          ; elhamy
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCxPtfAOwtyd_N6keP3MnVmw" youtube arabic religion) ; Qassom
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9dRb4fbJQIbQ3KHJZF_z0g" youtube religion)        ; religion
+
+          ;; ---------- YouTube — politics / news ----------
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UChzVhAwzGR7hV-4O8ZmBLHg" youtube politics) ; Glenn Greenwald
+
+          ;; ---------- YouTube — art / aesthetic ----------
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC99wd4wi8AfaSkqprWo206g" youtube art) ; edits
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrPOgNsUldOtQsTf9Kjlm_A" youtube art) ; national_gallery
+
+          ;; ---------- YouTube — misc ----------
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtscFf8VayggrDYjOwDke_Q" youtube) ; academia
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCij1VEjDb88RCbqsvZ1gqaw" youtube) ; sideof
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCT6H50SccbeQKlhHufvAo1A" youtube) ; prof
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCHv1q35tKUJiSWO9W2OQRhw" youtube) ; age
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVHxGFLo5GzDNUHglYeW46Q" youtube)         ; english
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCL8w_A8p8P1HWI3k6PR5Z6w" youtube finance) ; two_cents
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9RM-iSvTu1uPJb8X5yp3EQ" youtube)         ; Wendover
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCJJl3hyuWwEw0EtYfzy0g5A" youtube)         ; workplace
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCCrl9a26fDCZvofnCnA5A8g" youtube)         ; Johnathan
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCqM0zDcFNdAHj7uQkprLszg" youtube)         ; Positron
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCIBYr1IVf54Ho5fRV2s62QA" youtube)         ; alternate
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UC8wKWWarusivFpIcUx9ilOw" youtube)         ; theDefault
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCiuDswZU50IGRKvF2AkVjrQ" youtube)         ; ACADEMY
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCZlodzngfsaCQAKE6wXiuMw" youtube)         ; Fiction
+          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCePDFpCr78_qmVtpoB1Axaw" youtube)         ; Gart
+          )))
+
+(map! :leader
+      :desc "Elfeed" "o e" #'elfeed)
+
+(map! :after elfeed
+      :map (elfeed-search-mode-map elfeed-show-mode-map)
+      :n "C-c C-c" #'salih/elfeed-org-store-and-capture)
+
+(map! :after elfeed
+      :map elfeed-show-mode-map
+      :n "C" #'salih/elfeed-show-visit-feed
+      :n "C-n" #'elfeed-goodies/split-show-next
+      :n "C-p" #'elfeed-goodies/split-show-prev)
+
+(provide 'lr-elfeed)
+
+

@@ -1,5 +1,15 @@
 ;;; config.el -*- lexical-binding: t; -*-
 
+;; Declare `so-long-target-modes' special EARLY.  Doom's lang/org module
+;; lexically `let'-binds it inside `+org-get-agenda-file-buffer' (compiled
+;; before so-long loads).  On Emacs 32, if that advice runs before
+;; so-long.el's own `defvar', the later defvar hard-errors with "Defining
+;; as dynamic an already lexical var so-long-target-modes" — which then
+;; cascades into flycheck's org-lint checker.  Marking it special here,
+;; before any agenda/first-file activity, makes so-long.el's defvar a
+;; harmless re-declaration instead of a conflict.
+(defvar so-long-target-modes nil)
+
 (setq user-full-name    "Salih Muhammed"
       user-mail-address "salih.moahabdelhafez@halan.com")
 
@@ -41,7 +51,9 @@
 ;;; doom-tomorrow-night
 ;;; doom-wilmersdorf
 ;;; ef-owl
-(setq doom-theme 'doom-wilmersdorf)
+;;; doom-tokyo-night
+;;; doom-one
+(setq doom-theme 'doom-tokyo-night)
 
 ;;; --- Basic settings ---
 (setq display-line-numbers-type 'relative
@@ -55,24 +67,21 @@
 (setq-default bidi-paragraph-direction 'left-to-right
               frame-title-format       '("%b"))
 
-;;; --- Encryption ---
 (setq epa-file-cache-passphrase-for-symmetric-encryption t
       epa-file-select-keys    'silent
       epa-file-encrypt-to     user-mail-address)
 
-;;; --- GC / Performance ---
 (after! gcmh
   (setq gcmh-high-cons-threshold (* 256 1024 1024)
         gc-cons-threshold        (* 100 1024 1024)
         gc-cons-percentage       0.6))
 
-(setq read-process-output-max (* 4 1024 1024)
-      undo-limit           80000000
-      undo-strong-limit    120000000
-      undo-outer-limit     360000000
-      treesit-font-lock-level 3)
+(setq read-process-output-max   (* 4 1024 1024)
+      undo-limit                80000000
+      undo-strong-limit         120000000
+      undo-outer-limit          360000000
+      treesit-font-lock-level   3)
 
-;;; --- Safe local variables ---
 (setq safe-local-variable-values
       '((org-download-image-dir . "../i")
         (org-download-image-dir . "../../media")
@@ -82,7 +91,6 @@
 
 (put 'org-download-image-dir 'safe-local-variable #'stringp)
 
-;;; --- Keyboard translation (must be early) ---
 (defun salih/keyboard-config ()
   (when (display-graphic-p)
     (keyboard-translate ?\C-m ?\H-m)
@@ -128,6 +136,7 @@
 (require 'lr-editor)
 (require 'lr-prog)
 (require 'lr-tools)
+(require 'lr-elfeed)
 ;; (require 'lr-writing)
 
 ;;; --- Defer heavy modules ---
@@ -231,3 +240,20 @@ separated by one or more blank lines.  Skips org headings (lines starting with
         (when (re-search-forward "^[[:space:]]*:END:\n?" nil t)
           (delete-region start (point)))))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq magit-git-executable "/opt/homebrew/bin/git")
+
+
+(defun salih/elfeed-show-visit-feed ()
+  "Open the source feed's own URL (not the entry's) in the browser."
+  (interactive)
+  (let* ((entry elfeed-show-entry)
+         (url   (elfeed-entry-link entry)))
+    (unless url (user-error "No feed URL for this entry")
+            (browse-url url))))
+
+(map! :after elfeed
+      :map elfeed-show-mode-map
+      :n "C" #'salih/elfeed-show-visit-feed)
+
+(setq elfeed-goodies/entry-pane-size 0.5)

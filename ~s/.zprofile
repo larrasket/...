@@ -14,7 +14,6 @@ export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.dotnet/tools"
 export PATH="$PATH:$HOME/Library/Python/3.9/bin"
-export PATH="$PATH:$HOME/.rvm/bin"
 
 export ANDROID_HOME="$HOME/Library/Android/sdk"
 export PATH="$PATH:$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin"
@@ -39,4 +38,3 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
     [ -f "$HOME/.ssh/agent.env" ] && source "$HOME/.ssh/agent.env" >/dev/null
 fi
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"

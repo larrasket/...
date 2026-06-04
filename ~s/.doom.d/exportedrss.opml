@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<opml version="1.0">
+    <head>
+        <title>Vienna Subscriptions</title>
+        <dateCreated>2026-05-23 17:29:31 +0000</dateCreated>
+    </head>
+    <body>
+        <outline htmlUrl="https://blog.giovanh.com/" xmlUrl="https://blog.giovanh.com/feeds/atom.xml" type="rss" description="" text="Giovanh"/>
+        <outline htmlUrl="https://cedwards.xyz/" xmlUrl="https://cedwards.xyz/index.xml" type="rss" description="Recent content on Connor's Blog" text="Connor's Blog"/>
+        <outline htmlUrl="https://github.com/ViennaRSS/vienna-rss/discussions" xmlUrl="https://github.com/ViennaRSS/vienna-rss/discussions.atom" type="rss" description="" text="Vienna Support"/>
+        <outline htmlUrl="http://monakareem.blogspot.com/" xmlUrl="http://monakareem.blogspot.com/feeds/posts/default?alt=rss" type="rss" description="5ft-tall writer" text="MonaKareem"/>
+        <outline htmlUrl="https://www.emadelsaid.com/+/feed.rss" xmlUrl="https://www.emadelsaid.com/+/feed.rss" type="rss" description="A Software Engineer. Ruby Golang. 🇪🇬 Egyptian 📷 Youtuber 🎮 Casual gamer and 🚀 Sci-Fi addict. My opinions are my own" text="EmadElSaid"/>
+        <outline htmlUrl="https://appliedgo.net/" xmlUrl="https://appliedgo.net/index.xml" type="rss" description="Recent content in Blog on Applied Go" text="AppliedGo"/>
+        <outline htmlUrl="https://www.computerenhance.com" xmlUrl="https://www.computerenhance.com/feed" type="rss" description="Programming courses, interviews, commentary." text="Computer, Enhance!"/>
+        <outline htmlUrl="https://williamdavies.blog" xmlUrl="https://williamdavies.blog/feed/" type="rss" description="" text="WilliamDavies"/>
+        <outline htmlUrl="https://chomsky.info" xmlUrl="https://chomsky.info/feed/" type="rss" description="" text="Chomsky"/>
+        <outline htmlUrl="https://daily.jstor.org/" xmlUrl="https://daily.jstor.org/feed/" type="rss" description="from JSTOR, nonprofit library for the intellectually curious" text="JSTOR"/>
+        <outline htmlUrl="https://www.radicalphilosophy.com" xmlUrl="https://www.radicalphilosophy.com/feed" type="rss" description="Journal of Socialist and Feminist Philosophy" text="RadicalPhilosophy"/>
+        <outline htmlUrl="https://nintil.com" xmlUrl="https://nintil.com/rss.xml" type="rss" description="" text="Nintil"/>
+        <outline htmlUrl="https://blog.gabiseabra.dev" xmlUrl="https://rss.gabiseabra.dev/feed" type="rss" description="This is not a tech blog!" text="Gabi Dev 123"/>
+        <outline htmlUrl="https://www.n16f.net/blog/index.xml" xmlUrl="https://www.n16f.net/blog/index.xml" type="rss" description="Brain dump" text="N16F"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCGVHC4L6gjS13AMe-JMOjHg" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCGVHC4L6gjS13AMe-JMOjHg" type="rss" description="" text="Youtube_kanb_philosophy"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCtx9oIT_eWp6jIkoULS-ZdQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCtx9oIT_eWp6jIkoULS-ZdQ" type="rss" description="" text="Youtube_shabaka"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UC-pn1lcD--68WjOgCGBXlCQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UC-pn1lcD--68WjOgCGBXlCQ" type="rss" description="" text="Youtube_tasneem"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCtscFf8VayggrDYjOwDke_Q" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCtscFf8VayggrDYjOwDke_Q" type="rss" description="" text="Youtube_academia"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCij1VEjDb88RCbqsvZ1gqaw" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCij1VEjDb88RCbqsvZ1gqaw" type="rss" description="" text="Youtube_sideof"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCmHu591mWNj_zSaSuYVwsaQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCmHu591mWNj_zSaSuYVwsaQ" type="rss" description="" text="Youtube_manufacturing_intellect_philosophy"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCX2U8kCH2EzKSeaTIJBtkkQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCX2U8kCH2EzKSeaTIJBtkkQ" type="rss" description="" text="Youtube_ryan_cs"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCT6H50SccbeQKlhHufvAo1A" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCT6H50SccbeQKlhHufvAo1A" type="rss" description="" text="Youtube_prof"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCHv1q35tKUJiSWO9W2OQRhw" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCHv1q35tKUJiSWO9W2OQRhw" type="rss" description="" text="Youtube_age"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCkS_HP3m9NXOgswVAKbMeJQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCkS_HP3m9NXOgswVAKbMeJQ" type="rss" description="" text="Youtube_thenandnow_philosophy"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCAiiOTio8Yu69c3XnR7nQBQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" type="rss" description="" text="Youtube_systemcraft_emacs"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UC7YOGHUfC1Tb6E4pudI9STA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" type="rss" description="" text="Youtube_mentaloutlaw_cs"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCX7katl3DVmch4D7LSvqbVQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCX7katl3DVmch4D7LSvqbVQ" type="rss" description="" text="Youtube_montemayor_history"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCEqNbbsx0i7fhwRt0saYIcQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCEqNbbsx0i7fhwRt0saYIcQ" type="rss" description="" text="Youtube_america_history"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UC7pr_dQxm2Ns2KlzRSx5FZA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UC7pr_dQxm2Ns2KlzRSx5FZA" type="rss" description="" text="Youtube_sandrhoman_history"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCrI5U0R293u9uveijefKyAA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCrI5U0R293u9uveijefKyAA" type="rss" description="" text="Youtube_ryan_history"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCdHT7KB1gDAXZYpPW71fn0Q" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCdHT7KB1gDAXZYpPW71fn0Q" type="rss" description="" text="Youtube_distributist_philosophy"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCqBiWcuTF8IaLH7wBqnihsQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCqBiWcuTF8IaLH7wBqnihsQ" type="rss" description="" text="Youtube_toldinstone_history"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UC9-y-6csu5WGm29I7JiwpnA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA" type="rss" description="" text="Youtube_computerphile_cs"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCheAUBrk8xw6QhJIxEPsvhg" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCheAUBrk8xw6QhJIxEPsvhg" type="rss" description="" text="Youtube_thelifeguide_history"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UC9ff15w4ufviWfv9UfIuByA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UC9ff15w4ufviWfv9UfIuByA" type="rss" description="" text="Youtube_wes_cecil_history_philosophy"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCMhLD2vecQSBqKd5uVPrwaQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCMhLD2vecQSBqKd5uVPrwaQ" type="rss" description="" text="Youtube_historiancraft_history"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCp9ZtilfKJds0iWytR_pnOQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCp9ZtilfKJds0iWytR_pnOQ" type="rss" description="" text="Youtube_epimetheum_history"/>
+        <outline htmlUrl="https://engineering.fb.com/" xmlUrl="https://engineering.fb.com/feed/" type="rss" description="Engineering at Meta Blog" text="Engineering at Meta"/>
+        <outline htmlUrl="https://netflixtechblog.com?source=rss----2615bd06b42e---4" xmlUrl="https://netflixtechblog.com/feed" type="rss" description="Learn about Netflix’s world class engineering efforts, company culture, product developments and more. - Medium" text="Netflix TechBlog - Medium"/>
+        <outline htmlUrl="https://dropbox.tech" xmlUrl="https://dropbox.tech/feed" type="rss" description="null" text="Dropbox Tech Blog"/>
+        <outline htmlUrl="https://tailscale.com/blog/" xmlUrl="https://tailscale.com/blog/index.xml" type="rss" description="Recent blog posts from Tailscale" text="Blog on Tailscale"/>
+        <outline htmlUrl="https://careersatdoordash.com/engineering-blog/" xmlUrl="https://careersatdoordash.com/engineering-blog/feed/" type="rss" description="" text="Comments on: Engineering Blog"/>
+        <outline htmlUrl="https://engineering.atspotify.com/" xmlUrl="https://engineering.atspotify.com/feed" type="rss" description="Spotify’s official technology blog" text="Spotify Engineering"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCVpb6nv1igxnoY0SRVhaoEA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCVpb6nv1igxnoY0SRVhaoEA" type="rss" description="" text="Youtube_engieering_cs"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UC_5ENzPnzYCGRxiOIdtaRug" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UC_5ENzPnzYCGRxiOIdtaRug" type="rss" description="" text="Youtube_ramah_aesthetic"/>
+        <outline htmlUrl="https://kelar.org/~bandali/" xmlUrl="https://kelar.org/~bandali/rss20.xml" type="rss" description="writings and talks by bandali" text="Amin Bandali"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UC99wd4wi8AfaSkqprWo206g" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UC99wd4wi8AfaSkqprWo206g" type="rss" description="" text="Youtube_edits_aesthetic"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCoxcjq-8xIDTYp3uz647V5A" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A" type="rss" description="" text="Youtube_numberphile_math"/>
+        <outline htmlUrl="https://joyofsource.com" xmlUrl="https://joyofsource.com/feed.xml" type="rss" description="Recent Posts" text="joyofsource.com"/>
+        <outline htmlUrl="https://drewdevault.com" xmlUrl="https://drewdevault.com/blog/index.xml" type="rss" description="Drew DeVault's blog - Blog" text="Drew DeVault's blog"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCtYLUTtgS3k1Fg4y5tAhLbw" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCtYLUTtgS3k1Fg4y5tAhLbw" type="rss" description="" text="Youtube_statquest_math"/>
+        <outline htmlUrl="https://stackexchange.com/filters/451382/skepticism" xmlUrl="https://stackexchange.com/feeds/tagsets/451382/skepticism?sort=active" type="rss" description="30 hot questions from stackexchange.com" text="skeptics"/>
+        <outline htmlUrl="https://stackexchange.com/filters/451144/lifehack" xmlUrl="https://stackexchange.com/feeds/tagsets/451144/lifehack?sort=active" type="rss" description="30 hot questions from stackexchange.com" text="Lifehacks_StackExchange"/>
+        <outline htmlUrl="https://stackexchange.com/filters/450777/politics" xmlUrl="https://stackexchange.com/feeds/tagsets/450777/politics?sort=active" type="rss" description="30 hot questions from stackexchange.com" text="Politics_StackExchange"/>
+        <outline htmlUrl="https://stackexchange.com/filters/450949/interpersonal" xmlUrl="https://stackexchange.com/feeds/tagsets/450949/interpersonal?sort=active" type="rss" description="30 hot questions from stackexchange.com" text="Interpersonal_StackExchange"/>
+        <outline htmlUrl="https://www.reddit.com/r/chomsky/search?sort=new&amp;restrict_sr=on&amp;q=flair%3AArticle%2B" xmlUrl="https://www.reddit.com/r/chomsky/search.rss?sort=new&amp;restrict_sr=on&amp;q=flair%3AArticle%2B" type="rss" description="This is a place to share and discuss content related to History, Politics, Media, Anarchism, Linguistics, Cognitive Science, Free Speech and everything else by people familiar with, or interested in learning about, Noam Chomsky." text="reddit_chomsky"/>
+        <outline htmlUrl="http://www.norvig.com" xmlUrl="http://norvig.com/rss-feed.xml" type="rss" description="Articles by Peter Norvig" text="Norvig"/>
+        <outline htmlUrl="https://lukesmith.xyz/" xmlUrl="https://lukesmith.xyz/index.xml" type="rss" description="Recent content in Luke Smith's Webpage on Luke Smith" text="LukeSmith"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UChzVhAwzGR7hV-4O8ZmBLHg" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UChzVhAwzGR7hV-4O8ZmBLHg" type="rss" description="" text="Glenn_Greenwald"/>
+        <outline htmlUrl="https://cybershow.uk/" xmlUrl="https://cybershow.uk/rss/feed.xml" type="rss" description="Helen and Andy are on a deeply critical quest to understand our technological society. The show is punk - sassy, sceptical, creative, humane and irreverent, but also prescient with remarkable insights on serious subjects." text="The Cyber Show"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCVHxGFLo5GzDNUHglYeW46Q" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCVHxGFLo5GzDNUHglYeW46Q" type="rss" description="" text="english"/>
+        <outline htmlUrl="https://rahmawritings.com" xmlUrl="https://rahmawritings.com/feed/" type="rss" description="مدونة رحمة الراوي" text="rahma"/>
+        <outline htmlUrl="https://thematamixta.blogspot.com/" xmlUrl="https://thematamixta.blogspot.com/feeds/posts/default" type="rss" description="A cornucopia of elegant excerpts, a collectanea of passages, a florilegium of ideas, a gallimaufry of aperçus, musing flowers of yore, an anthologia of verse (a Parnassus), an omnium gatherum of etymologies and origins, all singled out carefully by hand. " text="ahemd"/>
+        <outline htmlUrl="https://news.ycombinator.com/threads?id=lr0" xmlUrl="https://hnrss.org/replies?id=lr0" type="rss" description="Hacker News RSS" text="hncomments"/>
+        <outline htmlUrl="https://news.ycombinator.com/" xmlUrl="https://hnrss.org/frontpage" type="rss" description="Hacker News RSS" text="hnfront"/>
+        <outline htmlUrl="" xmlUrl="https://www.leonardcohenforum.com/app.php/feed/topics" type="rss" description="" text="(Untitled Feed)"/>
+        <outline htmlUrl="https://lewiscampbell.tech/" xmlUrl="https://lewiscampbell.tech/blog/feed.xml" type="rss" description="Software Testing, Distributed Systems, and miscellaneous Programming." text="Lewis Campbell's Blog"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCrPOgNsUldOtQsTf9Kjlm_A" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCrPOgNsUldOtQsTf9Kjlm_A" type="rss" description="" text="national_gallery"/>
+        <outline htmlUrl="http://simonwillison.net/" xmlUrl="https://simonwillison.net/tags/claude-code.atom" type="rss" description="" text="Simon Willison's Weblog: claude-code"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCL8w_A8p8P1HWI3k6PR5Z6w" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCL8w_A8p8P1HWI3k6PR5Z6w" type="rss" description="" text="two_cents"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCHnyfMqiRRG1u-2MsSQLbXA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCHnyfMqiRRG1u-2MsSQLbXA" type="rss" description="" text="veritasium"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UC9RM-iSvTu1uPJb8X5yp3EQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UC9RM-iSvTu1uPJb8X5yp3EQ" type="rss" description="" text="Wendover"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCJJl3hyuWwEw0EtYfzy0g5A" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCJJl3hyuWwEw0EtYfzy0g5A" type="rss" description="" text="workplace"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCqBrZisk79ExL7MN96bEJxA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCqBrZisk79ExL7MN96bEJxA" type="rss" description="" text="ayman"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCP-PfkMcOKriSxFMH7pTxfA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCP-PfkMcOKriSxFMH7pTxfA" type="rss" description="" text="elhamy"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCO6nDCimkF79NZRRb8YiDcA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCO6nDCimkF79NZRRb8YiDcA" type="rss" description="" text="Storied"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCCrl9a26fDCZvofnCnA5A8g" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCCrl9a26fDCZvofnCnA5A8g" type="rss" description="" text="Johnathan"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCsXVk37bltHxD1rDPwtNM8Q" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCsXVk37bltHxD1rDPwtNM8Q" type="rss" description="" text="Kurzgesagt"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UC9dRb4fbJQIbQ3KHJZF_z0g" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UC9dRb4fbJQIbQ3KHJZF_z0g" type="rss" description="" text="religion"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCxPtfAOwtyd_N6keP3MnVmw" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCxPtfAOwtyd_N6keP3MnVmw" type="rss" description="" text="Qassom"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCqM0zDcFNdAHj7uQkprLszg" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCqM0zDcFNdAHj7uQkprLszg" type="rss" description="" text="Positron"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UC1yNl2E66ZzKApQdRuTQ4tw" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UC1yNl2E66ZzKApQdRuTQ4tw" type="rss" description="" text="Hossenfelder"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCxoz4YfS4M3H3C57FD4jW4Q" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCxoz4YfS4M3H3C57FD4jW4Q" type="rss" description="" text="sciencetime"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCG9ShGbASoiwHwFcLcAh9EA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCG9ShGbASoiwHwFcLcAh9EA" type="rss" description="" text="sea"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCIBYr1IVf54Ho5fRV2s62QA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCIBYr1IVf54Ho5fRV2s62QA" type="rss" description="" text="alternate"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UChVUSXFzV8QCOKNWGfE56YQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UChVUSXFzV8QCOKNWGfE56YQ" type="rss" description="" text="BriTheMathGuy"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UC8wKWWarusivFpIcUx9ilOw" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UC8wKWWarusivFpIcUx9ilOw" type="rss" description="" text="theDefault"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UC1VzCyqpmCaRh8_BnijbOvg" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UC1VzCyqpmCaRh8_BnijbOvg" type="rss" description="" text="Carneades"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCiuDswZU50IGRKvF2AkVjrQ" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCiuDswZU50IGRKvF2AkVjrQ" type="rss" description="" text="ACADEMY"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCm3i_fqq8dqsV-dTAriv2KA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCm3i_fqq8dqsV-dTAriv2KA" type="rss" description="" text="disScience"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCZlodzngfsaCQAKE6wXiuMw" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCZlodzngfsaCQAKE6wXiuMw" type="rss" description="" text="Fiction"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCsBjURrPoezykLs9EqgamOA" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA" type="rss" description="" text="FireShip"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCePDFpCr78_qmVtpoB1Axaw" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCePDFpCr78_qmVtpoB1Axaw" type="rss" description="" text="Gart"/>
+        <outline htmlUrl="https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw" xmlUrl="https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw" type="rss" description="" text="3Blue1Brown"/>
+        <outline htmlUrl="https://www.vox.com" xmlUrl="https://www.vox.com/rss/index.xml" type="rss" description="Our world has too much noise and too little context. Vox helps you understand what matters." text="vox"/>
+        <outline htmlUrl="https://abhinavg.net/" xmlUrl="https://abhinavg.net/posts/index.xml" type="rss" description="" text="Abhinav Gupta"/>
+        <outline htmlUrl="https://ploum.net/" xmlUrl="https://ploum.net/atom_en.xml" type="rss" description="le blog de Lionel Dricot" text="Ploum.net"/>
+        <outline htmlUrl="https://liamrosen.com" xmlUrl="https://liamrosen.com/feed/" type="rss" description="Wired Differently" text="fit"/>
+        <outline htmlUrl="https://joshblais.com/" xmlUrl="https://joshblais.com/index.xml" type="rss" description="A blog, notes, gallery, lifestyle and fully conglomerated posts from Joshua." text="joshblais"/>
+        <outline htmlUrl="http://www.unemployednegativity.com/" xmlUrl="http://www.unemployednegativity.com/feeds/posts/default" type="rss" description="" text="unemployed"/>
+        <outline htmlUrl="https://hawramani.com" xmlUrl="https://hawramani.com/feed/" type="rss" description="" text="ikram"/>
+        <outline htmlUrl="https://melhamy.blogspot.com/" xmlUrl="https://melhamy.blogspot.com/feeds/posts/default" type="rss" description="اللهم اجعل كلامى وكتابتى خالصة لوجهك الكريم، اللهم لا تجعل لأحد سواك فيها نصيبا، اللهم طهرها من الرياء والعجب، والغرور والكبر، والعناد والانتصار للنفس، وحب الشهرة وحب المدح.. اللهم إن كان فيها الخير فيسرنى لها ويسر نشرها وقراءتها، وإن كان فيها الشر فأبعدنى عنها وعسرها لى واكتب لها الموت والفناء.. إنك نعم المولى ونعم النصير." text="elhamy_blog"/>
+        <outline htmlUrl="https://www.reddit.com/r/emacs/" xmlUrl="https://www.reddit.com/r/emacs/.rss" type="rss" description="The extensible, customizable, self-documenting real-time display editor." text="emacs_reddit"/>
+        <outline htmlUrl="https://news.ycombinator.com/newest" xmlUrl="https://hnrss.org/newest?q=emacs" type="rss" description="Hacker News RSS" text="emacs_hn"/>
+        <outline htmlUrl="https://news.ycombinator.com/newest" xmlUrl="https://hnrss.org/newest?q=chomsky" type="rss" description="Hacker News RSS" text="chomsky_hn"/>
+        <outline htmlUrl="https://news.ycombinator.com/newest" xmlUrl="https://hnrss.org/newest?q=israel" type="rss" description="Hacker News RSS" text="israel_hn"/>
+        <outline htmlUrl="https://news.ycombinator.com/newest" xmlUrl="https://hnrss.org/newest?q=egypt" type="rss" description="Hacker News RSS" text="egypt_hn"/>
+        <outline htmlUrl="https://news.ycombinator.com/newest" xmlUrl="https://hnrss.org/newest?q=arabic" type="rss" description="Hacker News RSS" text="arabic_hn"/>
+        <outline htmlUrl="https://news.ycombinator.com/newest" xmlUrl="https://hnrss.org/newest?q=arab" type="rss" description="Hacker News RSS" text="arab_hn"/>
+        <outline htmlUrl="https://mana.net" xmlUrl="https://mana.net/feed/" type="rss" description="منصة ثقافية تهتم بنشر المعرفة والفنون، عبر مجموعة متنوعة من المواد المقروءة والمسموعة والمرئية." text="mana"/>
+        <outline htmlUrl="https://rahim.li" xmlUrl="https://rahim.li/index.xml" type="rss" description="Posts, notes and essays I write while learning &amp; discovering stuff" text="Alvan's digital garden"/>
+        <outline htmlUrl="https://maurycyz.com/" xmlUrl="https://maurycyz.com/index.xml" type="rss" description="I sometimes post stuff here" text="Maurycy's blog"/>
+        <outline htmlUrl="https://etidal.org" xmlUrl="https://etidal.org/feed/" type="rss" description="المركز العالمي لمكافحة الفكر المتطرف" text="e3tidal"/>
+        <outline htmlUrl="https://thanosapollo.org/posts/" xmlUrl="https://thanosapollo.org/posts/index.xml" type="rss" description="Recent content in Posts on Thanos Apollo" text="thanospollo"/>
+        <outline htmlUrl="" xmlUrl="https://blog.tareef.sy/index.xml" type="rss" description="" text="tareef"/>
+        <outline htmlUrl="https://nullpt.rs" xmlUrl="https://nullpt.rs/feed.rss" type="rss" description="" text="nullpt"/>
+        <outline htmlUrl="" xmlUrl="https://gallant.dev/feeds/" type="rss" description="" text="gallant"/>
+        <outline htmlUrl="https://news.ycombinator.com/" xmlUrl="https://hnrss.org/polls" type="rss" description="Hacker News RSS" text="poll"/>
+        <outline htmlUrl="https://fromjason.xyz/p/freelance/" xmlUrl="https://www.fromjason.xyz/p/freelance/feed/feed.xml" type="rss" description="Break free from corporate drudgery, one step at a time." text="freelance"/>
+        <outline htmlUrl="https://danluu.com/atom/index.xml" xmlUrl="https://danluu.com/atom.xml" type="rss" description="Recent content on " text="danluu"/>
+        <outline htmlUrl="" xmlUrl="https://bobbyhiltz.com/rss.xml" type="rss" description="" text="bobby"/>
+        <outline htmlUrl="https://informationisbeautiful.net" xmlUrl="http://feeds.feedburner.com/InformationIsBeautiful" type="rss" description="Distilling the world's data, information &amp; knowledge into beautiful infographics &amp; visualizations" text="information_is_beautiful"/>
+        <outline htmlUrl="https://themkat.net/" xmlUrl="https://themkat.net/feed.xml" type="rss" description="" text="themkat"/>
+        <outline htmlUrl="https://martinalderson.com/" xmlUrl="https://martinalderson.com/feed.xml" type="rss" description="Web development, AI tooling, and building better software" text="Martin Alderson"/>
+        <outline htmlUrl="https://stephenramsay.net/posts/" xmlUrl="https://stephenramsay.net/rss.xml" type="rss" description="Stephen Ramsay's Blog" text="Stephen Ramsay"/>
+        <outline htmlUrl="" xmlUrl="https://boards.4chan.org/sci/index.rss" type="rss" description="" text="sci"/>
+        <outline htmlUrl="https://aliquote.org/" xmlUrl="https://aliquote.org/index.xml" type="rss" description="Recent content on aliquote.org" text="aliquote"/>
+        <outline htmlUrl="https://www.cyberdemon.org/" xmlUrl="https://www.cyberdemon.org/feed.xml" type="rss" description="" text="cyberdemond"/>
+        <outline htmlUrl="https://news.ycombinator.com/newest" xmlUrl="https://hnrss.org/newest?q=islam" type="rss" description="Hacker News RSS" text="islam_hn"/>
+        <outline htmlUrl="https://news.ycombinator.com/newest" xmlUrl="https://hnrss.org/newest?q=muslim" type="rss" description="Hacker News RSS" text="muslim_hn"/>
+        <outline htmlUrl="https://erichartford.com" xmlUrl="https://erichartford.com/rss.xml" type="rss" description="Applied AI Researcher
+I make AI models like Dolphin and Samantha
+https://ko-fi.com/erichartford
+BTC 3ENBV6zdwyqieAXzZP2i3EjeZtVwEmAuo4
+ETH 0xcac74542A7fF51E2fb0" text="ct"/>
+        <outline htmlUrl="https://www.admdnewsletter.com/" xmlUrl="https://www.admdnewsletter.com/rss/" type="rss" description="A newsletter about the emotions behind marketing work." text="Attention Deficit Marketing Disorder (ADMD)"/>
+        <outline htmlUrl="https://atelfo.github.io/" xmlUrl="https://atelfo.github.io/feed.xml" type="rss" description="Personal site for posts about my interests: the biotech industry, medicine, molecular biology, neuroscience, biorisk, science, consciousness, AI, innovation, decision making, philosophy, games, sci-fi, probability, and forecasting (among other things). I write to learn, mostly about biotech.
+" text="alex"/>
+        <outline htmlUrl="https://blog.avas.space/" xmlUrl="https://blog.avas.space/feed/" type="rss" description="ava's blog documenting life, little projects, tech adventures and more." text="ave"/>
+        <outline htmlUrl="https://notes.jeddacp.com/" xmlUrl="https://notes.jeddacp.com/feed/" type="rss" description="A photographer dedicated to discovering beauty in the ordinary." text="jedcap"/>
+        <outline htmlUrl="https://trueblue.bearblog.dev" xmlUrl="https://trueblue.bearblog.dev/feed/?type=rss" type="rss" description="true blue blog" text="trueblue"/>
+        <outline htmlUrl="https://takenvaullt.bearblog.dev" xmlUrl="https://takenvaullt.bearblog.dev/feed/?type=rss" type="rss" description="Hello there. Welcome to my corner of BearBlog. I'm not much of a blogger (or a writer in general) but I do like to publish posts every now and again.
+Create..." text="takenvault"/>
+        <outline htmlUrl="https://emacsconf.org/" xmlUrl="https://emacsconf.org/index.atom" type="rss" description="EmacsConf" text="emacsconf"/>
+        <outline htmlUrl="http://www.pixelbeat.org/" xmlUrl="https://www.pixelbeat.org/feed/rss2.xml" type="rss" description="latest from www.pixelbeat.org" text="pixelbeat"/>
+        <outline htmlUrl="https://monthlyreview.org/" xmlUrl="https://monthlyreview.org/feed/" type="rss" description="An Independent Socialist Magazine and Press" text="monthlyreview"/>
+        <outline htmlUrl="https://www.reddit.com/r/programmingcirclejerk/" xmlUrl="https://www.reddit.com/r/programmingcirclejerk/.rss" type="rss" description="Linus is wearing a blue shirt! zomg noSQL u guise! Apple Google Facebook NSA I rewrote &quot;hello world&quot; in ~~Fortran~~ ~~Pascal~~ ~~C~~ ~~Perl~~ ~~Ruby~~ ~~Lisp~~ ~~Haskell~~ ~~Clojure~~ ~~NodeJS~~ ~~Go~~ ~~Rust~~ ~~Blockchain~~ AI" text="programmingcircle"/>
+        <outline htmlUrl="https://endlessparentheses.com/?source=rss" xmlUrl="https://endlessparentheses.com/atom.xml" type="rss" description="" text="endlessparanthess"/>
+        <outline htmlUrl="https://blog.alexbeals.com" xmlUrl="https://blog.alexbeals.com/feeds/rss" type="rss" description="Websites, projects, snippets, and errata from Hanover to San Francisco" text="alexbeals"/>
+        <outline htmlUrl="https://utcc.utoronto.ca/~cks/space/blog/" xmlUrl="https://utcc.utoronto.ca/~cks/space/blog/?atom" type="rss" description="Recently changed pages in Chris's Wiki :: blog." text="csk"/>
+        <outline htmlUrl="https://www.gleech.org/" xmlUrl="https://www.gleech.org/feed.xml" type="rss" description="" text="gleech"/>
+        <outline htmlUrl="https://lobste.rs/" xmlUrl="https://lobste.rs/rss" type="rss" description="" text="lobsters"/>
+        <outline htmlUrl="https://kevinboone.me" xmlUrl="https://kevinboone.me/feed.xml" type="rss" description="Computing, math, science" text="Kevin Boone's website"/>
+        <outline htmlUrl="https://lobste.rs/" xmlUrl="https://lobste.rs/t/job.rss" type="rss" description="job - Employment/Internship opportunities" text="lobsters_jobs"/>
+        <outline htmlUrl="https://alhassy.com" xmlUrl="https://alhassy.com/rss.xml" type="rss" description="Life &amp; Computing Science" text="hasi"/>
+        <outline htmlUrl="https://meyerweb.com/eric/thoughts" xmlUrl="https://meyerweb.com/feed/" type="rss" description="Things that Eric A. Meyer, CSS expert, writes about on his personal Web site; it's largely Web standards and Web technology, but also various bits of culture, politics, personal observations, and other miscellaneous stuff" text="meryerweb"/>
+        <outline htmlUrl="https://maia.crimew.gay" xmlUrl="https://maia.crimew.gay/feed.xml" type="rss" description="the maia blog :3" text="maia"/>
+        <outline htmlUrl="https://third-bit.com/" xmlUrl="https://third-bit.com/atom.xml" type="rss" description="" text="greg"/>
+        <outline htmlUrl="https://alexanderdanilov.dev/" xmlUrl="https://alexanderdanilov.dev/rss.xml" type="rss" description="undefined" text="Alexander Danilov's blog"/>
+        <outline htmlUrl="https://boxbase.org/" xmlUrl="http://boxbase.org/feed.rss" type="rss" description="Blog about programming, games." text="Boxbase"/>
+        <outline htmlUrl="https://www.nsrip.com" xmlUrl="https://nsrip.com/feed.xml" type="rss" description="
+Nick Ripley's blog. Programming and other interests.
+" text="Nick Ripley's blog"/>
+        <outline htmlUrl="https://words.filippo.io/" xmlUrl="https://words.filippo.io/rss/" type="rss" description="" text="Filippo Valsorda"/>
+        <outline htmlUrl="https://golangweekly.com/" xmlUrl="https://cprss.s3.amazonaws.com/golangweekly.com.xml" type="rss" description="A weekly newsletter about the Go programming language" text="Golang Weekly"/>
+        <outline htmlUrl="https://stackoverflow.blog/" xmlUrl="https://stackoverflow.blog/feed" type="rss" description="Essays, opinions, and advice on the act of computer programming from Stack Overflow." text="Stack Overflow Blog"/>
+        <outline htmlUrl="https://lr0.org/" xmlUrl="https://lr0.org/index.xml" type="rss" description="Recent content on La Vita Nouva" text="La Vita Nouva"/>
+        <outline htmlUrl="http://brooker.co.za/blog/" xmlUrl="https://brooker.co.za/blog/atom.xml" type="rss" description="" text="Marc Brooker's Blog"/>
+        <outline htmlUrl="https://kevincox.ca/" xmlUrl="https://kevincox.ca/feed.atom" type="rss" description="" text="Kevin Cox's Blog"/>
+        <outline htmlUrl="https://stallman.org/archives/polnotes.html" xmlUrl="https://stallman.org/rss/rss.xml" type="rss" description="Daily political notes about what is happening in the world." text="Richard Stallman's Political Notes"/>
+    </body>
+</opml>

@@ -43,6 +43,10 @@
 ;; Epub
 (package! nov)
 
+;; RSS
+(unpin! elfeed)
+(package! elfeed)
+
 ;; Git
 (package! git-auto-commit-mode)
 (package! git-gutter)
@@ -81,4 +85,3 @@
            :branch "feature/notification"))
 
 
-(package! solaire-mode :disable t)
