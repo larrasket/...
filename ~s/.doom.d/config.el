@@ -53,7 +53,7 @@
 ;;; ef-owl
 ;;; doom-tokyo-night
 ;;; doom-one
-(setq doom-theme 'doom-tokyo-night)
+(setq doom-theme 'doom-monokai-ristretto)
 
 ;;; --- Basic settings ---
 (setq display-line-numbers-type 'relative
@@ -284,3 +284,19 @@ separated by one or more blank lines.  Skips org headings (lines starting with
       :n "C" #'salih/elfeed-show-visit-feed)
 
 (setq elfeed-goodies/entry-pane-size 0.5)
+
+
+
+(setq indent-bars-width-frac 0.24
+      indent-bars-pad-frac 0.12
+      indent-bars-color '(font-lock-property-name-face :face-bg nil :blend 0.28)
+      indent-bars-color-by-depth nil
+      indent-bars-highlight-current-depth nil)
+
+
+(indent-bars-reset-styles)
+
+(dolist (buf (buffer-list))
+  (with-current-buffer buf
+    (when (bound-and-true-p indent-bars-mode)
+      (indent-bars-reset))))

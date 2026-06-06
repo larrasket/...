@@ -39,8 +39,12 @@
 
   ;; Glass mode intentionally does not set face colors. The active theme should
   ;; own backgrounds/foregrounds so this stays seamless with any theme.
-  (setq salih/alpha-background 0.78
-        salih/ns-background-blur 1)
+  (setq salih/alpha-background 0.64
+        salih/ns-background-blur 8)
+  ;; (salih/toggle-glass)
+  ;; (salih/toggle-glass)
+
+
 
   (add-to-list 'default-frame-alist `(alpha-background . ,salih/alpha-background))
   (add-to-list 'default-frame-alist `(ns-background-blur . ,salih/ns-background-blur))
