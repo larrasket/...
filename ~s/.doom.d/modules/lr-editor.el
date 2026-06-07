@@ -1,5 +1,7 @@
 ;;; lr-editor.el --- Keybindings, evil, editing prefs -*- lexical-binding: t; -*-
 
+(require 'cl-lib)
+
 ;;; --- Evil ---
 (setq doom-leader-alt-key "M-m")
 
@@ -156,6 +158,192 @@
 (after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
 (after! vterm  (remove-hook 'vterm-mode-hook 'hide-mode-line-mode))
 
+;;; --- Linked frames ---
+(setq-default cursor-in-non-selected-windows t)
+
+(defvar salih/linked-frame-sync-delay 0.03
+  "Idle delay before linked frames mirror the active linked frame.")
+
+(defvar salih/--linked-frame-next-id 0)
+(defvar salih/--linked-frame-sync-timer nil)
+(defvar salih/--linked-frame-syncing nil)
+
+(defun salih/--linked-frame-new-group ()
+  "Return a fresh linked-frame group name."
+  (setq salih/--linked-frame-next-id (1+ salih/--linked-frame-next-id))
+  (format "salih-linked-frame-%d" salih/--linked-frame-next-id))
+
+(defun salih/--linked-frame-group (&optional frame)
+  "Return FRAME's linked-frame group, if any."
+  (frame-parameter (or frame (selected-frame)) 'salih-linked-frame-group))
+
+(defun salih/--linked-frame-ensure-group (&optional frame)
+  "Ensure FRAME belongs to a linked-frame group and return that group."
+  (let* ((frame (or frame (selected-frame)))
+         (group (or (salih/--linked-frame-group frame)
+                    (salih/--linked-frame-new-group))))
+    (set-frame-parameter frame 'salih-linked-frame-group group)
+    ;; Doom uses the `workspace' frame parameter for disposable per-frame
+    ;; workspaces.  Linked frames share a workspace, so they must not delete it
+    ;; when one frame is closed.
+    (set-frame-parameter frame 'workspace nil)
+    group))
+
+(defun salih/--linked-frame-p (&optional frame)
+  "Return non-nil when FRAME is a linked frame."
+  (and (salih/--linked-frame-group frame) t))
+
+(defun salih/--linked-frame-siblings (&optional frame)
+  "Return all live frames in FRAME's linked-frame group."
+  (let ((group (salih/--linked-frame-group frame)))
+    (when group
+      (cl-remove-if-not
+       (lambda (candidate)
+         (and (frame-live-p candidate)
+              (equal group (salih/--linked-frame-group candidate))))
+       (frame-list)))))
+
+(defun salih/--linked-frame-workspace-name (&optional frame)
+  "Return the Doom workspace name visible in FRAME, if workspaces are active."
+  (when (and (bound-and-true-p persp-mode)
+             (fboundp '+workspace-current-name))
+    (with-selected-frame (or frame (selected-frame))
+      (+workspace-current-name))))
+
+(defun salih/--linked-frame-state (&optional frame)
+  "Capture selected-window state from FRAME for linked-frame mirroring."
+  (with-selected-frame (or frame (selected-frame))
+    (let ((window (selected-window)))
+      (unless (window-minibuffer-p window)
+        (list :workspace (salih/--linked-frame-workspace-name)
+              :buffer (window-buffer window)
+              :window-state (window-state-get (frame-root-window frame))
+              :point (window-point window)
+              :start (window-start window)
+              :hscroll (window-hscroll window)
+              :vscroll (window-vscroll window t))))))
+
+(defun salih/--linked-frame-bounded-position (buffer position)
+  "Return POSITION clamped to BUFFER's accessible range."
+  (with-current-buffer buffer
+    (min (max (or position (point-min)) (point-min))
+         (point-max))))
+
+(defun salih/--linked-frame-switch-workspace (workspace frame)
+  "Switch FRAME to WORKSPACE when Doom workspaces are available."
+  (when (and workspace (bound-and-true-p persp-mode))
+    (with-selected-frame frame
+      (unless (equal workspace (salih/--linked-frame-workspace-name frame))
+        (cond ((fboundp '+workspace-switch)
+               (+workspace-switch workspace t))
+              ((fboundp 'persp-frame-switch)
+               (persp-frame-switch workspace frame))))))
+  (set-frame-parameter frame 'workspace nil))
+
+(defun salih/--linked-frame-add-buffer-to-workspace (buffer)
+  "Add BUFFER to the current perspective when persp-mode is active."
+  (when (and (buffer-live-p buffer)
+             (bound-and-true-p persp-mode)
+             (fboundp 'persp-add-buffer)
+             (fboundp 'get-current-persp))
+    (condition-case nil
+        (persp-add-buffer buffer (get-current-persp) nil nil)
+      (error nil))))
+
+(defun salih/--linked-frame-add-state-buffers-to-workspace (state)
+  "Add buffers in linked-frame STATE to the current perspective."
+  (when-let* ((buffer (plist-get state :buffer)))
+    (salih/--linked-frame-add-buffer-to-workspace buffer))
+  (when-let* ((window-state (plist-get state :window-state)))
+    (dolist (buffer (ignore-errors (window-state-buffers window-state)))
+      (when (buffer-live-p buffer)
+        (salih/--linked-frame-add-buffer-to-workspace buffer)))))
+
+(defun salih/--linked-frame-apply-state (state frame)
+  "Apply linked-frame STATE to FRAME."
+  (let ((buffer (plist-get state :buffer)))
+    (when (and (frame-live-p frame)
+               (buffer-live-p buffer))
+      (with-selected-frame frame
+        (salih/--linked-frame-switch-workspace (plist-get state :workspace) frame)
+        (salih/--linked-frame-add-state-buffers-to-workspace state)
+        (when-let* ((window-state (plist-get state :window-state)))
+          (window-state-put window-state (frame-root-window frame) 'safe))
+        (let ((window (selected-window)))
+          (unless (or (window-minibuffer-p window)
+                      (window-dedicated-p window))
+            (set-window-buffer window buffer)
+            (set-window-hscroll window (or (plist-get state :hscroll) 0))
+            (set-window-vscroll window (or (plist-get state :vscroll) 0) t)
+            (set-window-point
+             window
+             (salih/--linked-frame-bounded-position
+              buffer (plist-get state :point)))
+            (set-window-start
+             window
+             (salih/--linked-frame-bounded-position
+              buffer (plist-get state :start))
+             t)))))))
+
+(defun salih/--linked-frame-sync-eligible-p (state frame)
+  "Return non-nil when FRAME should receive linked-frame STATE.
+Linked frames are mirrored into one another only while they share a
+workspace.  Buffer text and unsaved edits are already shared by Emacs
+whenever two frames display the same buffer, so once a frame has diverged
+into a different workspace it is left independent: opening a shared buffer
+there must not drag the source workspace or window layout across and make
+the frames identical again."
+  (equal (plist-get state :workspace)
+         (salih/--linked-frame-workspace-name frame)))
+
+(defun salih/--linked-frame-sync (source-frame)
+  "Mirror SOURCE-FRAME's selected-window state to linked sibling frames."
+  (setq salih/--linked-frame-sync-timer nil)
+  (when (and (not salih/--linked-frame-syncing)
+             (frame-live-p source-frame)
+             (salih/--linked-frame-p source-frame))
+    (let ((state (salih/--linked-frame-state source-frame))
+          (salih/--linked-frame-syncing t))
+      (when state
+        (dolist (frame (salih/--linked-frame-siblings source-frame))
+          (unless (or (eq frame source-frame)
+                      (not (salih/--linked-frame-sync-eligible-p state frame)))
+            (salih/--linked-frame-apply-state state frame)))))))
+
+(defun salih/--linked-frame-schedule-sync ()
+  "Schedule a sync from the selected frame when it is linked."
+  (unless salih/--linked-frame-syncing
+    (let ((source-frame (selected-frame)))
+      (when (and (salih/--linked-frame-p source-frame)
+                 (not (minibufferp (window-buffer (selected-window)))))
+        (when (timerp salih/--linked-frame-sync-timer)
+          (cancel-timer salih/--linked-frame-sync-timer))
+        (setq salih/--linked-frame-sync-timer
+              (run-with-idle-timer
+               salih/linked-frame-sync-delay
+               nil
+               #'salih/--linked-frame-sync
+               source-frame))))))
+
+(add-hook 'post-command-hook #'salih/--linked-frame-schedule-sync)
+
+(defun salih/make-linked-frame (&optional parameters)
+  "Create a new frame linked to the selected frame's workspace and cursor state."
+  (interactive)
+  (let* ((source-frame (selected-frame))
+         (group (salih/--linked-frame-ensure-group source-frame))
+         (state (salih/--linked-frame-state source-frame))
+         (new-frame (make-frame parameters)))
+    (set-frame-parameter new-frame 'salih-linked-frame-group group)
+    (set-frame-parameter new-frame 'workspace nil)
+    (when state
+      (salih/--linked-frame-apply-state state new-frame))
+    (when (fboundp 'persp-set-frame-buffer-predicate)
+      (persp-set-frame-buffer-predicate new-frame))
+    (select-frame-set-input-focus new-frame)
+    (salih/--linked-frame-sync source-frame)
+    new-frame))
+
 ;;; --- Embark ---
 (after! embark
   (define-key embark-url-map (kbd "c") 'salih/open-url-in-chrome-cross-platform))
@@ -179,7 +367,7 @@
       :i "C-v"     #'yank)
 
 ;;; --- Normal/visual/insert ---
-(map! :nvi "M-n" #'make-frame
+(map! :nvi "M-n" #'salih/make-linked-frame
       :nvi "M-s" #'salih/jinx-correct-or-save)
 
 ;;; --- Global (M-key) ---
