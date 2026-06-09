@@ -300,7 +300,6 @@ advice on `elfeed-search--update-list' because a pairwise
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCL8w_A8p8P1HWI3k6PR5Z6w" youtube finance) ; two_cents
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9RM-iSvTu1uPJb8X5yp3EQ" youtube)         ; Wendover
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCJJl3hyuWwEw0EtYfzy0g5A" youtube)         ; workplace
-          ("https://www.youtube.com/feeds/videos.xml?channel_id=UCCrl9a26fDCZvofnCnA5A8g" youtube)         ; Johnathan
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCqM0zDcFNdAHj7uQkprLszg" youtube)         ; Positron
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCIBYr1IVf54Ho5fRV2s62QA" youtube)         ; alternate
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC8wKWWarusivFpIcUx9ilOw" youtube)         ; theDefault
