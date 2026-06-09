@@ -223,8 +223,6 @@ on-mode-changed = []
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
     alt-tab = 'workspace-back-and-forth'
-    # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
-    alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     alt-shift-semicolon = 'mode service'
@@ -277,6 +275,42 @@ on-mode-changed = []
 
 # ── Auto-route apps to their dedicated workspaces ────────────────────────────
 # Runs whenever a new window is detected (app launch, un-minimize, etc.)
+
+# ── Pin workspaces to monitors ───────────────────────────────────────────────
+# Numbers live on the external (EV2750); letters live on the laptop.
+# When the external is disconnected, AeroSpace falls back to the only monitor.
+[workspace-to-monitor-force-assignment]
+1 = 'EV2750'
+2 = 'EV2750'
+3 = 'EV2750'
+4 = 'EV2750'
+5 = 'EV2750'
+6 = 'EV2750'
+7 = 'EV2750'
+8 = 'EV2750'
+9 = 'EV2750'
+A = 'Built-in Retina Display'
+B = 'Built-in Retina Display'
+C = 'Built-in Retina Display'
+D = 'Built-in Retina Display'
+E = 'Built-in Retina Display'
+F = 'Built-in Retina Display'
+G = 'Built-in Retina Display'
+I = 'Built-in Retina Display'
+M = 'Built-in Retina Display'
+N = 'Built-in Retina Display'
+O = 'Built-in Retina Display'
+P = 'Built-in Retina Display'
+Q = 'Built-in Retina Display'
+R = 'Built-in Retina Display'
+S = 'Built-in Retina Display'
+T = 'Built-in Retina Display'
+U = 'Built-in Retina Display'
+V = 'Built-in Retina Display'
+W = 'Built-in Retina Display'
+X = 'Built-in Retina Display'
+Y = 'Built-in Retina Display'
+Z = 'Built-in Retina Display'
 
 [[on-window-detected]]
 if.app-id = 'org.gnu.Emacs'

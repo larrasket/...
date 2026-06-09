@@ -133,6 +133,42 @@
                 (should (= (window-start) 1))))))
       (kill-buffer buffer))))
 
+(ert-deftest salih-linked-frame-apply-state-skips-layout-rebuild-when-unchanged ()
+  ;; Rebuilding the window tree on every command is slow and flickers the
+  ;; mirrored frame, so when the sibling already matches the source geometry
+  ;; we take the cheap path and only update the selected window's contents.
+  (let ((put-called nil)
+        (buffer (get-buffer-create " *salih-linked-frame-test*")))
+    (unwind-protect
+        (with-current-buffer buffer
+          (erase-buffer)
+          (insert "alpha\nbeta\ngamma\n")
+          (let ((state (list :workspace "main"
+                             :buffer buffer
+                             :window-state 'linked-window-layout
+                             :window-signature 'same-layout
+                             :point 3
+                             :start 1
+                             :hscroll 0
+                             :vscroll 0))
+                (persp-mode t))
+            (cl-letf (((symbol-function 'frame-live-p) (lambda (_frame) t))
+                      ((symbol-function 'select-frame) (lambda (&rest _) nil))
+                      ((symbol-function 'set-frame-parameter) (lambda (&rest _) nil))
+                      ((symbol-function 'salih/--linked-frame-workspace-name)
+                       (lambda (&optional _frame) "main"))
+                      ((symbol-function 'salih/--linked-frame-window-signature)
+                       (lambda (&optional _frame) 'same-layout))
+                      ((symbol-function 'salih/--linked-frame-add-state-buffers-to-workspace)
+                       (lambda (&rest _) nil))
+                      ((symbol-function 'window-state-put)
+                       (lambda (&rest _) (setq put-called t))))
+              (salih/--linked-frame-apply-state state (selected-frame))
+              (should-not put-called)
+              (should (eq (window-buffer) buffer))
+              (should (= (window-point) 3)))))
+      (kill-buffer buffer))))
+
 (ert-deftest salih-linked-frame-state-captures-window-layout ()
   (cl-letf (((symbol-function 'window-state-get)
              (lambda (_window &optional _writable)
@@ -142,26 +178,79 @@
     (let ((state (salih/--linked-frame-state (selected-frame))))
       (should (eq (plist-get state :window-state) 'linked-window-layout)))))
 
-(ert-deftest salih-linked-frame-sync-is-limited-to-same-workspace ()
-  ;; Linked frames may only be made identical while they share a workspace.
-  ;; Once a frame has moved to a different workspace it must stay independent,
-  ;; even when it happens to display the same buffer -- otherwise opening a
-  ;; shared buffer would drag the source workspace and layout across, making
-  ;; the sibling identical again.
+(ert-deftest salih-linked-frame-sync-mode-tracks-workspace-and-shared-buffer ()
+  ;; Same workspace -> full sync (workspace + layout + cursor).
+  ;; Different workspace but the sibling shows the same buffer -> light sync
+  ;; that mirrors only that buffer's scroll/cursor, never the workspace or
+  ;; layout (that full cross-workspace apply was the original bug).
+  ;; Different workspace and the buffer is not shown -> no sync.
   (let ((buffer (get-buffer-create " *salih-linked-frame-test*")))
     (unwind-protect
         (let ((state (list :workspace "main" :buffer buffer)))
-          ;; Same workspace -> eligible.
           (cl-letf (((symbol-function 'salih/--linked-frame-workspace-name)
                      (lambda (&optional _frame) "main")))
-            (should (salih/--linked-frame-sync-eligible-p state (selected-frame))))
-          ;; Different workspace, even while showing the same buffer -> not eligible.
+            (should (eq (salih/--linked-frame-sync-mode state (selected-frame))
+                        'full)))
           (cl-letf (((symbol-function 'salih/--linked-frame-workspace-name)
                      (lambda (&optional _frame) "other"))
-                    ((symbol-function 'window-buffer)
-                     (lambda (&optional _window) buffer)))
-            (should-not (salih/--linked-frame-sync-eligible-p state (selected-frame)))))
+                    ((symbol-function 'salih/--linked-frame-windows-showing)
+                     (lambda (_buffer _frame) (list (selected-window)))))
+            (should (eq (salih/--linked-frame-sync-mode state (selected-frame))
+                        'buffer)))
+          (cl-letf (((symbol-function 'salih/--linked-frame-workspace-name)
+                     (lambda (&optional _frame) "other"))
+                    ((symbol-function 'salih/--linked-frame-windows-showing)
+                     (lambda (_buffer _frame) nil)))
+            (should-not (salih/--linked-frame-sync-mode state (selected-frame)))))
       (kill-buffer buffer))))
+
+(ert-deftest salih-linked-frame-apply-buffer-scroll-mirrors-scroll-only ()
+  ;; The cross-workspace light sync must move the shared buffer's window to the
+  ;; source point/scroll without switching workspace or rebuilding the layout.
+  (let ((switched nil)
+        (put-called nil)
+        (buffer (get-buffer-create " *salih-linked-frame-test*")))
+    (unwind-protect
+        (with-current-buffer buffer
+          (erase-buffer)
+          (insert "one\ntwo\nthree\nfour\n")
+          (let ((state (list :buffer buffer :point 9 :start 5 :hscroll 0 :vscroll 0)))
+            (cl-letf (((symbol-function 'frame-live-p) (lambda (_frame) t))
+                      ((symbol-function 'salih/--linked-frame-windows-showing)
+                       (lambda (_buffer _frame) (list (selected-window))))
+                      ((symbol-function '+workspace-switch)
+                       (lambda (&rest _) (setq switched t)))
+                      ((symbol-function 'window-state-put)
+                       (lambda (&rest _) (setq put-called t))))
+              (set-window-buffer (selected-window) buffer)
+              (salih/--linked-frame-apply-buffer-scroll state (selected-frame))
+              (should (= (window-point) 9))
+              (should (= (window-start) 5))
+              (should-not switched)
+              (should-not put-called))))
+      (kill-buffer buffer))))
+
+(ert-deftest salih-linked-frame-schedule-sync-never-propagates-errors ()
+  ;; A sync failure must never break the command loop or get the hook disabled
+  ;; -- an error in `post-command-hook' makes Emacs feel "disconnected".
+  (cl-letf (((symbol-function 'salih/--linked-frame-p) (lambda (&rest _) t))
+            ((symbol-function 'minibufferp) (lambda (&rest _) nil))
+            ((symbol-function 'salih/--linked-frame-sync)
+             (lambda (&rest _) (error "boom"))))
+    (should (progn (salih/--linked-frame-schedule-sync) t))))
+
+(ert-deftest salih-linked-frame-sync-does-nothing-without-siblings ()
+  ;; With no other linked frame there is nothing to mirror, so the sync must
+  ;; not even capture state (no per-command work or side effects).
+  (let ((captured nil))
+    (cl-letf (((symbol-function 'salih/--linked-frame-p) (lambda (&rest _) t))
+              ((symbol-function 'frame-live-p) (lambda (&rest _) t))
+              ((symbol-function 'salih/--linked-frame-siblings)
+               (lambda (&rest _) (list (selected-frame))))
+              ((symbol-function 'salih/--linked-frame-state)
+               (lambda (&rest _) (setq captured t) nil)))
+      (salih/--linked-frame-sync (selected-frame))
+      (should-not captured))))
 
 (ert-deftest salih-linked-frame-enables-cursor-in-non-selected-windows ()
   (with-temp-buffer
