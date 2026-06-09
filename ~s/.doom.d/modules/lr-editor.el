@@ -161,11 +161,7 @@
 ;;; --- Linked frames ---
 (setq-default cursor-in-non-selected-windows t)
 
-(defvar salih/linked-frame-sync-delay 0.03
-  "Idle delay before linked frames mirror the active linked frame.")
-
 (defvar salih/--linked-frame-next-id 0)
-(defvar salih/--linked-frame-sync-timer nil)
 (defvar salih/--linked-frame-syncing nil)
 
 (defun salih/--linked-frame-new-group ()
@@ -210,6 +206,14 @@
     (with-selected-frame (or frame (selected-frame))
       (+workspace-current-name))))
 
+(defun salih/--linked-frame-window-signature (&optional frame)
+  "Return a cheap structural signature of FRAME's window layout.
+Only window geometry is considered, so moving point or switching the
+selected window's buffer in place does not change the signature.  This lets
+the sync layer skip the expensive `window-state-put' rebuild unless the
+splits themselves actually changed."
+  (mapcar #'window-edges (window-list (or frame (selected-frame)) 'no-minibuffer)))
+
 (defun salih/--linked-frame-state (&optional frame)
   "Capture selected-window state from FRAME for linked-frame mirroring."
   (with-selected-frame (or frame (selected-frame))
@@ -218,6 +222,7 @@
         (list :workspace (salih/--linked-frame-workspace-name)
               :buffer (window-buffer window)
               :window-state (window-state-get (frame-root-window frame))
+              :window-signature (salih/--linked-frame-window-signature)
               :point (window-point window)
               :start (window-start window)
               :hscroll (window-hscroll window)
@@ -267,8 +272,14 @@
       (with-selected-frame frame
         (salih/--linked-frame-switch-workspace (plist-get state :workspace) frame)
         (salih/--linked-frame-add-state-buffers-to-workspace state)
+        ;; Only rebuild the window tree when the source layout actually
+        ;; differs.  Running `window-state-put' on every command is slow and
+        ;; visibly resets the mirrored frame, so the common case (same splits,
+        ;; cursor moved) skips it and the cheap restore below runs instead.
         (when-let* ((window-state (plist-get state :window-state)))
-          (window-state-put window-state (frame-root-window frame) 'safe))
+          (unless (equal (plist-get state :window-signature)
+                         (salih/--linked-frame-window-signature frame))
+            (window-state-put window-state (frame-root-window frame) 'safe)))
         (let ((window (selected-window)))
           (unless (or (window-minibuffer-p window)
                       (window-dedicated-p window))
@@ -285,45 +296,79 @@
               buffer (plist-get state :start))
              t)))))))
 
-(defun salih/--linked-frame-sync-eligible-p (state frame)
-  "Return non-nil when FRAME should receive linked-frame STATE.
-Linked frames are mirrored into one another only while they share a
-workspace.  Buffer text and unsaved edits are already shared by Emacs
-whenever two frames display the same buffer, so once a frame has diverged
-into a different workspace it is left independent: opening a shared buffer
-there must not drag the source workspace or window layout across and make
-the frames identical again."
-  (equal (plist-get state :workspace)
-         (salih/--linked-frame-workspace-name frame)))
+(defun salih/--linked-frame-windows-showing (buffer frame)
+  "Return FRAME's windows currently displaying BUFFER."
+  (when (buffer-live-p buffer)
+    (get-buffer-window-list buffer 'no-minibuffer frame)))
+
+(defun salih/--linked-frame-apply-buffer-scroll (state frame)
+  "Mirror only the shared buffer's point and scroll from STATE into FRAME.
+Used when the frames are in different workspaces: the buffer itself is
+shared by Emacs, so its scroll/cursor position is synced in whatever window
+of FRAME already shows it, but the workspace and window layout are left
+untouched."
+  (let ((buffer (plist-get state :buffer)))
+    (when (and (frame-live-p frame)
+               (buffer-live-p buffer))
+      (dolist (window (salih/--linked-frame-windows-showing buffer frame))
+        (set-window-hscroll window (or (plist-get state :hscroll) 0))
+        (set-window-vscroll window (or (plist-get state :vscroll) 0) t)
+        (set-window-point
+         window
+         (salih/--linked-frame-bounded-position buffer (plist-get state :point)))
+        (set-window-start
+         window
+         (salih/--linked-frame-bounded-position buffer (plist-get state :start))
+         t)))))
+
+(defun salih/--linked-frame-sync-mode (state frame)
+  "Return how FRAME should mirror linked-frame STATE.
+`full' when FRAME shares the source workspace: mirror workspace, layout,
+buffer, and cursor.  `buffer' when FRAME is in a different workspace but
+already displays the source buffer: mirror only that buffer's scroll/cursor,
+never the workspace or layout.  nil otherwise."
+  (cond
+   ((equal (plist-get state :workspace)
+           (salih/--linked-frame-workspace-name frame))
+    'full)
+   ((salih/--linked-frame-windows-showing (plist-get state :buffer) frame)
+    'buffer)))
 
 (defun salih/--linked-frame-sync (source-frame)
   "Mirror SOURCE-FRAME's selected-window state to linked sibling frames."
-  (setq salih/--linked-frame-sync-timer nil)
   (when (and (not salih/--linked-frame-syncing)
              (frame-live-p source-frame)
              (salih/--linked-frame-p source-frame))
-    (let ((state (salih/--linked-frame-state source-frame))
-          (salih/--linked-frame-syncing t))
-      (when state
-        (dolist (frame (salih/--linked-frame-siblings source-frame))
-          (unless (or (eq frame source-frame)
-                      (not (salih/--linked-frame-sync-eligible-p state frame)))
-            (salih/--linked-frame-apply-state state frame)))))))
+    ;; Bail before any per-command work when SOURCE-FRAME has no live linked
+    ;; sibling to mirror into (e.g. the other linked frame was closed).
+    (let ((targets (remq source-frame
+                         (salih/--linked-frame-siblings source-frame))))
+      (when targets
+        (let ((state (salih/--linked-frame-state source-frame))
+              (salih/--linked-frame-syncing t))
+          (when state
+            (dolist (frame targets)
+              (pcase (salih/--linked-frame-sync-mode state frame)
+                ('full (salih/--linked-frame-apply-state state frame))
+                ('buffer (salih/--linked-frame-apply-buffer-scroll state frame))))))))))
 
 (defun salih/--linked-frame-schedule-sync ()
-  "Schedule a sync from the selected frame when it is linked."
+  "Mirror the selected frame to its linked siblings after each command.
+This runs synchronously instead of on an idle timer: an idle timer is
+starved during continuous scrolling or typing, which makes the sibling
+frames visibly lag.  The per-command work is kept cheap by only rebuilding
+window layouts when they actually change (see
+`salih/--linked-frame-apply-state').
+
+The body is wrapped in `with-demoted-errors' so that a sync failure can never
+abort the running command or get this function removed from
+`post-command-hook' -- either of which would make editing feel broken."
   (unless salih/--linked-frame-syncing
     (let ((source-frame (selected-frame)))
       (when (and (salih/--linked-frame-p source-frame)
                  (not (minibufferp (window-buffer (selected-window)))))
-        (when (timerp salih/--linked-frame-sync-timer)
-          (cancel-timer salih/--linked-frame-sync-timer))
-        (setq salih/--linked-frame-sync-timer
-              (run-with-idle-timer
-               salih/linked-frame-sync-delay
-               nil
-               #'salih/--linked-frame-sync
-               source-frame))))))
+        (with-demoted-errors "salih/make-linked-frame sync error: %S"
+          (salih/--linked-frame-sync source-frame))))))
 
 (add-hook 'post-command-hook #'salih/--linked-frame-schedule-sync)
 
