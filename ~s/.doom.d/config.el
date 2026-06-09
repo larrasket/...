@@ -11,12 +11,12 @@
 (defvar so-long-target-modes nil)
 
 (setq user-full-name    "Salih Muhammed"
-      user-mail-address "salih.moahabdelhafez@halan.com")
+      user-mail-address "root@lr0.org")
 
 (defvar user-first-name       "Salih")
 (defvar user-stmp-server      "smtp.mail.me.com")
 (defvar user-stmp-port        587)
-(defvar user-short-username   "larrasket")
+(defvar user-short-username   "lr0")
 (defvar user-config-repo-path "~/configs/~s")
 
 (defvar salih/blog-content-path "~/blog/content")
@@ -53,7 +53,7 @@
 ;;; ef-owl
 ;;; doom-tokyo-night
 ;;; doom-one
-(setq doom-theme 'doom-badger)
+(setq doom-theme 'doom-monokai-ristretto)
 
 ;;; --- Basic settings ---
 (setq display-line-numbers-type 'relative
@@ -148,8 +148,8 @@
   (require 'lr-academic)
   (require 'lr-roam-lint))
 
-;; (with-eval-after-load 'mu4e
-;;   (require 'lr-email))
+(with-eval-after-load 'mu4e
+  (require 'lr-email))
 
 (with-eval-after-load 'circe
   (require 'lr-irc))
@@ -184,8 +184,35 @@
      (when org-agenda-files
        (org-agenda-prepare-buffers org-agenda-files)))))
 
-;; (add-to-list 'load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e")
-;; (mu4e-alert-enable-mode-line-display)
+(add-to-list 'load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e")
+
+(mu4e-alert-enable-mode-line-display)
+
+
+(defvar my/theme-cycle nil
+  "Shuffled list of themes to cycle through without repetition.")
+
+(defun my/shuffle-list (list)
+  "Return a shuffled copy of LIST."
+  (let ((vec (vconcat list)))
+    (dotimes (i (length vec))
+      (let* ((j (+ i (random (- (length vec) i))))
+             (tmp (aref vec i)))
+        (aset vec i (aref vec j))
+        (aset vec j tmp)))
+    (append vec nil)))
+
+(defun my/load-random-theme ()
+  "Load a random theme without repeating until all themes are used."
+  (interactive)
+  (unless my/theme-cycle
+    (setq my/theme-cycle (my/shuffle-list (custom-available-themes))))
+  
+  (let ((theme (pop my/theme-cycle)))
+    (mapc #'disable-theme custom-enabled-themes)
+    (load-theme theme t)
+    (message "Loaded theme: %s" theme)))
+
 
 
 
@@ -257,3 +284,19 @@ separated by one or more blank lines.  Skips org headings (lines starting with
       :n "C" #'salih/elfeed-show-visit-feed)
 
 (setq elfeed-goodies/entry-pane-size 0.5)
+
+
+
+(setq indent-bars-width-frac 0.24
+      indent-bars-pad-frac 0.12
+      indent-bars-color '(font-lock-property-name-face :face-bg nil :blend 0.28)
+      indent-bars-color-by-depth nil
+      indent-bars-highlight-current-depth nil)
+
+
+(indent-bars-reset-styles)
+
+(dolist (buf (buffer-list))
+  (with-current-buffer buf
+    (when (bound-and-true-p indent-bars-mode)
+      (indent-bars-reset))))
