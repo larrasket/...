@@ -158,31 +158,31 @@
 ;; At 3s idle: load org + org-roam so "r" in consult-buffer works.
 ;; At 5s idle: run the full DB sync (safe — Emacs is idle, no blocking UX).
 ;;   Uses the allow-flag to bypass the eager-sync block above.
-(run-with-idle-timer
- 3 nil
- (lambda ()
-   (require 'org)
-   (require 'org-roam)))
+;; (run-with-idle-timer
+;;  3 nil
+;;  (lambda ()
+;;    (require 'org)
+;;    (require 'org-roam)))
 
-(run-with-idle-timer
- 5 nil
- (lambda ()
-   (when (featurep 'org-roam)
-     (let ((salih/--org-roam-allow-sync t))
-       (org-roam-db-sync)))))
+;; (run-with-idle-timer
+;;  5 nil
+;;  (lambda ()
+;;    (when (featurep 'org-roam)
+;;      (let ((salih/--org-roam-allow-sync t))
+;;        (org-roam-db-sync)))))
 
-;;; --- Pre-warm agenda file buffers in background ---
-;; At 8s idle (after org/org-roam are loaded by the 3s timer), populate
-;; org-agenda-files from vulpea and pre-parse the buffers.  This way the
-;; first `org-agenda` call only needs to render, not do file I/O.
-(run-with-idle-timer
- 90 nil
- (lambda ()
-   (when (and (featurep 'org-roam)
-              (fboundp 'vulpea-agenda-files-update))
-     (vulpea-agenda-files-update)
-     (when org-agenda-files
-       (org-agenda-prepare-buffers org-agenda-files)))))
+;; ;;; --- Pre-warm agenda file buffers in background ---
+;; ;; At 8s idle (after org/org-roam are loaded by the 3s timer), populate
+;; ;; org-agenda-files from vulpea and pre-parse the buffers.  This way the
+;; ;; first `org-agenda` call only needs to render, not do file I/O.
+;; (run-with-idle-timer
+;;  90 nil
+;;  (lambda ()
+;;    (when (and (featurep 'org-roam)
+;;               (fboundp 'vulpea-agenda-files-update))
+;;      (vulpea-agenda-files-update)
+;;      (when org-agenda-files
+;;        (org-agenda-prepare-buffers org-agenda-files)))))
 
 (add-to-list 'load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e")
 
