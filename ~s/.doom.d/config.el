@@ -41,7 +41,7 @@
 (defvar salih/org-roam-dailies-capture-p nil)
 
 ;;; --- Font ---
-(setq doom-font (font-spec :family "PragmataPro" :size 16)
+(setq doom-font (font-spec :family "Pragmasevka" :size 16)
       doom-variable-pitch-font (font-spec :family "Iosevka Term" :size 16))
 
 ;;; --- Theme ---
@@ -53,7 +53,7 @@
 ;;; ef-owl
 ;;; doom-tokyo-night
 ;;; doom-one
-(setq doom-theme 'doom-tokyo-night)
+(setq doom-theme 'doom-badger)
 
 ;;; --- Basic settings ---
 (setq display-line-numbers-type 'relative
