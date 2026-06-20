@@ -143,7 +143,7 @@ alias cp="cp -i"
 alias dirsize='du -h -d 1 | sort -hr'
 alias sz='du -sh'
 alias share="caddy file-server --listen :2030 --browse"
-alias frozen="pkill -SIGUSR2 emacs"
+alias frozen="pkill -SIGUSR2 Emacs"
 alias 'cd..'='cd ..'
 
 
