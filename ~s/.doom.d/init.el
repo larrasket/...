@@ -52,15 +52,11 @@
        (cc +lsp +tree-sitter)
        (clojure +lsp +tree-sitter)
        emacs-lisp
-       ess
        (go +lsp +tree-sitter)
-       (graphql +lsp +tree-sitter)
        (javascript +lsp +tree-sitter)
        json
-       (julia +lsp +tree-sitter)
-       (latex +latexmk +lsp)
+       (latex +latexmk)
        (org +roam +pandoc)
-       (rest +jq)
        (scala +lsp +tree-sitter)
        sh
        web

@@ -300,6 +300,3 @@ separated by one or more blank lines.  Skips org headings (lines starting with
   (with-current-buffer buf
     (when (bound-and-true-p indent-bars-mode)
       (indent-bars-reset))))
-
-
-

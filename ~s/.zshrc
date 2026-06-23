@@ -187,3 +187,5 @@ fi
 export TERM=xterm-256color
 
 command -v starship >/dev/null && eval "$(starship init zsh)"
+
+source /Users/l/.config/broot/launcher/bash/br

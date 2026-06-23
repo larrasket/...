@@ -92,3 +92,5 @@ export PATH="$HOME/Library/Application Support/Coursier/bin:$PATH"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 source "$HOME/.rvm/scripts/rvm"
+
+source /Users/l/.config/broot/launcher/bash/br
