@@ -86,6 +86,21 @@ advice on `elfeed-search--update-list' because a pairwise
         elfeed-search-title-max-width 100
         elfeed-search-title-min-width 30)
 
+  ;; Compatibility shim.  `elfeed-goodies/search-header-draw' (installed as
+  ;; `elfeed-search-header-function' by `elfeed-goodies/setup') calls
+  ;; `elfeed-search--intro-header' whenever the database has never been
+  ;; updated, i.e. `(zerop (elfeed-db-last-update))'.  We track the latest
+  ;; elfeed via `unpin!', and current elfeed no longer defines that function,
+  ;; so opening elfeed before the first fetch throws `void-function
+  ;; elfeed-search--intro-header' on every redisplay.  Fall back to elfeed's
+  ;; standard header so the search buffer renders regardless.
+  (unless (fboundp 'elfeed-search--intro-header)
+    (defun elfeed-search--intro-header ()
+      "Compatibility shim for `elfeed-goodies'; see `lr-elfeed.el'."
+      (if (fboundp 'elfeed-search--header)
+          (elfeed-search--header)
+        "")))
+
   ;; Cluster the search list by author (freshest author first) via an :after
   ;; pass.  We leave `elfeed-search-sort-function' at the default date sort and
   ;; let the advice reorder the already-built list (a pairwise sort predicate
@@ -307,6 +322,44 @@ advice on `elfeed-search--update-list' because a pairwise
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCZlodzngfsaCQAKE6wXiuMw" youtube)         ; Fiction
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCePDFpCr78_qmVtpoB1Axaw" youtube)         ; Gart
           )))
+
+;;; --- Background fetching: load elfeed and refresh feeds after startup
+
+(defcustom salih/elfeed-update-interval (* 30 60)
+  "Seconds between automatic background `elfeed-update-background' runs."
+  :type 'integer
+  :group 'elfeed)
+
+(defvar salih/elfeed-update-timer nil
+  "Repeating timer that drives background elfeed refreshes.")
+
+(defun salih/elfeed-background-update ()
+  "Fetch every feed in `elfeed-feeds' in the background.
+`require's elfeed on the first call, which also loads the feed list and
+DB settings from the `after! elfeed' block above.  Uses
+`elfeed-update-background', which refreshes feeds without disturbing any
+visible Elfeed windows and no-ops if an update is already running."
+  (require 'elfeed)
+  (elfeed-update-background))
+
+(defun salih/elfeed-enable-background-updates ()
+  "Do an initial background fetch and schedule periodic refreshes."
+  (salih/elfeed-background-update)
+  (unless (timerp salih/elfeed-update-timer)
+    (setq salih/elfeed-update-timer
+          (run-with-timer salih/elfeed-update-interval
+                          salih/elfeed-update-interval
+                          #'salih/elfeed-background-update))))
+
+;; Once Doom and the user config have fully loaded, wait until Emacs is idle
+;; briefly (so the first frame isn't blocked by loading elfeed + network I/O)
+;; and then start fetching feeds in the background.  This means feeds are
+;; already populated by the time `elfeed' is opened, instead of only fetching
+;; on demand.
+(add-hook 'doom-after-init-hook
+          (lambda ()
+            (unless noninteractive
+              (run-with-idle-timer 5 nil #'salih/elfeed-enable-background-updates))))
 
 (map! :leader
       :desc "Elfeed" "o e" #'elfeed)

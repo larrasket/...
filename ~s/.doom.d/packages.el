@@ -23,7 +23,7 @@
 (package! org-ql)
 (package! org-download)
 (package! org-fc)
-(package! org-noter :pin "9d42ebc626981b6726b8078fb216b30cc5e34d21")
+(package! org-noter :pin "ab9628e449d76af8b2e5a9d5fead4e03ca76a03d")
 (package! org-present)
 (package! org-web-tools)
 (package! org-ref)
