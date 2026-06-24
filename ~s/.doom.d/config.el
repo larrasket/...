@@ -53,7 +53,7 @@
 ;;; ef-owl
 ;;; doom-tokyo-night
 ;;; doom-one
-(setq doom-theme 'doom-monokai-ristretto)
+(setq doom-theme 'ef-tritanopia-dark)
 
 ;;; --- Basic settings ---
 (setq display-line-numbers-type 'relative
@@ -286,6 +286,7 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 (setq elfeed-goodies/entry-pane-size 0.5)
 
 
+(require 'indent-bars)
 
 (setq indent-bars-width-frac 0.24
       indent-bars-pad-frac 0.12
@@ -300,3 +301,7 @@ separated by one or more blank lines.  Skips org headings (lines starting with
   (with-current-buffer buf
     (when (bound-and-true-p indent-bars-mode)
       (indent-bars-reset))))
+
+;; (salih/set-glass 0.01 30) 
+
+;; ir black
