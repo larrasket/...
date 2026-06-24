@@ -10,10 +10,10 @@
 ;; harmless re-declaration instead of a conflict.
 (defvar so-long-target-modes nil)
 
-(setq user-full-name    "Salih Muhammed"
+(setq user-full-name    "Saleh"
       user-mail-address "root@lr0.org")
 
-(defvar user-first-name       "Salih")
+(defvar user-first-name       "Saleh")
 (defvar user-stmp-server      "smtp.mail.me.com")
 (defvar user-stmp-port        587)
 (defvar user-short-username   "lr0")
@@ -302,6 +302,6 @@ separated by one or more blank lines.  Skips org headings (lines starting with
     (when (bound-and-true-p indent-bars-mode)
       (indent-bars-reset))))
 
-;; (salih/set-glass 0.01 30) 
+;; (salih/set-glass 0.1 1) 
 
 ;; ir black
