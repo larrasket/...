@@ -36,6 +36,7 @@ Bound to \"C\" in `elfeed-show-mode'; complements \"b\"
          (feed  (and entry (elfeed-entry-feed entry)))
          (url   (and feed (elfeed-feed-url feed))))
     (unless url (user-error "No feed URL for this entry"))
+    (elfeed-search-untag-all-unread)
     (browse-url url)))
 
 ;;; --- Search ordering: cluster entries by author, newest author first
@@ -368,11 +369,52 @@ visible Elfeed windows and no-ops if an update is already running."
       :map (elfeed-search-mode-map elfeed-show-mode-map)
       :n "C-c C-c" #'salih/elfeed-org-store-and-capture)
 
+
+
+(defun salih/elfeed-show-visit-feed ()
+  "Open current Elfeed entry URL in browser without focusing browser."
+  (interactive)
+  (let* ((entry elfeed-show-entry)
+         (url (elfeed-entry-link entry)))
+    (unless url
+      (user-error "No URL for this entry"))
+    (cond
+     ;; macOS: open in background
+     ((eq system-type 'darwin)
+      (start-process "elfeed-open-url-bg" nil "open" "-g" url))
+
+     ;; Linux/BSD fallback: opens URL, focus behavior depends on WM/browser
+     (t
+      (start-process "elfeed-open-url" nil "xdg-open" url)))))
+
+
+
+(defun salih/elfeed-visit-entry-background ()
+  "Open current Elfeed entry URL in browser without focusing browser."
+  (interactive)
+  (let* ((entry (or (bound-and-true-p elfeed-show-entry)
+                    (elfeed-search-selected :single)))
+         (url (and entry (elfeed-entry-link entry))))
+    (unless url
+      (user-error "No URL for this entry"))
+    (elfeed-search-untag-all-unread)
+    (if (eq system-type 'darwin)
+        (start-process "elfeed-open-url-bg" nil "open" "-g" url)
+      (start-process "elfeed-open-url" nil "xdg-open" url))))
+
+(map! :after elfeed
+      :map (elfeed-search-mode-map elfeed-show-mode-map)
+      :nvim
+      "C" #'salih/elfeed-visit-entry-background)
+
 (map! :after elfeed
       :map elfeed-show-mode-map
-      :n "C" #'salih/elfeed-show-visit-feed
-      :n "C-n" #'elfeed-goodies/split-show-next
-      :n "C-p" #'elfeed-goodies/split-show-prev)
+      :nvim
+      "C" #'salih/elfeed-show-visit-feed
+      "C-n" #'elfeed-goodies/split-show-next
+      "C-p" #'elfeed-goodies/split-show-prev)
+
+
 
 (provide 'lr-elfeed)
 
