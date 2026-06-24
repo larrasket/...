@@ -69,7 +69,7 @@ Nil lets Emacs choose light/dark defaults.")
        :alpha 0.01
        :blur 0
        :tint-opacity 0.05
-       :saturation 1.4
+       :saturation 1.9
        :inactive-opacity 0.05
        :corner-radius 2
        :fallback-alpha 0.70
