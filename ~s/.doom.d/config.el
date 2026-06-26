@@ -53,6 +53,7 @@
 ;;; ef-owl
 ;;; doom-tokyo-night
 ;;; doom-one
+;;; ef-maris-dark
 (setq doom-theme 'ef-tritanopia-dark)
 
 ;;; --- Basic settings ---
@@ -302,6 +303,6 @@ separated by one or more blank lines.  Skips org headings (lines starting with
     (when (bound-and-true-p indent-bars-mode)
       (indent-bars-reset))))
 
-;; (salih/set-glass 0.1 1) 
+(salih/set-glass 0.2 1) 
 
 ;; ir black
