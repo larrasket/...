@@ -39,44 +39,69 @@ Bound to \"C\" in `elfeed-show-mode'; complements \"b\"
     (elfeed-search-untag-all-unread)
     (browse-url url)))
 
-;;; --- Search ordering: cluster entries by author, newest author first
+;;; --- Search ordering: cluster entries into stable, contiguous groups
+;;
+;; Goal: every entry from the same source (or author) sits together, and the
+;; order is *deterministic* — pressing "r"/"g" never reshuffles the buffer, and
+;; a background fetch only slots new entries into their existing group instead
+;; of churning everything.  The previous version ordered groups by "freshest
+;; author first", i.e. by date, so reading an entry or fetching new ones changed
+;; which author was freshest and reshuffled the whole list.  We drop recency
+;; from the *group* ordering entirely: groups are ordered alphabetically by a
+;; stable key, and the comparator is a *total* order (final tiebreak on the
+;; entry id) so the result is identical no matter what order
+;; `elfeed-search--update-list' hands us.
 
-(defun salih/elfeed-entry-author (entry)
-  "Best-effort author key for ENTRY: its author metadata, else feed title.
-Used to cluster entries from the same author/feed together."
-  (let* ((meta (car (elfeed-meta entry :authors)))
-         (name (and meta (plist-get meta :name))))
-    (or name
-        (elfeed-meta--title (elfeed-entry-feed entry))
-        "")))
+(defvar salih/elfeed-group-by 'source
+  "How to cluster entries in the elfeed search buffer.
+`source' groups by feed title (all of a site's posts together); `author'
+groups by per-entry author metadata, falling back to the feed title when an
+entry has none.  `source' avoids scattering aggregator feeds (HN, Reddit,
+Lobsters) whose entries each carry a different submitter as the author.")
 
-(defun salih/elfeed-cluster-by-author (&rest _)
-  "Re-order `elfeed-search-entries' so each author's posts are contiguous.
-Author groups are ordered by their most-recent post (freshest author
-first); within an author the newest entry comes first.  Used as :after
-advice on `elfeed-search--update-list' because a pairwise
-`elfeed-search-sort-function' cannot know each author's latest date."
+(defun salih/elfeed-entry-group-key (entry)
+  "Stable grouping key for ENTRY: a feed title or author name.
+Honours `salih/elfeed-group-by'.  Never returns nil, so entries with missing
+metadata still cluster together deterministically."
+  (let ((feed-title (or (elfeed-meta--title (elfeed-entry-feed entry)) "")))
+    (if (eq salih/elfeed-group-by 'author)
+        (let* ((meta (car (elfeed-meta entry :authors)))
+               (name (and meta (plist-get meta :name))))
+          (or name feed-title))
+      feed-title)))
+
+(defun salih/elfeed-entry-id-string (entry)
+  "Deterministic unique string for ENTRY, used as a final sort tiebreak."
+  (let ((id (elfeed-entry-id entry)))   ; (FEED-ID . ENTRY-ID), both strings
+    (concat (car id) "\0" (cdr id))))
+
+(defun salih/elfeed-entry-lessp (x y)
+  "Total-order predicate: cluster by group, newest within a group.
+Groups are ordered alphabetically by `salih/elfeed-entry-group-key' — a key
+that depends on neither dates nor read state, so the ordering is stable across
+refreshes and background fetches.  Within a group the newest entry comes
+first; exact-date ties break on the entry id.  Being a total order, this
+yields the same result regardless of the input order."
+  (let ((gx (salih/elfeed-entry-group-key x))
+        (gy (salih/elfeed-entry-group-key y)))
+    (if (not (string= gx gy))
+        (string-collate-lessp gx gy nil t)
+      (let ((dx (elfeed-entry-date x))
+            (dy (elfeed-entry-date y)))
+        (if (/= dx dy)
+            (> dx dy)                    ; newest first within a group
+          (string< (salih/elfeed-entry-id-string x)
+                   (salih/elfeed-entry-id-string y)))))))
+
+(defun salih/elfeed-cluster-entries (&rest _)
+  "Re-order `elfeed-search-entries' into deterministic, contiguous groups.
+Installed as :after advice on `elfeed-search--update-list' because a pairwise
+`elfeed-search-sort-function' is consulted per-entry and cannot guarantee a
+stable global clustering.  See `salih/elfeed-entry-lessp'.  `advice-add' is
+idempotent, so re-evaluating this file won't stack duplicate advice."
   (when elfeed-search-entries
-    (let ((latest (make-hash-table :test 'equal)))
-      (dolist (e elfeed-search-entries)
-        (let ((a (salih/elfeed-entry-author e))
-              (d (elfeed-entry-date e)))
-          (when (> d (gethash a latest 0))
-            (puthash a d latest))))
-      (setq elfeed-search-entries
-            (sort elfeed-search-entries
-                  (lambda (x y)
-                    (let ((ax (salih/elfeed-entry-author x))
-                          (ay (salih/elfeed-entry-author y)))
-                      (if (string= ax ay)
-                          ;; same author: newest entry first
-                          (> (elfeed-entry-date x) (elfeed-entry-date y))
-                        ;; different authors: freshest author's group first
-                        (let ((lx (gethash ax latest))
-                              (ly (gethash ay latest)))
-                          (if (= lx ly)
-                              (string-collate-lessp ax ay nil t)
-                            (> lx ly)))))))))))
+    (setq elfeed-search-entries
+          (sort elfeed-search-entries #'salih/elfeed-entry-lessp))))
 
 
 ;;; --- Elfeed proper
@@ -102,13 +127,15 @@ advice on `elfeed-search--update-list' because a pairwise
           (elfeed-search--header)
         "")))
 
-  ;; Cluster the search list by author (freshest author first) via an :after
-  ;; pass.  We leave `elfeed-search-sort-function' at the default date sort and
-  ;; let the advice reorder the already-built list (a pairwise sort predicate
-  ;; can't cluster by per-author recency).  `advice-add' is idempotent, so
-  ;; re-evaluating this block won't stack duplicates.
+  ;; Cluster the search list into stable, contiguous groups via an :after pass.
+  ;; We disable the built-in pairwise sort and let the advice reorder the
+  ;; already-built list with a total-order comparator (see
+  ;; `salih/elfeed-cluster-entries').  `advice-add' is idempotent; we also drop
+  ;; the previous advice function so re-evaluating after a rename doesn't leave
+  ;; the old date-based clustering installed alongside the new one.
   (setq elfeed-search-sort-function nil)
-  (advice-add 'elfeed-search--update-list :after #'salih/elfeed-cluster-by-author)
+  (advice-remove 'elfeed-search--update-list 'salih/elfeed-cluster-by-author)
+  (advice-add 'elfeed-search--update-list :after #'salih/elfeed-cluster-entries)
   ;; If a search buffer is already open (e.g. after `doom/reload'), drop any
   ;; stale buffer-local sort and re-sort now so the new ordering shows
   ;; immediately instead of only on the next refresh.
