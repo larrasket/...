@@ -1,9 +1,59 @@
 ;;; lr-ui.el --- UI, theme, modeline, dashboard -*- lexical-binding: t; -*-
 
+(require 'cl-lib)
+
 ;;; --- Fringe ---
 (set-fringe-style '(1 . 1))
 
 ;;; --- Faces ---
+(defconst salih/ef-maris-dark-line-number-palette-overrides
+  '((fg-line-number-active fg-line-number-inactive)
+    (bg-line-number-active unspecified)
+    (bg-line-number-inactive unspecified))
+  "Ef Maris Dark palette entries that keep line numbers visually neutral.")
+
+(defvar ef-maris-dark-palette-overrides nil)
+(dolist (override salih/ef-maris-dark-line-number-palette-overrides)
+  (setq ef-maris-dark-palette-overrides
+        (assq-delete-all (car override) ef-maris-dark-palette-overrides)))
+(setq ef-maris-dark-palette-overrides
+      (append salih/ef-maris-dark-line-number-palette-overrides
+              ef-maris-dark-palette-overrides))
+
+(defun salih/--neutralize-ef-maris-dark-line-numbers (&rest _)
+  "Remove Ef Maris Dark's active line-number treatment."
+  (if (memq 'ef-maris-dark custom-enabled-themes)
+      (progn
+        (face-spec-set
+         'line-number
+         '((t :background unspecified
+              :box nil
+              :inverse-video nil
+              :overline nil
+              :underline nil
+              :slant normal
+              :weight normal
+              :extend nil))
+         'face-override-spec)
+        (face-spec-set
+         'line-number-current-line
+         '((t :inherit line-number
+              :foreground unspecified
+              :background unspecified
+              :box nil
+              :inverse-video nil
+              :overline nil
+              :underline nil
+              :slant normal
+              :weight normal
+              :extend nil))
+         'face-override-spec))
+    (dolist (face '(line-number line-number-current-line))
+      (face-spec-set face nil 'face-override-spec))))
+
+(add-hook 'doom-load-theme-hook #'salih/--neutralize-ef-maris-dark-line-numbers)
+(salih/--neutralize-ef-maris-dark-line-numbers)
+
 (custom-set-faces!
   ;; Theme-neutral emphasis. Colors stay owned by the active theme.
   '(font-lock-keyword-face     :weight bold)

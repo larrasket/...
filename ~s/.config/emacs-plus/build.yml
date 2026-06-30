@@ -8,4 +8,4 @@ patches:
   # Adds native NSGlassEffectView frame parameters for Ghostty-like glass.
   - ns-glass-effect:
       url: ~/.config/emacs-plus/ns-glass-effect.patch
-      sha256: eb49e53d5efe6e92066351796b05d7a718074bbfd0833571eb835414f7ced565
+      sha256: 532eb0b8549a8591dd91376ad6f8071fe2d1136f61b19d1a2f44556ac6bebb91

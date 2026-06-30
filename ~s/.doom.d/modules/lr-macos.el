@@ -33,7 +33,7 @@
   ;; Provided by a local emacs-plus@31 patch layered after the community
   ;; `frame-transparency' patch.  Native builds expose the same material shape
   ;; Ghostty uses: regular/clear NSGlassEffectView, tint opacity 0.01, and a
-  ;; 1.2 saturation multiplier for the inactive tint overlay.
+  ;; saturation multiplier for the inactive tint overlay.
   ;;
   ;; Keep color ownership with the active theme.  This module only adjusts
   ;; frame material parameters and uses the theme's current default background
@@ -47,6 +47,8 @@
   (defvar salih/ns-alpha-elements
     '(ns-alpha-all)
     "Frame elements that receive `alpha-background'.")
+  (defvar salih/ns-alpha-glyphs-min-alpha 0.24
+    "Minimum alpha for non-default glyph backgrounds on native glass builds.")
   (defvar salih/ns-glass-material 'regular
     "Native glass material: `regular', `clear', or nil.")
   (defvar salih/ns-glass-tint-opacity 0.01
@@ -67,6 +69,7 @@ Nil lets Emacs choose light/dark defaults.")
     '((macos-glass-regular
        :material regular
        :alpha 0.01
+       :glyphs-min-alpha 0.24
        :blur 0
        :tint-opacity 0.05
        :saturation 1.9
@@ -77,6 +80,7 @@ Nil lets Emacs choose light/dark defaults.")
       (macos-glass-clear
        :material clear
        :alpha 0.01
+       :glyphs-min-alpha 0.22
        :blur 0
        :tint-opacity 0.01
        :saturation 1.2
@@ -106,6 +110,8 @@ Nil lets Emacs choose light/dark defaults.")
       (setq salih/glass-style style
             salih/ns-glass-material (salih/--plist-get preset :material)
             salih/alpha-background (salih/--plist-get preset :alpha)
+            salih/ns-alpha-glyphs-min-alpha
+            (salih/--plist-get preset :glyphs-min-alpha)
             salih/ns-background-blur (salih/--plist-get preset :blur)
             salih/ns-alpha-elements '(ns-alpha-all)
             salih/ns-glass-tint-opacity (salih/--plist-get preset :tint-opacity)
@@ -137,7 +143,8 @@ Nil lets Emacs choose light/dark defaults.")
     "Return non-nil if this Emacs binary exposes native glass parameters."
     (if (eq salih/--native-glass-build-p-cache :unset)
         (setq salih/--native-glass-build-p-cache
-              (salih/--emacs-binary-has-string-p "ns-glass-material"))
+              (and (salih/--emacs-binary-has-string-p "ns-glass-material")
+                   (salih/--emacs-binary-has-string-p "ns-alpha-glyphs-alpha")))
       salih/--native-glass-build-p-cache))
 
   (defun salih/--warn-unless-glass-build ()
@@ -146,6 +153,7 @@ Nil lets Emacs choose light/dark defaults.")
       (setq salih/--glass-build-warning-shown t)
       (unless (and (salih/--emacs-binary-has-string-p "ns-background-blur")
                    (salih/--emacs-binary-has-string-p "ns-alpha-elements")
+                   (salih/--emacs-binary-has-string-p "ns-alpha-glyphs-alpha")
                    (salih/--native-glass-build-p))
         (display-warning
          'lr-macos
@@ -164,6 +172,11 @@ Nil lets Emacs choose light/dark defaults.")
         salih/ns-background-blur
       salih/glass-fallback-background-blur))
 
+  (defun salih/--effective-alpha-glyphs-alpha ()
+    "Return the alpha for theme-owned row and selection backgrounds."
+    (max (salih/--effective-alpha-background)
+         salih/ns-alpha-glyphs-min-alpha))
+
   (defun salih/--theme-background ()
     "Return the active theme's default background, if it defines one."
     (let ((background (face-background 'default nil t)))
@@ -179,7 +192,8 @@ Nil lets Emacs choose light/dark defaults.")
   (defun salih/--native-glass-frame-parameters ()
     "Return native glass frame parameters, when this Emacs supports them."
     (when (salih/--native-glass-build-p)
-      `((ns-glass-material . ,salih/ns-glass-material)
+      `((ns-alpha-glyphs-alpha . ,(salih/--effective-alpha-glyphs-alpha))
+        (ns-glass-material . ,salih/ns-glass-material)
         (ns-glass-tint-opacity . ,salih/ns-glass-tint-opacity)
         (ns-glass-saturation . ,salih/ns-glass-saturation)
         (ns-glass-inactive-opacity . ,salih/ns-glass-inactive-opacity)
@@ -204,7 +218,8 @@ Nil lets Emacs choose light/dark defaults.")
        (ns-background-blur . 0)
        (ns-alpha-elements . ,salih/ns-alpha-elements))
      (when (salih/--native-glass-build-p)
-       '((ns-glass-material . nil)))))
+       '((ns-alpha-glyphs-alpha . nil)
+         (ns-glass-material . nil)))))
 
   (dolist (parameter (salih/--glass-frame-parameters))
     (unless (eq (car parameter) 'background-color)
@@ -266,8 +281,9 @@ Nil lets Emacs choose light/dark defaults.")
     (setq salih/alpha-background  alpha
           salih/ns-background-blur blur)
     (modify-all-frames-parameters (salih/--glass-frame-parameters))
-    (message "glass: alpha=%s blur=%s material=%s"
+    (message "glass: alpha=%s glyph-alpha=%s blur=%s material=%s"
              (salih/--effective-alpha-background)
+             (salih/--effective-alpha-glyphs-alpha)
              (salih/--effective-background-blur)
              (if (salih/--native-glass-build-p) salih/ns-glass-material 'fallback)))
 
@@ -282,9 +298,10 @@ Nil lets Emacs choose light/dark defaults.")
              nil t nil nil (symbol-name salih/glass-style)))))
     (salih/--apply-glass-style-values style)
     (modify-all-frames-parameters (salih/--glass-frame-parameters))
-    (message "glass: %s alpha=%s blur=%s material=%s"
+    (message "glass: %s alpha=%s glyph-alpha=%s blur=%s material=%s"
              style
              (salih/--effective-alpha-background)
+             (salih/--effective-alpha-glyphs-alpha)
              (salih/--effective-background-blur)
              (if (salih/--native-glass-build-p) salih/ns-glass-material 'fallback))))
 

@@ -27,18 +27,6 @@ then opens `org-capture' with template \"f\".  This is the Elfeed twin of
       (push (list url title) org-stored-links)
       (org-capture nil "f"))))
 
-(defun salih/elfeed-show-visit-feed ()
-  "Open the source feed's own URL (not the entry's) in the browser.
-Bound to \"C\" in `elfeed-show-mode'; complements \"b\"
-\(`elfeed-show-visit') which opens the current article."
-  (interactive)
-  (let* ((entry elfeed-show-entry)
-         (feed  (and entry (elfeed-entry-feed entry)))
-         (url   (and feed (elfeed-feed-url feed))))
-    (unless url (user-error "No feed URL for this entry"))
-    (elfeed-search-untag-all-unread)
-    (browse-url url)))
-
 ;;; --- Search ordering: cluster entries into stable, contiguous groups
 ;;
 ;; Goal: every entry from the same source (or author) sits together, and the
@@ -398,36 +386,84 @@ visible Elfeed windows and no-ops if an update is already running."
 
 
 
+(defconst salih/elfeed-hn-item-url-regexp
+  (concat "\\`" (regexp-quote "https://news.ycombinator.com/item?id=")
+          "[0-9]+\\(?:[&#].*\\)?\\'")
+  "Regexp matching Hacker News item URLs.")
+
+(defconst salih/elfeed-hn-comments-url-regexp
+  (concat "Comments URL:\\(?:.\\|\n\\)*?\\("
+          (regexp-quote "https://news.ycombinator.com/item?id=")
+          "[0-9]+\\(?:&amp;[[:alnum:]_=.-]+\\)*\\)")
+  "Regexp matching the HNRSS comments URL in an entry body.")
+
+(defun salih/elfeed--html-url-unescape (url)
+  "Decode the small HTML entity subset that appears in feed URLs."
+  (when url
+    (replace-regexp-in-string "&amp;" "&" url t t)))
+
+(defun salih/elfeed--hn-item-url-p (url)
+  "Return non-nil when URL points at a Hacker News item page."
+  (and (stringp url)
+       (string-match-p salih/elfeed-hn-item-url-regexp
+                       (salih/elfeed--html-url-unescape url))))
+
+(defun salih/elfeed--entry-id-url (entry)
+  "Return ENTRY's id string, when it is URL-shaped."
+  (let ((id (and entry (elfeed-entry-id entry))))
+    (cond
+     ((stringp id) id)
+     ((consp id) (cdr id)))))
+
+(defun salih/elfeed-hn-comments-url (entry)
+  "Return ENTRY's Hacker News comments URL, if HNRSS exposes one."
+  (let ((content (and entry (elfeed-entry-content entry))))
+    (or (when (and (stringp content)
+                   (string-match salih/elfeed-hn-comments-url-regexp content))
+          (salih/elfeed--html-url-unescape (match-string 1 content)))
+        (let ((id-url (salih/elfeed--entry-id-url entry)))
+          (when (salih/elfeed--hn-item-url-p id-url)
+            (salih/elfeed--html-url-unescape id-url))))))
+
+(defun salih/elfeed-entry-preferred-url (entry)
+  "Return the URL `C' should open for ENTRY.
+For HNRSS entries, prefer the Hacker News comments URL.  Otherwise fall back to
+the article URL."
+  (or (salih/elfeed-hn-comments-url entry)
+      (and entry (elfeed-entry-link entry))))
+
+(defun salih/elfeed--open-url-background (url)
+  "Open URL in a browser, keeping focus in Emacs where supported."
+  (cond
+   ;; macOS: open in background
+   ((eq system-type 'darwin)
+    (start-process "elfeed-open-url-bg" nil "open" "-g" url))
+
+   ;; Linux/BSD fallback: opens URL, focus behavior depends on WM/browser
+   (t
+    (start-process "elfeed-open-url" nil "xdg-open" url))))
+
 (defun salih/elfeed-show-visit-feed ()
-  "Open current Elfeed entry URL in browser without focusing browser."
+  "Open the preferred URL for the current Elfeed entry."
   (interactive)
   (let* ((entry elfeed-show-entry)
-         (url (elfeed-entry-link entry)))
+         (url (salih/elfeed-entry-preferred-url entry)))
     (unless url
       (user-error "No URL for this entry"))
-    (cond
-     ;; macOS: open in background
-     ((eq system-type 'darwin)
-      (start-process "elfeed-open-url-bg" nil "open" "-g" url))
-
-     ;; Linux/BSD fallback: opens URL, focus behavior depends on WM/browser
-     (t
-      (start-process "elfeed-open-url" nil "xdg-open" url)))))
+    (salih/elfeed--open-url-background url)))
 
 
 
 (defun salih/elfeed-visit-entry-background ()
-  "Open current Elfeed entry URL in browser without focusing browser."
+  "Open the preferred URL for the current Elfeed entry."
   (interactive)
   (let* ((entry (or (bound-and-true-p elfeed-show-entry)
                     (elfeed-search-selected :single)))
-         (url (and entry (elfeed-entry-link entry))))
+         (url (salih/elfeed-entry-preferred-url entry)))
     (unless url
       (user-error "No URL for this entry"))
     (elfeed-search-untag-all-unread)
-    (if (eq system-type 'darwin)
-        (start-process "elfeed-open-url-bg" nil "open" "-g" url)
-      (start-process "elfeed-open-url" nil "xdg-open" url))))
+    (salih/elfeed--open-url-background url)))
 
 (map! :after elfeed
       :map (elfeed-search-mode-map elfeed-show-mode-map)
@@ -444,5 +480,4 @@ visible Elfeed windows and no-ops if an update is already running."
 
 
 (provide 'lr-elfeed)
-
 

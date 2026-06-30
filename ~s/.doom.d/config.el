@@ -54,7 +54,7 @@
 ;;; doom-tokyo-night
 ;;; doom-one
 ;;; ef-maris-dark
-(setq doom-theme 'ef-tritanopia-dark)
+(setq doom-theme 'ef-maris-dark)
 
 ;;; --- Basic settings ---
 (setq display-line-numbers-type 'relative
@@ -214,18 +214,12 @@
     (load-theme theme t)
     (message "Loaded theme: %s" theme)))
 
-
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
 
 
 (defun join-paragraph-lines ()
@@ -272,18 +266,6 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 (setq magit-git-executable "/opt/homebrew/bin/git")
 
 
-(defun salih/elfeed-show-visit-feed ()
-  "Open the source feed's own URL (not the entry's) in the browser."
-  (interactive)
-  (let* ((entry elfeed-show-entry)
-         (url   (elfeed-entry-link entry)))
-    (unless url (user-error "No feed URL for this entry")
-            (browse-url url))))
-
-(map! :after elfeed
-      :map elfeed-show-mode-map
-      :n "C" #'salih/elfeed-show-visit-feed)
-
 (setq elfeed-goodies/entry-pane-size 0.5)
 
 
@@ -303,6 +285,7 @@ separated by one or more blank lines.  Skips org headings (lines starting with
     (when (bound-and-true-p indent-bars-mode)
       (indent-bars-reset))))
 
-(salih/set-glass 0.2 1) 
+(salih/set-glass 0 1) 
 
+(load-theme doom-theme)
 ;; ir black
