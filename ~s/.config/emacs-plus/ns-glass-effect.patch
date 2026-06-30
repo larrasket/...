@@ -1,11 +1,12 @@
 diff --git a/src/frame.c b/src/frame.c
-index 704b510d291..e3d2b1013a7 100644
+index 704b510d291..fc3ad04d579 100644
 --- a/src/frame.c
 +++ b/src/frame.c
-@@ -1210,6 +1210,11 @@ make_frame (bool mini_p)
+@@ -1210,6 +1210,12 @@ make_frame (bool mini_p)
    f->ns_appearance = ns_appearance_system_default;
    f->ns_transparent_titlebar = false;
    f->ns_background_blur = 0;
++  f->ns_alpha_glyphs_alpha = -1.0;
 +  f->ns_glass_material = 0;
 +  f->ns_glass_tint_opacity = 0.01;
 +  f->ns_glass_saturation = 1.2;
@@ -14,10 +15,11 @@ index 704b510d291..e3d2b1013a7 100644
  #endif
  #endif
    f->select_mini_window_flag = false;
-@@ -4886,6 +4891,11 @@ static const struct frame_parm_table frame_parms[] =
+@@ -4886,6 +4892,12 @@ static const struct frame_parm_table frame_parms[] =
    {"ns-transparent-titlebar",	SYMBOL_INDEX (Qns_transparent_titlebar)},
    {"ns-background-blur",	SYMBOL_INDEX (Qns_background_blur)},
    {"ns-alpha-elements",	SYMBOL_INDEX (Qns_alpha_elements)},
++  {"ns-alpha-glyphs-alpha",	SYMBOL_INDEX (Qns_alpha_glyphs_alpha)},
 +  {"ns-glass-material",	SYMBOL_INDEX (Qns_glass_material)},
 +  {"ns-glass-tint-opacity",	SYMBOL_INDEX (Qns_glass_tint_opacity)},
 +  {"ns-glass-saturation",	SYMBOL_INDEX (Qns_glass_saturation)},
@@ -25,39 +27,42 @@ index 704b510d291..e3d2b1013a7 100644
 +  {"ns-glass-corner-radius",	SYMBOL_INDEX (Qns_glass_corner_radius)},
  #endif
  };
- 
-@@ -7323,6 +7333,11 @@ syms_of_frame (void)
+
+@@ -7323,6 +7335,12 @@ syms_of_frame (void)
    DEFSYM (Qns_transparent_titlebar, "ns-transparent-titlebar");
    DEFSYM (Qns_background_blur, "ns-background-blur");
    DEFSYM (Qns_alpha_elements, "ns-alpha-elements");
++  DEFSYM (Qns_alpha_glyphs_alpha, "ns-alpha-glyphs-alpha");
 +  DEFSYM (Qns_glass_material, "ns-glass-material");
 +  DEFSYM (Qns_glass_tint_opacity, "ns-glass-tint-opacity");
 +  DEFSYM (Qns_glass_saturation, "ns-glass-saturation");
 +  DEFSYM (Qns_glass_inactive_opacity, "ns-glass-inactive-opacity");
 +  DEFSYM (Qns_glass_corner_radius, "ns-glass-corner-radius");
  #endif
- 
+
    DEFSYM (Qalpha, "alpha");
 diff --git a/src/frame.h b/src/frame.h
-index f918d1fdbd2..627716f22b6 100644
+index f918d1fdbd2..de1ad09f4f8 100644
 --- a/src/frame.h
 +++ b/src/frame.h
-@@ -737,6 +737,11 @@ struct frame
+@@ -737,6 +737,12 @@ struct frame
    enum ns_appearance_type ns_appearance;
    bool_bf ns_transparent_titlebar;
    int ns_background_blur;
++  double ns_alpha_glyphs_alpha;
 +  int ns_glass_material;
 +  double ns_glass_tint_opacity;
 +  double ns_glass_saturation;
 +  double ns_glass_inactive_opacity;
 +  double ns_glass_corner_radius;
  #endif
- 
+
  #ifdef HAVE_TEXT_CONVERSION
-@@ -1259,6 +1264,11 @@ FRAME_PARENT_FRAME (struct frame *f)
+@@ -1259,6 +1265,12 @@ FRAME_PARENT_FRAME (struct frame *f)
  #define FRAME_NS_APPEARANCE(f) ((f)->ns_appearance)
  #define FRAME_NS_TRANSPARENT_TITLEBAR(f) ((f)->ns_transparent_titlebar)
  #define FRAME_NS_BACKGROUND_BLUR(f) ((f)->ns_background_blur)
++#define FRAME_NS_ALPHA_GLYPHS_ALPHA(f) ((f)->ns_alpha_glyphs_alpha)
 +#define FRAME_NS_GLASS_MATERIAL(f) ((f)->ns_glass_material)
 +#define FRAME_NS_GLASS_TINT_OPACITY(f) ((f)->ns_glass_tint_opacity)
 +#define FRAME_NS_GLASS_SATURATION(f) ((f)->ns_glass_saturation)
@@ -66,8 +71,21 @@ index f918d1fdbd2..627716f22b6 100644
  #endif
  #else /* not HAVE_WINDOW_SYSTEM */
  #define FRAME_OVERRIDE_REDIRECT(f) ((void) (f), 0)
+diff --git a/src/macfont.m b/src/macfont.m
+index 049c03a9e1f..85032745231 100644
+--- a/src/macfont.m
++++ b/src/macfont.m
+@@ -3006,7 +3006,7 @@ So we use CTFontDescriptorCreateMatchingFontDescriptor (no
+                 alpha = f->alpha_background;
+             }
+           else if (ns_alpha_element_enabled (f, Qns_alpha_glyphs))
+-            alpha = f->alpha_background;
++            alpha = ns_alpha_glyphs_background_alpha (f, face);
+           CGContextSetAlpha (context, alpha);
+           CG_SET_FILL_COLOR_WITH_FACE_BACKGROUND (context, face);
+         }
 diff --git a/src/nsfns.m b/src/nsfns.m
-index ee872b73123..2c95ef11a20 100644
+index ee872b73123..b58b1418bf9 100644
 --- a/src/nsfns.m
 +++ b/src/nsfns.m
 @@ -320,6 +320,7 @@ Turn the input menu (an NSMenu) into a lisp list for tracking on lisp side.
@@ -76,7 +94,7 @@ index ee872b73123..2c95ef11a20 100644
        ns_update_background_blur (f);
 +      ns_update_glass_material (f);
  #endif
- 
+
        face = FRAME_DEFAULT_FACE (f);
 @@ -378,6 +379,7 @@ Turn the input menu (an NSMenu) into a lisp list for tracking on lisp side.
    SET_FRAME_GARBAGED (f);
@@ -85,11 +103,12 @@ index ee872b73123..2c95ef11a20 100644
 +  ns_update_glass_material (f);
  #endif
  }
- 
-@@ -1154,6 +1156,11 @@ Turn the input menu (an NSMenu) into a lisp list for tracking on lisp side.
+
+@@ -1154,6 +1156,12 @@ Turn the input menu (an NSMenu) into a lisp list for tracking on lisp side.
    ns_set_transparent_titlebar,
    ns_set_background_blur,
    NULL,
++  ns_set_alpha_glyphs_alpha,
 +  ns_set_glass_material,
 +  ns_set_glass_tint_opacity,
 +  ns_set_glass_saturation,
@@ -98,10 +117,12 @@ index ee872b73123..2c95ef11a20 100644
  #endif
  };
  
-@@ -1464,6 +1471,16 @@ Turn the input menu (an NSMenu) into a lisp list for tracking on lisp side.
+@@ -1464,6 +1471,18 @@ Turn the input menu (an NSMenu) into a lisp list for tracking on lisp side.
                           NULL, NULL, RES_TYPE_NUMBER);
    gui_default_parameter (f, parms, Qns_alpha_elements, Qnil,
                           NULL, NULL, RES_TYPE_SYMBOL);
++  gui_default_parameter (f, parms, Qns_alpha_glyphs_alpha, Qnil,
++                         NULL, NULL, RES_TYPE_NUMBER);
 +  gui_default_parameter (f, parms, Qns_glass_material, Qnil,
 +                         NULL, NULL, RES_TYPE_SYMBOL);
 +  gui_default_parameter (f, parms, Qns_glass_tint_opacity, make_float (0.01),
@@ -113,10 +134,10 @@ index ee872b73123..2c95ef11a20 100644
 +  gui_default_parameter (f, parms, Qns_glass_corner_radius, Qnil,
 +                         NULL, NULL, RES_TYPE_NUMBER);
  #endif
- 
+
    parent_frame = gui_display_get_arg (dpyinfo, parms, Qparent_frame, NULL, NULL,
 diff --git a/src/nsterm.h b/src/nsterm.h
-index bb95cde12f6..a83e54eb2e5 100644
+index bb95cde12f6..7f80f1876b8 100644
 --- a/src/nsterm.h
 +++ b/src/nsterm.h
 @@ -936,6 +936,8 @@ struct ns_output
@@ -137,10 +158,16 @@ index bb95cde12f6..a83e54eb2e5 100644
    void *miniimage;
    void *cursor_color;
    void *foreground_color;
-@@ -1245,6 +1249,18 @@ extern void ns_set_transparent_titlebar (struct frame *f,
+@@ -1245,6 +1249,24 @@ extern void ns_set_transparent_titlebar (struct frame *f,
  extern void ns_set_background_blur (struct frame *f, Lisp_Object new_value,
                                      Lisp_Object old_value);
  extern void ns_update_background_blur (struct frame *f);
++extern double ns_alpha_glyphs_alpha (struct frame *f);
++extern double ns_alpha_glyphs_background_alpha (struct frame *f,
++                                                struct face *face);
++extern void ns_set_alpha_glyphs_alpha (struct frame *f,
++                                       Lisp_Object new_value,
++                                       Lisp_Object old_value);
 +extern void ns_set_glass_material (struct frame *f, Lisp_Object new_value,
 +                                   Lisp_Object old_value);
 +extern void ns_set_glass_tint_opacity (struct frame *f, Lisp_Object new_value,
@@ -157,7 +184,7 @@ index bb95cde12f6..a83e54eb2e5 100644
  #endif
  extern int ns_select (int nfds, fd_set *readfds, fd_set *writefds,
 diff --git a/src/nsterm.m b/src/nsterm.m
-index 4f912f249dc..1edc8c0b812 100644
+index 4f912f249dc..50714a2c4f7 100644
 --- a/src/nsterm.m
 +++ b/src/nsterm.m
 @@ -72,6 +72,7 @@ Updated by Christian Limpach (chris@nice.ch)
@@ -174,12 +201,12 @@ index 4f912f249dc..1edc8c0b812 100644
  static EmacsMenu *mainMenu;
 +static void ns_remove_glass_material (struct frame *);
  #endif
- 
+
  /* The last known monitor attributes list.  */
 @@ -1777,6 +1779,10 @@ Hide the window (X11 semantics)
    if (f->output_data.ns->miniimage != nil)
      [f->output_data.ns->miniimage release];
- 
+
 +#ifdef NS_IMPL_COCOA
 +  ns_remove_glass_material (f);
 +#endif
@@ -190,7 +217,7 @@ index 4f912f249dc..1edc8c0b812 100644
 @@ -2171,6 +2177,357 @@ Hide the window (X11 semantics)
  #endif /* MAC_OS_X_VERSION_MAX_ALLOWED >= 101000 */
  }
- 
+
 +enum ns_glass_material
 +  {
 +    ns_glass_material_none = 0,
@@ -545,8 +572,104 @@ index 4f912f249dc..1edc8c0b812 100644
  static void
  ns_apply_background_blur (struct frame *f)
  {
-@@ -8583,6 +8940,8 @@ - (void)windowDidBecomeKey      /* for direct calls */
- 
+@@ -3963,6 +4320,35 @@ larger if there are taller display elements (e.g., characters
+   return false;
+ }
+
++double
++ns_alpha_glyphs_alpha (struct frame *f)
++{
++  double alpha = FRAME_NS_ALPHA_GLYPHS_ALPHA (f);
++
++  return alpha < 0.0 ? f->alpha_background : alpha;
++}
++
++double
++ns_alpha_glyphs_background_alpha (struct frame *f, struct face *face)
++{
++  if (face && face->background == FRAME_BACKGROUND_PIXEL (f))
++    return f->alpha_background;
++
++  return ns_alpha_glyphs_alpha (f);
++}
++
++void
++ns_set_alpha_glyphs_alpha (struct frame *f, Lisp_Object new_value,
++                           Lisp_Object old_value)
++{
++  NSTRACE ("ns_set_alpha_glyphs_alpha");
++
++  FRAME_NS_ALPHA_GLYPHS_ALPHA (f)
++    = ns_lisp_glass_number (new_value, -1.0, 0.0, 1.0,
++                            "ns-alpha-glyphs-alpha");
++  SET_FRAME_GARBAGED (f);
++}
++
+ /* Set up colors for the relief lines around glyph string S.  */
+
+ static void
+@@ -4298,7 +4684,8 @@ Function modeled after x_draw_glyph_string_box ().
+ 		 ? [NSColor colorWithUnsignedLong:NS_FACE_BACKGROUND (face)]
+ 		 : FRAME_BACKGROUND_COLOR (s->f));
+ 	      if (ns_alpha_element_enabled (s->f, Qns_alpha_glyphs))
+-		color = [color colorWithAlphaComponent: s->f->alpha_background];
++		color = [color colorWithAlphaComponent:
++			  ns_alpha_glyphs_background_alpha (s->f, face)];
+ 	      [color set];
+ 	    }
+ 	  else if (face && (NS_FACE_BACKGROUND (face)
+@@ -4444,7 +4831,8 @@ Function modeled after x_draw_glyph_string_box ().
+     NSColor *color =
+       [NSColor colorWithUnsignedLong:NS_FACE_BACKGROUND (face)];
+     if (ns_alpha_element_enabled (s->f, Qns_alpha_glyphs))
+-      color = [color colorWithAlphaComponent: s->f->alpha_background];
++      color = [color colorWithAlphaComponent:
++		ns_alpha_glyphs_background_alpha (s->f, face)];
+     [color set];
+   }
+
+@@ -4518,7 +4906,8 @@ Function modeled after x_draw_glyph_string_box ().
+       [FRAME_CURSOR_COLOR (s->f) set];
+       tdCol = [NSColor colorWithUnsignedLong: NS_FACE_BACKGROUND (face)];
+       if (ns_alpha_element_enabled (s->f, Qns_alpha_glyphs))
+-        tdCol = [tdCol colorWithAlphaComponent: s->f->alpha_background];
++        tdCol = [tdCol colorWithAlphaComponent:
++		  ns_alpha_glyphs_background_alpha (s->f, face)];
+     }
+   else
+     tdCol = [NSColor colorWithUnsignedLong: NS_FACE_FOREGROUND (face)];
+@@ -4616,7 +5005,8 @@ Function modeled after x_draw_glyph_string_box ().
+ 		  [NSColor colorWithUnsignedLong: face->background];
+ 		if (ns_alpha_element_enabled (s->f, Qns_alpha_glyphs))
+ 		  color = [color colorWithAlphaComponent:
+-				 s->f->alpha_background];
++				 ns_alpha_glyphs_background_alpha (s->f,
++								   face)];
+ 		[color set];
+ 	      }
+ 	    }
+@@ -4626,7 +5016,8 @@ Function modeled after x_draw_glyph_string_box ().
+ 		[NSColor colorWithUnsignedLong: s->face->background];
+ 	      if (ns_alpha_element_enabled (s->f, Qns_alpha_glyphs))
+ 		color = [color colorWithAlphaComponent:
+-			       s->f->alpha_background];
++			       ns_alpha_glyphs_background_alpha (s->f,
++								 s->face)];
+ 	      [color set];
+ 	    }
+ 	  NSRectFill (NSMakeRect (x, y, w, h));
+@@ -4702,7 +5093,8 @@ Function modeled after x_draw_glyph_string_box ().
+ 		[NSColor colorWithUnsignedLong: s->face->background];
+ 	      if (ns_alpha_element_enabled (s->f, Qns_alpha_glyphs))
+ 		color = [color colorWithAlphaComponent:
+-			       s->f->alpha_background];
++			       ns_alpha_glyphs_background_alpha (s->f,
++								 s->face)];
+ 	      [color set];
+ 	    }
+
+@@ -8583,6 +8975,8 @@ - (void)windowDidBecomeKey      /* for direct calls */
+
  #ifdef NS_IMPL_COCOA
    EmacsView *view = FRAME_NS_VIEW (emacsframe);
 +  ns_update_glass_material (emacsframe);
@@ -554,21 +677,21 @@ index 4f912f249dc..1edc8c0b812 100644
    /* Make sure we have focus and the timer isn't already scheduled.  */
    if (self.window.firstResponder == view
        && !ns_deferred_UAZoomChangeFocus_timer)
-@@ -8660,6 +9019,9 @@ - (void)windowDidResignKey: (NSNotification *)notification
- 
+@@ -8660,6 +9054,9 @@ - (void)windowDidResignKey: (NSNotification *)notification
+
    emacsframe->mouse_moved = 0;
    ns_frame_rehighlight (emacsframe);
 +#ifdef NS_IMPL_COCOA
 +  ns_update_glass_material (emacsframe);
 +#endif
- 
+
    /* FIXME: for some reason needed on second and subsequent clicks away
              from sole-frame Emacs to get hollow box to show.  */
-@@ -10009,6 +10371,7 @@ - (instancetype) initWithEmacsFrame: (struct frame *) f
+@@ -10009,6 +10406,7 @@ - (instancetype) initWithEmacsFrame: (struct frame *) f
          [self setOpaque:NO];
  #ifdef NS_IMPL_COCOA
        ns_update_background_blur (f);
 +      ns_update_glass_material (f);
  #endif
- 
+
        /* toolbar support */

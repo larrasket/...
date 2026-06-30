@@ -17,7 +17,25 @@
 (ert-deftest lr-ui-does-not-hard-code-face-colors ()
   (with-temp-buffer
     (insert-file-contents (lr-ui-theme-neutral-test--module-path))
-    (should-not (re-search-forward ":[a-z-]*color\\|:foreground\\|:background" nil t))))
+    (should-not (re-search-forward ":[a-z-]*color\\s-+\"" nil t))
+    (should-not (re-search-forward ":foreground\\s-+\"" nil t))
+    (should-not (re-search-forward ":background\\s-+\"" nil t))))
+
+(ert-deftest lr-ui-neutralizes-ef-maris-dark-line-number-palette ()
+  (with-temp-buffer
+    (insert-file-contents (lr-ui-theme-neutral-test--module-path))
+    (should (search-forward "(fg-line-number-active fg-line-number-inactive)" nil t))
+    (should (search-forward "(bg-line-number-active unspecified)" nil t))
+    (should (search-forward "(bg-line-number-inactive unspecified)" nil t))))
+
+(ert-deftest lr-ui-removes-ef-maris-dark-current-line-number-effects ()
+  (with-temp-buffer
+    (insert-file-contents (lr-ui-theme-neutral-test--module-path))
+    (should (search-forward "line-number-current-line" nil t))
+    (should (search-forward ":inherit line-number" nil t))
+    (should (search-forward ":foreground unspecified" nil t))
+    (should (search-forward ":background unspecified" nil t))
+    (should (search-forward ":weight normal" nil t))))
 
 (ert-deftest lr-ui-restores-theme-neutral-face-emphasis ()
   (with-temp-buffer
