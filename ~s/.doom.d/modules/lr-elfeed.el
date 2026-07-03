@@ -435,13 +435,9 @@ the article URL."
 (defun salih/elfeed--open-url-background (url)
   "Open URL in a browser, keeping focus in Emacs where supported."
   (cond
-   ;; macOS: open in background
    ((eq system-type 'darwin)
     (start-process "elfeed-open-url-bg" nil "open" "-g" url))
-
-   ;; Linux/BSD fallback: opens URL, focus behavior depends on WM/browser
-   (t
-    (start-process "elfeed-open-url" nil "xdg-open" url))))
+   (t (start-process "elfeed-open-url" nil "xdg-open" url))))
 
 (defun salih/elfeed-show-visit-feed ()
   "Open the preferred URL for the current Elfeed entry."
