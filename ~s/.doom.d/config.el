@@ -285,7 +285,7 @@ separated by one or more blank lines.  Skips org headings (lines starting with
     (when (bound-and-true-p indent-bars-mode)
       (indent-bars-reset))))
 
-(salih/set-glass 0.1 1) 
+;; (salih/set-glass 0.1 1) 
 
 (load-theme doom-theme)
 ;; ir black
