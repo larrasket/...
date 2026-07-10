@@ -116,6 +116,150 @@
                       (format-time-string "%a") (format-time-string "%H:%M"))))
     (goto-char (point-max))))
 
+;;; --- Transfer between microblog and diary ---
+;; Mirror of scripts/check_post_lengths.py, but entry-at-point in Emacs.
+;; Golden rule: preserve the relevant :ID: so internal [[id:...]] links survive.
+
+(defun salih/--org-file-id ()
+  "Return the first (file-level) :ID: in the buffer, or nil."
+  (save-excursion
+    (goto-char (point-min))
+    (when (re-search-forward "^[ \t]*:ID:[ \t]+\\(\\S-+\\)" nil t)
+      (match-string 1))))
+
+(defun salih/--org-title ()
+  "Return the #+title value, trimmed, or nil."
+  (save-excursion
+    (goto-char (point-min))
+    (when (re-search-forward "^#\\+title:[ \t]*\\(.*\\)$" nil t)
+      (string-trim (match-string 1)))))
+
+(defun salih/--org-date-stamp ()
+  "Return the #+date/#+DATE angle-bracket stamp, or nil."
+  (save-excursion
+    (goto-char (point-min))
+    (when (re-search-forward "^#\\+date:[ \t]*\\(<[^>]*>\\)" nil t)
+      (match-string 1))))
+
+(defun salih/--org-body-after-header ()
+  "Buffer body after the top property drawer and leading #+ / blank lines."
+  (save-excursion
+    (goto-char (point-min))
+    (when (looking-at "[ \t]*:PROPERTIES:")
+      (re-search-forward "^[ \t]*:END:[ \t]*\n" nil t))
+    (while (looking-at "[ \t]*\\(#\\+\\|$\\)")
+      (forward-line 1))
+    (string-trim (buffer-substring-no-properties (point) (point-max)))))
+
+(defun salih/--org-subtree-body ()
+  "Body of the current subtree: contents after the heading and its drawer."
+  (save-excursion
+    (org-back-to-heading t)
+    (let ((end (save-excursion (org-end-of-subtree t t) (point))))
+      (forward-line 1)
+      (when (looking-at "[ \t]*:PROPERTIES:")
+        (re-search-forward "^[ \t]*:END:[ \t]*\n" end t))
+      (while (and (< (point) end) (looking-at "[ \t]*$"))
+        (forward-line 1))
+      (string-trim-right (buffer-substring-no-properties (point) end)))))
+
+(defun salih/--microblog-file-to-diary ()
+  "Convert the whole current microblog file into a diary day."
+  (let* ((file (buffer-file-name))
+         (date-ymd (substring (file-name-base file) 0 10))
+         (day-title (replace-regexp-in-string "-" "/" date-ymd))
+         (org-id (salih/--org-file-id))
+         (title (salih/--org-title))
+         (stamp (or (salih/--org-date-stamp) (format "<%s>" date-ymd)))
+         (time (if (string-match "[0-9]\\{1,2\\}:[0-9]\\{2\\}" stamp)
+                   (match-string 0 stamp) "00:00"))
+         (body (salih/--org-body-after-header))
+         (heading (if (and title (not (string-prefix-p "Microblog Post" title)))
+                      title
+                    (read-string "Section heading: "
+                                 (string-join (seq-take (split-string body) 6) " "))))
+         (target (expand-file-name (concat "content/diary/" date-ymd ".org")
+                                   salih/hugo-root))
+         (this-buf (current-buffer)))
+    (if (file-exists-p target)
+        (progn
+          (with-current-buffer (find-file-noselect target)
+            (goto-char (point-max))
+            (unless (bolp) (insert "\n"))
+            (insert (format "\n* %s %s\n" time heading))
+            (when org-id
+              (insert (format ":PROPERTIES:\n:ID:       %s\n:CUSTOM_ID: %s\n:END:\n"
+                              org-id org-id)))
+            (insert body "\n")
+            (save-buffer))
+          (message "Appended to existing diary %s — file URL changed; check [[id:%s]] links"
+                   (file-name-nondirectory target) org-id))
+      (with-temp-file target
+        (when org-id
+          (insert (format ":PROPERTIES:\n:ID:       %s\n:CUSTOM_ID: %s\n:END:\n"
+                          org-id org-id)))
+        (insert (format "#+title: %s\n#+DATE: %s\n\n* %s %s\n%s\n"
+                        day-title stamp time heading body)))
+      (message "Created diary %s" (file-name-nondirectory target)))
+    (delete-file file)
+    (set-buffer-modified-p nil)
+    (kill-buffer this-buf)
+    (find-file target)
+    (goto-char (point-max))))
+
+(defun salih/--diary-heading-to-microblog ()
+  "Extract the diary subtree at point into a new microblog file."
+  (let* ((file (buffer-file-name))
+         (date-ymd (substring (file-name-base file) 0 10))
+         time heading title section-id body stamp)
+    (save-excursion
+      (org-back-to-heading t)
+      (unless (looking-at "^\\*+[ \t]+\\([0-9]\\{1,2\\}:[0-9]\\{2\\}\\)[ \t]*\\(.*\\)$")
+        (user-error "Point is not inside a '* HH:MM' diary heading"))
+      (setq time (match-string 1)
+            heading (string-trim (match-string 2))
+            title (if (string= heading "") (format "Microblog Post %s" date-ymd) heading))
+      (let ((end (save-excursion (org-end-of-subtree t t) (point))))
+        (setq section-id (save-excursion
+                           (when (re-search-forward "^[ \t]*:ID:[ \t]+\\(\\S-+\\)" end t)
+                             (match-string 1)))))
+      (setq body (salih/--org-subtree-body)))
+    (let ((dstamp (salih/--org-date-stamp)))
+      ;; date stamp carries this section's time (day + weekday preserved)
+      (setq stamp (if (and dstamp (string-match "<\\([0-9-]\\{10\\}\\(?: [A-Za-z]\\{3\\}\\)?\\)" dstamp))
+                      (format "<%s %s>" (match-string 1 dstamp) time)
+                    (format "<%s %s>" date-ymd time))))
+    (let* ((micro-dir (expand-file-name "content/microblog/" salih/hugo-root))
+           (counter 1) target)
+      (while (file-exists-p (expand-file-name (format "%s-%d.org" date-ymd counter) micro-dir))
+        (setq counter (1+ counter)))
+      (setq target (expand-file-name (format "%s-%d.org" date-ymd counter) micro-dir))
+      (with-temp-file target
+        (when section-id
+          (insert (format ":PROPERTIES:\n:ID:       %s\n:END:\n" section-id)))
+        (insert (format "#+title: %s\n#+date: %s\n\n%s\n" title stamp body)))
+      (save-excursion (org-back-to-heading t) (org-cut-subtree))
+      (save-buffer)
+      (when (save-excursion (goto-char (point-min)) (not (re-search-forward "^\\* " nil t)))
+        (message "Diary %s now has no sections — clean up if needed"
+                 (file-name-nondirectory file)))
+      (find-file target)
+      (message "Created microblog %s" (file-name-nondirectory target)))))
+
+;;;###autoload
+(defun salih/transfer-hugo-entry ()
+  "Transfer the current entry between microblog and diary.
+In a microblog file: convert the whole file into a diary day.
+In a diary heading: extract that subtree into a new microblog file.
+The relevant :ID: is preserved so internal [[id:...]] links keep resolving."
+  (interactive)
+  (let ((file (buffer-file-name)))
+    (unless file (user-error "Buffer is not visiting a file"))
+    (cond
+     ((string-match-p "/content/microblog/" file) (salih/--microblog-file-to-diary))
+     ((string-match-p "/content/diary/" file)     (salih/--diary-heading-to-microblog))
+     (t (user-error "Not in a microblog file or a diary heading")))))
+
 ;;; --- Pic-log / film / music / exhibit ---
 (defun salih/--generate-org-id ()
   (format "%s0" (downcase (substring (md5 (format "%s%s" (current-time) (random))) 0 8))))

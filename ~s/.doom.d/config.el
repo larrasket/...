@@ -2,8 +2,7 @@
 
 ;; Declare `so-long-target-modes' special EARLY.  Doom's lang/org module
 ;; lexically `let'-binds it inside `+org-get-agenda-file-buffer' (compiled
-;; before so-long loads).  On Emacs 32, if that advice runs before
-;; so-long.el's own `defvar', the later defvar hard-errors with "Defining
+;; before so-long loads).  On Emacs 32, if that advice runs before so-long.el's own `defvar', the later defvar hard-errors with "Defining
 ;; as dynamic an already lexical var so-long-target-modes" — which then
 ;; cascades into flycheck's org-lint checker.  Marking it special here,
 ;; before any agenda/first-file activity, makes so-long.el's defvar a
@@ -54,7 +53,8 @@
 ;;; doom-tokyo-night
 ;;; doom-one
 ;;; ef-maris-dark
-(setq doom-theme 'ef-maris-dark)
+;;; ef-dream
+(setq doom-theme 'kaolin-temple)
 
 ;;; --- Basic settings ---
 (setq display-line-numbers-type 'relative
@@ -271,11 +271,11 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 
 (require 'indent-bars)
 
-(setq indent-bars-width-frac 0.24
-      indent-bars-pad-frac 0.12
-      indent-bars-color '(font-lock-property-name-face :face-bg nil :blend 0.28)
-      indent-bars-color-by-depth nil
-      indent-bars-highlight-current-depth nil)
+;; (setq indent-bars-width-frac 0.24
+;;       indent-bars-pad-frac 0.12
+;;       indent-bars-color '(font-lock-property-name-face :face-bg nil :blend 0.28)
+;;       indent-bars-color-by-depth nil
+;;       indent-bars-highlight-current-depth nil)
 
 
 (indent-bars-reset-styles)
@@ -285,7 +285,10 @@ separated by one or more blank lines.  Skips org headings (lines starting with
     (when (bound-and-true-p indent-bars-mode)
       (indent-bars-reset))))
 
-(salih/set-glass 0 1) 
+(salih/set-glass 0.1 1) 
 
 (load-theme doom-theme)
 ;; ir black
+
+(setq org-extend-today-until 5)
+(salih/set-glass-style 'macos-glass-regular)
