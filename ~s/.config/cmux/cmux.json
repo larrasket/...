@@ -1,0 +1,288 @@
+{
+  "$schema" : "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json",
+  "schemaVersion" : 1,
+  "shortcuts" : {
+    "bindings" : {
+      "canvasOverview" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "canvasRevealFocusedPane" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "canvasTidy" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "canvasZoomIn" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "canvasZoomOut" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "canvasZoomReset" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "clearScreenKeepScrollback" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "commandPaletteNext" : {
+        "first" : {
+          "command" : false,
+          "control" : true,
+          "key" : "j",
+          "keyCode" : 38,
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "commandPalettePrevious" : {
+        "first" : {
+          "command" : false,
+          "control" : true,
+          "key" : "k",
+          "keyCode" : 40,
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "equalizeSplits" : {
+        "first" : {
+          "command" : true,
+          "control" : true,
+          "key" : "=",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "focusBrowserAddressBar" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "focusDown" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "j",
+          "keyCode" : 38,
+          "option" : false,
+          "shift" : true
+        }
+      },
+      "focusLeft" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "h",
+          "keyCode" : 4,
+          "option" : false,
+          "shift" : true
+        }
+      },
+      "focusRight" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "l",
+          "keyCode" : 37,
+          "option" : false,
+          "shift" : true
+        }
+      },
+      "focusRightSidebar" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "focusUp" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "k",
+          "keyCode" : 40,
+          "option" : false,
+          "shift" : true
+        }
+      },
+      "markOldestUnreadAndJumpNext" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "openBrowser" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "showBrowserJavaScriptConsole" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "showNotifications" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "i",
+          "keyCode" : 34,
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "splitBrowserDown" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "splitBrowserRight" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "splitDown" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "j",
+          "keyCode" : 38,
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "splitRight" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "l",
+          "keyCode" : 37,
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "toggleBrowserDeveloperTools" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "toggleBrowserFocusMode" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "toggleCanvasLayout" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "toggleFileExplorer" : {
+        "first" : {
+          "command" : true,
+          "control" : false,
+          "key" : "e",
+          "keyCode" : 14,
+          "option" : false,
+          "shift" : true
+        }
+      },
+      "toggleUnread" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      },
+      "triggerFlash" : {
+        "first" : {
+          "command" : false,
+          "control" : false,
+          "key" : "",
+          "option" : false,
+          "shift" : false
+        }
+      }
+    }
+  }
+}

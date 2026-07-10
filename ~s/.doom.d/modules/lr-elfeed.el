@@ -474,6 +474,126 @@ the article URL."
       "C-p" #'elfeed-goodies/split-show-prev)
 
 
+(require 'ox-md)
+(require 'shr)
+
+(defun salih/elfeed--plain-text-from-html (html)
+  "Convert HTML to readable plain text."
+  (with-temp-buffer
+    (insert html)
+    (shr-render-region (point-min) (point-max))
+    (buffer-string)))
+
+(defun salih/elfeed--entry-body-as-text (entry)
+  "Return ENTRY body as plain text."
+  (let ((content (elfeed-deref (elfeed-entry-content entry))))
+    (cond
+     ((stringp content)
+      (salih/elfeed--plain-text-from-html content))
+     ((and (listp content) (eq (car content) 'html))
+      (salih/elfeed--plain-text-from-html
+       (with-temp-buffer
+         (shr-insert-document content)
+         (buffer-string))))
+     (t ""))))
+
+(defun salih/elfeed--format-link (url)
+  "Return URL formatted for plain text email."
+  (if (not url)
+      ""
+    (format "\n\nLink: %s\n" url)))
+
+(defun salih/elfeed-email-current-view ()
+  "Compose the current Elfeed article in Apple Mail."
+  (interactive)
+  (unless (derived-mode-p 'elfeed-show-mode)
+    (user-error "This command only works from an Elfeed article"))
+
+  (let* ((entry elfeed-show-entry)
+         (subject (substring-no-properties
+                   (or (elfeed-entry-title entry) "Elfeed article")))
+         (url (elfeed-entry-link entry))
+         (body
+          (substring-no-properties
+           (with-temp-buffer
+             (insert (elfeed-deref (elfeed-entry-content entry)))
+             (goto-char (point-min))
+
+             ;; Convert HTML links to: Text (URL)
+             (while (re-search-forward
+                     "<a[^>]*href=[\"']\\([^\"']+\\)[\"'][^>]*>\\(.*?\\)</a>"
+                     nil t)
+               (replace-match "\\2 (\\1)" t))
+
+             (salih/elfeed--plain-text-from-html (buffer-string)))))
+         (text
+          (substring-no-properties
+           (concat body
+                   (when url
+                     (format "\n\nLink: %s\n" url)))))
+         ;; Escape for AppleScript string literals.
+         (escape
+          (lambda (s)
+            (setq s (replace-regexp-in-string "\\\\" "\\\\\\\\" s))
+            (setq s (replace-regexp-in-string "\"" "\\\\\"" s))
+            (setq s (replace-regexp-in-string "\r" "" s))
+            (setq s (replace-regexp-in-string "\n" "\\\\n" s))
+            s))
+         (script
+          (format
+           (concat
+            "tell application \"Mail\"\n"
+            "    activate\n"
+            "    make new outgoing message with properties "
+            "{visible:true, "
+            "subject:\"%s\", "
+            "content:\"%s\"}\n"
+            "end tell")
+           (funcall escape subject)
+           (funcall escape text))))
+    (do-applescript script)))
+
+(map! :after elfeed
+      :map elfeed-show-mode-map
+      :n "C-c H-m" #'salih/elfeed-email-current-view)
+
+
+(require 'ox-org)
+
+(defun salih/elfeed-export-current-to-org ()
+  "Export the current Elfeed article to Org and copy it to the kill ring."
+  (interactive)
+  (unless (derived-mode-p 'elfeed-show-mode)
+    (user-error "This command only works from an Elfeed article"))
+
+  (let* ((entry elfeed-show-entry)
+         (title (or (elfeed-entry-title entry) "Untitled"))
+         (url (elfeed-entry-link entry))
+         (html (elfeed-deref (elfeed-entry-content entry)))
+         (org-body
+          (with-temp-buffer
+            (insert html)
+            ;; HTML -> Org
+            (shell-command-on-region
+             (point-min) (point-max)
+             "pandoc --wrap=none -f html -t org"
+             (current-buffer)
+             t)
+            (buffer-string)))
+         (org-text
+          (concat
+           "* " title "\n"
+           (when url
+             (format "%s\n\n" url))
+           org-body)))
+
+    (kill-new org-text)
+    (message "Copied Org version to clipboard.")))
+
+(map! :after elfeed
+      :map elfeed-show-mode-map
+      :n "C-c C-o" #'salih/elfeed-export-current-to-org)
+
 
 (provide 'lr-elfeed)
 
