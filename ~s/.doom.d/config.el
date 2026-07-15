@@ -54,7 +54,7 @@
 ;;; doom-one
 ;;; ef-maris-dark
 ;;; ef-dream
-(setq doom-theme 'kaolin-temple)
+(setq doom-theme 'modus-vivendi)
 
 ;;; --- Basic settings ---
 (setq display-line-numbers-type 'relative
@@ -266,7 +266,6 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 (setq magit-git-executable "/opt/homebrew/bin/git")
 
 
-(setq elfeed-goodies/entry-pane-size 0.5)
 
 
 (require 'indent-bars)
@@ -287,8 +286,29 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 
 ;; (salih/set-glass 0.1 1) 
 
-(load-theme doom-theme)
+;; Pass no-confirm (t): this runs during (daemon) init, BEFORE Doom loads
+;; custom.el — so `custom-safe-themes' is still empty here and a bare
+;; `load-theme' would fire the "Loading a theme can run Lisp code. Really
+;; load?" prompt with no interactive frame to answer it, hanging startup
+;; until SIGUSR2.  `t' skips that confirmation, exactly as Doom's own
+;; `doom-init-theme-h' does.
+(load-theme doom-theme t)
 ;; ir black
 
 (setq org-extend-today-until 5)
 (salih/set-glass-style 'macos-glass-regular)
+
+
+(use-package ghostel-eshell
+  :hook (eshell-load . ghostel-eshell-visual-command-mode))
+
+(use-package ghostel-comint
+  :hook (after-init . ghostel-comint-global-mode))
+
+(use-package ghostel-compile
+  :hook (after-init . ghostel-compile-global-mode))
+
+
+(use-package evil-ghostel
+  :after (ghostel evil)
+  :hook (ghostel-mode . evil-ghostel-mode))
