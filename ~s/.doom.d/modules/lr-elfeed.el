@@ -95,6 +95,9 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
 ;;; --- Elfeed proper
 
 (after! elfeed
+  (setq elfeed-goodies/entry-pane-size 0.5)
+  (setq elfeed-goodies/entry-pane-position 'bottom)
+
   (setq elfeed-db-directory (expand-file-name "elfeed/" doom-cache-dir)
         elfeed-search-filter "@2-weeks-ago +unread"
         elfeed-search-title-max-width 100
@@ -167,7 +170,8 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://www.pixelbeat.org/feed/rss2.xml"             blog programming)
           ("https://joshblais.com/index.xml"                     blog)
           ("https://aliquote.org/index.xml"                      blog programming)
-          ("https://www.cyberdemon.org/feed.xml"                 blog programming)
+          ;; ("https://www.cyberdemon.org/feed.xml"                 blog programming)
+          ;; TODO I think something is wrong with their feed. Disabling it for now.
           ("https://bobbyhiltz.com/rss.xml"                      blog)
           ("https://blog.avas.space/feed/"                       blog)
           ("https://notes.jeddacp.com/feed/"                     blog photography)
@@ -470,7 +474,13 @@ the article URL."
       :map elfeed-show-mode-map
       :nvim
       "C" #'salih/elfeed-show-visit-feed
+      :nvim
+      "C-j" #'elfeed-goodies/split-show-next
+      :nvim
+      "C-k" #'elfeed-goodies/split-show-prev
+      :nvim
       "C-n" #'elfeed-goodies/split-show-next
+      :nvim
       "C-p" #'elfeed-goodies/split-show-prev)
 
 

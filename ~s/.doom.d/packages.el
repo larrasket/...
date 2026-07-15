@@ -85,3 +85,5 @@
            :branch "feature/notification"))
 
 
+(package! evil-ghostel)
+(package! ghostel)
