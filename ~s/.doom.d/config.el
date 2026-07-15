@@ -138,6 +138,7 @@
 (require 'lr-prog)
 (require 'lr-tools)
 (require 'lr-elfeed)
+(require 'lr-agent)
 ;; (require 'lr-writing)
 
 ;;; --- Defer heavy modules ---
