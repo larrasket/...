@@ -138,7 +138,7 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
 
   (setq elfeed-feeds
         '(;; ---------- Programming — personal blogs ----------
-          ("https://blog.giovanh.com/feeds/atom.xml"            blog programming)
+          ("https://blog.giovanh.com/feeds/atom.xml"             blog programming)
           ("https://cedwards.xyz/index.xml"                      blog programming)
           ("http://norvig.com/rss-feed.xml"                      blog programming)
           ("https://lukesmith.xyz/index.xml"                     blog)
@@ -321,11 +321,13 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
 
           ;; ---------- YouTube — politics / news ----------
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UChzVhAwzGR7hV-4O8ZmBLHg" youtube politics) ; Glenn Greenwald
+          ("https://www.reddit.com/r/wikipedia/.rss" wikipedia)
 
           ;; ---------- YouTube — art / aesthetic ----------
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC99wd4wi8AfaSkqprWo206g" youtube art) ; edits
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrPOgNsUldOtQsTf9Kjlm_A" youtube art) ; national_gallery
 
+          
           ;; ---------- YouTube — misc ----------
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtscFf8VayggrDYjOwDke_Q" youtube) ; academia
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCij1VEjDb88RCbqsvZ1gqaw" youtube) ; sideof

@@ -9,8 +9,7 @@ export PATH="$PATH:$GOROOT/bin:$GOPATH/bin"
 export PATH="$PATH:$HOME/.emacs.d/bin"
 export PATH="$PATH:/Library/TeX/texbin"
 export PATH="$PATH:$HOME/.doom.d/bin"
-export PATH="$PATH:$HOME/.bin"
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.bin" export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.dotnet/tools"
 export PATH="$PATH:$HOME/Library/Python/3.9/bin"
@@ -37,6 +36,33 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
     fi
     [ -f "$HOME/.ssh/agent.env" ] && source "$HOME/.ssh/agent.env" >/dev/null
 fi
+
+
+compressvideo() {
+    if [[ $# -ne 1 ]]; then
+        echo "Usage: compressvideo <video>"
+        return 1
+    fi
+
+    input="$1"
+    output="${input%.*}-compressed.mp4"
+
+    ffmpeg -i "$input" \
+        -c:v libx264 \
+        -profile:v high \
+        -level 4.0 \
+        -pix_fmt yuv420p \
+        -crf 36 \
+        -preset slow \
+        -vf "scale='min(1280,iw)':-2" \
+        -movflags +faststart \
+        -c:a aac \
+        -b:a 128k \
+        "$output"
+
+    echo "Saved to: $output"
+}
+
 
 
 if [[ "$INSIDE_EMACS" = 'ghostel' ]]; then

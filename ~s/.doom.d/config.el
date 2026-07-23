@@ -54,7 +54,8 @@
 ;;; doom-one
 ;;; ef-maris-dark
 ;;; ef-dream
-(setq doom-theme 'modus-vivendi)
+;;; modus-vivendi-tritanopia
+(setq doom-theme 'modus-vivendi-tritanopia)
 
 ;;; --- Basic settings ---
 (setq display-line-numbers-type 'relative
@@ -138,6 +139,7 @@
 (require 'lr-prog)
 (require 'lr-tools)
 (require 'lr-elfeed)
+(require 'lr-fedi)
 (require 'lr-agent)
 ;; (require 'lr-writing)
 
@@ -313,3 +315,20 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 (use-package evil-ghostel
   :after (ghostel evil)
   :hook (ghostel-mode . evil-ghostel-mode))
+
+
+;; All customizations must come BEFORE loading the theme
+(setq modus-themes-common-palette-overrides
+      '((bg-mode-line-active   bg-main)
+        (fg-mode-line-active   fg-main)
+        (border-mode-line-active   bg-main)
+        (bg-mode-line-inactive bg-main)
+        (fg-mode-line-inactive fg-dim)
+        (border-mode-line-inactive bg-main)))
+
+(setq modus-themes-common-palette-overrides
+      '((bg-line-number-active   bg-main)
+        (bg-line-number-inactive bg-main)
+        (fringe                  bg-main)))
+
+(modus-themes-load-theme 'modus-vivendi-tritanopia)
