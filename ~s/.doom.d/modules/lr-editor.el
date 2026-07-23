@@ -459,7 +459,8 @@ abort the running command or get this function removed from
       "b k"   #'kill-current-buffer
       "e e"   #'eshell
       "f p"   #'projectile-switch-project
-      "t t"   #'salih/vterm
+      "t t"   #'ghostel
+      "o t"   #'ghostel
       "TAB d" #'+workspace:delete)
 
 ;;; --- Leader: Org agenda & calendar ---
@@ -500,7 +501,9 @@ abort the running command or get this function removed from
       "r l f" #'consult-org-roam-forward-links
       "m z"   #'org-add-note
       "C-;"   #'salih/rename-or-iedit
-      "o o"   #'salih/org-open-file-link-in-macos)
+      "o o"   #'salih/org-open-file-link-in-macos
+      "m d"   #'org-pad-draw
+      "m e"   #'org-pad-edit)
 
 (map! :after org
       :map org-mode-map
