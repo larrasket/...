@@ -11,6 +11,8 @@
 ;;   `SPC o n'  notifications — mentions, replies, likes, boosts, and new
 ;;                              followers directed at you
 ;;                              (${base}/admin/notifications.json)
+;;   `SPC o p'  post          — compose a fediverse-ONLY post (not the blog),
+;;                              published via ${base}/admin/publish
 ;;
 ;; Both render into a read-only buffer with per-entry navigation and actions:
 ;;   n / p        next / previous entry
@@ -537,11 +539,78 @@ Shows mentions, replies, likes, boosts, and new followers newest-first."
 (when (featurep 'evil)
   (evil-set-initial-state 'salih/fedi-notifications-mode 'normal))
 
+;;; --- Compose (fediverse-only post) -----------------------------------------
+;;
+;; Publishes ONLY to the fediverse (via ${base}/admin/publish) — it never
+;; touches the Hugo blog.  This is distinct from `salih/add-microblog-to-hugo',
+;; which authors a blog micropost that then syndicates to the fediverse.
+
+(defun salih/fedi--escape-html (s)
+  "Escape &, <, > in S for safe HTML embedding."
+  (replace-regexp-in-string
+   "[<>&]"
+   (lambda (c) (pcase c ("<" "&lt;") (">" "&gt;") ("&" "&amp;") (_ c)))
+   s t t))
+
+(defun salih/fedi--text-to-html (text)
+  "Convert plain TEXT to minimal HTML: blank lines split paragraphs, newlines
+become <br>. TEXT is HTML-escaped first."
+  (mapconcat
+   (lambda (para)
+     (concat "<p>"
+             (replace-regexp-in-string
+              "\n" "<br>" (salih/fedi--escape-html (string-trim para)))
+             "</p>"))
+   (split-string (string-trim text) "\n[ \t]*\n" t)
+   ""))
+
+(defvar salih/fedi-compose-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-c C-c") #'salih/fedi-compose-send)
+    (define-key map (kbd "C-c C-k") #'salih/fedi-compose-cancel)
+    map)
+  "Keymap for `salih/fedi-compose-mode'.")
+
+(define-derived-mode salih/fedi-compose-mode text-mode "FediCompose"
+  "Major mode for composing a fediverse-only post."
+  (setq-local header-line-format
+              " Fediverse-only post  ·  C-c C-c publish · C-c C-k cancel "))
+
+;;;###autoload
+(defun salih/fedi-post ()
+  "Compose and publish a post to the fediverse ONLY (not the blog).
+Opens a compose buffer; `C-c C-c' publishes via /admin/publish, `C-c C-k'
+cancels."
+  (interactive)
+  (let ((buf (get-buffer-create "*fedi-compose*")))
+    (with-current-buffer buf
+      (erase-buffer)
+      (salih/fedi-compose-mode))
+    (pop-to-buffer buf)
+    (message "Write your post, then C-c C-c to publish to the fediverse.")))
+
+(defun salih/fedi-compose-send ()
+  "Publish the compose buffer to the fediverse and close it."
+  (interactive)
+  (let ((text (string-trim (buffer-substring-no-properties (point-min) (point-max)))))
+    (when (string-empty-p text) (user-error "Nothing to post"))
+    (salih/fedi--post-json "/admin/publish"
+                           (list (cons "content" (salih/fedi--text-to-html text))))
+    (quit-window t)
+    (message "Published to the fediverse.")))
+
+(defun salih/fedi-compose-cancel ()
+  "Abort composing without publishing."
+  (interactive)
+  (quit-window t)
+  (message "Fediverse post cancelled."))
+
 ;;; --- Keybindings -----------------------------------------------------------
 
 (map! :leader
       :desc "Fedi timeline" "o m" #'salih/fedi-timeline
-      :desc "Fedi notifications" "o n" #'salih/fedi-notifications)
+      :desc "Fedi notifications" "o n" #'salih/fedi-notifications
+      :desc "Fedi post (fedi-only)" "o p" #'salih/fedi-post)
 
 ;; Evil-state bindings so single-key actions win over evil's normal/motion maps.
 (map! :map salih/fedi-timeline-mode-map
