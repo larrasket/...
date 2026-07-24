@@ -21,8 +21,15 @@
 ;;   y            copy the entry's link
 ;;   gr           refresh
 ;;   q            quit
-;; The timeline adds:
-;;   u            unfollow the author of the entry at point (with confirmation)
+;; The timeline adds X-style interaction and curation:
+;;   l            like the post at point
+;;   b            boost (repost) the post at point
+;;   r            reply to the post at point
+;;   f            follow the author (a boost's ORIGINAL author)
+;;   u            unfollow the author (with confirmation)
+;;   t            toggle sort: recent  <->  top (algorithmic)
+;;   c            clear — dismiss all shown posts so they never return
+;;                (local-only, persisted to `salih/fedi-dismissed-file')
 ;;
 ;; Only built-ins are used (url.el + json + shr) — no request.el / plz.el,
 ;; matching the rest of the config.
@@ -446,6 +453,87 @@ A no-op (inserts nothing) when avatars aren't supported or URL is empty."
           (string-remove-suffix "/" salih/fedi-base-url)
           salih/fedi-timeline-limit))
 
+;;; --- Timeline state: dismiss (local "clear") + sort ------------------------
+
+(defcustom salih/fedi-dismissed-file
+  (expand-file-name "lr-fedi-dismissed.eld" user-emacs-directory)
+  "File persisting the set of dismissed post ids (the local-only \"clear\")."
+  :type 'file :group 'salih/fedi)
+
+(defcustom salih/fedi-dismissed-max 8000
+  "Maximum number of dismissed post ids to keep on disk."
+  :type 'integer :group 'salih/fedi)
+
+(defvar salih/fedi--dismissed nil
+  "Hash-set of dismissed post ids, or nil until loaded from disk.")
+
+(defvar-local salih/fedi--items nil
+  "Raw items last fetched for this buffer (re-sorted without refetching).")
+
+(defvar-local salih/fedi--sort 'recent
+  "Current timeline sort: `recent' or `top'.")
+
+(defvar-local salih/fedi--shown-ids nil
+  "Ids currently displayed, for `salih/fedi-timeline-clear'.")
+
+(defun salih/fedi--ensure-dismissed ()
+  "Load the dismissed-id set from disk once; return the hash-set."
+  (unless salih/fedi--dismissed
+    (setq salih/fedi--dismissed (make-hash-table :test 'equal))
+    (when (file-readable-p salih/fedi-dismissed-file)
+      (ignore-errors
+        (dolist (id (with-temp-buffer
+                      (insert-file-contents salih/fedi-dismissed-file)
+                      (read (current-buffer))))
+          (puthash id t salih/fedi--dismissed)))))
+  salih/fedi--dismissed)
+
+(defun salih/fedi--save-dismissed ()
+  "Persist the dismissed-id set (capped) to disk."
+  (ignore-errors
+    (let ((ids (hash-table-keys salih/fedi--dismissed)))
+      (when (> (length ids) salih/fedi-dismissed-max)
+        (setq ids (seq-take ids salih/fedi-dismissed-max))
+        (clrhash salih/fedi--dismissed)
+        (dolist (id ids) (puthash id t salih/fedi--dismissed)))
+      (with-temp-file salih/fedi-dismissed-file
+        (let ((print-length nil) (print-level nil))
+          (prin1 ids (current-buffer)))))))
+
+(defun salih/fedi--dismissed-p (item)
+  "Non-nil when ITEM's id has been dismissed."
+  (gethash (alist-get 'id item) (salih/fedi--ensure-dismissed)))
+
+(defun salih/fedi--item-epoch (item)
+  "ITEM's published time as epoch seconds, or 0."
+  (or (ignore-errors
+        (float-time (encode-time (iso8601-parse (salih/fedi--item-timestamp item)))))
+      0))
+
+(defun salih/fedi--score (item)
+  "Heuristic \"top\" score for ITEM.  ActivityPub delivery carries no engagement
+counts, so we rank boosts, original posts, media and substance over reply
+chatter, with a recency bonus that fades over ~a day."
+  (let* ((kind (alist-get 'kind item))
+         (reply (alist-get 'inReplyTo item))
+         (content (or (alist-get 'contentHtml item) ""))
+         (age-h (/ (max 0.0 (- (float-time) (salih/fedi--item-epoch item))) 3600.0))
+         (s 0.0))
+    (when (equal kind "boost") (setq s (+ s 2.0)))
+    (unless (and (stringp reply) (not (string-empty-p reply))) (setq s (+ s 1.5)))
+    (when (string-match-p "\\[\\(?:photo\\|video\\)\\]" content) (setq s (+ s 0.6)))
+    (setq s (+ s (min 1.5 (/ (float (length content)) 240.0))))
+    (setq s (+ s (max 0.0 (- 3.0 (/ age-h 8.0)))))
+    s))
+
+(defun salih/fedi--arrange (items)
+  "Drop dismissed ITEMS and order by the current sort mode."
+  (let ((live (seq-remove #'salih/fedi--dismissed-p items)))
+    (if (eq salih/fedi--sort 'top)
+        (sort (copy-sequence live)
+              (lambda (a b) (> (salih/fedi--score a) (salih/fedi--score b))))
+      live)))
+
 (defun salih/fedi--insert-content (content boosted)
   "Insert CONTENT indented (wrapped lines align), colouring media markers.
 When empty and not a boost, insert a faint \"(no text)\"."
@@ -516,30 +604,40 @@ the parent post (IN-REPLY is its URL)."
     (push start salih/fedi--entry-positions)))
 
 (defun salih/fedi--timeline-header (items)
-  "Return a header-line string for the timeline ITEMS."
+  "Return a header-line string for the timeline showing ITEMS."
   (if (null items)
-      " Fedi timeline — empty  ·  gr refresh · q quit "
-    (format " %d posts · n/p move · RET open · a author · f follow · u unfollow · y copy · gr refresh · q quit "
-            (length items))))
+      " Fedi timeline — empty  ·  c cleared? gr refresh · q quit "
+    (format " %d posts [%s] · n/p · RET open · l like · b boost · r reply · f follow · u unfollow · t top · c clear · gr refresh · q quit "
+            (length items) (if (eq salih/fedi--sort 'top) "top" "recent"))))
+
+(defun salih/fedi--redraw ()
+  "Re-render `salih/fedi--items' with the current sort + dismiss filter."
+  (let ((items (salih/fedi--arrange salih/fedi--items))
+        (inhibit-read-only t))
+    (erase-buffer)
+    (setq salih/fedi--entry-positions nil
+          salih/fedi--avatar-slots nil
+          salih/fedi--shown-ids nil)
+    (if (null items)
+        (insert (propertize "  Nothing to show (all caught up / cleared).\n" 'face 'shadow))
+      (let ((firstp t))
+        (dolist (item items)
+          (push (alist-get 'id item) salih/fedi--shown-ids)
+          (salih/fedi--insert-timeline-item item firstp)
+          (setq firstp nil))))
+    (setq salih/fedi--entry-positions (nreverse salih/fedi--entry-positions))
+    (setq header-line-format (salih/fedi--timeline-header items))
+    (goto-char (point-min))))
 
 (defun salih/fedi--render-timeline (items)
-  "Render ITEMS (a list of alists) into the `*fedi-timeline*' buffer."
+  "Store ITEMS and render them into the `*fedi-timeline*' buffer.
+Enters the mode only once so the sort mode survives refreshes."
   (let ((buf (get-buffer-create "*fedi-timeline*")))
     (with-current-buffer buf
-      (let ((inhibit-read-only t))
-        (erase-buffer)
-        (salih/fedi-timeline-mode)
-        (setq salih/fedi--entry-positions nil)
-        (setq salih/fedi--avatar-slots nil)
-        (if (null items)
-            (insert (propertize "  Nothing in the timeline yet.\n" 'face 'shadow))
-          (let ((firstp t))
-            (dolist (item items)
-              (salih/fedi--insert-timeline-item item firstp)
-              (setq firstp nil))))
-        (setq salih/fedi--entry-positions (nreverse salih/fedi--entry-positions))
-        (setq header-line-format (salih/fedi--timeline-header items))
-        (goto-char (point-min))))
+      (unless (derived-mode-p 'salih/fedi-timeline-mode)
+        (salih/fedi-timeline-mode))
+      (setq salih/fedi--items items)
+      (salih/fedi--redraw))
     (pop-to-buffer buf)))
 
 ;;;###autoload
@@ -578,6 +676,53 @@ the parent post (IN-REPLY is its URL)."
   (salih/fedi--post-json "/admin/follow" (list (cons "actor" account)))
   (message "Follow request sent to %s" account))
 
+(defun salih/fedi--entry-object ()
+  "Return the acted-on post URI for the entry at point, or signal."
+  (let* ((d (salih/fedi--entry-data))
+         (obj (and d (plist-get d :source-url))))
+    (or obj (user-error "No post at point"))))
+
+(defun salih/fedi-timeline-like ()
+  "Like the post at point."
+  (interactive)
+  (salih/fedi--post-json "/admin/like" (list (cons "object" (salih/fedi--entry-object))))
+  (message "♥ Liked."))
+
+(defun salih/fedi-timeline-boost ()
+  "Boost (repost) the post at point."
+  (interactive)
+  (salih/fedi--post-json "/admin/boost" (list (cons "object" (salih/fedi--entry-object))))
+  (message "↻ Boosted."))
+
+(defun salih/fedi-timeline-reply ()
+  "Reply to the post at point (published to the fediverse)."
+  (interactive)
+  (let* ((obj (salih/fedi--entry-object))
+         (text (string-trim (read-string "Reply: "))))
+    (when (string-empty-p text) (user-error "Empty reply"))
+    (salih/fedi--post-json "/admin/publish"
+                           (list (cons "content" (salih/fedi--text-to-html text))
+                                 (cons "inReplyTo" obj)))
+    (message "Replied.")))
+
+(defun salih/fedi-timeline-sort ()
+  "Toggle the timeline sort between `recent' and `top' (algorithmic)."
+  (interactive)
+  (setq salih/fedi--sort (if (eq salih/fedi--sort 'top) 'recent 'top))
+  (salih/fedi--redraw)
+  (message "Sort: %s" (if (eq salih/fedi--sort 'top) "top (algorithmic)" "recent")))
+
+(defun salih/fedi-timeline-clear ()
+  "Dismiss every post currently shown; they will never appear again (local only)."
+  (interactive)
+  (salih/fedi--ensure-dismissed)
+  (let ((n 0))
+    (dolist (id salih/fedi--shown-ids)
+      (when id (puthash id t salih/fedi--dismissed) (setq n (1+ n))))
+    (salih/fedi--save-dismissed)
+    (salih/fedi--redraw)
+    (message "Cleared %d posts — they won't show again." n)))
+
 (defvar salih/fedi-timeline-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "n")   #'salih/fedi-next)
@@ -588,6 +733,11 @@ the parent post (IN-REPLY is its URL)."
     (define-key map (kbd "a")   #'salih/fedi-open-author)
     (define-key map (kbd "u")   #'salih/fedi-unfollow)
     (define-key map (kbd "f")   #'salih/fedi-timeline-follow)
+    (define-key map (kbd "l")   #'salih/fedi-timeline-like)
+    (define-key map (kbd "b")   #'salih/fedi-timeline-boost)
+    (define-key map (kbd "r")   #'salih/fedi-timeline-reply)
+    (define-key map (kbd "t")   #'salih/fedi-timeline-sort)
+    (define-key map (kbd "c")   #'salih/fedi-timeline-clear)
     (define-key map (kbd "y")   #'salih/fedi-copy-link)
     (define-key map (kbd "g")   #'salih/fedi-timeline)
     (define-key map (kbd "q")   #'quit-window)
@@ -810,6 +960,11 @@ cancels."
       :nvm "a"       #'salih/fedi-open-author
       :nvm "u"       #'salih/fedi-unfollow
       :nvm "f"       #'salih/fedi-timeline-follow
+      :nvm "l"       #'salih/fedi-timeline-like
+      :nvm "b"       #'salih/fedi-timeline-boost
+      :nvm "r"       #'salih/fedi-timeline-reply
+      :nvm "t"       #'salih/fedi-timeline-sort
+      :nvm "c"       #'salih/fedi-timeline-clear
       :nvm "y"       #'salih/fedi-copy-link
       :nvm "gr"      #'salih/fedi-timeline
       :nvm "q"       #'quit-window)
