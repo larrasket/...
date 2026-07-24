@@ -98,17 +98,23 @@ Prefer ~/.authinfo.gpg or the LR0_ADMIN_TOKEN environment variable."
 ;;; --- Formatting helpers ----------------------------------------------------
 
 (defun salih/fedi--html-to-text (html)
-  "Render HTML content into readable, trimmed plain text via `shr'."
+  "Render HTML into readable text via `shr', KEEPING shr's link/face styling
+so mentions, hashtags and links stay visually distinct.  Interactive props
+\(keymaps, mouse-face) are dropped so the buffer's own keymap wins."
   (if (or (null html) (not (stringp html)) (string-empty-p html))
       ""
-    (string-trim
-     (with-temp-buffer
-       (insert html)
-       (let ((shr-use-fonts nil)
-             (shr-width most-positive-fixnum)
-             (shr-inhibit-images t))
-         (shr-render-region (point-min) (point-max)))
-       (buffer-substring-no-properties (point-min) (point-max))))))
+    (let ((s (with-temp-buffer
+               (insert html)
+               (let ((shr-use-fonts nil)
+                     (shr-width most-positive-fixnum)
+                     (shr-inhibit-images t))
+                 (shr-render-region (point-min) (point-max)))
+               (buffer-string))))
+      (remove-text-properties 0 (length s)
+                              '(keymap nil local-map nil mouse-face nil help-echo nil
+                                       follow-link nil shr-tab-stop nil)
+                              s)
+      (string-trim s))))
 
 (defun salih/fedi--shorten-actor (actor)
   "Strip the leading scheme from ACTOR for a compact display."
@@ -116,12 +122,47 @@ Prefer ~/.authinfo.gpg or the LR0_ADMIN_TOKEN environment variable."
       (replace-regexp-in-string "\\`https?://" "" actor)
     "unknown"))
 
+(defun salih/fedi--ref-handle (url)
+  "Best-effort @user@host from a status/actor URL, else the bare host/URL.
+Handles both …/users/NAME/… and …/@NAME/… forms."
+  (if (not (stringp url))
+      "someone"
+    (let ((host (ignore-errors (url-host (url-generic-parse-url url)))))
+      (cond
+       ((and host (string-match "/users/\\([^/?#]+\\)" url))
+        (format "@%s@%s" (match-string 1 url) host))
+       ((and host (string-match "/@\\([^/?#]+\\)" url))
+        (format "@%s@%s" (match-string 1 url) host))
+       (host host)
+       (t (salih/fedi--shorten-actor url))))))
+
+(defun salih/fedi--actor-uri-from-status (url)
+  "Return the actor URI for a status URL (strip the trailing /statuses/…)."
+  (when (stringp url)
+    (if (string-match "\\`\\(https?://[^/]+/\\(?:users/\\|@\\)[^/]+\\)" url)
+        (match-string 1 url)
+      (replace-regexp-in-string "/statuses/.*\\'" "" url))))
+
 (defun salih/fedi--format-time (iso)
   "Format ISO-8601 string ISO as local `YYYY-MM-DD HH:MM'; fall back to ISO."
   (or (and (stringp iso) (not (string-empty-p iso))
            (ignore-errors
              (format-time-string "%Y-%m-%d %H:%M" (encode-time (iso8601-parse iso)))))
       (or iso "")))
+
+(defun salih/fedi--relative-time (iso)
+  "Compact relative age of ISO-8601 timestamp ISO, e.g. \"3m\", \"2h\", \"5d\"."
+  (or (ignore-errors
+        (let* ((then (encode-time (iso8601-parse iso)))
+               (secs (float-time (time-subtract (current-time) then))))
+          (cond
+           ((< secs 0) "now")
+           ((< secs 60) "now")
+           ((< secs 3600) (format "%dm" (floor secs 60)))
+           ((< secs 86400) (format "%dh" (floor secs 3600)))
+           ((< secs 604800) (format "%dd" (floor secs 86400)))
+           (t (format-time-string "%b %-d" then)))))
+      ""))
 
 (defun salih/fedi--excerpt (text)
   "Trim TEXT to `salih/fedi-excerpt-width' chars, adding an ellipsis if cut."
@@ -160,6 +201,11 @@ Prefer ~/.authinfo.gpg or the LR0_ADMIN_TOKEN environment variable."
   "Return a display @user@host handle for ITEM."
   (or (alist-get 'actorHandle item)
       (salih/fedi--shorten-actor (salih/fedi--item-actor item))))
+
+(defun salih/fedi--item-name (item)
+  "Return ITEM's author display name, or nil."
+  (let ((n (alist-get 'authorName item)))
+    (and (stringp n) (not (string-empty-p (string-trim n))) (string-trim n))))
 
 (defun salih/fedi--item-content (item)
   "Return ITEM's content rendered to readable plain text."
@@ -261,10 +307,82 @@ Return t on a 2xx response; signal a `user-error' otherwise."
   "Badge face for new followers." :group 'salih/fedi)
 (defface salih/fedi-actor-face '((t :inherit bold))
   "Face for the actor handle." :group 'salih/fedi)
+(defface salih/fedi-name-face '((t :inherit (bold font-lock-function-name-face)))
+  "Face for the author's display name." :group 'salih/fedi)
+(defface salih/fedi-handle-face '((t :inherit shadow))
+  "Face for the @user@host handle next to a display name." :group 'salih/fedi)
 (defface salih/fedi-time-face '((t :inherit shadow))
   "Face for timestamps." :group 'salih/fedi)
-(defface salih/fedi-context-face '((t :inherit font-lock-comment-face))
-  "Face for the quoted-post context line." :group 'salih/fedi)
+(defface salih/fedi-context-face '((t :inherit font-lock-comment-face :slant italic))
+  "Face for the reply/boost context line." :group 'salih/fedi)
+(defface salih/fedi-separator-face '((t :inherit shadow))
+  "Face for the thin rule between posts." :group 'salih/fedi)
+(defface salih/fedi-media-face '((t :inherit (font-lock-constant-face)))
+  "Face for [photo]/[video] media markers." :group 'salih/fedi)
+(defface salih/fedi-quote-face '((t :inherit (shadow) :slant italic))
+  "Face for the quoted parent post shown under a reply." :group 'salih/fedi)
+
+;;; --- Avatars (graphical Emacs only) ----------------------------------------
+
+(defcustom salih/fedi-show-avatars t
+  "Show author avatars inline.  Only applies in graphical Emacs."
+  :type 'boolean :group 'salih/fedi)
+
+(defcustom salih/fedi-avatar-height 38
+  "Avatar height in pixels."
+  :type 'integer :group 'salih/fedi)
+
+(defvar salih/fedi--avatar-cache (make-hash-table :test 'equal)
+  "Global cache: avatar URL -> Emacs image.")
+
+(defvar-local salih/fedi--avatar-slots nil
+  "Per-buffer hash: avatar URL -> list of (START . END) markers awaiting the image.")
+
+(defun salih/fedi--avatars-p ()
+  "Return non-nil when avatars can be shown in this Emacs."
+  (and salih/fedi-show-avatars (display-graphic-p) (image-type-available-p 'png)))
+
+(defun salih/fedi--insert-avatar (url)
+  "Insert an avatar slot for URL: fill from cache, else queue an async fetch.
+A no-op (inserts nothing) when avatars aren't supported or URL is empty."
+  (when (and (salih/fedi--avatars-p) (stringp url) (not (string-empty-p url)))
+    (let ((start (point)))
+      (insert "  ")                     ; placeholder occupying the image slot
+      (let ((end (point))
+            (img (gethash url salih/fedi--avatar-cache)))
+        (if img
+            (put-text-property start end 'display img)
+          (unless salih/fedi--avatar-slots
+            (setq salih/fedi--avatar-slots (make-hash-table :test 'equal)))
+          (let ((fresh (null (gethash url salih/fedi--avatar-slots))))
+            (push (cons (copy-marker start) (copy-marker end))
+                  (gethash url salih/fedi--avatar-slots))
+            (when fresh (salih/fedi--fetch-avatar url (current-buffer)))))))))
+
+(defun salih/fedi--fetch-avatar (url buf)
+  "Fetch avatar URL asynchronously; on success fill its slots in BUF."
+  (ignore-errors
+    (url-retrieve
+     url
+     (lambda (status)
+       (let ((img nil))
+         (ignore-errors
+           (unless (plist-get status :error)
+             (goto-char (point-min))
+             (when (re-search-forward "\n\r?\n" nil t)
+               (set-buffer-multibyte nil)
+               (setq img (create-image (buffer-substring-no-properties (point) (point-max))
+                                       nil t :height salih/fedi-avatar-height :ascent 'center)))))
+         (when (buffer-live-p (current-buffer)) (kill-buffer (current-buffer)))
+         (when (and img (buffer-live-p buf))
+           (puthash url img salih/fedi--avatar-cache)
+           (with-current-buffer buf
+             (let ((inhibit-read-only t)
+                   (slots (and salih/fedi--avatar-slots (gethash url salih/fedi--avatar-slots))))
+               (dolist (slot slots)
+                 (when (and (marker-position (car slot)) (marker-position (cdr slot)))
+                   (put-text-property (car slot) (cdr slot) 'display img))))))))
+     nil t t)))
 
 ;;; --- Shared entry infrastructure -------------------------------------------
 
@@ -328,36 +446,80 @@ Return t on a 2xx response; signal a `user-error' otherwise."
           (string-remove-suffix "/" salih/fedi-base-url)
           salih/fedi-timeline-limit))
 
-(defun salih/fedi--insert-timeline-item (item)
-  "Insert one timeline ITEM (an alist) at point, richly formatted."
+(defun salih/fedi--insert-content (content boosted)
+  "Insert CONTENT indented (wrapped lines align), colouring media markers.
+When empty and not a boost, insert a faint \"(no text)\"."
+  (let ((cstart (point)))
+    (cond
+     ((and (stringp content) (not (string-empty-p content))) (insert content "\n"))
+     ((not boosted) (insert (propertize "(no text)" 'face 'shadow) "\n")))
+    (save-excursion
+      (goto-char cstart)
+      (while (re-search-forward "\\[\\(?:photo\\|video\\|audio\\|attachment\\)\\]" nil t)
+        (add-face-text-property (match-beginning 0) (match-end 0) 'salih/fedi-media-face)))
+    ;; Indent the whole block by two columns, including soft-wrapped lines.
+    (add-text-properties cstart (point) '(line-prefix "  " wrap-prefix "  "))))
+
+(defun salih/fedi--insert-reply-context (item in-reply)
+  "Insert the `↳ replying to' line for ITEM and, if known, a quoted preview of
+the parent post (IN-REPLY is its URL)."
+  (let ((rauthor (or (alist-get 'replyAuthor item) (salih/fedi--ref-handle in-reply)))
+        (rcontent (salih/fedi--excerpt
+                   (substring-no-properties
+                    (salih/fedi--html-to-text (or (alist-get 'replyContent item) ""))))))
+    (insert (propertize (format "  ↳ replying to %s\n" rauthor) 'face 'salih/fedi-context-face))
+    (unless (string-empty-p rcontent)
+      (let ((qs (point)))
+        (insert rcontent "\n")
+        (add-text-properties qs (point)
+                             (list 'line-prefix "    │ " 'wrap-prefix "    │ "
+                                   'face 'salih/fedi-quote-face))))))
+
+(defun salih/fedi--insert-timeline-item (item &optional firstp)
+  "Insert timeline ITEM as a Mastodon-style card.  FIRSTP omits the top rule."
   (let* ((actor    (salih/fedi--item-actor item))
+         (name     (salih/fedi--item-name item))
          (handle   (salih/fedi--item-handle item))
          (boosted  (salih/fedi--item-boosted-p item))
-         (ts       (salih/fedi--format-time (salih/fedi--item-timestamp item)))
+         (rel      (salih/fedi--relative-time (salih/fedi--item-timestamp item)))
          (content  (salih/fedi--item-content item))
+         (avatar   (alist-get 'avatar item))
          (in-reply (alist-get 'inReplyTo item))
          (src      (or (alist-get 'url item) (alist-get 'object_uri item)))
+         ;; Who `f' follows: a post's author, or a boost's ORIGINAL author.
+         (follow   (if boosted (salih/fedi--actor-uri-from-status src) actor))
          (start    (point)))
-    (insert (propertize handle 'face 'salih/fedi-actor-face))
-    (when boosted (insert (propertize "  ↻ boosted" 'face 'salih/fedi-boost-face)))
-    (unless (string-empty-p ts)
-      (insert (propertize (format "  %s" ts) 'face 'salih/fedi-time-face)))
-    (insert "\n")
-    (when (and (stringp in-reply) (not (string-empty-p in-reply)))
-      (insert (salih/fedi--context-line "in reply to" (salih/fedi--shorten-actor in-reply))))
-    (if (string-empty-p content)
-        (insert (propertize "  (no text)\n" 'face 'shadow))
-      (insert (salih/fedi--indent content) "\n"))
+    (unless firstp
+      (insert (propertize (concat (make-string 72 ?─) "\n") 'face 'salih/fedi-separator-face)))
+    (salih/fedi--insert-avatar avatar)
+    (if boosted
+        ;; Boost: a "↻ NAME boosted" line, then the original author + content.
+        (progn
+          (insert (propertize (format "↻ %s boosted" (or name handle)) 'face 'salih/fedi-boost-face))
+          (unless (string-empty-p rel)
+            (insert (propertize (format "   %s" rel) 'face 'salih/fedi-time-face)))
+          (insert "\n")
+          (insert (propertize (salih/fedi--ref-handle src) 'face 'salih/fedi-actor-face) "\n"))
+      ;; Normal post: "Display Name  @user@host          rel", optional reply line.
+      (progn
+        (when name (insert (propertize name 'face 'salih/fedi-name-face) "  "))
+        (insert (propertize handle 'face (if name 'salih/fedi-handle-face 'salih/fedi-actor-face)))
+        (unless (string-empty-p rel)
+          (insert (propertize (format "   %s" rel) 'face 'salih/fedi-time-face)))
+        (insert "\n")
+        (when (and (stringp in-reply) (not (string-empty-p in-reply)))
+          (salih/fedi--insert-reply-context item in-reply))))
+    (salih/fedi--insert-content content boosted)
     (insert "\n")
     (add-text-properties start (point)
-                         (list 'fedi-data (list :source-url src :author-url actor)))
+                         (list 'fedi-data (list :source-url src :author-url actor :follow-uri follow)))
     (push start salih/fedi--entry-positions)))
 
 (defun salih/fedi--timeline-header (items)
   "Return a header-line string for the timeline ITEMS."
   (if (null items)
       " Fedi timeline — empty  ·  gr refresh · q quit "
-    (format " %d posts  ·  n/p move · RET open · a author · u unfollow · y copy · gr refresh · q quit "
+    (format " %d posts · n/p move · RET open · a author · f follow · u unfollow · y copy · gr refresh · q quit "
             (length items))))
 
 (defun salih/fedi--render-timeline (items)
@@ -368,9 +530,13 @@ Return t on a 2xx response; signal a `user-error' otherwise."
         (erase-buffer)
         (salih/fedi-timeline-mode)
         (setq salih/fedi--entry-positions nil)
+        (setq salih/fedi--avatar-slots nil)
         (if (null items)
             (insert (propertize "  Nothing in the timeline yet.\n" 'face 'shadow))
-          (dolist (item items) (salih/fedi--insert-timeline-item item)))
+          (let ((firstp t))
+            (dolist (item items)
+              (salih/fedi--insert-timeline-item item firstp)
+              (setq firstp nil))))
         (setq salih/fedi--entry-positions (nreverse salih/fedi--entry-positions))
         (setq header-line-format (salih/fedi--timeline-header items))
         (goto-char (point-min))))
@@ -393,6 +559,25 @@ Return t on a 2xx response; signal a `user-error' otherwise."
       (message "Unfollowed %s" (salih/fedi--shorten-actor actor))
       (salih/fedi-timeline))))
 
+(defun salih/fedi-timeline-follow ()
+  "Follow the author of the entry at point (a boost's ORIGINAL author)."
+  (interactive)
+  (let* ((d (salih/fedi--entry-data))
+         (uri (and d (or (plist-get d :follow-uri) (plist-get d :author-url)))))
+    (unless uri (user-error "No account to follow here"))
+    (when (yes-or-no-p (format "Follow %s? " (salih/fedi--ref-handle uri)))
+      (salih/fedi--post-json "/admin/follow" (list (cons "actor" uri)))
+      (message "Follow request sent to %s" (salih/fedi--ref-handle uri)))))
+
+;;;###autoload
+(defun salih/fedi-follow (account)
+  "Follow ACCOUNT on the fediverse (an @user@host handle or an actor URL)."
+  (interactive "sFollow (e.g. @user@host or https://…): ")
+  (setq account (string-trim account))
+  (when (string-empty-p account) (user-error "No account given"))
+  (salih/fedi--post-json "/admin/follow" (list (cons "actor" account)))
+  (message "Follow request sent to %s" account))
+
 (defvar salih/fedi-timeline-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "n")   #'salih/fedi-next)
@@ -402,6 +587,7 @@ Return t on a 2xx response; signal a `user-error' otherwise."
     (define-key map (kbd "o")   #'salih/fedi-open)
     (define-key map (kbd "a")   #'salih/fedi-open-author)
     (define-key map (kbd "u")   #'salih/fedi-unfollow)
+    (define-key map (kbd "f")   #'salih/fedi-timeline-follow)
     (define-key map (kbd "y")   #'salih/fedi-copy-link)
     (define-key map (kbd "g")   #'salih/fedi-timeline)
     (define-key map (kbd "q")   #'quit-window)
@@ -413,6 +599,7 @@ Return t on a 2xx response; signal a `user-error' otherwise."
 \\{salih/fedi-timeline-mode-map}"
   (setq-local truncate-lines nil)
   (setq-local salih/fedi--entry-positions nil)
+  (visual-line-mode 1) ; word-wrap long posts; wrap-prefix keeps content indented
   (buffer-disable-undo))
 
 (when (featurep 'evil)
@@ -610,7 +797,8 @@ cancels."
 (map! :leader
       :desc "Fedi timeline" "o m" #'salih/fedi-timeline
       :desc "Fedi notifications" "o n" #'salih/fedi-notifications
-      :desc "Fedi post (fedi-only)" "o p" #'salih/fedi-post)
+      :desc "Fedi post (fedi-only)" "o p" #'salih/fedi-post
+      :desc "Fedi follow account" "o f" #'salih/fedi-follow)
 
 ;; Evil-state bindings so single-key actions win over evil's normal/motion maps.
 (map! :map salih/fedi-timeline-mode-map
@@ -621,6 +809,7 @@ cancels."
       :nvm "o"       #'salih/fedi-open
       :nvm "a"       #'salih/fedi-open-author
       :nvm "u"       #'salih/fedi-unfollow
+      :nvm "f"       #'salih/fedi-timeline-follow
       :nvm "y"       #'salih/fedi-copy-link
       :nvm "gr"      #'salih/fedi-timeline
       :nvm "q"       #'quit-window)
