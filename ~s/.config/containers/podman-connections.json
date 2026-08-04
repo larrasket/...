@@ -1,0 +1,1 @@
+{"Connection":{"Default":"testing","Connections":{"testing":{"URI":"ssh://localhost:22/run/user/foo/podman/podman.sock"}}},"Farm":{}}

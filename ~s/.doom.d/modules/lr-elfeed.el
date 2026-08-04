@@ -27,6 +27,53 @@ then opens `org-capture' with template \"f\".  This is the Elfeed twin of
       (push (list url title) org-stored-links)
       (org-capture nil "f"))))
 
+(defun salih/elfeed-org-capture-check ()
+  "File the current Elfeed entry under `Inbox' in life.org, then mark it read.
+Like `salih/elfeed-org-store-and-capture' this grabs the entry's real
+http(s) URL and title, but instead of opening a capture buffer it prepends,
+instantly, an entry of the form
+
+  ** TODO [[URL][TITLE]] :@check:
+  [inactive timestamp]
+
+as the first child of the `Inbox' headline in `+org-capture-todo-file',
+matching the entries already there.  No capture window is shown; focus stays
+in Elfeed.
+
+The link is inserted as literal buffer text (not through an `org-capture'
+template) on purpose: URL-encoded bytes like %D8 and %A7, or a literal
+\"100%\" in a title, collide with capture's %-escapes and get mangled."
+  (interactive)
+  (require 'org)
+  (let ((entry (salih/elfeed--current-entry)))
+    (unless entry (user-error "No Elfeed entry at point"))
+    (let* ((url   (elfeed-entry-link entry))
+           (title (or (elfeed-entry-title entry) url)))
+      (unless url (user-error "Entry has no URL"))
+      (let ((buf (find-file-noselect (expand-file-name +org-capture-todo-file))))
+        (with-current-buffer buf
+          (org-with-wide-buffer
+           (goto-char (point-min))
+           (unless (re-search-forward "^\\(\\*+\\)[ \t]+Inbox[ \t]*$" nil t)
+             (user-error "No `Inbox' headline in %s" (buffer-file-name)))
+           (let ((stars (make-string (1+ (length (match-string 1))) ?*)))
+             ;; Step past Inbox's own planning/property drawer to the start of
+             ;; its content, so the new entry becomes the first child.
+             (forward-line 1)
+             (when (looking-at-p "^[ \t]*:PROPERTIES:")
+               (re-search-forward "^[ \t]*:END:[ \t]*$" nil t)
+               (forward-line 1))
+             (insert stars " TODO " (org-link-make-string url title) " :@check:\n"
+                     (format-time-string "[%Y-%m-%d %a %H:%M]") "\n")))
+          (save-buffer))
+        ;; Mark the filed entry as read in Elfeed too, and redraw its line so
+        ;; the unread face/count updates (no-op when not in the search buffer).
+        (when (elfeed-tagged-p 'unread entry)
+          (elfeed-untag entry 'unread)
+          (when (derived-mode-p 'elfeed-search-mode)
+            (elfeed-search-update-entry entry)))
+        (message "Filed as @check (read): %s" title)))))
+
 ;;; --- Search ordering: cluster entries into stable, contiguous groups
 ;;
 ;; Goal: every entry from the same source (or author) sits together, and the
@@ -383,12 +430,49 @@ visible Elfeed windows and no-ops if an update is already running."
             (unless noninteractive
               (run-with-idle-timer 5 nil #'salih/elfeed-enable-background-updates))))
 
-(map! :leader
-      :desc "Elfeed" "o e" #'elfeed)
+;;; --- Guard: drop pending shr image fetches when a show buffer is killed
+;;
+;; `elfeed-show' renders an article's HTML with `shr', which fetches inline
+;; images asynchronously through `url-queue', passing markers into the
+;; *elfeed-entry* buffer as the eventual insert point.  Quit the article (`q',
+;; which kills the buffer) before an image arrives and those markers are left
+;; pointing nowhere.  Such a job can then never be pruned: `url-queue-kill-job'
+;; signals "Marker does not point anywhere" from inside the
+;; `url-queue-check-progress' timer *before* `url-queue-prune-old-entries'
+;; deletes it from the queue, so the dead job survives and the 1-second timer
+;; retries it forever, spamming that error into *Messages*.
+;;
+;; Fix it at the source: while the buffer -- and therefore its markers -- are
+;; still live in `kill-buffer-hook', drop every queued job that targets it.
 
-(map! :after elfeed
-      :map (elfeed-search-mode-map elfeed-show-mode-map)
-      :n "C-c C-c" #'salih/elfeed-org-store-and-capture)
+(defun salih/elfeed--flush-url-queue-jobs ()
+  "Remove pending `url-queue' jobs whose shr callback targets this buffer.
+Intended for `kill-buffer-hook' in an Elfeed show buffer: it runs while the
+buffer is still live, so a job can be matched by its target buffer or by a
+callback marker still pointing into it -- before killing the buffer would
+strand it with dead markers and wedge the `url-queue-check-progress' timer.
+See the commentary above."
+  (when (boundp 'url-queue)
+    (let ((buf (current-buffer)))
+      (setq url-queue
+            (seq-remove
+             (lambda (job)
+               (seq-some (lambda (arg)
+                           (or (eq arg buf)
+                               (and (markerp arg)
+                                    (eq (marker-buffer arg) buf))))
+                         (ignore-errors (url-queue-cbargs job))))
+             url-queue)))))
+
+(defun salih/elfeed--install-url-queue-guard ()
+  "Flush this show buffer's pending shr image jobs when it is killed.
+Added to `elfeed-show-mode-hook'; installs `salih/elfeed--flush-url-queue-jobs'
+on the buffer-local `kill-buffer-hook'.  Both hooks take named functions so
+re-evaluating this file (e.g. `doom/reload') never stacks duplicates."
+  (add-hook 'kill-buffer-hook #'salih/elfeed--flush-url-queue-jobs nil t))
+
+(add-hook 'elfeed-show-mode-hook #'salih/elfeed--install-url-queue-guard)
+
 
 
 
@@ -467,23 +551,6 @@ the article URL."
     (elfeed-search-untag-all-unread)
     (salih/elfeed--open-url-background url)))
 
-(map! :after elfeed
-      :map (elfeed-search-mode-map elfeed-show-mode-map)
-      :nvim
-      "C" #'salih/elfeed-visit-entry-background)
-
-(map! :after elfeed
-      :map elfeed-show-mode-map
-      :nvim
-      "C" #'salih/elfeed-show-visit-feed
-      :nvim
-      "C-j" #'elfeed-goodies/split-show-next
-      :nvim
-      "C-k" #'elfeed-goodies/split-show-prev
-      :nvim
-      "C-n" #'elfeed-goodies/split-show-next
-      :nvim
-      "C-p" #'elfeed-goodies/split-show-prev)
 
 
 (require 'ox-md)
@@ -605,6 +672,40 @@ the article URL."
 (map! :after elfeed
       :map elfeed-show-mode-map
       :n "C-c C-o" #'salih/elfeed-export-current-to-org)
+
+
+(map! :leader
+      :desc "Elfeed" "o e" #'elfeed)
+
+(map! :after elfeed
+      :map (elfeed-search-mode-map elfeed-show-mode-map)
+      :n "C-c C-c" #'salih/elfeed-org-store-and-capture)
+
+
+(map! :after elfeed
+      :map (elfeed-search-mode-map elfeed-show-mode-map)
+      :nvim
+      "b" #'salih/elfeed-visit-entry-background)
+
+;; S (search list): file the entry under Inbox as a :@check: TODO, instantly.
+;; Overrides elfeed's default `elfeed-search-set-filter' on S.
+(map! :after elfeed
+      :map elfeed-search-mode-map
+      :nvim
+      "c" #'salih/elfeed-org-capture-check)
+
+(map! :after elfeed
+      :map elfeed-show-mode-map
+      :nvim
+      "b" #'salih/elfeed-show-visit-feed
+      :nvim
+      "C-j" #'elfeed-goodies/split-show-next
+      :nvim
+      "C-k" #'elfeed-goodies/split-show-prev
+      :nvim
+      "C-n" #'elfeed-goodies/split-show-next
+      :nvim
+      "C-p" #'elfeed-goodies/split-show-prev)
 
 
 (provide 'lr-elfeed)
