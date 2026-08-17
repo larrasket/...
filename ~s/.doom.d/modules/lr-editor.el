@@ -2,16 +2,16 @@
 
 (require 'cl-lib)
 
-;;; --- Evil ---
+;;; Evil
 (setq doom-leader-alt-key "M-m")
 
-;;; --- Jinx (lazy — hook only) ---
+;;; Jinx (lazy - hook only)
 (add-hook 'text-mode-hook #'jinx-mode)
 
-;;; --- YAS ---
+;;; YAS
 (after! yasnippet (yas-global-mode 1))
 
-;;; --- Comment utility ---
+;;; Comment utility
 (defun salih/comment-or-uncomment-region-or-line ()
   "Comment/uncomment the region or current line."
   (interactive)
@@ -22,7 +22,7 @@
     (comment-or-uncomment-region beg end)
     (forward-line)))
 
-;;; --- Jinx + save ---
+;;; Jinx + save
 (defun salih/jinx-correct-or-save ()
   "Run `jinx-correct`. If no misspellings found, save buffer."
   (interactive)
@@ -31,7 +31,7 @@
     (error (when (string-match-p "No misspelled word" (error-message-string msg))
              (save-buffer)))))
 
-;;; --- Bidi toggle ---
+;;; Bidi toggle
 (defun salih/bidi-direction-toggle ()
   "Toggle bidirectional paragraph direction and Arabic input method."
   (interactive)
@@ -47,7 +47,7 @@
            bidi-paragraph-direction
            (or current-input-method "none")))
 
-;;; --- Helper functions ---
+;;; Helper functions
 (defun salih/tmp-buffer ()
   "Open a new temporary buffer."
   (interactive)
@@ -85,7 +85,7 @@
       (when (eq major-mode 'org-mode)
         (kill-buffer buffer)))))
 
-;;; --- File utilities ---
+;;; File utilities
 (defun salih/open-in-external-app (&optional fname)
   "Open file in external app. In dired, open marked files."
   (interactive)
@@ -108,7 +108,7 @@
   (let ((default-directory (concat salih/source-directory "/")))
     (call-interactively 'find-file)))
 
-;;; --- Agenda launchers (defined early so keybindings work before org loads) ---
+;;; Agenda launchers (defined early so keybindings work before org loads)
 (defun salih/org-agenda-no-full-f ()
   (interactive)
   (setq salih/vulpea-show-full nil)
@@ -129,7 +129,7 @@
   (org-agenda-remove-restriction-lock)
   (org-agenda nil "v"))
 
-;;; --- Inbox launcher ---
+;;; Inbox launcher
 (defun salih/open-inbox ()
   "Open mu4e inbox, loading mu4e if needed."
   (interactive)
@@ -142,7 +142,7 @@
   (interactive)
   (start-process "" nil "open" buffer-file-name))
 
-;;; --- Dired sort ---
+;;; Dired sort
 (defun salih/dired-sort ()
   "Sort dired listing."
   (interactive)
@@ -154,11 +154,11 @@
                 ("dir"  "-Al --si --time-style long-iso --group-directories-first"))))
     (dired-sort-other arg)))
 
-;;; --- Shell/term hooks ---
+;;; Shell/term hooks
 (after! eshell (remove-hook 'eshell-mode-hook 'hide-mode-line-mode))
 (after! vterm  (remove-hook 'vterm-mode-hook 'hide-mode-line-mode))
 
-;;; --- Linked frames ---
+;;; Linked frames
 (setq-default cursor-in-non-selected-windows t)
 
 (defvar salih/--linked-frame-next-id 0)
@@ -389,33 +389,33 @@ abort the running command or get this function removed from
     (salih/--linked-frame-sync source-frame)
     new-frame))
 
-;;; --- Embark ---
+;;; Embark
 (after! embark
   (define-key embark-url-map (kbd "c") 'salih/open-url-in-chrome-cross-platform))
 
-;;; --- Flyspell unbind ---
+;;; Flyspell unbind
 (after! flyspell
   (define-key flyspell-mode-map (kbd "C-;") nil))
 
 ;;; ===================================================================
-;;; KEYBINDINGS — All via map! for consistency (Doom convention)
+;;; KEYBINDINGS - All via map! for consistency (Doom convention)
 ;;; ===================================================================
 
-;;; --- Motion state ---
+;;; Motion state
 (map! :m "-"   #'er/expand-region
       :m "H-i" #'evil-jump-backward
       :m "C-o" #'evil-jump-forward)
 
-;;; --- Insert state ---
+;;; Insert state
 (map! :i "C-x C-s" #'save-buffer
       :i "M-v"     #'yank
       :i "C-v"     #'yank)
 
-;;; --- Normal/visual/insert ---
+;;; Normal/visual/insert
 (map! :nvi "M-n" #'salih/make-linked-frame
       :nvi "M-s" #'salih/jinx-correct-or-save)
 
-;;; --- Global (M-key) ---
+;;; Global (M-key)
 (map! "M-;"      #'salih/comment-or-uncomment-region-or-line
       "M-<left>"  #'shrink-window-horizontally
       "M-<right>" #'enlarge-window-horizontally
@@ -423,7 +423,7 @@ abort the running command or get this function removed from
       "M-<up>"    #'shrink-window
       "C-M-g"     #'+lookup/definition)
 
-;;; --- Leader: Git ---
+;;; Leader: Git
 (map! :leader
       :prefix "m"
       "m" #'magit-status
@@ -431,7 +431,7 @@ abort the running command or get this function removed from
       "l" #'magit-log-buffer-file
       "d" #'magit-file-delete)
 
-;;; --- Leader: Code / Errors ---
+;;; Leader: Code / Errors
 (map! :leader
       "c r" #'salih/rename-or-iedit
       "c a" #'lsp-execute-code-action
@@ -447,10 +447,10 @@ abort the running command or get this function removed from
       :n "] d" #'flycheck-next-error
       :n "[ d" #'flycheck-previous-error)
 
-;;; --- Leader: Translate (visual) ---
+;;; Leader: Translate (visual)
 (map! :leader :v "w t" #'gt-translate)
 
-;;; --- Leader: Buffers & Navigation ---
+;;; Leader: Buffers & Navigation
 (map! :leader
       "RET"   #'consult-buffer
       "["     #'previous-buffer
@@ -463,7 +463,7 @@ abort the running command or get this function removed from
       "o t"   #'ghostel
       "TAB d" #'+workspace:delete)
 
-;;; --- Leader: Org agenda & calendar ---
+;;; Leader: Org agenda & calendar
 (map! :leader
       "o a"   #'salih/org-agenda-no-full-f
       "o l"   #'salih/org-agenda-no-full-l
@@ -473,7 +473,7 @@ abort the running command or get this function removed from
       "o c"   #'calendar
       "n z"   #'salih/open-book)
 
-;;; --- Leader: Roam (global) ---
+;;; Leader: Roam (global)
 (map! :leader
       :map 'override
       "r f" #'org-roam-node-find
@@ -483,7 +483,7 @@ abort the running command or get this function removed from
       "s r" #'salih/consult-org-roam-search
       "r s" #'salih/consult-org-roam-search)
 
-;;; --- Org-mode leader ---
+;;; Org-mode leader
 (map! :after org
       :map org-mode-map
       :leader
@@ -514,7 +514,7 @@ abort the running command or get this function removed from
       :map org-mode-map
       "C-c 8" #'org-ctrl-c-star)
 
-;;; --- Org-noter ---
+;;; Org-noter
 (map! :after org-noter
       :map org-noter-notes-mode-map
       :leader
@@ -533,7 +533,7 @@ abort the running command or get this function removed from
   (map! :map nov-mode-map   "l" nil)
   (map! :map nov-button-map "l" nil))
 
-;;; --- PDF ---
+;;; PDF
 (after! pdf-view
   (map! :map pdf-view-mode-map
         :prefix "SPC n"
@@ -552,7 +552,7 @@ abort the running command or get this function removed from
   (setq-local evil-normal-state-cursor (list nil)
               browse-url-browser-function 'salih/open-url-in-chrome-cross-platform))
 
-;;; --- LSP keybindings ---
+;;; LSP keybindings
 (map! :after lsp-mode
       :map lsp-mode-map
       "M-RET" #'lsp-execute-code-action)
@@ -561,27 +561,27 @@ abort the running command or get this function removed from
       :map scala-ts-mode-map
       "M-RET" #'eglot-code-actions)
 
-;;; --- Dired ---
+;;; Dired
 (map! :after dired
       :map dired-mode-map
       :leader
       "o o" #'salih/open-in-external-app)
 
-;;; --- Wordnut ---
+;;; Wordnut
 (map! :after wordnut
       :map wordnut-mode-map
       :n "q" #'+workspace/close-window-or-workspace)
 
-;;; --- EWW ---
+;;; EWW
 (map! :after eww
       :map eww-mode-map
       "C" #'eww-browse-with-external-browser)
 
-;;; --- SHR unbinds ---
+;;; SHR unbinds
 (after! shr
   (map! :map shr-map "u" nil "w" nil))
 
-;;; --- Mu4e ---
+;;; Mu4e
 (map! :after mu4e
       :map mu4e-headers-mode-map
       :n "r" #'mu4e-headers-mark-for-refile)
@@ -597,16 +597,16 @@ abort the running command or get this function removed from
       "RET"    'mu4e--view-browse-url-from-binding
       [return] 'mu4e--view-browse-url-from-binding)
 
-;;; --- Text mode ---
+;;; Text mode
 (map! :map text-mode-map
       :n ";" #'embark-act)
 
-;;; --- Calendar ---
+;;; Calendar
 (after! calendar
   (evil-define-key 'normal calendar-mode-map (kbd "RET")
     'salih/org-calendar-goto-agenda))
 
-;;; --- Org-fc ---
+;;; Org-fc
 (after! org-fc
   (evil-define-minor-mode-key '(normal insert emacs) 'org-fc-review-flip-mode
     (kbd "r") 'org-fc-review-flip
@@ -621,7 +621,7 @@ abort the running command or get this function removed from
     (kbd "s") 'org-fc-review-suspend-card
     (kbd "q") 'org-fc-review-quit))
 
-;;; --- Org-present ---
+;;; Org-present
 (after! org-present
   (define-key org-present-mode-keymap (kbd "SPC") nil))
 

@@ -1,6 +1,6 @@
 ;;; lr-elfeed.el --- Elfeed RSS reader: feeds and tags -*- lexical-binding: t; -*-
 
-;;; --- Org capture: store the article URL (not an elfeed: link) and capture
+;;; Org capture: store the article URL (not an elfeed: link) and capture
 
 (defun salih/elfeed--current-entry ()
   "Return the Elfeed entry at point, in either search or show buffers."
@@ -74,10 +74,10 @@ template) on purpose: URL-encoded bytes like %D8 and %A7, or a literal
             (elfeed-search-update-entry entry)))
         (message "Filed as @check (read): %s" title)))))
 
-;;; --- Search ordering: cluster entries into stable, contiguous groups
+;;; Search ordering: cluster entries into stable, contiguous groups
 ;;
 ;; Goal: every entry from the same source (or author) sits together, and the
-;; order is *deterministic* — pressing "r"/"g" never reshuffles the buffer, and
+;; order is *deterministic* - pressing "r"/"g" never reshuffles the buffer, and
 ;; a background fetch only slots new entries into their existing group instead
 ;; of churning everything.  The previous version ordered groups by "freshest
 ;; author first", i.e. by date, so reading an entry or fetching new ones changed
@@ -112,7 +112,7 @@ metadata still cluster together deterministically."
 
 (defun salih/elfeed-entry-lessp (x y)
   "Total-order predicate: cluster by group, newest within a group.
-Groups are ordered alphabetically by `salih/elfeed-entry-group-key' — a key
+Groups are ordered alphabetically by `salih/elfeed-entry-group-key' - a key
 that depends on neither dates nor read state, so the ordering is stable across
 refreshes and background fetches.  Within a group the newest entry comes
 first; exact-date ties break on the entry id.  Being a total order, this
@@ -139,7 +139,7 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           (sort elfeed-search-entries #'salih/elfeed-entry-lessp))))
 
 
-;;; --- Elfeed proper
+;;; Elfeed proper
 
 (after! elfeed
   (setq elfeed-goodies/entry-pane-size 0.5)
@@ -184,7 +184,7 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
         (elfeed-search-update :force))))
 
   (setq elfeed-feeds
-        '(;; ---------- Programming — personal blogs ----------
+        '(;; ---------- Programming - personal blogs ----------
           ("https://blog.giovanh.com/feeds/atom.xml"             blog programming)
           ("https://cedwards.xyz/index.xml"                      blog programming)
           ("http://norvig.com/rss-feed.xml"                      blog programming)
@@ -234,7 +234,7 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://nullpt.rs/feed.rss"                          blog programming security)
           ("https://www.emadelsaid.com/+/feed.rss"               blog programming arabic)
 
-          ;; ---------- Programming — engineering & industry ----------
+          ;;  engineering & industry
           ("https://engineering.fb.com/feed/"                    engineering programming)
           ("https://netflixtechblog.com/feed"                    engineering programming)
           ("https://dropbox.tech/feed"                           engineering programming)
@@ -242,9 +242,10 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://careersatdoordash.com/engineering-blog/feed/" engineering programming)
           ("https://engineering.atspotify.com/feed"              engineering programming)
           ("https://stackoverflow.blog/feed"                     programming)
+          ("https://taylor.town/feed.xml"                        programming)
           ("https://cprss.s3.amazonaws.com/golangweekly.com.xml" programming golang newsletter)
 
-          ;; ---------- Emacs ----------
+          ;; Emacs
           ("https://kelar.org/~bandali/rss20.xml"                blog emacs)
           ("https://thanosapollo.org/posts/index.xml"            blog emacs)
           ("https://themkat.net/feed.xml"                        blog emacs)
@@ -253,11 +254,11 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://endlessparentheses.com/atom.xml"             blog emacs)
           ("https://emacsconf.org/index.atom"                    emacs)
 
-          ;; ---------- AI ----------
+          ;; AI
           ("https://erichartford.com/rss.xml"                    blog ai)
           ("https://simonwillison.net/tags/claude-code.atom"     blog ai programming)
 
-          ;; ---------- Philosophy & Politics ----------
+          ;; Philosophy & Politics
           ("https://chomsky.info/feed/"                          philosophy politics)
           ("https://www.radicalphilosophy.com/feed"              philosophy politics)
           ("https://nintil.com/rss.xml"                          philosophy science)
@@ -266,14 +267,14 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://stallman.org/rss/rss.xml"                    politics)
           ("https://cybershow.uk/rss/feed.xml"                   politics tech)
 
-          ;; ---------- News, culture, misc ----------
+          ;; News, culture, misc
           ("https://www.vox.com/rss/index.xml"                   news)
           ("https://daily.jstor.org/feed/"                       culture)
           ("http://feeds.feedburner.com/InformationIsBeautiful"  design data)
           ("https://www.admdnewsletter.com/rss/"                 marketing newsletter)
           ("https://www.leonardcohenforum.com/app.php/feed/topics" culture)
 
-          ;; ---------- Arabic blogs ----------
+          ;; Arabic blogs
           ("http://monakareem.blogspot.com/feeds/posts/default?alt=rss" blog arabic)
           ("https://rahmawritings.com/feed/"                     blog arabic)
           ("https://thematamixta.blogspot.com/feeds/posts/default" blog arabic)
@@ -283,7 +284,7 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://mana.net/feed/"                              arabic culture)
           ("https://blog.tareef.sy/index.xml"                    blog arabic)
 
-          ;; ---------- Aggregators — Hacker News ----------
+          ;; Aggregators - Hacker News
           ("https://hnrss.org/frontpage"                         aggregator hn)
           ("https://hnrss.org/replies?id=lr0"                    aggregator hn personal)
           ("https://hnrss.org/polls"                             aggregator hn)
@@ -296,27 +297,27 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://hnrss.org/newest?q=islam"                    aggregator hn religion)
           ("https://hnrss.org/newest?q=muslim"                   aggregator hn religion)
 
-          ;; ---------- Aggregators — Lobsters ----------
+          ;; Aggregators - Lobsters
           ("https://lobste.rs/rss"                               aggregator lobsters programming)
           ("https://lobste.rs/t/job.rss"                         aggregator lobsters jobs)
 
-          ;; ---------- Aggregators — Reddit ----------
+          ;; Aggregators - Reddit
           ("https://www.reddit.com/r/emacs/.rss"                 aggregator reddit emacs)
           ("https://www.reddit.com/r/chomsky/search.rss?sort=new&restrict_sr=on&q=flair%3AArticle%2B"
            aggregator reddit philosophy politics)
           ("https://www.reddit.com/r/programmingcirclejerk/.rss" aggregator reddit humor)
 
-          ;; ---------- Aggregators — StackExchange & misc ----------
+          ;; Aggregators - StackExchange & misc
           ("https://stackexchange.com/feeds/tagsets/451382/skepticism?sort=active"   aggregator stackexchange)
           ("https://stackexchange.com/feeds/tagsets/451144/lifehack?sort=active"     aggregator stackexchange)
           ("https://stackexchange.com/feeds/tagsets/450777/politics?sort=active"     aggregator stackexchange politics)
           ("https://stackexchange.com/feeds/tagsets/450949/interpersonal?sort=active" aggregator stackexchange)
           ("https://boards.4chan.org/sci/index.rss"              aggregator 4chan science)
 
-          ;; ---------- Vienna RSS support (kept for transition reference) ----------
+          ;; Vienna RSS support (kept for transition reference)
           ("https://github.com/ViennaRSS/vienna-rss/discussions.atom" meta)
 
-          ;; ---------- YouTube — programming / CS ----------
+          ;; YouTube - programming / CS
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCX2U8kCH2EzKSeaTIJBtkkQ" youtube programming) ; ryan_cs
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" youtube programming) ; mentaloutlaw
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA" youtube programming) ; computerphile
@@ -324,7 +325,7 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCsBjURrPoezykLs9EqgamOA" youtube programming) ; FireShip
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" youtube emacs)       ; systemcraft
 
-          ;; ---------- YouTube — philosophy ----------
+          ;; YouTube - philosophy
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCGVHC4L6gjS13AMe-JMOjHg" youtube philosophy)         ; kanb
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCmHu591mWNj_zSaSuYVwsaQ" youtube philosophy)         ; manufacturing_intellect
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkS_HP3m9NXOgswVAKbMeJQ" youtube philosophy)         ; thenandnow
@@ -332,7 +333,7 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9ff15w4ufviWfv9UfIuByA" youtube philosophy history) ; wes_cecil
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC1VzCyqpmCaRh8_BnijbOvg" youtube philosophy)         ; Carneades
 
-          ;; ---------- YouTube — history ----------
+          ;; YouTube - history
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCX7katl3DVmch4D7LSvqbVQ" youtube history) ; montemayor
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCEqNbbsx0i7fhwRt0saYIcQ" youtube history) ; america
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7pr_dQxm2Ns2KlzRSx5FZA" youtube history) ; sandrhoman
@@ -343,13 +344,13 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCp9ZtilfKJds0iWytR_pnOQ" youtube history) ; epimetheum
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCO6nDCimkF79NZRRb8YiDcA" youtube history) ; Storied
 
-          ;; ---------- YouTube — math ----------
+          ;; YouTube - math
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A" youtube math) ; numberphile
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtYLUTtgS3k1Fg4y5tAhLbw" youtube math) ; statquest
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UChVUSXFzV8QCOKNWGfE56YQ" youtube math) ; BriTheMathGuy
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw" youtube math) ; 3Blue1Brown
 
-          ;; ---------- YouTube — science ----------
+          ;; YouTube - science
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCHnyfMqiRRG1u-2MsSQLbXA" youtube science) ; veritasium
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCsXVk37bltHxD1rDPwtNM8Q" youtube science) ; Kurzgesagt
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC1yNl2E66ZzKApQdRuTQ4tw" youtube science) ; Hossenfelder
@@ -357,7 +358,7 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCG9ShGbASoiwHwFcLcAh9EA" youtube science) ; sea
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCm3i_fqq8dqsV-dTAriv2KA" youtube science) ; disScience
 
-          ;; ---------- YouTube — Arabic / religion ----------
+          ;; YouTube - Arabic / religion
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtx9oIT_eWp6jIkoULS-ZdQ" youtube arabic)          ; shabaka
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC-pn1lcD--68WjOgCGBXlCQ" youtube arabic)          ; tasneem
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC_5ENzPnzYCGRxiOIdtaRug" youtube arabic art)      ; ramah aesthetic
@@ -366,16 +367,16 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCxPtfAOwtyd_N6keP3MnVmw" youtube arabic religion) ; Qassom
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC9dRb4fbJQIbQ3KHJZF_z0g" youtube religion)        ; religion
 
-          ;; ---------- YouTube — politics / news ----------
+          ;; YouTube - politics / news
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UChzVhAwzGR7hV-4O8ZmBLHg" youtube politics) ; Glenn Greenwald
           ("https://www.reddit.com/r/wikipedia/.rss" wikipedia)
 
-          ;; ---------- YouTube — art / aesthetic ----------
+          ;; YouTube - art / aesthetic
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UC99wd4wi8AfaSkqprWo206g" youtube art) ; edits
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrPOgNsUldOtQsTf9Kjlm_A" youtube art) ; national_gallery
 
           
-          ;; ---------- YouTube — misc ----------
+          ;; YouTube - misc
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCtscFf8VayggrDYjOwDke_Q" youtube) ; academia
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCij1VEjDb88RCbqsvZ1gqaw" youtube) ; sideof
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCT6H50SccbeQKlhHufvAo1A" youtube) ; prof
@@ -392,7 +393,7 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
           ("https://www.youtube.com/feeds/videos.xml?channel_id=UCePDFpCr78_qmVtpoB1Axaw" youtube)         ; Gart
           )))
 
-;;; --- Background fetching: load elfeed and refresh feeds after startup
+;;; Background fetching: load elfeed and refresh feeds after startup
 
 (defcustom salih/elfeed-update-interval (* 30 60)
   "Seconds between automatic background `elfeed-update-background' runs."
@@ -430,7 +431,7 @@ visible Elfeed windows and no-ops if an update is already running."
             (unless noninteractive
               (run-with-idle-timer 5 nil #'salih/elfeed-enable-background-updates))))
 
-;;; --- Guard: drop pending shr image fetches when a show buffer is killed
+;;; Guard: drop pending shr image fetches when a show buffer is killed
 ;;
 ;; `elfeed-show' renders an article's HTML with `shr', which fetches inline
 ;; images asynchronously through `url-queue', passing markers into the

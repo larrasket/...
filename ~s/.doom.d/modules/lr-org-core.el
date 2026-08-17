@@ -1,11 +1,11 @@
 ;;; lr-org-core.el --- Org settings, agenda, capture, modern -*- lexical-binding: t; -*-
 
-;;; --- Org basic display (safe to set early) ---
+;;; Org basic display (safe to set early)
 (setq org-hide-emphasis-markers t
       org-pretty-entities t
       org-agenda-tags-column 'auto)
 
-;;; --- Org core config (deferred) ---
+;;; Org core config (deferred)
 (after! org
   (require 'vulpea)
   (setq org-id-method 'org
@@ -24,7 +24,7 @@
         org-agenda-show-future-repeats nil
         org-clock-mode-line-total 'current
         org-agenda-current-time-string
-        "◀── now ─────────────────────────────────────────────────"
+        "<--- now -------------------------------------------------"
         org-clock-string-limit 7
         org-agenda-dim-blocked-tasks 'invisible
         org-agenda-inhibit-startup t            ; don't apply startup folding in agenda files
@@ -100,7 +100,7 @@
                 (org-store-link-props
                  :type "eww" :link url :description title))))))
 
-;;; --- Capture templates ---
+;;; Capture templates
 (after! org
   (setq org-capture-templates
         '(("t" "Personal todo" entry
@@ -131,7 +131,7 @@
            (file+headline +org-capture-journal-file "Posts")
            "*** %?\n:DATE:\n%<[%Y-%m-%d %a %H:%M]>\n:END:" :prepend t))))
 
-;;; --- Agenda custom commands (deferred to agenda open) ---
+;;; Agenda custom commands (deferred to agenda open)
 (after! org
   (require 'ts)
   (setq org-agenda-custom-commands
@@ -207,7 +207,7 @@
                                 (not (deadline)) (not (scheduled)))
                           ((org-ql-block-header "Looking for an idea?"))))))))
 
-;;; --- Org helper functions ---
+;;; Org helper functions
 (defun salih/org-archive-done-tasks ()
   (interactive)
   (org-map-entries 'org-archive-subtree "/DONE" 'file))
@@ -290,7 +290,7 @@
           (message "Opened: %s" full-path))
       (message "Not on a file link."))))
 
-;;; --- Org-ql formatting ---
+;;; Org-ql formatting
 (defun salih/org-ql-view--format-element (orig-fun &rest args)
   "Add category prefix to org-ql results."
   (if (not args) ""
@@ -308,7 +308,7 @@
 
 (advice-add 'org-ql-view--format-element :around #'salih/org-ql-view--format-element)
 
-;;; --- Org advice ---
+;;; Org advice
 (advice-add 'org-id-get-create :after #'salih/set-custom-id-to-id)
 
 ;; Org-download: skip org-id-get-create
@@ -318,7 +318,7 @@
                 (cl-letf (((symbol-function 'org-id-get-create) #'ignore))
                   (apply orig-fun args)))))
 
-;;; --- Logbook/clock advice ---
+;;; Logbook/clock advice
 (defun salih/logbook-on (&rest _)  (setq org-log-into-drawer t))
 (defun salih/logbook-off (&rest _) (setq org-log-into-drawer nil))
 
@@ -337,19 +337,19 @@
 (advice-add 'org-add-note      :before 'salih/stats-on)
 (advice-add 'org-add-note      :after  'salih/logbook-on)
 
-;;; --- Org mode hooks ---
+;;; Org mode hooks
 (add-hook! 'org-mode-hook
   (display-line-numbers-mode -1)
   (visual-fill-column-mode 1)
   (setq-local fill-column 90))
 
 
-;;; --- Agenda advice (deferred until agenda opens) ---
+;;; Agenda advice (deferred until agenda opens)
 (advice-add 'org-agenda      :before 'vulpea-agenda-files-update)
 (advice-add 'org-todo-list   :before 'vulpea-agenda-files-update)
 (advice-add 'org-agenda-quit :before 'org-save-all-org-buffers)
 
-;;; --- File templates ---
+;;; File templates
 (after! org
   (require 'org-download)
   (set-file-template! "\\.org$"
@@ -363,18 +363,18 @@
     :mode 'org-mode
     :project nil))
 
-;;; --- Org-modern (deferred to org-mode) ---
+;;; Org-modern (deferred to org-mode)
 (after! org-modern
   (setq org-modern-star 'fold
-        org-modern-replace-stars "◉○✸✿✤✜◆▶"
+        org-modern-replace-stars "*+-~>#."
         org-modern-tag nil
         org-modern-timestamp nil
         org-modern-keyword t
         org-modern-todo nil
         org-modern-block-name t
         org-modern-priority nil
-        org-modern-list '((42 . "•") (43 . "‒") (45 . "-"))
-        org-modern-horizontal-rule '("─" 2)
+        org-modern-list '((42 . "-") (43 . "-") (45 . "-"))
+        org-modern-horizontal-rule '("-" 2)
         org-modern-block-fringe t
         org-modern-table-vertical 1
         org-modern-table-horizontal 0.2
@@ -382,7 +382,7 @@
 
 (add-hook 'org-mode-hook #'org-modern-mode)
 
-;;; --- Org-present ---
+;;; Org-present
 (after! org-present
   (add-hook! 'org-present-mode-hook
     (set-fringe-style 0)
@@ -398,16 +398,16 @@
     (org-remove-inline-images)
     (visual-fill-column-mode -1)))
 
-;;; --- Org-fc ---
+;;; Org-fc
 (after! org-fc
   (setq org-fc-flashcard-tag "drill"
         org-fc-directories '("~/roam/main" "~/roam/other" "~/roam/references")))
 
-;;; --- Nov breadcrumb ---
+;;; Nov breadcrumb
 (add-hook! 'org-noter-doc-mode-hook (breadcrumb-local-mode -1))
 (add-hook! 'nov-mode-hook (breadcrumb-local-mode -1))
 
-;;; --- Nov epub mode ---
+;;; Nov epub mode
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
 

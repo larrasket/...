@@ -1,11 +1,11 @@
 ;;; lr-org-roam.el --- Org-roam, vulpea, dailies -*- lexical-binding: t; -*-
 
-;;; --- iCloud symlink compatibility ---
+;;; iCloud symlink compatibility
 ;; Doom Emacs sets `find-file-visit-truename t', which means opening a file
-;; via a symlink (e.g. ~/roam/main/foo.org → iCloud) sets buffer-file-name to
+;; via a symlink (e.g. ~/roam/main/foo.org -> iCloud) sets buffer-file-name to
 ;; the TRUENAME (/Users/l/Library/Mobile Documents/.../main/foo.org), not the
 ;; symlink path.  org-roam-file-p checks if file-truename is under
-;; file-truename(org-roam-directory) = /Users/l/roam — but iCloud truenames are
+;; file-truename(org-roam-directory) = /Users/l/roam - but iCloud truenames are
 ;; NOT under /Users/l/roam, so org-roam-file-p always returns nil for these files.
 ;; That breaks DB updates on save, find-file-hook integration, etc.
 ;;
@@ -31,7 +31,7 @@ accessed via iCloud symlinks are recognised as org-roam files.")
                                 (file-truename path))))
                           (directory-files roam-dir nil "^[^.]")))))))
 
-;;; --- Org-roam per-buffer setup via org-mode-hook ---
+;;; Org-roam per-buffer setup via org-mode-hook
 ;; org-roam normally wires these up only via org-roam-find-file-hook, which
 ;; fires for files under org-roam-directory after org-roam-db-autosync-mode
 ;; is active.  Any timing gap (file opened before autosync enables) or path
@@ -42,10 +42,10 @@ accessed via iCloud symlinks are recognised as org-roam files.")
   ;; Completion: adds org-roam-complete-link-at-point + org-roam-complete-everywhere
   (add-hook 'org-mode-hook #'org-roam--register-completion-functions-h)
   ;; Link replacement: adds org-roam-link-replace-all to before-save-hook
-  ;; so [[roam:Title]] → [[id:...]] on every save
+  ;; so [[roam:Title]] -> [[id:...]] on every save
   (add-hook 'org-mode-hook #'org-roam--replace-roam-links-on-save-h))
 
-;;; --- Org-roam (deferred) ---
+;;; Org-roam (deferred)
 (after! org-roam
   ;; Extend org-roam-file-p to handle iCloud-symlinked files.
   ;; When find-file-visit-truename=t (Doom default), buffer-file-name for
@@ -68,7 +68,7 @@ accessed via iCloud symlinks are recognised as org-roam files.")
                             (string-prefix-p (file-name-as-directory dir) path))
                           salih/--roam-symlink-truenames))))))
 
-  ;; Exclude .gpg files — decrypting them on every DB sync is slow
+  ;; Exclude .gpg files - decrypting them on every DB sync is slow
   ;; and causes passphrase prompts. Encrypted dailies are still writable,
   ;; they just won't appear in the roam graph.
   (setq org-roam-file-exclude-regexp "\\.gpg$")
@@ -110,15 +110,15 @@ accessed via iCloud symlinks are recognised as org-roam files.")
            :target (file+head "references/${citekey}.org"
                               "#+title: ${title}\n"))))) ;; end after! org-roam
 
-;;; --- Org-roam hooks ---
+;;; Org-roam hooks
 ;; (add-hook! 'org-roam-find-file-hook #'git-auto-commit-mode)
 
-;;; --- Git auto-commit ---
+;;; Git auto-commit
 (after! git-auto-commit-mode
   (setq gac-debounce-interval 200
         gac-silent-message-p  t))
 
-;;; --- Interactive functions ---
+;;; Interactive functions
 (defun salih/org-roam-dailies-capture-today ()
   (interactive)
   (setq salih/org-roam-dailies-capture-p t)
@@ -142,7 +142,7 @@ accessed via iCloud symlinks are recognised as org-roam files.")
   (let ((consult-ripgrep-args (concat consult-ripgrep-args " --follow -g *.org")))
     (consult-ripgrep org-roam-directory)))
 
-;;; --- Vulpea (deferred) ---
+;;; Vulpea (deferred)
 (after! vulpea
   (defun salih/vulpea-project-update-tag ()
     "Update project tag for current buffer."
@@ -230,7 +230,7 @@ modified, and kills buffers it opened."
               (kill-buffer)))))
       (message "Updated tags in %d / %d files." updated (length files)))))
 
-;;; --- Org-roam-bibtex ---
+;;; Org-roam-bibtex
 (after! org-roam-bibtex
   (require 'org-ref))
 

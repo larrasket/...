@@ -13,7 +13,7 @@
           (inproceedings . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*} ${booktitle:40}")
           (t             . "${=has-pdf=:1}${=has-note=:1} ${year:4} ${author:36} ${title:*}"))))
 
-;;; --- Bibtex autokey ---
+;;; Bibtex autokey
 (after! bibtex
   (setq bibtex-autokey-year-length 4
         bibtex-autokey-name-year-separator "-"
@@ -23,7 +23,7 @@
         bibtex-autokey-titlewords-stretch 1
         bibtex-autokey-titleword-length 5))
 
-;;; --- Org-cite ---
+;;; Org-cite
 (after! org
   (setq org-cite-global-bibliography (list "~/configs/~s/ref.bib")
         jinx-languages "en_US ar_EG")
@@ -32,7 +32,7 @@
         org-cite-csl--fallback-style-file
         (expand-file-name "chicago-ibid.csl" "~/configs/~s/.pandoc/csl")))
 
-;;; --- Citar ---
+;;; Citar
 (after! citar
   (setq citar-bibliography "~/configs/~s/ref.bib"
         citar-symbol-separator "  "
@@ -57,7 +57,7 @@
           :symbol (nerd-icons-octicon "nf-oct-link" :face 'nerd-icons-orange :v-adjust -0.1)
           :function #'citar-has-links :padding "  " :tag "has:links"))))
 
-;;; --- Citar-org-roam ---
+;;; Citar-org-roam
 (after! citar-org-roam
   (setq citar-org-roam-note-title-template
         "${title}\n ${title} is a book by ${author}\n * ${title}\n ")

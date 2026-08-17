@@ -6,12 +6,12 @@
 ;; counterpart to `salih/add-microblog-to-hugo' (authoring lives in lr-tools.el);
 ;; this module never posts.  Two rich, evil-friendly views:
 ;;
-;;   `SPC o m'  timeline      — posts/boosts from the accounts you follow
+;;   `SPC o m'  timeline      - posts/boosts from the accounts you follow
 ;;                              (${base}/admin/timeline.json)
-;;   `SPC o n'  notifications — mentions, replies, likes, boosts, and new
+;;   `SPC o n'  notifications - mentions, replies, likes, boosts, and new
 ;;                              followers directed at you
 ;;                              (${base}/admin/notifications.json)
-;;   `SPC o p'  post          — compose a fediverse-ONLY post (not the blog),
+;;   `SPC o p'  post          - compose a fediverse-ONLY post (not the blog),
 ;;                              published via ${base}/admin/publish
 ;;
 ;; Both render into a read-only buffer with per-entry navigation and actions:
@@ -28,10 +28,10 @@
 ;;   f            follow the author (a boost's ORIGINAL author)
 ;;   u            unfollow the author (with confirmation)
 ;;   t            toggle sort: recent  <->  top (algorithmic)
-;;   c            clear — dismiss all shown posts so they never return
+;;   c            clear - dismiss all shown posts so they never return
 ;;                (local-only, persisted to `salih/fedi-dismissed-file')
 ;;
-;; Only built-ins are used (url.el + json + shr) — no request.el / plz.el,
+;; Only built-ins are used (url.el + json + shr) - no request.el / plz.el,
 ;; matching the rest of the config.
 ;;
 ;; Token: never hardcoded.  Resolved (in order) from
@@ -83,7 +83,7 @@ Prefer ~/.authinfo.gpg or the LR0_ADMIN_TOKEN environment variable."
   :type 'integer
   :group 'salih/fedi)
 
-;;; --- Token -----------------------------------------------------------------
+;;; Token
 
 (defun salih/fedi--host ()
   "Return the bare host of `salih/fedi-base-url' (e.g. \"lr0.org\")."
@@ -102,7 +102,7 @@ Prefer ~/.authinfo.gpg or the LR0_ADMIN_TOKEN environment variable."
                  "or set the LR0_ADMIN_TOKEN env var, or `salih/fedi-admin-token'.")
          host))))
 
-;;; --- Formatting helpers ----------------------------------------------------
+;;; Formatting helpers
 
 (defun salih/fedi--html-to-text (html)
   "Render HTML into readable text via `shr', KEEPING shr's link/face styling
@@ -131,7 +131,7 @@ so mentions, hashtags and links stay visually distinct.  Interactive props
 
 (defun salih/fedi--ref-handle (url)
   "Best-effort @user@host from a status/actor URL, else the bare host/URL.
-Handles both …/users/NAME/… and …/@NAME/… forms."
+Handles both .../users/NAME/... and .../@NAME/... forms."
   (if (not (stringp url))
       "someone"
     (let ((host (ignore-errors (url-host (url-generic-parse-url url)))))
@@ -144,7 +144,7 @@ Handles both …/users/NAME/… and …/@NAME/… forms."
        (t (salih/fedi--shorten-actor url))))))
 
 (defun salih/fedi--actor-uri-from-status (url)
-  "Return the actor URI for a status URL (strip the trailing /statuses/…)."
+  "Return the actor URI for a status URL (strip the trailing /statuses/...)."
   (when (stringp url)
     (if (string-match "\\`\\(https?://[^/]+/\\(?:users/\\|@\\)[^/]+\\)" url)
         (match-string 1 url)
@@ -175,14 +175,14 @@ Handles both …/users/NAME/… and …/@NAME/… forms."
   "Trim TEXT to `salih/fedi-excerpt-width' chars, adding an ellipsis if cut."
   (let ((s (string-trim (or text ""))))
     (if (> (length s) salih/fedi-excerpt-width)
-        (concat (substring s 0 salih/fedi-excerpt-width) "…")
+        (concat (substring s 0 salih/fedi-excerpt-width) "...")
       s)))
 
 (defun salih/fedi--indent (text)
   "Indent every line of TEXT by two spaces."
   (concat "  " (replace-regexp-in-string "\n" "\n  " (string-trim-right text))))
 
-;;; --- Item field helpers ----------------------------------------------------
+;;; Item field helpers
 
 (defun salih/fedi--item-timestamp (item)
   "Return a timestamp string for ITEM, or the empty string."
@@ -222,7 +222,7 @@ Handles both …/users/NAME/… and …/@NAME/… forms."
        (alist-get 'text item)
        "")))
 
-;;; --- HTTP ------------------------------------------------------------------
+;;; HTTP
 
 (defun salih/fedi--parse-buffer ()
   "Parse the current `url-retrieve-synchronously' buffer.
@@ -256,7 +256,7 @@ Accepts a bare JSON array or an object wrapping the list under
             (cond
              ((= status 401)
               (user-error
-               (concat "Fediverse: 401 Unauthorized — the admin token is missing "
+               (concat "Fediverse: 401 Unauthorized - the admin token is missing "
                        "or wrong.  Fix ~/.authinfo.gpg: machine %s login admin "
                        "password <TOKEN>")
                (salih/fedi--host)))
@@ -300,7 +300,7 @@ Return t on a 2xx response; signal a `user-error' otherwise."
             t))
       (kill-buffer buf))))
 
-;;; --- Faces -----------------------------------------------------------------
+;;; Faces
 
 (defface salih/fedi-mention-face '((t :inherit warning :weight bold))
   "Badge face for mentions." :group 'salih/fedi)
@@ -329,7 +329,7 @@ Return t on a 2xx response; signal a `user-error' otherwise."
 (defface salih/fedi-quote-face '((t :inherit (shadow) :slant italic))
   "Face for the quoted parent post shown under a reply." :group 'salih/fedi)
 
-;;; --- Avatars (graphical Emacs only) ----------------------------------------
+;;; Avatars (graphical Emacs only)
 
 (defcustom salih/fedi-show-avatars t
   "Show author avatars inline.  Only applies in graphical Emacs."
@@ -391,14 +391,14 @@ A no-op (inserts nothing) when avatars aren't supported or URL is empty."
                    (put-text-property (car slot) (cdr slot) 'display img))))))))
      nil t t)))
 
-;;; --- Shared entry infrastructure -------------------------------------------
+;;; Shared entry infrastructure
 
 (defvar-local salih/fedi--entry-positions nil
   "Sorted buffer positions where each entry begins, for n/p navigation.")
 
 (defun salih/fedi--context-line (label plain)
   "Return an indented `  > LABEL: \"excerpt\"' context string for PLAIN text."
-  (propertize (format "  › %s: \"%s\"\n" label (salih/fedi--excerpt plain))
+  (propertize (format "  > %s: \"%s\"\n" label (salih/fedi--excerpt plain))
               'face 'salih/fedi-context-face))
 
 (defun salih/fedi--entry-data ()
@@ -445,7 +445,7 @@ A no-op (inserts nothing) when avatars aren't supported or URL is empty."
     (if url (progn (kill-new url) (message "Copied: %s" url))
       (user-error "No link for this entry"))))
 
-;;; --- Timeline --------------------------------------------------------------
+;;; Timeline
 
 (defun salih/fedi--timeline-url ()
   "Return the full timeline endpoint URL."
@@ -453,7 +453,7 @@ A no-op (inserts nothing) when avatars aren't supported or URL is empty."
           (string-remove-suffix "/" salih/fedi-base-url)
           salih/fedi-timeline-limit))
 
-;;; --- Timeline state: dismiss (local "clear") + sort ------------------------
+;;; Timeline state: dismiss (local "clear") + sort
 
 (defcustom salih/fedi-dismissed-file
   (expand-file-name "lr-fedi-dismissed.eld" user-emacs-directory)
@@ -549,18 +549,18 @@ When empty and not a boost, insert a faint \"(no text)\"."
     (add-text-properties cstart (point) '(line-prefix "  " wrap-prefix "  "))))
 
 (defun salih/fedi--insert-reply-context (item in-reply)
-  "Insert the `↳ replying to' line for ITEM and, if known, a quoted preview of
+  "Insert the `> replying to' line for ITEM and, if known, a quoted preview of
 the parent post (IN-REPLY is its URL)."
   (let ((rauthor (or (alist-get 'replyAuthor item) (salih/fedi--ref-handle in-reply)))
         (rcontent (salih/fedi--excerpt
                    (substring-no-properties
                     (salih/fedi--html-to-text (or (alist-get 'replyContent item) ""))))))
-    (insert (propertize (format "  ↳ replying to %s\n" rauthor) 'face 'salih/fedi-context-face))
+    (insert (propertize (format "  > replying to %s\n" rauthor) 'face 'salih/fedi-context-face))
     (unless (string-empty-p rcontent)
       (let ((qs (point)))
         (insert rcontent "\n")
         (add-text-properties qs (point)
-                             (list 'line-prefix "    │ " 'wrap-prefix "    │ "
+                             (list 'line-prefix "    | " 'wrap-prefix "    | "
                                    'face 'salih/fedi-quote-face))))))
 
 (defun salih/fedi--insert-timeline-item (item &optional firstp)
@@ -578,12 +578,12 @@ the parent post (IN-REPLY is its URL)."
          (follow   (if boosted (salih/fedi--actor-uri-from-status src) actor))
          (start    (point)))
     (unless firstp
-      (insert (propertize (concat (make-string 72 ?─) "\n") 'face 'salih/fedi-separator-face)))
+      (insert (propertize (concat (make-string 72 ?-) "\n") 'face 'salih/fedi-separator-face)))
     (salih/fedi--insert-avatar avatar)
     (if boosted
-        ;; Boost: a "↻ NAME boosted" line, then the original author + content.
+        ;; Boost: a "* NAME boosted" line, then the original author + content.
         (progn
-          (insert (propertize (format "↻ %s boosted" (or name handle)) 'face 'salih/fedi-boost-face))
+          (insert (propertize (format "* %s boosted" (or name handle)) 'face 'salih/fedi-boost-face))
           (unless (string-empty-p rel)
             (insert (propertize (format "   %s" rel) 'face 'salih/fedi-time-face)))
           (insert "\n")
@@ -606,8 +606,8 @@ the parent post (IN-REPLY is its URL)."
 (defun salih/fedi--timeline-header (items)
   "Return a header-line string for the timeline showing ITEMS."
   (if (null items)
-      " Fedi timeline — empty  ·  c cleared? gr refresh · q quit "
-    (format " %d posts [%s] · n/p · RET open · l like · b boost · r reply · f follow · u unfollow · t top · c clear · gr refresh · q quit "
+      " Fedi timeline - empty  |  c cleared? gr refresh | q quit "
+    (format " %d posts [%s] | n/p | RET open | l like | b boost | r reply | f follow | u unfollow | t top | c clear | gr refresh | q quit "
             (length items) (if (eq salih/fedi--sort 'top) "top" "recent"))))
 
 (defun salih/fedi--redraw ()
@@ -670,7 +670,7 @@ Enters the mode only once so the sort mode survives refreshes."
 ;;;###autoload
 (defun salih/fedi-follow (account)
   "Follow ACCOUNT on the fediverse (an @user@host handle or an actor URL)."
-  (interactive "sFollow (e.g. @user@host or https://…): ")
+  (interactive "sFollow (e.g. @user@host or https://...): ")
   (setq account (string-trim account))
   (when (string-empty-p account) (user-error "No account given"))
   (salih/fedi--post-json "/admin/follow" (list (cons "actor" account)))
@@ -686,13 +686,13 @@ Enters the mode only once so the sort mode survives refreshes."
   "Like the post at point."
   (interactive)
   (salih/fedi--post-json "/admin/like" (list (cons "object" (salih/fedi--entry-object))))
-  (message "♥ Liked."))
+  (message "Liked."))
 
 (defun salih/fedi-timeline-boost ()
   "Boost (repost) the post at point."
   (interactive)
   (salih/fedi--post-json "/admin/boost" (list (cons "object" (salih/fedi--entry-object))))
-  (message "↻ Boosted."))
+  (message "* Boosted."))
 
 (defun salih/fedi-timeline-reply ()
   "Reply to the post at point (published to the fediverse)."
@@ -721,7 +721,7 @@ Enters the mode only once so the sort mode survives refreshes."
       (when id (puthash id t salih/fedi--dismissed) (setq n (1+ n))))
     (salih/fedi--save-dismissed)
     (salih/fedi--redraw)
-    (message "Cleared %d posts — they won't show again." n)))
+    (message "Cleared %d posts - they won't show again." n)))
 
 (defvar salih/fedi-timeline-mode-map
   (let ((map (make-sparse-keymap)))
@@ -755,7 +755,7 @@ Enters the mode only once so the sort mode survives refreshes."
 (when (featurep 'evil)
   (evil-set-initial-state 'salih/fedi-timeline-mode 'normal))
 
-;;; --- Notifications ---------------------------------------------------------
+;;; Notifications
 
 (defun salih/fedi--notifications-url ()
   "Return the full notifications endpoint URL."
@@ -814,7 +814,7 @@ Enters the mode only once so the sort mode survives refreshes."
 (defun salih/fedi--notif-header (items)
   "Return a header-line string summarising notification ITEMS."
   (if (null items)
-      " Fedi notifications — empty  ·  gr refresh · q quit "
+      " Fedi notifications - empty  |  gr refresh | q quit "
     (let ((counts (make-hash-table :test 'equal)) parts)
       (dolist (it items)
         (let ((ty (alist-get 'type it)))
@@ -822,7 +822,7 @@ Enters the mode only once so the sort mode survives refreshes."
       (maphash (lambda (k v)
                  (push (format "%d %s" v (downcase (car (salih/fedi--notif-badge k)))) parts))
                counts)
-      (format " %d notifications  ·  %s  ·  n/p move · RET open · a author · y copy · gr refresh · q quit "
+      (format " %d notifications  |  %s  |  n/p move | RET open | a author | y copy | gr refresh | q quit "
               (length items) (mapconcat #'identity (nreverse parts) ", ")))))
 
 (defun salih/fedi--render-notifications (items)
@@ -876,9 +876,9 @@ Shows mentions, replies, likes, boosts, and new followers newest-first."
 (when (featurep 'evil)
   (evil-set-initial-state 'salih/fedi-notifications-mode 'normal))
 
-;;; --- Compose (fediverse-only post) -----------------------------------------
+;;; Compose (fediverse-only post)
 ;;
-;; Publishes ONLY to the fediverse (via ${base}/admin/publish) — it never
+;; Publishes ONLY to the fediverse (via ${base}/admin/publish) - it never
 ;; touches the Hugo blog.  This is distinct from `salih/add-microblog-to-hugo',
 ;; which authors a blog micropost that then syndicates to the fediverse.
 
@@ -911,7 +911,7 @@ become <br>. TEXT is HTML-escaped first."
 (define-derived-mode salih/fedi-compose-mode text-mode "FediCompose"
   "Major mode for composing a fediverse-only post."
   (setq-local header-line-format
-              " Fediverse-only post  ·  C-c C-c publish · C-c C-k cancel "))
+              " Fediverse-only post  |  C-c C-c publish | C-c C-k cancel "))
 
 ;;;###autoload
 (defun salih/fedi-post ()
@@ -942,7 +942,7 @@ cancels."
   (quit-window t)
   (message "Fediverse post cancelled."))
 
-;;; --- Keybindings -----------------------------------------------------------
+;;; Keybindings
 
 (map! :leader
       :desc "Fedi timeline" "o m" #'salih/fedi-timeline

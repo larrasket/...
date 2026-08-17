@@ -3,7 +3,7 @@
 ;; Declare `so-long-target-modes' special EARLY.  Doom's lang/org module
 ;; lexically `let'-binds it inside `+org-get-agenda-file-buffer' (compiled
 ;; before so-long loads).  On Emacs 32, if that advice runs before so-long.el's own `defvar', the later defvar hard-errors with "Defining
-;; as dynamic an already lexical var so-long-target-modes" — which then
+;; as dynamic an already lexical var so-long-target-modes" - which then
 ;; cascades into flycheck's org-lint checker.  Marking it special here,
 ;; before any agenda/first-file activity, makes so-long.el's defvar a
 ;; harmless re-declaration instead of a conflict.
@@ -26,7 +26,7 @@
       org-directory      (file-truename "~/roam")
       org-id-locations-file "~/roam/.orgids")
 
-;;; --- Org capture files ---
+;;; Org capture files
 (setq +org-capture-changelog-file "~/blog/content/nice.org"
       +org-capture-journal-file   "~/blog/content/stack.org"
       +org-capture-todo-file      "~/roam/main/life.org")
@@ -34,16 +34,16 @@
 (defvar salih/org-roam-fleet-file "~/roam/main/lr.org")
 (defvar salih/org-vocal-store     "~/roam/media/vocal")
 
-;;; --- State variables ---
+;;; State variables
 (defvar salih/vulpea-show-full nil)
 (defvar salih/adding-note?    nil)
 (defvar salih/org-roam-dailies-capture-p nil)
 
-;;; --- Font ---
-(setq doom-font (font-spec :family "Pragmasevka" :size 16)
-      doom-variable-pitch-font (font-spec :family "Iosevka Term" :size 16))
+;;; Font
+(setq doom-font (font-spec :family "Pragmasevka" :size 18)
+      doom-variable-pitch-font (font-spec :family "Iosevka Term" :size 18))
 
-;;; --- Theme ---
+;;; Theme
 ;;; doom-badger
 ;;; doom-opera
 ;;; doom-bluloco-dark
@@ -57,7 +57,7 @@
 ;;; modus-vivendi-tritanopia
 (setq doom-theme 'modus-vivendi-tritanopia)
 
-;;; --- Basic settings ---
+;;; Basic settings
 (setq display-line-numbers-type 'relative
       auto-save-no-message      t
       warning-minimum-level     :error
@@ -101,37 +101,37 @@
 
 (salih/keyboard-config)
 
-;;; --- Popup rules ---
+;;; Popup rules
 (set-popup-rules! '(("^\\*Project errors\\*" :size 0.25)))
 
-;;; --- Fix: global-git-commit-mode void-variable 'function' bug ---
+;;; Fix: global-git-commit-mode void-variable 'function' bug
 (remove-hook 'doom-first-file-hook #'global-git-commit-mode)
 (with-eval-after-load 'git-commit
   (add-hook 'find-file-hook #'git-commit-setup-check-buffer)
   (add-hook 'after-change-major-mode-hook #'git-commit-setup-font-lock-in-buffer))
 
-;;; --- Suppress org-roam's blocking full DB sync ---
+;;; Suppress org-roam's blocking full DB sync
 ;; org-roam-db-sync opens EVERY roam file via find-file-noselect, which
-;; triggers vc-refresh-state → git subprocess per file → Emacs freezes.
+;; triggers vc-refresh-state to git subprocess per file to Emacs freezes.
 ;;
 ;; Sources of unwanted syncs we block:
-;;   • org-roam-db-autosync-enable on startup
-;;   • citar-org-roam-setup during font-lock (triggered by citar-org-activate)
-;;   • +org-roam-try-init-db-a (Doom's lazy-init advice) on first db-query
+;;   - org-roam-db-autosync-enable on startup
+;;   - citar-org-roam-setup during font-lock (triggered by citar-org-activate)
+;;   - +org-roam-try-init-db-a (Doom's lazy-init advice) on first db-query
 ;;
 ;; We allow sync only when:
-;;   • Called interactively (M-x org-roam-db-sync)
-;;   • Our idle timer sets salih/--org-roam-allow-sync to t
+;;   - Called interactively (M-x org-roam-db-sync)
+;;   - Our idle timer sets salih/--org-roam-allow-sync to t
 ;;
 ;; Per-file incremental updates (org-roam-db-update-file via after-save-hook)
-;; are NOT affected — they never go through org-roam-db-sync.
+;; are NOT affected - they never go through org-roam-db-sync.
 (defvar salih/--org-roam-allow-sync nil)
 (defadvice! salih/org-roam-block-eager-sync-a (&rest _)
   :before-while #'org-roam-db-sync
   (or salih/--org-roam-allow-sync
       (called-interactively-p 'any)))
 
-;;; --- Load core modules ---
+;;; Load core modules
 (require 'lr-macos)
 (require 'lr-ui)
 (require 'lr-completion)
@@ -141,52 +141,54 @@
 (require 'lr-elfeed)
 (require 'lr-fedi)
 (require 'lr-agent)
-;; (require 'lr-writing)
 
-;;; --- Defer heavy modules ---
+;;; Context switcher (lr-context)
+;; One command to move between working modes (work / reading / blog / study),
+;; carrying workspace + window layout + clock + notification profile, with all
+;; facts about work in ~/roam/main/contexts.org.  Lazy: the SPC d prefix is
+;; live from startup; the module (and org) load on first use via the autoloads,
+;; so this adds nothing to boot time.
+(dolist (cmd '(lr-context-switch lr-context-define lr-context-list
+               lr-context-resume-clock lr-context-visit))
+  (autoload cmd "lr-context" nil t))
+(map! :leader
+      (:prefix ("d" . "context")
+       :desc "Switch context"        "d" #'lr-context-switch
+       :desc "New context"           "n" #'lr-context-define
+       :desc "List contexts / time"  "l" #'lr-context-list
+       :desc "Resume context clock"  "r" #'lr-context-resume-clock
+       :desc "Open contexts.org"     "o" #'lr-context-visit
+       :desc "Coach check-in / clock" "j" #'lr-track-checkin))
+
+;;; Attention tracker + accountability coach (lr-track)
+;; Background sensing (HID + Emacs idle + focus) -> engaged/elsewhere/away/slept,
+;; a modeline badge, an org activity log (~/roam/main/activity.org), trustworthy
+;; clocks (auto clock-out on away/sleep, idle subtracted), and nudges when you're
+;; clocked-but-elsewhere.  org-free at load; org loads lazily on first clock.
+(require 'lr-track)
+(map! :leader
+      (:prefix ("d" . "context")
+       :desc "Clock in (search)"    "i" #'lr-track-clock-in
+       :desc "Track status (now)"   "s" #'lr-track-status
+       :desc "Toggle tracking"      "t" #'lr-track-mode
+       :desc "Tracker doctor"       "k" #'lr-track-doctor))
+;; Start the coach a couple seconds after init so the first frame is never blocked.
+(add-hook 'doom-after-init-hook
+          (lambda () (run-with-timer 2 nil (lambda () (lr-track-mode 1)))))
+
+;;; Defer heavy modules
 (with-eval-after-load 'org
   (require 'lr-org-core)
   (require 'lr-org-roam)
   (require 'lr-roam-lint)
   (require 'lr-org-noter)
-  (require 'lr-academic)
-  (require 'lr-roam-lint))
+  (require 'lr-academic))
 
 (with-eval-after-load 'mu4e
   (require 'lr-email))
 
 (with-eval-after-load 'circe
   (require 'lr-irc))
-
-;;; --- Pre-load org-roam in background (idle) and sync DB ---
-;; At 3s idle: load org + org-roam so "r" in consult-buffer works.
-;; At 5s idle: run the full DB sync (safe — Emacs is idle, no blocking UX).
-;;   Uses the allow-flag to bypass the eager-sync block above.
-;; (run-with-idle-timer
-;;  3 nil
-;;  (lambda ()
-;;    (require 'org)
-;;    (require 'org-roam)))
-
-;; (run-with-idle-timer
-;;  5 nil
-;;  (lambda ()
-;;    (when (featurep 'org-roam)
-;;      (let ((salih/--org-roam-allow-sync t))
-;;        (org-roam-db-sync)))))
-
-;; ;;; --- Pre-warm agenda file buffers in background ---
-;; ;; At 8s idle (after org/org-roam are loaded by the 3s timer), populate
-;; ;; org-agenda-files from vulpea and pre-parse the buffers.  This way the
-;; ;; first `org-agenda` call only needs to render, not do file I/O.
-;; (run-with-idle-timer
-;;  90 nil
-;;  (lambda ()
-;;    (when (and (featurep 'org-roam)
-;;               (fboundp 'vulpea-agenda-files-update))
-;;      (vulpea-agenda-files-update)
-;;      (when org-agenda-files
-;;        (org-agenda-prepare-buffers org-agenda-files)))))
 
 (add-to-list 'load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e")
 
@@ -221,7 +223,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -239,9 +241,9 @@ separated by one or more blank lines.  Skips org headings (lines starting with
       ;; Join lines within the current paragraph
       (while (and (not (eobp)) (not (looking-at "^[[:space:]]*$")))
         (if (looking-at "^\\*\\|^:")
-            ;; It's a heading or property line — skip it entirely
+            ;; It's a heading or property line - skip it entirely
             (forward-line 1)
-          ;; It's a regular paragraph line — join with next if next is also regular
+          ;; It's a regular paragraph line - join with next if next is also regular
           (end-of-line)
           (when (not (eobp))
             (let ((next-line-empty-or-special
@@ -287,10 +289,10 @@ separated by one or more blank lines.  Skips org headings (lines starting with
     (when (bound-and-true-p indent-bars-mode)
       (indent-bars-reset))))
 
-;; (salih/set-glass 0.1 1) 
+;; (salih/set-glass 0.1 1)
 
 ;; Pass no-confirm (t): this runs during (daemon) init, BEFORE Doom loads
-;; custom.el — so `custom-safe-themes' is still empty here and a bare
+;; custom.el - so `custom-safe-themes' is still empty here and a bare
 ;; `load-theme' would fire the "Loading a theme can run Lisp code. Really
 ;; load?" prompt with no interactive frame to answer it, hanging startup
 ;; until SIGUSR2.  `t' skips that confirmation, exactly as Doom's own

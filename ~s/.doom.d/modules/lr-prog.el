@@ -1,6 +1,6 @@
 ;;; lr-prog.el --- LSP, treesitter, formatters, compilation -*- lexical-binding: t; -*-
 
-;;; HACK --- go-mod-ts-mode-maybe shim ---
+;;; HACK go-mod-ts-mode-maybe shim
 ;; Emacs 30's built-in go-ts-mode lacks this function that Doom registers as an autoload.
 ;; Define it here early so the autoload is never triggered.
 (defun go-mod-ts-mode-maybe ()
@@ -9,7 +9,7 @@
       (go-mod-ts-mode)
     (when (fboundp 'go-mod-mode) (go-mod-mode))))
 
-;;; --- LSP ---
+;;; LSP
 (after! lsp-mode
   (setq lsp-enable-symbol-highlighting nil
         lsp-ui-doc-show-with-cursor nil
@@ -28,7 +28,7 @@
         lsp-idle-delay 0.5
         lsp-use-plists t))
 
-;;; --- LSP booster ---
+;;; LSP booster
 (defun lsp-booster--advice-json-parse (old-fn &rest args)
   "Try to parse bytecode instead of json."
   (or (when (equal (following-char) ?#)
@@ -59,7 +59,7 @@
 
 (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
 
-;;; --- Rename/iedit ---
+;;; Rename/iedit
 (defun salih/rename-or-iedit ()
   "LSP rename if available, otherwise iedit."
   (interactive)
@@ -102,7 +102,7 @@
       (lsp-ui-doc-show)
     (flycheck-display-error-at-point)))
 
-;;; --- Auto-show error list when compilation/check finishes with errors ---
+;;; Auto-show error list when compilation/check finishes with errors
 (after! flycheck
   ;; Quicker feedback
   (setq flycheck-display-errors-delay 0.15
@@ -110,7 +110,7 @@
 
   (setq flycheck-error-list-mode-line nil))
 
-;;; --- Flycheck-golangci-lint patch ---
+;;; Flycheck-golangci-lint patch
 (after! flycheck-golangci-lint
   (defun flycheck-golangci-lint--executable ()
     (or flycheck-golangci-lint-executable "golangci-lint"))
@@ -135,7 +135,7 @@
           '("--output.checkstyle.path=stdout")
         '("--out-format=checkstyle")))))
 
-;;; --- Scalafmt ---
+;;; Scalafmt
 (defconst scalafmt-default-config
   "version = \"3.2.1\"
 style = default
@@ -175,7 +175,7 @@ newlines.source = keep
 (add-hook 'scala-mode-hook #'apheleia-mode)
 (add-hook 'scala-ts-mode-hook #'apheleia-mode)
 
-;;; --- Metals (Scala LSP) ---
+;;; Metals (Scala LSP)
 (defun metals-import-build ()
   "Run sbt bloopInstall for Scala projects."
   (interactive)
@@ -183,12 +183,12 @@ newlines.source = keep
     (async-shell-command "sbt bloopInstall")
     (message "Running sbt bloopInstall...")))
 
-;;; --- Prog mode hooks ---
+;;; Prog mode hooks
 (add-hook! 'prog-mode-hook
   (setq prettify-symbols-alist '(("lambda" . 923)))
   (jinx-mode -1))
 
-;;; --- Compilation ---
+;;; Compilation
 (defun salih/compile-and-run-cpp ()
   "Compile and run C++ file."
   (interactive)
@@ -209,7 +209,7 @@ newlines.source = keep
                      base base base)
              t)))
 
-;;; --- Magit: restart LSP on branch checkout ---
+;;; Magit: restart LSP on branch checkout
 (defun salih/lsp-restart-workspaces-after-checkout ()
   "Restart all active LSP workspaces after a git branch switch.
 Ensures language servers pick up files that may have changed on the new branch."
@@ -230,7 +230,7 @@ Ensures language servers pick up files that may have changed on the new branch."
   (add-hook 'magit-post-checkout-hook #'salih/lsp-restart-workspaces-after-checkout)
   (add-hook 'magit-post-checkout-hook #'projectile-invalidate-cache))
 
-;;; --- Fix flycheck's `org-lint' checker on Emacs 32 / new org-mode ---
+;;; Fix flycheck's `org-lint' checker on Emacs 32 / new org-mode
 ;; Newer `org-lint` returns reports whose line slot is a propertized
 ;; string (e.g. #("442" ... org-lint-marker ...)) instead of a plain int.
 ;; Flycheck's built-in `org-lint' checker passes that string straight to
@@ -243,7 +243,7 @@ Ensures language servers pick up files that may have changed on the new branch."
     ;; Use `put' directly instead of `(setf (flycheck-checker-get ...))':
     ;; the latter relies on flycheck's gv-setter being registered at
     ;; macro-expansion time, which isn't guaranteed when this file is
-    ;; byte-compiled before flycheck loads — causing
+    ;; byte-compiled before flycheck loads - causing
     ;; "(void-function (setf flycheck-checker-get))".
     (put 'org-lint 'flycheck-start
           (lambda (checker callback)
@@ -270,11 +270,11 @@ Ensures language servers pick up files that may have changed on the new branch."
               (error (funcall callback 'errored
                               (error-message-string err)))))))
 
-  ;; --- Stop org-lint from running as a LIVE flycheck checker ---------------
+  ;; Stop org-lint from running as a LIVE flycheck checker
   ;; `org-lint' is a whole-buffer linter not designed for continuous use.
   ;; In current org, its `org-lint-invalid-id-link' check calls
   ;; `org-id-update-id-locations', which rebuilds the org-id DB by scanning
-  ;; every agenda + archive file with recursive `file-truename' — murderous
+  ;; every agenda + archive file with recursive `file-truename' - murderous
   ;; over a 160+ file iCloud roam tree, on EVERY flycheck idle tick.  Remove
   ;; it from the auto-run checker list; `M-x org-lint' still works on demand.
   (setq flycheck-checkers (delq 'org-lint flycheck-checkers)))

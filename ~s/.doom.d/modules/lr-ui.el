@@ -2,10 +2,10 @@
 
 (require 'cl-lib)
 
-;;; --- Fringe ---
+;;; Fringe
 (set-fringe-style '(1 . 1))
 
-;;; --- Faces ---
+;;; Faces
 (defconst salih/ef-maris-dark-line-number-palette-overrides
   '((fg-line-number-active fg-line-number-inactive)
     (bg-line-number-active unspecified)
@@ -87,10 +87,10 @@
   '(orderless-match-face-3 :weight bold)
   '(org-document-title :inherit outline-1 :height 1.5 :weight normal))
 
-;;; --- Cursor ---
+;;; Cursor
 (setq evil-default-cursor 'box)
 
-;;; --- Modeline ---
+;;; Modeline
 (setq doom-modeline-icon t
       doom-modeline-height 28
       doom-modeline-bar-width 1
@@ -163,7 +163,7 @@
                    (doom-modeline-spc)))
          'face 'doom-modeline-emphasis)))))
 
-;;; --- Breadcrumb (lazy) ---
+;;; Breadcrumb (lazy)
 (use-package! breadcrumb
   :defer t
   :init
@@ -176,7 +176,7 @@
         breadcrumb-idle-time 20)
   (add-hook! 'doom-docs-org-mode-hook (breadcrumb-local-mode -1)))
 
-;;; --- Dashboard ---
+;;; Dashboard
 (defun salih/banner ()
   (let* ((banner '("       d8888                                     8888888888       888    d8b      "
                    "      d88888                                     888              888    Y8P      "
@@ -210,17 +210,17 @@
             " of wisdom; all those who practice it have\na good understanding."
             " His praise endures forever."))))
 
-;;; --- Emoji fallback ---
+;;; Emoji fallback
 (add-to-list 'doom-emoji-fallback-font-families "Symbola")
 
-;;; --- Battery ---
+;;; Battery
 (add-hook 'doom-first-buffer-hook #'display-battery-mode)
 
-;;; --- SHR face ---
+;;; SHR face
 (after! shr
   (set-face-attribute 'shr-text nil :family "Optima" :height 180))
 
-;;; --- Visual line mode (text/org only, not global) ---
+;;; Visual line mode (text/org only, not global)
 (add-hook 'text-mode-hook #'visual-line-mode)
 
 ;; Doom's evil-respect-visual-line-mode only remaps arrow keys; also remap j/k.
@@ -232,7 +232,7 @@
     "$" #'evil-end-of-visual-line
     "^" #'evil-first-non-blank-of-visual-line))
 
-;;; --- Dired preview ---
+;;; Dired preview
 (after! dired-preview
   (setq dired-preview-delay 0.1
         dired-preview-max-size (* 1024 1024 30)))

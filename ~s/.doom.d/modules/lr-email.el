@@ -1,6 +1,6 @@
 ;;; lr-email.el --- mu4e configuration -*- lexical-binding: t; -*-
 
-;;; --- Mu4e (fully deferred) ---
+;;; Mu4e (fully deferred)
 (after! mu4e
   (setq mu4e-get-mail-command "mbsync --verbose --all"
         mu4e-update-interval 300
@@ -19,7 +19,7 @@
         mu4e-sent-folder   "/icloud/Sent Messages"
         mu4e-trash-folder  "/icloud/Junk")
 
-  ;; Send mail via msmtp asynchronously — never blocks the main thread.
+  ;; Send mail via msmtp asynchronously - never blocks the main thread.
   ;; message-send-mail-with-sendmail uses call-process-region (synchronous).
   ;; We replace it with start-process + process-send-region (non-blocking).
   (defun salih/send-mail-with-msmtp ()
@@ -34,10 +34,10 @@
        (lambda (p event)
          (cond
           ((string-match-p "finished" event)
-           (message "✓ Mail to %s delivered." to)
+           (message "Mail to %s delivered." to)
            (kill-buffer (process-buffer p)))
           (t
-           (message "✗ Mail to %s failed — see buffer %s"
+           (message "Mail to %s failed - see buffer %s"
                     to (buffer-name (process-buffer p)))
            (display-buffer (process-buffer p))))))
       (process-send-region proc (point-min) (point-max))
@@ -84,7 +84,7 @@
   ;; Disable visual line in headers
   (add-hook! 'mu4e-headers-mode-hook (visual-line-mode -1)))
 
-;;; --- Mu4e-alert (lazy) ---
+;;; Mu4e-alert (lazy)
 (after! mu4e-alert
   (setq mu4e-alert-interesting-mail-query
         (concat "flag:unread"

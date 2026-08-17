@@ -23,7 +23,7 @@
   :defer t
   :commands (agent-shell agent-shell-anthropic-start-claude-code)
   :init
-  ;; SPC o c → start a Claude Code session in the current project.
+  ;; SPC o c -> start a Claude Code session in the current project.
   (map! :leader
         (:prefix ("o" . "open")
          :desc "Claude Code (agent-shell)" "c"
@@ -33,7 +33,7 @@
   ;; the `claude' CLI), not a separate ANTHROPIC_API_KEY.
   (setq agent-shell-anthropic-authentication
         (agent-shell-anthropic-make-authentication :login t))
-  ;; Launch the ACP bridge by absolute path — belt-and-suspenders alongside the
+  ;; Launch the ACP bridge by absolute path - belt-and-suspenders alongside the
   ;; exec-path fix above, in case exec-path is ever reset.
   (setq agent-shell-anthropic-claude-acp-command
         '("/opt/homebrew/bin/claude-agent-acp")))

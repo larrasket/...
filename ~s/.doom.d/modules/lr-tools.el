@@ -1,6 +1,6 @@
 ;;; lr-tools.el --- Translate, browse, hugo, pic-log, prayer -*- lexical-binding: t; -*-
 
-;;; --- Translation ---
+;;; Translation
 (after! gt
   (setq gt-langs '("en" "ar")
         gt-default-translator
@@ -9,7 +9,7 @@
          :engines (list (gt-google-engine))
          :render  (gt-buffer-render))))
 
-;;; --- Browse / EWW ---
+;;; Browse / EWW
 (defun salih/open-url-in-chrome-cross-platform (url &optional _new-window)
   "Open URL in system browser."
   (pcase system-type
@@ -19,7 +19,7 @@
 
 (advice-remove '+lookup/documentation #'salih/ensure-eww-in-search)
 
-;;; --- Prayer times (lazy) ---
+;;; Prayer times (lazy)
 (after! awqat
   (setq calendar-latitude  29.392691
         calendar-longitude 30.828360
@@ -33,10 +33,10 @@
               (awqat-notification-mode 1)
               (awqat-display-prayer-time-mode))))
 
-;;; --- Magit ---
+;;; Magit
 (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
 
-;;; --- YAML env to dotenv ---
+;;; YAML env to dotenv
 (defun yaml-env-to-dotenv ()
   "Convert Helm-style YAML env entries into a .env file."
   (interactive)
@@ -72,7 +72,7 @@
           (insert (string-join (nreverse env-vars) "\n") "\n"))
         (message "Wrote %d env vars to %s" (length env-vars) file)))))
 
-;;; --- Hugo diary / microblog ---
+;;; Hugo diary / microblog
 (defvar salih/hugo-root (expand-file-name salih/hugo-directory))
 
 (defun salih/add-diary-entry-to-hugo ()
@@ -116,7 +116,7 @@
                       (format-time-string "%a") (format-time-string "%H:%M"))))
     (goto-char (point-max))))
 
-;;; --- Transfer between microblog and diary ---
+;;; Transfer between microblog and diary
 ;; Mirror of scripts/check_post_lengths.py, but entry-at-point in Emacs.
 ;; Golden rule: preserve the relevant :ID: so internal [[id:...]] links survive.
 
@@ -192,7 +192,7 @@
                               org-id org-id)))
             (insert body "\n")
             (save-buffer))
-          (message "Appended to existing diary %s — file URL changed; check [[id:%s]] links"
+          (message "Appended to existing diary %s - file URL changed; check [[id:%s]] links"
                    (file-name-nondirectory target) org-id))
       (with-temp-file target
         (when org-id
@@ -241,7 +241,7 @@
       (save-excursion (org-back-to-heading t) (org-cut-subtree))
       (save-buffer)
       (when (save-excursion (goto-char (point-min)) (not (re-search-forward "^\\* " nil t)))
-        (message "Diary %s now has no sections — clean up if needed"
+        (message "Diary %s now has no sections - clean up if needed"
                  (file-name-nondirectory file)))
       (find-file target)
       (message "Created microblog %s" (file-name-nondirectory target)))))
@@ -260,7 +260,7 @@ The relevant :ID: is preserved so internal [[id:...]] links keep resolving."
      ((string-match-p "/content/diary/" file)     (salih/--diary-heading-to-microblog))
      (t (user-error "Not in a microblog file or a diary heading")))))
 
-;;; --- Pic-log / film / music / exhibit ---
+;;; Pic-log / film / music / exhibit
 (defun salih/--generate-org-id ()
   (format "%s0" (downcase (substring (md5 (format "%s%s" (current-time) (random))) 0 8))))
 
@@ -359,7 +359,7 @@ The relevant :ID: is preserved so internal [[id:...]] links keep resolving."
         (message "Saved exhibit image: %s" img-name)
       (error "Failed to paste image"))))
 
-;;; --- Artist favor scores ---
+;;; Artist favor scores
 (defun salih/calculate-artist-favor-scores (org-file)
   "Calculate favor scores for artists in ORG-FILE."
   (require 'org)

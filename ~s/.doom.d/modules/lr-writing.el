@@ -1,7 +1,7 @@
 ;;; lr-writing.el --- Grammar checking via LanguageTool / ltex-ls -*- lexical-binding: t; -*-
 ;;
 ;; ltex-ls (Language Tool Extended) is a grammar checker that speaks LSP.
-;; It is NOT the LaTeX language server — the name is misleading.
+;; It is NOT the LaTeX language server - the name is misleading.
 ;; We use the Homebrew-installed ltex-ls (/opt/homebrew/bin/ltex-ls).
 ;;
 ;; The server is "registered" by symlinking:
@@ -10,7 +10,7 @@
 ;; plus a dummy ltex-ls-16.0.0.tar.gz so lsp-ltex detects version "16.0.0"
 ;; without hitting GitHub's API (github-tags package).
 
-;;; --- Tell lsp-ltex where the server lives (before it loads) ---
+;;; Tell lsp-ltex where the server lives (before it loads)
 ;; These must be set before lsp-ltex.el is loaded so that defcustoms pick
 ;; up the right values at evaluation time.
 (setq lsp-ltex-server-store-path
@@ -25,7 +25,7 @@
 ;; Auto-start is prevented by NOT adding salih/ltex-enable to org-mode-hook.
 (setq lsp-ltex-active-modes nil)
 
-;;; --- lsp-ltex settings ---
+;;; lsp-ltex settings
 (after! lsp-ltex
   (setq lsp-ltex-language "en-US"
         lsp-ltex-completion-enabled nil         ; ltex-ls doesn't do completion
@@ -36,7 +36,7 @@
                   "COMMA_PARENTHESIS_WHITESPACE"])
         lsp-ltex-sentence-start-with-uppercase t))
 
-;;; --- Enable in writing modes ---
+;;; Enable in writing modes
 ;; ltex-ls via lsp-mode conflicts with org-roam completion in org-mode buffers.
 ;; Auto-enable only in message-mode (emails) and markdown where there's no
 ;; competing completion system.  In org-mode, use `salih/ltex-toggle' manually.
@@ -53,13 +53,13 @@
     (salih/ltex-enable)
     (message "ltex-ls enabled")))
 
-;; Auto-enable for emails and markdown — no competing completion systems
+;; Auto-enable for emails and markdown - no competing completion systems
 (add-hook 'message-mode-hook  #'salih/ltex-enable)
 (add-hook 'markdown-mode-hook #'salih/ltex-enable)
 ;; NOT org-mode: conflicts with org-roam completion.
 ;; Use SPC m G to toggle manually in specific org buffers.
 
-;;; --- Add word to personal dictionary ---
+;;; Add word to personal dictionary
 (defun salih/ltex-add-word ()
   "Add word at point to lsp-ltex personal dictionary."
   (interactive)
@@ -68,9 +68,9 @@
     ;; Fallback: use lsp execute code action
     (lsp-execute-code-action-by-kind "quickfix")))
 
-;;; --- Keybindings ---
+;;; Keybindings
 (map! :leader
-      "t G" #'salih/ltex-toggle)  ; SPC t G — toggle grammar in any buffer
+      "t G" #'salih/ltex-toggle)  ; SPC t G - toggle grammar in any buffer
 
 (map! :after lsp-ltex
       :localleader

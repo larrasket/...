@@ -7,16 +7,16 @@
 
 (require 'org-roam)
 
-;;; ---------------------------------------------------------------------------
+;;;
 ;;; Configuration
-;;; ---------------------------------------------------------------------------
+;;;
 
 (defvar salih/roam-lint-script (expand-file-name "roam-lint" org-roam-directory)
   "Path to the roam-lint Python script.")
 
-;;; ---------------------------------------------------------------------------
+;;;
 ;;; Core: run roam-lint on a file
-;;; ---------------------------------------------------------------------------
+;;;
 
 (defun salih/roam-lint-buffer ()
   "Run roam-lint on the current buffer and display warnings."
@@ -41,12 +41,12 @@
                           warnings)))
         (if (and (= (length warnings) 1)
                  (string= (cdr (assq 'level (aref warnings 0))) "ok"))
-            (message "roam-lint: ✓ Note looks healthy")
+            (message "roam-lint: Note looks healthy")
           (message "roam-lint: %s" (string-join msgs " | ")))))))
 
-;;; ---------------------------------------------------------------------------
+;;;
 ;;; After-save: warn about unlinked notes
-;;; ---------------------------------------------------------------------------
+;;;
 
 (defun salih/roam-lint--check-links-on-save ()
   "After saving an org-roam file, warn if it has 0 outgoing links."
@@ -57,16 +57,16 @@
     (save-excursion
       (goto-char (point-min))
       (unless (re-search-forward "\\[\\[id:" nil t)
-        (message "roam-lint: ⚠ This note has no outgoing links. Consider connecting it.")))))
+        (message "roam-lint: This note has no outgoing links. Consider connecting it.")))))
 
 (add-hook 'after-save-hook #'salih/roam-lint--check-links-on-save)
 
-;;; ---------------------------------------------------------------------------
+;;;
 ;;; Interactive: browse stubs
-;;; ---------------------------------------------------------------------------
+;;;
 
 (defun salih/roam-find-stubs ()
-  "Browse stub notes (< 100 words) — these need your thinking."
+  "Browse stub notes (< 100 words) - these need your thinking."
   (interactive)
   (let* ((output (shell-command-to-string
                   (format "%s --stubs --json"
@@ -82,7 +82,7 @@
                             (path (cdr (assq 'path item)))
                             (bl (cdr (assq 'backlinks item)))
                             (wc (cdr (assq 'word_count item))))
-                        (cons (format "%s  (%d←, %dw)  %s" title bl wc path)
+                        (cons (format "%s  (%d<-, %dw)  %s" title bl wc path)
                               (expand-file-name path org-roam-directory))))
                     items))
            (choice (completing-read
@@ -91,12 +91,12 @@
       (when choice
         (find-file (cdr (assoc choice candidates)))))))
 
-;;; ---------------------------------------------------------------------------
+;;;
 ;;; Interactive: browse dead-end hubs
-;;; ---------------------------------------------------------------------------
+;;;
 
 (defun salih/roam-dead-ends ()
-  "Browse dead-end hubs — notes with many backlinks but 0 outgoing."
+  "Browse dead-end hubs - notes with many backlinks but 0 outgoing."
   (interactive)
   (let* ((output (shell-command-to-string
                   (format "%s --dead-ends --json"
@@ -107,25 +107,25 @@
     (unless items
       (user-error "Could not parse roam-lint output"))
     (if (= (length items) 0)
-        (message "No dead-end hubs found — nice!")
+        (message "No dead-end hubs found - nice!")
       (let* ((candidates
               (mapcar (lambda (item)
                         (let ((title (cdr (assq 'title item)))
                               (path (cdr (assq 'path item)))
                               (bl (cdr (assq 'backlinks item))))
-                          (cons (format "%s  (%d backlinks → nowhere)  %s" title bl path)
+                          (cons (format "%s  (%d backlinks -> nowhere)  %s" title bl path)
                                 (expand-file-name path org-roam-directory))))
                       items))
              (choice (completing-read "Dead-end hubs: " candidates nil t)))
         (when choice
           (find-file (cdr (assoc choice candidates))))))))
 
-;;; ---------------------------------------------------------------------------
+;;;
 ;;; Interactive: browse orphans
-;;; ---------------------------------------------------------------------------
+;;;
 
 (defun salih/roam-find-orphans ()
-  "Browse true orphan notes — completely disconnected from the graph."
+  "Browse true orphan notes - completely disconnected from the graph."
   (interactive)
   (let* ((output (shell-command-to-string
                   (format "%s --orphans --json"
@@ -149,9 +149,9 @@
       (when choice
         (find-file (cdr (assoc choice candidates)))))))
 
-;;; ---------------------------------------------------------------------------
+;;;
 ;;; Link suggestion: find notes that might be relevant to current buffer
-;;; ---------------------------------------------------------------------------
+;;;
 
 (defun salih/roam-suggest-links ()
   "Suggest org-roam notes that might be relevant to the current buffer.
@@ -224,9 +224,9 @@ in the org-roam database."
                             (nth 2 (seq-find (lambda (e) (string= (nth 1 e) chosen-id))
                                              sorted))))))))))
 
-;;; ---------------------------------------------------------------------------
+;;;
 ;;; Full report in a buffer
-;;; ---------------------------------------------------------------------------
+;;;
 
 (defun salih/roam-lint-report ()
   "Run full roam-lint and display report in a buffer."
@@ -242,13 +242,13 @@ in the org-roam database."
       (goto-char (point-min)))
     (display-buffer buf)))
 
-;;; ---------------------------------------------------------------------------
+;;;
 ;;; Updated capture templates
-;;; ---------------------------------------------------------------------------
+;;;
 
 (after! org-roam
   (setq org-roam-capture-templates
-        '(;; Zettel: an atomic thought — the core unit
+        '(;; Zettel: an atomic thought - the core unit
           ("z" "zettel" plain "%?"
            :if-new (file+head "main/${slug}.org"
                               "#+title: ${title}\n")
@@ -264,7 +264,7 @@ in the org-roam database."
 
           ;; Structure note: a map of content
           ("s" "structure note" plain
-           "#+begin_comment\nThis is a structure note — a map, not content.\nList links to zettel with brief annotations.\n#+end_comment\n\n%?"
+           "#+begin_comment\nThis is a structure note - a map, not content.\nList links to zettel with brief annotations.\n#+end_comment\n\n%?"
            :if-new (file+head "main/${slug}.org"
                               "#+title: ${title}\n")
            :immediate-finish t :unnarrowed t)
@@ -286,9 +286,9 @@ in the org-roam database."
            :target (file+head "references/${citekey}.org"
                               "#+title: ${title}\n")))))
 
-;;; ---------------------------------------------------------------------------
-;;; Broken link finder — pure DB, no file scanning
-;;; ---------------------------------------------------------------------------
+;;;
+;;; Broken link finder - pure DB, no file scanning
+;;;
 
 (defvar-local salih/broken-links-scope 'buffer
   "Scope used for the current broken-links scan.")
@@ -362,7 +362,7 @@ in the org-roam database."
 
 (defun salih/roam-find-broken-links (&optional scope)
   "Find all [[id:X]] links whose target node no longer exists.
-Queries the org-roam DB directly — instant, no file scanning.
+Queries the org-roam DB directly - instant, no file scanning.
 SCOPE: 'buffer (default) or 'directory (all files)."
   (interactive
    (list (intern (completing-read "Scope: " '("buffer" "directory")
@@ -414,9 +414,9 @@ SCOPE: 'buffer (default) or 'directory (all files)."
       (message "%d broken link(s). RET/o=preview  n/p=navigate  g=refresh  q=quit"
                (length broken)))))
 
-;;; ---------------------------------------------------------------------------
+;;;
 ;;; Keybindings (under SPC n r prefix, alongside org-roam defaults)
-;;; ---------------------------------------------------------------------------
+;;;
 
 (map! :leader
       (:prefix ("n" . "notes")

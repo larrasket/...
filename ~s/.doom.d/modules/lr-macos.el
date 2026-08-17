@@ -14,13 +14,13 @@
         ls-lisp-use-insert-directory-program nil
         epg-pinentry-mode      'loopback)
 
-  ;; ── Native chrome ────────────────────────────────────────────────────────
-  ;;   ns-appearance dark        → dark traffic-light buttons / controls
-  ;;   ns-transparent-titlebar t → titlebar follows the frame material
-  ;;   undecorated-round-corners → preserve macOS native window rounding
-  ;;   internal-border-width 12  → padding so text doesn't kiss the edge
-  ;;   drag-internal-border t    → drag from anywhere in the padding
-  ;;   tool-bar-lines 0          → no Emacs tool bar
+  ;; -- Native chrome
+  ;;   ns-appearance dark        -> dark traffic-light buttons / controls
+  ;;   ns-transparent-titlebar t -> titlebar follows the frame material
+  ;;   undecorated-round-corners -> preserve macOS native window rounding
+  ;;   internal-border-width 12  -> padding so text doesn't kiss the edge
+  ;;   drag-internal-border t    -> drag from anywhere in the padding
+  ;;   tool-bar-lines 0          -> no Emacs tool bar
   (defvar salih/ns-transparent-titlebar t
     "Non-nil makes the macOS titlebar transparent.")
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
@@ -29,7 +29,7 @@
   (add-to-list 'default-frame-alist '(undecorated-round-corners . t))
   (add-to-list 'default-frame-alist '(tool-bar-lines . 0))
 
-  ;; ── Liquid glass: NSGlassEffectView + theme-owned tint ───────────────────
+  ;; -- Liquid glass: NSGlassEffectView + theme-owned tint
   ;; Provided by a local emacs-plus@31 patch layered after the community
   ;; `frame-transparency' patch.  Native builds expose the same material shape
   ;; Ghostty uses: regular/clear NSGlassEffectView, tint opacity 0.01, and a
@@ -243,7 +243,7 @@ Nil lets Emacs choose light/dark defaults.")
   ;; `set-face-attribute' only patches the LIVE frame; the cyclic spec stays
   ;; in theme storage and re-applies on every new frame.  `face-spec-set' with
   ;; `face-override-spec' wins against `theme-face' for all current AND
-  ;; future frames — that's what corfu needs.
+  ;; future frames - that's what corfu needs.
   (defun salih/--break-gnus-face-cycle (&rest _)
     (dolist (face '(gnus-group-news-low-empty gnus-group-news-low))
       (when (facep face)

@@ -1,6 +1,6 @@
 ;;; lr-completion.el --- Corfu, Vertico, Consult -*- lexical-binding: t; -*-
 
-;;; --- Corfu ---
+;;; Corfu
 (after! corfu
   (setf (alist-get 'border-width          corfu--frame-parameters) 3
         (alist-get 'internal-border-width  corfu--frame-parameters) 2
@@ -13,11 +13,11 @@
         corfu-min-width            30
         corfu-max-width            80))
 
-;;; --- Consult ---
+;;; Consult
 (after! consult
   (setq consult-preview-excluded-buffers t))
 
-;;; --- Consult-org-roam: "r" in consult-buffer shows all roam nodes ---
+;;; Consult-org-roam: "r" in consult-buffer shows all roam nodes
 ;; Defined at startup; :items guard means it silently returns nothing
 ;; until org-roam is loaded (on first org file open).
 (defvar salih/consult-org-roam-node-source
@@ -41,7 +41,7 @@
 (after! consult
   (add-to-list 'consult-buffer-sources 'salih/consult-org-roam-node-source 'append))
 
-;;; --- Vertico multiform ---
+;;; Vertico multiform
 (after! vertico-multiform
   (add-to-list 'vertico-multiform-categories
                '(jinx (vertico-grid-annotate . 25)))
