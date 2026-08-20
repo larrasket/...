@@ -119,7 +119,7 @@ so mentions, hashtags and links stay visually distinct.  Interactive props
                (buffer-string))))
       (remove-text-properties 0 (length s)
                               '(keymap nil local-map nil mouse-face nil help-echo nil
-                                       follow-link nil shr-tab-stop nil)
+                                follow-link nil shr-tab-stop nil)
                               s)
       (string-trim s))))
 
@@ -782,7 +782,7 @@ Enters the mode only once so the sort mode survives refreshes."
          (content    (salih/fedi--item-content item))
          (target     (alist-get 'target item))
          (target-txt (and target (salih/fedi--html-to-text
-                                   (or (alist-get 'contentHtml target) ""))))
+                                  (or (alist-get 'contentHtml target) ""))))
          (source-url (alist-get 'url item))
          (target-url (and target (alist-get 'url target)))
          (author-url (salih/fedi--item-actor item))
@@ -943,12 +943,6 @@ cancels."
   (message "Fediverse post cancelled."))
 
 ;;; Keybindings
-
-(map! :leader
-      :desc "Fedi timeline" "o m" #'salih/fedi-timeline
-      :desc "Fedi notifications" "o n" #'salih/fedi-notifications
-      :desc "Fedi post (fedi-only)" "o p" #'salih/fedi-post
-      :desc "Fedi follow account" "o f" #'salih/fedi-follow)
 
 ;; Evil-state bindings so single-key actions win over evil's normal/motion maps.
 (map! :map salih/fedi-timeline-mode-map

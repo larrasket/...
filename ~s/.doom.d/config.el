@@ -184,8 +184,8 @@
   (require 'lr-org-noter)
   (require 'lr-academic))
 
-(with-eval-after-load 'mu4e
-  (require 'lr-email))
+;; (with-eval-after-load 'mu4e
+;;   (require 'lr-email))
 
 (with-eval-after-load 'circe
   (require 'lr-irc))

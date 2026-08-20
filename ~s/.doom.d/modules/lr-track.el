@@ -717,7 +717,8 @@ LEFT (away: now minus system idle; slept: now minus gap), never at now.  Notifie
     (when at
       (let ((res (lr-track--autoout at (if (eq state 'slept) 'auto_slept 'auto_idle))))
         (when (and res (memq (plist-get res :action) '(clock-out cancel)))
-          (setq lr-track--last-close (list :task task :marker marker :at (plist-get res :at))))
+          (setq lr-track--last-close (list :task task :marker marker :at (plist-get res :at))
+                lr-track--checkin-since (plist-get res :at)))   ; the gap starts where the clock ended
         (when res
           (lr-track-notify
            2 'clock
@@ -735,8 +736,13 @@ after you stay away, closing at when you left."
   (when (lr-track--clocking-p)
     (pcase lr-track--stable-state
       ('slept
-       (when lr-track-auto-clock-out (lr-track--close-running-clock 'slept))
-       (lr-track--incident-close 'away))
+       (if lr-track-auto-clock-out
+           (progn (lr-track--close-running-clock 'slept)   ; records the gap in `lr-track--last-close'
+                  (lr-track--incident-close 'away))
+         ;; keeping the clock running: remember when sleep began, so the return
+         ;; check-in can attribute the whole gap to this same task or split it out
+         (let ((g (plist-get lr-track--tick-attention :gap)))
+           (when (numberp g) (setq lr-track--away-pending (- (float-time) g))))))
       ('away
        (let* ((inc (lr-track--incident-open 'away))
               (age (- (float-time) (plist-get (cdr inc) :since)))
@@ -789,17 +795,22 @@ re-arms so you get at most one check-in per `lr-track-elsewhere-checkin-seconds'
     (lr-track--incident-close 'elsewhere)))
 
 (defun lr-track--maybe-prompt-on-return ()
-  "Tick-side backup to the focus trigger: if an away stretch is pending and you're
-present in Emacs again, run the check-in."
-  (when (and lr-track-checkin-on-return lr-track--away-pending
-             (memq lr-track--stable-state '(engaged reading)))
-    (setq lr-track--checkin-since lr-track--away-pending)   ; remember when you left
+  "Tick-side backup to the focus trigger: when you are present in Emacs again and
+there is an unaccounted stretch (an away/slept pending, or a clock the coach just
+auto-closed), run the return check-in so no minute is lost."
+  (when (and lr-track-checkin-on-return
+             (memq lr-track--stable-state '(engaged reading))
+             (or lr-track--away-pending lr-track--last-close))
+    (when lr-track--away-pending
+      (setq lr-track--checkin-since lr-track--away-pending))   ; remember when you left
     (lr-track--trigger-checkin 'return)))
 
 (defun lr-track--nudge-check ()
   "Run detectors, each contained.  Snooze pauses everything; no clock clears all."
   (cond
-   ((not (lr-track--clocking-p)) (setq lr-track--incidents nil lr-track--away-pending nil))
+   ((not (lr-track--clocking-p))
+    (setq lr-track--incidents nil lr-track--away-pending nil)
+    (lr-track--maybe-prompt-on-return))   ; a clock the coach just auto-closed still owes a check-in
    ((lr-track--snoozed-p) nil)          ; you asked for quiet, no nudges, no auto-close
    (t
     (dolist (fn '(lr-track--check-away lr-track--check-ceiling lr-track--check-elsewhere))
@@ -819,15 +830,6 @@ command in flight."
     (run-with-idle-timer
      1.0 nil (lambda () (when (lr-track--safe-to-prompt-p)
                           (ignore-errors (lr-track-checkin context)))))))
-
-(defun lr-track--resume-task (lc)
-  "Clock back in on the task recorded in LC (a `lr-track--last-close' plist)."
-  (require 'org-clock)
-  (let ((m (plist-get lc :marker)))
-    (if (and m (markerp m) (marker-buffer m))
-        (progn (org-with-point-at m (org-clock-in))
-               (message "Clocked back into %S." (plist-get lc :task)))
-      (message "lr-track: can't resume, that task is no longer open."))))
 
 (defcustom lr-track-task-cache-ttl 60.0
   "Seconds the check-in memoizes the agenda task list, so repeated prompts are instant."
@@ -960,6 +962,16 @@ same search interface the check-in uses."
       (let ((s (lr-track-system-idle-seconds)))
         (if (numberp s) (- (float-time) s) (- (float-time) (lr-track-emacs-idle-seconds))))))
 
+(defun lr-track--gap-start ()
+  "Authoritative start of the currently-unaccounted stretch.  Prefer the moment the
+coach last auto-closed a clock (survives laptop sleep, where the idle counters
+reset to ~0 on wake and would otherwise report no gap at all); else fall back to
+when you left."
+  (or (and lr-track--last-close
+           (numberp (plist-get lr-track--last-close :at))
+           (plist-get lr-track--last-close :at))
+      (lr-track--left-since)))
+
 (defun lr-track--clock-task-from (task since)
   "Clock into TASK (LABEL . MARKER) as if it had started at SINCE (float) -
 i.e. a running clock backdated to when you actually started.  A :asleep/:away
@@ -1041,32 +1053,31 @@ closed (SINCE to now).  Returns t when it left a running clock."
     (lr-track--log-task-interval activity since (float-time))
     nil))
 
-(defun lr-track--checkin-clocked (context)
-  "Check-in flow while a clock is running."
+(defun lr-track--checkin-clocked (_context)
+  "You are back with a clock running.  Account for the time you were away: it was
+this task, or something else.  Every minute is attributed, none dropped.  The
+split is the moment you left, so the task and the next activity never overlap."
   (let* ((task (or (lr-track--clock-task) "your task"))
-         (mins (let ((e (lr-track--clock-elapsed))) (and e (round (/ e 60.0)))))
+         (gap-start (lr-track--left-since))
+         (gap-min (max 0 (round (/ (- (float-time) gap-start) 60.0))))
          (choice (car (read-multiple-choice
-                       (format "%sStill working on \"%s\"%s? "
-                               (if (memq context '(return startup)) "Welcome back, " "")
-                               task (if mins (format " (%dm)" mins) ""))
-                       '((?y "yes" "keep clocking it")
-                         (?s "switch" "I was doing something else, clock THAT from when I left")
-                         (?o "clock-out" "clock out at when you last used the machine")
-                         (?z "snooze" "silence the coach a while")
-                         (?d "dismiss" "not now"))))))
+                       (format "The last %dm (since %s): still \"%s\"? "
+                               gap-min (lr-track--ts-hm gap-start) task)
+                       '((?y "yes, this task" "keep those minutes on this task, stay clocked in")
+                         (?e "something else" "end this task here, then say what you were doing")
+                         (?o "this task, and stop" "keep those minutes on it, then clock out now")
+                         (?z "ask later" "remind me in a bit"))))))
+    (setq lr-track--away-pending nil lr-track--checkin-since nil)
     (pcase choice
       (?y (let ((inc (or (lr-track--incident 'away) (lr-track--incident-open 'away))))
             (setf (plist-get (cdr inc) :keep) t))
-          (message "Still on %s" task))
-      (?s (let ((since (lr-track--left-since)))
-            (lr-track--clock-out-at-left)
-            (let ((activity (lr-track--pick-task "You are now doing (recent or new): ")))
-              (when activity (lr-track--stay-or-log activity since)))))
-      (?o (lr-track--clock-out-at-left) (message "Clocked out of %s." task))
+          (message "Kept %dm on %s." gap-min task))
+      (?e (lr-track--autoout gap-start 'manual)     ; end this task the moment you left
+          (lr-track--backfill gap-start gap-min))    ; account every minute since then
+      (?o (require 'org-clock) (org-clock-out) (message "Clocked out of %s." task))
       (?z (setq lr-track--snooze-until (+ (float-time) lr-track-snooze-seconds))
-          (message "Snoozed %d min." (round (/ lr-track-snooze-seconds 60.0))))
-      (_ nil))
-    (setq lr-track--away-pending nil lr-track--checkin-since nil)))
+          (message "Will ask again in %d min." (round (/ lr-track-snooze-seconds 60.0))))
+      (_ nil))))
 
 (defun lr-track--read-minutes (prompt default-mins)
   "Read a minute count; empty input returns DEFAULT-MINS; clamped to [1, DEFAULT]."
@@ -1080,7 +1091,6 @@ you were doing, oldest first.  For each, say whether you are still doing it now:
 if so it is clocked (a running clock, backdated to when it started) and you are
 done; if not, give how long, it is logged closed, and you continue with the rest
 of the gap.  Type a new name at any prompt to create (and log to) a fresh TODO."
-  (message "Welcome back, gone %dm (since %s)." total-mins (lr-track--ts-hm since))
   (let ((cursor since) (remaining total-mins))
     (catch 'done
       (while (> remaining 0)
@@ -1099,24 +1109,35 @@ of the gap.  Type a new name at any prompt to create (and log to) a fresh TODO."
               (setq cursor end remaining (- remaining dur)))))))))
 
 (defun lr-track--checkin-idle (context)
-  "Check-in flow when no clock is running.  On a real return, offer to account for
-where you've been and for how long (retroactive clock-in); else just clock in."
-  (let* ((since (lr-track--left-since))
+  "Check-in flow when no clock is running.  If the coach just auto-closed a clock
+\(away/slept), the stretch since then is UNACCOUNTED: ask where you were and put
+every minute somewhere (the same task across the gap, a split, or explicitly off
+the clock), never dropping it.  Otherwise, on a real return offer a retroactive
+backfill; failing that, just clock in."
+  (let* ((since (lr-track--gap-start))
          (mins (max 0 (round (/ (- (float-time) since) 60.0)))))
     (setq lr-track--away-pending nil lr-track--checkin-since nil)
     (cond
-     (lr-track--last-close
-      (pcase (car (read-multiple-choice
-                   (format "%sNo clock (last was \"%s\"). "
-                           (if (memq context '(return startup)) "Welcome back, " "")
-                           (plist-get lr-track--last-close :task))
-                   '((?r "resume" "resume that task") (?n "something-else" "log what you were doing")
-                     (?d "dismiss" "not now"))))
-        (?r (lr-track--resume-task lr-track--last-close) (setq lr-track--last-close nil))
-        (?n (setq lr-track--last-close nil)
-            (if (and (>= mins 1) (<= (- (float-time) since) lr-track-max-clock-seconds))
-                (lr-track--backfill since mins) (lr-track--pick-and-clock)))
-        (_ nil)))
+     ;; a clock the coach auto-closed leaves a real gap we must account for
+     ((and lr-track--last-close (>= mins 1))
+      (let ((task (plist-get lr-track--last-close :task))
+            (marker (plist-get lr-track--last-close :marker)))
+        (setq lr-track--last-close nil)
+        (pcase (car (read-multiple-choice
+                     (format "The last %dm (since %s) had no clock (was \"%s\"). "
+                             mins (lr-track--ts-hm since) task)
+                     '((?s "same task" "you kept doing that task across the gap; clock it")
+                       (?e "something else" "say what you were doing, oldest first")
+                       (?o "off the clock" "genuine downtime, leave it unaccounted")
+                       (?d "ask later" "dismiss for now"))))
+          (?s (if (and (markerp marker) (marker-buffer marker))
+                  (lr-track--clock-task-from (cons task marker) since)
+                (lr-track--backfill since mins)))
+          (?e (lr-track--backfill since mins))
+          (?o (message "Left %dm (since %s) off the clock." mins (lr-track--ts-hm since)))
+          (_ nil))))
+     ;; stale pointer with no real gap: nothing to account, just clock in
+     (lr-track--last-close (setq lr-track--last-close nil) (lr-track--pick-and-clock))
      ((and (memq context '(return startup)) (>= mins 1)
            (<= (- (float-time) since) lr-track-backfill-max-seconds))
       (lr-track--backfill since mins))

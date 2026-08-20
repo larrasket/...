@@ -37,8 +37,8 @@ instantly, an entry of the form
   [inactive timestamp]
 
 as the first child of the `Inbox' headline in `+org-capture-todo-file',
-matching the entries already there.  No capture window is shown; focus stays
-in Elfeed.
+matching the entries already there.  A YouTube URL is filed under :@watch:
+instead of :@check:.  No capture window is shown; focus stays in Elfeed.
 
 The link is inserted as literal buffer text (not through an `org-capture'
 template) on purpose: URL-encoded bytes like %D8 and %A7, or a literal
@@ -48,7 +48,10 @@ template) on purpose: URL-encoded bytes like %D8 and %A7, or a literal
   (let ((entry (salih/elfeed--current-entry)))
     (unless entry (user-error "No Elfeed entry at point"))
     (let* ((url   (elfeed-entry-link entry))
-           (title (or (elfeed-entry-title entry) url)))
+           (title (or (elfeed-entry-title entry) url))
+           (tag   (if (and url (string-match-p
+                                "\\(?://\\|\\.\\)\\(?:youtube\\.com\\|youtu\\.be\\)/" url))
+                      "@watch" "@check")))
       (unless url (user-error "Entry has no URL"))
       (let ((buf (find-file-noselect (expand-file-name +org-capture-todo-file))))
         (with-current-buffer buf
@@ -63,7 +66,7 @@ template) on purpose: URL-encoded bytes like %D8 and %A7, or a literal
              (when (looking-at-p "^[ \t]*:PROPERTIES:")
                (re-search-forward "^[ \t]*:END:[ \t]*$" nil t)
                (forward-line 1))
-             (insert stars " TODO " (org-link-make-string url title) " :@check:\n"
+             (insert stars " TODO " (org-link-make-string url title) " :" tag ":\n"
                      (format-time-string "[%Y-%m-%d %a %H:%M]") "\n")))
           (save-buffer))
         ;; Mark the filed entry as read in Elfeed too, and redraw its line so
@@ -72,7 +75,7 @@ template) on purpose: URL-encoded bytes like %D8 and %A7, or a literal
           (elfeed-untag entry 'unread)
           (when (derived-mode-p 'elfeed-search-mode)
             (elfeed-search-update-entry entry)))
-        (message "Filed as @check (read): %s" title)))))
+        (message "Filed as %s (read): %s" tag title)))))
 
 ;;; Search ordering: cluster entries into stable, contiguous groups
 ;;

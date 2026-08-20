@@ -62,8 +62,8 @@
        web
        yaml
 
-       :email
-       (mu4e +mbsync)
+       ;; :email
+       ;; (mu4e +mbsync)
 
        :app
        irc
