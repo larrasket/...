@@ -54,6 +54,13 @@
 (declare-function org-clock-cancel "org-clock" ())
 (declare-function org-log-beginning "org" (&optional create))
 (declare-function org-back-to-heading "org" (&optional invisible-ok))
+;; used by the live clock line (`lr-track--advance-clock-line')
+(declare-function org-clock-update-time-maybe "org-clock" ())
+(declare-function org-end-of-subtree "org" (&optional invisible-ok to-heading))
+(declare-function org-entry-end-position "org" ())
+(declare-function org-time-string-to-seconds "org" (s))
+(declare-function org-time-string-to-time "org" (s))
+(defvar org-clock-hd-marker)
 (defvar org-clock-start-time)
 (defvar org-clock-current-task)
 (defvar org-clock-out-remove-zero-time-clocks)
@@ -110,7 +117,31 @@ CLOCK line.  This floor makes that unreachable."
 Default nil: the clock is closed ONLY by you (explicitly, or via the check-in when
 you say where you were).  The coach still NOTIFIES about away/slept/4h and the
 check-in still asks on return, but it NEVER touches the CLOCK line on its own.
-Set this non-nil to opt back into automatic clock surgery."
+Set this non-nil to opt back into automatic clock surgery.
+
+You almost certainly want `lr-track-live-clock-line' instead: it removes the
+REASON for clock surgery rather than automating it."
+  :type 'boolean)
+
+(defcustom lr-track-live-clock-line t
+  "Keep the running clock's CLOCK line CLOSED at all times.
+
+org writes `CLOCK: [start]' and leaves it open until something closes it.
+Forget once -- or lose the session -- and that line is a claim with no end.
+That is how 299 intervals here came to hold 48.9% of all clocked hours.
+
+With this on, the tick advances the line's TRAILING stamp while you are actually
+working, so it always reads `CLOCK: [start]--[last-active] =>  H:MM'.  Stop
+working and it just stops growing, at the last moment you were really there.
+
+The point is what it does NOT do.  It never closes the clock, never rewrites a
+stamp backwards, never asks you anything, and never saves the buffer.  There is
+simply no dangling line left to forget, so no surgery is needed to fix one --
+which is why this is the answer to \"shit should be explicit\" rather than a
+violation of it.  You still clock out yourself, and an explicit clock-out
+extends the line to the real end time (verified against org, not assumed).
+
+nil restores plain org behaviour."
   :type 'boolean)
 
 (defcustom lr-track-away-nudge-seconds 0.0
@@ -268,7 +299,11 @@ collapse every classification to unknown.")
 (defvar lr-track--modeline-cache "" "O(1) modeline string, written only by the modeline phase.")
 (defvar lr-track--phase-failures nil "Alist (PHASE . consecutive-failures).")
 
-(defconst lr-track--phases '(sense heartbeat activity nudge modeline) "Ordered tick phases; order is behavioral.")
+(defconst lr-track--phases '(sense live-clock heartbeat activity nudge modeline)
+  "Ordered tick phases; order is behavioral.
+`live-clock' runs straight after `sense' so the clock line is advanced from the
+state this tick just measured, and BEFORE `nudge', so a nudge that reads the
+clock sees the line already up to date.")
 (defconst lr-track--phase-failure-limit 3 "Consecutive failures before a phase is disabled + tick backs off.")
 (defvar lr-track--modeline-form '(:eval (lr-track--modeline-string)) "Literal appended to `global-mode-string'.")
 
@@ -470,6 +505,140 @@ Returns a plist with :state, :gap, :outside.  Rule order is load-bearing."
          (org-clock-idle-time nil)
          (org-log-note-clock-out nil))
      ,@body))
+
+(defconst lr-track--clock-line-re
+  "^[ \t]*CLOCK: \\(\\[[^]\n]*\\]\\)\\(?:--\\[[^]\n]*\\]\\)?.*$"
+  "The running clock's line, whether still open or already closed by us.
+Group 1 is the START stamp, which is the only part we ever preserve verbatim.")
+
+(defun lr-track--advance-clock-line (end-float)
+  "Rewrite the running clock's CLOCK line so it ends at END-FLOAT.  Return t if
+the line changed.
+
+This is the whole live-clock mechanism.  It does exactly one thing: move the
+trailing stamp of the line org is already maintaining, forward, in the buffer.
+
+What it deliberately does NOT do:
+  - close the clock (`org-clocking-p' stays t, `org-clock-marker' stays valid);
+  - move a stamp BACKWARDS (a late tick, an NTP step back, or a stale caller
+    must never shorten an interval that is already recorded);
+  - write an inverted or zero-length interval (END-FLOAT at or before the start
+    leaves the line untouched);
+  - save the buffer.  This config runs three rewriters on `before-save-hook'
+    and the tree is iCloud-synced; a 30-second save loop would run all three
+    every tick.  The line is left dirty for the owner's own save, exactly as
+    org's own clock-in already does.
+
+Verified against real org before this was written: rewriting the line in place
+keeps the clock live, is idempotent across ticks, and a later explicit
+`org-clock-out' EXTENDS the line to the real end rather than keeping our stamp."
+  (when (and lr-track-live-clock-line
+             (lr-track--clocking-p)
+             (numberp end-float)
+             (markerp org-clock-marker)
+             (marker-buffer org-clock-marker))
+    (let ((start (and (boundp 'org-clock-start-time)
+                      org-clock-start-time
+                      (float-time org-clock-start-time))))
+      (when (and start (> end-float start))
+        (with-current-buffer (marker-buffer org-clock-marker)
+          (unless buffer-read-only
+            (save-excursion
+              (save-restriction
+                (widen)
+                ;; Locate the line by its START STAMP under the clocked heading,
+                ;; NOT by `org-clock-marker''s position.  Rewriting the line moves
+                ;; that marker, so anchoring on it made the SECOND tick replace at
+                ;; the wrong position and clobber the heading (observed:
+                ;; `CLOCK: ...:LOGBOOK: =>  0:10' with the heading gone).  The
+                ;; start stamp is stable and unique within the ENTRY.
+                (let* ((hd (and (markerp org-clock-hd-marker)
+                                (marker-buffer org-clock-hd-marker)
+                                (eq (marker-buffer org-clock-hd-marker)
+                                    (current-buffer))
+                                org-clock-hd-marker))
+                       (start-stamp (format-time-string
+                                     (org-time-stamp-format t t)
+                                     (seconds-to-time start)))
+                       (end-stamp (format-time-string
+                                   (org-time-stamp-format t t)
+                                   (seconds-to-time end-float)))
+                       ;; Duration from the STAMPS (minute resolution), exactly as
+                       ;; `org-clock-out' computes it, so the line is always
+                       ;; internally consistent.  Deliberately NOT
+                       ;; `org-clock-update-time-maybe': that goes through
+                       ;; `org-timestamp-change', which deletes and reinserts BOTH
+                       ;; stamps and so destroys point sitting inside them.
+                       (secs (max 0 (round (- (org-time-string-to-seconds end-stamp)
+                                              (org-time-string-to-seconds start-stamp)))))
+                       (new-tail (format "--%s => %2d:%02d" end-stamp
+                                         (floor secs 3600) (floor (mod secs 3600) 60)))
+                       bound)
+                  (if hd (goto-char hd) (goto-char org-clock-marker))
+                  (beginning-of-line)
+                  ;; This ENTRY only.  `org-end-of-subtree' spans CHILDREN, and a
+                  ;; descendant carrying the same start stamp would then get its
+                  ;; real historical record rewritten.
+                  (setq bound (save-excursion
+                                (or (ignore-errors (org-entry-end-position))
+                                    (point-max))))
+                  (when (re-search-forward
+                         (concat "^[ \t]*CLOCK: " (regexp-quote start-stamp)
+                                 "\\(?:--\\[[^]\n]*\\]\\)?.*$")
+                         bound t)
+                    (beginning-of-line)
+                    (let ((current-end (lr-track--clock-line-end)))
+                      ;; Only ever move FORWARD.
+                      (when (or (null current-end) (> end-float current-end))
+                        (when (looking-at
+                               (concat "^[ \t]*CLOCK: " (regexp-quote start-stamp)
+                                       "\\(.*\\)$"))
+                          (let ((tail-beg (match-beginning 1))
+                                (old-tail (match-string 1)))
+                            ;; Skip an identical rewrite (ticks within the same
+                            ;; MINUTE), and never write a zero-length interval --
+                            ;; the float guard above does not stop a same-minute
+                            ;; end stamp.  Both would dirty the buffer and push
+                            ;; undo entries for no change at all.
+                            (unless (or (equal old-tail new-tail)
+                                        (equal end-stamp start-stamp))
+                              (let ((inhibit-field-text-motion t))
+                                ;; Rewrite only the TAIL after the start stamp.
+                                ;; Whole-line `replace-match' destroyed leading
+                                ;; indentation (life.org has 475 indented CLOCK
+                                ;; lines), clobbered any text being typed on the
+                                ;; line, and dragged point to column 0.
+                                (delete-region tail-beg (line-end-position))
+                                (goto-char tail-beg)
+                                (insert new-tail)
+                                ;; Put org's marker back where org itself keeps it
+                                ;; (right after the START stamp).  Without this the
+                                ;; marker collapses to column 0 and
+                                ;; `org-clock-cancel' SILENTLY FAILS, leaving a
+                                ;; fabricated, plausible, closed interval behind --
+                                ;; the banned clock surgery by another route.
+                                (move-marker org-clock-marker tail-beg
+                                             (buffer-base-buffer))
+                                t))))))))))))))))
+
+(defun lr-track--clock-line-end ()
+  "Float time of the end stamp on the clock line at point, or nil when open.
+Point must already be at the beginning of the line."
+  (save-excursion
+    (when (looking-at "^[ \t]*CLOCK: \\[[^]\n]*\\]--\\(\\[[^]\n]*\\]\\)")
+      (ignore-errors
+        (float-time (org-time-string-to-time (match-string 1)))))))
+
+(defun lr-track--tick-live-clock ()
+  "Tick phase: advance the live clock line while the owner is actually working.
+
+Advances for `engaged' and `reading'; deliberately does NOTHING for `away',
+`elsewhere', `slept' or `unknown'.  That asymmetry is the entire safety story:
+walk away and the line simply stops growing at your last real activity, with no
+clock surgery, no prompt and nothing to undo."
+  (when (and lr-track-live-clock-line
+             (memq lr-track--stable-state '(engaged reading)))
+    (lr-track--advance-clock-line (float-time))))
 
 (defun lr-track--autoout (at-float cause)
   "Close the running clock at AT-FLOAT (float seconds) for CAUSE.
@@ -1639,6 +1808,7 @@ the same moment it sets the interval, so gap is always measured from here."
       (progn
         (pcase phase
           ('sense (lr-track--tick-sense))
+          ('live-clock (lr-track--tick-live-clock))
           ('heartbeat (lr-track--tick-heartbeat))
           ('activity (lr-track--tick-activity))
           ('nudge (lr-track--nudge-check))
