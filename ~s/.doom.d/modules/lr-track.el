@@ -105,10 +105,12 @@ CLOCK line.  This floor makes that unreachable."
   "A running clock longer than this (4h) is auto-capped (D1b ceiling)."
   :type 'number)
 
-(defcustom lr-track-auto-clock-out t
+(defcustom lr-track-auto-clock-out nil
   "When non-nil, auto-close the clock on away/slept/4h-ceiling (idle subtracted).
-When nil, the coach only NOTIFIES about it and never touches the CLOCK line -
-set this if you want the accountability nudges without automatic clock surgery."
+Default nil: the clock is closed ONLY by you (explicitly, or via the check-in when
+you say where you were).  The coach still NOTIFIES about away/slept/4h and the
+check-in still asks on return, but it NEVER touches the CLOCK line on its own.
+Set this non-nil to opt back into automatic clock surgery."
   :type 'boolean)
 
 (defcustom lr-track-away-nudge-seconds 0.0
@@ -172,6 +174,52 @@ down.  Beyond this it just offers a plain clock-in, e.g. back after a week."
 (defcustom lr-track-category-cooldown 300.0
   "Minimum seconds between banners of the same category."
   :type 'number)
+
+(defcustom lr-track-timeline t
+  "When non-nil, the backfill check-in shows a live timeline gauge in a side window
+so you can SEE the untracked stretch, what is already filled, where the cursor is,
+how much time is left, and a preview of the segment as you type \"until when\"."
+  :type 'boolean)
+
+(defcustom lr-track-timeline-ascii nil
+  "When non-nil, draw the backfill timeline with ASCII glyphs even when the unicode
+block characters are displayable.  (It already falls back to ASCII automatically
+when a glyph cannot be shown.)"
+  :type 'boolean)
+
+;; The gauge glyphs live as integer codepoints so this source file stays pure ASCII;
+;; they are turned into characters only at render time.  Density ramp full > dark >
+;; medium > light encodes done > preview > empty even with every face stripped.
+(defconst lr-track--tl-glyphs
+  '((:fill . #x2588) (:fill2 . #x2593) (:preview . #x2592) (:empty . #x2591)
+    (:hour . #x2503) (:half . #x2502))
+  "Unicode codepoints for the backfill gauge (FULL/DARK/MEDIUM/LIGHT block, heavy/light bar).")
+(defconst lr-track--tl-ascii
+  '((:fill . ?#) (:fill2 . ?%) (:preview . ?=) (:empty . ?.) (:hour . ?|) (:half . ?:))
+  "Pure-ASCII fallback glyphs, same keys as `lr-track--tl-glyphs'.")
+
+(defface lr-track-backfill-fill '((t :inherit success))
+  "Committed (already logged) time in the backfill gauge." :group 'lr-track)
+(defface lr-track-backfill-fill-alt
+  '((((class color) (min-colors 88)) :foreground "turquoise")
+    (((class color)) :foreground "cyan")
+    (t :inherit success))
+  "Alternate committed segment, so two adjacent logged runs never merge." :group 'lr-track)
+(defface lr-track-backfill-preview '((t :inherit warning :weight bold))
+  "The tentative segment you are typing at the until-when prompt." :group 'lr-track)
+(defface lr-track-backfill-empty '((t :inherit shadow))
+  "Unfilled time still to account for in the backfill gauge." :group 'lr-track)
+(defface lr-track-backfill-cursor '((t :inherit (bold warning)))
+  "The cursor and tentative-end carets in the backfill gauge." :group 'lr-track)
+(defface lr-track-backfill-tick-hour '((t :weight bold))
+  "Hour tick and its label on the gauge axis." :group 'lr-track)
+(defface lr-track-backfill-tick-half '((t :inherit shadow))
+  "Half-hour tick and its label on the gauge axis." :group 'lr-track)
+(defface lr-track-backfill-task '((t :inherit warning :weight bold))
+  "The task name this prompt is filling (the one word that answers what am I filling)."
+  :group 'lr-track)
+(defface lr-track-backfill-invalid '((t :inherit error))
+  "Shown when the typed until-when does not parse or is out of range." :group 'lr-track)
 
 ;; probe cache tuning
 (defconst lr-track--ioreg-args '("-r" "-c" "IOHIDSystem" "-d" "1" "-w" "0")
@@ -615,6 +663,14 @@ the symbol-functions reaches an installed buffer-local entry."
 (defun lr-track--ts (time) (format-time-string (org-time-stamp-format t t) time))
 (defun lr-track--ts-hm (x) (format-time-string "%H:%M" (if (numberp x) (seconds-to-time x) x)))
 
+(defun lr-track--fmt-dur (mins)
+  "Compact human duration for MINS minutes: \"0m\", \"40m\", \"2h\", \"1h15m\"."
+  (let* ((m (max 0 (round mins))) (h (/ m 60)) (r (% m 60)))
+    (cond ((= m 0) "0m")
+          ((= h 0) (format "%dm" r))
+          ((= r 0) (format "%dh" h))
+          (t (format "%dh%dm" h r)))))
+
 (defun lr-track--activity-log (state start-float end-float)
   "Append a CLOCK line for the STATE episode START..END under its heading.
 Episodes shorter than a minute are dropped, they round to 0:00 and are just
@@ -1038,21 +1094,6 @@ A :asleep/:away pick is logged closed, never left as a running clock."
   "Pick a task and clock into it now."
   (lr-track--pick-and-clock-from "What are you working on? (pick recent or type new): " nil))
 
-(defun lr-track--clock-out-at-left ()
-  "Clock out at when you last used the machine (idle subtracted)."
-  (let* ((s (lr-track-system-idle-seconds))
-         (at (if (numberp s) (- (float-time) s) (float-time))))
-    (lr-track--autoout at 'manual)))
-
-(defun lr-track--stay-or-log (activity since)
-  "You named ACTIVITY in a check-in.  Ask whether you are still doing it: if so,
-keep it clocked (a running clock backdated to SINCE); if not, just log that time
-closed (SINCE to now).  Returns t when it left a running clock."
-  (if (y-or-n-p (format "Are you still doing \"%s\" now (stay clocked in)? " (car activity)))
-      (progn (lr-track--clock-task-from activity since) t)
-    (lr-track--log-task-interval activity since (float-time))
-    nil))
-
 (defun lr-track--checkin-clocked (_context)
   "You are back with a clock running.  Account for the time you were away: it was
 this task, or something else.  Every minute is attributed, none dropped.  The
@@ -1073,40 +1114,398 @@ split is the moment you left, so the task and the next activity never overlap."
             (setf (plist-get (cdr inc) :keep) t))
           (message "Kept %dm on %s." gap-min task))
       (?e (lr-track--autoout gap-start 'manual)     ; end this task the moment you left
-          (lr-track--backfill gap-start gap-min))    ; account every minute since then
+          (lr-track--backfill gap-start))            ; account every minute since then
       (?o (require 'org-clock) (org-clock-out) (message "Clocked out of %s." task))
       (?z (setq lr-track--snooze-until (+ (float-time) lr-track-snooze-seconds))
           (message "Will ask again in %d min." (round (/ lr-track-snooze-seconds 60.0))))
       (_ nil))))
 
-(defun lr-track--read-minutes (prompt default-mins)
-  "Read a minute count; empty input returns DEFAULT-MINS; clamped to [1, DEFAULT]."
-  (let ((s (string-trim (read-string prompt))))
-    (if (string-empty-p s) default-mins
-      (max 1 (min default-mins (truncate (abs (string-to-number s))))))))
+(defun lr-track--parse-clock (s)
+  "Parse S as a wall-clock time (needs a colon or an am/pm suffix) into (H . MM),
+or nil.  Bare numbers are NOT clock times here, they are durations."
+  (let (h mm ap)
+    (cond
+     ((string-match "\\`\\([0-9]\\{1,2\\}\\):\\([0-9]\\{2\\}\\)\\s-*\\(am\\|pm\\)?\\'" s)
+      (setq h (string-to-number (match-string 1 s))
+            mm (string-to-number (match-string 2 s))
+            ap (match-string 3 s)))
+     ((string-match "\\`\\([0-9]\\{1,2\\}\\)\\s-*\\(am\\|pm\\)\\'" s)
+      (setq h (string-to-number (match-string 1 s)) mm 0 ap (match-string 2 s))))
+    (when h
+      (when ap
+        (setq h (cond ((and (equal ap "pm") (< h 12)) (+ h 12))
+                      ((and (equal ap "am") (= h 12)) 0)
+                      (t h))))
+      (when (and (<= 0 h 23) (<= 0 mm 59)) (cons h mm)))))
 
-(defun lr-track--backfill (since total-mins)
-  "You returned with nothing clocked after TOTAL-MINS min (since SINCE).  Name what
-you were doing, oldest first.  For each, say whether you are still doing it now:
-if so it is clocked (a running clock, backdated to when it started) and you are
-done; if not, give how long, it is logged closed, and you continue with the rest
-of the gap.  Type a new name at any prompt to create (and log to) a fresh TODO."
-  (let ((cursor since) (remaining total-mins))
-    (catch 'done
-      (while (> remaining 0)
-        (let ((task (lr-track--pick-task
-                     (format "Since %s, %dm left. What were you doing? (empty = done) "
-                             (lr-track--ts-hm cursor) remaining))))
-          (unless task (throw 'done nil))
-          (if (y-or-n-p (format "Are you still doing \"%s\" now (stay clocked in)? " (car task)))
-              (progn (lr-track--clock-task-from task cursor) (throw 'done t))
-            (let* ((dur (if (<= remaining 1) remaining
-                          (lr-track--read-minutes
-                           (format "Minutes on \"%s\"? (RET = the rest, %dm) " (car task) remaining)
-                           remaining)))
-                   (end (+ cursor (* 60.0 dur))))
-              (lr-track--log-task-interval task cursor end)
-              (setq cursor end remaining (- remaining dur)))))))))
+(defun lr-track--clock-on-day (h mm cursor now)
+  "Float time for H:MM on CURSOR's day, rolled to the next day if that would land at
+or before CURSOR.  Returns nil unless it sits in (CURSOR, NOW]."
+  (let ((d (decode-time (seconds-to-time cursor))))
+    (setf (nth 0 d) 0 (nth 1 d) mm (nth 2 d) h)
+    (let ((t0 (float-time (encode-time d))))
+      (when (<= t0 cursor) (setq t0 (+ t0 86400.0)))
+      (and (> t0 cursor) (<= t0 (+ now 90.0)) (min t0 now)))))
+
+(defun lr-track--duration-minutes (s)
+  "Minutes (float) for a duration like 90, 90m, 1h, 1h30, 1h30m, 1.5h, 2:15; else nil."
+  (let ((s (replace-regexp-in-string "[+ \t]" "" s)))
+    (cond
+     ;; H:MM written as a duration (2:15 = 135m); clock times are routed away earlier
+     ((string-match "\\`\\([0-9]+\\):\\([0-9]\\{2\\}\\)\\'" s)
+      (+ (* 60.0 (string-to-number (match-string 1 s))) (string-to-number (match-string 2 s))))
+     ;; NhMM / NhMMm / N.Nh: hours with optional trailing minutes
+     ((string-match "\\`\\([0-9]*\\.?[0-9]+\\)h\\([0-9]*\\)m?\\'" s)
+      (+ (* 60.0 (string-to-number (match-string 1 s)))
+         (if (> (length (match-string 2 s)) 0) (string-to-number (match-string 2 s)) 0)))
+     ;; Nm
+     ((string-match "\\`\\([0-9]+\\)m\\'" s) (float (string-to-number (match-string 1 s))))
+     ;; bare number = minutes
+     ((string-match "\\`[0-9]*\\.?[0-9]+\\'" s) (float (string-to-number s)))
+     (t nil))))
+
+(defun lr-track--parse-when (input cursor now)
+  "Turn INPUT into an absolute float time.  A wall-clock time (\"15:30\", \"3:30pm\",
+\"3pm\") is read on CURSOR's day; anything else is a duration from CURSOR (\"90\",
+\"90m\", \"1h\", \"1h30\", \"1.5h\").  \"now\" is now.  Returns a float or nil."
+  (let ((s (downcase (string-trim input))))
+    (cond
+     ((string-empty-p s) nil)
+     ((member s '("now" "n")) now)
+     ((lr-track--parse-clock s)
+      (let ((hm (lr-track--parse-clock s))) (lr-track--clock-on-day (car hm) (cdr hm) cursor now)))
+     (t (let ((mins (lr-track--duration-minutes s)))
+          (and mins (> mins 0) (min now (+ cursor (* 60.0 mins)))))))))
+
+;;;; backfill timeline gauge
+;;
+;; A bottom side window that visualizes the untracked stretch while you answer
+;; "until when".  It shows the whole window [gap-start .. now], the runs you have
+;; already logged, the cursor (where the next segment starts), the time left, and
+;; a LIVE preview of the tentative segment as you type (repainted from a buffer
+;; local post-command-hook in the minibuffer).  The answer is still read by the
+;; ordinary `read-string', so point never leaves the minibuffer.  Everything here
+;; is display-only: only a parse that satisfies (> tm cursor) ever logs anything.
+
+(defvar lr-track--tl-buffer-name " *lr-track backfill*")
+(defvar lr-track--tl-model nil
+  "Plist for the active gauge: :start :now :cursor :segments :label :width :ascii.
+:segments is a list of (LABEL START END) oldest first.  nil when no gauge is up.")
+(defvar lr-track--tl-last-sig nil "Debounce token: the last preview state painted.")
+
+(defun lr-track--tl-glyph (key ascii)
+  "Character for glyph KEY, from the ASCII set when ASCII, else the unicode set."
+  (cdr (assq key (if ascii lr-track--tl-ascii lr-track--tl-glyphs))))
+
+(defun lr-track--tl-use-ascii ()
+  "Whether to draw the gauge in ASCII (toggle on, or a glyph is not displayable)."
+  (or lr-track-timeline-ascii
+      (not (cl-every (lambda (c) (char-displayable-p (cdr c))) lr-track--tl-glyphs))))
+
+(defun lr-track--tl-col (tm start total width)
+  "Column (0..WIDTH) for absolute time TM in the window [START, START+TOTAL]."
+  (if (<= total 0) 0
+    (max 0 (min width (round (* (/ (- tm start) (float total)) width))))))
+
+(defun lr-track--tl-width (win)
+  "Bar width: the side window body minus a margin, clamped to keep it one line."
+  (max 24 (min 48 (- (if (window-live-p win) (window-body-width win) 62) 2))))
+
+(defun lr-track--tl-window () (get-buffer-window lr-track--tl-buffer-name t))
+
+;; --- rows ---------------------------------------------------------------
+
+(defun lr-track--tl-bar (model preview-end)
+  "The proportional bar row: filled runs, an optional PREVIEW-END run, remaining."
+  (let* ((start (plist-get model :start)) (now (plist-get model :now))
+         (cursor (plist-get model :cursor)) (segs (plist-get model :segments))
+         (w (plist-get model :width)) (ascii (plist-get model :ascii))
+         (total (- now start))
+         (cur-col (lr-track--tl-col cursor start total w))
+         (cells (make-vector w nil)))
+    (dotimes (i w) (aset cells i (cons (lr-track--tl-glyph :empty ascii) 'lr-track-backfill-empty)))
+    ;; filled segments as boundary columns B[0..n] tiling [0, cur-col) exactly, then a
+    ;; 1-column floor so a tiny segment never vanishes (it borrows a column from the
+    ;; run before it), applied backward and then re-clamped monotone.
+    (let* ((n (length segs)) (b (make-vector (1+ n) 0)))
+      (aset b n cur-col)
+      (cl-loop for i from 1 below n
+               do (aset b i (min cur-col (max (aref b (1- i))
+                                              (lr-track--tl-col (nth 2 (nth (1- i) segs)) start total w)))))
+      (cl-loop for i from n downto 1
+               for seg = (nth (1- i) segs)
+               when (and (> (nth 2 seg) (nth 1 seg)) (< (- (aref b i) (aref b (1- i))) 1))
+               do (aset b (1- i) (max 0 (1- (aref b i)))))
+      (cl-loop for i from 1 to n do (aset b i (max (aref b i) (aref b (1- i)))))
+      (cl-loop for i from 0 below n
+               for evenp = (cl-evenp i)
+               for ch = (lr-track--tl-glyph (if evenp :fill :fill2) ascii)
+               for face = (if evenp 'lr-track-backfill-fill 'lr-track-backfill-fill-alt)
+               do (cl-loop for c from (aref b i) below (aref b (1+ i))
+                           do (aset cells c (cons ch face)))))
+    (when (and preview-end (> preview-end cursor))
+      (let ((pcol (min w (max cur-col (lr-track--tl-col preview-end start total w))))
+            (ch (lr-track--tl-glyph :preview ascii)))
+        (cl-loop for i from cur-col below pcol do (aset cells i (cons ch 'lr-track-backfill-preview)))))
+    (cl-loop for cell across cells
+             concat (propertize (char-to-string (car cell)) 'face (cdr cell)))))
+
+(defun lr-track--tl-caret-row (model preview-end)
+  "The caret row: a ^ under the cursor time, plus (typing) one under the preview end."
+  (let* ((start (plist-get model :start)) (now (plist-get model :now))
+         (cursor (plist-get model :cursor)) (w (plist-get model :width))
+         (total (- now start)) (len (+ w 12)) (vec (make-vector len ?\s)) (spans nil))
+    (cl-flet ((place (tm)
+                (let ((col (min (1- len) (lr-track--tl-col tm start total w)))
+                      (lbl (lr-track--ts-hm tm)))
+                  (aset vec col ?^)
+                  (cl-loop for i from 0 below (length lbl)
+                           when (< (+ col 2 i) len) do (aset vec (+ col 2 i) (aref lbl i)))
+                  (push (cons col (min len (+ col 2 (length lbl)))) spans))))
+      (place cursor)
+      (when (and preview-end (> preview-end cursor)) (place preview-end)))
+    (let ((row (concat vec)))
+      (dolist (sp spans) (put-text-property (car sp) (cdr sp) 'face 'lr-track-backfill-cursor row))
+      (string-trim-right row))))
+
+(defun lr-track--tl-header (model preview-end invalid)
+  "Header row: the window, total, and a live logged / typing / left readout."
+  (let* ((start (plist-get model :start)) (now (plist-get model :now))
+         (cursor (plist-get model :cursor))
+         (previewing (and preview-end (> preview-end cursor)))
+         (left (if previewing (- now preview-end) (- now cursor))))
+    (concat
+     (format "Backfill %s to %s (%s)   " (lr-track--ts-hm start) (lr-track--ts-hm now)
+             (lr-track--fmt-dur (/ (- now start) 60.0)))
+     (propertize (concat "logged " (lr-track--fmt-dur (/ (- cursor start) 60.0)))
+                 'face 'lr-track-backfill-fill)
+     (cond (previewing (concat ", " (propertize (concat "typing " (lr-track--fmt-dur (/ (- preview-end cursor) 60.0)))
+                                                'face 'lr-track-backfill-preview)))
+           (invalid (concat ", " (propertize "typing ?" 'face 'lr-track-backfill-invalid)))
+           (t ""))
+     "   "
+     (propertize (concat "left " (lr-track--fmt-dur (/ left 60.0)))
+                 'face (if previewing 'lr-track-backfill-preview 'lr-track-backfill-empty)))))
+
+(defun lr-track--tl-tick-step (total w)
+  "Minutes between axis ticks so adjacent labels never collide (need >= 6 columns)."
+  (let ((per-col (/ total (float w))))
+    (or (seq-find (lambda (m) (>= (/ (* m 60.0) per-col) 6.0)) '(30 60 120 180 360)) 360)))
+
+(defun lr-track--tl-ticks (start now step-min)
+  "List of (TIME . HOURP) axis ticks at STEP-MIN spacing within [START, NOW]."
+  (let* ((res nil) (d (decode-time (seconds-to-time start))))
+    (setf (nth 0 d) 0)
+    (let* ((mod (+ (* 60 (nth 2 d)) (nth 1 d)))
+           (rem (% mod step-min))
+           (bump (if (zerop rem) 0 (- step-min rem)))
+           (t0 (+ (float-time (encode-time d)) (* bump 60))))
+      (while (<= t0 (+ now 1))
+        (when (>= t0 start)
+          (push (cons t0 (zerop (nth 1 (decode-time (seconds-to-time t0))))) res))
+        (setq t0 (+ t0 (* step-min 60)))))
+    (nreverse res)))
+
+(defun lr-track--tl-axis (model)
+  "The two axis rows (labels, ticks), or nil when the window is too narrow."
+  (let* ((start (plist-get model :start)) (now (plist-get model :now))
+         (w (plist-get model :width)) (ascii (plist-get model :ascii)) (total (- now start)))
+    (when (>= w 40)
+      (let* ((step (lr-track--tl-tick-step total w))
+             (ticks (lr-track--tl-ticks start now step))
+             (lvec (make-vector w ?\s)) (tvec (make-vector w ?\s)) (ls nil) (ts nil))
+        (dolist (tk ticks)
+          (let* ((tm (car tk)) (hourp (cdr tk))
+                 (col (min (1- w) (lr-track--tl-col tm start total w)))
+                 (lbl (lr-track--ts-hm tm))
+                 (lstart (max 0 (min (- w (length lbl)) col))))
+            (aset tvec col (lr-track--tl-glyph (if hourp :hour :half) ascii))
+            (push (list col hourp) ts)
+            (when (cl-loop for i from lstart below (+ lstart (length lbl))
+                           always (eq (aref lvec i) ?\s))
+              (dotimes (i (length lbl)) (aset lvec (+ lstart i) (aref lbl i)))
+              (push (list lstart (+ lstart (length lbl)) hourp) ls))))
+        (let ((lrow (concat lvec)) (trow (concat tvec)))
+          (dolist (sp ts) (put-text-property (car sp) (1+ (car sp))
+                                             'face (if (cadr sp) 'lr-track-backfill-tick-hour 'lr-track-backfill-tick-half) trow))
+          (dolist (sp ls) (put-text-property (nth 0 sp) (nth 1 sp)
+                                             'face (if (nth 2 sp) 'lr-track-backfill-tick-hour 'lr-track-backfill-tick-half) lrow))
+          (list (string-trim-right lrow) (string-trim-right trow)))))))
+
+(defun lr-track--tl-legend (model)
+  "The done-legend row listing each logged segment in bar order, oldest first."
+  (let ((segs (plist-get model :segments)))
+    (if (null segs) (propertize "done: nothing yet" 'face 'shadow)
+      (let* ((parts (mapcar (lambda (seg)
+                              (format "%s %s to %s %s" (nth 0 seg)
+                                      (lr-track--ts-hm (nth 1 seg)) (lr-track--ts-hm (nth 2 seg))
+                                      (lr-track--fmt-dur (/ (- (nth 2 seg) (nth 1 seg)) 60.0))))
+                            segs))
+             (maxw (max 20 (- (plist-get model :width) 0)))
+             (dropped 0))
+        (while (and (> (length parts) 1)
+                    (> (length (string-join parts ", ")) (* 2 maxw)))
+          (setq parts (cdr parts) dropped (1+ dropped)))
+        (concat (propertize "done: " 'face 'shadow)
+                (when (> dropped 0) (propertize (format "(+%d more) " dropped) 'face 'shadow))
+                (string-join parts ", "))))))
+
+(defun lr-track--tl-nowline (model preview-end invalid)
+  "The now line: what THIS prompt is filling, and where the typed answer lands."
+  (let ((label (plist-get model :label)) (cursor (plist-get model :cursor)))
+    (concat
+     (propertize "now: " 'face 'shadow)
+     (if label (concat (propertize label 'face 'lr-track-backfill-task) " ") "")
+     (cond
+      ((and preview-end (> preview-end cursor))
+       (format "%s to %s (%s)" (lr-track--ts-hm cursor) (lr-track--ts-hm preview-end)
+               (lr-track--fmt-dur (/ (- preview-end cursor) 60.0))))
+      (invalid (propertize "that time is not in range" 'face 'lr-track-backfill-invalid))
+      (label (format "from %s, until when?" (lr-track--ts-hm cursor)))
+      (t (format "pick what you were doing from %s onward" (lr-track--ts-hm cursor)))))))
+
+;; --- window + render ----------------------------------------------------
+
+(defun lr-track--tl-render (model preview-end invalid)
+  "Repaint the gauge buffer from MODEL, with an optional PREVIEW-END and INVALID flag."
+  (let ((buf (get-buffer lr-track--tl-buffer-name)))
+    (when (buffer-live-p buf)
+      (let* ((axis (lr-track--tl-axis model))
+             (rows (delq nil (list (lr-track--tl-header model preview-end invalid)
+                                   (nth 0 axis) (nth 1 axis)
+                                   (lr-track--tl-bar model preview-end)
+                                   (lr-track--tl-caret-row model preview-end)
+                                   (lr-track--tl-legend model)
+                                   (lr-track--tl-nowline model preview-end invalid)))))
+        (with-current-buffer buf
+          (let ((inhibit-read-only t))
+            (erase-buffer)
+            (insert " " (string-join rows "\n ") "\n"))
+          (goto-char (point-min)))
+        (let ((win (lr-track--tl-window)))
+          (when (window-live-p win) (ignore-errors (fit-window-to-buffer win 10 4))))))))
+
+(defun lr-track--tl-show ()
+  "Create and display the gauge side window (nil if it cannot be shown).
+Uses a dedicated slot so it never reuses a Doom popup's bottom side window, and
+marks ONLY a window it actually creates (`lr-track-gauge'), so teardown can never
+delete a pre-existing side window it merely happened to land in."
+  (with-demoted-errors "lr-track timeline: %S"
+    (let ((buf (get-buffer-create lr-track--tl-buffer-name)))
+      (with-current-buffer buf
+        (setq buffer-read-only t truncate-lines t mode-line-format nil)
+        (setq-local cursor-type nil))
+      (let* ((before (window-list nil 'no-minibuf))
+             (win (or (ignore-errors
+                        (display-buffer-in-side-window
+                         buf '((side . bottom) (slot . -100) (window-height . 9)
+                               (window-parameters . ((no-other-window . t) (no-delete-other-windows . t))))))
+                      (ignore-errors (display-buffer-at-bottom buf '((window-height . 9)))))))
+        (when (and (window-live-p win) (not (memq win before)))
+          (set-window-parameter win 'lr-track-gauge t)))   ; mark it as OURS to delete
+      buf)))
+
+(defun lr-track--tl-begin (start now)
+  "Open the gauge for the window [START, NOW].  No-op when the gauge is disabled."
+  (when lr-track-timeline
+    (let ((buf (lr-track--tl-show)))
+      (when (and buf (lr-track--tl-window))
+        (setq lr-track--tl-model
+              (list :start start :now now :cursor start :segments nil :label nil
+                    :width (lr-track--tl-width (lr-track--tl-window))
+                    :ascii (lr-track--tl-use-ascii))
+              lr-track--tl-last-sig nil)
+        (lr-track--tl-render lr-track--tl-model nil nil)))))
+
+(defun lr-track--tl-update (cursor segments label)
+  "Advance the gauge to CURSOR with SEGMENTS logged and LABEL as the current task."
+  (when lr-track--tl-model
+    (setq lr-track--tl-model
+          (plist-put (plist-put (plist-put (plist-put lr-track--tl-model :cursor cursor)
+                                           :segments segments)
+                                :label label)
+                     :width (lr-track--tl-width (lr-track--tl-window)))
+          lr-track--tl-last-sig nil)
+    (lr-track--tl-render lr-track--tl-model nil nil)))
+
+(defun lr-track--tl-end ()
+  "Tear down the gauge.  Delete ONLY a window this module created; if we ever landed
+in a foreign window, restore its previous buffer instead of deleting it."
+  (let ((win (lr-track--tl-window)))
+    (when (window-live-p win)
+      (if (window-parameter win 'lr-track-gauge)
+          (ignore-errors (delete-window win))
+        (ignore-errors (quit-restore-window win 'bury)))))
+  (when (get-buffer lr-track--tl-buffer-name) (kill-buffer lr-track--tl-buffer-name))
+  (setq lr-track--tl-model nil lr-track--tl-last-sig nil))
+
+(defun lr-track--tl-post-command ()
+  "Buffer-local minibuffer hook: reparse the input and repaint the live preview."
+  (when (and lr-track--tl-model (minibufferp) (buffer-live-p (get-buffer lr-track--tl-buffer-name)))
+    (with-demoted-errors "lr-track timeline: %S"
+      (let* ((s (string-trim (minibuffer-contents)))
+             (cursor (plist-get lr-track--tl-model :cursor))
+             (now (plist-get lr-track--tl-model :now))
+             (tm (and (> (length s) 0) (lr-track--parse-when s cursor now)))
+             (valid (and (numberp tm) (> tm cursor)))
+             (invalid (and (> (length s) 0) (not valid)))
+             (sig (cond ((= (length s) 0) 'idle) (valid (round tm)) (t 'invalid))))
+        (unless (equal sig lr-track--tl-last-sig)
+          (setq lr-track--tl-last-sig sig)
+          (lr-track--tl-render lr-track--tl-model (and valid tm) invalid))))))
+
+;;;; the until-when prompt (with the live gauge)
+
+(defun lr-track--read-until (cursor now &optional segments label)
+  "Read when an activity that started at CURSOR ended: a wall-clock time or a
+duration, both in (CURSOR, NOW].  Empty input returns nil, meaning you are STILL
+doing it now.  Re-prompts on anything unparseable or out of range.  When the gauge
+is up, SEGMENTS (logged so far) and LABEL (the current task) drive the live view."
+  (let ((prompt (format "  until when? (e.g. %s, or 40m; RET = still on it now) "
+                        (lr-track--ts-hm now))))
+    (when lr-track--tl-model (lr-track--tl-update cursor segments label))
+    (catch 'ok
+      (while t
+        (let ((s (string-trim
+                  (minibuffer-with-setup-hook
+                      (lambda ()
+                        (when lr-track--tl-model
+                          (add-hook 'post-command-hook #'lr-track--tl-post-command nil t)))
+                    (read-string prompt)))))
+          (if (string-empty-p s) (throw 'ok nil)
+            (let ((tm (lr-track--parse-when s cursor now)))
+              (if (and (numberp tm) (> tm cursor))
+                  (throw 'ok tm)
+                (message "Give a clock time like %s, a duration like 40m, or RET if still on it."
+                         (lr-track--ts-hm now))
+                (sit-for 1.3)))))))))
+
+(defun lr-track--backfill (since &optional _total-mins)
+  "Walk the untracked stretch from SINCE to now, oldest first, with NO minute math.
+For each activity you name, say UNTIL WHEN it ran (a clock time like 15:30, or a
+duration like 40m); press RET to mean you are STILL doing it now, which leaves a
+running clock (backdated to when it started) and ends the walk.  Each closed
+segment is logged and the cursor advances, so segments are contiguous and never
+overlap.  A live gauge in a side window shows the whole stretch, what is filled,
+and a preview as you type.  Type a new name at any prompt to create a fresh TODO."
+  (let ((cursor since) (now (float-time)) (segments nil))
+    (unwind-protect
+        (progn
+          (lr-track--tl-begin since now)
+          (catch 'done
+            (while (< cursor (- now 30.0))      ; stop once the gap is essentially filled
+              (lr-track--tl-update cursor (reverse segments) nil)   ; label nil = choosing
+              (let ((task (lr-track--pick-task
+                           (format "From %s onward, what were you doing? (empty = stop) "
+                                   (lr-track--ts-hm cursor)))))
+                (unless task (throw 'done nil))
+                (let ((end (lr-track--read-until cursor now (reverse segments) (car task))))
+                  (if (null end)                ; RET = still doing it now
+                      (progn (lr-track--clock-task-from task cursor) (throw 'done t))
+                    (lr-track--log-task-interval task cursor end)
+                    (push (list (car task) cursor end) segments)
+                    (setq cursor end)))))))
+      (lr-track--tl-end))))
 
 (defun lr-track--checkin-idle (context)
   "Check-in flow when no clock is running.  If the coach just auto-closed a clock
@@ -1132,15 +1531,15 @@ backfill; failing that, just clock in."
                        (?d "ask later" "dismiss for now"))))
           (?s (if (and (markerp marker) (marker-buffer marker))
                   (lr-track--clock-task-from (cons task marker) since)
-                (lr-track--backfill since mins)))
-          (?e (lr-track--backfill since mins))
+                (lr-track--backfill since)))
+          (?e (lr-track--backfill since))
           (?o (message "Left %dm (since %s) off the clock." mins (lr-track--ts-hm since)))
           (_ nil))))
      ;; stale pointer with no real gap: nothing to account, just clock in
      (lr-track--last-close (setq lr-track--last-close nil) (lr-track--pick-and-clock))
      ((and (memq context '(return startup)) (>= mins 1)
            (<= (- (float-time) since) lr-track-backfill-max-seconds))
-      (lr-track--backfill since mins))
+      (lr-track--backfill since))
      (t (lr-track--pick-and-clock)))))
 
 ;;;###autoload
