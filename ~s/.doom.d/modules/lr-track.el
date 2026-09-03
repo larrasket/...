@@ -144,6 +144,27 @@ extends the line to the real end time (verified against org, not assumed).
 nil restores plain org behaviour."
   :type 'boolean)
 
+(defcustom lr-track-autosave-clock t
+  "Save the clocked org file after the live clock line is advanced.
+
+Without this the advanced line lives only in the buffer until your next manual
+save, so a crash loses it and the on-disk line is stale -- which undercuts the
+whole point of `lr-track-live-clock-line'.  With it on, every advance (about
+once a minute while you work, since same-minute ticks are no-ops) is flushed to
+disk.
+
+The save goes through `lr-track--save-buffer', which NEUTRALISES this config's
+three before-save rewriters (toc-org-insert-toc, vulpea-project-update-tag,
+org-roam-link-replace-all): it is a clean write of the clock advance, never a
+reformat, and never runs an org-roam reindex on a timer.  Only the one clocked
+buffer is ever saved; no other buffer is touched.
+
+This deliberately reverses the usual \"never save an org buffer from a timer\"
+stance.  That is safe here because only this machine writes `~/roam' (no iCloud
+merge to lose) and the write is a neutralised flush.  nil restores the
+save-only-by-you behaviour."
+  :type 'boolean)
+
 (defcustom lr-track-away-nudge-seconds 0.0
   "Seconds after you're detected AWAY (machine idle) before the coach checks in.
 0 = check in as soon as you cross the away threshold (already ~10 min idle)."
@@ -619,6 +640,16 @@ keeps the clock live, is idempotent across ticks, and a later explicit
                                 ;; the banned clock surgery by another route.
                                 (move-marker org-clock-marker tail-beg
                                              (buffer-base-buffer))
+                                ;; Flush the advance to disk so a crash never
+                                ;; loses it and the on-disk line stays current.
+                                ;; `lr-track--save-buffer' neutralises the three
+                                ;; before-save rewriters, so this is a clean
+                                ;; write, not a reformat, and touches only this
+                                ;; one buffer.  Only reached on a REAL advance
+                                ;; (same-minute ticks never get here), so it is
+                                ;; naturally ~once a minute.
+                                (when lr-track-autosave-clock
+                                  (lr-track--save-buffer (current-buffer)))
                                 t))))))))))))))))
 
 (defun lr-track--clock-line-end ()

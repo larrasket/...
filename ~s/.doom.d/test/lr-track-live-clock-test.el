@@ -151,18 +151,16 @@ discard the minutes since the last tick."
       (should (= 1 (length (lr-track-test--clock-lines buf)))))))
 
 
-;;;; safety: it must never save the buffer (I2)
+;;;; autosave
 
-(ert-deftest lr-track-live-clock-never-saves-the-buffer ()
-  "A background tick must NEVER save an org buffer.  This config runs three
-rewriters on `before-save-hook' (toc-org-insert-toc, vulpea-project-update-tag,
-org-roam-link-replace-all) and the tree is iCloud-synced; a 30-second save loop
-would run all three on every tick and push whole files into iCloud.
-
-The stub COUNTS calls rather than signalling: a signalling stub would abort the
-save it is meant to detect, so the test would pass BECAUSE the alarm fired."
+(ert-deftest lr-track-live-clock-does-not-save-when-autosave-is-off ()
+  "With `lr-track-autosave-clock' nil the tick must NEVER save the buffer -- the
+original I2 behaviour, kept as the opt-out.  The stub COUNTS calls rather than
+signalling: a signalling stub would abort the save it is meant to detect, so the
+test would pass BECAUSE the alarm fired."
   (let ((t0 (- (float-time) 3600))
-        (saves nil))
+        (saves nil)
+        (lr-track-autosave-clock nil))
     (lr-track-test--clocked t0
       (cl-letf (((symbol-function 'save-buffer)
                  (lambda (&rest _) (push 'save saves) nil))
@@ -170,8 +168,78 @@ save it is meant to detect, so the test would pass BECAUSE the alarm fired."
                  (lambda (&rest _) (push 'basic saves) nil)))
         (lr-track--advance-clock-line (+ t0 1800)))
       (should-not saves)
-      ;; and the buffer is left dirty, for the owner's own save to flush
+      ;; left dirty, for the owner's own save to flush
       (should (buffer-modified-p buf)))))
+
+(ert-deftest lr-track-live-clock-autosaves-the-advance-to-disk ()
+  "With autosave on, a real advance flushes to disk: the buffer is no longer
+modified and the file on disk carries the advanced line."
+  (let ((t0 (- (float-time) 3600))
+        (lr-track-autosave-clock t))
+    (lr-track-test--clocked t0
+      (should (lr-track--advance-clock-line (+ t0 1800)))
+      (should-not (buffer-modified-p buf))
+      ;; the on-disk bytes carry the closed line, not just the buffer
+      (let ((on-disk (with-temp-buffer (insert-file-contents file) (buffer-string))))
+        (should (string-match-p "CLOCK: \\[[^]]*\\]--\\[[^]]*\\] =>  0:30" on-disk))))))
+
+(ert-deftest lr-track-live-clock-autosave-neutralises-the-three-rewriters ()
+  "The autosave must NOT run this config's before-save rewriters -- it is a
+clean flush, not a reformat, and must never trigger an org-roam reindex on a
+timer.  Defines the three as recorders on `before-save-hook' and asserts none
+fire during the autosave."
+  (let ((t0 (- (float-time) 3600))
+        (lr-track-autosave-clock t)
+        (ran nil))
+    (cl-letf (((symbol-function 'toc-org-insert-toc)
+               (lambda (&rest _) (push 'toc ran)))
+              ((symbol-function 'vulpea-project-update-tag)
+               (lambda (&rest _) (push 'vulpea ran)))
+              ((symbol-function 'org-roam-link-replace-all)
+               (lambda (&rest _) (push 'roam ran))))
+      (lr-track-test--clocked t0
+        (with-current-buffer buf
+          (add-hook 'before-save-hook #'toc-org-insert-toc nil t)
+          (add-hook 'before-save-hook #'vulpea-project-update-tag nil t)
+          (add-hook 'before-save-hook #'org-roam-link-replace-all nil t))
+        (should (lr-track--advance-clock-line (+ t0 1800)))
+        (should-not (buffer-modified-p buf))   ; it did save
+        (should-not ran)))))                    ; but the rewriters did not run
+
+(ert-deftest lr-track-live-clock-autosave-touches-only-the-clocked-buffer ()
+  "It must save exactly the clocked buffer, never `save-some-buffers'.  A second
+dirty org buffer must be left untouched."
+  (let* ((t0 (- (float-time) 3600))
+         (lr-track-autosave-clock t)
+         (other-dir (file-name-as-directory (make-temp-file "lr-other" t)))
+         (other-file (expand-file-name "other.org" other-dir))
+         other)
+    (with-temp-file other-file (insert "* other\n"))
+    (setq other (find-file-noselect other-file))
+    (with-current-buffer other (goto-char (point-max)) (insert "dirty\n"))
+    (unwind-protect
+        (lr-track-test--clocked t0
+          (should (buffer-modified-p other))
+          (lr-track--advance-clock-line (+ t0 1800))
+          (should (buffer-modified-p other)))   ; the other buffer stays dirty
+      (when (buffer-live-p other)
+        (with-current-buffer other (set-buffer-modified-p nil))
+        (kill-buffer other))
+      (ignore-errors (delete-directory other-dir t)))))
+
+(ert-deftest lr-track-live-clock-autosave-does-nothing-on-a-same-minute-noop ()
+  "A tick that does not actually change the line must not save either."
+  (let ((t0 (- (float-time) 3600))
+        (lr-track-autosave-clock t)
+        (saves nil))
+    (lr-track-test--clocked t0
+      (lr-track--advance-clock-line (+ t0 1800))          ; real advance -> saves
+      (set-buffer-modified-p nil)
+      (cl-letf (((symbol-function 'save-buffer)
+                 (lambda (&rest _) (push 'save saves) nil)))
+        ;; same minute: no change, must not return t, must not save
+        (should-not (lr-track--advance-clock-line (+ t0 1830)))
+        (should-not saves)))))
 
 (ert-deftest lr-track-live-clock-is-a-no-op-with-no-clock ()
   "No clock, no writes, no errors."
