@@ -1346,6 +1346,71 @@ or before CURSOR.  Returns nil unless it sits in (CURSOR, NOW]."
      (t (let ((mins (lr-track--duration-minutes s)))
           (and mins (> mins 0) (min now (+ cursor (* 60.0 mins)))))))))
 
+;;;; arrow-key scrubbing (pure core)
+;;
+;; The arrows author the SAME minibuffer string you could type, so preview,
+;; parsing and commit are all unchanged.  The one deliberate choice: an arrow
+;; writes a DURATION token ("<N>m", or the literal "now"), NEVER a clock stamp.
+;; `lr-track--parse-when' turns "<N>m" into (min now (+ cursor (* 60 N))) with
+;; N>0, so a scrubbed value is in (CURSOR, NOW] by construction -- it never
+;; reaches `lr-track--clock-on-day', so there is no day-rollover to get wrong
+;; and no >24h ambiguity.  An out-of-range end cannot be AUTHORED.
+
+(defconst lr-track--scrub-ladder '(1 2 5 10 15 30 60 120)
+  "Step sizes (minutes).  Every element two rungs up is an integer multiple of
+the one below (1|5, 2|10, 5|15, 10|30, 15|60, 30|120), so the coarse grid nests
+on the fine grid and a coarse landing is always a fine landing.")
+
+(defun lr-track--scrub-steps (cursor now)
+  "Return (FINE . COARSE) step minutes for the REMAINING span (CURSOR, NOW].
+Keyed off `now - cursor', NOT the whole gauge window, so fine control does not
+collapse on a late segment.  Fine crosses the span in <= ~40 presses at every
+width from 1 minute to 40 hours; coarse in <= ~12."
+  (let* ((m (max 1.0 (/ (- now cursor) 60.0)))
+         (last (1- (length lr-track--scrub-ladder)))
+         (fi (or (cl-position-if (lambda (s) (<= (/ m s) 40))
+                                 lr-track--scrub-ladder)
+                 last)))
+    (cons (nth fi lr-track--scrub-ladder)
+          (nth (min last (+ fi 2)) lr-track--scrub-ladder))))
+
+(defun lr-track--scrub-target (d0 step dir m minfloor)
+  "The next STEP multiple strictly past duration D0 in DIR (+1/-1), clamped to
+[MINFLOOR, M].  Below the floor snaps UP to the floor (never to 0); past M
+parks at M."
+  (let* ((d0 (float d0))                 ; never integer-divide (43/5 -> 8, not 8.6)
+         (d (if (> dir 0)
+                (* step (1+ (floor (/ d0 step))))
+              (* step (1- (ceiling (/ d0 step)))))))
+    (max minfloor (min m (float d)))))
+
+(defun lr-track--scrub-string (contents kind cursor now)
+  "Given the current minibuffer CONTENTS, return the new minibuffer string after
+a scrub key KIND (`fine-' `fine+' `coarse-' `coarse+' `home' `end') in the
+window (CURSOR, NOW].
+
+Pure: no minibuffer, no side effects.  Result is always exactly one canonical
+token -- \"<N>m\" with N>=1, or \"now\" -- so it round-trips through
+`lr-track--parse-when' back into (CURSOR, NOW]."
+  (let* ((m (max 1.0 (/ (- now cursor) 60.0)))
+         (st (lr-track--scrub-steps cursor now))
+         (fine (car st)) (coarse (cdr st))
+         (minf (min (float fine) m))
+         (s (string-trim (or contents "")))
+         ;; adopt whatever is already typed; empty/unparseable seeds from `now'
+         (base (or (and (> (length s) 0) (lr-track--parse-when s cursor now)) now))
+         (d0 (max 0.0 (min m (/ (- base cursor) 60.0)))))
+    (if (eq kind 'end)
+        "now"
+      (let ((d1 (pcase kind
+                  ('home    minf)
+                  ('fine-   (lr-track--scrub-target d0 fine   -1 m minf))
+                  ('fine+   (lr-track--scrub-target d0 fine   +1 m minf))
+                  ('coarse- (lr-track--scrub-target d0 coarse -1 m minf))
+                  ('coarse+ (lr-track--scrub-target d0 coarse +1 m minf))
+                  (_        d0))))
+        (format "%dm" (max 1 (round d1)))))))
+
 ;;;; backfill timeline gauge
 ;;
 ;; A bottom side window that visualizes the untracked stretch while you answer
@@ -1533,6 +1598,16 @@ or before CURSOR.  Returns nil unless it sits in (CURSOR, NOW]."
       (label (format "from %s, until when?" (lr-track--ts-hm cursor)))
       (t (format "pick what you were doing from %s onward" (lr-track--ts-hm cursor)))))))
 
+(defun lr-track--tl-footer (model)
+  "Scrub help row for the until-when prompt: the LIVE fine/coarse step sizes and
+the keys.  Kept plain ASCII and arrow-free on purpose (the whole file is)."
+  (let* ((cursor (plist-get model :cursor)) (now (plist-get model :now))
+         (st (lr-track--scrub-steps cursor now)))
+    (propertize
+     (format "Left/Right %s   Up/Down %s   Home shortest   End now   RET log"
+             (lr-track--fmt-dur (car st)) (lr-track--fmt-dur (cdr st)))
+     'face 'shadow)))
+
 ;; --- window + render ----------------------------------------------------
 
 (defun lr-track--tl-render (model preview-end invalid)
@@ -1545,7 +1620,10 @@ or before CURSOR.  Returns nil unless it sits in (CURSOR, NOW]."
                                    (lr-track--tl-bar model preview-end)
                                    (lr-track--tl-caret-row model preview-end)
                                    (lr-track--tl-legend model)
-                                   (lr-track--tl-nowline model preview-end invalid)))))
+                                   (lr-track--tl-nowline model preview-end invalid)
+                                   ;; scrub help only on the until-when prompt
+                                   (and (plist-get model :label)
+                                        (lr-track--tl-footer model))))))
         (with-current-buffer buf
           (let ((inhibit-read-only t))
             (erase-buffer)
@@ -1625,12 +1703,38 @@ in a foreign window, restore its previous buffer instead of deleting it."
 
 ;;;; the until-when prompt (with the live gauge)
 
+(defun lr-track--scrub (kind)
+  "Rewrite the minibuffer with the scrubbed end for KIND.  Thin wrapper over the
+pure `lr-track--scrub-string'; the existing post-command hook repaints."
+  (when (and lr-track--tl-model (minibufferp))
+    (let ((new (lr-track--scrub-string (minibuffer-contents)
+                                       kind
+                                       (plist-get lr-track--tl-model :cursor)
+                                       (plist-get lr-track--tl-model :now))))
+      (delete-minibuffer-contents)
+      (insert new))))
+
+(defconst lr-track--scrub-map
+  (let ((km (make-sparse-keymap)))
+    ;; right/up = later, left/down = earlier; home = shortest, end = now.
+    ;; Bound as real key EVENTS (not h/l), so evil normal-state motion never
+    ;; intercepts them, and installed via a COMPOSED map (never by mutating the
+    ;; shared `minibuffer-local-map'), so nothing leaks into later minibuffers.
+    (dolist (b '(([left]  fine-)  ([right] fine+)
+                 ([down]  coarse-)([up]    coarse+)
+                 ([home]  home)   ([end]   end)))
+      (let ((kind (cadr b)))
+        (define-key km (car b) (lambda () (interactive) (lr-track--scrub kind)))))
+    km)
+  "Minibuffer overlay for the until-when prompt.  Composed OVER the live map, so
+RET, C-g, self-insert, C-a/C-e/C-k and history (M-p/M-n) all fall through.")
+
 (defun lr-track--read-until (cursor now &optional segments label)
   "Read when an activity that started at CURSOR ended: a wall-clock time or a
 duration, both in (CURSOR, NOW].  Empty input returns nil, meaning you are STILL
 doing it now.  Re-prompts on anything unparseable or out of range.  When the gauge
 is up, SEGMENTS (logged so far) and LABEL (the current task) drive the live view."
-  (let ((prompt (format "  until when? (e.g. %s, or 40m; RET = still on it now) "
+  (let ((prompt (format "  until when? (%s, 40m, or arrows to scrub; RET = still on it) "
                         (lr-track--ts-hm now))))
     (when lr-track--tl-model (lr-track--tl-update cursor segments label))
     (catch 'ok
@@ -1639,7 +1743,14 @@ is up, SEGMENTS (logged so far) and LABEL (the current task) drive the live view
                   (minibuffer-with-setup-hook
                       (lambda ()
                         (when lr-track--tl-model
-                          (add-hook 'post-command-hook #'lr-track--tl-post-command nil t)))
+                          (add-hook 'post-command-hook #'lr-track--tl-post-command nil t)
+                          ;; Overlay the scrub keys OVER the live minibuffer map,
+                          ;; per-minibuffer.  `use-local-map' + `make-composed-keymap'
+                          ;; never mutates the shared `minibuffer-local-map', so the
+                          ;; bindings die with this minibuffer and never leak.
+                          (use-local-map
+                           (make-composed-keymap lr-track--scrub-map
+                                                 (current-local-map)))))
                     (read-string prompt)))))
           (if (string-empty-p s) (throw 'ok nil)
             (let ((tm (lr-track--parse-when s cursor now)))
