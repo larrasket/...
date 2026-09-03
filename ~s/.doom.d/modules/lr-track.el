@@ -1717,9 +1717,18 @@ pure `lr-track--scrub-string'; the existing post-command hook repaints."
 (defconst lr-track--scrub-map
   (let ((km (make-sparse-keymap)))
     ;; right/up = later, left/down = earlier; home = shortest, end = now.
-    ;; Bound as real key EVENTS (not h/l), so evil normal-state motion never
-    ;; intercepts them, and installed via a COMPOSED map (never by mutating the
-    ;; shared `minibuffer-local-map'), so nothing leaks into later minibuffers.
+    ;; Installed via a COMPOSED map (never by mutating the shared
+    ;; `minibuffer-local-map'), so nothing leaks into later minibuffers.
+    ;;
+    ;; These reach `lr-track--scrub' because this config leaves evil OUT of the
+    ;; minibuffer: `evil-want-minibuffer' and `evil-collection-setup-minibuffer'
+    ;; are both nil, so `evil-initialize' skips `evil-local-mode' here
+    ;; (evil-core.el) and there is no `evil-motion-state-map' to shadow the
+    ;; arrows.  It is NOT the key encoding that saves us -- evil DOES bind the
+    ;; arrow EVENTS in motion state (evil-maps.el).  If evil-in-the-minibuffer
+    ;; is ever enabled, ESC into normal/motion state would revert these to evil
+    ;; motions (insert state still falls through to scrub, and typing always
+    ;; works, so there is no data risk -- only dead scrub keys until you type).
     (dolist (b '(([left]  fine-)  ([right] fine+)
                  ([down]  coarse-)([up]    coarse+)
                  ([home]  home)   ([end]   end)))
