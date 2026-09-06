@@ -8,9 +8,6 @@
 ;;; Jinx (lazy - hook only)
 (add-hook 'text-mode-hook #'jinx-mode)
 
-;;; YAS
-(after! yasnippet (yas-global-mode 1))
-
 ;;; Comment utility
 (defun salih/comment-or-uncomment-region-or-line ()
   "Comment/uncomment the region or current line."
@@ -352,25 +349,30 @@ never the workspace or layout.  nil otherwise."
                 ('full (salih/--linked-frame-apply-state state frame))
                 ('buffer (salih/--linked-frame-apply-buffer-scroll state frame))))))))))
 
+(defun salih/--linked-frame-any-p ()
+  "Return non-nil when any live frame belongs to a linked-frame group."
+  (cl-some #'salih/--linked-frame-p (frame-list)))
+
 (defun salih/--linked-frame-schedule-sync ()
   "Mirror the selected frame to its linked siblings after each command.
-This runs synchronously instead of on an idle timer: an idle timer is
-starved during continuous scrolling or typing, which makes the sibling
-frames visibly lag.  The per-command work is kept cheap by only rebuilding
-window layouts when they actually change (see
-`salih/--linked-frame-apply-state').
+This is installed on `post-command-hook' only while linked frames exist (by
+`salih/make-linked-frame'), and removes itself once the last linked frame is
+gone -- so the feature costs nothing on every keystroke until you actually use
+it.
 
-The body is wrapped in `with-demoted-errors' so that a sync failure can never
-abort the running command or get this function removed from
-`post-command-hook' -- either of which would make editing feel broken."
-  (unless salih/--linked-frame-syncing
-    (let ((source-frame (selected-frame)))
-      (when (and (salih/--linked-frame-p source-frame)
-                 (not (minibufferp (window-buffer (selected-window)))))
-        (with-demoted-errors "salih/make-linked-frame sync error: %S"
-          (salih/--linked-frame-sync source-frame))))))
-
-(add-hook 'post-command-hook #'salih/--linked-frame-schedule-sync)
+It runs synchronously rather than on an idle timer, which is starved during
+continuous scrolling or typing and makes the sibling frames visibly lag.  The
+per-command work stays cheap: window layouts are rebuilt only when they change
+(see `salih/--linked-frame-apply-state').  The body is wrapped in
+`with-demoted-errors' so a sync failure can never abort the running command."
+  (if (not (salih/--linked-frame-any-p))
+      (remove-hook 'post-command-hook #'salih/--linked-frame-schedule-sync)
+    (unless salih/--linked-frame-syncing
+      (let ((source-frame (selected-frame)))
+        (when (and (salih/--linked-frame-p source-frame)
+                   (not (minibufferp (window-buffer (selected-window)))))
+          (with-demoted-errors "salih/make-linked-frame sync error: %S"
+            (salih/--linked-frame-sync source-frame)))))))
 
 (defun salih/make-linked-frame (&optional parameters)
   "Create a new frame linked to the selected frame's workspace and cursor state."
@@ -386,6 +388,9 @@ abort the running command or get this function removed from
     (when (fboundp 'persp-set-frame-buffer-predicate)
       (persp-set-frame-buffer-predicate new-frame))
     (select-frame-set-input-focus new-frame)
+    ;; Install the per-command mirror only now that a linked frame exists; it
+    ;; removes itself again once the last one is closed.
+    (add-hook 'post-command-hook #'salih/--linked-frame-schedule-sync)
     (salih/--linked-frame-sync source-frame)
     new-frame))
 

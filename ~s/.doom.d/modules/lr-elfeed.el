@@ -171,11 +171,8 @@ idempotent, so re-evaluating this file won't stack duplicate advice."
   ;; Cluster the search list into stable, contiguous groups via an :after pass.
   ;; We disable the built-in pairwise sort and let the advice reorder the
   ;; already-built list with a total-order comparator (see
-  ;; `salih/elfeed-cluster-entries').  `advice-add' is idempotent; we also drop
-  ;; the previous advice function so re-evaluating after a rename doesn't leave
-  ;; the old date-based clustering installed alongside the new one.
+  ;; `salih/elfeed-cluster-entries').  `advice-add' is idempotent.
   (setq elfeed-search-sort-function nil)
-  (advice-remove 'elfeed-search--update-list 'salih/elfeed-cluster-by-author)
   (advice-add 'elfeed-search--update-list :after #'salih/elfeed-cluster-entries)
   ;; If a search buffer is already open (e.g. after `doom/reload'), drop any
   ;; stale buffer-local sort and re-sort now so the new ordering shows

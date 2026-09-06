@@ -17,8 +17,6 @@
     ('gnu/linux (start-process "chrome" nil "google-chrome" url))
     (_          (browse-url url))))
 
-(advice-remove '+lookup/documentation #'salih/ensure-eww-in-search)
-
 ;;; Prayer times (lazy)
 (after! awqat
   (setq calendar-latitude  29.392691

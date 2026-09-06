@@ -36,10 +36,10 @@
                   "COMMA_PARENTHESIS_WHITESPACE"])
         lsp-ltex-sentence-start-with-uppercase t))
 
-;;; Enable in writing modes
-;; ltex-ls via lsp-mode conflicts with org-roam completion in org-mode buffers.
-;; Auto-enable only in message-mode (emails) and markdown where there's no
-;; competing completion system.  In org-mode, use `salih/ltex-toggle' manually.
+;;; Enable in writing modes (manual)
+;; ltex-ls runs over lsp-mode, whose completion-at-point conflicts with corfu,
+;; so it is never auto-started.  `salih/ltex-toggle' (SPC t G) turns grammar
+;; checking on/off in the current buffer on demand.
 (defun salih/ltex-enable ()
   "Enable ltex-ls grammar diagnostics in the current buffer."
   (when (executable-find "ltex-ls")
@@ -53,11 +53,9 @@
     (salih/ltex-enable)
     (message "ltex-ls enabled")))
 
-;; Auto-enable for emails and markdown - no competing completion systems
-(add-hook 'message-mode-hook  #'salih/ltex-enable)
-(add-hook 'markdown-mode-hook #'salih/ltex-enable)
-;; NOT org-mode: conflicts with org-roam completion.
-;; Use SPC m G to toggle manually in specific org buffers.
+;; No auto-start hooks.  lsp-mode's completion-at-point conflicts with corfu in
+;; these buffers (it was breaking completion) and spins up a JVM per buffer, so
+;; grammar checking is started manually with `salih/ltex-toggle' (SPC t G).
 
 ;;; Add word to personal dictionary
 (defun salih/ltex-add-word ()

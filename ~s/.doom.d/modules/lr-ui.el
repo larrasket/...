@@ -125,44 +125,6 @@
 
 
 
-(after! doom-modeline
-  ;; PDF page display
-  (defun salih/doom-modeline-update-pdf-pages-no-percent ()
-    "Update PDF pages."
-    (setq doom-modeline--pdf-pages
-          (format "  %d/%d "
-                  (or (eval `(pdf-view-current-page)) 0)
-                  (pdf-cache-number-of-pages))))
-
-  ;; Selection info segment
-  (doom-modeline-def-segment salih/selection-info
-    "Information about the current selection."
-    (when (and (or mark-active (and (bound-and-true-p evil-local-mode)
-                                    (eq evil-state 'visual)))
-               (doom-modeline--active))
-      (cl-destructuring-bind (beg . end)
-          (if (and (bound-and-true-p evil-local-mode) (eq evil-state 'visual))
-              (cons evil-visual-beginning evil-visual-end)
-            (cons (region-beginning) (region-end)))
-        (propertize
-         (let ((lines (count-lines beg (min end (point-max)))))
-           (concat (doom-modeline-spc)
-                   (cond ((or (bound-and-true-p rectangle-mark-mode)
-                              (and (bound-and-true-p evil-visual-selection)
-                                   (eq 'block evil-visual-selection)))
-                          (let ((cols (abs (- (doom-modeline-column end)
-                                              (doom-modeline-column beg)))))
-                            (format "%dx%dB" lines cols)))
-                         ((and (bound-and-true-p evil-visual-selection)
-                               (eq evil-visual-selection 'line))
-                          (format "%dL" lines))
-                         ((> lines 1)
-                          (format "%dC %dL" (- end beg) lines))
-                         (t
-                          (format "%dC" (- end beg))))
-                   (doom-modeline-spc)))
-         'face 'doom-modeline-emphasis)))))
-
 ;;; Breadcrumb (lazy)
 (use-package! breadcrumb
   :defer t

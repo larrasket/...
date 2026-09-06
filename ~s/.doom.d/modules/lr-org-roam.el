@@ -31,19 +31,14 @@ accessed via iCloud symlinks are recognised as org-roam files.")
                                 (file-truename path))))
                           (directory-files roam-dir nil "^[^.]")))))))
 
-;;; Org-roam per-buffer setup via org-mode-hook
-;; org-roam normally wires these up only via org-roam-find-file-hook, which
-;; fires for files under org-roam-directory after org-roam-db-autosync-mode
-;; is active.  Any timing gap (file opened before autosync enables) or path
-;; outside org-roam-directory breaks completion and link replacement.
-;; Adding them directly to org-mode-hook makes them bullet-proof.
+;;; Roam symlink truenames
+;; org-roam registers its own completion and link-replace handlers for roam
+;; files via `org-roam-find-file-hook', so we do NOT re-add them to every
+;; org-mode buffer: doing so stacked capfs (breaking corfu) and ran the
+;; before-save link rewriter in non-roam buffers.  Here we only pre-compute the
+;; symlink truenames that the `org-roam-file-p' advice below relies on.
 (with-eval-after-load 'org-roam
-  (salih/--compute-roam-symlink-truenames)
-  ;; Completion: adds org-roam-complete-link-at-point + org-roam-complete-everywhere
-  (add-hook 'org-mode-hook #'org-roam--register-completion-functions-h)
-  ;; Link replacement: adds org-roam-link-replace-all to before-save-hook
-  ;; so [[roam:Title]] -> [[id:...]] on every save
-  (add-hook 'org-mode-hook #'org-roam--replace-roam-links-on-save-h))
+  (salih/--compute-roam-symlink-truenames))
 
 ;;; Org-roam (deferred)
 (after! org-roam
@@ -72,10 +67,6 @@ accessed via iCloud symlinks are recognised as org-roam files.")
   ;; and causes passphrase prompts. Encrypted dailies are still writable,
   ;; they just won't appear in the roam graph.
   (setq org-roam-file-exclude-regexp "\\.gpg$")
-
-  ;; Incremental DB updates: only process files that actually changed.
-  ;; Prevents full resync on every org-roam operation.
-  (setq org-roam-db-update-on-save t)
 
   ;; Dailies
   (setq org-roam-dailies-capture-templates
@@ -109,9 +100,6 @@ accessed via iCloud symlinks are recognised as org-roam files.")
            (file "~/configs/~s/orb")
            :target (file+head "references/${citekey}.org"
                               "#+title: ${title}\n"))))) ;; end after! org-roam
-
-;;; Org-roam hooks
-;; (add-hook! 'org-roam-find-file-hook #'git-auto-commit-mode)
 
 ;;; Git auto-commit
 (after! git-auto-commit-mode

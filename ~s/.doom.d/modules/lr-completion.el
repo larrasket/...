@@ -1,5 +1,12 @@
 ;;; lr-completion.el --- Corfu, Vertico, Consult -*- lexical-binding: t; -*-
 
+;;; Text-mode completion
+;; jinx owns spelling here, so keep the Emacs 30 ispell capf out of
+;; `completion-at-point-functions'.  Doom only disables it AFTER it first
+;; errors; turning it off up front stops corfu from ever invoking a slow or
+;; erroring ispell subprocess in org/text/markdown buffers.
+(setq text-mode-ispell-word-completion nil)
+
 ;;; Corfu
 (after! corfu
   (setf (alist-get 'border-width          corfu--frame-parameters) 3
@@ -17,13 +24,14 @@
 (after! consult
   (setq consult-preview-excluded-buffers t))
 
-;;; Consult-org-roam: "r" in consult-buffer shows all roam nodes
-;; Defined at startup; :items guard means it silently returns nothing
-;; until org-roam is loaded (on first org file open).
+;;; Consult-org-roam: narrow with "r" in consult-buffer to list all roam nodes
+;; Hidden by default so `org-roam-node-list' (a full DB scan, slow on a large
+;; corpus) runs only when you actually narrow to ?r, not on every consult-buffer
+;; call.  The :items guard also returns nothing until org-roam has loaded.
 (defvar salih/consult-org-roam-node-source
   `(:name     "Roam"
     :narrow   ?r
-    :hidden   nil
+    :hidden   t
     :category org-roam-node
     :items    ,(lambda ()
                  (when (featurep 'org-roam)

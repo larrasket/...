@@ -82,12 +82,6 @@
   (custom-set-faces! `(jinx-misspelled
                        :underline (:style wave :color ,(face-foreground 'error))))
 
-  ;; Source directory & books (lazy list)
-  (setq salih/books
-        (when (file-directory-p salih/source-directory)
-          (mapcar 'file-truename
-                  (directory-files-recursively salih/source-directory "" nil t))))
-
   ;; EWW link type
   (org-link-set-parameters
    "eww"
@@ -321,24 +315,22 @@
                 (cl-letf (((symbol-function 'org-id-get-create) #'ignore))
                   (apply orig-fun args)))))
 
-;;; Logbook/clock advice
-(defun salih/logbook-on (&rest _)  (setq org-log-into-drawer t))
-(defun salih/logbook-off (&rest _) (setq org-log-into-drawer nil))
+;;; Log-note drawer routing
+;; Same result as the old web of :before/:after advices, but without mutating
+;; `org-log-into-drawer' globally (which could leak into unrelated dynamic
+;; scopes).  Org routes clock lines, state/reschedule logs and manual notes all
+;; through `org-store-log-note', tagging each with `org-log-note-purpose':
+;;   - CLOCK lines            -> :LOGBOOK:  (via org-clock-into-drawer)
+;;   - state / reschedule logs -> :STATS:   (via org-log-into-drawer)
+;;   - manual notes (C-c C-z)  -> inline    (the one scoped advice below)
+(setq org-clock-into-drawer "LOGBOOK"
+      org-log-into-drawer   "STATS")
 
-(defun salih/stats-on (&rest _)
-  (if salih/adding-note?
-      (setq salih/adding-note? nil org-log-into-drawer nil)
-    (setq org-log-into-drawer "STATS")))
-
-(defun salih/start-note (&rest _) (setq salih/adding-note? t))
-
-(advice-add 'org-clock-in      :before 'salih/logbook-on)
-(advice-add 'org-clock-in      :after  'salih/logbook-off)
-(advice-add 'org-store-log-note :before 'salih/stats-on)
-(advice-add 'org-store-log-note :after  'salih/logbook-off)
-(advice-add 'org-add-note      :before 'salih/start-note)
-(advice-add 'org-add-note      :before 'salih/stats-on)
-(advice-add 'org-add-note      :after  'salih/logbook-on)
+(define-advice org-store-log-note (:around (fn &rest args) salih/route-log-note)
+  "Keep manual notes inline while automatic logs go to the :STATS: drawer."
+  (let ((org-log-into-drawer
+         (if (eq org-log-note-purpose 'note) nil org-log-into-drawer)))
+    (apply fn args)))
 
 ;;; Org mode hooks
 (add-hook! 'org-mode-hook
@@ -419,73 +411,10 @@
 
 
 
-(after! vulpea
-  (defun salih/vulpea-project-update-tag ()
-    "Update project tag for current buffer."
-    (when (and (featurep 'vulpea)
-               (not (eq major-mode 'org-agenda-mode)))
-      (vulpea-project-update-tag)))
-
-  (defun vulpea-project-files ()
-    "Return note files containing 'project' tag."
-    (if salih/vulpea-show-full
-        (vulpea-project-files-full)
-      (seq-uniq
-       (seq-map #'car
-                (org-roam-db-query
-                 [:select [nodes:file]
-                  :from tags
-                  :left-join nodes :on (= tags:node-id nodes:id)
-                  :where (like tag (quote "%\"project\"%"))])))))
-
-  (defun vulpea-project-files-full ()
-    (seq-uniq
-     (seq-map #'car
-              (org-roam-db-query
-               [:select [nodes:file]
-                :from tags
-                :left-join nodes :on (= tags:node-id nodes:id)
-                :where (or (like tag (quote "%\"project\"%"))
-                           (like tag (quote "%\"project_archived\"%")))]))))
-
-  (defun vulpea-agenda-files-update (&rest _)
-    "Update `org-agenda-files'."
-    (setq org-agenda-files (vulpea-project-files)))
-
-  (defun vulpea-project-p ()
-    "Non-nil if buffer has incomplete TODO entries."
-    (seq-find (lambda (type) (eq type 'todo))
-              (org-element-map (org-element-parse-buffer 'headline) 'headline
-                (lambda (h) (org-element-property :todo-type h)))))
-
-  (defun vulpea-project-done-p ()
-    "Non-nil if buffer has completed TODO entries."
-    (seq-find (lambda (type) (eq type 'done))
-              (org-element-map (org-element-parse-buffer 'headline) 'headline
-                (lambda (h) (org-element-property :todo-type h)))))
-
-  (defun vulpea-project-update-tag ()
-    "Update PROJECT tag in current buffer."
-    (when (and (not (active-minibuffer-window)) (vulpea-buffer-p))
-      (save-excursion
-        (goto-char (point-min))
-        (let* ((tags (vulpea-buffer-tags-get))
-               (original-tags tags))
-          (cond
-           ((vulpea-project-p)
-            (setq tags (cons "project" (remove "project_archived" tags))))
-           ((vulpea-project-done-p)
-            (setq tags (cons "project_archived" (remove "project" tags))))
-           (t (setq tags (remove "project" (remove "project_archived" tags)))))
-          (setq tags (seq-uniq tags))
-          (when (or (seq-difference tags original-tags)
-                    (seq-difference original-tags tags))
-            (apply #'vulpea-buffer-tags-set tags))))))
-
-  (defun vulpea-buffer-p ()
-    "Non-nil if current buffer is in org-roam directory."
-    (org-roam-buffer-p)))
-
+;; The vulpea project-tag helpers (vulpea-project-files, vulpea-project-p,
+;; vulpea-project-update-tag, vulpea-buffer-p, vulpea-agenda-files-update, ...)
+;; live in lr-org-roam.el, which loads right after this file and is the single
+;; source of truth for them.  This file only wires the org-mode hook below.
 
 (require 'vulpea)
 (add-hook! 'org-mode-hook

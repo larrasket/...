@@ -36,7 +36,6 @@
 
 ;;; State variables
 (defvar salih/vulpea-show-full nil)
-(defvar salih/adding-note?    nil)
 (defvar salih/org-roam-dailies-capture-p nil)
 
 ;;; Font
@@ -61,7 +60,6 @@
 (setq display-line-numbers-type 'relative
       auto-save-no-message      t
       warning-minimum-level     :error
-      evil-respect-visual-line-mode t
       fast-but-imprecise-scrolling t
       auto-window-vscroll nil
       process-adaptive-read-buffering nil)
@@ -190,9 +188,9 @@
 (with-eval-after-load 'circe
   (require 'lr-irc))
 
+;; Kept so `salih/open-inbox' can (require 'mu4e) on demand while the :email
+;; module is disabled.
 (add-to-list 'load-path "/opt/homebrew/share/emacs/site-lisp/mu/mu4e")
-
-(mu4e-alert-enable-mode-line-display)
 
 
 (defvar my/theme-cycle nil
@@ -273,32 +271,37 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 
 
 
-(require 'indent-bars)
-
+;; Indent guides come from Doom's :ui indent-guides module (indent-bars),
+;; which loads and resets the package per buffer on its own.  Tunables, if
+;; ever needed:
 ;; (setq indent-bars-width-frac 0.24
 ;;       indent-bars-pad-frac 0.12
 ;;       indent-bars-color '(font-lock-property-name-face :face-bg nil :blend 0.28)
 ;;       indent-bars-color-by-depth nil
 ;;       indent-bars-highlight-current-depth nil)
 
-
-(indent-bars-reset-styles)
-
-(dolist (buf (buffer-list))
-  (with-current-buffer buf
-    (when (bound-and-true-p indent-bars-mode)
-      (indent-bars-reset))))
-
 ;; (salih/set-glass 0.1 1)
 
-;; Pass no-confirm (t): this runs during (daemon) init, BEFORE Doom loads
-;; custom.el - so `custom-safe-themes' is still empty here and a bare
-;; `load-theme' would fire the "Loading a theme can run Lisp code. Really
-;; load?" prompt with no interactive frame to answer it, hanging startup
-;; until SIGUSR2.  `t' skips that confirmation, exactly as Doom's own
-;; `doom-init-theme-h' does.
-(load-theme doom-theme t)
-;; ir black
+;; Modus palette overrides must be set BEFORE the theme loads, so define them
+;; here and load once.  `modus-themes-load-theme' passes :no-confirm, which
+;; matters during (daemon) init: this runs before custom.el populates
+;; `custom-safe-themes', so a confirming load would hang startup with no frame
+;; to answer the "Really load?" prompt (exactly what Doom's `doom-init-theme-h'
+;; avoids the same way).  Require modus-themes first: we no longer load the
+;; theme with a bare `load-theme' (which used to pull it in), so the function
+;; and the overrides variable must be defined before we use them.
+(require 'modus-themes)
+(setq modus-themes-common-palette-overrides
+      '((bg-mode-line-active       bg-main)
+        (fg-mode-line-active       fg-main)
+        (border-mode-line-active   bg-main)
+        (bg-mode-line-inactive     bg-main)
+        (fg-mode-line-inactive     fg-dim)
+        (border-mode-line-inactive bg-main)
+        (bg-line-number-active     bg-main)
+        (bg-line-number-inactive   bg-main)
+        (fringe                    bg-main)))
+(modus-themes-load-theme 'modus-vivendi-tritanopia)
 
 (setq org-extend-today-until 5)
 (salih/set-glass-style 'macos-glass-regular)
@@ -318,21 +321,5 @@ separated by one or more blank lines.  Skips org headings (lines starting with
   :after (ghostel evil)
   :hook (ghostel-mode . evil-ghostel-mode))
 
-
-;; All customizations must come BEFORE loading the theme
-(setq modus-themes-common-palette-overrides
-      '((bg-mode-line-active   bg-main)
-        (fg-mode-line-active   fg-main)
-        (border-mode-line-active   bg-main)
-        (bg-mode-line-inactive bg-main)
-        (fg-mode-line-inactive fg-dim)
-        (border-mode-line-inactive bg-main)))
-
-(setq modus-themes-common-palette-overrides
-      '((bg-line-number-active   bg-main)
-        (bg-line-number-inactive bg-main)
-        (fringe                  bg-main)))
-
-(modus-themes-load-theme 'modus-vivendi-tritanopia)
 
 (map! "M-f" #'consult-line)

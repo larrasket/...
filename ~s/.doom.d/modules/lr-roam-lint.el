@@ -45,23 +45,6 @@
           (message "roam-lint: %s" (string-join msgs " | ")))))))
 
 ;;;
-;;; After-save: warn about unlinked notes
-;;;
-
-(defun salih/roam-lint--check-links-on-save ()
-  "After saving an org-roam file, warn if it has 0 outgoing links."
-  (when (and buffer-file-name
-             (org-roam-file-p buffer-file-name)
-             (not (string-match-p "_index\\.org" buffer-file-name))
-             (not (string-match-p "microblog" buffer-file-name)))
-    (save-excursion
-      (goto-char (point-min))
-      (unless (re-search-forward "\\[\\[id:" nil t)
-        (message "roam-lint: This note has no outgoing links. Consider connecting it.")))))
-
-(add-hook 'after-save-hook #'salih/roam-lint--check-links-on-save)
-
-;;;
 ;;; Interactive: browse stubs
 ;;;
 

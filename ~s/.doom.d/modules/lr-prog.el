@@ -209,25 +209,12 @@ newlines.source = keep
                      base base base)
              t)))
 
-;;; Magit: restart LSP on branch checkout
-(defun salih/lsp-restart-workspaces-after-checkout ()
-  "Restart all active LSP workspaces after a git branch switch.
-Ensures language servers pick up files that may have changed on the new branch."
-  (when (featurep 'lsp-mode)
-    (let (seen-workspaces)
-      (dolist (buf (buffer-list))
-        (with-current-buffer buf
-          (when (and (bound-and-true-p lsp-mode)
-                     (bound-and-true-p lsp--buffer-workspaces))
-            (dolist (ws lsp--buffer-workspaces)
-              (unless (memq ws seen-workspaces)
-                (push ws seen-workspaces)
-                (lsp-workspace-restart ws)))))))))
-
-
-
+;;; Magit: refresh projectile's cache on branch checkout
+;; LSP servers pick up on-disk changes through their own file watchers, so we no
+;; longer restart every workspace on checkout -- that made lsp-completion-at-point
+;; unavailable (corfu stalled) right after a branch switch and spiked CPU while
+;; re-indexing.  Restart manually with `M-x lsp-workspace-restart' if ever needed.
 (after! magit
-  (add-hook 'magit-post-checkout-hook #'salih/lsp-restart-workspaces-after-checkout)
   (add-hook 'magit-post-checkout-hook #'projectile-invalidate-cache))
 
 ;;; Fix flycheck's `org-lint' checker on Emacs 32 / new org-mode
