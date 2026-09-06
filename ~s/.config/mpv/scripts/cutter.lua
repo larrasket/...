@@ -42,11 +42,27 @@ local function next_table_key(t, current)
 	return keys[1]
 end
 
+local function resolve_ffmpeg()
+	-- GUI apps (IINA) launched from Finder get a minimal PATH that excludes
+	-- Homebrew, so a bare "ffmpeg" fails to spawn. Prefer an absolute path.
+	local candidates = {
+		"/opt/homebrew/bin/ffmpeg", -- Apple Silicon Homebrew
+		"/usr/local/bin/ffmpeg",    -- Intel Homebrew
+		"/opt/local/bin/ffmpeg",    -- MacPorts
+	}
+	for _, p in ipairs(candidates) do
+		local f = io.open(p, "r")
+		if f then f:close() return p end
+	end
+	return "ffmpeg" -- fall back to PATH lookup (works when launched from a shell)
+end
+FFMPEG = resolve_ffmpeg()
+
 ACTIONS = {}
 
 ACTIONS.COPY = function(d)
 	local args = {
-		"ffmpeg",
+		FFMPEG,
 		"-nostdin", "-y",
 		"-loglevel", "error",
 		"-ss", d.start_time,
@@ -67,7 +83,7 @@ end
 
 ACTIONS.ENCODE = function(d)
 	local args = {
-		"ffmpeg",
+		FFMPEG,
 		"-nostdin", "-y",
 		"-loglevel", "error",
 		"-i", d.inpath,

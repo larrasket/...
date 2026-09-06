@@ -108,11 +108,8 @@ on-mode-changed = []
     # end tell'
     # '''
 
-    # Focus Ghostty (or open it if not running)
-    alt-enter = 'exec-and-forget /Users/l/.config/aerospace/focus-ghostty.sh'
-
-    # Focus Emacs — moves it to workspace E if it's elsewhere, then jumps there
-    alt-e = 'exec-and-forget /Users/l/.config/aerospace/focus-emacs.sh'
+    # Open Ghostty terminal
+    alt-enter = 'exec-and-forget open -a Ghostty'
 
     # AeroSpace fullscreen — expands window to fill workspace, hides siblings (toggle)
     alt-f = 'fullscreen'
@@ -168,22 +165,21 @@ on-mode-changed = []
     alt-b = 'workspace B'
     alt-c = 'workspace C'
     alt-d = 'workspace D'
-    # alt-e is used for focus-emacs script above
+    alt-e = 'workspace E'
     # alt-f is used for fullscreen above — alt-shift-f does macOS native fullscreen
     alt-g = 'workspace G'
     alt-i = 'workspace I'
-    alt-m = 'exec-and-forget /Users/l/.config/aerospace/focus-music.sh'
-    alt-s = 'exec-and-forget /Users/l/.config/aerospace/focus-safari.sh'
+    alt-m = 'workspace M'
+    alt-s = 'workspace S'
     alt-n = 'workspace N'
     alt-o = 'workspace O'
     alt-p = 'workspace P'
     alt-q = 'workspace Q'
-    # alt-r is used for resize mode — use alt-shift-r to move window to workspace R
-    # alt-s is used for focus-safari script above
+    alt-r = 'workspace R'
     alt-t = 'workspace T'
     alt-u = 'workspace U'
     alt-v = 'workspace V'
-    alt-w = 'exec-and-forget /Users/l/.config/aerospace/focus-mail.sh'
+    alt-w = 'workspace W'
     alt-x = 'workspace X'
     alt-y = 'workspace Y'
     alt-z = 'workspace Z'
@@ -226,7 +222,6 @@ on-mode-changed = []
 
     # See: https://nikitabobko.github.io/AeroSpace/commands#mode
     alt-shift-semicolon = 'mode service'
-    alt-r = 'mode resize'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -261,17 +256,6 @@ on-mode-changed = []
     shift-j = ['swap dfs-next', 'mode main']
     shift-k = ['swap dfs-prev', 'mode main']
     shift-l = ['swap right', 'mode main']
-
-# Resize mode — enter with alt-r, exit with enter/esc
-[mode.resize.binding]
-    h = 'resize width -50'
-    j = 'resize height +50'
-    k = 'resize height -50'
-    l = 'resize width +50'
-    minus = 'resize smart -50'
-    equal = 'resize smart +50'
-    enter = 'mode main'
-    esc = 'mode main'
 
 # ── Auto-route apps to their dedicated workspaces ────────────────────────────
 # Runs whenever a new window is detected (app launch, un-minimize, etc.)

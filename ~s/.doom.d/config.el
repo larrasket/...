@@ -334,3 +334,5 @@ separated by one or more blank lines.  Skips org headings (lines starting with
         (fringe                  bg-main)))
 
 (modus-themes-load-theme 'modus-vivendi-tritanopia)
+
+(map! "M-f" #'consult-line)

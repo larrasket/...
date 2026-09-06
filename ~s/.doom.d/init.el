@@ -1,6 +1,7 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
 (setq evil-respect-visual-line-mode t)
+(setq load-prefer-newer t)
 (doom! :completion
        vertico
        (corfu +icons)

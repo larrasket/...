@@ -278,7 +278,9 @@ The relevant :ID: is preserved so internal [[id:...]] links keep resolving."
 (defun salih/pic-log-from-clipboard (description)
   "Create a pic-log entry from clipboard image."
   (interactive "sDescription: ")
-  (let* ((date-str (format-time-string "%Y-%m-%d"))
+  (require 'org)
+  (let* ((date-str (org-read-date nil nil nil "Date: "))
+         (date-time (org-time-string-to-time date-str))
          (img-name (format "pic_%s_%s.png" date-str (format-time-string "%H%M%S")))
          (img-dir (expand-file-name "static/media/images/featured-images/" salih/hugo-root))
          (img-path (expand-file-name img-name img-dir))
@@ -295,7 +297,8 @@ The relevant :ID: is preserved so internal [[id:...]] links keep resolving."
                            content-dir)))
           (with-temp-file md-path
             (insert (format "---\ntitle: \"Pic - %s\"\ndate: %s\nimage: \"%s\"\ndescription: \"%s\"\n---\n"
-                            (format-time-string "%B %d, %Y") date-str img-url description)))
+                            (format-time-string "%B %d, %Y" date-time)
+                            date-str img-url description)))
           (message "Created pic-log: %s" (file-name-nondirectory md-path)))
       (error "Failed to paste image. Ensure pngpaste is installed"))))
 
