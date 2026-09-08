@@ -54,7 +54,8 @@
 ;;; ef-maris-dark
 ;;; ef-dream
 ;;; modus-vivendi-tritanopia
-(setq doom-theme 'modus-vivendi-tritanopia)
+;;; ef-cherie
+(setq doom-theme 'ef-fig)
 
 ;;; Basic settings
 (setq display-line-numbers-type 'relative
@@ -280,7 +281,6 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 ;;       indent-bars-color-by-depth nil
 ;;       indent-bars-highlight-current-depth nil)
 
-;; (salih/set-glass 0.1 1)
 
 ;; Modus palette overrides must be set BEFORE the theme loads, so define them
 ;; here and load once.  `modus-themes-load-theme' passes :no-confirm, which
@@ -301,7 +301,19 @@ separated by one or more blank lines.  Skips org headings (lines starting with
         (bg-line-number-active     bg-main)
         (bg-line-number-inactive   bg-main)
         (fringe                    bg-main)))
-(modus-themes-load-theme 'modus-vivendi-tritanopia)
+;; (modus-themes-load-theme 'modus-vivendi-tritanopia)
+
+
+(setq ef-themes-common-palette-overrides
+      '((bg-mode-line-active       bg-main)
+        (fg-mode-line-active       fg-main)
+        (border-mode-line-active   bg-main)
+        (bg-mode-line-inactive     bg-main)
+        (fg-mode-line-inactive     fg-dim)
+        (border-mode-line-inactive bg-main)
+        (bg-line-number-active     bg-main)
+        (bg-line-number-inactive   bg-main)
+        (fringe                    bg-main)))
 
 (setq org-extend-today-until 5)
 (salih/set-glass-style 'macos-glass-regular)
@@ -323,3 +335,4 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 
 
 (map! "M-f" #'consult-line)
+
