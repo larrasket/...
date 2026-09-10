@@ -68,12 +68,12 @@ on-mode-changed = []
 #                 See:
 #                 https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-    inner.horizontal = 15
-    inner.vertical =   15
-    outer.left =       15
-    outer.bottom =     15
-    outer.top =        15
-    outer.right =      15
+    inner.horizontal = 5
+    inner.vertical =   5
+    outer.left =       5
+    outer.bottom =     5
+    outer.top =        5
+    outer.right =      5
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
