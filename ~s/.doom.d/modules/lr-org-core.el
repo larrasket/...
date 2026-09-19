@@ -375,7 +375,7 @@
         org-modern-table-horizontal 0.2
         org-modern-label-border 0.5))
 
-(add-hook 'org-mode-hook #'org-modern-mode)
+;; (add-hook 'org-mode-hook #'org-modern-mode)
 
 ;;; Org-present
 (after! org-present

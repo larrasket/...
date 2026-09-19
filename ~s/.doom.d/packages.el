@@ -19,7 +19,7 @@
 (package! consult-org-roam)
 
 ;; Org
-(package! org-modern)
+;; (package! org-modern)
 (package! org-ql)
 (package! org-download)
 (package! org-fc)
