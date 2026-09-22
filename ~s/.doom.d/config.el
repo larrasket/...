@@ -55,7 +55,6 @@
 ;;; ef-dream
 ;;; modus-vivendi-tritanopia
 ;;; ef-cherie
-(setq doom-theme 'ef-fig)
 
 ;;; Basic settings
 (setq display-line-numbers-type 'relative
@@ -336,3 +335,9 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 
 (map! "M-f" #'consult-line)
 
+
+(setq doom-theme 'kaolin-dark)
+
+(solaire-global-mode +1)
+
+(set-fringe-style -1)

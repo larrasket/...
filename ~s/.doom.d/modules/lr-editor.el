@@ -501,6 +501,7 @@ per-command work stays cheap: window layouts are rebuilt only when they change
       "b k"   #'org-noter-kill-session
       "b o"   #'salih/org-noter-open-in-zathura
       "r i"   #'org-roam-node-insert
+      "i r"   #'org-roam-node-insert
       "r I"   #'org-id-get-create 
       "r t"   #'org-roam-tag-add
       "r l f" #'consult-org-roam-forward-links

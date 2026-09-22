@@ -312,3 +312,7 @@ run = ['move-node-to-workspace M']
 [[on-window-detected]]
 if.app-id = 'com.nadroju.silicio'
 run = ['move-node-to-workspace M']
+
+[[on-window-detected]]
+if.app-id = 'com.ghost.browser'
+run = ['layout floating']
