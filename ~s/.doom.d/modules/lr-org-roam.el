@@ -81,21 +81,39 @@ accessed via iCloud symlinks are recognised as org-roam files.")
 
   ;; Capture templates
   (setq org-roam-capture-templates
-        '(("k" "knowledge" plain "%?"
+        '(;; Zettel: an atomic thought - the core unit
+          ("z" "zettel" plain "%?"
            :if-new (file+head "main/${slug}.org"
-                              "#+title: ${title}\n#+FILETAGS: permanent")
+                              "#+title: ${title}\n")
            :immediate-finish t :unnarrowed t)
-          ("e" "encrypted knowledge" plain "%?"
-           :if-new (file+head "main/${slug}.org.gpg"
-                              "#+title: ${title}\n#+FILETAGS: permanent")
-           :immediate-finish t :unnarrowed t)
-          ("l" "links" plain "%?"
+
+          ;; Entity/link node (backward compatible with "l")
+          ;; The template now includes a prompt to write YOUR thought
+          ("l" "entity" plain
+           "\n%?\n\n(What is your thought about ${title}? A definition is not enough.)\n"
            :if-new (file+head "things/${slug}.org"
-                              "#+title: ${title}\n#+FILETAGS: link\n")
+                              "#+title: ${title}\n")
            :immediate-finish t :unnarrowed t)
+
+          ;; Structure note: a map of content
+          ("s" "structure note" plain
+           "#+begin_comment\nThis is a structure note - a map, not content.\nList links to zettel with brief annotations.\n#+end_comment\n\n%?"
+           :if-new (file+head "main/${slug}.org"
+                              "#+title: ${title}\n")
+           :immediate-finish t :unnarrowed t)
+
+          ;; Fleeting: quick capture into fleet file
           ("f" "fleeting" plain "%?"
            :target (file+olp "main/lr.org" ("notes" "${title}"))
            :immediate-finish t :unnarrowed nil)
+
+          ;; Encrypted zettel
+          ("e" "encrypted zettel" plain "%?"
+           :if-new (file+head "main/${slug}.org.gpg"
+                              "#+title: ${title}\n")
+           :immediate-finish t :unnarrowed t)
+
+          ;; Bibliography reference
           ("r" "bibliography reference" plain
            (file "~/configs/~s/orb")
            :target (file+head "references/${citekey}.org"

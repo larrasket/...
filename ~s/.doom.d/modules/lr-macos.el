@@ -261,6 +261,16 @@ Nil lets Emacs choose light/dark defaults.")
   (when (display-graphic-p)
     (salih/--apply-glass))
 
+  ;; First-boot fix: during startup the theme load, `solaire-global-mode', and
+  ;; the initial frame's realization on screen race with the applies above, so
+  ;; the native glass layer can land too early and look wrong until a manual
+  ;; `doom/reload-theme'.  Re-apply once more after init has fully settled (theme
+  ;; loaded, solaire run, frame realized) -- this is what that manual reload does.
+  (add-hook 'doom-after-init-hook
+            (lambda ()
+              (when (display-graphic-p)
+                (run-with-idle-timer 0.5 nil #'salih/--apply-glass))))
+
   (defun salih/toggle-glass ()
     "Toggle the glass effect on/off."
     (interactive)

@@ -164,12 +164,13 @@
 ;; clocks (auto clock-out on away/sleep, idle subtracted), and nudges when you're
 ;; clocked-but-elsewhere.  org-free at load; org loads lazily on first clock.
 (require 'lr-track)
+;; Plain "d X" sequences: a SECOND (:prefix ("d" . "context") ...) block would
+;; recreate the SPC d keymap and wipe the context bindings defined above.
 (map! :leader
-      (:prefix ("d" . "context")
-       :desc "Clock in (search)"    "i" #'lr-track-clock-in
-       :desc "Track status (now)"   "s" #'lr-track-status
-       :desc "Toggle tracking"      "t" #'lr-track-mode
-       :desc "Tracker doctor"       "k" #'lr-track-doctor))
+      :desc "Clock in (search)"    "d i" #'lr-track-clock-in
+      :desc "Track status (now)"   "d s" #'lr-track-status
+      :desc "Toggle tracking"      "d t" #'lr-track-mode
+      :desc "Tracker doctor"       "d k" #'lr-track-doctor)
 ;; Start the coach a couple seconds after init so the first frame is never blocked.
 (add-hook 'doom-after-init-hook
           (lambda () (run-with-timer 2 nil (lambda () (lr-track-mode 1)))))
@@ -178,7 +179,6 @@
 (with-eval-after-load 'org
   (require 'lr-org-core)
   (require 'lr-org-roam)
-  (require 'lr-roam-lint)
   (require 'lr-org-noter)
   (require 'lr-academic))
 
@@ -223,47 +223,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-(defun join-paragraph-lines ()
-  "Join wrapped lines within each paragraph into a single line.  Paragraphs are
-separated by one or more blank lines.  Skips org headings (lines starting with
-*) and property drawers (lines starting with :)."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (not (eobp))
-      ;; Skip blank lines between paragraphs
-      (while (and (not (eobp)) (looking-at "^[[:space:]]*$"))
-        (forward-line 1))
-      ;; Join lines within the current paragraph
-      (while (and (not (eobp)) (not (looking-at "^[[:space:]]*$")))
-        (if (looking-at "^\\*\\|^:")
-            ;; It's a heading or property line - skip it entirely
-            (forward-line 1)
-          ;; It's a regular paragraph line - join with next if next is also regular
-          (end-of-line)
-          (when (not (eobp))
-            (let ((next-line-empty-or-special
-                   (save-excursion
-                     (forward-line 1)
-                     (or (looking-at "^[[:space:]]*$")
-                         (looking-at "^\\*")
-                         (looking-at "^:")))))
-              (unless next-line-empty-or-special
-                (delete-char 1)
-                (just-one-space))))
-          (forward-line 1))))))
-
-(defun remove-org-properties ()
-  "Remove all :PROPERTIES: drawers from an org buffer."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward "^[[:space:]]*:PROPERTIES:\n" nil t)
-      (let ((start (match-beginning 0)))
-        (when (re-search-forward "^[[:space:]]*:END:\n?" nil t)
-          (delete-region start (point)))))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq magit-git-executable "/opt/homebrew/bin/git")
@@ -271,52 +230,7 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 
 
 
-;; Indent guides come from Doom's :ui indent-guides module (indent-bars),
-;; which loads and resets the package per buffer on its own.  Tunables, if
-;; ever needed:
-;; (setq indent-bars-width-frac 0.24
-;;       indent-bars-pad-frac 0.12
-;;       indent-bars-color '(font-lock-property-name-face :face-bg nil :blend 0.28)
-;;       indent-bars-color-by-depth nil
-;;       indent-bars-highlight-current-depth nil)
-
-
-;; Modus palette overrides must be set BEFORE the theme loads, so define them
-;; here and load once.  `modus-themes-load-theme' passes :no-confirm, which
-;; matters during (daemon) init: this runs before custom.el populates
-;; `custom-safe-themes', so a confirming load would hang startup with no frame
-;; to answer the "Really load?" prompt (exactly what Doom's `doom-init-theme-h'
-;; avoids the same way).  Require modus-themes first: we no longer load the
-;; theme with a bare `load-theme' (which used to pull it in), so the function
-;; and the overrides variable must be defined before we use them.
-(require 'modus-themes)
-(setq modus-themes-common-palette-overrides
-      '((bg-mode-line-active       bg-main)
-        (fg-mode-line-active       fg-main)
-        (border-mode-line-active   bg-main)
-        (bg-mode-line-inactive     bg-main)
-        (fg-mode-line-inactive     fg-dim)
-        (border-mode-line-inactive bg-main)
-        (bg-line-number-active     bg-main)
-        (bg-line-number-inactive   bg-main)
-        (fringe                    bg-main)))
-;; (modus-themes-load-theme 'modus-vivendi-tritanopia)
-
-
-(setq ef-themes-common-palette-overrides
-      '((bg-mode-line-active       bg-main)
-        (fg-mode-line-active       fg-main)
-        (border-mode-line-active   bg-main)
-        (bg-mode-line-inactive     bg-main)
-        (fg-mode-line-inactive     fg-dim)
-        (border-mode-line-inactive bg-main)
-        (bg-line-number-active     bg-main)
-        (bg-line-number-inactive   bg-main)
-        (fringe                    bg-main)))
-
 (setq org-extend-today-until 5)
-(salih/set-glass-style 'macos-glass-regular)
-
 
 (use-package ghostel-eshell
   :hook (eshell-load . ghostel-eshell-visual-command-mode))
@@ -327,7 +241,6 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 (use-package ghostel-compile
   :hook (after-init . ghostel-compile-global-mode))
 
-
 (use-package evil-ghostel
   :after (ghostel evil)
   :hook (ghostel-mode . evil-ghostel-mode))
@@ -335,9 +248,14 @@ separated by one or more blank lines.  Skips org headings (lines starting with
 
 (map! "M-f" #'consult-line)
 
-
 (setq doom-theme 'kaolin-dark)
 
 (solaire-global-mode +1)
 
-(set-fringe-style -1)
+;; Zero fringes.  Doom's `vc-gutter +pretty' runs `(fringe-mode 8)' and the
+;; initial GUI frame doesn't retain an early `set-fringe-style', so re-assert 0
+;; once init has settled.  (Solaire already remaps the `fringe' face to
+;; `solaire-fringe-face' per buffer, so a fringe would still match each buffer's
+;; background if one is ever wanted back.)
+(set-fringe-style 0)
+(add-hook 'doom-after-init-hook (lambda () (fringe-mode 0)))

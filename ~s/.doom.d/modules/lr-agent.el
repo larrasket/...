@@ -24,10 +24,12 @@
   :commands (agent-shell agent-shell-anthropic-start-claude-code)
   :init
   ;; SPC o c -> start a Claude Code session in the current project.
+  ;; Bind it as a plain "o c" key-sequence, NOT via (:prefix ("o" . "open") ...):
+  ;; that prefix form recreates the whole SPC o keymap, wiping the o-bindings
+  ;; other modules (lr-editor's agenda keys) already put there.
   (map! :leader
-        (:prefix ("o" . "open")
-         :desc "Claude Code (agent-shell)" "c"
-         #'agent-shell-anthropic-start-claude-code))
+        :desc "Claude Code (agent-shell)" "o c"
+        #'agent-shell-anthropic-start-claude-code)
   :config
   ;; Authenticate with the Claude Code login/subscription (same credentials as
   ;; the `claude' CLI), not a separate ANTHROPIC_API_KEY.

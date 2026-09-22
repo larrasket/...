@@ -2,8 +2,7 @@
 
 (require 'cl-lib)
 
-;;; Fringe
-(set-fringe-style '(1 . 1))
+;; (Fringe width is set to 0 in config.el, after Doom's vc-gutter forces 8.)
 
 ;;; Faces
 (defconst salih/ef-maris-dark-line-number-palette-overrides

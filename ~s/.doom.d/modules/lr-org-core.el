@@ -387,7 +387,7 @@
     (setq visual-fill-column-width 140)
     (visual-fill-column-mode))
   (add-hook! 'org-present-mode-quit-hook
-    (set-fringe-style '(1 . 1))
+    (set-fringe-style 0)
     (hl-line-mode 1)
     (mixed-pitch-mode -1)
     (org-remove-inline-images)
