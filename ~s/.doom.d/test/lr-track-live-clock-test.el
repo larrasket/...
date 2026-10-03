@@ -228,8 +228,10 @@ dirty org buffer must be left untouched."
       (ignore-errors (delete-directory other-dir t)))))
 
 (ert-deftest lr-track-live-clock-autosave-does-nothing-on-a-same-minute-noop ()
-  "A tick that does not actually change the line must not save either."
-  (let ((t0 (- (float-time) 3600))
+  "A tick that does not actually change the line must not save either.
+T0 is aligned to a minute boundary: unaligned, +1800 s and +1830 s straddle a
+minute whenever the wall clock's seconds are 30 or more, and the test flaked."
+  (let ((t0 (* 60.0 (floor (- (float-time) 3600) 60)))
         (lr-track-autosave-clock t)
         (saves nil))
     (lr-track-test--clocked t0

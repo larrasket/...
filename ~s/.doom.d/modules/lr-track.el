@@ -352,22 +352,56 @@ Must be (float-time (or (current-idle-time) 0)); (car (current-idle-time)) is 0
 even at real idle because the seconds live in the low-order slot."
   (float-time (or (current-idle-time) 0)))
 
+(defconst lr-track--return-confirm-seconds 1.5
+  "Focus must still be on Emacs this long after a return before it counts.")
+
+(defvar lr-track--resolving)  ; defined with the check-in below
+
 (defun lr-track--focus-change (&rest _)
   "Recompute `lr-track--focused-p' (`unknown' counts as focused) and, when Emacs
 regains focus after a real absence, trigger the return check-in."
   (let ((was lr-track--focused-p))
-    (setq lr-track--focused-p
-          (and (seq-some (lambda (f) (memq (frame-focus-state f) '(t unknown))) (frame-list)) t))
+    (setq lr-track--focused-p (lr-track--frame-focused-now-p))
     (cond
      ((and was (not lr-track--focused-p))          ; just left Emacs
-      (setq lr-track--unfocused-since (float-time)))
+      ;; Keep the EARLIEST unanswered departure: a pass-through visit must not
+      ;; reset when you actually left, or the next real return under-asks.
+      (unless lr-track--unfocused-since
+        (setq lr-track--unfocused-since (float-time)))
+      ;; Leaving while a check-in is open drops it, exactly like C-g, so it can
+      ;; never sit in a minibuffer nobody is looking at and swallow the next
+      ;; keystrokes (one was found open for 34 min on 2026-10-03).
+      (when (and lr-track--resolving (> (minibuffer-depth) 0))
+        (run-at-time 0 nil #'lr-track--drop-unseen-checkin)))
      ((and (not was) lr-track--focused-p)           ; just came back to Emacs
-      (when (and lr-track-checkin-on-return
-                 lr-track--unfocused-since
-                 (>= (- (float-time) lr-track--unfocused-since) lr-track-checkin-after-seconds))
-        (setq lr-track--checkin-since lr-track--unfocused-since)  ; remember when you left
-        (lr-track--trigger-checkin 'return))
-      (setq lr-track--unfocused-since nil)))))
+      ;; Only a return that HOLDS counts.  AeroSpace workspace hops pass through
+      ;; Emacs for under a second; confirming after a beat means they never
+      ;; open a prompt into the void.
+      (run-at-time lr-track--return-confirm-seconds nil #'lr-track--confirm-return)))))
+
+(defun lr-track--frame-focused-now-p ()
+  "Non-nil when some frame has focus (`unknown' counts as focused)."
+  (and (seq-some (lambda (f) (memq (frame-focus-state f) '(t unknown))) (frame-list)) t))
+
+(defun lr-track--confirm-return ()
+  "Second half of a return: if Emacs still has focus, ask about the gap (when it
+is long enough) and clear the departure.  A pass-through that already left does
+nothing, so the departure survives for the next real return."
+  (when (lr-track--frame-focused-now-p)
+    (when (and lr-track-checkin-on-return
+               lr-track--unfocused-since
+               (>= (- (float-time) lr-track--unfocused-since)
+                   lr-track-checkin-after-seconds))
+      (setq lr-track--checkin-since lr-track--unfocused-since)  ; remember when you left
+      (lr-track--trigger-checkin 'return))
+    (setq lr-track--unfocused-since nil)))
+
+(defun lr-track--drop-unseen-checkin ()
+  "Abort an open check-in once Emacs has lost focus (the C-g path, nothing written)."
+  (when (and lr-track--resolving
+             (> (minibuffer-depth) 0)
+             (not (lr-track--frame-focused-now-p)))
+    (abort-recursive-edit)))
 
 (defun lr-track-sense-healthy-p ()
   (< lr-track--sense-failures lr-track--sense-max-failures))
@@ -1084,8 +1118,20 @@ command in flight."
     (setq lr-track--last-checkin (float-time)
           lr-track--away-pending nil)
     (run-with-idle-timer
-     1.0 nil (lambda () (when (lr-track--safe-to-prompt-p)
-                          (ignore-errors (lr-track-checkin context)))))))
+     1.0 nil (lambda () (lr-track--open-checkin-if-seen context)))))
+
+(defun lr-track--open-checkin-if-seen (context)
+  "Open the check-in only if someone is looking.  Emacs is idle while unfocused,
+so this idle timer fires after a pass-through too; opening then would leave a
+prompt in the void.  Instead re-arm: the cooldown resets and the departure
+rewinds to the earliest unanswered gap, so the next real return asks it all."
+  (if (lr-track--frame-focused-now-p)
+      (when (lr-track--safe-to-prompt-p)
+        (ignore-errors (lr-track-checkin context)))
+    (setq lr-track--last-checkin 0.0
+          lr-track--unfocused-since
+          (let ((a lr-track--checkin-since) (b lr-track--unfocused-since))
+            (cond ((and a b) (min a b)) (a a) (b b) (t (float-time)))))))
 
 (defcustom lr-track-task-cache-ttl 60.0
   "Seconds the check-in memoizes the agenda task list, so repeated prompts are instant."
