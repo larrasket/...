@@ -171,6 +171,9 @@
 ;; line is what silences them when the new code is deployed mid-day.
 (setq lr-track-checkin-on-return nil lr-track-checkin-on-startup nil
       lr-track-daily-banner-budget 0 lr-track-elsewhere-checkin-seconds nil)
+;; Deterministic clocks: a clock runs from your start to your stop, wherever you
+;; are.  Nothing about this laptop (idle, lock, sleep) may pause or end it.
+(setq lr-track-live-clock-line nil)
 ;; Plain "d X" sequences: a SECOND (:prefix ("d" . "context") ...) block would
 ;; recreate the SPC d keymap and wipe the context bindings defined above.
 (map! :leader
