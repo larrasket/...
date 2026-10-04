@@ -41,11 +41,33 @@
 ;; that is never "now"; a post-condition check so a silent abort is reported as
 ;; failed; and it never saves the buffer (a save would run this config's three
 ;; before-save rewriters and push into iCloud).
+;;
+;; V3 STAGE 1: PRESENCE AND THE HONEST CLOCK.  The probe reads three facts every
+;; tick, clocked or not: HID idle, the console lock and kern.waketime
+;; (`lr-track--probe-command').  lr-track-presence.el folds them into here or
+;; away (`lr-track--presence'), and the running clock earns time from presence
+;; alone, through the pure `lr-track--clock-step':
+;;
+;;   machine (and either, for now)  the line ends at his last input.  An away
+;;       (15 min without input, a lock past 15 min, the Mac asleep) PAUSES it
+;;       at that last input, and only his own key ever continues it.
+;;   away (practice, life, sleep)   the line ends at presence's newest sample
+;;       while he is away; 15 min of activity at the Mac pauses it where that
+;;       activity began.
+;;
+;; A pause only stops the line growing: org still clocks the task.  His own
+;; clock-out of a paused clock (O, SPC c o, the switch inside `org-clock-in')
+;; ends it at the pause, through a filter on `org-clock-out', with a note under
+;; the line.  The old check-in and banners stay in this file until Stage 2, but
+;; are off by default (S0).
 
 ;;; Code:
 
 (require 'cl-lib)
 (require 'seq)
+;; Presence (pure, no deps): the probe parsers, including the HID idle one the
+;; sentinel below uses, and the presence step.
+(require 'lr-track-presence)
 
 ;; Soft deps: read live, never required at load, so enabling the mode never
 ;; forces org to load at startup.
@@ -60,6 +82,15 @@
 (declare-function org-entry-end-position "org" ())
 (declare-function org-time-string-to-seconds "org" (s))
 (declare-function org-time-string-to-time "org" (s))
+;; used by the honest clock (places, the paused string, the ended note)
+(declare-function org-entry-get "org" (epom property &optional inherit literal-nil))
+(declare-function org-clock-update-mode-line "org-clock" (&optional refresh))
+(declare-function lr-track-ask-refresh-header "lr-track-ask" ())
+(declare-function org-base-buffer "org-macs" (buffer))
+(declare-function org-get-heading "org" (&optional no-tags no-todo no-priority no-comment))
+(declare-function org-remove-empty-drawer-at "org" (pos))
+(defvar org-clock-marker)
+(defvar org-clock-out-time)
 (defvar org-clock-hd-marker)
 (defvar org-clock-start-time)
 (defvar org-clock-current-task)
@@ -130,16 +161,17 @@ org writes `CLOCK: [start]' and leaves it open until something closes it.
 Forget once -- or lose the session -- and that line is a claim with no end.
 That is how 299 intervals here came to hold 48.9% of all clocked hours.
 
-With this on, the tick advances the line's TRAILING stamp while you are actually
-working, so it always reads `CLOCK: [start]--[last-active] =>  H:MM'.  Stop
-working and it just stops growing, at the last moment you were really there.
+With this on, the tick advances the line's TRAILING stamp while you are at the
+Mac, so it always reads `CLOCK: [start]--[last-input] =>  H:MM'.  Leave and it
+pauses, at your last input; only your own key continues it.
 
 The point is what it does NOT do.  It never closes the clock, never rewrites a
-stamp backwards, never asks you anything, and never saves the buffer.  There is
-simply no dangling line left to forget, so no surgery is needed to fix one --
-which is why this is the answer to \"shit should be explicit\" rather than a
-violation of it.  You still clock out yourself, and an explicit clock-out
-extends the line to the real end time (verified against org, not assumed).
+stamp backwards, never asks you anything, and saves only as
+`lr-track-autosave-clock' says.  There is simply no dangling line left to
+forget, so no surgery is needed to fix one, which is why this is the answer to
+\"shit should be explicit\" rather than a violation of it.  You still clock out
+yourself: a live clock's explicit clock-out extends the line to the real end
+time (verified against org, not assumed), a paused one's ends at the pause.
 
 nil restores plain org behaviour."
   :type 'boolean)
@@ -149,9 +181,9 @@ nil restores plain org behaviour."
 
 Without this the advanced line lives only in the buffer until your next manual
 save, so a crash loses it and the on-disk line is stale -- which undercuts the
-whole point of `lr-track-live-clock-line'.  With it on, every advance (about
-once a minute while you work, since same-minute ticks are no-ops) is flushed to
-disk.
+whole point of `lr-track-live-clock-line'.  With it on, an advance is flushed
+to disk at most once per `lr-track-autosave-interval', at once when the clock
+pauses, and once more when Emacs is killed.  The save is silent: no Wrote line.
 
 The save goes through `lr-track--save-buffer', which NEUTRALISES this config's
 three before-save rewriters (toc-org-insert-toc, vulpea-project-update-tag,
@@ -164,6 +196,11 @@ stance.  That is safe here because only this machine writes `~/roam' (no iCloud
 merge to lose) and the write is a neutralised flush.  nil restores the
 save-only-by-you behaviour."
   :type 'boolean)
+
+(defcustom lr-track-autosave-interval 300.0
+  "Seconds between two autosaves of the clocked buffer for a plain advance.
+A pause and kill-emacs save at once, whatever this says."
+  :type 'number)
 
 (defcustom lr-track-away-nudge-seconds 0.0
   "Seconds after you're detected AWAY (machine idle) before the coach checks in.
@@ -181,10 +218,13 @@ Off by default: the in-Emacs check-in on return (see `lr-track-checkin-on-return
 is the real interaction; this is the naggier banner version.  A number enables it."
   :type '(choice (const :tag "Disabled" nil) number))
 
-(defcustom lr-track-checkin-on-return t
+;; S0 (v3 Stage 1): the old prompts are silenced by default.  Nothing opens from
+;; a timer or a hook any more; the Now? question in the agenda replaces them,
+;; and Stage 2 deletes the code below.
+(defcustom lr-track-checkin-on-return nil
   "When you come back to Emacs after being away/out of it a while, POP an
 in-Emacs check-in: \"still on X? / switch to what you're doing / clock out\",
-and offer to clock into whatever you name.  This is the coach's main interaction."
+and offer to clock into whatever you name.  Off by default since v3 Stage 1."
   :type 'boolean)
 
 (defcustom lr-track-checkin-after-seconds 180.0
@@ -195,9 +235,10 @@ and offer to clock into whatever you name.  This is the coach's main interaction
   "Minimum seconds between return check-ins, so refocusing doesn't nag."
   :type 'number)
 
-(defcustom lr-track-checkin-on-startup t
+(defcustom lr-track-checkin-on-startup nil
   "When Emacs starts (after a prior session), pop the check-in so you account for
-where you've been and clock into what you're doing now.  nil disables it."
+where you've been and clock into what you're doing now.  Off by default since v3
+Stage 1."
   :type 'boolean)
 
 (defcustom lr-track-log-activity nil
@@ -218,10 +259,39 @@ down.  Beyond this it just offers a plain clock-in, e.g. back after a week."
 (defcustom lr-track-interval-clocked 30.0 "Tick seconds while a clock runs." :type 'number)
 (defcustom lr-track-interval-idle 120.0 "Tick seconds while no clock runs." :type 'number)
 (defcustom lr-track-degraded-interval 300.0 "Backoff tick seconds after repeated phase failures." :type 'number)
+(defcustom lr-track-interval-here 30.0
+  "Tick seconds while presence is here (he is at the Mac)."
+  :type 'number)
+(defcustom lr-track-interval-away 60.0
+  "Tick seconds while presence is away."
+  :type 'number)
 
-(defcustom lr-track-daily-banner-budget 14
-  "Maximum coach banners per day (modeline nudges are free and uncounted)."
+(defcustom lr-track-daily-banner-budget 0
+  "Maximum coach banners per day (modeline nudges are free and uncounted).
+0 since v3 Stage 1: no banner ever interrupts."
   :type 'integer)
+
+(defconst lr-track--s0-old-defaults
+  '((lr-track-checkin-on-return . t)
+    (lr-track-checkin-on-startup . t)
+    (lr-track-daily-banner-budget . 14))
+  "The defaults S0 changed, as they were before v3 Stage 1.")
+
+(defun lr-track--s0-silence-old-defaults ()
+  "Give each S0 option still at its old default its new one.
+Deploy is by `load' over the running session (I13), and `defcustom' keeps a
+live value, so the old check-in and banners would stay on until a restart.
+An option customized through Custom, or set to anything else, is his: it is
+left alone."
+  (dolist (c lr-track--s0-old-defaults)
+    (let ((sym (car c)))
+      (when (and (boundp sym)
+                 (equal (default-value sym) (cdr c))
+                 (not (get sym 'saved-value))
+                 (not (get sym 'customized-value)))
+        (set-default sym (eval (car (get sym 'standard-value)) t))))))
+
+(lr-track--s0-silence-old-defaults)
 
 (defcustom lr-track-category-cooldown 300.0
   "Minimum seconds between banners of the same category."
@@ -274,11 +344,19 @@ when a glyph cannot be shown.)"
   "Shown when the typed until-when does not parse or is out of range." :group 'lr-track)
 
 ;; probe cache tuning
-(defconst lr-track--ioreg-args '("-r" "-c" "IOHIDSystem" "-d" "1" "-w" "0")
-  "ioreg args for the HID idle probe.  `-r' is MANDATORY: without it ioreg prints
-only the registry root and HIDIdleTime never appears, so `away' silently becomes
-unreachable and no clock is ever auto-closed.  Do not \"tidy\" this list.")
-(defconst lr-track--hid-idle-max-seconds 2592000.0 "30-day sanity bound on parsed HID idle.")
+(defconst lr-track--probe-command
+  (list "/bin/sh" "-c"
+        (concat "ioreg -r -c IOHIDSystem -d 1 -w 0 | grep -m1 HIDIdleTime;"
+                " ioreg -n Root -d 1 | grep -m1 IOConsoleLocked;"
+                " sysctl -n kern.waketime"))
+  "The presence probe: one shell, three facts, one line each.
+HID idle, the console lock and the last wake, and nothing else (I16): no app,
+window or process name is ever read.  The `-r' on the first ioreg is
+MANDATORY: without it ioreg prints only the registry root, HIDIdleTime never
+appears, and `away' silently becomes unreachable.  Do not \"tidy\" it.")
+(defconst lr-track--probe-skip-seconds 30.0
+  "Emacs input this recent already proves he is here: no process is spawned.")
+;; `lr-track--hid-idle-max-seconds' lives in lr-track-presence.el, with the parser.
 (defvar lr-track--sense-respawn-seconds 25.0 "Do not re-probe if the cached HID sample is younger than this.")
 (defvar lr-track--sense-stale-seconds 60.0
   "A cached HID sample older than this reads as `unknown'.
@@ -320,11 +398,13 @@ collapse every classification to unknown.")
 (defvar lr-track--modeline-cache "" "O(1) modeline string, written only by the modeline phase.")
 (defvar lr-track--phase-failures nil "Alist (PHASE . consecutive-failures).")
 
-(defconst lr-track--phases '(sense live-clock heartbeat activity nudge modeline)
+(defconst lr-track--phases
+  '(sense presence live-clock heartbeat activity nudge modeline header)
   "Ordered tick phases; order is behavioral.
-`live-clock' runs straight after `sense' so the clock line is advanced from the
-state this tick just measured, and BEFORE `nudge', so a nudge that reads the
-clock sees the line already up to date.")
+`presence' steps the newest probe sample straight after `sense', and
+`live-clock' runs right after it, so the clock line moves on the presence this
+tick just stepped, and BEFORE `nudge', so a nudge that reads the clock sees the
+line already up to date.  `header' runs last, on everything the tick changed.")
 (defconst lr-track--phase-failure-limit 3 "Consecutive failures before a phase is disabled + tick backs off.")
 (defvar lr-track--modeline-form '(:eval (lr-track--modeline-string)) "Literal appended to `global-mode-string'.")
 
@@ -332,19 +412,47 @@ clock sees the line already up to date.")
 (defvar lr-track--state-prev nil "Sidecar plist as read at enable (for crash recovery).")
 (defvar lr-track--recovered nil "Non-nil once startup crash recovery has run this session.")
 
+;; Presence and the honest clock (v3 Stage 1).  Every one is a `defvar': deploy
+;; is by `load' mid-day (I13), and a reload must keep the live values.
+(defvar lr-track--last-sample nil
+  "The newest presence sample: (:time T :idle I :locked K :wake W).
+Written by the probe's sentinel, or synthesized when Emacs saw input under
+`lr-track--probe-skip-seconds' ago.  Stepped once by the `presence' phase.")
+(defvar lr-track--presence (lr-track--presence-init)
+  "Presence state, from `lr-track--presence-step'.  `lr-track--enable' starts it
+fresh unless it is still current (`lr-track--presence-fresh-p'); a plain
+`load' keeps it.")
+(defvar lr-track--presence-stepped nil
+  "The sample last stepped into `lr-track--presence', so none goes in twice.")
+(defvar lr-track--clock-pause nil
+  "nil, or (:start F :paused-at F :why SYM) for the clock whose
+`org-clock-start-time' is :start.  Any other clock is not paused.")
+(defvar lr-track--internal nil
+  "Non-nil around lr-track's own clock-outs; the clock-out filter skips those.")
+(defvar lr-track--clock-out-ended nil
+  "What the clock-out filter changed, for the `org-clock-out-hook' note: nil or
+\(:task S :paused-at F :start-stamp S :hd MARKER).")
+(defvar lr-track--last-clock-end nil
+  "Float time the most recent clock ended at, this session (any clock-out).")
+(defvar lr-track--ask-exit-fn nil
+  "Exit function of the Now? one-key map while it is up (set by lr-track-ask).
+Focus loss calls it, so the map never outlives his attention.")
+(defvar-local lr-track--autosaved-at nil
+  "`float-time' this buffer was last autosaved by `lr-track--maybe-autosave'.")
+(put 'lr-track--autosaved-at 'permanent-local t)
+(defvar-local lr-track--advanced-tick nil
+  "`buffer-chars-modified-tick' right after the last advance of the clock line.
+While the buffer's tick still equals it, nothing but that line is unsaved.")
+(put 'lr-track--advanced-tick 'permanent-local t)
+(defvar lr-track--blind-since nil
+  "Float time the probe first failed since the last usable sample was stepped,
+or nil.  A usable sample after 3 min or more of this cannot vouch for the
+stretch before it (`lr-track--step-sample').")
+
 ;;;; sensing
 
-(defun lr-track--parse-hid-idle (output)
-  "Parse HIDIdleTime (nanoseconds) out of ioreg OUTPUT; return seconds or `unknown'.
-Every failure mode returns `unknown', NEVER 0 (0 means input-now and would make
-`away' permanently unreachable) and NEVER a wild value."
-  (if (not (stringp output))
-      'unknown
-    (if (not (string-match
-              "^[ \t]*\"HIDIdleTime\"[ \t]*=[ \t]*\\([0-9]+\\)[ \t]*$" output))
-        'unknown
-      (let ((secs (/ (string-to-number (match-string 1 output)) 1e9)))
-        (if (and (>= secs 0.0) (< secs lr-track--hid-idle-max-seconds)) secs 'unknown)))))
+;; `lr-track--parse-hid-idle' (and `lr-track--parse-probe') live in
+;; lr-track-presence.el, so the pure presence module needs nothing from here.
 
 (defun lr-track-emacs-idle-seconds ()
   "Seconds since Emacs last read input.
@@ -362,6 +470,11 @@ even at real idle because the seconds live in the low-order slot."
 regains focus after a real absence, trigger the return check-in."
   (let ((was lr-track--focused-p))
     (setq lr-track--focused-p (lr-track--frame-focused-now-p))
+    ;; The Now? one-key map never outlives his attention: losing focus closes
+    ;; it, exactly like any other key would.
+    (when (and (not lr-track--focused-p) (functionp lr-track--ask-exit-fn))
+      (condition-case err (funcall lr-track--ask-exit-fn)
+        (error (lr-track--log 'ask-exit err))))
     (cond
      ((and was (not lr-track--focused-p))          ; just left Emacs
       ;; Keep the EARLIEST unanswered departure: a pass-through visit must not
@@ -419,18 +532,27 @@ nothing, so the departure survives for the next real return."
   (setq lr-track--sys-idle-value 'unknown
         lr-track--sys-idle-stamp (float-time)
         lr-track--sense-failures (1+ lr-track--sense-failures))
+  ;; presence is blind from here until a usable sample is stepped
+  (unless lr-track--blind-since
+    (setq lr-track--blind-since lr-track--sys-idle-stamp))
   nil)
 
 (defun lr-track--sys-idle-watchdog-fire ()
   "Kill a probe that overran.  Clears the slot BEFORE `delete-process' (which runs
-the sentinel synchronously) so one timeout is not counted twice."
-  (let ((proc lr-track--sys-idle-process))
+the sentinel synchronously) so one timeout is not counted twice.  The
+sentinel then no longer owns the probe, so its buffer is killed here."
+  (let* ((proc lr-track--sys-idle-process)
+         (buf (and (processp proc) (process-get proc 'lr-track-buf))))
     (setq lr-track--sys-idle-process nil
           lr-track--sys-idle-watchdog nil)
     (when (process-live-p proc) (delete-process proc))
+    (when (buffer-live-p buf) (kill-buffer buf))
     (lr-track--sense-note-failure 'timeout)))
 
 (defun lr-track--sys-idle-sentinel (proc _event)
+  "Read the finished presence probe PROC into the caches.
+The idle seconds keep feeding the old classifier's cache, and the whole sample,
+stamped with the time of the parse, becomes `lr-track--last-sample'."
   (when (memq (process-status proc) '(exit signal))
     ;; only the owner of the slot may write the cache
     (when (eq proc lr-track--sys-idle-process)
@@ -441,28 +563,63 @@ the sentinel synchronously) so one timeout is not counted twice."
       (let* ((buf (process-get proc 'lr-track-buf))
              (out (and (buffer-live-p buf)
                        (with-current-buffer buf (buffer-string))))
-             (parsed (lr-track--parse-hid-idle out)))
+             (parsed (lr-track--parse-probe out))
+             (idle (plist-get parsed :idle)))
         (when (buffer-live-p buf) (kill-buffer buf))
-        (if (eq parsed 'unknown) (lr-track--sense-note-failure 'parse)
-          (lr-track--sense-note-success parsed))))))
+        ;; Only the three parsed facts and the time get past this point (I16).
+        (setq lr-track--last-sample
+              (list :time (float-time) :idle idle
+                    :locked (plist-get parsed :locked)
+                    :wake (plist-get parsed :wake)))
+        (if (eq idle 'unknown) (lr-track--sense-note-failure 'parse)
+          (lr-track--sense-note-success idle))))))
 
 (defun lr-track--sys-idle-probe ()
-  "Spawn one async HID idle probe if the slot is free and ioreg exists."
-  (when (and (eq system-type 'darwin) (executable-find "ioreg")
+  "Spawn one async presence probe if the slot is free and the shell exists."
+  (when (and (eq system-type 'darwin)
+             (file-executable-p (car lr-track--probe-command))
              (not (process-live-p lr-track--sys-idle-process)))
-    (condition-case err
-        (let* ((buf (generate-new-buffer " *lr-track-ioreg*" t))
-               (proc (make-process
-                      :name "lr-track-ioreg" :buffer buf :noquery t
-                      :connection-type 'pipe
-                      :command (cons "ioreg" lr-track--ioreg-args)
-                      :sentinel #'lr-track--sys-idle-sentinel)))
-          (process-put proc 'lr-track-buf buf)
-          (setq lr-track--sys-idle-process proc
-                lr-track--sys-idle-watchdog
-                (run-with-timer lr-track--sense-timeout-seconds nil
-                                #'lr-track--sys-idle-watchdog-fire)))
-      (error (lr-track--sense-note-failure 'spawn) (lr-track--log 'probe err)))))
+    (let ((buf nil))
+      (condition-case err
+          (let ((proc (progn
+                        (setq buf (generate-new-buffer " *lr-track-probe*" t))
+                        (make-process
+                         :name "lr-track-probe" :buffer buf :noquery t
+                         :connection-type 'pipe
+                         :command lr-track--probe-command
+                         :sentinel #'lr-track--sys-idle-sentinel))))
+            (process-put proc 'lr-track-buf buf)
+            (setq lr-track--sys-idle-process proc
+                  lr-track--sys-idle-watchdog
+                  (run-with-timer lr-track--sense-timeout-seconds nil
+                                  #'lr-track--sys-idle-watchdog-fire)))
+        (error
+         ;; no process owns the buffer: one per failed spawn would pile up
+         (when (buffer-live-p buf) (kill-buffer buf))
+         (lr-track--sense-note-failure 'spawn)
+         (lr-track--log 'probe err))))))
+
+(defun lr-track--tick-probe ()
+  "Sense presence for this tick, clock or no clock (spec v3 3.1).
+Emacs input under `lr-track--probe-skip-seconds' ago already proves he is here
+and unlocked, so no process is spawned: the sample is synthesized from Emacs
+idle with the last known wake.  Two guards keep that honest.  A probe sample
+that arrived since the last tick is stepped first, so the synthesized one never
+overwrites it unseen (it may be the very sample that starts an away).  And
+after a stalled tick (over `lr-track-slept-tick-multiple' intervals late, as
+after a sleep) the real probe runs instead, since only it can read the new
+wake that tells presence the Mac slept."
+  (let* ((e (lr-track-emacs-idle-seconds))
+         (now (float-time)))
+    (if (or (>= e lr-track--probe-skip-seconds) (lr-track--tick-stalled-p now))
+        (lr-track--sys-idle-probe)
+      ;; contained: a bad sample must never cost the classifier its tick
+      (condition-case err (lr-track--step-sample lr-track--last-sample)
+        (error (lr-track--log 'presence err)))
+      (setq lr-track--last-sample (lr-track--emacs-sample now e)
+            ;; the old classifier's cache too, so it spawns nothing itself
+            lr-track--sys-idle-value e
+            lr-track--sys-idle-stamp now))))
 
 (defun lr-track-system-idle-seconds ()
   "Return the cached HID idle sample (float) or `unknown'; kick an async refresh.
@@ -532,9 +689,10 @@ Returns a plist with :state, :gap, :outside.  Rule order is load-bearing."
               ;; not worthwhile: treat as fully present at machine (0 sys idle)
               0.0))
          (now (float-time))
-         (gap (if lr-track--last-tick (- now lr-track--last-tick) 0.0))
-         (mode (buffer-local-value 'major-mode (window-buffer (selected-window)))))
-    (lr-track--classify e s gap lr-track--focused-p mode lr-track--interval)))
+         (gap (if lr-track--last-tick (- now lr-track--last-tick) 0.0)))
+    ;; MODE nil: the buffer he looks at is never read (spec v3 3.1), so the
+    ;; old classifier has no `reading' state left.  It is inert since S0.
+    (lr-track--classify e s gap lr-track--focused-p nil lr-track--interval)))
 
 ;;;; org: clock
 
@@ -601,18 +759,15 @@ keeps the clock live, is idempotent across ticks, and a later explicit
             (save-excursion
               (save-restriction
                 (widen)
-                ;; Locate the line by its START STAMP under the clocked heading,
-                ;; NOT by `org-clock-marker''s position.  Rewriting the line moves
-                ;; that marker, so anchoring on it made the SECOND tick replace at
-                ;; the wrong position and clobber the heading (observed:
-                ;; `CLOCK: ...:LOGBOOK: =>  0:10' with the heading gone).  The
-                ;; start stamp is stable and unique within the ENTRY.
-                (let* ((hd (and (markerp org-clock-hd-marker)
-                                (marker-buffer org-clock-hd-marker)
-                                (eq (marker-buffer org-clock-hd-marker)
-                                    (current-buffer))
-                                org-clock-hd-marker))
-                       (start-stamp (format-time-string
+                ;; Locate the line by its START STAMP: the line at
+                ;; `org-clock-marker' when it carries that stamp, else the first
+                ;; one in the clocked ENTRY (`lr-track--goto-running-line').
+                ;; Never by the marker's position alone: before the rewrite
+                ;; below put it back, anchoring on it made the SECOND tick
+                ;; replace at the wrong position and clobber the heading
+                ;; (observed: `CLOCK: ...:LOGBOOK: =>  0:10' with the heading
+                ;; gone).
+                (let* ((start-stamp (format-time-string
                                      (org-time-stamp-format t t)
                                      (seconds-to-time start)))
                        (end-stamp (format-time-string
@@ -627,21 +782,8 @@ keeps the clock live, is idempotent across ticks, and a later explicit
                        (secs (max 0 (round (- (org-time-string-to-seconds end-stamp)
                                               (org-time-string-to-seconds start-stamp)))))
                        (new-tail (format "--%s => %2d:%02d" end-stamp
-                                         (floor secs 3600) (floor (mod secs 3600) 60)))
-                       bound)
-                  (if hd (goto-char hd) (goto-char org-clock-marker))
-                  (beginning-of-line)
-                  ;; This ENTRY only.  `org-end-of-subtree' spans CHILDREN, and a
-                  ;; descendant carrying the same start stamp would then get its
-                  ;; real historical record rewritten.
-                  (setq bound (save-excursion
-                                (or (ignore-errors (org-entry-end-position))
-                                    (point-max))))
-                  (when (re-search-forward
-                         (concat "^[ \t]*CLOCK: " (regexp-quote start-stamp)
-                                 "\\(?:--\\[[^]\n]*\\]\\)?.*$")
-                         bound t)
-                    (beginning-of-line)
+                                         (floor secs 3600) (floor (mod secs 3600) 60))))
+                  (when (lr-track--goto-running-line start-stamp)
                     (let ((current-end (lr-track--clock-line-end)))
                       ;; Only ever move FORWARD.
                       (when (or (null current-end) (> end-float current-end))
@@ -656,7 +798,18 @@ keeps the clock live, is idempotent across ticks, and a later explicit
                             ;; end stamp.  Both would dirty the buffer and push
                             ;; undo entries for no change at all.
                             (unless (or (equal old-tail new-tail)
-                                        (equal end-stamp start-stamp))
+                                        (equal end-stamp start-stamp)
+                                        ;; Never edit a buffer whose file
+                                        ;; changed on disk since it was read:
+                                        ;; the first change would ask whether
+                                        ;; to edit it anyway, and the save
+                                        ;; whether to overwrite the disk, from
+                                        ;; a timer.  The line waits.
+                                        (and (not (lr-track--buffer-current-p
+                                                   (current-buffer)))
+                                             (progn (lr-track--log
+                                                     'advance-stale (buffer-name))
+                                                    t)))
                               (let ((inhibit-field-text-motion t))
                                 ;; Rewrite only the TAIL after the start stamp.
                                 ;; Whole-line `replace-match' destroyed leading
@@ -674,16 +827,25 @@ keeps the clock live, is idempotent across ticks, and a later explicit
                                 ;; the banned clock surgery by another route.
                                 (move-marker org-clock-marker tail-beg
                                              (buffer-base-buffer))
+                                ;; what only our line made unsaved, for the
+                                ;; kill-emacs save (`lr-track--on-kill-emacs')
+                                (setq lr-track--advanced-tick
+                                      (buffer-chars-modified-tick))
                                 ;; Flush the advance to disk so a crash never
                                 ;; loses it and the on-disk line stays current.
                                 ;; `lr-track--save-buffer' neutralises the three
-                                ;; before-save rewriters, so this is a clean
-                                ;; write, not a reformat, and touches only this
-                                ;; one buffer.  Only reached on a REAL advance
-                                ;; (same-minute ticks never get here), so it is
-                                ;; naturally ~once a minute.
-                                (when lr-track-autosave-clock
-                                  (lr-track--save-buffer (current-buffer)))
+                                ;; before-save rewriters, so this is a clean,
+                                ;; silent write, not a reformat, and touches
+                                ;; only this one buffer.  Only reached on a REAL
+                                ;; advance, and throttled to one save per
+                                ;; `lr-track-autosave-interval' (a pause and
+                                ;; kill-emacs force one).  A failing save (a
+                                ;; save hook's error, a full disk) is logged:
+                                ;; it must not abort the step that called
+                                ;; this before its pause is recorded.
+                                (condition-case err
+                                    (lr-track--maybe-autosave (current-buffer) nil)
+                                  (error (lr-track--log 'autosave err)))
                                 t))))))))))))))))
 
 (defun lr-track--clock-line-end ()
@@ -694,16 +856,768 @@ Point must already be at the beginning of the line."
       (ignore-errors
         (float-time (org-time-string-to-time (match-string 1)))))))
 
-(defun lr-track--tick-live-clock ()
-  "Tick phase: advance the live clock line while the owner is actually working.
+(defun lr-track--running-line-end ()
+  "Float time of the end stamp on the running clock's line, or nil while open.
+The line is found the way `lr-track--advance-clock-line' finds it: by its start
+stamp, inside the clocked entry only."
+  (when (and (lr-track--clocking-p)
+             (boundp 'org-clock-start-time) org-clock-start-time
+             (markerp org-clock-marker) (marker-buffer org-clock-marker))
+    (with-current-buffer (marker-buffer org-clock-marker)
+      (save-excursion
+        (save-restriction
+          (widen)
+          (when (lr-track--goto-running-line
+                 (format-time-string (org-time-stamp-format t t)
+                                     org-clock-start-time))
+            (lr-track--clock-line-end)))))))
 
-Advances for `engaged' and `reading'; deliberately does NOTHING for `away',
-`elsewhere', `slept' or `unknown'.  That asymmetry is the entire safety story:
-walk away and the line simply stops growing at your last real activity, with no
-clock surgery, no prompt and nothing to undo."
+(defun lr-track--goto-running-line (start-stamp)
+  "Move point to the start of the running clock's line and return non-nil.
+START-STAMP is that line's start stamp.  The line at `org-clock-marker' wins
+when it carries the stamp: that is the line org runs, even when an answer
+wrote a closed line with the same start into the same entry.  Otherwise the
+first line with the stamp inside the clocked ENTRY (`org-end-of-subtree'
+would span children, and a descendant with the same start stamp would get
+its real record rewritten).  nil, point unspecified, when there is none.
+Call it in the clocked buffer, widened."
+  (let ((re (concat "^[ \t]*CLOCK: " (regexp-quote start-stamp))))
+    (or (and (markerp org-clock-marker)
+             (eq (marker-buffer org-clock-marker) (current-buffer))
+             (progn (goto-char org-clock-marker)
+                    (beginning-of-line)
+                    (looking-at re)))
+        (let ((hd (and (markerp org-clock-hd-marker)
+                       (eq (marker-buffer org-clock-hd-marker) (current-buffer))
+                       org-clock-hd-marker)))
+          (when (or hd (and (markerp org-clock-marker)
+                            (eq (marker-buffer org-clock-marker)
+                                (current-buffer))))
+            (goto-char (or hd org-clock-marker))
+            (beginning-of-line)
+            (when (re-search-forward
+                   re (save-excursion
+                        (or (ignore-errors (org-entry-end-position)) (point-max)))
+                   t)
+              (beginning-of-line)
+              t))))))
+
+(defun lr-track--buffer-current-p (buffer)
+  "Non-nil unless BUFFER visits a file that changed on disk since it was read.
+A timer must never edit or save such a buffer: Emacs would ask, on the first
+change, whether to edit it anyway, and on the save whether to overwrite."
+  (with-current-buffer buffer
+    (or (not buffer-file-name)
+        (verify-visited-file-modtime buffer))))
+
+;;;; the honest clock: places, the pure step, the pause
+
+(defconst lr-track--clock-default-max 36000.0
+  "A clock's maximum when no TRACK_MAX is set on or above its heading: 10 h.")
+
+(defun lr-track--parse-max (s)
+  "Seconds for a TRACK_MAX string S in H:MM, like \"10:00\"; nil if not one."
+  (when (and (stringp s)
+             (string-match "\\`[ \t]*\\([0-9]+\\):\\([0-5][0-9]\\)[ \t]*\\'" s))
+    (let ((secs (+ (* 3600.0 (string-to-number (match-string 1 s)))
+                   (* 60.0 (string-to-number (match-string 2 s))))))
+      (and (> secs 0) secs))))
+
+(defun lr-track--clock-place (marker)
+  "The place and maximum of the heading at MARKER, as (PLACE . MAX-SECONDS).
+PLACE is `machine', `either' or `away', from the nearest TRACK_PLACE on the
+heading or an ancestor; MAX-SECONDS from the nearest TRACK_MAX (H:MM).  Without
+them: `machine' and `lr-track--clock-default-max'.  Never signals: no marker,
+a dead buffer, a buffer not in org, or any error answers that default."
+  (let ((place 'machine) (cap lr-track--clock-default-max))
+    (condition-case err
+        (when (and (markerp marker) (buffer-live-p (marker-buffer marker)))
+          (with-current-buffer (marker-buffer marker)
+            (when (derived-mode-p 'org-mode)
+              (save-excursion
+                (save-restriction
+                  (widen)
+                  (goto-char marker)
+                  (let ((p (org-entry-get nil "TRACK_PLACE" t))
+                        (m (lr-track--parse-max
+                            (org-entry-get nil "TRACK_MAX" t))))
+                    (when (stringp p)
+                      (let ((sym (intern (downcase (string-trim p)))))
+                        (when (memq sym '(machine either away))
+                          (setq place sym))))
+                    (when m (setq cap m))))))))
+      (error (lr-track--log 'clock-place err)
+             (setq place 'machine cap lr-track--clock-default-max)))
+    (cons place cap)))
+
+(defun lr-track--away-why (kind)
+  "Why a clock paused at an away of KIND: the kind, `idle' when none, and
+`unknown' for an `unseen' one, a stretch no sample saw."
+  (pcase kind
+    ('nil 'idle)
+    ('unseen 'unknown)
+    (_ kind)))
+
+(defun lr-track--clock-step (clock p now)
+  "PURE: what the running CLOCK earns from presence P at NOW.
+CLOCK is (:start F :end F :place SYM :max SECS :paused-at F :why SYM), :end
+the running line's current end stamp (nil while open), :paused-at and :why
+nil while it is live.  Return (:advance-to F :paused-at F :why SYM):
+:advance-to is the new end to write, or nil to hold, and is always past both
+:end and :start; :paused-at and :why are set when the clock is paused.
+
+  already paused  hold and keep the pause: a clock never resumes itself.
+  machine/either  here: end at the last input L (a break under 15 min is
+                  bridged, because L jumps on his return).  away: pause at
+                  the away's start (never before :start), why its kind;
+                  but hold while P's newest sample is older than a minute
+                  past :start, since a clock started while presence still
+                  says away is his own key, and the sample that sees it is
+                  still to come.  unknown: hold.  Here again, but P's
+                  latest away ended past the line's end and over a minute
+                  past :start: no step saw it, as when the first sample
+                  after a wake already carries his input, or he clocked in
+                  just before the lid closed.  Pause at its start (never
+                  before :start), why its kind, exactly as if a step had.
+                  An `unseen' away (no sample saw it) pauses why
+                  `unknown': it never says he left.
+                  And whatever the mode, when P's first sample came 3 min
+                  or more after the line's end, no sample saw that span:
+                  presence started over (the mode toggled, a deploy by
+                  `load') or was blind until then.  Pause where the line
+                  reads, why `unknown'.  An open line is exempt: it is his
+                  own clock-in, or an open line org resumed at his word,
+                  and a pause at its start would delete it.
+  away            away: end at P's newest sample, never past it (NOW at
+                  most): a blind probe or a late tick vouches for nothing
+                  after it.  here: let A be his return, or :start
+                  when that is later; once his last input is 15 min or more
+                  past A, pause at A, why `activity'.  Shorter activity
+                  holds, and is bridged when he leaves again.  unknown: hold.
+  any place       a would-be end at :start + :max or later pauses there
+                  instead, why `max'.  A pause never lands before the line's
+                  current end (a glance merged into an earlier away, or a
+                  lowered max, can put its target there): his key ends the
+                  line where it already reads, never earlier."
+  (let ((start (plist-get clock :start))
+        (end (plist-get clock :end))
+        (paused (plist-get clock :paused-at)))
+    (if paused
+        (list :advance-to nil :paused-at paused :why (plist-get clock :why))
+      (let* ((cap (or (plist-get clock :max) lr-track--clock-default-max))
+             (mode (plist-get p :mode))
+             (last (plist-get p :last-input))
+             ;; (TARGET . WHY): the would-be end, and why the clock pauses
+             ;; there (nil for a plain advance); nil to hold
+             (verdict
+              (if (eq (plist-get clock :place) 'away)
+                  (pcase mode
+                    ;; what presence observed: its newest sample said away
+                    ('away (cons (min now (or (plist-get p :prev-time) now)) nil))
+                    ('here
+                     (let ((a (max start (or (lr-track--presence-here-since p)
+                                             start))))
+                       ;; the activity's own span, never NOW minus A: presence
+                       ;; stays here 15 min past his last input, so a 2 min
+                       ;; glance would otherwise end the stream 13 min later
+                       (and (numberp last)
+                            (>= (- last a) lr-track-presence-away-seconds)
+                            (cons a 'activity)))))
+                (pcase (if (let ((first (plist-get p :first-time)))
+                             ;; presence started 3 min or more after the
+                             ;; line's end: no sample saw that span.  Only
+                             ;; a line with an end: an open one is his own
+                             ;; clock-in, or org resuming an open line he
+                             ;; chose to keep, and a pause at its start
+                             ;; would delete it at his clock-out
+                             (and (numberp first) (numberp end)
+                                  (>= (- first end)
+                                      lr-track-presence-break-seconds)))
+                           'unseen
+                         mode)
+                  ('unseen (cons end 'unknown))
+                  ('here
+                   (let* ((gone (plist-get p :last-away))
+                          (from (plist-get gone :from))
+                          (to (plist-get gone :to)))
+                     (if (and (numberp from) (numberp to)
+                              ;; it ended on this clock's watch and the line
+                              ;; never got past it.  It may have begun
+                              ;; before :start: presence dates it from the
+                              ;; last input it saw, and a clock-in just
+                              ;; before the lid closed is never sampled.
+                              ;; A line backdated to the return starts in
+                              ;; the return's minute, so that away is not
+                              ;; its own.
+                              (> to (+ start 60.0))
+                              (or (null end) (> to end)))
+                         (cons (max start from)
+                               (lr-track--away-why (plist-get gone :kind)))
+                       (and (numberp last) (cons (min last now) nil)))))
+                  ('away
+                   (let ((seen (plist-get p :prev-time)))
+                     ;; presence not yet sampled past the clock-in: the
+                     ;; clock is his key, so this away may already be
+                     ;; over; the next sample says.  A start floored to
+                     ;; its minute is why the minute.
+                     (unless (and (numberp seen) (< seen (+ start 60.0)))
+                       (cons (max start (or (plist-get p :away-from) last start))
+                             (lr-track--away-why (plist-get p :away-kind))))))))))
+        (when (and verdict (>= (- (car verdict) start) cap))
+          (setq verdict (cons (+ start cap) 'max)))
+        (let* ((target (car verdict))
+               (why (cdr verdict)))
+          (list :advance-to (and target (> target start)
+                                 (or (null end) (> target end))
+                                 target)
+                ;; never before the line's current end: his key then ends
+                ;; the line where it already reads, never earlier (I7)
+                :paused-at (and why target
+                                (if (numberp end) (max target end) target))
+                :why why))))))
+
+(defun lr-track--sync-running-start ()
+  "Follow his edit of the running line's start; non-nil when it moved.
+Org's `org-clock-update-time-maybe' does this for an open line only, and the
+live line is closed in form.  So after his S-up or S-down on its start,
+`org-clock-start-time' still named the old one: the line was no longer found
+by its start (it froze), and a pause before the new start ended it inverted.
+The line at `org-clock-marker' is read, only when the marker sits past its
+start stamp (a deleted line leaves it at the next line's start), and never
+inside org's own clock resolution.  When that stamp names another minute,
+`org-clock-start-time' becomes it.  A pause at or after the new start is
+kept for it; one before it is dropped, and the clock step decides again.
+Never signals."
+  (condition-case err
+      (when (and (lr-track--clocking-p)
+                 (not (lr-track--clock-stood-in-p))
+                 (boundp 'org-clock-start-time) org-clock-start-time
+                 (markerp org-clock-marker)
+                 (buffer-live-p (marker-buffer org-clock-marker)))
+        (let ((stamp
+               (with-current-buffer (marker-buffer org-clock-marker)
+                 (save-excursion
+                   (save-restriction
+                     (widen)
+                     (goto-char org-clock-marker)
+                     (let ((m (point)))
+                       (beginning-of-line)
+                       (and (looking-at "[ \t]*CLOCK: \\(\\[[^]\n]*\\]\\)")
+                            (>= m (match-end 1))
+                            (match-string-no-properties 1))))))))
+          (when stamp
+            (let ((new (float-time (org-time-string-to-time stamp)))
+                  (old (float-time org-clock-start-time))
+                  (pause lr-track--clock-pause))
+              (unless (= (floor new 60) (floor old 60))
+                (setq org-clock-start-time (seconds-to-time new)
+                      lr-track--clock-pause
+                      (and pause
+                           (eql (plist-get pause :start) old)
+                           (numberp (plist-get pause :paused-at))
+                           (>= (plist-get pause :paused-at) new)
+                           (plist-put (copy-sequence pause) :start new)))
+                (lr-track--log 'start-moved (list :from old :to new))
+                t)))))
+    (error (lr-track--log 'sync-start err) nil)))
+
+(defun lr-track--sync-paused-end (pause)
+  "PAUSE, the current clock's, after his edit of the paused line's end.
+A pause is where his key ends the line, so it follows the end as the line
+reads now.  It records the end the line read when it paused (:end).  When
+the line now reads another minute, he moved it (S-up, S-down, or typed):
+the pause becomes his end, so his clock-out, a switch or y y keeps it,
+never puts the line back at the old pause.  An end later than the pause
+is taken too, recorded or not: a pause is never before the line's end
+\(I7).  Otherwise PAUSE as it is: a line still short of its pause (an
+advance a stale or read-only buffer skipped) ends at the pause.  An open,
+missing or inverted line keeps PAUSE.  Never signals."
+  (condition-case err
+      (let* ((end (lr-track--running-line-end))
+             (recorded (plist-get pause :end))
+             (at (plist-get pause :paused-at)))
+        (if (and (numberp end) (numberp at)
+                 (> end (plist-get pause :start))
+                 (or (> end at)
+                     (and (numberp recorded)
+                          (/= (floor end 60) (floor recorded 60)))))
+            (progn
+              (lr-track--log 'end-moved (list :from at :to end))
+              (setq lr-track--clock-pause
+                    (plist-put (plist-put (copy-sequence pause) :paused-at end)
+                               :end end)))
+          pause))
+    (error (lr-track--log 'sync-end err) pause)))
+
+(defun lr-track--current-pause ()
+  "The pause recorded for the CURRENT clock, or nil.
+A pause recorded for any other clock (another start, or none running) is stale
+and is dropped here, so it can never apply to the wrong line.  His edit of
+the running line's start is followed first (`lr-track--sync-running-start'),
+and his edit of its end then (`lr-track--sync-paused-end')."
+  (lr-track--sync-running-start)
+  (let ((pause lr-track--clock-pause))
+    (when pause
+      (if (and (lr-track--clocking-p)
+               (boundp 'org-clock-start-time) org-clock-start-time
+               (numberp (plist-get pause :start))
+               (= (plist-get pause :start) (float-time org-clock-start-time)))
+          (lr-track--sync-paused-end pause)
+        (setq lr-track--clock-pause nil)))))
+
+(defun lr-track--paused-at ()
+  "The time the current clock paused at, or nil when it is live (or none runs)."
+  (plist-get (lr-track--current-pause) :paused-at))
+
+(defun lr-track--forget-pause ()
+  "Clock hooks: the running clock changed, so no pause applies any more.
+Not when org stands a dangling line in for it (`lr-track--clock-stood-in-p'):
+its cancel in `org-resolve-clocks' (C) ends that line, not the clock org
+runs, whose pause still holds."
+  (unless (lr-track--clock-stood-in-p)
+    (setq lr-track--clock-pause nil)))
+
+(defun lr-track--maybe-autosave (buffer &optional force)
+  "Save BUFFER, the clocked one, when FORCE or when a save is due.
+Due means its last autosave was `lr-track-autosave-interval' or more ago, or
+never happened.  A pause and kill-emacs pass FORCE.  Nothing at all when
+`lr-track-autosave-clock' is nil.  Non-nil when a save was made or due."
+  (when (and lr-track-autosave-clock (buffer-live-p buffer))
+    (let ((now (float-time))
+          (last (buffer-local-value 'lr-track--autosaved-at buffer)))
+      (when (or force
+                (not (numberp last))
+                (>= (- now last) lr-track-autosave-interval)
+                (< now last))           ; the wall clock stepped back
+        (with-current-buffer buffer (setq lr-track--autosaved-at now))
+        (lr-track--save-buffer buffer)
+        t))))
+
+(defun lr-track--tick-live-clock ()
+  "Tick phase: move the running clock's line as far as presence allows.
+
+The pure `lr-track--clock-step' decides, from the clock's place, its line, its
+pause and `lr-track--presence'; this only carries the verdict out.  An advance
+goes through `lr-track--advance-clock-line' (tail only, forward only, a
+same-minute no-op).  A new pause is recorded for this clock and saved at once.
+The old classifier plays no part: presence decides.  Walk away and the line
+stops at your last input, with no clock surgery, no prompt and nothing to undo."
   (when (and lr-track-live-clock-line
-             (memq lr-track--stable-state '(engaged reading)))
-    (lr-track--advance-clock-line (float-time))))
+             (lr-track--clocking-p)
+             ;; never the dangling line org stands in while resolving it
+             (not (lr-track--clock-stood-in-p))
+             (boundp 'org-clock-start-time) org-clock-start-time
+             (markerp org-clock-marker) (marker-buffer org-clock-marker))
+    ;; his S-up on the line's start moves the clock's start with it
+    (lr-track--sync-running-start)
+    (let* ((start (float-time org-clock-start-time))
+           (place (lr-track--clock-place
+                   (and (boundp 'org-clock-hd-marker) org-clock-hd-marker)))
+           (pause (lr-track--current-pause))
+           (step (lr-track--clock-step
+                  (list :start start :end (lr-track--running-line-end)
+                        :place (car place) :max (cdr place)
+                        :paused-at (plist-get pause :paused-at)
+                        :why (plist-get pause :why))
+                  lr-track--presence (float-time)))
+           (advance (plist-get step :advance-to))
+           (paused-at (plist-get step :paused-at)))
+      (when advance (lr-track--advance-clock-line advance))
+      (when (and paused-at (not pause))
+        ;; with the end the line reads now, so his later edit of it shows
+        ;; (`lr-track--sync-paused-end')
+        (setq lr-track--clock-pause
+              (list :start start :paused-at paused-at :why (plist-get step :why)
+                    :end (lr-track--running-line-end)))
+        ;; the line is final until his own key: put it on disk now
+        (lr-track--maybe-autosave (marker-buffer org-clock-marker) t)
+        ;; and say paused in the modeline now, not at org's next minute
+        (when (fboundp 'org-clock-update-mode-line)
+          (ignore-errors (org-clock-update-mode-line)))))))
+
+(defun lr-track--settle-clock ()
+  "Bring presence and the running clock up to the newest sample, now.
+The probe's sample can land after the tick that spawned it, and the next
+tick may be a minute away.  Right after a wake that sample is the sleep:
+until it is stepped, presence still says here and the clock is live, so his
+clock-out, a switch or an answer in that window would book the whole night.
+So the sample is stepped and the live-clock phase runs on it here, and any
+pause it implies is recorded before anything reads the pause.  Idempotent: a
+sample is stepped once and a pause is never undone.  Never signals."
+  (condition-case err
+      (progn (lr-track--step-sample lr-track--last-sample)
+             (lr-track--tick-live-clock))
+    (error (lr-track--log 'settle err))))
+
+(defun lr-track--tick-stalled-p (now)
+  "Non-nil when the tick is late at NOW: over `lr-track-slept-tick-multiple'
+intervals since the last one, as after a sleep or App Nap."
+  (and (numberp lr-track--last-tick)
+       (> (- now lr-track--last-tick)
+          (* lr-track-slept-tick-multiple lr-track--interval))))
+
+(defun lr-track--emacs-sample (now idle)
+  "The sample Emacs input makes at NOW, IDLE seconds after it.
+Unlocked (Emacs took the input) with the last known wake: what
+`lr-track--tick-probe' steps instead of a probe while he types."
+  (list :time now :idle idle :locked nil
+        :wake (or (plist-get lr-track--last-sample :wake)
+                  (plist-get lr-track--presence :wake))))
+
+(defun lr-track--settle-at-key (&optional now)
+  "Settle the clock for his key at NOW (default now): the key is input too.
+First `lr-track--settle-clock'.  Then the sample his key in Emacs makes
+\(`lr-track--emacs-sample') is stepped, and the clock step runs on it: a
+return no tick has sampled yet (he pressed y 25 s after unlocking) is then
+stepped before anything reads presence, so his answer starts at that
+return and `a' names the away he just ended, not the one before.  The
+rule is `lr-track--tick-probe's: Emacs input under
+`lr-track--probe-skip-seconds' ago (a key is), and not after a stalled tick
+\(`lr-track--tick-stalled-p'): only the probe reads the wake that says the
+Mac slept, and a sample with the old wake would hide the sleep.
+Idempotent; never signals."
+  (lr-track--settle-clock)
+  (condition-case err
+      (let ((now (or now (float-time)))
+            (e (lr-track-emacs-idle-seconds))
+            (prev (plist-get lr-track--presence :prev-time)))
+        ;; the rule of `lr-track--tick-probe': Emacs input under
+        ;; `lr-track--probe-skip-seconds' ago, and no stalled tick.  Only a
+        ;; sample newer than presence's newest: it becomes the newest sample
+        ;; (`lr-track--last-sample'), so it is never stepped again, and an
+        ;; older one never reads as the wall clock stepping back
+        (unless (or (>= e lr-track--probe-skip-seconds)
+                    (lr-track--tick-stalled-p now)
+                    (and (numberp prev) (<= now prev)))
+          (let ((sample (lr-track--emacs-sample now e)))
+            (setq lr-track--last-sample sample)
+            (when (lr-track--step-sample sample)
+              (lr-track--tick-live-clock)))))
+    (error (lr-track--log 'settle-key err))))
+
+;;;; clock-out at the pause, and the paused clock string
+
+(defun lr-track--drop-ended ()
+  "Forget what the clock-out filter recorded, freeing its markers."
+  (let ((hd (plist-get lr-track--clock-out-ended :hd))
+        (note (cdr (plist-get lr-track--clock-out-ended :note))))
+    (when (markerp hd) (set-marker hd nil))
+    (when (markerp note) (set-marker note nil)))
+  (setq lr-track--clock-out-ended nil))
+
+(defconst lr-track--note-tags
+  '("now" "declared" "continued" "ended" "away" "sleep" "restarted" "picked")
+  "The TAGs of the notes lr-track writes, `- lr TAG: TEXT'.")
+
+(defconst lr-track--note-re
+  (concat "[ \t]*- lr " (regexp-opt lr-track--note-tags) ": [^\n]*$")
+  "A note lr-track wrote: its own grammar, never a list item of his that
+merely starts with `- lr'.")
+
+(defun lr-track--note-below-running-line ()
+  "The `- lr' note right below the running clock's line, or nil.
+As (TEXT . MARKER), MARKER at the note's line start: lr-track wrote it when
+the line started (`lr-track-ask'), and it must not outlive the line.  Only a
+line in lr-track's own grammar (`lr-track--note-re') is one: an entry with
+no clock drawer puts the CLOCK line right above his own text."
+  (when (and (markerp org-clock-marker) (marker-buffer org-clock-marker))
+    (with-current-buffer (marker-buffer org-clock-marker)
+      (save-excursion
+        (save-restriction
+          (widen)
+          (goto-char org-clock-marker)
+          ;; only below the running line itself, never below a stale marker
+          (when (and (save-excursion (beginning-of-line)
+                                     (looking-at "[ \t]*CLOCK: "))
+                     (= 0 (forward-line 1))
+                     (looking-at lr-track--note-re))
+            (cons (match-string-no-properties 0) (copy-marker (point)))))))))
+
+(defun lr-track--delete-note-line (note)
+  "Delete NOTE, (TEXT . MARKER) from `lr-track--note-below-running-line'.
+Only when the line at MARKER still reads TEXT exactly; a LOGBOOK it leaves
+empty goes too, as `org-clock-cancel' does.  The marker is freed.  Non-nil
+when the line was deleted."
+  (let ((m (cdr note))
+        (done nil))
+    (when (and (markerp m) (buffer-live-p (marker-buffer m)))
+      (with-current-buffer (marker-buffer m)
+        (save-excursion
+          (save-restriction
+            (widen)
+            (goto-char m)
+            (when (and (bolp) (> (point) (point-min))
+                       (looking-at (concat (regexp-quote (car note)) "$")))
+              (delete-region (1- (point)) (line-end-position))
+              (ignore-errors (org-remove-empty-drawer-at (point)))
+              (setq done t))))))
+    (when (markerp m) (set-marker m nil))
+    done))
+
+(defun lr-track--clock-stood-in-p ()
+  "Non-nil while org stands another clock in for the running one.
+`org-with-clock' let-binds `org-clock-marker' and the start time to a
+dangling line (`org-resolve-clocks', `org-clock-clock-out'): whatever reads
+the clock globals then reads that line, not the clock org runs."
+  (and (boundp 'org-clock-marker)
+       (not (eq org-clock-marker (default-toplevel-value 'org-clock-marker)))))
+
+(defun lr-track--org-resolving-p ()
+  "Non-nil inside org's own clock resolution.
+That is `org-resolve-clocks' and its idle prompt, or any clock org stands in
+\(`lr-track--clock-stood-in-p').  His answer there (k, K, g, G, s, C) names
+its own end, so lr-track keeps out: no settle, no pause, no note."
+  (or (bound-and-true-p org-clock-resolving-clocks)
+      (lr-track--clock-stood-in-p)))
+
+(defun lr-track--org-ends-it-p ()
+  "Non-nil when org's own clock resolution names the end of this clock-out.
+That is a clock org stands in (`lr-track--clock-stood-in-p'), or one it
+clocks out while it resolves, outside a clock-in.  Not the clock-out of his
+real clock inside the clock-in a resolution makes (his k, t, g or s for a
+dangling line clocks that task in again): that one interrupts his clock as
+any switch of his does, so it ends at the pause."
+  (or (lr-track--clock-stood-in-p)
+      (and (bound-and-true-p org-clock-resolving-clocks)
+           (not (bound-and-true-p org-clock-clocking-in)))))
+
+(defun lr-track--clock-out-args (args)
+  "`org-clock-out' :filter-args: his clock-out of a paused clock ends there.
+ARGS are (SWITCH-TO-STATE FAIL-QUIETLY AT-TIME).  Only his own clock-outs
+\(`lr-track--internal' nil) are touched, and never one whose end org's own
+clock resolution names (`lr-track--org-ends-it-p'): his key there does.
+With no AT-TIME the clock is first settled (`lr-track--settle-clock'), so a
+sample that came after the last tick counts; then, when the current clock is
+paused, AT-TIME becomes the pause, never before the line's start as it reads
+now (`lr-track--sync-running-start').  That covers agenda O, SPC c o and the
+switch inside `org-clock-in', none of which pass one.  An explicit AT-TIME
+always wins.  The `- lr' note under the running line is remembered for every
+clock-out of his, so the hook can drop it when org removes the line as zero
+time."
+  (lr-track--drop-ended)
+  (if (or lr-track--internal (lr-track--org-ends-it-p))
+      args
+    (lr-track--sync-running-start)
+    (unless (nth 2 args) (lr-track--settle-clock))
+    (let* ((pause (and (null (nth 2 args))
+                       (condition-case nil (lr-track--current-pause)
+                         (error nil))))
+           (paused-at (and (plist-get pause :paused-at)
+                           (max (plist-get pause :paused-at)
+                                (float-time org-clock-start-time))))
+           (note (condition-case nil (lr-track--note-below-running-line)
+                   (error nil))))
+      (setq lr-track--clock-out-ended
+            (if paused-at
+                (list :task (lr-track--clock-task)
+                      :paused-at paused-at
+                      :why (plist-get pause :why)
+                      :start-stamp (format-time-string
+                                    (org-time-stamp-format t t)
+                                    org-clock-start-time)
+                      :hd (and (markerp org-clock-hd-marker)
+                               (marker-buffer org-clock-hd-marker)
+                               (copy-marker org-clock-hd-marker))
+                      :note note)
+              (and note (list :note note))))
+      (if (not paused-at)
+          args
+        (append (list (nth 0 args) (nth 1 args) (seconds-to-time paused-at))
+                (nthcdr 3 args))))))
+
+(defun lr-track--note-under-clock-line (start-stamp hd note)
+  "Put NOTE on its own line right after the closed CLOCK line from START-STAMP.
+The note takes that line's indentation.  The line is the one at point, where
+`org-clock-out' leaves it, else the one inside HD's entry.  Non-nil when the
+note was written."
+  (let ((re (concat "^\\([ \t]*\\)CLOCK: " (regexp-quote start-stamp) "--")))
+    (cl-flet ((write-here ()
+                (when (looking-at re)
+                  (let ((indent (match-string 1)))
+                    (end-of-line)
+                    (insert "\n" indent note)
+                    t))))
+      (or (save-excursion
+            (save-restriction
+              (widen)
+              (beginning-of-line)
+              (write-here)))
+          (and (markerp hd) (buffer-live-p (marker-buffer hd))
+               (with-current-buffer (marker-buffer hd)
+                 (save-excursion
+                   (save-restriction
+                     (widen)
+                     (goto-char hd)
+                     (when (re-search-forward
+                            re (save-excursion
+                                 (or (ignore-errors (org-entry-end-position))
+                                     (point-max)))
+                            t)
+                       (beginning-of-line)
+                       (write-here))))))))))
+
+(defun lr-track--zero-time-why (why)
+  "Why a clock paused at its start (WHY, the pause's) earned nothing."
+  (pcase why
+    ('activity "you stayed at the Mac, so it earned nothing")
+    ('unknown "nothing was seen after it started")
+    (_ "you left right after clocking in")))
+
+(defun lr-track--on-clock-out ()
+  "`org-clock-out-hook': a clock ended; finish one that ended at its pause.
+Every clock-out clears the pause and records `lr-track--last-clock-end'.  When
+org removed the line as zero time, the `- lr' note that was under it goes
+too, whatever ended it.  When the filter moved AT-TIME to the pause, the
+ended note goes under the closed line and the echo says where it ended; or,
+when the line was removed, that no time was recorded, and why.  A clock org
+stood in for the running one (`lr-track--clock-stood-in-p', its own
+resolution of a dangling line) changes none of that: the running clock, its
+pause and its end are not the ones that ended."
+  (if (lr-track--clock-stood-in-p)
+      (lr-track--drop-ended)
+    (lr-track--clock-ended)))
+
+(defun lr-track--clock-ended ()
+  "`lr-track--on-clock-out' for the clock org runs."
+  (let ((ended lr-track--clock-out-ended))
+    (setq lr-track--clock-out-ended nil
+          lr-track--clock-pause nil)
+    (when (and (boundp 'org-clock-out-time) org-clock-out-time)
+      (setq lr-track--last-clock-end (float-time org-clock-out-time)))
+    (when ended
+      (condition-case err
+          (let ((removed (bound-and-true-p org-clock-out-removed-last-clock))
+                (task (or (plist-get ended :task) "The task"))
+                (hm (and (plist-get ended :paused-at)
+                         (lr-track--ts-hm (plist-get ended :paused-at)))))
+            ;; a note must not outlive its line
+            (when (and removed (plist-get ended :note))
+              (lr-track--delete-note-line (plist-get ended :note)))
+            (cond
+             ((not hm))
+             (removed
+              (message "%s: no time recorded (%s)."
+                       task (lr-track--zero-time-why (plist-get ended :why))))
+             (t
+              (lr-track--note-under-clock-line
+               (plist-get ended :start-stamp) (plist-get ended :hd)
+               (concat "- lr ended: where it paused " hm))
+              (message "Clocked out of %s at %s, where it paused." task hm))))
+        (error (lr-track--log 'clock-out err)))
+      (let ((hd (plist-get ended :hd))
+            (note (cdr (plist-get ended :note))))
+        (when (markerp hd) (set-marker hd nil))
+        (when (markerp note) (set-marker note nil))))))
+
+(defun lr-track--clock-string (orig &rest args)
+  ":around `org-clock-get-clock-string': a paused clock says so in the modeline.
+TASK (cut to 20 characters) paused HH:MM, in the `warning' face, and within
+org's MAX-LENGTH (the first of ARGS) when that is positive.  A live clock keeps
+ORIG's own string, ARGS passed through."
+  (let ((paused-at (condition-case nil (lr-track--paused-at) (error nil)))
+        (task (and (boundp 'org-clock-current-task) org-clock-current-task))
+        (limit (car args)))
+    (if (and paused-at (stringp task))
+        (let ((s (format "%s paused %s"
+                         (substring-no-properties task 0 (min 20 (length task)))
+                         (lr-track--ts-hm paused-at))))
+          (when (and (integerp limit) (> limit 0) (> (length s) limit))
+            (setq s (substring s 0 limit)))
+          (propertize s 'face 'warning))
+      (apply orig args))))
+
+(defun lr-track--cancel-takes-line-p ()
+  "Non-nil when `org-clock-cancel' will delete the running line.
+Org's own test: the text before `org-clock-marker' on its line is a CLOCK
+line.  A marker at the line's start (the line retyped in place) fails it,
+and org then only says Clock gone and keeps the line."
+  (and (markerp org-clock-marker) (marker-buffer org-clock-marker)
+       (with-current-buffer (marker-buffer org-clock-marker)
+         (save-excursion
+           (save-restriction
+             (widen)
+             (goto-char org-clock-marker)
+             (looking-back "^[ \t]*CLOCK:.*" (line-beginning-position)))))))
+
+(defun lr-track--clock-cancel-note (&rest _)
+  ":before `org-clock-cancel': his cancel takes the running line's `- lr' note.
+It goes first, so a LOGBOOK the cancel then empties still goes, as org
+leaves it: a note must not outlive its line.  Only when org will delete the
+line (`lr-track--cancel-takes-line-p'): a line org keeps keeps its note.
+lr-track's own cancels (`lr-track--internal') handle their notes themselves.
+Never signals."
+  (unless lr-track--internal
+    (condition-case err
+        (let ((note (and (lr-track--cancel-takes-line-p)
+                         (lr-track--note-below-running-line))))
+          (when note (lr-track--delete-note-line note)))
+      (error (lr-track--log 'cancel-note err)))))
+
+(defun lr-track--hold-here-block ()
+  "`org-clock-in-hook': a line starts in this here-block, so it is no glance.
+Presence then never merges the block into the aways around it
+\(`lr-track--presence-leave'): the night stays split at his line, and the
+away after it can be labelled on its own.  An answer written in the block
+\(`lr-track--execute-plan', a label too) holds it the same way."
+  (let ((p lr-track--presence))
+    (when (and (eq (plist-get p :mode) 'here)
+               (numberp (plist-get p :return)))
+      (setq lr-track--presence
+            (plist-put (copy-sequence p) :held (plist-get p :return))))))
+
+(defun lr-track--clock-in-paused-task (&optional select _start-time)
+  ":before `org-clock-in': his clock-in on the paused task itself starts anew.
+Org would only say Clock continues and leave it paused, so the time after his
+explicit clock-in would never be earned and his clock-out would end it at the
+old pause.  So the paused clock is clocked out first, which the filter ends
+at its pause with its note, and org then starts a new line, exactly as when
+he switches to another task.  Only his own clock-in (`lr-track--internal'
+nil), outside org's clock resolution (`lr-track--org-resolving-p'), with no
+task prompt (SELECT nil or the default-task prefix), on the very heading org
+clocks.  The clock is settled first
+\(`lr-track--settle-clock'), so a pause the newest sample implies counts.
+Point stays in the heading's entry: a clock-out at the line's start removes
+the 0:00 line, its note and the drawer they emptied, and point there would
+fall onto the next heading, which org would then clock.  Never signals: on
+any error org runs as it would."
+  (condition-case err
+      (when (and (not lr-track--internal)
+                 (not (lr-track--org-resolving-p))
+                 (progn (lr-track--settle-clock) t)
+                 (or (null select) (equal select '(16)))
+                 (derived-mode-p 'org-mode)
+                 (lr-track--paused-at)
+                 (markerp org-clock-hd-marker)
+                 (eq (marker-buffer org-clock-hd-marker)
+                     (org-base-buffer (current-buffer)))
+                 (stringp org-clock-current-task)
+                 (save-excursion
+                   (org-back-to-heading t)
+                   (and (= (point) (marker-position org-clock-hd-marker))
+                        (equal org-clock-current-task
+                               (org-get-heading t t t t)))))
+        (let ((hd (save-excursion (org-back-to-heading t) (point-marker))))
+          (unwind-protect
+              (progn
+                (org-clock-out nil t)
+                (unless (ignore-errors
+                          (= (save-excursion (org-back-to-heading t) (point))
+                             hd))
+                  (goto-char hd)))
+            (set-marker hd nil))))
+    (error (lr-track--log 'clock-in-paused err))))
+
+;; Installed at load, never by the mode: deploy is by `load' (I13), and each of
+;; these is idempotent, so a reload adds nothing twice.  Every one also works
+;; before org-clock loads.
+(advice-add 'org-clock-in :before #'lr-track--clock-in-paused-task)
+(advice-add 'org-clock-out :filter-args #'lr-track--clock-out-args)
+(advice-add 'org-clock-get-clock-string :around #'lr-track--clock-string)
+(advice-add 'org-clock-cancel :before #'lr-track--clock-cancel-note)
+(add-hook 'org-clock-in-hook #'lr-track--forget-pause)
+(add-hook 'org-clock-in-hook #'lr-track--hold-here-block)
+(add-hook 'org-clock-cancel-hook #'lr-track--forget-pause)
+(add-hook 'org-clock-out-hook #'lr-track--on-clock-out)
 
 (defun lr-track--autoout (at-float cause)
   "Close the running clock at AT-FLOAT (float seconds) for CAUSE.
@@ -724,7 +1638,8 @@ or inverted interval.  See the module commentary for why each guard exists."
            (t
             (let ((removed nil))
               (lr-track--with-pristine-org-globals
-                (let ((org-clock-out-removed-last-clock nil))
+                (let ((org-clock-out-removed-last-clock nil)
+                      (lr-track--internal t))
                   (org-clock-out nil t (seconds-to-time target))
                   (setq removed org-clock-out-removed-last-clock)))
               ;; post-condition: fail-quietly may have silently aborted
@@ -778,20 +1693,24 @@ or inverted interval.  See the module commentary for why each guard exists."
 
 (defun lr-track--tick-heartbeat ()
   "Stamp a heartbeat every tick (so a restart knows how long Emacs was off) and,
-while clocked, the running-clock pointer (for crash recovery)."
+while clocked, the running-clock pointer (for crash recovery) and its pause."
   (if (lr-track--clocking-p)
       (lr-track--state-put
        :heartbeat (float-time) :pid (emacs-pid)
        :clock (list :file (lr-track--clock-file)
                     :task (lr-track--clock-task)
                     :started (and (boundp 'org-clock-start-time) org-clock-start-time
-                                  (float-time org-clock-start-time))))
-    (lr-track--state-put :heartbeat (float-time) :clock nil)))
+                                  (float-time org-clock-start-time)))
+       :clock-pause (lr-track--current-pause))
+    (lr-track--state-put :heartbeat (float-time) :clock nil :clock-pause nil)))
 
 (defun lr-track--recover-prompt (task at)
-  "Startup-safe: never steal input; time out to `?n' (leave alone) after 60s."
+  "Startup-safe: never steal input; time out to `?n' (leave alone) after 60s.
+It runs from an idle timer, so with no Emacs frame focused it never asks: a
+question nobody sees would take the keys he types once he comes back."
   (if (or noninteractive (active-minibuffer-window) executing-kbd-macro
-          defining-kbd-macro (> (recursion-depth) 0))
+          defining-kbd-macro (> (recursion-depth) 0)
+          (not (lr-track--frame-focused-now-p)))
       ?n
     (condition-case nil
         (with-timeout (60 ?n)
@@ -811,7 +1730,8 @@ Return `closed', `removed', or `cancel'."
         (progn (lr-track--with-pristine-org-globals (org-clock-clock-cancel clock)) 'cancel)
       (let ((removed nil))
         (lr-track--with-pristine-org-globals
-          (let ((org-clock-out-removed-last-clock nil))
+          (let ((org-clock-out-removed-last-clock nil)
+                (lr-track--internal t))
             (org-clock-clock-out clock nil (seconds-to-time target))
             (setq removed org-clock-out-removed-last-clock)))
         (if removed 'removed 'closed)))))
@@ -854,6 +1774,12 @@ Returns the list of outcomes.  Opened buffers do not get the save-time rewriters
             (condition-case e (lr-track--recover-file file task hb)
               (error (lr-track--log 'recover e)))))))))
 
+(defun lr-track--recover-quietly ()
+  "The idle timer `lr-track--enable' arms: `lr-track--recover', never raising.
+A named function, not a lambda, so `lr-track--reap-timers' finds it."
+  (condition-case e (lr-track--recover)
+    (error (lr-track--log 'recover e))))
+
 ;;;; org: activity log
 
 (defun lr-track--activity-file () (expand-file-name lr-track-activity-file))
@@ -883,15 +1809,31 @@ Returns the list of outcomes.  Opened buffers do not get the save-time rewriters
 (defun lr-track--save-buffer (buffer)
   "Save BUFFER with this config's three before-save rewriters neutralised.
 A bare `let'-bind of the buffer-local hook cannot suppress them; only overriding
-the symbol-functions reaches an installed buffer-local entry."
+the symbol-functions reaches an installed buffer-local entry.  Silent: no Wrote
+line, in the echo area or in *Messages*.  A buffer whose file changed on disk
+since it was read is not saved, nor one whose file is write-protected (a
+chmod, or the Finder lock, leaves the modification time alone), nor one with
+no file at all: the save would ask whether to overwrite it, to try anyway,
+or for a file name, and this runs from timers, his keys and kill-emacs.  All
+three are logged; the line stays in the buffer."
   (with-current-buffer buffer
-    (when (buffer-modified-p)
+    (when (and (buffer-modified-p)
+               (or (lr-track--buffer-current-p buffer)
+                   (progn (lr-track--log 'save-stale (buffer-name)) nil))
+               ;; no file: `save-buffer' would ask for one
+               (or buffer-file-name
+                   (progn (lr-track--log 'save-no-file (buffer-name)) nil))
+               (or (file-writable-p buffer-file-name)
+                   (progn (lr-track--log 'save-write-protected (buffer-name))
+                          nil)))
       (let* ((names (seq-filter #'fboundp '(toc-org-insert-toc
                                             vulpea-project-update-tag
                                             org-roam-link-replace-all)))
              (saved (mapcar (lambda (n) (cons n (symbol-function n))) names)))
         (unwind-protect
-            (progn (dolist (n names) (fset n #'ignore)) (save-buffer))
+            (progn (dolist (n names) (fset n #'ignore))
+                   (let ((save-silently t) (inhibit-message t))
+                     (save-buffer)))
           (dolist (p saved) (fset (car p) (cdr p))))))))
 
 (defun lr-track--ts (time) (format-time-string (org-time-stamp-format t t) time))
@@ -1361,7 +2303,10 @@ split is the moment you left, so the task and the next activity never overlap."
           (message "Kept %dm on %s." gap-min task))
       (?e (lr-track--autoout gap-start 'manual)     ; end this task the moment you left
           (lr-track--backfill gap-start))            ; account every minute since then
-      (?o (require 'org-clock) (org-clock-out) (message "Clocked out of %s." task))
+      ;; "keep those minutes on it": his explicit now, never the pause
+      (?o (require 'org-clock)
+          (let ((lr-track--internal t)) (org-clock-out))
+          (message "Clocked out of %s." task))
       (?z (setq lr-track--snooze-until (+ (float-time) lr-track-snooze-seconds))
           (message "Will ask again in %d min." (round (/ lr-track-snooze-seconds 60.0))))
       (_ nil))))
@@ -1934,26 +2879,31 @@ doing and it clocks you in) / clock-out / snooze.  If not: clock into something.
 
 (defun lr-track--modeline-refresh ()
   "Write the O(1) modeline cache.  The ONLY writer, run from the modeline phase.
-Quiet by design: when you are engaged/reading (or the state is unknown) it shows
-NOTHING, so org-clock owns the modeline.  It speaks only when it has something
-actionable to say, you drifted elsewhere while clocked, or you're away/asleep."
-  (let* ((state lr-track--stable-state)
-         (since lr-track--stable-since)
-         (mins (and since (max 0 (floor (/ (- (float-time) since) 60.0)))))
-         (ago (if (and mins (> mins 0)) (format " %dm" mins) ""))
-         (clocked (lr-track--clocking-p)))
+Quiet by design: while he is here (or nothing is known) it shows NOTHING, so
+org-clock owns the modeline.  It speaks only while a clock runs and presence
+says he is away: away for the minutes since his last input, or slept when
+the Mac slept.  It reads `lr-track--presence', as the clock does, so it
+never names another departure or length than the paused clock beside it."
+  (let* ((p lr-track--presence)
+         (from (plist-get p :away-from))
+         (mins (and (numberp from)
+                    (max 0 (floor (/ (- (float-time) from) 60.0)))))
+         (ago (if (and mins (> mins 0)) (format " %dm" mins) "")))
     (setq lr-track--modeline-cache
-          (pcase state
-            ;; away/slept while clocked are the only actionable states; elsewhere
-            ;; (working outside Emacs) is presumed fine, so it stays silent.
-            ('away  (if clocked (format " o away%s " ago) ""))
-            ('slept (if clocked " z slept " ""))
-            (_      "")))))               ; engaged/reading/elsewhere/unknown stays silent
+          (if (and (eq (plist-get p :mode) 'away) (lr-track--clocking-p))
+              (if (eq (plist-get p :away-kind) 'asleep)
+                  " z slept "
+                (format " o away%s " ago))
+            ""))))
 
 ;;;; tick engine
 
 (defun lr-track--next-interval ()
-  (if (lr-track--clocking-p) lr-track-interval-clocked lr-track-interval-idle))
+  "Seconds to the next tick: by presence, else by whether a clock runs."
+  (pcase (plist-get lr-track--presence :mode)
+    ('here lr-track-interval-here)
+    ('away lr-track-interval-away)
+    (_ (if (lr-track--clocking-p) lr-track-interval-clocked lr-track-interval-idle))))
 
 (defun lr-track--schedule (interval)
   "Arm the next tick.  Single choke point: stamps `lr-track--last-tick' to now at
@@ -1968,6 +2918,8 @@ the same moment it sets the interval, so gap is always measured from here."
   (or (eq (plist-get att :state) 'slept) (eq (plist-get att :cause) 'clock-step)))
 
 (defun lr-track--tick-sense ()
+  "Tick phase: probe presence (every tick, clock or not), then classify."
+  (lr-track--tick-probe)
   (let ((att (lr-track-attention-state)))
     (setq lr-track--tick-attention att)
     (let ((state (plist-get att :state)))
@@ -1983,6 +2935,127 @@ the same moment it sets the interval, so gap is always measured from here."
        (t (setq lr-track--last-state state)))
       (when (memq state '(engaged reading))
         (setq lr-track--last-engaged (float-time))))))
+
+(defun lr-track--presence-compact (p)
+  "The part of presence state P that state.eld keeps."
+  (list :mode (plist-get p :mode)
+        :last-input (plist-get p :last-input)
+        :away-from (plist-get p :away-from)
+        :away-kind (plist-get p :away-kind)
+        :return (plist-get p :return)
+        :last-away (plist-get p :last-away)))
+
+(defun lr-track--blind-sample (p sample)
+  "The sample to step before SAMPLE after a blind stretch, or nil.
+P is the presence state.  The last usable sample is 3 min or more before
+SAMPLE, which carries new input 15 min or more after P's last input, and
+nothing vouches for the stretch between: the probe failed
+\(`lr-track--blind-since'), or no tick ran at all (App Nap, a blocked Emacs)
+and no wake says the Mac slept (a wake is rule 3's sleep, which the step
+handles).  HID idle only dates the LAST input, so the whole stretch would
+read as continuous input and its absence would be credited.  A gap under
+15 min hides an away too: 10 min of idle the samples saw, then 10 min no
+sample saw, may be 16 min away.  A sample just before that input, with no
+input since P's, comes first.  It starts an away at P's last input (a
+here-block) or keeps one going, and the return is dated at the new input,
+never at the stale previous sample.  It says :blind, so an away it starts
+is of kind `unseen': nothing saw him leave, and the header and the label
+must not say he did.  If he did work in another app all along, the clock
+pauses where it need not, and his key continues it: the safe way to be
+wrong."
+  (let* ((now (plist-get sample :time))
+         (idle (plist-get sample :idle))
+         (prev (plist-get p :prev-time))
+         (last (plist-get p :last-input))
+         (wake (plist-get sample :wake))
+         (input (and (numberp now) (numberp idle) (- now idle)))
+         (at (and input (- input 1.0))))
+    (when (and input (numberp prev) (numberp last)
+               (or lr-track--blind-since
+                   ;; no wake new since P's: the gap is not a sleep
+                   (not (and (numberp wake) (> wake prev)
+                             (not (eql wake (plist-get p :wake))))))
+               (memq (plist-get p :mode) '(here away))
+               (not (eq (plist-get sample :locked) t))
+               ;; more than a tick or two went unsampled
+               (>= (- now prev) lr-track-presence-break-seconds)
+               (>= (- at last) lr-track-presence-away-seconds)
+               (> at prev))
+      (list :time at :idle (- at last) :locked nil
+            :wake (plist-get sample :wake) :blind t))))
+
+(defun lr-track--step-sample (sample)
+  "Fold SAMPLE into `lr-track--presence', unless it already was.
+Non-nil when it was stepped now.  Each sample is stepped exactly once.  A
+usable sample after a blind stretch is preceded by `lr-track--blind-sample'.
+A return it steps is held when the running line began in that block
+\(`lr-track--hold-early-line')."
+  (when (and sample (not (eq sample lr-track--presence-stepped)))
+    (let* ((p (or lr-track--presence (lr-track--presence-init)))
+           (r0 (plist-get p :return))
+           (blind (and (numberp (plist-get sample :idle))
+                       (lr-track--blind-sample p sample))))
+      (when blind
+        (lr-track--log 'presence-blind
+                       (list :since lr-track--blind-since :to (plist-get blind :time)))
+        (setq p (lr-track--presence-step p blind)))
+      ;; a sample with no idle is the probe failing too (the sentinel also
+      ;; marks it); a usable one ends the blind stretch
+      (if (numberp (plist-get sample :idle))
+          (setq lr-track--blind-since nil)
+        (unless lr-track--blind-since
+          (setq lr-track--blind-since (or (plist-get sample :time) (float-time)))))
+      (setq lr-track--presence-stepped sample
+            lr-track--presence (lr-track--presence-step p sample))
+      (lr-track--hold-early-line r0))
+    t))
+
+(defun lr-track--hold-early-line (old-return)
+  "Hold the here-block a step just opened when the running line began in it.
+OLD-RETURN is presence's return before the step.  His key on sitting down
+\(SPC d N, y then a digit, SPC c i) often comes before the sample that sees
+him back: the clock-in hook (`lr-track--hold-here-block') then finds
+presence away and holds nothing, and a short block would merge as a glance
+into the aways around it, his line inside.  So when the step sets a new
+return R, presence is here, and a clock runs that started after R or at
+most 60 s before it (a start floored to its minute, or the tick before R),
+the block is held, as the hook would have held it."
+  (let* ((p lr-track--presence)
+         (r (plist-get p :return)))
+    (when (and (numberp r) (not (eql r old-return))
+               (eq (plist-get p :mode) 'here)
+               (lr-track--clocking-p)
+               (not (lr-track--clock-stood-in-p))
+               (boundp 'org-clock-start-time) org-clock-start-time
+               (>= (float-time org-clock-start-time) (- r 60.0)))
+      (setq lr-track--presence (plist-put (copy-sequence p) :held r)))))
+
+(defun lr-track--tick-presence ()
+  "Tick phase: step `lr-track--presence' with the newest sample, once each.
+A compact copy goes into `lr-track--state', for state.eld.  It is written at
+once only when more than the last input moved (a mode change, an away, a
+return): the heartbeat phase of this same tick flushes the state anyway, so
+typing does not cost a second write every tick."
+  (lr-track--step-sample lr-track--last-sample)
+  (let ((compact (lr-track--presence-compact lr-track--presence))
+        (old (plist-get lr-track--state :presence)))
+    (unless (equal compact old)
+      (if (equal (plist-put (copy-sequence compact) :last-input nil)
+                 (and old (plist-put (copy-sequence old) :last-input nil)))
+          (setq lr-track--state (plist-put lr-track--state :presence compact))
+        (lr-track--state-put :presence compact)))))
+
+(defun lr-track--tick-header ()
+  "Tick phase: refresh the agenda's Now? header, when lr-track-ask is loaded.
+lr-track never requires lr-track-ask (config.el does), so without it this is a
+quiet no-op.  So is it before org loads: reading time.org would load org from a
+timer, and the header only shows in an agenda, whose build loads org and
+refreshes the header itself.  An error is logged here, never counted as a
+phase failure: the header is display only, and a failing time.org must not
+back the whole tick (presence, the clock line) off to 5 min."
+  (when (and (fboundp 'lr-track-ask-refresh-header) (featurep 'org))
+    (condition-case err (lr-track-ask-refresh-header)
+      (error (lr-track--log 'header err)))))
 
 (defun lr-track--tick-activity ()
   (if (not lr-track-log-activity)
@@ -2005,11 +3078,13 @@ the same moment it sets the interval, so gap is always measured from here."
       (progn
         (pcase phase
           ('sense (lr-track--tick-sense))
+          ('presence (lr-track--tick-presence))
           ('live-clock (lr-track--tick-live-clock))
           ('heartbeat (lr-track--tick-heartbeat))
           ('activity (lr-track--tick-activity))
           ('nudge (lr-track--nudge-check))
-          ('modeline (lr-track--modeline-refresh)))
+          ('modeline (lr-track--modeline-refresh))
+          ('header (lr-track--tick-header)))
         (setf (alist-get phase lr-track--phase-failures) 0)
         nil)                            ; success means not degraded
     (error
@@ -2110,9 +3185,22 @@ which is invisible here, and never org)."
     (setq lr-track--episode nil)))
 
 (defun lr-track--on-kill-emacs ()
-  "On a clean Emacs exit, mark the session clean (so next start won't recover)
-and flush the in-progress episode.  Narrow, never blocks or signals."
+  "On a clean Emacs exit, mark the session clean (so next start won't recover),
+flush the in-progress episode, and save the clocked buffer once more (the
+autosave throttle may be holding its last advance).  That save happens only
+while nothing but the clock line's own advance is unsaved: by now he has
+answered `save-buffers-kill-emacs' about the file, and his no to his own
+unsaved text stands.  Narrow, never signals."
   (ignore-errors (lr-track--state-put :clean t :heartbeat (float-time)))
+  (ignore-errors
+    (when (and (lr-track--clocking-p) (markerp org-clock-marker))
+      (let ((buf (marker-buffer org-clock-marker)))
+        (when (buffer-live-p buf)
+          (if (eql (buffer-local-value 'lr-track--advanced-tick buf)
+                   (with-current-buffer buf (buffer-chars-modified-tick)))
+              (lr-track--maybe-autosave buf t)
+            (when (buffer-modified-p buf)
+              (lr-track--log 'kill-save-skipped (buffer-name buf))))))))
   (lr-track--flush-episode))
 
 (defun lr-track--reap-timers ()
@@ -2137,6 +3225,16 @@ and flush the in-progress episode.  Narrow, never blocks or signals."
   (when (boundp 'doom-before-reload-hook)
     (remove-hook 'doom-before-reload-hook #'lr-track--teardown)))
 
+(defun lr-track--presence-fresh-p (p now)
+  "Non-nil when presence P still vouches for NOW: its newest sample is at
+most `lr-track-presence-break-seconds' old.  SPC d t twice while he works
+then keeps what presence saw, instead of a fresh start whose first sample
+would leave the running line unseen and pause it (`lr-track--clock-step')."
+  (let ((prev (plist-get p :prev-time)))
+    (and (memq (plist-get p :mode) '(here away))
+         (numberp prev)
+         (<= 0.0 (- now prev) lr-track-presence-break-seconds))))
+
 (defun lr-track--enable ()
   (setq lr-track--generation (1+ lr-track--generation))
   (lr-track--reap-timers)
@@ -2153,8 +3251,16 @@ and flush the in-progress episode.  Narrow, never blocks or signals."
   (setq lr-track--stable-state 'unknown lr-track--stable-since (float-time)
         lr-track--last-state nil lr-track--episode nil lr-track--incidents nil
         lr-track--away-pending nil lr-track--snooze-until nil lr-track--last-close nil)
-  ;; close any clock a crashed session left open, after the first frame is up
-  (run-with-idle-timer 5 nil (lambda () (ignore-errors (lr-track--recover))))
+  ;; Presence starts fresh here, and only here: a plain `load' keeps it (I13).
+  ;; The clock's pause is NOT reset: it is a fact about the running line.
+  (unless (lr-track--presence-fresh-p lr-track--presence (float-time))
+    (setq lr-track--presence (lr-track--presence-init)))
+  (setq lr-track--presence-stepped nil
+        lr-track--last-sample nil
+        lr-track--blind-since nil)
+  ;; close any clock a crashed session left open, after the first frame is up.
+  ;; A named function, so `lr-track--reap-timers' cancels it at teardown.
+  (run-with-idle-timer 5 nil #'lr-track--recover-quietly)
   ;; startup check-in: prompt for what you're doing (and account for the gap since
   ;; Emacs was last alive).  Only after a real prior session; a quick reload has a
   ;; fresh heartbeat, so its ~0 gap just offers a plain clock-in.

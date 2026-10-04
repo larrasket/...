@@ -156,21 +156,39 @@
        :desc "List contexts / time"  "l" #'lr-context-list
        :desc "Resume context clock"  "r" #'lr-context-resume-clock
        :desc "Open contexts.org"     "o" #'lr-context-visit
-       :desc "Coach check-in / clock" "j" #'lr-track-checkin))
+       :desc "Time: Now?"            "j" #'lr-track-ask))
 
-;;; Attention tracker + accountability coach (lr-track)
-;; Background sensing (HID + Emacs idle + focus) -> engaged/elsewhere/away/slept,
-;; a modeline badge, an org activity log (~/roam/main/activity.org), trustworthy
-;; clocks (auto clock-out on away/sleep, idle subtracted), and nudges when you're
-;; clocked-but-elsewhere.  org-free at load; org loads lazily on first clock.
+;;; Time tracker (lr-track)
+;; Presence only (the screen lock, HID idle, the Mac's sleep and wake), never
+;; what you did.  The running clock's line ends at your last input and pauses
+;; when you leave; the f agenda's header asks "Now?" when something is due, and
+;; one key there (y) answers it.  org-free at load; org loads lazily on first
+;; clock.
 (require 'lr-track)
+(require 'lr-track-ask)
+;; S0: the old check-in and banners stay off.  The defaults already say so, but
+;; a `load' over a running session keeps the live values (defcustom), so this
+;; line is what silences them when the new code is deployed mid-day.
+(setq lr-track-checkin-on-return nil lr-track-checkin-on-startup nil
+      lr-track-daily-banner-budget 0 lr-track-elsewhere-checkin-seconds nil)
 ;; Plain "d X" sequences: a SECOND (:prefix ("d" . "context") ...) block would
 ;; recreate the SPC d keymap and wipe the context bindings defined above.
 (map! :leader
       :desc "Clock in (search)"    "d i" #'lr-track-clock-in
       :desc "Track status (now)"   "d s" #'lr-track-status
       :desc "Toggle tracking"      "d t" #'lr-track-mode
-      :desc "Tracker doctor"       "d k" #'lr-track-doctor)
+      :desc "Tracker doctor"       "d k" #'lr-track-doctor
+      :desc "Now: avey"            "d 1" #'lr-track-now-1
+      :desc "Now: study"           "d 2" #'lr-track-now-2
+      :desc "Now: build"           "d 3" #'lr-track-now-3
+      :desc "Now: writing"         "d 4" #'lr-track-now-4
+      :desc "Now: reading"         "d 5" #'lr-track-now-5
+      :desc "Now: practice"        "d 6" #'lr-track-now-6
+      :desc "Now: life"            "d 7" #'lr-track-now-7
+      :desc "Now: leisure"         "d 8" #'lr-track-now-8
+      :desc "Now: sleep"           "d 9" #'lr-track-now-9
+      :desc "Time: undo"           "d u" #'lr-track-undo
+      :desc "Time: set up streams" "d M" #'lr-track-setup)
 ;; Start the coach a couple seconds after init so the first frame is never blocked.
 (add-hook 'doom-after-init-hook
           (lambda () (run-with-timer 2 nil (lambda () (lr-track-mode 1)))))
