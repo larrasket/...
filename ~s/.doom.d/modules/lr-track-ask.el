@@ -1,32 +1,29 @@
-;;; lr-track-ask.el --- Now? in the agenda: streams, answers, undo -*- lexical-binding: t; -*-
+;;; lr-track-ask.el --- the Time questions, the keys and every write -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;;
-;; v3 Stage 1, the question side.  lr-track.el senses presence and keeps the
-;; running clock honest; this file asks what the time was, only when he looks,
-;; and writes exactly the answer he gave.
+;; Deterministic by rule: it pops a question only because HE did something
+;; (opened his f agenda, started Emacs, stopped a clock, pressed SPC d j), and
+;; every time it writes is NOW, a time he typed, or one of his own boundaries
+;; (his last stop, a clock's start, where a clock's line ended when Emacs
+;; quit).  Nothing about this laptop is read.
 ;;
-;;   STREAMS  time.org (`lr-track-time-file'), created by SPC d M and nothing
-;;            else: nine plain headings, each with a key, a place and a max.
-;;   CONTEXT  `lr-track--ask-context' is the one door from live state.  Every
-;;            function after it is pure over that plist (tests build it by
-;;            hand): the state, the answer start, the header, the echo and the
-;;            plan of each key.
-;;   HEADER   the f agenda's header line: the clock, or Now? when something is
-;;            due.  Display only, read from a cache the tick refreshes.
-;;   ASK      y in the f agenda (or SPC d j) shows in the echo area what each
-;;            key would write, then takes ONE key through a transient map that
-;;            any other key, focus loss, a minibuffer or 15 s idle closes.  The
-;;            key recomputes its plan and refuses when it is not the one shown
-;;            (I18).
-;;   WRITES   `lr-track--execute-plan' clocks in backdated, ends clocks and logs
-;;            closed lines, each with a `- lr TAG:' note under its CLOCK line,
-;;            saves silently and pushes ONE undo record that matches by exact
-;;            text (`lr-track-undo').
-;;
-;; Nothing in this file reads the minibuffer, displays a buffer, selects a
-;; window or captures a key, except `lr-track-ask', its away map and
-;; `lr-track-setup'.  A test scans the source for exactly that.
+;;   STREAMS    time.org (`lr-track-time-file'), created only by SPC d M: ten
+;;              plain headings 0 to 9, 0 being off, each with a TRACK_KEY and a
+;;              TRACK_MAX limit.
+;;   QUESTIONS  `lr-track-pop' asks, one at a time, what the state calls for:
+;;              a clock that ran when Emacs quit, a clock past its limit, one
+;;              running overnight or 3 h unconfirmed, nothing running 10 min
+;;              since his last stop, and "what now?" right after his stop.  One
+;;              key answers; RET skips; any other key ends the questions and
+;;              runs as usual; C-g, 120 s or losing focus drops them.
+;;   KEYS       SPC d 0-9 (that stream from now; SPC u first: from a typed
+;;              time), SPC d x stop, SPC d j ask, SPC d s status, SPC d u undo,
+;;              SPC d M setup, y in the f agenda.
+;;   WRITES     `lr-track--execute-plan' clocks in backdated, ends clocks and
+;;              logs closed lines, each with a `- lr TAG:' note under its CLOCK
+;;              line, saves silently and pushes ONE undo record that matches by
+;;              exact text (`lr-track-undo').
 
 ;;; Code:
 
@@ -40,6 +37,8 @@
 (declare-function org-clock-cancel "org-clock" ())
 (declare-function org-clock-in "org-clock" (&optional select start-time))
 (declare-function org-duration-from-minutes "org-duration" (minutes &optional fmt canonical))
+(declare-function org-find-olp "org" (path &optional this-buffer))
+(declare-function org-time-string-to-time "org" (s))
 (declare-function evil-define-minor-mode-key "evil-core" (state mode key def &rest bindings))
 (declare-function evil-define-key* "evil-core" (state keymap key def &rest bindings))
 (declare-function evil-set-initial-state "evil-core" (mode state))
@@ -62,7 +61,47 @@
 (defvar evil-local-mode)
 (defvar doom-leader-map)
 
-;;;; settings and constants
+
+(defconst lr-track--stream-seeds
+  '((0 "off" nil) (1 "avey" "10:00") (2 "study" "10:00") (3 "build" "10:00")
+    (4 "writing" "10:00") (5 "reading" "8:00") (6 "practice" "4:00")
+    (7 "life" "4:00") (8 "leisure" "8:00") (9 "sleep" "16:00"))
+  "The streams SPC d M creates, as (KEY NAME MAX).  0 is off: time you did not
+track, logged so it is never asked about again; it has no limit.")
+
+(defvar-local lr-track--setup-file nil
+  "The file the *Time setup* preview creates.")
+
+(defun lr-track--time-file-text ()
+  "The text SPC d M writes: the preamble and one heading per seed."
+  (concat
+   "#+title: Time\n"
+   "#+startup: overview\n"
+   "# Managed by lr-track. Streams are plain headings (no TODO keyword), so this\n"
+   "# file stays out of the agenda. 0 off is time you did not track. TRACK_MAX is\n"
+   "# a stream's limit: a clock running longer asks when it ended.\n"
+   "\n"
+   (mapconcat
+    (lambda (s)
+      (concat (format "* %s\n:PROPERTIES:\n:TRACK_KEY:   %d\n" (nth 1 s) (nth 0 s))
+              (if (nth 2 s) (format ":TRACK_MAX:   %s\n" (nth 2 s)) "")
+              ":END:\n"))
+    lr-track--stream-seeds "\n")))
+
+(defun lr-track--setup-text (file)
+  "The preview of creating FILE with the seeds."
+  (concat
+   "Time setup   nothing is written until RET; q cancels\n"
+   (format "  create %s with %d streams (no TODO keywords, so it stays out of the agenda):\n"
+           (abbreviate-file-name file) (length lr-track--stream-seeds))
+   "    "
+   (mapconcat (lambda (s) (format "%d %s" (nth 0 s) (nth 1 s)))
+              lr-track--stream-seeds "   ")
+   "\n"
+   "  0 off is time you did not track.  Limits: avey, study, build, writing 10h;\n"
+   "  reading, leisure 8h; practice, life 4h; sleep 16h (edit TRACK_MAX in the file)\n"
+   "  your old buckets in life.org stay where they are\n"
+   "  RET create   q cancel\n"))
 
 (defcustom lr-track-time-file "~/roam/main/time.org"
   "Org file of the streams: top-level headings carrying a numeric TRACK_KEY.
@@ -70,96 +109,50 @@ Only `lr-track-setup' creates it.  Answers add CLOCK lines and notes under its
 streams; nothing else here ever writes it."
   :type 'file :group 'lr-track)
 
-(defconst lr-track--stream-seeds
-  '((1 "avey" machine "10:00") (2 "study" machine "10:00")
-    (3 "build" machine "10:00") (4 "writing" machine "10:00")
-    (5 "reading" either "8:00") (6 "practice" away "4:00")
-    (7 "life" away "4:00") (8 "leisure" either "8:00")
-    (9 "sleep" away "16:00"))
-  "The streams SPC d M creates, as (KEY NAME PLACE MAX).")
-
-(defconst lr-track-ask-timeout 15
-  "Seconds of idle after which the one-key map closes by itself.")
-(defconst lr-track--ask-back-seconds 120.0
-  "Here this long since his return before a paused clock asks Now?.")
-(defconst lr-track--ask-open-seconds 600.0
-  "Here this long with nothing running before the header asks Now?.")
-(defconst lr-track--answer-window 5400.0
-  "How far back a now answer may start: 90 min.  Anything older stays open.")
-(defconst lr-track--header-essential-width 90
-  "Columns the header's essential part (before the key hints) must fit in.")
 (defconst lr-track--note-max 70
   "Longest note line, `- lr TAG: ' included.")
+
 (defconst lr-track--undo-max 10
   "Undo records kept; the oldest beyond this can no longer be undone.")
-(defconst lr-track--ask-undo-recent-seconds 600.0
-  "The u key after y undoes only a write this recent, and its echo names it.
-SPC d u reaches the whole stack: it is a command of its own.")
-(defconst lr-track--echo-width 186
-  "Columns of his frame (spec v3 2): every echo line fits in it.")
-(defconst lr-track--echo-task-width 24
-  "Columns a task name gets where an echo line names it twice.")
-(defconst lr-track--covered-max 20
-  "Spans kept in `lr-track--covered-spans'.")
+
 (defconst lr-track--agenda-buffer "*Org Agenda(f)*"
   "The one agenda buffer that gets the header and `lr-track-agenda-mode'.")
+
 (defconst lr-track--agenda-sticky-commands
   '(salih/org-agenda-no-full-f salih/toggle-agenda-late)
   "Commands that rebuild the sticky f agenda without running its finalize.")
+
 (defconst lr-track--header-line-form '(:eval (lr-track--header-cached))
   "The `header-line-format' the f agenda gets.")
 
 ;; Arabic letters and digits as codepoints, so this source stays ASCII.  Each
 ;; letter is the one on the same physical key under the Arabic PC layout.
 (defconst lr-track--ar-ghain #x63a "Arabic ghain, the y key.")
+
 (defconst lr-track--ar-sheen #x634 "Arabic sheen, the a key.")
+
 (defconst lr-track--ar-ain #x639 "Arabic ain, the u key.")
+
 (defconst lr-track--ar-teh #x62a "Arabic teh, the j key.")
+
 (defconst lr-track--ar-noon #x646 "Arabic noon, the k key.")
+
 (defconst lr-track--ar-yeh #x64a "Arabic yeh, the d key.")
+
 (defconst lr-track--ar-khah #x62e "Arabic khah, the o key.")
+
 (defconst lr-track--ar-digit-zeros '(#x660 #x6f0)
   "Arabic-Indic and Extended Arabic-Indic zero: digit N is the zero plus N.")
-
-;;;; state
 
 (defvar lr-track--streams-cache nil
   "(FILE MODTIME TICK STREAMS): the streams last read, by file modification
 time and the visiting buffer's `buffer-chars-modified-tick'.")
+
 (defvar lr-track--header-cache nil
   "The header text, written by `lr-track-ask-refresh-header' only.")
-(defvar lr-track--ask-shown nil
-  "While a one-key map is up: (STATE . ALIST), each key's plan signature as
-the echo showed it.  `lr-track--ask-on-exit' clears it.")
-(defvar lr-track--ask-map nil
-  "The one-key map currently installed by `lr-track-ask', or nil.")
+
 (defvar lr-track--undo-stack nil
   "Undo records, newest first, at most `lr-track--undo-max'.")
-(defvar lr-track--covered-spans nil
-  "Spans a line already books, newest first, as (FROM . TO): every clock line
-that ended this session and every away he labelled.  An away inside one is
-not offered for a label again (`lr-track--ask-away-covered-p').  At most
-`lr-track--covered-max'.")
-(defvar lr-track--ask-echo-shown nil
-  "The echo text a one-key map of ours showed, while that map is up.")
-(defvar lr-track--ask-echo-seen nil
-  "Non-nil when the key being read came while the echo area still showed
-the one-key map's echo (`lr-track--ask-note-echo').  Cleared each time an
-echo is shown, so a key after another message, or after the echo area was
-emptied, finds it nil.")
-(defvar lr-track--ask-where nil
-  "While a one-key map is up: (WINDOW BUFFER STATE), where its echo was
-shown and the evil state there.  A key of the map answers only there
-\(`lr-track--ask-here-p').")
-(defvar lr-track--ask-display-only nil
-  "Non-nil while the context is read for display only (the header).
-The clock is then not settled: a header refresh runs from clock hooks and
-right after an undo, where moving the running line would change what was
-just written.  The next tick, or his next key, settles it.")
-(defvar-local lr-track--setup-file nil
-  "In the *Time setup* preview: the file RET would create.")
-
-;;;; small helpers
 
 (defun lr-track--ask-say (text)
   "Echo TEXT without logging it in *Messages*."
@@ -184,22 +177,6 @@ A name in a right-to-left script (an Arabic heading) gets a mark after it,
 so the hint that follows keeps its place (`bidi-string-mark-left-to-right').
 Any other name comes back as it is."
   (bidi-string-mark-left-to-right s))
-
-(defun lr-track--ask-cut-words (s n)
-  "S cut to at most N columns, at a word boundary when one is near."
-  (if (<= (string-width s) n)
-      s
-    (let* ((cut (truncate-string-to-width s n))
-           (sp (string-match-p " [^ ]*\\'" cut)))
-      (if (and sp (>= sp (/ n 2))) (substring cut 0 sp) cut))))
-
-(defun lr-track--ask-kind-text (kind)
-  "How an away of KIND reads: locked, no input, Mac asleep or not seen."
-  (pcase kind
-    ('locked "locked")
-    ('asleep "Mac asleep")
-    ('unseen "not seen")
-    (_ "no input")))
 
 (defun lr-track--ask-ascii (s)
   "S with every character outside printable ASCII dropped, spaces folded."
@@ -227,27 +204,9 @@ Any other name comes back as it is."
   "The note line for TAG and TEXT, without indentation."
   (format "- lr %s: %s" tag text))
 
-;;;; streams and time.org
-
 (defun lr-track--time-file ()
   "`lr-track-time-file', expanded."
   (expand-file-name lr-track-time-file))
-
-(defun lr-track--time-file-text ()
-  "The text SPC d M writes: the preamble and one heading per seed."
-  (concat
-   "#+title: Time\n"
-   "#+startup: overview\n"
-   "# Managed by lr-track. Streams are plain headings (no TODO keyword),"
-   " so this file stays out\n"
-   "# of the agenda. Edit the properties freely.\n"
-   "\n"
-   (mapconcat
-    (lambda (s)
-      (format (concat "* %s\n:PROPERTIES:\n:TRACK_KEY:   %d\n"
-                      ":TRACK_PLACE: %s\n:TRACK_MAX:   %s\n:END:\n")
-              (nth 1 s) (nth 0 s) (nth 2 s) (nth 3 s)))
-    lr-track--stream-seeds "\n")))
 
 (defun lr-track--time-buffer (file)
   "A buffer visiting FILE, current with the disk, never displayed.
@@ -270,7 +229,7 @@ auto-save-data warning and the `sit-for' after it, no write-protect note."
 
 (defun lr-track--read-streams (file)
   "The streams in FILE, sorted by key (see `lr-track--streams').
-Only keys 1 to 9 are streams, since only those have a key to answer with,
+Keys 0 to 9 are streams (0 is off), since only those have a key to answer with,
 and only the first heading with a key: the rest are logged and left out."
   (require 'org)
   (let ((buf (lr-track--time-buffer file))
@@ -287,19 +246,17 @@ and only the first heading with a key: the rest are logged and left out."
               (when (and (stringp raw)
                          (string-match "\\`[ \t]*\\([0-9]+\\)[ \t]*\\'" raw))
                 (let ((key (string-to-number (match-string 1 raw))))
-                  (if (or (not (<= 1 key 9))
+                  (if (or (not (<= 0 key 9))
                           (seq-find (lambda (x) (eql (plist-get x :key) key))
                                     streams))
                       (push (cons key pos) skipped)
-                    (let* ((m (copy-marker pos))
-                           (place (lr-track--clock-place m)))
+                    (let* ((m (copy-marker pos)))
                       (push (list :key key
                                   :name (save-excursion
                                           (goto-char pos)
                                           (substring-no-properties
                                            (org-get-heading t t t t)))
-                                  :place (car place)
-                                  :max (cdr place)
+                                  :max (unless (zerop key) (lr-track--heading-limit m))
                                   :marker m)
                             streams))))))))))
     (when skipped
@@ -313,10 +270,10 @@ and only the first heading with a key: the rest are logged and left out."
 
 (defun lr-track--streams ()
   "The streams of `lr-track-time-file', sorted by key, or nil without it.
-Each is (:key N :name S :place SYM :max SECS :marker M), one per top-level
-heading with a TRACK_KEY of 1 to 9; place and max follow
-`lr-track--clock-place'.  The file is visited with `find-file-noselect', never
-displayed, and only when it exists.  Cached until its modification time or
+Each is (:key N :name S :max SECS :marker M), one per top-level heading
+with a TRACK_KEY of 0 to 9; max is its TRACK_MAX in seconds (none for 0).
+The file is visited with `find-file-noselect', never displayed, and only
+when it exists.  Cached until its modification time or
 its buffer's text changes: an unsaved move or delete of a heading must not
 leave a key on the wrong one."
   (let ((file (lr-track--time-file)))
@@ -389,40 +346,6 @@ write never lands on a heading the echo did not name."
           (and top
                (seq-find (lambda (s) (= (plist-get s :marker) top)) mine)))))))
 
-(defun lr-track--ask-stream (ctx n)
-  "The stream keyed N among CTX's streams, or nil."
-  (seq-find (lambda (s) (eql (plist-get s :key) n)) (plist-get ctx :streams)))
-
-;;;; SPC d M: the setup preview
-
-(defun lr-track--setup-text (file)
-  "The preview of creating FILE with the seeds.
-The first row's cells are three spaces apart; each cell of the second row
-starts in the column of the cell above it."
-  (let* ((cells (mapcar (lambda (s) (format "%d %s (%s)" (nth 0 s) (nth 1 s) (nth 2 s)))
-                        lr-track--stream-seeds))
-         (top (seq-take cells 5))
-         (cols (let ((col 4) (out nil))
-                 (dolist (c top (nreverse out))
-                   (push col out)
-                   (setq col (+ col (length c) 3)))))
-         (row2 (let ((line ""))
-                 (cl-loop for c in (seq-drop cells 5)
-                          for col in cols
-                          do (setq line (concat (string-pad
-                                                 line (if (string-empty-p line) col
-                                                        (max col (+ 2 (length line)))))
-                                                c)))
-                 line)))
-    (concat
-     "Time setup   nothing is written until RET; q cancels\n"
-     (format "  create %s with %d streams (no TODO keywords, so it stays out of the agenda):\n"
-             (abbreviate-file-name file) (length lr-track--stream-seeds))
-     "    " (mapconcat #'identity top "   ") "\n"
-     row2 "\n"
-     "  your 20 old buckets in life.org stay where they are until a later stage moves them\n"
-     "  RET create   q cancel\n")))
-
 (defun lr-track--setup-exists-text (file)
   "The refusal when FILE already exists.
 When it holds no stream, it says so and where to add them: SPC d M never
@@ -434,7 +357,7 @@ writes over his file, so the way on is in the file."
 
 (defun lr-track--nostreams-file-text (file)
   "What to do when FILE, time.org, exists but holds no stream."
-  (format "%s has no streams (top-level headings with TRACK_KEY 1 to 9): add them there."
+  (format "%s has no streams (top-level headings with TRACK_KEY 0 to 9): add them there."
           (abbreviate-file-name file)))
 
 (defun lr-track--setup-close ()
@@ -455,7 +378,9 @@ writes over his file, so the way on is in the file."
         ;; `excl': never over a file that appeared since the check
         (write-region (lr-track--time-file-text) nil file nil 'quiet nil 'excl))
       (lr-track--setup-close)
-      (lr-track--ask-say (format "Created %s with %d streams. y in your agenda now asks Now?"
+      ;; the record starts now: no question about time before the setup
+      (lr-track--set-last-stop (lr-track--ask-minute (float-time)) t)
+      (lr-track--ask-say (format "Created %s with %d streams. The agenda now asks what you did when something is open."
                                  (abbreviate-file-name file)
                                  (length lr-track--stream-seeds))))))
 
@@ -476,13 +401,6 @@ writes over his file, so the way on is in the file."
 (define-derived-mode lr-track-setup-mode special-mode "Time-Setup"
   "The SPC d M preview.  Nothing is written until RET; q cancels.")
 
-(with-eval-after-load 'evil
-  (evil-set-initial-state 'lr-track-setup-mode 'motion)
-  (evil-define-key* '(motion normal) lr-track-setup-mode-map
-    (kbd "RET") #'lr-track--setup-create
-    [return] #'lr-track--setup-create
-    "q" #'lr-track--setup-cancel))
-
 (defun lr-track-setup ()
   "SPC d M: preview creating `lr-track-time-file' with the nine streams.
 The preview writes nothing; RET in it creates the file, q closes it.  An
@@ -500,769 +418,6 @@ existing file is his: this refuses with an echo and opens nothing."
             (insert (lr-track--setup-text file)))
           (goto-char (point-min)))
         (pop-to-buffer buf)))))
-
-;;;; the context (the one door from live state)
-
-(defun lr-track--ask-clock ()
-  "The running clock for the context, or nil when none runs."
-  (when (and (lr-track--clocking-p)
-             (boundp 'org-clock-start-time) org-clock-start-time)
-    (let* ((hd (and (boundp 'org-clock-hd-marker) (markerp org-clock-hd-marker)
-                    (marker-buffer org-clock-hd-marker) org-clock-hd-marker))
-           (pause (lr-track--current-pause))
-           (stream (and hd (lr-track--stream-of-marker hd))))
-      (list :task (or (lr-track--clock-task) "the clock")
-            :marker hd
-            :stream-key (plist-get stream :key)
-            :start (float-time org-clock-start-time)
-            :end (lr-track--running-line-end)
-            :paused-at (plist-get pause :paused-at)
-            :why (plist-get pause :why)
-            :place (car (lr-track--clock-place hd))))))
-
-(defun lr-track--ask-undo-label (now)
-  "What u after y undoes at NOW: the newest undo record's label, when that
-write is under `lr-track--ask-undo-recent-seconds' old; else nil."
-  (let* ((rec (car lr-track--undo-stack))
-         (at (plist-get rec :at)))
-    (and rec (numberp at) (numberp now)
-         (<= 0.0 (- now at) lr-track--ask-undo-recent-seconds)
-         (plist-get rec :label))))
-
-(defun lr-track--ask-context (&optional now)
-  "The context every Now? function reads: live state at NOW (default now).
-\(:now F :presence P :streams STREAMS :clock CLOCK :last-end F :quiet nil
- :covered SPANS :undo LABEL :time-file FILE).  :undo is what u would undo,
-or nil (`lr-track--ask-undo-label'); :time-file is time.org when it exists
-but holds no stream.  First the clock is settled at his key
-\(`lr-track--settle-at-key'): a probe sample that arrived since the last
-tick is stepped and the clock step runs on it, then the sample his key
-itself is, at NOW.  He may answer right after a wake, before the tick that
-would step it, and the old presence would date his answer and leave the
-night on a live clock; or 25 s after unlocking, before any tick saw him
-back.  Inside lr-track's own writes, and for the header
-\(`lr-track--ask-display-only'), only the probe's sample is stepped."
-  (if (or lr-track--internal lr-track--ask-display-only)
-      (condition-case err (lr-track--step-sample lr-track--last-sample)
-        (error (lr-track--log 'presence err)))
-    (lr-track--settle-at-key now))
-  (let ((now (or now (float-time)))
-        (streams (lr-track--streams)))
-    (list :now now
-          :presence lr-track--presence
-          :streams streams
-          :clock (lr-track--ask-clock)
-          :last-end lr-track--last-clock-end
-          :quiet nil
-          :covered lr-track--covered-spans
-          :undo (lr-track--ask-undo-label now)
-          :time-file (and (null streams)
-                          (let ((f (lr-track--time-file)))
-                            (and (file-exists-p f) f))))))
-
-;;;; state, start, header, echo (PURE given a context)
-
-(defun lr-track--ask-activity-pause-p (clock)
-  "Non-nil when CLOCK is an away-place clock paused by his activity."
-  (and (plist-get clock :paused-at) (eq (plist-get clock :why) 'activity)))
-
-(defun lr-track--ask-no-continue-p (clock)
-  "Non-nil when CLOCK is paused and has no y y: an away-place stream.
-It earns while he is away, so it never continues from his return at the
-Mac, whether it paused for his activity there or at its maximum (a line
-from his return would pause at its own start).  The digits are the way on:
-an away stream's digit starts from now."
-  (and (plist-get clock :paused-at)
-       (or (lr-track--ask-activity-pause-p clock)
-           (eq (plist-get clock :place) 'away))))
-
-(defun lr-track--ask-back-at (ctx)
-  "When he came back, for a paused clock of CTX, or nil.
-His return.  With none this session, for a pause by his activity or one
-where nothing was seen (why `unknown'): the start of his here-block, the
-first time presence saw him.  For an activity pause never before the
-clock's start: a return before it is not one from this clock."
-  (let* ((p (plist-get ctx :presence))
-         (clock (plist-get ctx :clock))
-         (start (plist-get clock :start))
-         (back (or (plist-get p :return)
-                   (and (plist-get clock :paused-at)
-                        (memq (plist-get clock :why) '(activity unknown))
-                        (lr-track--presence-here-since p)))))
-    (if (and (numberp back) (numberp start)
-             (lr-track--ask-activity-pause-p clock))
-        (max back start)
-      back)))
-
-(defun lr-track--ask-stayed-p (ctx)
-  "Non-nil when CTX's clock paused for his activity and he never left: he was
-here since before it started, so its pause is at its start, not a return."
-  (let ((since (lr-track--presence-here-since (plist-get ctx :presence)))
-        (clock (plist-get ctx :clock)))
-    (and (lr-track--ask-activity-pause-p clock)
-         (numberp since) (numberp (plist-get clock :start))
-         (< since (plist-get clock :start)))))
-
-(defun lr-track--ask-state (ctx)
-  "What CTX asks: `nostreams', `paused-back', `open-back', `live' or `calm'.
-A clock paused by his activity at the Mac (an away place) is back at once:
-that pause is his return, so it can never be after it."
-  (let* ((now (plist-get ctx :now))
-         (p (plist-get ctx :presence))
-         (clock (plist-get ctx :clock))
-         (paused (plist-get clock :paused-at))
-         (here (eq (plist-get p :mode) 'here))
-         (r (lr-track--ask-back-at ctx))
-         (since (lr-track--presence-here-since p))
-         (last-end (plist-get ctx :last-end)))
-    (cond
-     ((null (plist-get ctx :streams)) 'nostreams)
-     ((and clock paused here (numberp r)
-           (or (> r paused) (lr-track--ask-activity-pause-p clock))
-           (>= (- now r) lr-track--ask-back-seconds))
-      'paused-back)
-     ((and (null clock) here (numberp since)
-           (>= (- now (max since (or last-end 0.0))) lr-track--ask-open-seconds))
-      'open-back)
-     ((and clock (not paused)) 'live)
-     (t 'calm))))
-
-(defun lr-track--answer-start-why (ctx)
-  "(START . WHY): `lr-track--answer-start' and what it is.
-WHY is `return', `seen' (the return from a stretch no sample saw, kind
-`unseen': nothing says he left), `first' (first input this session),
-`break', `now', `last-end' or `paused'."
-  (let* ((now (plist-get ctx :now))
-         (p (plist-get ctx :presence))
-         ;; He is answering, so he is back; presence away only has not stepped
-         ;; his return yet.  Its here-since and breaks are then the block
-         ;; BEFORE this away, and a start from them would claim the away.
-         (gone (lr-track--presence-away-p p))
-         (r (and (not gone) (lr-track--presence-here-since p)))
-         (floor-at (- now lr-track--answer-window))
-         (ends (and (not gone)
-                    (seq-filter (lambda (x) (and (numberp x) (>= x floor-at) (<= x now)))
-                                (mapcar (lambda (b) (plist-get b :to))
-                                        (plist-get p :breaks)))))
-         (pick (cond
-                ((and (numberp r) (<= r now) (<= (- now r) lr-track--answer-window))
-                 (cons r (cond ((not (plist-get p :return)) 'first)
-                               ((eq (plist-get (plist-get p :last-away) :kind)
-                                    'unseen)
-                                'seen)
-                               (t 'return))))
-                (ends (cons (apply #'min ends) 'break))
-                (t (cons now 'now))))
-         (last-end (plist-get ctx :last-end))
-         (paused (plist-get (plist-get ctx :clock) :paused-at)))
-    (when (and (numberp last-end) (> last-end (car pick)))
-      (setq pick (cons last-end 'last-end)))
-    (when (and (numberp paused) (> paused (car pick)))
-      (setq pick (cons paused 'paused)))
-    (cons (lr-track--ask-minute (min (car pick) now)) (cdr pick))))
-
-(defun lr-track--answer-start (ctx)
-  "The start a now answer in CTX writes, floored to the minute.
-His return (or first input) when at most 90 min ago; else the earliest break
-end in the last 90 min; else now.  Now, too, while presence still says away
-\(his return is not stepped yet).  Never before the last clock's end nor the
-paused clock's pause."
-  (car (lr-track--answer-start-why ctx)))
-
-(defun lr-track--start-phrase (why)
-  "What a start of kind WHY is, in a few words."
-  (pcase why
-    ('return "your return")
-    ('seen "seen again")
-    ('first "first input this session")
-    ('break "end of a break")
-    ('last-end "end of your last clock")
-    ('paused "where it paused")
-    (_ "now")))
-
-(defun lr-track--ask-keys (ctx)
-  "The digits CTX's streams answer to, ascending (each of 1 to 9)."
-  (sort (delq nil (mapcar (lambda (s) (let ((k (plist-get s :key)))
-                                        (and (integerp k) (<= 1 k 9) k)))
-                          (plist-get ctx :streams)))
-        #'<))
-
-(defun lr-track--ask-keys-text (keys)
-  "KEYS, digits, as the echo names them: 1-9 for a run from 1, else 2 5 7."
-  (let ((ks (sort (copy-sequence keys) #'<)))
-    (if (and (cdr ks) (equal ks (number-sequence 1 (length ks))))
-        (format "1-%d" (length ks))
-      (mapconcat #'number-to-string ks " "))))
-
-(defun lr-track--ask-overlap (a-from a-to b-from b-to)
-  "Seconds the span A-FROM to A-TO shares with B-FROM to B-TO."
-  (max 0.0 (- (min a-to b-to) (max a-from b-from))))
-
-(defun lr-track--ask-away-covered-p (ctx away)
-  "Non-nil when a line already books AWAY in CTX, for a minute or more.
-That is the running clock's line (to its pause, its end, or now while still
-open), and CTX's `:covered' spans: lines that ended this session and aways
-already labelled.  A label there would count the time twice."
-  (let* ((from (plist-get away :from))
-         (to (plist-get away :to))
-         (clock (plist-get ctx :clock))
-         (start (plist-get clock :start))
-         (spans (append (and (numberp start)
-                             (list (cons start (or (plist-get clock :paused-at)
-                                                   (plist-get clock :end)
-                                                   (plist-get ctx :now)))))
-                        (plist-get ctx :covered))))
-    (seq-some (lambda (sp)
-                (and (numberp (car sp)) (numberp (cdr sp))
-                     (>= (lr-track--ask-overlap from to (car sp) (cdr sp))
-                         60.0)))
-              spans)))
-
-(defun lr-track--ask-labelable-away (ctx)
-  "CTX's latest completed away when it can be labelled: 15 min or more, and
-no line books it yet (`lr-track--ask-away-covered-p').  A stretch no sample
-saw (kind `unseen') is not one: nothing says he was away.  Nor is any while
-presence still says away: he is answering, so the away he means is the one
-not stepped yet, never the one before it."
-  (let* ((p (plist-get ctx :presence))
-         (a (plist-get p :last-away))
-         (from (plist-get a :from))
-         (to (plist-get a :to)))
-    (and (numberp from) (numberp to)
-         (not (lr-track--presence-away-p p))
-         (not (eq (plist-get a :kind) 'unseen))
-         (>= (- to from) lr-track-presence-away-seconds)
-         (not (lr-track--ask-away-covered-p ctx a))
-         a)))
-
-(defun lr-track--ask-away-text (away)
-  "AWAY as HH:MM to HH:MM (D, KIND)."
-  (let ((from (lr-track--ask-minute (plist-get away :from)))
-        (to (lr-track--ask-minute (plist-get away :to))))
-    (format "%s to %s (%s, %s)" (lr-track--ts-hm from) (lr-track--ts-hm to)
-            (lr-track--ask-dur (- to from))
-            (lr-track--ask-kind-text (plist-get away :kind)))))
-
-(defun lr-track--ask-paused-why (why)
-  "Why a clock paused, as the header says it."
-  (pcase why
-    ('max "(its maximum)")
-    ('activity "(your return)")
-    ('unknown "(nothing seen after)")
-    (_ "(your last input)")))
-
-(defun lr-track--ask-in-start-minute-p (at start)
-  "Non-nil when AT reads as START's minute or earlier, as a CLOCK stamp does.
-A line from START ending there is 0:00 (org removes it) or inverted, so it is
-cancelled, never stretched to a minute he did not earn.  Floats both."
-  (< at (+ (lr-track--ask-minute start) 60.0)))
-
-(defun lr-track--ask-paused-empty-p (clock)
-  "Non-nil when CLOCK paused in its own start's minute: its line never earned
-a minute (`lr-track--ask-in-start-minute-p').  Ending it there removes the
-line, as his own clock-out does, so the echo and the messages say that
-instead of a line that stays."
-  (let ((paused (plist-get clock :paused-at))
-        (start (plist-get clock :start)))
-    (and (numberp paused) (numberp start)
-         (lr-track--ask-in-start-minute-p paused start))))
-
-(defun lr-track--ask-nostreams-text (ctx)
-  "The way on when CTX has no stream: SPC d M without a time.org, the file
-itself when it exists but holds none (SPC d M never writes over it)."
-  (let ((f (plist-get ctx :time-file)))
-    (if f
-        (lr-track--nostreams-file-text f)
-      "No streams yet: SPC d M sets them up.")))
-
-(defun lr-track--ask-fit-task (task fixed)
-  "TASK cut so that FIXED more columns still fit the essential width.
-His heading is shown as he wrote it (`lr-track--ask-name')."
-  (lr-track--ask-name
-   (lr-track--ask-cut (or task "the clock")
-                      (max 8 (- lr-track--header-essential-width fixed)))))
-
-(defun lr-track--ask-live-switch-at (ctx)
-  "Where a switch ends CTX's live clock, floored to the minute.
-Now; but an away-place clock he is back from (presence here) ends at his
-return, or at its start when that is later.  It earns his absence only, and
-the activity since is held, never earned, unless he leaves again."
-  (let* ((now (lr-track--ask-minute (plist-get ctx :now)))
-         (clock (plist-get ctx :clock))
-         (start (plist-get clock :start))
-         (p (plist-get ctx :presence)))
-    (if (and (eq (plist-get clock :place) 'away)
-             (not (plist-get clock :paused-at))
-             (eq (plist-get p :mode) 'here)
-             (numberp start))
-        (min now (lr-track--ask-minute
-                  (max start (or (lr-track--presence-here-since p) start))))
-      now)))
-
-(defun lr-track--ask-digit-from (ctx state)
-  "Where a digit for a machine or either stream starts in CTX in STATE."
-  (if (eq state 'live)
-      (lr-track--ask-live-switch-at ctx)
-    (lr-track--answer-start ctx)))
-
-(defun lr-track--ask-away-clause (ctx state)
-  "The echo's word on away-place digits in CTX in STATE, or nil.
-Those streams always start now (I am leaving for this), so when the other
-digits start earlier the echo says so: `6 7 9: from 16:41 (now, ...)'."
-  (let* ((now (lr-track--ask-minute (plist-get ctx :now)))
-         (running (and (eq state 'live)
-                       (plist-get (plist-get ctx :clock) :stream-key)))
-         (keys (delq nil (mapcar (lambda (s)
-                                   (let ((k (plist-get s :key)))
-                                     (and (eq (plist-get s :place) 'away)
-                                          (integerp k) (<= 1 k 9)
-                                          (not (eql k running))
-                                          k)))
-                                 (plist-get ctx :streams)))))
-    (when (and keys (< (lr-track--ask-digit-from ctx state) now))
-      (format "%s: from %s (now, for when you step away)"
-              (mapconcat #'number-to-string (sort keys #'<) " ")
-              (lr-track--ts-hm now)))))
-
-(defun lr-track--header (ctx)
-  "The f agenda's header line for CTX: one ASCII line, `Time' first.
-Everything before the key hints fits in `lr-track--header-essential-width'."
-  (let* ((state (lr-track--ask-state ctx))
-         (now (plist-get ctx :now))
-         (p (plist-get ctx :presence))
-         (clock (plist-get ctx :clock))
-         (task (plist-get clock :task))
-         (hm #'lr-track--ts-hm)
-         (s (lr-track--answer-start ctx))
-         (digits (lr-track--ask-keys-text (lr-track--ask-keys ctx)))
-         (text
-          (pcase state
-            ('nostreams
-             (if (plist-get ctx :time-file)
-                 (format "Time  %s has no streams: add top-level headings with TRACK_KEY 1 to 9"
-                         (file-name-nondirectory (plist-get ctx :time-file)))
-               "Time  no streams yet: SPC d M sets them up"))
-            ('live
-             (let* ((start (plist-get clock :start))
-                    (d (lr-track--ask-dur (- (or (plist-get clock :end) now) start)))
-                    (tail (format " %s since %s" d (funcall hm start))))
-               (format "Time  %s%s  |  y: switch"
-                       (lr-track--ask-fit-task task (+ 6 (length tail))) tail)))
-            ('paused-back
-             (let* ((paused (plist-get clock :paused-at))
-                    (r (lr-track--ask-back-at ctx))
-                    (away (plist-get p :last-away))
-                    (d (lr-track--ask-dur
-                        (if away
-                            (- (lr-track--ask-minute (plist-get away :to))
-                               (lr-track--ask-minute (plist-get away :from)))
-                          (- r paused))))
-                    (tail (cond
-                           ;; he never left: no return to name
-                           ((lr-track--ask-stayed-p ctx)
-                            (format " paused %s (you stayed at the Mac)"
-                                    (funcall hm paused)))
-                           ;; nothing seen, then presence started or saw him
-                           ;; again after a stretch no sample saw: not an away
-                           ((and (eq (plist-get clock :why) 'unknown)
-                                 (or (null (plist-get p :return))
-                                     (eq (plist-get away :kind) 'unseen)))
-                            (format " paused %s %s, seen again %s"
-                                    (funcall hm paused)
-                                    (lr-track--ask-paused-why 'unknown)
-                                    (funcall hm r)))
-                           (t
-                            (format " paused %s %s, back %s after %s away"
-                                    (funcall hm paused)
-                                    (lr-track--ask-paused-why (plist-get clock :why))
-                                    (funcall hm r) d))))
-                    (name (lr-track--ask-fit-task task (+ 12 (length tail)))))
-               (if (lr-track--ask-no-continue-p clock)
-                   ;; an away stream does not continue: no y y
-                   (format "Time  Now?  %s%s  |  y then %s: another"
-                           name tail digits)
-                 (format "Time  Now?  %s%s  |  y y: %s again from %s   y then %s: another"
-                         name tail name (funcall hm s) digits))))
-            ('open-back
-             (let ((away (plist-get p :last-away))
-                   (r (plist-get p :return)))
-               (cond
-                ;; a stretch no sample saw: he was not seen, not away
-                ((and away (numberp r) (eq (plist-get away :kind) 'unseen))
-                 (format (concat "Time  Now?  seen again %s after %s not seen, nothing running"
-                                 "  |  y then %s: what you do now, from %s")
-                         (funcall hm r)
-                         (lr-track--ask-dur
-                          (- (lr-track--ask-minute (plist-get away :to))
-                             (lr-track--ask-minute (plist-get away :from))))
-                         digits
-                         (funcall hm s)))
-                ((and away (numberp r))
-                 (format (concat "Time  Now?  back %s after %s away (%s), nothing running"
-                                 "  |  y then %s: what you do now, from %s%s")
-                         (funcall hm r)
-                         (lr-track--ask-dur
-                          (- (lr-track--ask-minute (plist-get away :to))
-                             (lr-track--ask-minute (plist-get away :from))))
-                         (lr-track--ask-kind-text (plist-get away :kind))
-                         digits
-                         (funcall hm s)
-                         (if (lr-track--ask-labelable-away ctx) "   y a: the away" "")))
-                (t
-                 (format (concat "Time  Now?  here since %s, nothing running"
-                                 "  |  y then %s: what you do now, from %s")
-                         (funcall hm (lr-track--presence-here-since p))
-                         digits
-                         (funcall hm s))))))
-            (_
-             (if (plist-get clock :paused-at)
-                 (let ((tail (format " paused %s %s"
-                                     (funcall hm (plist-get clock :paused-at))
-                                     (lr-track--ask-paused-why (plist-get clock :why)))))
-                   (format "Time  %s%s  |  y: switch"
-                           (lr-track--ask-fit-task task (+ 6 (length tail))) tail))
-               "Time  nothing running  |  y: start something")))))
-    (propertize text 'face (if (memq state '(paused-back open-back)) 'warning 'shadow))))
-
-(defun lr-track--header-cached ()
-  "The header text as last refreshed, ready for `header-line-format'.
-A percent sign is doubled, so a task name never reads as a mode-line
-construct."
-  (let ((h (or lr-track--header-cache "Time")))
-    (if (string-search "%" h) (string-replace "%" "%%" h) h)))
-
-(defun lr-track-ask-refresh-header ()
-  "Recompute the header from live state; redraw only when its text changed."
-  (let ((h (lr-track--header (let ((lr-track--ask-display-only t))
-                               (lr-track--ask-context)))))
-    (unless (equal h lr-track--header-cache)
-      (setq lr-track--header-cache h)
-      (force-mode-line-update t))
-    h))
-
-(defun lr-track--ask-refresh-quietly (&rest _)
-  "Refresh the header from a clock hook; an error is logged, never raised.
-Not while org stands a dangling line in for the running clock
-\(`lr-track--clock-stood-in-p'): the header would describe that line."
-  (unless (lr-track--clock-stood-in-p)
-    (condition-case err (lr-track-ask-refresh-header)
-      (error (lr-track--log 'header err)))))
-
-(defun lr-track--ask-stream-list (ctx)
-  "CTX's streams as the echo names them: 1 avey  2 study ...
-Only streams with a key of 1 to 9: no other key can answer."
-  (mapconcat (lambda (s) (format "%d %s" (plist-get s :key)
-                                 (lr-track--ask-name (plist-get s :name))))
-             (seq-filter (lambda (s) (let ((k (plist-get s :key)))
-                                       (and (integerp k) (<= 1 k 9))))
-                         (plist-get ctx :streams))
-             "  "))
-
-(defun lr-track--ask-keys-tail (ctx before)
-  "The echo's closing key hints for CTX, on a line that starts with BEFORE.
-u names what it would undo, when that write is recent (CTX's :undo, see
-`lr-track--ask-undo-label'); no recent write, no u.  Then other keys: not
-now.  The undo text is cut so the line fits `lr-track--echo-width'."
-  (let ((label (plist-get ctx :undo))
-        (rest "other keys: not now"))
-    (if (not (stringp label))
-        rest
-      (let ((room (- lr-track--echo-width (string-width before)
-                     (length "u: undo ()    ") (length rest))))
-        (format "u: undo (%s)    %s" (lr-track--ask-cut label (max 16 room))
-                rest)))))
-
-(defun lr-track--ask-paused-clauses (ctx state)
-  "Line 1 of the echo for CTX's paused clock in STATE: y, then the digits.
-The task is named in both, cut to `lr-track--echo-task-width' so the line
-fits the frame.  A line that paused at its own start never earned a minute:
-both say it goes, never that it stays."
-  (let* ((clock (plist-get ctx :clock))
-         (task (lr-track--ask-name
-                (lr-track--ask-cut-words (or (plist-get clock :task) "the clock")
-                                         lr-track--echo-task-width)))
-         (hm #'lr-track--ts-hm)
-         (s (lr-track--answer-start ctx))
-         (digits (lr-track--ask-keys-text (lr-track--ask-keys ctx)))
-         (start (funcall hm (plist-get clock :start)))
-         (paused (funcall hm (plist-get clock :paused-at)))
-         (empty (lr-track--ask-paused-empty-p clock)))
-    (concat
-     (if (and (eq state 'paused-back)
-              (not (lr-track--ask-no-continue-p clock)))
-         (if empty
-             (format "y: %s again from %s (its empty %s line goes)    "
-                     task (funcall hm s) start)
-           (format "y: %s again from %s (its %s to %s line stays)    "
-                   task (funcall hm s) start paused))
-       "")
-     (if empty
-         (format "%s: another stream from %s, the empty %s line of %s goes"
-                 digits (funcall hm s) start task)
-       (format "%s: another stream from %s, %s stays ended at %s"
-               digits (funcall hm s) task paused)))))
-
-(defun lr-track--ask-echo (ctx)
-  "The echo `y' shows for CTX: what each key would write, two lines at most.
-Every key it names is bound in the one-key map and no other key is.  Every
-line fits `lr-track--echo-width'."
-  (let* ((state (lr-track--ask-state ctx))
-         (clock (plist-get ctx :clock))
-         (task (lr-track--ask-name
-                (lr-track--ask-cut (or (plist-get clock :task) "the clock") 40)))
-         (hm #'lr-track--ts-hm)
-         (sw (lr-track--answer-start-why ctx))
-         (s (car sw))
-         (digits (lr-track--ask-keys-text (lr-track--ask-keys ctx)))
-         (away (lr-track--ask-labelable-away ctx))
-         (a-part (and away (format "a then %s: the away %s was that" digits
-                                   (lr-track--ask-away-text away))))
-         (clause (lr-track--ask-away-clause ctx state))
-         (lead (mapconcat (lambda (x) (concat x "    "))
-                          (delq nil (list clause a-part)) ""))
-         (line2 (concat lead (lr-track--ask-keys-tail ctx lead))))
-    (pcase state
-      ('nostreams (lr-track--ask-nostreams-text ctx))
-      ('live
-       (let* ((at (lr-track--ask-live-switch-at ctx))
-              (main (format "%s: switch now (%s %s to %s, the new one from %s)"
-                            digits task (funcall hm (plist-get clock :start))
-                            (funcall hm at) (funcall hm at))))
-         (if (or a-part clause)
-             (concat main "\n" line2)
-           (let ((lead1 (concat main "    ")))
-             (concat lead1 (lr-track--ask-keys-tail ctx lead1))))))
-      ((guard (plist-get clock :paused-at))
-       (concat (lr-track--ask-paused-clauses ctx state) "\n" line2))
-      (_
-       (concat
-        (if (eq (cdr sw) 'now)
-            (format "Now, from %s:  " (funcall hm s))
-          (format "Now, from %s (%s, %s ago):  " (funcall hm s)
-                  (lr-track--start-phrase (cdr sw))
-                  (lr-track--ask-dur (- (plist-get ctx :now) s))))
-        (lr-track--ask-stream-list ctx)
-        "\n" line2)))))
-
-;;;; plans (PURE given a context)
-
-(defun lr-track--refuse (text)
-  "A plan that writes nothing and says TEXT."
-  (list :refuse text))
-
-(defun lr-track--start-op (n from tag text)
-  "The operation that clocks into stream N from FROM, with its note."
-  (list :start n :from from :tag tag :text (lr-track--note-text tag text)))
-
-(defun lr-track--plan-resume (ctx)
-  "The paused clock of CTX again, from the answer start."
-  (let* ((clock (plist-get ctx :clock))
-         (sw (lr-track--answer-start-why ctx))
-         (s (car sw))
-         (task (plist-get clock :task))
-         (hm #'lr-track--ts-hm))
-    (list :ops (list (list :resume :from s :tag "continued"
-                           :text (lr-track--note-text
-                                  "continued"
-                                  (format "from %s, %s" (funcall hm s)
-                                          (lr-track--start-phrase (cdr sw))))))
-          :message (if (lr-track--ask-paused-empty-p clock)
-                       (format "%s again from %s, running. Its empty %s line is removed.  SPC d u undoes."
-                               task (funcall hm s) (funcall hm (plist-get clock :start)))
-                     (format "%s again from %s, running. Its %s to %s line stays.  SPC d u undoes."
-                             task (funcall hm s) (funcall hm (plist-get clock :start))
-                             (funcall hm (plist-get clock :paused-at)))))))
-
-(defun lr-track--plan-switch (ctx n)
-  "The plan of digit N while CTX's clock is live: it ends, N starts.
-Both at now, except after an away-place clock he is back from: that one
-ends at his return (`lr-track--ask-live-switch-at') and a machine or either
-stream starts there, since the time since is his at the Mac."
-  (let* ((stream (lr-track--ask-stream ctx n))
-         (name (plist-get stream :name))
-         (clock (plist-get ctx :clock))
-         (task (plist-get clock :task))
-         (now (lr-track--ask-minute (plist-get ctx :now)))
-         (at (lr-track--ask-live-switch-at ctx))
-         (from (if (eq (plist-get stream :place) 'away) now at))
-         (hm #'lr-track--ts-hm))
-    (list :ops (list (list :end-at at)
-                     (if (= from now)
-                         (lr-track--start-op n now "declared"
-                                             (format "from %s, switched from %s"
-                                                     (funcall hm now)
-                                                     (lr-track--ask-task-ascii task)))
-                       (lr-track--start-op n from "now"
-                                           (format "from %s, back from %s"
-                                                   (funcall hm from)
-                                                   (lr-track--ask-task-ascii task)))))
-          :message (format "%s from %s%s; %s %s to %s.  SPC d u undoes."
-                           name (funcall hm from) (if (= from now) " (now)" "")
-                           task (funcall hm (plist-get clock :start))
-                           (funcall hm at)))))
-
-(defun lr-track--plan-digit (ctx state n)
-  "The plan of digit N in CTX, whose state is STATE."
-  (let* ((stream (lr-track--ask-stream ctx n))
-         (name (plist-get stream :name))
-         (clock (plist-get ctx :clock))
-         (task (plist-get clock :task))
-         (paused (plist-get clock :paused-at))
-         (now (lr-track--ask-minute (plist-get ctx :now)))
-         (sw (lr-track--answer-start-why ctx))
-         (s (car sw))
-         (hm #'lr-track--ts-hm)
-         (away-place (eq (plist-get stream :place) 'away))
-         (from (if away-place now s))
-         (start-op (if away-place
-                       (lr-track--start-op n now "declared"
-                                           (format "from %s, for when you step away"
-                                                   (funcall hm now)))
-                     (lr-track--start-op n s "now"
-                                         (format "from %s, %s" (funcall hm s)
-                                                 (lr-track--start-phrase (cdr sw)))))))
-    (cond
-     ((null stream)
-      (lr-track--refuse (format "No stream %d in time.org. Nothing written." n)))
-     ((eq state 'live)
-      (if (eql n (plist-get clock :stream-key))
-          (lr-track--refuse (format "%s is already running (since %s). Nothing written."
-                                    task (funcall hm (plist-get clock :start))))
-        (lr-track--plan-switch ctx n)))
-     (paused
-      ;; every digit does what the echo says, its own stream's too: the
-      ;; paused line stays ended at P and N runs from the answer start (y is
-      ;; the one key that continues the task itself)
-      (list :ops (list (list :end-at paused) start-op)
-            :message (if (lr-track--ask-paused-empty-p clock)
-                         (format "%s from %s, running; the empty %s line of %s is removed.  SPC d u undoes."
-                                 name (funcall hm from)
-                                 (funcall hm (plist-get clock :start)) task)
-                       (format "%s from %s, running; %s stays ended at %s.  SPC d u undoes."
-                               name (funcall hm from) task (funcall hm paused)))))
-     (clock
-      (lr-track--refuse (format "%s is running. Nothing written." task)))
-     (t
-      (list :ops (list start-op)
-            :message (format "%s from %s, running (time.org).  SPC d u undoes."
-                             name (funcall hm from)))))))
-
-(defun lr-track--plan-away (ctx n)
-  "The plan that labels CTX's latest away as stream N."
-  (let ((stream (lr-track--ask-stream ctx n))
-        (away (lr-track--ask-labelable-away ctx)))
-    (cond
-     ((null stream)
-      (lr-track--refuse (format "No stream %d in time.org. Nothing written." n)))
-     ((null away)
-      (lr-track--refuse
-       "No away of 15 min or more left to label (none, or a line already has it). Nothing written."))
-     (t
-      (let* ((from (lr-track--ask-minute (plist-get away :from)))
-             (to (lr-track--ask-minute (plist-get away :to)))
-             (kind (lr-track--ask-kind-text (plist-get away :kind))))
-        (list :ops (list (list :log n :from from :to to :tag "away"
-                               :text (lr-track--note-text
-                                      "away" (format "%s %s" kind
-                                                     (lr-track--ask-dur (- to from))))))
-              :message (format "%s %s to %s (%s) written (time.org).  SPC d u undoes."
-                               (plist-get stream :name) (lr-track--ts-hm from)
-                               (lr-track--ts-hm to) (lr-track--ask-dur (- to from)))))))))
-
-(defun lr-track--answer-plan (ctx key)
-  "What KEY writes in CTX: (:refuse STRING) or (:ops OPS :message STRING).
-KEY is a digit 1 to 9, `default' (y), (away . N) or `undo'.  OPS, run in
-order by `lr-track--execute-plan':
-  (:end-at F)                       end the running clock at F
-  (:start N :from F :tag T :text X) clock into stream N, running since F
-  (:resume :from F :tag T :text X)  end the paused clock at its pause, then
-                                    the same heading again since F
-  (:log N :from F :to F :tag T :text X)  a closed line under stream N
-  (:undo)                           `lr-track-undo'"
-  (let ((state (lr-track--ask-state ctx)))
-    (cond
-     ((eq key 'undo)
-      (list :ops (list (list :undo)) :message "Undo the last tracker write."))
-     ((eq state 'nostreams)
-      (lr-track--refuse (concat (lr-track--ask-nostreams-text ctx) " Nothing written.")))
-     ((and (consp key) (eq (car key) 'away) (integerp (cdr key)))
-      (lr-track--plan-away ctx (cdr key)))
-     ((eq key 'default)
-      (cond
-       ((not (eq state 'paused-back))
-        (lr-track--refuse "Nothing to continue now. Nothing written."))
-       ((lr-track--ask-activity-pause-p (plist-get ctx :clock))
-        (lr-track--refuse
-         (format "%s paused at your return: an away stream does not continue. Nothing written."
-                 (plist-get (plist-get ctx :clock) :task))))
-       ((lr-track--ask-no-continue-p (plist-get ctx :clock))
-        (lr-track--refuse
-         (format "%s is an away stream: it does not continue from your return. Nothing written."
-                 (plist-get (plist-get ctx :clock) :task))))
-       (t (lr-track--plan-resume ctx))))
-     ((and (integerp key) (<= 1 key 9))
-      (lr-track--plan-digit ctx state key))
-     (t (lr-track--refuse "Not an answer. Nothing written.")))))
-
-(defun lr-track--now-plan (ctx n)
-  "The plan of SPC d N in CTX: stream N from now, never backdated.
-A live away-place clock he is back from ends at his return, not now (see
-`lr-track--ask-live-switch-at')."
-  (let* ((stream (lr-track--ask-stream ctx n))
-         (name (plist-get stream :name))
-         (clock (plist-get ctx :clock))
-         (task (plist-get clock :task))
-         (paused (plist-get clock :paused-at))
-         (now (lr-track--ask-minute (plist-get ctx :now)))
-         (hm #'lr-track--ts-hm))
-    (cond
-     ((null (plist-get ctx :streams))
-      (lr-track--refuse (lr-track--ask-nostreams-text ctx)))
-     ((null stream)
-      (lr-track--refuse (format "No stream %d in time.org. Nothing written." n)))
-     ((and clock (not paused) (eql n (plist-get clock :stream-key)))
-      (lr-track--refuse (format "%s is already running (since %s). Nothing written."
-                                task (funcall hm (plist-get clock :start)))))
-     ((and clock (not paused))
-      (let ((at (lr-track--ask-live-switch-at ctx)))
-        (list :ops (list (list :end-at at)
-                         (lr-track--start-op n now "declared"
-                                             (format "from %s, switched from %s"
-                                                     (funcall hm now)
-                                                     (lr-track--ask-task-ascii task))))
-              :message (format "%s from %s (now); %s %s to %s.  SPC d u undoes."
-                               name (funcall hm now) task
-                               (funcall hm (plist-get clock :start)) (funcall hm at)))))
-     ((lr-track--ask-paused-empty-p clock)
-      (let ((start (funcall hm (plist-get clock :start))))
-        (list :ops (list (list :end-at paused)
-                         (lr-track--start-op n now "declared"
-                                             (format "from %s, the empty %s line of %s removed"
-                                                     (funcall hm now) start
-                                                     (lr-track--ask-task-ascii task))))
-              :message (format "%s from %s (now); the empty %s line of %s is removed.  SPC d u undoes."
-                               name (funcall hm now) start task))))
-     (clock
-      (list :ops (list (list :end-at paused)
-                       (lr-track--start-op n now "declared"
-                                           (format "from %s, %s stayed ended at %s"
-                                                   (funcall hm now)
-                                                   (lr-track--ask-task-ascii task)
-                                                   (funcall hm paused))))
-            :message (format "%s from %s (now); %s stays ended at %s.  SPC d u undoes."
-                             name (funcall hm now) task (funcall hm paused))))
-     (t
-      (list :ops (list (lr-track--start-op n now "declared"
-                                           (format "from %s, said with SPC d %d"
-                                                   (funcall hm now) n)))
-            :message (format "%s from %s (now), running.  SPC d u undoes."
-                             name (funcall hm now)))))))
-
-(defun lr-track--plan-signature (plan)
-  "What PLAN writes, comparable with `equal'; nil when it writes nothing."
-  (copy-tree (plist-get plan :ops)))
-
-;;;; execution
 
 (defun lr-track--entry-region (pos)
   "(BEG . END) of the entry whose heading is at or above POS: its heading
@@ -1370,7 +525,7 @@ its line."
          (start (float-time org-clock-start-time))
          (stamp (lr-track--ts org-clock-start-time))
          (end (lr-track--running-line-end))
-         (pause (lr-track--current-pause))
+         (pause nil)
          (bol (with-current-buffer buf
                 (save-excursion
                   (save-restriction
@@ -1407,44 +562,6 @@ its line."
                 :note note-text :ended-at (plist-get r :at))
           buf)))
 
-(defun lr-track--op-resume (from tag text)
-  "Run (:resume :from FROM ...): end the paused clock at its pause, then its
-heading again from FROM.  Return (ACTION . BUFFERS)."
-  (unless (lr-track--clocking-p) (error "No paused clock to continue"))
-  (lr-track--sync-running-start)
-  (let* ((paused (or (lr-track--paused-at) (error "The clock is not paused")))
-         (start (float-time org-clock-start-time))
-         (hd (copy-marker org-clock-hd-marker))
-         (name (or (lr-track--clock-task) "the task"))
-         (buf (marker-buffer org-clock-marker))
-         ;; paused in its start's minute, the line never earned a minute and
-         ;; the end cancels it (an AT at the start takes `lr-track--autoout's
-         ;; cancel): its `- lr' note goes first, as `lr-track--op-end-at'
-         ;; does, so no note outlives its line
-         (empty (lr-track--ask-in-start-minute-p paused start))
-         (note (and empty (lr-track--note-below-running-line)))
-         (note-text (and note (lr-track--delete-note-line note)
-                         (string-trim-left (car note))))
-         (r (lr-track--autoout (if empty (min paused start) paused) 'answer)))
-    (when (or (not r) (eq (plist-get r :action) 'failed) (lr-track--clocking-p))
-      (when (and note-text (lr-track--clocking-p))
-        (lr-track--note-under-running-line note-text))
-      (error "Could not end %s at its pause" name))
-    (let ((res (lr-track--ask-clock-in name hd from (lr-track--note-line tag text))))
-      (set-marker hd nil)
-      ;; undo removes the new line only: the old one stays ended at its
-      ;; pause, or stays removed when it was empty
-      (cons (append (car res)
-                    (list :label
-                          (if empty
-                              (format "%s from %s removed; its empty %s line stays removed"
-                                      name (lr-track--ts-hm from)
-                                      (lr-track--ts-hm start))
-                            (format "%s from %s removed; it stays ended at %s"
-                                    name (lr-track--ts-hm from)
-                                    (lr-track--ts-hm paused)))))
-            (list buf (cdr res))))))
-
 (defun lr-track--op-log (n from to tag text)
   "Run (:log N :from FROM :to TO ...): a closed line and its note under
 stream N.  Return (ACTION . BUFFER)."
@@ -1480,7 +597,7 @@ stream N.  Return (ACTION . BUFFER)."
                   (insert indent))
                 (end-of-line)
                 (insert "\n" indent (lr-track--note-line tag text))))
-            (lr-track--cover-span from to)
+            (lr-track--set-last-stop to)
             (cons (append (lr-track--replace-action (car region) old)
                           (list :label (format "%s %s to %s removed" name
                                                (lr-track--ts-hm from)
@@ -1495,9 +612,10 @@ stream N.  Return (ACTION . BUFFER)."
     (:start (let ((p (cddr op)))
               (lr-track--op-start (nth 1 op) (plist-get p :from)
                                   (plist-get p :tag) (plist-get p :text))))
-    (:resume (let ((p (cdr op)))
-               (lr-track--op-resume (plist-get p :from) (plist-get p :tag)
-                                    (plist-get p :text))))
+    (:resume-olp (let ((p (cdr op)))
+                   (lr-track--op-resume-olp (plist-get p :file) (plist-get p :olp)
+                                            (plist-get p :name) (plist-get p :from)
+                                            (plist-get p :tag) (plist-get p :text))))
     (:log (let ((p (cddr op)))
             (lr-track--op-log (nth 1 op) (plist-get p :from) (plist-get p :to)
                               (plist-get p :tag) (plist-get p :text))))
@@ -1547,7 +665,6 @@ open line left in the entry, rewrites its start and undo then deletes it."
 (defun lr-track--execute-plan (plan)
   "Write PLAN: run its ops in order, notes included, save what they touched,
 push ONE undo record for all of it, and echo its message (not logged).
-The here-block he answered in is held (`lr-track--hold-here-block').
 A refusal is only echoed.  A failing op stops the plan; what was written
 before it stays, and is undoable."
   (let ((ops (plist-get plan :ops)))
@@ -1575,10 +692,6 @@ before it stays, and is undoable."
             (error (setq err e))))
         (lr-track--save-touched touched)
         (when actions
-          ;; he answered in this here-block, a label too: it is no glance,
-          ;; so it never merges into the aways around it and takes his
-          ;; label's away with it (`lr-track--hold-here-block')
-          (lr-track--hold-here-block)
           ;; an end this plan wrote must not outlive its undo: the next
           ;; answer start is never before `lr-track--last-clock-end'
           (lr-track--push-undo
@@ -1595,8 +708,6 @@ before it stays, and is undoable."
                (format "Stopped: %s.%s" (error-message-string err)
                        (if actions "  What was written: SPC d u undoes it." ""))))
           (lr-track--ask-say (plist-get plan :message))))))))
-
-;;;; undo
 
 (defun lr-track--undo-release (record)
   "Free the markers RECORD holds."
@@ -1739,10 +850,6 @@ line, or when another open line in the entry is the one org would resume."
              (delete-region b (plist-get a :end))
              (goto-char b)
              (insert (plist-get a :old))))))
-     ;; the label is gone, so its away may be labelled again
-     (when (plist-get a :span)
-       (setq lr-track--covered-spans
-             (delete (plist-get a :span) lr-track--covered-spans)))
      (list (plist-get a :buffer)))
     ('cancel
      (with-current-buffer (plist-get a :buffer)
@@ -1757,8 +864,7 @@ line, or when another open line in the entry is the one org would resume."
      (list (plist-get a :buffer)))
     ('reopen
      (let ((bol (plist-get a :bol))
-           (start (plist-get a :start))
-           (pause (plist-get a :pause)))
+           (start (plist-get a :start)))
        (unless (lr-track--undo-reopen-in-place a)
          (when (and (plist-get a :line) (markerp bol))
            (with-current-buffer (marker-buffer bol)
@@ -1776,11 +882,6 @@ line, or when another open line in the entry is the one org would resume."
        (let ((end (plist-get a :end)))
          (when (and (numberp end) (> end start))
            (lr-track--advance-clock-line end)))
-       (when pause
-         (setq lr-track--clock-pause
-               (list :start start :paused-at (plist-get pause :paused-at)
-                     :why (plist-get pause :why)
-                     :end (lr-track--running-line-end))))
        (list (marker-buffer org-clock-marker))))))
 
 (defun lr-track-undo ()
@@ -1809,269 +910,13 @@ changes nothing."
             (lr-track--undo-release rec)
             (when (and (not err)
                        (equal lr-track--last-clock-end (plist-get rec :last-end-after)))
-              (setq lr-track--last-clock-end (plist-get rec :last-end-before)))
+              (lr-track--set-last-stop (plist-get rec :last-end-before) t))
             (lr-track--ask-refresh-quietly)
             (if err
                 (progn (lr-track--log 'undo err)
                        (lr-track--ask-say (format "Undo stopped: %s."
                                                   (error-message-string err))))
               (lr-track--ask-say (format "Undone: %s." (plist-get rec :label))))))))))
-
-(defun lr-track--cover-span (from to)
-  "Remember that a line books FROM to TO (floats), newest first."
-  (when (and (numberp from) (numberp to) (> to from))
-    (push (cons from to) lr-track--covered-spans)
-    (setq lr-track--covered-spans
-          (seq-take lr-track--covered-spans lr-track--covered-max))))
-
-(defun lr-track--ask-on-clock-out ()
-  "`org-clock-out-hook': the line that just ended books its span.
-A line org removed as zero time books nothing."
-  (condition-case err
-      (when (and (boundp 'org-clock-start-time) org-clock-start-time
-                 (boundp 'org-clock-out-time) org-clock-out-time
-                 (not (bound-and-true-p org-clock-out-removed-last-clock)))
-        (lr-track--cover-span (float-time org-clock-start-time)
-                              (float-time org-clock-out-time)))
-    (error (lr-track--log 'cover err))))
-
-;;;; SPC d N
-
-(defun lr-track--now (n)
-  "I am doing stream N now: it runs from now; a running other clock ends now."
-  (lr-track--execute-plan (lr-track--now-plan (lr-track--ask-context) n)))
-
-(defmacro lr-track--define-now-commands ()
-  "Define `lr-track-now-1' to `lr-track-now-9'."
-  `(progn
-     ,@(mapcar
-        (lambda (n)
-          `(defun ,(intern (format "lr-track-now-%d" n)) ()
-             ,(format "I am doing stream %d now (SPC d %d).
-It runs from now, never backdated; a running other stream ends now." n n)
-             (interactive)
-             (lr-track--now ,n)))
-        (number-sequence 1 9))))
-
-(lr-track--define-now-commands)
-
-;;;; y: the question and its one-key maps
-
-(defun lr-track--ask-refusal ()
-  "Why the one-key map must not go up now, or a key of it answer, or nil.
-Typing is evil's insert, replace or emacs state: there a digit is text."
-  (cond
-   ((and (boundp 'evil-state) (memq evil-state '(insert replace emacs)))
-    "you are typing")
-   ((or executing-kbd-macro defining-kbd-macro) "a keyboard macro is running")
-   ((or (minibufferp) (active-minibuffer-window)) "a minibuffer is open")
-   ((not (lr-track--frame-focused-now-p)) "no Emacs frame has focus")))
-
-(defun lr-track--ask-signatures (ctx)
-  "Each answer key of CTX with its plan signature, as an alist."
-  (mapcar (lambda (k) (cons k (lr-track--plan-signature (lr-track--answer-plan ctx k))))
-          (append (number-sequence 1 9) '(default)
-                  (mapcar (lambda (n) (cons 'away n)) (number-sequence 1 9)))))
-
-(defun lr-track--ask-answer (key shown now)
-  "Answer KEY: recompute its plan at NOW, the time the echo was shown; write
-it only when it is the plan SHOWN had for KEY, else refuse (I18)."
-  (let* ((plan (lr-track--answer-plan (lr-track--ask-context now) key))
-         (was (cdr (assoc key (cdr shown)))))
-    (cond
-     ((not (equal (lr-track--plan-signature plan) was))
-      (lr-track--ask-say
-       (concat "Changed since shown: a clock or your presence moved, so that key"
-               " would write something else. Nothing written; y again.")))
-     ((plist-get plan :refuse) (lr-track--ask-say (plist-get plan :refuse)))
-     (t (lr-track--execute-plan plan)))))
-
-(defun lr-track--ask-note-echo ()
-  "`echo-area-clear-hook': note whether the key comes while our echo shows.
-Emacs runs it when the read of a key clears the echo area, before the key is
-looked up, and `current-message' still reads what he saw.  The filter of a
-one-key binding runs later, once the key has cleared it, so it cannot ask
-itself.  When the echo area was already empty the hook does not run, and
-the mark stays as `lr-track-ask' left it: nil."
-  (setq lr-track--ask-echo-seen
-        (and lr-track--ask-echo-shown
-             (equal (current-message) lr-track--ask-echo-shown)
-             t)))
-
-(defun lr-track--ask-here-p ()
-  "Non-nil when a key now is meant for the one-key map.
-The key came while the echo area showed the echo naming it
-\(`lr-track--ask-echo-seen'), the selected window and its buffer are where
-the echo was shown, evil is in the state it was shown in, and nothing that
-refuses `lr-track-ask' holds (typing, a macro, a minibuffer, no focus).  A
-timer's or a process's message over the echo, a timer that selects another
-window, a server or a frame switch that shows another buffer, or a hook that
-puts evil in another state: the key there is his text or his command."
-  (pcase-let ((`(,win ,buf ,state) lr-track--ask-where))
-    (and lr-track--ask-echo-seen
-         (window-live-p win)
-         (eq (selected-window) win)
-         (eq (window-buffer win) buf)
-         (eq (current-buffer) buf)
-         (eq (bound-and-true-p evil-state) state)
-         (not (lr-track--ask-refusal)))))
-
-(defun lr-track--ask-key (cmd)
-  "CMD as a one-key map binding that answers only where the echo was shown.
-Anywhere else the key is not ours (`lr-track--ask-here-p'): the lookup goes
-on to the key's own binding, so it runs as he meant it, and the map closes
-as it does for any other key."
-  (list 'menu-item "" cmd
-        :filter (lambda (c) (and (lr-track--ask-here-p) c))))
-
-(defun lr-track--ask-where-now ()
-  "Where a one-key map goes up now, for `lr-track--ask-where'."
-  (list (selected-window) (current-buffer) (bound-and-true-p evil-state)))
-
-(defun lr-track--ask-bind-digits (map fn keys)
-  "Bind each digit N of KEYS in MAP, its Arabic twins too, to (FN N).
-KEYS are the streams' keys: a digit with no stream is never taken, so it
-leaves the map and runs as it would."
-  (dolist (n keys)
-    (when (and (integerp n) (<= 1 n 9))
-      (let ((cmd (lr-track--ask-key (lambda () (interactive) (funcall fn n)))))
-        (define-key map (vector (+ ?0 n)) cmd)
-        (dolist (zero lr-track--ar-digit-zeros)
-          (define-key map (vector (+ zero n)) cmd))))))
-
-(defun lr-track--ask-keymap (ctx shown now)
-  "The one-key map for CTX: exactly the keys its echo names.
-SHOWN and NOW are what each answer is checked against."
-  (let ((map (make-sparse-keymap))
-        (default (cdr (assq 'default (cdr shown)))))
-    (lr-track--ask-bind-digits map (lambda (n) (lr-track--ask-answer n shown now))
-                               (lr-track--ask-keys ctx))
-    (when (and default (eq (car shown) 'paused-back))
-      (let ((cmd (lr-track--ask-key
-                  (lambda () (interactive) (lr-track--ask-answer 'default shown now)))))
-        (define-key map "y" cmd)
-        (define-key map (vector lr-track--ar-ghain) cmd)))
-    (when (lr-track--ask-labelable-away ctx)
-      (let ((cmd (lr-track--ask-key
-                  (lambda () (interactive) (lr-track--ask-away-prompt shown now)))))
-        (define-key map "a" cmd)
-        (define-key map (vector lr-track--ar-sheen) cmd)))
-    ;; u only while the echo names what it undoes (a recent write)
-    (let ((label (plist-get ctx :undo)))
-      (when (stringp label)
-        (let ((cmd (lr-track--ask-key
-                    (lambda () (interactive) (lr-track--ask-undo label)))))
-          (define-key map "u" cmd)
-          (define-key map (vector lr-track--ar-ain) cmd))))
-    map))
-
-(defun lr-track--ask-undo (label)
-  "u after y: undo the write the echo named as LABEL, and only that one.
-Refuses when the newest undo record is no longer it (I18)."
-  (if (equal (plist-get (car lr-track--undo-stack) :label) label)
-      (lr-track-undo)
-    (lr-track--ask-say
-     (concat "Changed since shown: the last tracker write is another one now."
-             " Nothing undone; y again."))))
-
-(defun lr-track--ask-on-exit ()
-  "A one-key map closed: forget it, unless a newer one of ours is up.
-Its echo goes too when it is still showing: after the timeout or focus loss
-it would go on naming keys that now run their own commands.  (Any other key
-replaces the echo anyway.)"
-  (unless (and lr-track--ask-map
-               (memq lr-track--ask-map overriding-terminal-local-map))
-    (when (and lr-track--ask-echo-shown
-               (equal (current-message) lr-track--ask-echo-shown))
-      (let ((message-log-max nil)) (message nil)))
-    (setq lr-track--ask-exit-fn nil
-          lr-track--ask-shown nil
-          lr-track--ask-map nil
-          lr-track--ask-echo-shown nil
-          lr-track--ask-echo-seen nil
-          lr-track--ask-where nil)))
-
-(defun lr-track--ask-focus-change (&rest _)
-  "`after-focus-change-function': focus loss closes a one-key map of ours.
-So does focus on another Emacs frame: Emacs keeps focus, but the frame the
-echo was shown in lost it, or is no longer the selected one.  Installed at
-load, so it holds with `lr-track-mode' off too."
-  (when (and (functionp lr-track--ask-exit-fn)
-             (or (not (lr-track--frame-focused-now-p))
-                 (let* ((w (car lr-track--ask-where))
-                        (f (and (window-live-p w) (window-frame w))))
-                   (and f (or (not (eq f (selected-frame)))
-                              (not (memq (frame-focus-state f)
-                                         '(t unknown))))))))
-    (condition-case err (funcall lr-track--ask-exit-fn)
-      (error (lr-track--log 'ask-exit err)))))
-
-(defun lr-track--ask-exit-on-minibuffer ()
-  "`minibuffer-setup-hook': a minibuffer closes any one-key map of ours."
-  (when (functionp lr-track--ask-exit-fn)
-    (condition-case err (funcall lr-track--ask-exit-fn)
-      (error (lr-track--log 'ask-exit err)))))
-
-(defun lr-track--ask-away-prompt (shown now)
-  "`a' after y: name the latest away, then take one digit for it.
-Only the one-key map of `lr-track-ask' reaches this.  SHOWN and NOW are what
-the digit is checked against."
-  (let* ((ctx (lr-track--ask-context now))
-         (away (lr-track--ask-labelable-away ctx)))
-    (if (not away)
-        (lr-track--ask-say "No away of 15 min or more to label now. Nothing written.")
-      (let ((map (make-sparse-keymap)))
-        (lr-track--ask-bind-digits
-         map (lambda (n) (lr-track--ask-answer (cons 'away n) shown now))
-         (lr-track--ask-keys ctx))
-        (setq lr-track--ask-shown shown
-              lr-track--ask-where (lr-track--ask-where-now)
-              lr-track--ask-echo-shown (format "The away %s was:  %s"
-                                               (lr-track--ask-away-text away)
-                                               (lr-track--ask-stream-list ctx)))
-        (lr-track--ask-say lr-track--ask-echo-shown)
-        ;; the next key's read says whether this echo is still the message
-        (setq lr-track--ask-echo-seen nil)
-        (setq lr-track--ask-map map
-              lr-track--ask-exit-fn
-              (set-transient-map map nil #'lr-track--ask-on-exit nil
-                                 lr-track-ask-timeout))))))
-
-(defun lr-track-ask ()
-  "Time: Now?  Show in the echo area what each key would write; the next key
-answers (y in the f agenda, SPC d j anywhere).
-Digits: what you do now.  y: the default the echo names.  a then a digit:
-what the latest away was.  u: undo the write the echo names, offered only
-for one under 10 min old (SPC d u reaches older ones).  Any other key, focus
-loss, a minibuffer or 15 s idle closes it, writing nothing.  A key answers
-only while the echo is still the message on screen, and only in the window,
-buffer and evil state it was shown in: otherwise it runs as it would, and
-the map closes.  Refused while typing (insert, replace or emacs state), in
-a keyboard macro, with a minibuffer open or unfocused."
-  (interactive)
-  (let ((why (lr-track--ask-refusal)))
-    (if why
-        (lr-track--ask-say (concat "Not now: " why "."))
-      (let* ((ctx (lr-track--ask-context))
-             (state (lr-track--ask-state ctx))
-             (echo (lr-track--ask-echo ctx)))
-        (if (eq state 'nostreams)
-            (lr-track--ask-say echo)
-          (let* ((now (plist-get ctx :now))
-                 (shown (cons state (lr-track--ask-signatures ctx)))
-                 (map (lr-track--ask-keymap ctx shown now)))
-            (setq lr-track--ask-shown shown
-                  lr-track--ask-where (lr-track--ask-where-now)
-                  lr-track--ask-echo-shown echo)
-            (lr-track--ask-say echo)
-            ;; the next key's read says whether this echo is still the message
-            (setq lr-track--ask-echo-seen nil)
-            (setq lr-track--ask-map map
-                  lr-track--ask-exit-fn
-                  (set-transient-map map nil #'lr-track--ask-on-exit nil
-                                     lr-track-ask-timeout))))))))
-
-;;;; the f agenda: one key, the header line
 
 (defun lr-track--agenda-bind-keys ()
   "Bind y and ghain to `lr-track-ask', teh and noon to what j and k run here.
@@ -2091,7 +936,7 @@ agenda's own maps; nothing else is bound."
           (vector lr-track--ar-noon) k)))))
 
 (define-minor-mode lr-track-agenda-mode
-  "The f agenda's Now? key: y (and ghain) runs `lr-track-ask'.
+  "The f agenda's Time key: y (and ghain) runs `lr-track-ask'.
 Teh and noon run what j and k do there.  Every other key keeps its meaning.
 Only ever on in the buffer named by `lr-track--agenda-buffer'."
   :lighter nil
@@ -2127,19 +972,17 @@ finalize hook and kills local variables, put the key and header back."
   (when (memq this-command lr-track--agenda-sticky-commands)
     (lr-track--agenda-install (get-buffer lr-track--agenda-buffer))))
 
-;;;; SPC under the Arabic layout
-
 (defun lr-track-ask-install-arabic-leader ()
   "Arabic PC aliases of the Time keys in `doom-leader-map'.
-SPC yeh teh is SPC d j, SPC yeh DIGIT is SPC d N (both Arabic digit sets),
-SPC yeh ain is SPC d u, and SPC khah sheen is whatever SPC o a is now."
+SPC yeh teh is SPC d j, SPC yeh DIGIT is SPC d N (both Arabic digit sets, 0 to
+9), SPC yeh ain is SPC d u, and SPC khah sheen is whatever SPC o a is now."
   (when (and (boundp 'doom-leader-map) (keymapp doom-leader-map))
     (let* ((yeh lr-track--ar-yeh)
            (agenda (lookup-key doom-leader-map "oa"))
            (binds (append
                    (list (cons (vector yeh lr-track--ar-teh) #'lr-track-ask)
                          (cons (vector yeh lr-track--ar-ain) #'lr-track-undo))
-                   (cl-loop for n from 1 to 9
+                   (cl-loop for n from 0 to 9
                             append (mapcar (lambda (zero)
                                              (cons (vector yeh (+ zero n))
                                                    (intern (format "lr-track-now-%d" n))))
@@ -2151,20 +994,718 @@ SPC yeh ain is SPC d u, and SPC khah sheen is whatever SPC o a is now."
         (condition-case err (define-key doom-leader-map (car b) (cdr b))
           (error (lr-track--log 'arabic-leader err)))))))
 
-;;;; installed at load (deploy is by `load', I13; each is idempotent)
+(defun lr-track--header-cached ()
+  "The header text as last refreshed, ready for `header-line-format'.
+A percent sign is doubled, so a task name never reads as a mode-line
+construct."
+  (let ((h (or lr-track--header-cache "Time")))
+    (if (string-search "%" h) (string-replace "%" "%%" h) h)))
+
+(defun lr-track-ask-refresh-header ()
+  "Recompute the header from live state; redraw only when its text changed."
+  (let ((h (lr-track--header (lr-track--pop-context 'header))))
+    (unless (equal h lr-track--header-cache)
+      (setq lr-track--header-cache h)
+      (force-mode-line-update t))
+    h))
+
+(defun lr-track--ask-refresh-quietly (&rest _)
+  "Refresh the header from a clock hook; an error is logged, never raised.
+Not while org stands a dangling line in for the running clock
+\(`lr-track--clock-stood-in-p'): the header would describe that line."
+  (unless (lr-track--clock-stood-in-p)
+    (condition-case err (lr-track-ask-refresh-header)
+      (error (lr-track--log 'header err)))))
+
+
+;;;; the questions (deterministic)
+;;
+;; Every question is asked because HE did something: opened the agenda, started
+;; Emacs, stopped a clock, or pressed SPC d j.  Every time written is NOW (to the
+;; minute), a time he typed, or one of his own boundaries: his last stop, a
+;; clock's start, where a clock's line ended when Emacs quit.  Nothing about this
+;; laptop is read; focus is used only to DROP a question nobody is looking at.
+
+(defconst lr-track-gap-seconds 600.0
+  "Nothing running this long since his last stop pops \"what was it?\".")
+
+(defconst lr-track-stale-seconds 10800.0
+  "A clock running this long since its start or his last yes pops \"still?\".")
+
+(defconst lr-track-day-start-hour 5
+  "The day starts at 05:00: a clock from before today's 05:00 is overnight.")
+
+(defconst lr-track-pop-timeout 120
+  "Seconds a question waits for a key before it is dropped, nothing written.")
+
+(defconst lr-track--pop-max-questions 6
+  "At most this many questions in one go.")
+
+(defconst lr-track--his-clock-out-commands
+  '(org-clock-out org-agenda-clock-out +org/clock-out)
+  "His own clock-out commands: after one, \"what now?\" pops.")
+
+(defconst lr-track--ar-seen #x633 "Arabic seen, the s key.")
+
+(defvar lr-track--pop-active nil
+  "Non-nil while a question is up, so a question never starts inside one.")
+
+(defvar lr-track--pop-startup-armed nil
+  "Non-nil once this session's startup question is scheduled.")
+
+;;;; helpers
+
+(defun lr-track--frame-focused-p ()
+  "Non-nil when some frame has focus (`unknown' counts as focused).
+Used only to drop or hold back a question, never for anything written."
+  (and (seq-some (lambda (f) (memq (frame-focus-state f) '(t unknown))) (frame-list))
+       t))
+
+(defun lr-track--day-start (now)
+  "Float time of the latest 05:00 (`lr-track-day-start-hour') at or before NOW."
+  (let* ((d (decode-time (seconds-to-time now)))
+         (at (lambda (day)
+               (float-time (encode-time
+                            (list 0 0 lr-track-day-start-hour day
+                                  (decoded-time-month d) (decoded-time-year d)
+                                  nil -1 nil)))))
+         (today (funcall at (decoded-time-day d))))
+    (if (<= today now) today (funcall at (1- (decoded-time-day d))))))
+
+(defun lr-track--pop-when (time now)
+  "TIME as HH:MM, with its weekday when it falls before NOW's day."
+  (if (>= time (lr-track--day-start now))
+      (lr-track--ts-hm time)
+    (format-time-string "%a %H:%M" (seconds-to-time time))))
+
+(defun lr-track--heading-limit (m)
+  "Seconds of the TRACK_MAX on or above the heading at marker M, else 10 h."
+  (or (ignore-errors
+        (with-current-buffer (marker-buffer m)
+          (save-excursion
+            (save-restriction
+              (widen)
+              (goto-char m)
+              (lr-track--parse-max (org-entry-get (point) "TRACK_MAX" t))))))
+      lr-track--clock-default-max))
+
+(defun lr-track--last-stop-from-time-file (now)
+  "The latest CLOCK end in time.org at or before NOW, or nil."
+  (let ((file (lr-track--time-file)) (best nil))
+    (when (file-exists-p file)
+      (with-current-buffer (lr-track--time-buffer file)
+        (save-excursion
+          (save-restriction
+            (widen)
+            (goto-char (point-min))
+            (while (re-search-forward
+                    "^[ \t]*CLOCK: \\[[^]\n]*\\]--\\(\\[[^]\n]*\\]\\)" nil t)
+              (let ((e (ignore-errors
+                         (float-time (org-time-string-to-time (match-string 1))))))
+                (when (and e (<= e now) (or (null best) (> e best)))
+                  (setq best e))))))))
+    best))
+
+(defun lr-track--last-stop (&optional now)
+  "His last stop: `lr-track--last-clock-end', else the latest end in time.org."
+  (or lr-track--last-clock-end
+      (let ((f (lr-track--last-stop-from-time-file (or now (float-time)))))
+        (when f (lr-track--set-last-stop f))
+        f)))
+
+;;;; context and situations (PURE given the context)
+
+(defun lr-track--pop-clock ()
+  "The running clock as (:task :marker :stream-key :start :limit), or nil.
+The off stream (key 0) has no limit."
+  (when (and (lr-track--clocking-p)
+             (not (lr-track--clock-stood-in-p))
+             (markerp org-clock-hd-marker)
+             (buffer-live-p (marker-buffer org-clock-hd-marker))
+             (boundp 'org-clock-start-time) org-clock-start-time)
+    (lr-track--sync-running-start)
+    (let* ((m org-clock-hd-marker)
+           (stream (ignore-errors (lr-track--stream-of-marker m)))
+           (key (plist-get stream :key)))
+      (list :task (or (lr-track--clock-task) "the task")
+            :marker m
+            :stream-key key
+            :start (float-time org-clock-start-time)
+            :limit (unless (eql key 0) (lr-track--heading-limit m))))))
+
+(defun lr-track--pop-state ()
+  "The state.eld plist, read once."
+  (or lr-track--state (setq lr-track--state (lr-track--read-state))))
+
+(defun lr-track--pop-context (&optional trigger now)
+  "Everything a question is computed from, read once, at NOW."
+  (let* ((now (or now (float-time)))
+         (state (lr-track--pop-state))
+         (clock (lr-track--pop-clock))
+         (running (plist-get state :running)))
+    (list :now now
+          :trigger trigger
+          :streams (ignore-errors (lr-track--streams))
+          :clock clock
+          :last-stop (lr-track--last-stop now)
+          :confirmed (plist-get state :confirmed)
+          :restarted (and (not clock) running
+                          (numberp (plist-get running :at)) running))))
+
+(defun lr-track--pop-situations (ctx)
+  "The questions CTX calls for, in the order they are asked.
+restarted, then one of limit / overnight / stale for a running clock, then
+stopped (only right after his clock-out) or gap."
+  (let* ((now (plist-get ctx :now))
+         (clock (plist-get ctx :clock))
+         (last (plist-get ctx :last-stop))
+         (confirmed (plist-get ctx :confirmed))
+         (restarted (plist-get ctx :restarted))
+         (out nil))
+    (when (plist-get ctx :streams)
+      (when restarted (push (list :kind 'restarted) out))
+      (when clock
+        (let* ((start (plist-get clock :start))
+               (limit (plist-get clock :limit))
+               (day (lr-track--day-start now))
+               (since (max start (or confirmed start))))
+          (cond
+           ((and limit (> (- now start) limit)
+                 (not (and confirmed (>= confirmed (+ start limit)))))
+            (push (list :kind 'limit) out))
+           ((and (< start day) (not (and confirmed (>= confirmed day))))
+            (push (list :kind 'overnight) out))
+           ((>= (- now since) lr-track-stale-seconds)
+            (push (list :kind 'stale :since since) out)))))
+      (when (and (not clock) (not restarted) last)
+        (cond ((eq (plist-get ctx :trigger) 'stopped)
+               (push (list :kind 'stopped) out))
+              ((>= (- now last) lr-track-gap-seconds)
+               (push (list :kind 'gap) out)))))
+    (nreverse out)))
+
+;;;; plans (PURE given the context)
+
+(defun lr-track--pop-note (tag fmt &rest args)
+  "A note body for TAG: FMT and ARGS, ASCII, cut so the line fits."
+  (lr-track--note-text tag (apply #'format fmt args)))
+
+(defun lr-track--plan-start-from (ctx n from tag why)
+  "Stream N running from FROM; a running clock ends at FROM first."
+  (let* ((stream (seq-find (lambda (s) (eql (plist-get s :key) n))
+                           (plist-get ctx :streams)))
+         (clock (plist-get ctx :clock))
+         (now (plist-get ctx :now)))
+    (cond
+     ((null stream) (list :refuse (format "No stream %d in time.org. Nothing written." n)))
+     ((and clock (eql (plist-get clock :stream-key) n))
+      (list :refuse (format "%s is already running (since %s). Nothing written."
+                            (plist-get clock :task)
+                            (lr-track--pop-when (plist-get clock :start) now))))
+     ((and clock (<= from (plist-get clock :start)))
+      (list :refuse (format "%s is before %s started (%s). Nothing written."
+                            (lr-track--ts-hm from) (plist-get clock :task)
+                            (lr-track--ts-hm (plist-get clock :start)))))
+     (t
+      (list :ops (append
+                  (and clock (list (list :end-at from)))
+                  (list (list :start n :from from :tag tag
+                              :text (lr-track--pop-note tag "from %s, %s"
+                                                        (lr-track--ts-hm from) why))))
+            :message (format "%s from %s, running%s.  SPC d u undoes."
+                             (plist-get stream :name) (lr-track--pop-when from now)
+                             (if clock
+                                 (format "; %s ended at %s" (plist-get clock :task)
+                                         (lr-track--ts-hm from))
+                               "")))))))
+
+(defun lr-track--plan-stop-at (ctx at)
+  "End the running clock at AT."
+  (let ((clock (plist-get ctx :clock)))
+    (cond
+     ((null clock) (list :refuse "Nothing is running. Nothing written."))
+     ((<= at (plist-get clock :start))
+      (list :refuse (format "%s is not after %s started (%s). Nothing written."
+                            (lr-track--ts-hm at) (plist-get clock :task)
+                            (lr-track--ts-hm (plist-get clock :start)))))
+     (t (list :ops (list (list :end-at at))
+              :message (format "%s ended at %s.  SPC d u undoes."
+                               (plist-get clock :task)
+                               (lr-track--pop-when at (plist-get ctx :now))))))))
+
+(defun lr-track--plan-log (ctx n from to tag)
+  "A closed line FROM to TO under stream N."
+  (let ((stream (seq-find (lambda (s) (eql (plist-get s :key) n))
+                          (plist-get ctx :streams))))
+    (if (null stream)
+        (list :refuse (format "No stream %d in time.org. Nothing written." n))
+      (list :ops (list (list :log n :from from :to to :tag tag
+                             :text (lr-track--pop-note tag "%s to %s"
+                                                       (lr-track--ts-hm from)
+                                                       (lr-track--ts-hm to))))
+            :message (format "%s %s to %s written.  SPC d u undoes."
+                             (plist-get stream :name) (lr-track--ts-hm from)
+                             (lr-track--ts-hm to))))))
+
+(defun lr-track--plan-resume (ctx running)
+  "RUNNING (from state.eld) again, from where its line ended when Emacs quit."
+  (let ((at (plist-get running :at)))
+    (list :ops (list (list :resume-olp :file (plist-get running :file)
+                           :olp (plist-get running :olp)
+                           :name (plist-get running :task) :from at :tag "resumed"
+                           :text (lr-track--pop-note "resumed" "from %s, Emacs quit then"
+                                                     (lr-track--ts-hm at))))
+          :message (format "%s again from %s, running.  SPC d u undoes."
+                           (plist-get running :task)
+                           (lr-track--pop-when at (plist-get ctx :now))))))
+
+;;;; the resume of a clock Emacs quit with
+
+(defun lr-track--ask-in-start-minute-p (at start)
+  "Non-nil when AT reads as START's minute or earlier, as a CLOCK stamp does.
+A line from START ending there is 0:00 (org removes it), so it is cancelled,
+never stretched to a minute he did not earn.  Floats both."
+  (< at (+ (lr-track--ask-minute start) 60.0)))
+
+(defun lr-track--op-resume-olp (file olp name from tag text)
+  "Run (:resume-olp ...): clock into the heading at OLP in FILE, its line
+running since FROM, with the note under it.  Return (ACTION . BUFFER)."
+  (let ((m (or (and file olp (file-exists-p file)
+                    (ignore-errors (org-find-olp (cons file olp))))
+               (error "Could not find %s in %s" name (or file "its file")))))
+    (prog1 (lr-track--ask-clock-in name m from (lr-track--note-line tag text))
+      (set-marker m nil))))
+
+;;;; reading his answer
+
+(defun lr-track--pop-latin (ev)
+  "EV with Arabic digits and the Arabic letters on y and s read as Latin."
+  (cond
+   ((not (integerp ev)) ev)
+   ((<= #x660 ev #x669) (+ ?0 (- ev #x660)))
+   ((<= #x6f0 ev #x6f9) (+ ?0 (- ev #x6f0)))
+   ((= ev lr-track--ar-ghain) ?y)
+   ((= ev lr-track--ar-seen) ?s)
+   (t ev)))
+
+(defun lr-track--pop-latin-digits (s)
+  "S with Arabic digits as Latin digits."
+  (apply #'string (mapcar #'lr-track--pop-latin (string-to-list s))))
+
+(defun lr-track--pop-read-key (prompt choices)
+  "Show PROMPT; return the character from CHOICES he pressed, or `later' for
+RET.  Any other key ends the questions and runs as it always does (nothing is
+swallowed).  C-g, 120 s without a key, or Emacs losing focus signal `quit'."
+  (let* ((ev (with-timeout (lr-track-pop-timeout 'lr-track-pop-drop)
+               (read-key (propertize prompt 'face 'minibuffer-prompt))))
+         (ch (lr-track--pop-latin ev)))
+    (cond
+     ((memq ev '(lr-track-pop-drop)) (signal 'quit nil))
+     ((eql ch ?\C-g) (signal 'quit nil))
+     ((memq ch '(?\r ?\n return)) 'later)
+     ((memq ch choices) ch)
+     ;; back at the FRONT: it was pressed before anything still queued
+     (t (push ev unread-command-events)
+        (throw 'lr-track-pop-done 'other)))))
+
+(defun lr-track--pop-read-time (prompt parse)
+  "Ask PROMPT in the minibuffer and return the float PARSE makes of the answer
+\(floored to the minute), or `default' for an empty answer.  Re-asks on an
+answer PARSE rejects.  C-g, 120 s, or Emacs losing focus signal `quit'."
+  (let ((note nil))
+    (catch 'got
+      (while t
+        (let* ((raw (with-timeout (lr-track-pop-timeout (signal 'quit nil))
+                      (read-string (concat prompt (if note (format "[%s] " note) "")))))
+               (s (lr-track--pop-latin-digits (string-trim raw))))
+          (if (string-empty-p s)
+              (throw 'got 'default)
+            (let ((tm (funcall parse s)))
+              (if (numberp tm)
+                  (throw 'got (lr-track--ask-minute tm))
+                (setq note (format "not a time in range: %s" s))))))))))
+
+(defun lr-track--pop-parse-ago (anchor now)
+  "A parser for \"since when\": a clock time after ANCHOR, or a duration back
+from NOW, landing in (ANCHOR, NOW]."
+  (lambda (s)
+    (let ((s (downcase s)))
+      (cond
+       ((member s '("now" "n")) now)
+       ((lr-track--parse-clock s)
+        (let ((hm (lr-track--parse-clock s)))
+          (lr-track--clock-on-day (car hm) (cdr hm) anchor now)))
+       (t (let ((mins (lr-track--duration-minutes s)))
+            (and mins (> mins 0)
+                 (let ((tm (- now (* 60.0 mins)))) (and (> tm anchor) tm)))))))))
+
+(defun lr-track--pop-parse-after (anchor now)
+  "A parser for \"until when\": a clock time after ANCHOR, or how long it
+lasted from ANCHOR, landing in (ANCHOR, NOW]."
+  (lambda (s)
+    (let ((tm (lr-track--parse-when s anchor now)))
+      (and (numberp tm) (> tm anchor) (<= tm now) tm))))
+
+(defun lr-track--pop-focus-change (&rest _)
+  "`after-focus-change-function': drop a question nobody is looking at.
+Nothing is written for it; the same trigger asks again next time."
+  (when (and lr-track--pop-active (not (lr-track--frame-focused-p)))
+    (if (> (minibuffer-depth) 0)
+        (run-at-time 0 nil (lambda ()
+                             (when (and lr-track--pop-active (> (minibuffer-depth) 0)
+                                        (not (lr-track--frame-focused-p)))
+                               (abort-recursive-edit))))
+      (setq unread-command-events
+            (append unread-command-events (list 'lr-track-pop-drop))))))
+
+;;;; one question each
+
+(defun lr-track--pop-streams-text (ctx)
+  "\"0 off  1 avey  ...\" from CTX's streams."
+  (mapconcat (lambda (s) (format "%d %s" (plist-get s :key)
+                                 (lr-track--ask-cut (plist-get s :name) 10)))
+             (plist-get ctx :streams) "  "))
+
+(defun lr-track--pop-digits (ctx)
+  "The digit characters of CTX's streams."
+  (mapcar (lambda (s) (+ ?0 (plist-get s :key))) (plist-get ctx :streams)))
+
+(defun lr-track--pop-confirm (ctx)
+  "His yes: the running clock is still right, as of now (state only)."
+  (lr-track--state-put :confirmed (plist-get ctx :now))
+  (lr-track--ask-say (format "OK: %s still running." (plist-get (plist-get ctx :clock) :task))))
+
+(defun lr-track--pop-ask-restarted (ctx head)
+  "The clock that ran when Emacs quit: resume it, another, or off."
+  (let* ((r (plist-get ctx :restarted))
+         (at (plist-get r :at))
+         (k (lr-track--pop-read-key
+             (format "%s%s was running when Emacs quit at %s.\ny: %s again from %s   or from %s:  %s   RET later "
+                     head (plist-get r :task) (lr-track--pop-when at (plist-get ctx :now))
+                     (plist-get r :task) (lr-track--ts-hm at) (lr-track--ts-hm at)
+                     (lr-track--pop-streams-text ctx))
+             (cons ?y (lr-track--pop-digits ctx)))))
+    (unless (eq k 'later)
+      (let ((plan (if (eql k ?y)
+                      (lr-track--plan-resume ctx r)
+                    (lr-track--plan-start-from ctx (- k ?0) at "restarted"
+                                               "Emacs quit then"))))
+        (lr-track--execute-plan plan)
+        (unless (plist-get plan :refuse) (lr-track--state-put :running (lr-track--running-info)))))
+    k))
+
+(defun lr-track--pop-ask-limit (ctx head)
+  "A clock past its limit: when did it end?  RET keeps it running."
+  (let* ((c (plist-get ctx :clock))
+         (now (plist-get ctx :now))
+         (start (plist-get c :start))
+         (at (lr-track--pop-read-time
+              (format "%s%s has run %s since %s, past its %s limit.\nWhen did it end? (a time like 23:30, or how long it ran like 2h; RET: still running) "
+                      head (plist-get c :task) (lr-track--ask-dur (- now start))
+                      (lr-track--pop-when start now) (lr-track--ask-dur (plist-get c :limit)))
+              (lr-track--pop-parse-after start now))))
+    (if (eq at 'default)
+        (lr-track--pop-confirm ctx)
+      (lr-track--execute-plan (lr-track--plan-stop-at ctx at)))
+    at))
+
+(defun lr-track--pop-ask-still (ctx sit head)
+  "Overnight or 3 h unconfirmed: still the same?  y, another, or stopped."
+  (let* ((c (plist-get ctx :clock))
+         (now (plist-get ctx :now))
+         (start (plist-get c :start))
+         (k (lr-track--pop-read-key
+             (format "%sStill %s since %s%s?\ny: yes   0: stopped   or switched to:  %s   RET later "
+                     head (plist-get c :task) (lr-track--pop-when start now)
+                     (if (eq (plist-get sit :kind) 'stale)
+                         (format " (%s)" (lr-track--ask-dur (- now start)))
+                       "")
+                     (mapconcat (lambda (s) (format "%d %s" (plist-get s :key)
+                                                    (lr-track--ask-cut (plist-get s :name) 10)))
+                                (seq-remove (lambda (s) (eql (plist-get s :key) 0))
+                                            (plist-get ctx :streams))
+                                "  "))
+             (cons ?y (lr-track--pop-digits ctx)))))
+    (cond
+     ((eq k 'later) nil)
+     ((or (eql k ?y) (eql (- k ?0) (plist-get c :stream-key))) (lr-track--pop-confirm ctx))
+     (t (let ((at (lr-track--pop-read-time
+                   (format (if (eql k ?0)
+                               "%s stopped when? (a time like 15:00, or how long ago like 30m; RET: now) "
+                             "Since when? (a time like 15:00, or how long ago like 30m; RET: now) ")
+                           (plist-get c :task))
+                   (lr-track--pop-parse-ago start now))))
+          (when (eq at 'default) (setq at (lr-track--ask-minute now)))
+          (lr-track--execute-plan
+           (if (eql k ?0)
+               (lr-track--plan-stop-at ctx at)
+             (lr-track--plan-start-from ctx (- k ?0) at "since" "typed"))))))
+    k))
+
+(defun lr-track--pop-split (ctx)
+  "Walk the gap from his last stop with typed times: each part is a closed
+line; the last part, ending now, keeps running."
+  (let ((from (plist-get ctx :last-stop))
+        (done nil))
+    (while (not done)
+      (let* ((ctx (lr-track--pop-context 'split))
+             (now (plist-get ctx :now))
+             (k (lr-track--pop-read-key
+                 (format "From %s, what first?  %s   RET stop here " (lr-track--pop-when from now)
+                         (lr-track--pop-streams-text ctx))
+                 (lr-track--pop-digits ctx))))
+        (if (eq k 'later)
+            (setq done t)
+          (let ((to (lr-track--pop-read-time
+                     (format "Until when? (a time like 17:30, or how long it lasted like 40m; RET: still on it now) ")
+                     (lr-track--pop-parse-after from now))))
+            (if (or (eq to 'default) (>= to (lr-track--ask-minute now)))
+                (progn
+                  (lr-track--execute-plan
+                   (lr-track--plan-start-from ctx (- k ?0) from "split" "the last part, still running"))
+                  (setq done t))
+              (lr-track--execute-plan (lr-track--plan-log ctx (- k ?0) from to "split"))
+              (setq from to))))))))
+
+(defun lr-track--pop-ask-gap (ctx head)
+  "Nothing running since his last stop: what was it?"
+  (let* ((now (plist-get ctx :now))
+         (last (plist-get ctx :last-stop))
+         (k (lr-track--pop-read-key
+             (format "%sNothing logged since %s (%s). What was it, still running?\n%s   s: split it   RET later "
+                     head (lr-track--pop-when last now) (lr-track--ask-dur (- now last))
+                     (lr-track--pop-streams-text ctx))
+             (cons ?s (lr-track--pop-digits ctx)))))
+    (cond ((eq k 'later) nil)
+          ((eql k ?s) (lr-track--pop-split ctx))
+          (t (lr-track--execute-plan
+              (lr-track--plan-start-from ctx (- k ?0) (lr-track--ask-minute last) "gap"
+                                         (format "answered at %s" (lr-track--ts-hm now))))))
+    k))
+
+(defun lr-track--pop-ask-stopped (ctx head)
+  "Right after his clock-out: what now?"
+  (let* ((now (plist-get ctx :now))
+         (last (plist-get ctx :last-stop))
+         (k (lr-track--pop-read-key
+             (format "%sStopped at %s. What now?  %s   RET later "
+                     head (lr-track--pop-when last now) (lr-track--pop-streams-text ctx))
+             (lr-track--pop-digits ctx))))
+    (unless (eq k 'later)
+      (lr-track--execute-plan
+       (lr-track--plan-start-from ctx (- k ?0) (lr-track--ask-minute last) "now"
+                                  "after your stop")))
+    k))
+
+;;;; the questions in one go
+
+(defun lr-track--pop-refusal ()
+  "Why no question may start now, or nil."
+  (cond (lr-track--pop-active "a question is up")
+        ((or executing-kbd-macro defining-kbd-macro) "a keyboard macro runs")
+        ((active-minibuffer-window) "the minibuffer is in use")
+        ((not (lr-track--frame-focused-p)) "Emacs has no focus")))
+
+(defun lr-track-pop (trigger)
+  "Ask, one at a time, every question the current state calls for.
+TRIGGER is `agenda', `startup', `stopped' or `ask'.  Each answer is written
+before the next question.  RET skips one question; any key that is not a
+choice, C-g, 120 s without a key, or Emacs losing focus ends them all.
+Returns the number of questions asked."
+  (let ((asked 0))
+    (unless (lr-track--pop-refusal)
+      (let ((lr-track--pop-active t)
+            (skipped nil)
+            (head ""))
+        (condition-case nil
+            (catch 'lr-track-pop-done
+              (while (< asked lr-track--pop-max-questions)
+                (let* ((ctx (lr-track--pop-context trigger))
+                       (sit (seq-find (lambda (s) (not (memq (plist-get s :kind) skipped)))
+                                      (lr-track--pop-situations ctx))))
+                  (unless sit (throw 'lr-track-pop-done nil))
+                  (cl-incf asked)
+                  (let ((r (pcase (plist-get sit :kind)
+                             ('restarted (lr-track--pop-ask-restarted ctx head))
+                             ('limit (lr-track--pop-ask-limit ctx head))
+                             ((or 'overnight 'stale) (lr-track--pop-ask-still ctx sit head))
+                             ('gap (lr-track--pop-ask-gap ctx head))
+                             ('stopped (lr-track--pop-ask-stopped ctx head)))))
+                    (when (or (eq r 'later) (null r))
+                      (push (plist-get sit :kind) skipped))
+                    ;; "what now?" is asked once; afterwards the gap rule applies
+                    (when (eq trigger 'stopped) (setq trigger 'agenda))
+                    (let ((m (current-message)))
+                      (setq head (if (and m (not (eq r 'later))) (concat m "\n") "")))))))
+          (quit (lr-track--ask-say "Time: question dropped, nothing written for it.")))))
+    asked))
+
+;;;; header and status (facts only)
+
+(defun lr-track--header (ctx)
+  "The Time line for CTX: what is running, or since when nothing is."
+  (let* ((now (plist-get ctx :now))
+         (clock (plist-get ctx :clock))
+         (last (plist-get ctx :last-stop))
+         (body
+          (cond
+           ((null (plist-get ctx :streams))
+            (if (file-exists-p (lr-track--time-file))
+                (lr-track--nostreams-file-text (lr-track--time-file))
+              "no streams yet: SPC d M sets them up"))
+           (clock
+            (let* ((start (plist-get clock :start))
+                   (limit (plist-get clock :limit))
+                   (task (lr-track--ask-name (lr-track--ask-cut (plist-get clock :task) 30))))
+              (if (and limit (> (- now start) limit))
+                  (format "%s running %s since %s, past its %s limit" task
+                          (lr-track--ask-dur (- now start)) (lr-track--pop-when start now)
+                          (lr-track--ask-dur limit))
+                (format "%s running since %s (%s)" task (lr-track--pop-when start now)
+                        (lr-track--ask-dur (- now start))))))
+           (last (format "nothing running since %s (%s, your last stop)"
+                         (lr-track--pop-when last now) (lr-track--ask-dur (- now last))))
+           (t "nothing running"))))
+    (concat "Time  " body "  |  SPC d j: ask")))
+
+(defun lr-track-status ()
+  "SPC d s: what is running, or since when nothing is, in the echo area."
+  (interactive)
+  (lr-track--ask-say (lr-track--header (lr-track--pop-context 'ask))))
+
+;;;; commands
+
+(defun lr-track-ask ()
+  "SPC d j (and y in the f agenda): ask every question that is due now.
+With none due, show the Time line."
+  (interactive)
+  (let ((why (lr-track--pop-refusal)))
+    (cond
+     (why (lr-track--ask-say (format "Time: not now (%s)." why)))
+     ((null (lr-track--streams))
+      (lr-track--ask-say (lr-track--header (lr-track--pop-context 'ask))))
+     ((zerop (lr-track-pop 'ask))
+      (lr-track--ask-say (lr-track--header (lr-track--pop-context 'ask)))))))
+
+(defun lr-track--declare (n ask)
+  "Stream N from now, or from a typed time when ASK; a running clock ends then."
+  (let* ((ctx (lr-track--pop-context 'ask))
+         (now (lr-track--ask-minute (plist-get ctx :now)))
+         (clock (plist-get ctx :clock)))
+    (if (null (plist-get ctx :streams))
+        (lr-track--ask-say (lr-track--header ctx))
+      (let ((at (if (not ask) now
+                  (let ((anchor (or (and clock (plist-get clock :start))
+                                    (plist-get ctx :last-stop)
+                                    (- now 86400.0))))
+                    (let ((v (lr-track--pop-read-time
+                              "Since when? (a time like 15:00, or how long ago like 30m; RET: now) "
+                              (lr-track--pop-parse-ago anchor (plist-get ctx :now)))))
+                      (if (eq v 'default) now v))))))
+        (lr-track--execute-plan
+         (lr-track--plan-start-from ctx n at (if ask "since" "now")
+                                    (if ask "typed" "said then")))))))
+
+(defmacro lr-track--define-now-commands ()
+  "Define `lr-track-now-0' to `lr-track-now-9'."
+  `(progn
+     ,@(mapcar
+        (lambda (n)
+          `(defun ,(intern (format "lr-track-now-%d" n)) (&optional ask)
+             ,(format "Stream %d from now (SPC d %d); a running clock ends now.
+With a prefix argument (SPC u SPC d %d), from a time you type." n n n)
+             (interactive "P")
+             (lr-track--declare ,n ask)))
+        (number-sequence 0 9))))
+
+(lr-track--define-now-commands)
+
+(defun lr-track-stop (&optional ask)
+  "SPC d x: stop the running clock now, or at a typed time with a prefix
+argument (SPC u SPC d x); then ask what now."
+  (interactive "P")
+  (let* ((ctx (lr-track--pop-context 'ask))
+         (clock (plist-get ctx :clock))
+         (now (lr-track--ask-minute (plist-get ctx :now))))
+    (if (null clock)
+        (lr-track--ask-say "Nothing is running.")
+      (let ((at (if (not ask) now
+                  (let ((v (lr-track--pop-read-time
+                            (format "%s stopped when? (a time like 15:00, or how long ago like 30m; RET: now) "
+                                    (plist-get clock :task))
+                            (lr-track--pop-parse-ago (plist-get clock :start)
+                                                     (plist-get ctx :now)))))
+                    (if (eq v 'default) now v)))))
+        (let ((plan (lr-track--plan-stop-at ctx at)))
+          (lr-track--execute-plan plan)
+          (unless (plist-get plan :refuse)
+            (lr-track-pop 'stopped)))))))
+
+;;;; triggers
+
+(defun lr-track--pop-after-agenda (&rest _)
+  "After his f agenda shows: the Time line, then the questions due."
+  (condition-case err
+      (progn
+        (lr-track--agenda-install (get-buffer lr-track--agenda-buffer))
+        (lr-track-pop 'agenda))
+    (error (lr-track--log 'pop-agenda err))))
+
+(defun lr-track--pop-stopped-once ()
+  "One-shot `post-command-hook': \"what now?\" after his clock-out command."
+  (remove-hook 'post-command-hook #'lr-track--pop-stopped-once)
+  (condition-case err (lr-track-pop 'stopped)
+    (error (lr-track--log 'pop-stopped err))))
+
+(defun lr-track--pop-on-clock-out ()
+  "`org-clock-out-hook': after HIS clock-out (O, SPC c o), ask what now."
+  (when (and (not lr-track--internal)
+             (not lr-track--pop-active)
+             (memq this-command lr-track--his-clock-out-commands))
+    (add-hook 'post-command-hook #'lr-track--pop-stopped-once)))
+
+(defun lr-track--pop-startup ()
+  "The startup question, once, when someone is looking."
+  (if (and (lr-track--frame-focused-p) (not (active-minibuffer-window)))
+      (condition-case err (lr-track-pop 'startup)
+        (error (lr-track--log 'pop-startup err)))
+    (add-function :after after-focus-change-function #'lr-track--pop-startup-on-focus)))
+
+(defun lr-track--pop-startup-on-focus (&rest _)
+  "The first focus after a startup nobody saw: ask then, once."
+  (when (lr-track--frame-focused-p)
+    (remove-function after-focus-change-function #'lr-track--pop-startup-on-focus)
+    (run-at-time 0.5 nil #'lr-track--pop-startup)))
+
+(defun lr-track--schedule-startup-pop ()
+  "`doom-after-init-hook': the startup question, 4 s after init, once."
+  (unless lr-track--pop-startup-armed
+    (setq lr-track--pop-startup-armed t)
+    (run-with-timer 4 nil #'lr-track--pop-startup)))
+
+;;;; installed at load (deploy is by `load'; each is idempotent)
 
 (add-hook 'org-agenda-finalize-hook #'lr-track--agenda-finalize)
 (add-hook 'post-command-hook #'lr-track--agenda-post-command)
-(add-hook 'minibuffer-setup-hook #'lr-track--ask-exit-on-minibuffer)
-(add-hook 'echo-area-clear-hook #'lr-track--ask-note-echo)
-(add-function :after after-focus-change-function #'lr-track--ask-focus-change)
 (add-hook 'org-clock-in-hook #'lr-track--ask-refresh-quietly 90)
-(add-hook 'org-clock-out-hook #'lr-track--ask-on-clock-out)
 (add-hook 'org-clock-out-hook #'lr-track--ask-refresh-quietly 90)
 (add-hook 'org-clock-cancel-hook #'lr-track--ask-refresh-quietly 90)
+(add-hook 'org-clock-out-hook #'lr-track--pop-on-clock-out 95)
+(add-function :after after-focus-change-function #'lr-track--pop-focus-change)
+(dolist (f lr-track--agenda-sticky-commands)
+  (advice-add f :after #'lr-track--pop-after-agenda))
+(add-hook 'doom-after-init-hook #'lr-track--schedule-startup-pop 90)
 (if (bound-and-true-p doom-init-time)
     (lr-track-ask-install-arabic-leader)
   (add-hook 'doom-after-init-hook #'lr-track-ask-install-arabic-leader))
+
+;; Leftovers of the presence-based version, removed at load.  A `load' over a
+;; running session keeps what the old file installed; on a fresh start each of
+;; these is a no-op.
+(remove-hook 'minibuffer-setup-hook 'lr-track--ask-exit-on-minibuffer)
+(remove-hook 'echo-area-clear-hook 'lr-track--ask-note-echo)
+(remove-hook 'org-clock-out-hook 'lr-track--ask-on-clock-out)
+(remove-function after-focus-change-function 'lr-track--ask-focus-change)
 
 (provide 'lr-track-ask)
 ;;; lr-track-ask.el ends here

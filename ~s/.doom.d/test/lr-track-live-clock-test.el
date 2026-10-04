@@ -52,10 +52,6 @@
                                                      "modules")))
 (require 'lr-track)
 
-;; Stage 1 state, declared so the `let's below bind the module's variables
-;; dynamically even before the module defines them.
-(defvar lr-track--clock-pause)
-(defvar lr-track--presence)
 
 (setq org-clock-persist nil
       make-backup-files nil
@@ -93,17 +89,6 @@ Binds `file' and `buf'.  Always cancels the clock and kills the buffer."
         (while (re-search-forward "^[ \t]*CLOCK:.*$" nil t)
           (push (string-trim (match-string 0)) out))
         (nreverse out)))))
-
-(defun lr-track-test--presence (mode last-input &optional away-kind)
-  "A hand-built presence state in MODE whose last input was LAST-INPUT.
-When MODE is `away' the away began at LAST-INPUT, of AWAY-KIND (default
-`idle')."
-  (list :mode mode :last-input last-input :prev-time nil :wake nil
-        :first-time nil
-        :away-from (and (eq mode 'away) last-input)
-        :away-kind (and (eq mode 'away) (or away-kind 'idle))
-        :saw-lock nil :return nil :last-away nil :breaks nil :segments nil))
-
 
 ;;;; the core invariant
 
@@ -171,29 +156,6 @@ discard the minutes since the last tick."
         (should (string-match-p "=> +0:45\\'" line))
         (should-not (string-match-p "=> +0:30\\'" line)))
       (should (= 1 (length (lr-track-test--clock-lines buf)))))))
-
-(ert-deftest lr-track-live-clock-explicit-clock-out-of-paused-ends-at-pause ()
-  "The paused variant.  His O, SPC c o or an org switch passes no AT-TIME; once
-the clock has paused (he went away at 0:30) it must end where it paused, not
-at now.  Extending it to now would credit the whole absence to the task."
-  (let ((t0 (* 60.0 (floor (- (float-time) 3600) 60)))
-        (lr-track--clock-pause nil))
-    (lr-track-test--clocked t0
-      (let ((lr-track--presence (lr-track-test--presence 'here (+ t0 1800))))
-        (lr-track--tick-live-clock))                    ; tick says 0:30
-      (let ((lr-track--presence
-             (lr-track-test--presence 'away (+ t0 1800) 'locked)))
-        (lr-track--tick-live-clock))                    ; away: paused
-      (should (= (lr-track--paused-at) (+ t0 1800)))
-      (lr-track--with-pristine-org-globals
-        (org-clock-out))                                ; his O: no AT-TIME
-      (should-not (org-clocking-p))
-      (let ((line (car (lr-track-test--clock-lines buf))))
-        ;; the duration only: an hour in a stamp can read 1:00 too
-        (should (string-match-p "=> +0:30\\'" line))
-        (should-not (string-match-p "=> +1:0[01]\\'" line)))
-      (should (= 1 (length (lr-track-test--clock-lines buf)))))))
-
 
 ;;;; autosave
 
@@ -317,32 +279,44 @@ open and nothing is rewritten."
 
 ;;;; the tick phase: only advance while actually working
 
-(ert-deftest lr-track-live-clock-advances-only-while-working ()
-  "Presence decides.  While he is here the stamp follows his last input; once
-he is away (no input for 15 min, a lock, the Mac asleep) it holds at the last
-input and stays paused, even after he comes back.  That is what makes walking
-away self-limiting without any clock surgery.  The old classifier no longer
-gates it: a stale `away' there must not stop the advance."
-  (let ((t0 (* 60.0 (floor (- (float-time) 3600) 60)))
-        (lr-track--clock-pause nil))
+;;;; deterministic: nothing about this laptop moves the line
+
+(ert-deftest lr-track-live-clock-advances-to-now-whatever-the-laptop-does ()
+  "The tick moves the line to the current minute, every time, with the laptop
+idle for an hour, unfocused, or locked: a clock runs from his start to his
+stop wherever he is.  Only the clock and the time are read."
+  (let ((t0 (* 60.0 (floor (- (float-time) 7200) 60)))
+        (real (symbol-function 'float-time)))
     (lr-track-test--clocked t0
-      (let ((lr-track--stable-state 'away)
-            (lr-track--presence (lr-track-test--presence 'here (+ t0 1200))))
-        (lr-track--tick-live-clock)
-        (should (string-match-p "--\\[.* =>  0:20\\'"
-                                (car (lr-track-test--clock-lines buf)))))
-      ;; capture what presence earned, then go away: it must not move
-      (let ((frozen (car (lr-track-test--clock-lines buf))))
-        (dolist (kind '(idle locked asleep))
-          (let ((lr-track--stable-state 'engaged)
-                (lr-track--presence
-                 (lr-track-test--presence 'away (+ t0 1200) kind)))
-            (lr-track--tick-live-clock)
-            (should (equal frozen (car (lr-track-test--clock-lines buf))))))
-        ;; back at the machine: a paused line never resumes by itself
-        (let ((lr-track--presence (lr-track-test--presence 'here (+ t0 2400))))
-          (lr-track--tick-live-clock)
-          (should (equal frozen (car (lr-track-test--clock-lines buf)))))))))
+      (cl-letf (((symbol-function 'float-time)
+                 (lambda (&optional tm) (if tm (funcall real tm) (+ t0 1200.0))))
+                ((symbol-function 'frame-focus-state) (lambda (&rest _) nil))
+                ((symbol-function 'current-idle-time) (lambda () (seconds-to-time 3600))))
+        (lr-track--tick-live-clock))
+      (should (string-match-p "=> +0:20\\'" (car (lr-track-test--clock-lines buf))))
+      (cl-letf (((symbol-function 'float-time)
+                 (lambda (&optional tm) (if tm (funcall real tm) (+ t0 2400.0)))))
+        (lr-track--tick-live-clock))
+      (should (string-match-p "=> +0:40\\'" (car (lr-track-test--clock-lines buf)))))))
+
+(ert-deftest lr-track-live-clock-same-ticks-same-bytes ()
+  "Determinism: the same clock and the same tick times give the same file,
+whatever focus and idle say."
+  (let ((t0 (* 60.0 (floor (- (float-time) 7200) 60)))
+        (real (symbol-function 'float-time))
+        (runs nil))
+    (dolist (focus '(t nil))
+      (lr-track-test--clocked t0
+        (dolist (dt '(600.0 1200.0 1260.0 3000.0))
+          (cl-letf (((symbol-function 'float-time)
+                     (lambda (&optional tm) (if tm (funcall real tm) (+ t0 dt))))
+                    ((symbol-function 'frame-focus-state) (lambda (&rest _) focus))
+                    ((symbol-function 'current-idle-time)
+                     (lambda () (seconds-to-time (if focus 0 9999)))))
+            (lr-track--tick-live-clock)))
+        (push (lr-track-test--clock-lines buf) runs)))
+    (should (equal (nth 0 runs) (nth 1 runs)))
+    (should (string-match-p "=> +0:50\\'" (car (car runs))))))
 
 (provide 'lr-track-live-clock-test)
 ;;; lr-track-live-clock-test.el ends here
