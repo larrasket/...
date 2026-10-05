@@ -252,10 +252,8 @@
 
 (solaire-global-mode +1)
 
-;; Zero fringes.  Doom's `vc-gutter +pretty' runs `(fringe-mode 8)' and the
-;; initial GUI frame doesn't retain an early `set-fringe-style', so re-assert 0
-;; once init has settled.  (Solaire already remaps the `fringe' face to
-;; `solaire-fringe-face' per buffer, so a fringe would still match each buffer's
-;; background if one is ever wanted back.)
-(set-fringe-style 0)
-(add-hook 'doom-after-init-hook (lambda () (fringe-mode 0)))
+
+(fringe-mode 8)                       ; fringe back in normal buffers
+(defun salih/--minibuffer-no-fringe ()
+  (set-window-fringes (minibuffer-window) 0 0))
+(add-hook 'minibuffer-setup-hook #'salih/--minibuffer-no-fringe)
