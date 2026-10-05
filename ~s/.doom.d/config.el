@@ -156,34 +156,22 @@
        :desc "List contexts / time"  "l" #'lr-context-list
        :desc "Resume context clock"  "r" #'lr-context-resume-clock
        :desc "Open contexts.org"     "o" #'lr-context-visit
-       :desc "Time: ask"             "j" #'lr-track-ask))
+       :desc "Coach check-in / clock" "j" #'lr-track-checkin))
 
-;;; Time tracker (lr-track)
-;; Deterministic: a clock runs from your start to your stop, wherever you are;
-;; nothing about this laptop is read.  It asks (one key answers) when you open
-;; the f agenda, start Emacs or stop a clock, and only about what is open: a
-;; clock that ran when Emacs quit, one past its limit, overnight or 3 h without
-;; a yes, nothing running 10 min since your last stop, and "what now?".
+;;; Attention tracker + accountability coach (lr-track)
+;; Background sensing (HID + Emacs idle + focus) -> engaged/elsewhere/away/slept,
+;; a modeline badge, an org activity log (~/roam/main/activity.org), trustworthy
+;; clocks (auto clock-out on away/sleep, idle subtracted), and nudges when you're
+;; clocked-but-elsewhere.  org-free at load; org loads lazily on first clock.
 (require 'lr-track)
-(require 'lr-track-ask)
 ;; Plain "d X" sequences: a SECOND (:prefix ("d" . "context") ...) block would
 ;; recreate the SPC d keymap and wipe the context bindings defined above.
 (map! :leader
-      :desc "Time: status"         "d s" #'lr-track-status
-      :desc "Time: stop"           "d x" #'lr-track-stop
-      :desc "Now: off"             "d 0" #'lr-track-now-0
-      :desc "Now: avey"            "d 1" #'lr-track-now-1
-      :desc "Now: study"           "d 2" #'lr-track-now-2
-      :desc "Now: build"           "d 3" #'lr-track-now-3
-      :desc "Now: writing"         "d 4" #'lr-track-now-4
-      :desc "Now: reading"         "d 5" #'lr-track-now-5
-      :desc "Now: practice"        "d 6" #'lr-track-now-6
-      :desc "Now: life"            "d 7" #'lr-track-now-7
-      :desc "Now: leisure"         "d 8" #'lr-track-now-8
-      :desc "Now: sleep"           "d 9" #'lr-track-now-9
-      :desc "Time: undo"           "d u" #'lr-track-undo
-      :desc "Time: set up streams" "d M" #'lr-track-setup)
-;; Start the tracker a couple seconds after init so the first frame is never blocked.
+      :desc "Clock in (search)"    "d i" #'lr-track-clock-in
+      :desc "Track status (now)"   "d s" #'lr-track-status
+      :desc "Toggle tracking"      "d t" #'lr-track-mode
+      :desc "Tracker doctor"       "d k" #'lr-track-doctor)
+;; Start the coach a couple seconds after init so the first frame is never blocked.
 (add-hook 'doom-after-init-hook
           (lambda () (run-with-timer 2 nil (lambda () (lr-track-mode 1)))))
 

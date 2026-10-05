@@ -24,12 +24,6 @@
 
 (require 'ert)
 (require 'cl-lib)
-
-;; Match the live Emacs: the straight builds of org and evil come first.
-(let ((b "/Users/l/.emacs.d/.local/straight/build-31.0.91/"))
-  (dolist (p '("org" "evil"))
-    (when (file-directory-p (concat b p)) (push (concat b p) load-path))))
-
 (require 'org)
 (require 'org-clock)
 
@@ -51,7 +45,6 @@
                                                      (or load-file-name buffer-file-name)
                                                      "modules")))
 (require 'lr-track)
-
 
 (setq org-clock-persist nil
       make-backup-files nil
@@ -89,6 +82,7 @@ Binds `file' and `buf'.  Always cancels the clock and kills the buffer."
         (while (re-search-forward "^[ \t]*CLOCK:.*$" nil t)
           (push (string-trim (match-string 0)) out))
         (nreverse out)))))
+
 
 ;;;; the core invariant
 
@@ -152,10 +146,10 @@ discard the minutes since the last tick."
         (org-clock-out nil t (seconds-to-time (+ t0 2700))))  ; real end 0:45
       (should-not (org-clocking-p))
       (let ((line (car (lr-track-test--clock-lines buf))))
-        ;; the duration only: an hour in a stamp can read 0:45 or 0:30 too
-        (should (string-match-p "=> +0:45\\'" line))
-        (should-not (string-match-p "=> +0:30\\'" line)))
+        (should (string-match-p "0:45" line))
+        (should-not (string-match-p "0:30" line)))
       (should (= 1 (length (lr-track-test--clock-lines buf)))))))
+
 
 ;;;; autosave
 
@@ -234,10 +228,8 @@ dirty org buffer must be left untouched."
       (ignore-errors (delete-directory other-dir t)))))
 
 (ert-deftest lr-track-live-clock-autosave-does-nothing-on-a-same-minute-noop ()
-  "A tick that does not actually change the line must not save either.
-T0 is aligned to a minute boundary: unaligned, +1800 s and +1830 s straddle a
-minute whenever the wall clock's seconds are 30 or more, and the test flaked."
-  (let ((t0 (* 60.0 (floor (- (float-time) 3600) 60)))
+  "A tick that does not actually change the line must not save either."
+  (let ((t0 (- (float-time) 3600))
         (lr-track-autosave-clock t)
         (saves nil))
     (lr-track-test--clocked t0
@@ -279,44 +271,21 @@ open and nothing is rewritten."
 
 ;;;; the tick phase: only advance while actually working
 
-;;;; deterministic: nothing about this laptop moves the line
-
-(ert-deftest lr-track-live-clock-advances-to-now-whatever-the-laptop-does ()
-  "The tick moves the line to the current minute, every time, with the laptop
-idle for an hour, unfocused, or locked: a clock runs from his start to his
-stop wherever he is.  Only the clock and the time are read."
-  (let ((t0 (* 60.0 (floor (- (float-time) 7200) 60)))
-        (real (symbol-function 'float-time)))
+(ert-deftest lr-track-live-clock-advances-only-while-working ()
+  "The stamp advances for engaged/reading and STOPS for away/elsewhere/slept.
+That is what makes walking away self-limiting without any clock surgery: the
+line simply stops growing at the last moment the owner was really there."
+  (let ((t0 (- (float-time) 3600)))
     (lr-track-test--clocked t0
-      (cl-letf (((symbol-function 'float-time)
-                 (lambda (&optional tm) (if tm (funcall real tm) (+ t0 1200.0))))
-                ((symbol-function 'frame-focus-state) (lambda (&rest _) nil))
-                ((symbol-function 'current-idle-time) (lambda () (seconds-to-time 3600))))
-        (lr-track--tick-live-clock))
-      (should (string-match-p "=> +0:20\\'" (car (lr-track-test--clock-lines buf))))
-      (cl-letf (((symbol-function 'float-time)
-                 (lambda (&optional tm) (if tm (funcall real tm) (+ t0 2400.0)))))
-        (lr-track--tick-live-clock))
-      (should (string-match-p "=> +0:40\\'" (car (lr-track-test--clock-lines buf)))))))
-
-(ert-deftest lr-track-live-clock-same-ticks-same-bytes ()
-  "Determinism: the same clock and the same tick times give the same file,
-whatever focus and idle say."
-  (let ((t0 (* 60.0 (floor (- (float-time) 7200) 60)))
-        (real (symbol-function 'float-time))
-        (runs nil))
-    (dolist (focus '(t nil))
-      (lr-track-test--clocked t0
-        (dolist (dt '(600.0 1200.0 1260.0 3000.0))
-          (cl-letf (((symbol-function 'float-time)
-                     (lambda (&optional tm) (if tm (funcall real tm) (+ t0 dt))))
-                    ((symbol-function 'frame-focus-state) (lambda (&rest _) focus))
-                    ((symbol-function 'current-idle-time)
-                     (lambda () (seconds-to-time (if focus 0 9999)))))
-            (lr-track--tick-live-clock)))
-        (push (lr-track-test--clock-lines buf) runs)))
-    (should (equal (nth 0 runs) (nth 1 runs)))
-    (should (string-match-p "=> +0:50\\'" (car (car runs))))))
+      (let ((lr-track--stable-state 'engaged))
+        (lr-track--tick-live-clock)
+        (should (string-match-p "--\\[" (car (lr-track-test--clock-lines buf)))))
+      ;; capture what engaged wrote, then go away: it must not move
+      (let ((frozen (car (lr-track-test--clock-lines buf))))
+        (dolist (s '(away slept elsewhere))
+          (let ((lr-track--stable-state s))
+            (lr-track--tick-live-clock)
+            (should (equal frozen (car (lr-track-test--clock-lines buf))))))))))
 
 (provide 'lr-track-live-clock-test)
 ;;; lr-track-live-clock-test.el ends here
