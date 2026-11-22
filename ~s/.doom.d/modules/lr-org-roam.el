@@ -1,12 +1,32 @@
 ;;; lr-org-roam.el --- Org-roam, vulpea, dailies -*- lexical-binding: t; -*-
 
-;;; iCloud symlink compatibility
+;;; Local-first roam folders
+;; ~/roam's folders are plain local folders. iCloud only holds a one-way
+;; mirror written by roam-mirror (~/Library/Application Support/roam-mirror),
+;; and ~/roam/hugo is the ~/lr0.org repo, which Unison syncs to iCloud.
+;; Old iCloud paths still turn up (org-roam DB rows, org-id locations,
+;; recentf, file links), so alias them onto the local folders: visiting one
+;; opens the local file instead of reading or writing the mirror.  A folder
+;; that is still an iCloud symlink gets the same name, so the switch to local
+;; is invisible to open buffers.
+(let ((cloud "/Users/l/Library/Mobile Documents/com~apple~CloudDocs/"))
+  (dolist (map `(("sync/org/blog/"   . "/Users/l/lr0.org/")
+                 ("sync/org/source/" . "/Users/l/roam/source/")
+                 ("source/"          . "/Users/l/roam/source/")
+                 ,@(mapcar (lambda (d) (cons (concat "sync/org/" d "/")
+                                             (concat "/Users/l/roam/" d "/")))
+                           '("common" "journal" "main" "references" "tags" "things"))))
+    (add-to-list 'directory-abbrev-alist
+                 (cons (concat "\\`" (regexp-quote (concat cloud (car map))))
+                       (cdr map)))))
+
+;;; Symlinked roam folders
 ;; Doom Emacs sets `find-file-visit-truename t', which means opening a file
-;; via a symlink (e.g. ~/roam/main/foo.org -> iCloud) sets buffer-file-name to
-;; the TRUENAME (/Users/l/Library/Mobile Documents/.../main/foo.org), not the
-;; symlink path.  org-roam-file-p checks if file-truename is under
-;; file-truename(org-roam-directory) = /Users/l/roam - but iCloud truenames are
-;; NOT under /Users/l/roam, so org-roam-file-p always returns nil for these files.
+;; via a symlink (e.g. ~/roam/hugo/foo.org, which is ~/lr0.org) sets
+;; buffer-file-name to the TRUENAME (/Users/l/lr0.org/foo.org), not the
+;; symlink path.  org-roam-file-p checks if the path is under
+;; org-roam-directory = /Users/l/roam, which the truename is NOT, so
+;; org-roam-file-p returns nil for these files.
 ;; That breaks DB updates on save, find-file-hook integration, etc.
 ;;
 ;; Fix: pre-compute the truenames of symlinked subdirs of org-roam-directory,
@@ -42,6 +62,13 @@ accessed via iCloud symlinks are recognised as org-roam files.")
 
 ;;; Org-roam (deferred)
 (after! org-roam
+  (defadvice! salih/org-roam-list-file-truenames-a (files)
+    "Use the same file names for scanning and indexing symlinked notes."
+    :filter-return #'org-roam-list-files
+    (if find-file-visit-truename
+        (delete-dups (mapcar #'file-truename files))
+      files))
+
   ;; Extend org-roam-file-p to handle iCloud-symlinked files.
   ;; When find-file-visit-truename=t (Doom default), buffer-file-name for
   ;; ~/roam/main/foo.org is the iCloud truename, not the ~/roam path.

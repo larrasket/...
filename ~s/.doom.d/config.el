@@ -151,7 +151,7 @@
 ;;; Load core modules
 (setq salih/enable-liquid-glass nil)
 (require 'lr-macos)
-(require 'lr-ui)
+;; (require 'lr-ui)
 (require 'lr-completion)
 (require 'lr-editor)
 (require 'lr-prog)
@@ -268,7 +268,7 @@
 
 (map! "M-f" #'consult-line)
 
-(setq doom-theme 'kaolin-dark)
+(setq doom-theme 'modus-vivendi)
 
 (solaire-global-mode +1)
 

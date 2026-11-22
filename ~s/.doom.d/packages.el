@@ -96,3 +96,5 @@
   :recipe (:host github :repo "xenodium/agent-shell"))
 
 (package! csv-mode)
+
+(unpin! org-roam)
