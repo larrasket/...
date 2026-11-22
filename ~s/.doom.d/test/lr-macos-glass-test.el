@@ -19,6 +19,8 @@
   nil)
 
 (defvar doom-load-theme-hook nil)
+(defvar doom-after-init-hook nil)
+(defvar salih/enable-liquid-glass)
 
 (defconst lr-macos-test--file
   (or load-file-name buffer-file-name))
@@ -42,9 +44,26 @@
             ((symbol-function 'face-spec-set) (lambda (&rest _) nil)))
     (let ((system-type 'darwin)
           (default-frame-alist nil))
-      (load (lr-macos-test--module-path) nil t))))
+      (load (lr-macos-test--module-path) nil t)
+      default-frame-alist)))
 
 (lr-macos-test--load-module)
+
+(ert-deftest salih-glass-disabled-skips-automatic-setup ()
+  (let ((salih/enable-liquid-glass nil)
+        (doom-load-theme-hook nil)
+        (doom-after-init-hook nil)
+        (after-make-frame-functions nil)
+        (window-setup-hook nil))
+    (let ((frame-parameters (lr-macos-test--load-module)))
+      (should (eq (alist-get 'ns-appearance frame-parameters) 'dark))
+      (should-not (assq 'alpha-background frame-parameters))
+      (should-not (assq 'ns-background-blur frame-parameters))
+      (should-not (assq 'ns-glass-material frame-parameters)))
+    (should (equal doom-load-theme-hook '(salih/--break-gnus-face-cycle)))
+    (should-not doom-after-init-hook)
+    (should-not after-make-frame-functions)
+    (should-not window-setup-hook)))
 
 (defmacro lr-macos-test--capture-effects (&rest body)
   "Run BODY while recording frame parameters and face attributes."

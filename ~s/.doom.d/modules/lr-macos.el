@@ -38,6 +38,8 @@
   ;; Keep color ownership with the active theme.  This module only adjusts
   ;; frame material parameters and uses the theme's current default background
   ;; as the frame tint, so the effect remains portable across Doom themes.
+  (defvar salih/enable-liquid-glass t
+    "Non-nil enables automatic Liquid Glass setup when `lr-macos' loads.")
   (defvar salih/glass-style 'macos-glass-regular
     "Current macOS glass preset.")
   (defvar salih/alpha-background 0.01
@@ -221,10 +223,6 @@ Nil lets Emacs choose light/dark defaults.")
        '((ns-alpha-glyphs-alpha . nil)
          (ns-glass-material . nil)))))
 
-  (dolist (parameter (salih/--glass-frame-parameters))
-    (unless (eq (car parameter) 'background-color)
-      (add-to-list 'default-frame-alist parameter)))
-
   (defun salih/--apply-glass (&optional frame)
     "Re-apply transparency and blur to FRAME."
     (when (display-graphic-p)
@@ -251,25 +249,24 @@ Nil lets Emacs choose light/dark defaults.")
   (add-hook 'doom-load-theme-hook #'salih/--break-gnus-face-cycle)
   (salih/--break-gnus-face-cycle)
 
-  ;; Re-apply on each theme load (theme load can reset background-color
-  ;; which alpha-background composites against) and on every new frame
-  ;; (emacsclient -c, etc).
-  (add-hook 'doom-load-theme-hook       #'salih/--apply-glass)
-  (add-hook 'after-make-frame-functions #'salih/--apply-glass)
-  (unless (daemonp)
-    (add-hook 'window-setup-hook        #'salih/--apply-glass))
-  (when (display-graphic-p)
-    (salih/--apply-glass))
+  (when salih/enable-liquid-glass
+    (dolist (parameter (salih/--glass-frame-parameters))
+      (unless (eq (car parameter) 'background-color)
+        (add-to-list 'default-frame-alist parameter)))
 
-  ;; First-boot fix: during startup the theme load, `solaire-global-mode', and
-  ;; the initial frame's realization on screen race with the applies above, so
-  ;; the native glass layer can land too early and look wrong until a manual
-  ;; `doom/reload-theme'.  Re-apply once more after init has fully settled (theme
-  ;; loaded, solaire run, frame realized) -- this is what that manual reload does.
-  (add-hook 'doom-after-init-hook
-            (lambda ()
-              (when (display-graphic-p)
-                (run-with-idle-timer 0.5 nil #'salih/--apply-glass))))
+    ;; Re-apply when themes reset the background color and when new frames open.
+    (add-hook 'doom-load-theme-hook #'salih/--apply-glass)
+    (add-hook 'after-make-frame-functions #'salih/--apply-glass)
+    (unless (daemonp)
+      (add-hook 'window-setup-hook #'salih/--apply-glass))
+    (when (display-graphic-p)
+      (salih/--apply-glass))
+
+    ;; Re-apply after startup so the theme, Solaire, and initial frame have settled.
+    (add-hook 'doom-after-init-hook
+              (lambda ()
+                (when (display-graphic-p)
+                  (run-with-idle-timer 0.5 nil #'salih/--apply-glass)))))
 
   (defun salih/toggle-glass ()
     "Toggle the glass effect on/off."

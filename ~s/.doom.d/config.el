@@ -130,6 +130,7 @@
       (called-interactively-p 'any)))
 
 ;;; Load core modules
+(setq salih/enable-liquid-glass nil)
 (require 'lr-macos)
 (require 'lr-ui)
 (require 'lr-completion)
