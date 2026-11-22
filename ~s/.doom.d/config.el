@@ -56,6 +56,8 @@
 ;;; modus-vivendi-tritanopia
 ;;; ef-cherie
 
+(setq modus-themes-bold-constructs t)
+
 ;; Match the buffer gutter and use the flat Doom One modeline style.
 (setq modus-vivendi-palette-overrides
       '((bg-line-number-active bg-main)
