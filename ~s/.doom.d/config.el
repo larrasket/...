@@ -56,6 +56,23 @@
 ;;; modus-vivendi-tritanopia
 ;;; ef-cherie
 
+;; Match the buffer gutter and use the flat Doom One modeline style.
+(setq modus-vivendi-palette-overrides
+      '((bg-line-number-active bg-main)
+        (bg-line-number-inactive bg-main)
+        (bg-mode-line-active bg-dim)
+        (bg-mode-line-inactive bg-popup)
+        (border-mode-line-active unspecified)
+        (border-mode-line-inactive unspecified)))
+
+;; Hide the inactive accent before Doom refreshes its modeline images.
+(add-hook 'enable-theme-functions
+          (defun salih/modus-vivendi-modeline-h (theme)
+            (when (eq theme 'modus-vivendi)
+              (custom-theme-set-faces
+               theme '(doom-modeline-bar-inactive ((t :background unspecified))))))
+          -95)
+
 ;;; Basic settings
 (setq display-line-numbers-type 'relative
       auto-save-no-message      t
